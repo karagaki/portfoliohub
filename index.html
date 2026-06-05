@@ -17,11 +17,7 @@
 
       <section class="cards" aria-label="portfolio sections">
         <a class="card card-graphic" id="graphic" href="https://karagaki.github.io/testportfolio/" aria-label="Graphic portfolio">
-          <div class="card-art art-graphic" aria-hidden="true">
-            <span class="art-mark mark-star">✦</span>
-            <span class="art-panel panel-a"></span>
-            <span class="art-panel panel-b"></span>
-          </div>
+          <div class="card-art art-graphic" aria-hidden="true"></div>
           <div class="card-body">
             <p class="card-year">〜2025</p>
             <h2>Graphic Portfolio</h2>
@@ -31,11 +27,7 @@
         </a>
 
         <a class="card card-kashinoki" id="system-tools" href="./system-tools/" aria-label="System Tools">
-          <div class="card-art art-kashinoki" aria-hidden="true">
-            <span class="art-mark mark-circle"></span>
-            <span class="art-orb orb-one"></span>
-            <span class="art-orb orb-two"></span>
-          </div>
+          <div class="card-art art-kashinoki" aria-hidden="true"></div>
           <div class="card-body">
             <p class="card-year">2026〜</p>
             <h2>System Tools</h2>
@@ -45,12 +37,7 @@
         </a>
 
         <a class="card card-p5" id="uiux-animation-tools" href="./uiux-animation-tools/" aria-label="UI/UX Animation Tools">
-          <div class="card-art art-p5" aria-hidden="true">
-            <span class="art-mark mark-line"></span>
-            <span class="art-trace trace-one"></span>
-            <span class="art-trace trace-two"></span>
-            <span class="art-trace trace-three"></span>
-          </div>
+          <div class="card-art art-p5" aria-hidden="true"></div>
           <div class="card-body">
             <p class="card-year">2025〜</p>
             <h2>UI/UX Animation Tools</h2>
@@ -88,43 +75,75 @@
       <div class="hub-settings__body">
         <label class="hub-control">
           <span>背景の明るさ</span>
-          <input type="range" min="0.82" max="1.18" step="0.01" data-hub-control="bg-lightness" />
+          <input type="range" min="0.58" max="1.48" step="0.01" data-hub-control="bg-lightness" />
         </label>
         <label class="hub-control">
           <span>背景の暖色感</span>
-          <input type="range" min="0.82" max="1.22" step="0.01" data-hub-control="bg-warmth" />
+          <input type="range" min="0.68" max="1.42" step="0.01" data-hub-control="bg-warmth" />
         </label>
         <label class="hub-control">
           <span>背景ぼかし光の強さ</span>
-          <input type="range" min="0" max="1.3" step="0.01" data-hub-control="light-strength" />
+          <input type="range" min="0" max="2" step="0.01" data-hub-control="light-strength" />
         </label>
         <label class="hub-control">
           <span>パネル透明度</span>
-          <input type="range" min="0.14" max="0.42" step="0.01" data-hub-control="card-alpha" />
+          <input type="range" min="0.05" max="0.6" step="0.01" data-hub-control="card-alpha" />
         </label>
         <label class="hub-control">
           <span>パネルblur</span>
-          <input type="range" min="14" max="34" step="1" data-hub-control="card-blur" />
+          <input type="range" min="8" max="44" step="1" data-hub-control="card-blur" />
         </label>
         <label class="hub-control">
           <span>パネル境界線の強さ</span>
-          <input type="range" min="0.18" max="0.72" step="0.01" data-hub-control="card-border-alpha" />
+          <input type="range" min="0.08" max="0.92" step="0.01" data-hub-control="card-border-alpha" />
         </label>
         <label class="hub-control">
           <span>パネル影の強さ</span>
-          <input type="range" min="0.08" max="0.34" step="0.01" data-hub-control="card-shadow-strength" />
+          <input type="range" min="0.02" max="0.5" step="0.01" data-hub-control="card-shadow-strength" />
+        </label>
+        <label class="hub-control">
+          <span>カード角丸</span>
+          <input type="range" min="14" max="52" step="1" data-hub-control="card-radius" />
+        </label>
+        <label class="hub-control">
+          <span>カード高さ</span>
+          <input type="range" min="170" max="360" step="1" data-hub-control="card-height" />
+        </label>
+        <label class="hub-control">
+          <span>カード内余白</span>
+          <input type="range" min="8" max="34" step="1" data-hub-control="card-padding" />
+        </label>
+        <label class="hub-control">
+          <span>背景光の位置感</span>
+          <input type="range" min="0.5" max="1.5" step="0.01" data-hub-control="light-position" />
+        </label>
+        <label class="hub-control">
+          <span>背景光の広がり</span>
+          <input type="range" min="0.5" max="1.7" step="0.01" data-hub-control="light-spread" />
+        </label>
+        <label class="hub-control">
+          <span>カード白ハイライト強度</span>
+          <input type="range" min="0.08" max="0.9" step="0.01" data-hub-control="card-highlight-strength" />
+        </label>
+        <label class="hub-control">
+          <span>カード内側の明るさ</span>
+          <input type="range" min="0.02" max="0.58" step="0.01" data-hub-control="card-inner-light" />
+        </label>
+        <label class="hub-control">
+          <span>文字影の強さ</span>
+          <input type="range" min="0.02" max="0.55" step="0.01" data-hub-control="text-shadow-strength" />
         </label>
         <label class="hub-control">
           <span>文字の明るさ</span>
-          <input type="range" min="0.7" max="1" step="0.01" data-hub-control="text-strength" />
+          <input type="range" min="0.55" max="1" step="0.01" data-hub-control="text-strength" />
         </label>
         <label class="hub-control">
           <span>全体サイズ</span>
-          <input type="range" min="0.88" max="1.12" step="0.01" data-hub-control="scale" />
+          <input type="range" min="0.8" max="1.24" step="0.01" data-hub-control="scale" />
         </label>
         <label class="hub-control">
           <span>カード間隔</span>
-          <input type="range" min="8" max="24" step="1" data-hub-control="card-gap" />
+          <input type="range" min="4" max="28" step="1" data-hub-control="card-gap" />
         </label>
       </div>
 
