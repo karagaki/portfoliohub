@@ -28,6 +28,13 @@
   --hub-card-highlight-strength: 0.44;
   --hub-card-inner-light: 0.24;
   --hub-text-shadow-strength: 0.2;
+  --hub-shadow-distance: 18px;
+  --hub-shadow-blur: 38px;
+  --hub-shadow-alpha: 0.18;
+  --hub-shadow-y: 12px;
+  --hub-inner-highlight: 0.58;
+  --hub-ground-shadow: 0.14;
+  --hub-shadow-mode: Soft;
 }
 
 * {
@@ -104,9 +111,10 @@ a {
     linear-gradient(180deg, rgba(255, 255, 255, calc(var(--hub-card-alpha) + 0.08)), rgba(255, 255, 255, var(--hub-card-alpha))),
     rgba(255, 255, 255, calc(var(--hub-card-alpha) - 0.12));
   box-shadow:
-    0 20px 38px rgba(116, 98, 78, var(--hub-card-shadow-strength)),
-    inset 0 1px 0 rgba(255, 255, 255, 0.58),
-    inset 0 -1px 0 rgba(255, 255, 255, 0.14);
+    var(--hub-shadow-distance) var(--hub-shadow-y) var(--hub-shadow-blur) rgba(116, 98, 78, var(--hub-shadow-alpha)),
+    0 0 0 1px rgba(255, 255, 255, var(--hub-card-border-alpha)),
+    inset 0 1px 0 rgba(255, 255, 255, var(--hub-inner-highlight)),
+    inset 0 -1px 0 rgba(255, 255, 255, var(--hub-ground-shadow));
   backdrop-filter: blur(var(--hub-card-blur)) saturate(145%);
   -webkit-backdrop-filter: blur(var(--hub-card-blur)) saturate(145%);
   transition: transform 180ms ease, box-shadow 180ms ease;
@@ -120,37 +128,19 @@ a {
 .card:hover {
   transform: translateY(-10px);
   box-shadow:
-    0 26px 54px rgba(116, 98, 78, calc(var(--hub-card-shadow-strength) + 0.02)),
-    inset 0 1px 0 rgba(255, 255, 255, calc(var(--hub-card-highlight-strength) + 0.18)),
-    inset 0 -1px 0 rgba(255, 255, 255, 0.16);
-}
-
-.card-art {
-  position: relative;
-  min-height: var(--hub-card-height);
-  padding: var(--hub-card-padding);
-  overflow: hidden;
-}
-
-.card-art::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(180deg,
-      rgba(255, 255, 255, calc(var(--hub-card-highlight-strength) + 0.06)),
-      rgba(255, 255, 255, var(--hub-card-inner-light)) 54%,
-      rgba(255, 255, 255, calc(var(--hub-card-inner-light) + 0.02)));
-  pointer-events: none;
+    calc(var(--hub-shadow-distance) + 6px) calc(var(--hub-shadow-y) + 6px) calc(var(--hub-shadow-blur) + 10px) rgba(116, 98, 78, calc(var(--hub-shadow-alpha) + 0.06)),
+    0 0 0 1px rgba(255, 255, 255, calc(var(--hub-card-border-alpha) + 0.06)),
+    inset 0 1px 0 rgba(255, 255, 255, calc(var(--hub-inner-highlight) + 0.1)),
+    inset 0 -1px 0 rgba(255, 255, 255, calc(var(--hub-ground-shadow) + 0.04));
 }
 
 .card-body {
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: center;
   flex: 1;
-  min-height: 150px;
-  padding: 14px calc(var(--hub-card-padding)) calc(var(--hub-card-padding) + 2px);
+  min-height: 0;
+  padding: 22px calc(var(--hub-card-padding) + 2px) 20px;
 }
 
 .card-kicker {
@@ -177,14 +167,14 @@ a {
 }
 
 .card-title-ja {
-  margin: 10px 0 0;
+  margin: 8px 0 0;
   font-size: 0.88rem;
   line-height: 1.3;
   color: rgba(255, 255, 255, calc(var(--hub-text-strength) * 0.86));
 }
 
 .card-sub {
-  margin: 12px 0 0;
+  margin: 8px 0 0;
   color: var(--muted);
   line-height: 1.4;
   font-size: 0.84rem;
@@ -195,7 +185,7 @@ a {
   content: "Open";
   position: absolute;
   right: 24px;
-  bottom: 14px;
+  bottom: 18px;
   font-size: 0.82rem;
   letter-spacing: 0.04em;
   color: rgba(255, 255, 255, calc(var(--hub-text-strength) * 0.88));
@@ -307,8 +297,9 @@ a {
   position: fixed;
   right: 18px;
   bottom: 74px;
-  width: min(340px, calc(100vw - 28px));
-  padding: 11px 12px 10px;
+  width: min(290px, calc(100vw - 24px));
+  max-height: min(72vh, 680px);
+  padding: 9px 10px 8px;
   border: 1px solid rgba(255, 255, 255, 0.46);
   border-radius: 26px;
   background: rgba(255, 255, 255, 0.22);
@@ -323,6 +314,7 @@ a {
   pointer-events: none;
   transform: translateY(8px) scale(0.98);
   transition: opacity 160ms ease, transform 160ms ease;
+  overflow: auto;
 }
 
 .hub-settings.is-open {
@@ -336,7 +328,7 @@ a {
   align-items: flex-start;
   justify-content: space-between;
   gap: 12px;
-  margin-bottom: 6px;
+  margin-bottom: 5px;
 }
 
 .hub-settings__eyebrow {
@@ -369,16 +361,17 @@ a {
 
 .hub-settings__body {
   display: grid;
-  gap: 5px;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px 8px;
 }
 
 .hub-control {
   display: grid;
-  gap: 3px;
+  gap: 2px;
 }
 
 .hub-control span {
-  font-size: 0.74rem;
+  font-size: 0.72rem;
   line-height: 1.2;
   color: rgba(255, 255, 255, 0.92);
 }
@@ -388,10 +381,21 @@ a {
   accent-color: #fff;
 }
 
+.hub-control select {
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.14);
+  color: rgba(255, 255, 255, 0.94);
+  padding: 6px 8px;
+  font: inherit;
+  font-size: 0.78rem;
+}
+
 .hub-settings__footer {
   display: flex;
   justify-content: flex-start;
-  margin-top: 8px;
+  margin-top: 6px;
 }
 
 .hub-settings__close:hover,
@@ -399,12 +403,12 @@ a {
   background: rgba(255, 255, 255, 0.24);
 }
 
-body.hub-settings-open .page {
-  filter: none;
-}
-
 @media (max-width: 960px) {
   .hub-settings {
     bottom: 82px;
+  }
+
+  .hub-settings__body {
+    grid-template-columns: 1fr;
   }
 }
