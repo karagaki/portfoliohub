@@ -14,8 +14,8 @@
       --badb: #f8eaeb;
       --hold: #90704d;
       --holdb: #f8f1e7;
-      --r: 13px;
-      --sh: 0 7px 18px rgba(30, 48, 44, .04);
+      --r: 15px;
+      --sh: 0 8px 22px rgba(30, 48, 44, .042);
       font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic UI", sans-serif
     }
 
@@ -27,7 +27,7 @@
       margin: 0;
       background: var(--bg);
       color: var(--tx);
-      font-size: 12px;
+      font-size: 13px;
       font-family: inherit
     }
 
@@ -42,11 +42,11 @@
     .app {
       height: 100vh;
       display: grid;
-      grid-template-columns: 173px 1fr
+      grid-template-columns: 236px 1fr
     }
 
     .side {
-      padding: 14px 10px;
+      padding: 22px 14px;
       background: #fafbfa;
       border-right: 1px solid var(--line);
       display: flex;
@@ -54,42 +54,42 @@
     }
 
     .logo {
-      padding: 0 6px 12px
+      padding: 0 10px 20px
     }
 
     .logo .chord {
       display: block;
-      font-size: 14px;
+      font-size: 19px;
       letter-spacing: .17em;
       font-weight: 650
     }
 
     .logo small {
       display: block;
-      font-size: 7px;
+      font-size: 9px;
       color: var(--mut);
       letter-spacing: .12em;
-      margin-top: 4px
+      margin-top: 6px
     }
 
     .logo .toolname {
       display: block;
-      font-size: 9px;
+      font-size: 11px;
       letter-spacing: .03em;
       font-weight: 570;
       color: var(--tx);
-      margin-top: 8px;
-      line-height: 1.35
+      margin-top: 10px;
+      line-height: 1.45
     }
 
     .nav {
       display: grid;
-      gap: 5px
+      gap: 9px
     }
 
     .nav-group {
       display: grid;
-      gap: 4px
+      gap: 5px
     }
 
     .nav button {
@@ -101,8 +101,8 @@
     }
 
     .nav-parent {
-      padding: 7px 9px;
-      border-radius: 9px;
+      padding: 10px 12px;
+      border-radius: 11px;
       background: var(--neumo-raised);
       box-shadow: -2px -2px 6px rgba(255, 255, 255, .34), 3px 3px 8px rgba(157, 168, 179, .11);
       font-weight: 580
@@ -117,19 +117,19 @@
 
     .nav-children {
       display: grid;
-      gap: 1px;
-      margin-top: 1px
+      gap: 3px;
+      margin-top: 2px
     }
 
     .nav-child {
       width: calc(100% - 14px);
       justify-self: end;
-      padding: 5px 8px 5px 9px;
-      border-radius: 7px;
+      padding: 7px 10px 7px 11px;
+      border-radius: 9px;
       background: rgba(191, 204, 201, .23);
       box-shadow: inset 1px 1px 3px rgba(153, 166, 170, .10), inset -1px -1px 3px rgba(255, 255, 255, .32);
-      font-size: 8px;
-      line-height: 1.2
+      font-size: 10.5px;
+      line-height: 1.35
     }
 
     .nav-child:hover {
@@ -149,7 +149,7 @@
     }
 
     .nav-child .nav-sub {
-      font-size: 7px;
+      font-size: 9px;
       margin-top: 2px;
       color: #81918e
     }
@@ -157,17 +157,17 @@
     .nav-section-caption {
       width: calc(100% - 14px);
       justify-self: end;
-      padding: 4px 8px 1px;
-      font-size: 8px;
+      padding: 6px 10px 2px;
+      font-size: 9px;
       letter-spacing: .10em;
       color: #839492;
       font-weight: 700
     }
 
     .nav-section-caption.common {
-      margin-top: 4px;
+      margin-top: 5px;
       border-top: 1px solid rgba(104, 127, 123, .10);
-      padding-top: 7px
+      padding-top: 9px
     }
 
     .nav-child.nav-shared {
@@ -176,8 +176,8 @@
     }
 
     .nav-single {
-      padding: 7px 9px;
-      border-radius: 9px;
+      padding: 10px 12px;
+      border-radius: 11px;
       background: var(--neumo-raised);
       box-shadow: -2px -2px 6px rgba(255, 255, 255, .34), 3px 3px 8px rgba(157, 168, 179, .11);
       font-weight: 580
@@ -193,7 +193,7 @@
     .nav-child,
     .nav-single {
       position: relative;
-      padding-right: 22px
+      padding-right: 30px
     }
 
     .nav-parent::after,
@@ -201,7 +201,7 @@
     .nav-single::after {
       content: "";
       position: absolute;
-      right: 10px;
+      right: 13px;
       top: 50%;
       transform: translateY(-50%);
       width: 5px;
@@ -212,7 +212,7 @@
     }
 
     .nav-child::after {
-      right: 8px;
+      right: 10px;
       width: 4px;
       height: 4px
     }
@@ -224,28 +224,28 @@
 
     .protect {
       margin-top: auto;
-      padding: 8px;
+      padding: 12px;
       border: 1px solid var(--line);
-      border-radius: 12px;
+      border-radius: 13px;
       background: var(--p);
       color: var(--mut);
-      font-size: 8px;
-      line-height: 1.45
+      font-size: 10.5px;
+      line-height: 1.58
     }
 
     .protect b {
       display: block;
       color: var(--good);
-      font-size: 8.5px
+      font-size: 11px
     }
 
     .top {
-      height: 44px;
+      height: 62px;
       border-bottom: 1px solid var(--line);
       display: flex;
       align-items: center;
-      padding: 0 14px;
-      gap: 10px;
+      padding: 0 24px;
+      gap: 16px;
       background: #fbfcfb
     }
 
@@ -254,25 +254,25 @@
     }
 
     .path {
-      padding: 4px 7px;
+      padding: 7px 10px;
       background: var(--s);
-      border-radius: 7px;
+      border-radius: 8px;
       color: var(--mut);
-      font-size: 8px
+      font-size: 11px
     }
 
     .badge {
       margin-left: auto;
       background: var(--goodb);
       color: var(--good);
-      padding: 4px 7px;
-      border-radius: 7px;
-      font-size: 8px
+      padding: 6px 10px;
+      border-radius: 8px;
+      font-size: 11px
     }
 
     .content {
-      padding: 12px 14px;
-      height: calc(100vh - 44px);
+      padding: 22px 24px;
+      height: calc(100vh - 62px);
       overflow: auto
     }
 
@@ -289,7 +289,7 @@
     }
 
     .heading {
-      margin-bottom: 11px;
+      margin-bottom: 18px;
       display: flex;
       justify-content: space-between;
       align-items: flex-end
@@ -297,69 +297,69 @@
 
     .heading h2 {
       margin: 0 0 7px;
-      font-size: 15px;
+      font-size: 22px;
       font-weight: 590
     }
 
     .heading p {
       margin: 0;
       color: var(--mut);
-      line-height: 1.5
+      line-height: 1.55
     }
 
     .tag {
       border: 1px solid var(--line);
       background: var(--p);
-      border-radius: 7px;
-      padding: 4px 7px;
+      border-radius: 8px;
+      padding: 6px 10px;
       color: var(--mut);
-      font-size: 8px
+      font-size: 11px
     }
 
     .metrics {
       display: grid;
-      grid-template-columns: repeat(7, minmax(84px, 1fr));
-      gap: 8px;
-      margin-bottom: 14px
+      grid-template-columns: repeat(7, minmax(105px, 1fr));
+      gap: 10px;
+      margin-bottom: 18px
     }
 
     .card {
       background: var(--p);
       border: 1px solid var(--line);
       border-radius: var(--r);
-      padding: 11px;
+      padding: 15px;
       box-shadow: var(--sh)
     }
 
     .metric label {
-      font-size: 9px;
+      font-size: 12px;
       color: var(--mut);
       display: block;
-      margin-bottom: 6px
+      margin-bottom: 9px
     }
 
     .metric strong {
-      font-size: 20px;
+      font-size: 25px;
       font-weight: 560;
       display: block;
-      margin-bottom: 4px
+      margin-bottom: 5px
     }
 
     .metric small {
-      font-size: 8px;
+      font-size: 10.5px;
       color: var(--mut)
     }
 
     .cols {
       display: grid;
       grid-template-columns: 1.03fr .97fr;
-      gap: 9px
+      gap: 12px
     }
 
     .card h3 {
-      font-size: 12px;
+      font-size: 14px;
       font-weight: 590;
-      margin: 0 0 9px
+      margin: 0 0 12px
     }
 
     .drop {
@@ -368,10 +368,10 @@
       width: 100%;
       border: 1px dashed #c8d5d0;
       background: #fbfcfb;
-      border-radius: 13px;
-      padding: 16px;
+      border-radius: 15px;
+      padding: 24px;
       text-align: center;
-      margin: 0 0 11px;
+      margin: 0 0 14px;
       overflow: hidden
     }
 
@@ -380,15 +380,15 @@
     }
 
     .plus {
-      width: 32px;
-      height: 32px;
-      border-radius: 12px;
+      width: 42px;
+      height: 42px;
+      border-radius: 13px;
       background: var(--acb);
       color: var(--ac);
-      font-size: 16px;
+      font-size: 22px;
       display: grid;
       place-items: center;
-      margin: 0 auto 5px
+      margin: 0 auto 9px
     }
 
     .drop b {
@@ -399,16 +399,16 @@
     .drop span {
       display: block;
       color: var(--mut);
-      font-size: 8px;
-      margin-bottom: 8px
+      font-size: 11px;
+      margin-bottom: 12px
     }
 
     .btn {
-      height: 24px;
-      padding: 0 10px;
-      border-radius: 8px;
+      height: 34px;
+      padding: 0 14px;
+      border-radius: 10px;
       font-weight: 550;
-      font-size: 9px
+      font-size: 12px
     }
 
     .primary {
@@ -434,23 +434,23 @@
 
     .buttons {
       display: flex;
-      gap: 5px;
-      margin-top: 9px;
+      gap: 8px;
+      margin-top: 14px;
       flex-wrap: wrap
     }
 
     .samples {
       display: flex;
-      gap: 5px;
+      gap: 7px;
       flex-wrap: wrap;
-      margin-bottom: 9px
+      margin-bottom: 14px
     }
 
     .sample {
-      padding: 6px 8px;
+      padding: 8px 12px;
       border: 1px solid var(--line);
       background: var(--p);
-      border-radius: 8px;
+      border-radius: 10px;
       color: var(--mut)
     }
 
@@ -460,9 +460,9 @@
     }
 
     .banner {
-      padding: 7px 10px;
-      border-radius: 8px;
-      margin-bottom: 8px;
+      padding: 11px 14px;
+      border-radius: 12px;
+      margin-bottom: 12px;
       font-weight: 550
     }
 
@@ -484,9 +484,9 @@
     .kv {
       display: grid;
       grid-template-columns: 170px 1fr;
-      padding: 5px 0;
+      padding: 9px 0;
       border-top: 1px solid var(--line);
-      line-height: 1.35
+      line-height: 1.5
     }
 
     .kv:first-child {
@@ -495,28 +495,28 @@
     }
 
     .kv label {
-      font-size: 8px;
+      font-size: 11px;
       color: var(--mut)
     }
 
     .list {
       display: grid;
-      gap: 5px
+      gap: 7px
     }
 
     .item {
-      padding: 8px 10px;
+      padding: 13px 15px;
       background: var(--p);
       border: 1px solid var(--line);
-      border-radius: 9px
+      border-radius: 12px
     }
 
     .row {
       display: flex;
       justify-content: space-between;
-      gap: 6px;
+      gap: 10px;
       align-items: center;
-      margin-bottom: 4px
+      margin-bottom: 7px
     }
 
     .row b {
@@ -525,14 +525,14 @@
 
     .muted {
       color: var(--mut);
-      font-size: 10px;
-      line-height: 1.45
+      font-size: 11px;
+      line-height: 1.5
     }
 
     .status {
-      font-size: 10px;
-      border-radius: 7px;
-      padding: 4px 7px;
+      font-size: 11px;
+      border-radius: 8px;
+      padding: 5px 8px;
       background: var(--s);
       color: var(--mut);
       white-space: nowrap
@@ -550,16 +550,16 @@
 
     .msglist {
       display: grid;
-      gap: 6px;
-      margin-top: 8px
+      gap: 7px;
+      margin-top: 10px
     }
 
     .msg {
       border: 1px solid var(--line);
-      border-radius: 11px;
+      border-radius: 12px;
       background: var(--p);
-      padding: 10px 12px;
-      line-height: 1.5
+      padding: 12px 14px;
+      line-height: 1.58
     }
 
     .msg.add {
@@ -568,11 +568,11 @@
 
     .meta {
       display: flex;
-      gap: 7px;
+      gap: 8px;
       align-items: center;
       color: var(--mut);
-      font-size: 10px;
-      margin-bottom: 5px
+      font-size: 11px;
+      margin-bottom: 6px
     }
 
     .role {
@@ -619,11 +619,11 @@
 
     .route {
       display: inline-block;
-      margin-top: 5px;
+      margin-top: 6px;
       background: var(--s);
       border-radius: 6px;
       padding: 3px 7px;
-      font-size: 10px;
+      font-size: 11px;
       color: var(--mut)
     }
 
@@ -634,33 +634,33 @@
 
     .quote {
       background: var(--s);
-      padding: 10px;
-      border-radius: 11px;
+      padding: 12px;
+      border-radius: 12px;
       color: #54625e;
-      line-height: 1.55;
-      font-size: 11px;
-      margin: 10px 0
+      line-height: 1.65;
+      font-size: 12px;
+      margin: 13px 0
     }
 
     .notice {
       background: var(--goodb);
       color: #315f57;
-      padding: 12px;
-      border-radius: 12px;
-      line-height: 1.55
+      padding: 16px;
+      border-radius: 15px;
+      line-height: 1.7
     }
 
     .tabs {
       display: flex;
       gap: 6px;
-      margin-bottom: 10px
+      margin-bottom: 12px
     }
 
     .tab {
-      padding: 7px 10px;
+      padding: 8px 12px;
       border: 1px solid var(--line);
       background: var(--p);
-      border-radius: 8px;
+      border-radius: 9px;
       color: var(--mut)
     }
 
@@ -672,19 +672,19 @@
 
     .empty {
       color: var(--mut);
-      padding: 18px;
+      padding: 22px;
       text-align: center;
       border: 1px dashed var(--line);
-      border-radius: 12px
+      border-radius: 13px
     }
 
     .toast {
       position: fixed;
       z-index: 135;
-      bottom: 18px;
-      right: 18px;
-      padding: 9px 12px;
-      border-radius: 10px;
+      bottom: 20px;
+      right: 22px;
+      padding: 11px 14px;
+      border-radius: 11px;
       background: #293936;
       color: #fff;
       opacity: 0;
@@ -710,17 +710,17 @@
       opacity: .82;
       text-align: left;
       margin: auto 5px 0;
-      padding-top: 12px
+      padding-top: 14px
     }
 
     pre.preview {
       white-space: pre-wrap;
-      font: 10px/1.5 inherit;
+      font: 11px/1.58 inherit;
       color: #52605d;
       background: var(--s);
-      padding: 9px;
-      border-radius: 9px;
-      max-height: 140px;
+      padding: 11px;
+      border-radius: 10px;
+      max-height: 160px;
       overflow: hidden
     }
 
@@ -731,8 +731,8 @@
     .artifact-brief {
       display: flex;
       flex-wrap: wrap;
-      gap: 6px;
-      margin-bottom: 7px;
+      gap: 7px;
+      margin-bottom: 8px;
       align-items: center
     }
 
@@ -740,11 +740,11 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      padding: 4px 7px;
+      padding: 4px 8px;
       border-radius: 999px;
       background: var(--s);
       color: var(--mut);
-      font-size: 9px;
+      font-size: 10px;
       line-height: 1.35
     }
 
@@ -754,14 +754,14 @@
     }
 
     .artifact-preview {
-      margin: 6px 0 7px;
-      padding: 8px 10px;
-      border-radius: 10px;
+      margin: 7px 0 8px;
+      padding: 9px 11px;
+      border-radius: 11px;
       background: #fbfcfb;
       border: 1px solid var(--line);
       color: #51605d;
-      line-height: 1.45;
-      font-size: 10px;
+      line-height: 1.5;
+      font-size: 11px;
       display: -webkit-box;
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
@@ -774,19 +774,19 @@
 
     .artifact-copy-row {
       display: flex;
-      gap: 6px;
+      gap: 7px;
       flex-wrap: wrap;
       align-items: center;
-      margin-top: 6px
+      margin-top: 7px
     }
 
     .artifact-copy-row .btn {
-      height: 28px;
-      padding: 0 10px
+      height: 32px;
+      padding: 0 12px
     }
 
     .artifact-copy-status {
-      font-size: 10px;
+      font-size: 11px;
       color: var(--mut)
     }
 
@@ -813,86 +813,86 @@
     .flow-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-top: 12px
+      gap: 12px;
+      margin-top: 14px
     }
 
     .flow-card {
       background: var(--p);
       border: 1px solid var(--line);
       border-radius: var(--r);
-      padding: 13px;
+      padding: 15px;
       box-shadow: var(--sh)
     }
 
     .flow-card h3 {
-      font-size: 13px;
+      font-size: 14px;
       font-weight: 590;
-      margin: 0 0 6px
+      margin: 0 0 7px
     }
 
     .flow-card p {
-      margin: 0 0 10px;
+      margin: 0 0 12px;
       color: var(--mut);
-      line-height: 1.5
+      line-height: 1.55
     }
 
     .flow-steps {
       display: grid;
-      gap: 6px;
-      margin: 8px 0 10px
+      gap: 7px;
+      margin: 10px 0 12px
     }
 
     .flow-step {
       display: flex;
       align-items: flex-start;
-      gap: 7px;
-      padding: 7px 8px;
+      gap: 9px;
+      padding: 8px 9px;
       background: var(--s);
-      border-radius: 8px;
-      font-size: 10px;
-      line-height: 1.4
+      border-radius: 9px;
+      font-size: 11px;
+      line-height: 1.45
     }
 
     .flow-no {
-      width: 16px;
-      height: 16px;
+      width: 18px;
+      height: 18px;
       border-radius: 50%;
       display: inline-grid;
       place-items: center;
       background: var(--acb);
       color: var(--ac);
-      font-size: 9px;
+      font-size: 10px;
       font-weight: 650;
       flex: none
     }
 
     .flow-actions {
       display: flex;
-      gap: 6px;
+      gap: 7px;
       flex-wrap: wrap
     }
 
     .flow-actions .btn {
-      height: 28px
+      height: 32px
     }
 
     .flow-note {
-      margin-top: 12px;
-      padding: 10px 12px;
-      border-radius: 10px;
+      margin-top: 14px;
+      padding: 12px 14px;
+      border-radius: 12px;
       background: var(--holdb);
       color: var(--hold);
-      line-height: 1.5;
-      font-size: 10px
+      line-height: 1.58;
+      font-size: 11px
     }
 
     .internal {
       display: block;
       color: var(--mut);
-      font-size: 10px;
+      font-size: 11px;
       font-weight: 400;
-      margin-top: 5px
+      margin-top: 6px
     }
 
     .nav-label {
