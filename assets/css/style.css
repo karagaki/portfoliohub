@@ -33,26 +33,26 @@ a {
 }
 
 .page {
-  width: min(1180px, calc(100% - 32px));
+  width: min(940px, calc(100% - 28px));
   margin: 0 auto;
-  padding: 36px 0 44px;
+  padding: 24px 0 32px;
 }
 
 .hero {
-  padding: 10px 4px 24px;
+  padding: 6px 4px 16px;
 }
 
 .hero h1 {
   margin: 0;
-  font-size: clamp(2.8rem, 6vw, 5.6rem);
+  font-size: clamp(2.1rem, 4.4vw, 4.2rem);
   line-height: 0.92;
   letter-spacing: -0.05em;
 }
 
 .lead {
-  max-width: 420px;
+  max-width: 320px;
   margin: 10px 0 0;
-  font-size: 1rem;
+  font-size: 0.92rem;
   line-height: 1.5;
   color: var(--muted);
 }
@@ -60,8 +60,8 @@ a {
 .cards {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 20px;
-  margin-top: 28px;
+  gap: 14px;
+  margin-top: 20px;
 }
 
 .card {
@@ -70,7 +70,7 @@ a {
   display: flex;
   flex-direction: column;
   border: 1px solid var(--border);
-  border-radius: var(--radius-xl);
+  border-radius: 30px;
   background: var(--surface);
   box-shadow: var(--shadow);
   backdrop-filter: blur(14px);
@@ -89,8 +89,8 @@ a {
 
 .card-art {
   position: relative;
-  min-height: 320px;
-  padding: 24px;
+  min-height: 238px;
+  padding: 18px;
   overflow: hidden;
 }
 
@@ -99,8 +99,8 @@ a {
   flex-direction: column;
   justify-content: flex-end;
   flex: 1;
-  min-height: 190px;
-  padding: 18px 24px 24px;
+  min-height: 150px;
+  padding: 14px 18px 18px;
 }
 
 .card-kicker {
@@ -112,21 +112,21 @@ a {
 
 .card-year {
   margin: 0 0 10px;
-  font-size: 0.84rem;
+  font-size: 0.74rem;
   letter-spacing: 0.08em;
   color: rgba(31, 36, 48, 0.54);
 }
 
 .card-body h2 {
   margin: 0;
-  font-size: clamp(2rem, 3.3vw, 3.6rem);
+  font-size: clamp(1.55rem, 2.5vw, 2.7rem);
   line-height: 0.92;
   letter-spacing: -0.05em;
 }
 
 .card-title-ja {
   margin: 10px 0 0;
-  font-size: 1.02rem;
+  font-size: 0.88rem;
   line-height: 1.3;
   color: rgba(31, 36, 48, 0.78);
 }
@@ -135,14 +135,14 @@ a {
   margin: 12px 0 0;
   color: var(--muted);
   line-height: 1.4;
-  font-size: 0.98rem;
+  font-size: 0.84rem;
 }
 
 .card::after {
   content: "Open";
   position: absolute;
   right: 24px;
-  bottom: 18px;
+  bottom: 14px;
   font-size: 0.82rem;
   letter-spacing: 0.04em;
   color: rgba(31, 36, 48, 0.52);
@@ -291,43 +291,43 @@ a {
 .footer-block {
   display: flex;
   flex-wrap: wrap;
-  gap: 14px;
+  gap: 10px;
   align-items: center;
   justify-content: flex-start;
-  margin-top: 24px;
-  padding: 10px 4px 0;
+  margin-top: 18px;
+  padding: 8px 4px 0;
 }
 
 .footer-block h3 {
   margin: 0;
-  font-size: 1rem;
+  font-size: 0.9rem;
   color: var(--muted);
 }
 
 .pill-group {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 8px;
   justify-content: flex-end;
 }
 
 .pill {
-  padding: 10px 14px;
+  padding: 8px 12px;
   border-radius: 999px;
   border: 1px solid rgba(31, 36, 48, 0.08);
   background: rgba(255, 255, 255, 0.68);
   box-shadow: 0 8px 18px rgba(31, 36, 48, 0.06);
-  font-size: 0.88rem;
+  font-size: 0.8rem;
   color: var(--muted);
 }
 
 .note {
-  margin: 18px 4px 0;
-  padding-top: 14px;
+  margin: 14px 4px 0;
+  padding-top: 12px;
   border-top: 1px solid rgba(31, 36, 48, 0.06);
   color: rgba(95, 102, 117, 0.88);
   line-height: 1.6;
-  font-size: 0.85rem;
+  font-size: 0.78rem;
 }
 
 @media (max-width: 960px) {
@@ -340,6 +340,6 @@ a {
   }
 
   .card-art {
-    min-height: 240px;
+    min-height: 200px;
   }
 }
