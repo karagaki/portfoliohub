@@ -5,6 +5,24 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>AI制作継続アシスタント</title>
+  <link rel="icon" href="data:,">
+  <script>
+    (function() {
+      const nativeFetch = window.fetch.bind(window);
+      const isLocalStaticHost = ['localhost', '127.0.0.1', '::1'].includes(location.hostname);
+      window.fetch = function(resource, init) {
+        const url = typeof resource === 'string' ? resource : resource && resource.url ? resource.url : '';
+        if (isLocalStaticHost && (url.endsWith('/api/state') || url === '/api/state')) {
+          const body = JSON.stringify({ ok: true, state: {} });
+          return Promise.resolve(new Response(body, {
+            status: 200,
+            headers: { 'content-type': 'application/json; charset=utf-8' }
+          }));
+        }
+        return nativeFetch(resource, init);
+      };
+    })();
+  </script>
     <link rel="stylesheet" href="assets/base-shell.css">
 
   <link rel="stylesheet" href="assets/components.css">
@@ -19,6 +37,154 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Zen+Antique+Soft&display=swap" rel="stylesheet">
+  <style id="jarvis-start-scale-fix">
+    .jarvis-start-page {
+      padding-bottom: 28px !important;
+    }
+
+    .jarvis-start-page .start-hero {
+      width: min(736px, calc(100% - 36px)) !important;
+      max-width: 736px !important;
+      padding: 10px 0 14px !important;
+    }
+
+    .jarvis-start-page .start-title-block {
+      padding: 10px 6px 20px !important;
+    }
+
+    .jarvis-start-page .start-overline {
+      margin-bottom: 8px !important;
+      font-size: 8px !important;
+    }
+
+    .jarvis-start-page .start-title-block h2 {
+      max-width: 608px !important;
+      font-size: clamp(28px, 2.8vw, 38px) !important;
+      letter-spacing: -.05em !important;
+      margin-bottom: 18px !important;
+    }
+
+    .jarvis-start-page .start-value-grid {
+      gap: 18px !important;
+      margin: 2px 0 16px !important;
+    }
+
+    .jarvis-start-page .start-value {
+      height: 76px !important;
+      min-height: 76px !important;
+      border-radius: 13px !important;
+    }
+
+    .jarvis-start-page .mroak-flow-title {
+      left: 16px !important;
+      top: 11px !important;
+      width: 92px !important;
+      gap: 2px !important;
+    }
+
+    .jarvis-start-page .mroak-flow-kanji {
+      font-size: 32px !important;
+    }
+
+    .jarvis-start-page .mroak-flow-kana {
+      font-size: 18px !important;
+    }
+
+    .jarvis-start-page .mroak-flow-number {
+      right: 14px !important;
+      top: 12px !important;
+      font-size: 8px !important;
+    }
+
+    .jarvis-start-page .mroak-flow-card p {
+      right: 16px !important;
+      top: 48px !important;
+      width: 112px !important;
+      max-width: calc(100% - 144px) !important;
+      font-size: 8.5px !important;
+      line-height: 1.32 !important;
+    }
+
+    .jarvis-start-page .start-demo-panel {
+      grid-template-columns: minmax(0, 1fr) minmax(192px, 256px) !important;
+      column-gap: 16px !important;
+      row-gap: 8px !important;
+      min-height: 136px !important;
+      padding: 16px 18px !important;
+    }
+
+    .jarvis-start-page .start-demo-kicker {
+      font-size: 7px !important;
+    }
+
+    .jarvis-start-page .start-demo-copy {
+      gap: 9px !important;
+      max-width: 496px !important;
+    }
+
+    .jarvis-start-page .start-demo-copy p {
+      font-size: 10px !important;
+      line-height: 1.5 !important;
+    }
+
+    .jarvis-start-page .start-demo-copy p:first-child {
+      font-size: 11px !important;
+      line-height: 1.56 !important;
+    }
+
+    .jarvis-start-page .start-demo-copy p + p {
+      font-size: 9px !important;
+      line-height: 1.62 !important;
+    }
+
+    .jarvis-start-page .start-demo-button {
+      height: 29px !important;
+    }
+
+    .jarvis-start-page .start-flow-button {
+      height: 24px !important;
+      font-size: 9px !important;
+    }
+
+    @media (max-width: 860px) {
+      .jarvis-start-page .start-hero {
+        width: min(100%, calc(100% - 18px)) !important;
+        padding-bottom: 16px !important;
+      }
+
+      .jarvis-start-page .start-title-block {
+        padding: 8px 2px 14px !important;
+      }
+
+      .jarvis-start-page .start-title-block h2 {
+        font-size: clamp(22px, 5.7vw, 30px) !important;
+        line-height: 1.1 !important;
+        letter-spacing: -.045em !important;
+        max-width: 100% !important;
+      }
+
+      .jarvis-start-page .start-title-block h2::after {
+        width: 58% !important;
+        height: 3px !important;
+      }
+
+      .jarvis-start-page .start-value-grid {
+        grid-template-columns: 1fr !important;
+        gap: 8px !important;
+      }
+
+      .jarvis-start-page .start-value-grid::before {
+        display: none !important;
+      }
+
+      .jarvis-start-page .start-demo-panel {
+        grid-template-columns: 1fr !important;
+        grid-template-areas: "kicker" "copy" "action" !important;
+        padding: 14px 14px !important;
+        min-height: 0 !important;
+      }
+    }
+  </style>
 
   <style id="jarvis-page-inactive-hide-fix">
     /* v124: どの page でも inactive はレイアウトと描画から外す。 */

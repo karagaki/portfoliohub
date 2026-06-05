@@ -1,7 +1,7 @@
 /* main.css */
 
 #ui-container {
-    gap: 2px; /* すべてのコンテナ間の間隔を2pxに設定 */
+    gap: 1px; /* すべてのコンテナ間の間隔を1pxに設定 */
 }
 
 #canvas-size-container,
@@ -32,7 +32,7 @@ body {
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
-    font-size: 14px;  /*主にヘッダー*/
+    font-size: 12px;  /*主にヘッダー*/
     overflow: hidden;
 }
 
@@ -49,7 +49,7 @@ body[data-ui-ready="1"] {
     flex-direction: row;
     align-items: flex-start;
     height: 100vh;
-    min-width: 1100px;
+    min-width: 960px;
     position: relative;
 }
 
@@ -58,7 +58,7 @@ body[data-ui-ready="1"] {
     display: block;
     padding: 0;
     overflow: hidden;
-    min-width: 700px;
+    min-width: 560px;
     position: relative;
     z-index: 1;
 }
@@ -79,8 +79,8 @@ body[data-ui-ready="1"] {
 }
 
 #ui-wrapper {
-    flex: 0 0 340px;
-    width: 340px;
+    flex: 0 0 272px;
+    width: 272px;
     height: 100vh;
     overflow: visible;
     position: relative;
@@ -97,8 +97,8 @@ body[data-ui-variant="variant-1-glass"] #ui-wrapper {
 }
 
 .ui-variant-panel {
-    margin-bottom: 4px;
-    padding: 5px 7px;
+    margin-bottom: 3px;
+    padding: 4px 6px;
     background: #f4f4f4;
     border-radius: 6px;
     display: flex;
@@ -109,13 +109,13 @@ body[data-ui-variant="variant-1-glass"] #ui-wrapper {
 }
 
 .ui-variant-panel label {
-    font-size: 12px;
+    font-size: 10px;
     font-weight: bold;
     white-space: nowrap;
 }
 
 .ui-variant-panel select {
-    min-width: 128px;
+    min-width: 104px;
     font: inherit;
 }
 
@@ -153,9 +153,9 @@ body[data-ui-variant="variant-1-glass"] #ui-variant-panel {
     flex-direction: column;
     align-items: stretch;
     justify-content: flex-start;
-    gap: 4px;
+    gap: 3px;
     margin-bottom: 0;
-    padding: 8px 10px;
+    padding: 6px 8px;
     background: rgba(255, 255, 255, calc(var(--glass-opacity, 0) * 0.02));
     -webkit-backdrop-filter:
         blur(calc(var(--glass-blur-amount, 0) * 8px))
@@ -201,7 +201,7 @@ body[data-ui-variant="variant-1-glass"] #ui-preset-panel {
     flex-direction: column;
     align-items: stretch;
     justify-content: flex-start;
-    gap: 3px;
+    gap: 2px;
     margin: 0;
     padding: 0;
     position: relative;
@@ -256,6 +256,15 @@ body[data-ui-variant="variant-1-glass"] #ui-preset-panel::before {
 body[data-ui-variant="variant-1-glass"] #ui-preset-panel::after {
     box-shadow: none;
     opacity: 1;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-wrapper {
+    width: 272px;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-variant-panel,
+body[data-ui-variant="variant-1-glass"] #ui-container {
+    width: 272px;
 }
 
 body[data-ui-variant="variant-1-glass"] #ui-preset-panel.collapsed .glass-preset-details,
