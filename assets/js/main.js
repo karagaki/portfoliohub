@@ -27,6 +27,31 @@ const defaults = {
   "inner-highlight": 0.58,
   "ground-shadow": 0.14,
   "shadow-mode": "Soft",
+  "card-width": 1,
+  "card-radius-smooth": 1,
+  "card-highlight-y": 0.18,
+  "card-bottom-tint": 0.12,
+  "bg-angle": 180,
+  "bg-contrast": 1,
+  "page-padding-x": 1,
+  "page-padding-y": 1,
+  "extensions-y": 0,
+  "extensions-size": 1,
+  "pill-alpha": 0.22,
+  "pill-border-alpha": 0.4,
+  "card-content-y": 0,
+  "card-content-x": 0,
+  "card-text-gap": 8,
+  "title-size": 1,
+  "ja-size": 1,
+  "sub-size": 1,
+  "year-size": 1,
+  "line-height": 1,
+  "frost-strength": 1,
+  "edge-white": 1,
+  "shadow-x": 18,
+  "shadow-warmth": 1,
+  "shadow-spread": 1,
 };
 
 const controls = Array.from(document.querySelectorAll("[data-hub-control]"));
@@ -39,6 +64,18 @@ function toValue(key, raw) {
   const numeric = Number(raw);
   if (!Number.isFinite(numeric)) return defaults[key];
   return numeric;
+}
+
+function readNumber(settings, key, min, max) {
+  const fallback = defaults[key];
+  const value = Number(settings[key]);
+  if (!Number.isFinite(value)) return fallback;
+  return Math.min(max, Math.max(min, value));
+}
+
+function readMode(settings, key, fallback) {
+  const value = settings[key];
+  return typeof value === "string" && value ? value : fallback;
 }
 
 function readSettings() {
@@ -79,7 +116,32 @@ function applySettings(settings) {
   const shadowY = Math.min(56, Math.max(-12, settings["shadow-y"]));
   const innerHighlight = Math.min(0.92, Math.max(0.04, settings["inner-highlight"]));
   const groundShadow = Math.min(1, Math.max(0, settings["ground-shadow"]));
-  const mode = settings["shadow-mode"] || "Soft";
+  const mode = readMode(settings, "shadow-mode", "Soft");
+  const cardWidth = readNumber(settings, "card-width", 0.84, 1.22);
+  const cardRadiusSmooth = readNumber(settings, "card-radius-smooth", 0.7, 1.4);
+  const cardHighlightY = readNumber(settings, "card-highlight-y", -0.2, 0.6);
+  const cardBottomTint = readNumber(settings, "card-bottom-tint", 0, 0.4);
+  const bgAngle = readNumber(settings, "bg-angle", 120, 240);
+  const bgContrast = readNumber(settings, "bg-contrast", 0.78, 1.3);
+  const pagePaddingX = readNumber(settings, "page-padding-x", 0.72, 1.28);
+  const pagePaddingY = readNumber(settings, "page-padding-y", 0.72, 1.28);
+  const extensionsY = readNumber(settings, "extensions-y", -0.2, 0.8);
+  const extensionsSize = readNumber(settings, "extensions-size", 0.84, 1.18);
+  const pillAlpha = readNumber(settings, "pill-alpha", 0.06, 0.34);
+  const pillBorderAlpha = readNumber(settings, "pill-border-alpha", 0.12, 0.7);
+  const cardContentY = readNumber(settings, "card-content-y", -22, 22);
+  const cardContentX = readNumber(settings, "card-content-x", -18, 18);
+  const cardTextGap = readNumber(settings, "card-text-gap", 2, 18);
+  const titleSize = readNumber(settings, "title-size", 0.82, 1.24);
+  const jaSize = readNumber(settings, "ja-size", 0.82, 1.24);
+  const subSize = readNumber(settings, "sub-size", 0.78, 1.28);
+  const yearSize = readNumber(settings, "year-size", 0.76, 1.3);
+  const lineHeight = readNumber(settings, "line-height", 0.88, 1.2);
+  const frostStrength = readNumber(settings, "frost-strength", 0.72, 1.3);
+  const edgeWhite = readNumber(settings, "edge-white", 0.72, 1.3);
+  const shadowX = readNumber(settings, "shadow-x", -12, 34);
+  const shadowWarmth = readNumber(settings, "shadow-warmth", 0.72, 1.3);
+  const shadowSpread = readNumber(settings, "shadow-spread", 0.72, 1.4);
 
   const shadowPresets = {
     Soft: { distance: 18, blur: 38, alpha: 0.18, y: 12, inner: 0.58, ground: 0.14 },
@@ -106,8 +168,8 @@ function applySettings(settings) {
   root.style.setProperty("--hub-text-strength", textStrength);
   root.style.setProperty("--hub-scale", scale);
   root.style.setProperty("--hub-card-gap", `${cardGap}px`);
-  root.style.setProperty("--hub-card-radius", `${cardRadius}px`);
-  root.style.setProperty("--hub-card-height", `${cardHeight}px`);
+  root.style.setProperty("--hub-card-radius", cardRadius);
+  root.style.setProperty("--hub-card-height", cardHeight);
   root.style.setProperty("--hub-card-padding", `${cardPadding}px`);
   root.style.setProperty("--hub-light-position", lightPosition);
   root.style.setProperty("--hub-light-spread", lightSpread);
@@ -121,10 +183,39 @@ function applySettings(settings) {
   root.style.setProperty("--hub-inner-highlight", innerHighlightFinal);
   root.style.setProperty("--hub-ground-shadow", groundShadowFinal);
   root.style.setProperty("--hub-shadow-mode", mode);
+  root.style.setProperty("--hub-card-width", cardWidth);
+  root.style.setProperty("--hub-card-radius-smooth", cardRadiusSmooth);
+  root.style.setProperty("--hub-card-highlight-y", cardHighlightY);
+  root.style.setProperty("--hub-card-bottom-tint", cardBottomTint);
+  root.style.setProperty("--hub-bg-angle", `${bgAngle}deg`);
+  root.style.setProperty("--hub-bg-contrast", bgContrast);
+  root.style.setProperty("--hub-page-padding-x", pagePaddingX);
+  root.style.setProperty("--hub-page-padding-y", pagePaddingY);
+  root.style.setProperty("--hub-extensions-y", extensionsY);
+  root.style.setProperty("--hub-extensions-size", extensionsSize);
+  root.style.setProperty("--hub-pill-alpha", pillAlpha);
+  root.style.setProperty("--hub-pill-border-alpha", pillBorderAlpha);
+  root.style.setProperty("--hub-card-content-y", `${cardContentY}px`);
+  root.style.setProperty("--hub-card-content-x", `${cardContentX}px`);
+  root.style.setProperty("--hub-card-text-gap", `${cardTextGap}px`);
+  root.style.setProperty("--hub-title-size", titleSize);
+  root.style.setProperty("--hub-ja-size", jaSize);
+  root.style.setProperty("--hub-sub-size", subSize);
+  root.style.setProperty("--hub-year-size", yearSize);
+  root.style.setProperty("--hub-line-height", lineHeight);
+  root.style.setProperty("--hub-frost-strength", frostStrength);
+  root.style.setProperty("--hub-edge-white", edgeWhite);
+  root.style.setProperty("--hub-shadow-x", `${shadowX}px`);
+  root.style.setProperty("--hub-shadow-warmth", shadowWarmth);
+  root.style.setProperty("--hub-shadow-spread", shadowSpread);
 
   controls.forEach((control) => {
     const key = control.dataset.hubControl;
-    if (settings[key] !== undefined) control.value = settings[key];
+    if (settings[key] !== undefined) {
+      control.value = settings[key];
+    } else if (defaults[key] !== undefined) {
+      control.value = defaults[key];
+    }
   });
 }
 

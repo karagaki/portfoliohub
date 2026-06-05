@@ -70,112 +70,60 @@
       </div>
 
       <div class="hub-settings__body">
-        <label class="hub-control">
-          <span>背景の明るさ</span>
-          <input type="range" min="0.58" max="1.48" step="0.01" data-hub-control="bg-lightness" />
-        </label>
-        <label class="hub-control">
-          <span>背景の暖色感</span>
-          <input type="range" min="0.68" max="1.42" step="0.01" data-hub-control="bg-warmth" />
-        </label>
-        <label class="hub-control">
-          <span>背景ぼかし光の強さ</span>
-          <input type="range" min="0" max="2" step="0.01" data-hub-control="light-strength" />
-        </label>
-        <label class="hub-control">
-          <span>パネル透明度</span>
-          <input type="range" min="0.05" max="0.6" step="0.01" data-hub-control="card-alpha" />
-        </label>
-        <label class="hub-control">
-          <span>パネルblur</span>
-          <input type="range" min="8" max="44" step="1" data-hub-control="card-blur" />
-        </label>
-        <label class="hub-control">
-          <span>パネル境界線の強さ</span>
-          <input type="range" min="0.08" max="0.92" step="0.01" data-hub-control="card-border-alpha" />
-        </label>
-        <label class="hub-control">
-          <span>パネル影の強さ</span>
-          <input type="range" min="0.02" max="0.5" step="0.01" data-hub-control="card-shadow-strength" />
-        </label>
-        <label class="hub-control">
-          <span>影の距離</span>
-          <input type="range" min="0" max="44" step="1" data-hub-control="shadow-distance" />
-        </label>
-        <label class="hub-control">
-          <span>影のぼかし</span>
-          <input type="range" min="8" max="64" step="1" data-hub-control="shadow-blur" />
-        </label>
-        <label class="hub-control">
-          <span>影の濃さ</span>
-          <input type="range" min="0.04" max="0.5" step="0.01" data-hub-control="shadow-alpha" />
-        </label>
-        <label class="hub-control">
-          <span>影の下方向</span>
-          <input type="range" min="-12" max="34" step="1" data-hub-control="shadow-y" />
-        </label>
-        <label class="hub-control">
-          <span>内側ハイライト</span>
-          <input type="range" min="0.04" max="0.8" step="0.01" data-hub-control="inner-highlight" />
-        </label>
-        <label class="hub-control">
-          <span>下辺の接地影</span>
-          <input type="range" min="0" max="1" step="0.01" data-hub-control="ground-shadow" />
-        </label>
-        <label class="hub-control">
-          <span>影バリエーション</span>
-          <select data-hub-control="shadow-mode">
-            <option value="Soft">Soft</option>
-            <option value="Floating">Floating</option>
-            <option value="Deep">Deep</option>
-            <option value="Flat">Flat</option>
-            <option value="Glow">Glow</option>
-          </select>
-        </label>
-        <label class="hub-control">
-          <span>カード角丸</span>
-          <input type="range" min="14" max="52" step="1" data-hub-control="card-radius" />
-        </label>
-        <label class="hub-control">
-          <span>カード高さ</span>
-          <input type="range" min="170" max="360" step="1" data-hub-control="card-height" />
-        </label>
-        <label class="hub-control">
-          <span>カード内余白</span>
-          <input type="range" min="8" max="34" step="1" data-hub-control="card-padding" />
-        </label>
-        <label class="hub-control">
-          <span>背景光の位置感</span>
-          <input type="range" min="0.5" max="1.5" step="0.01" data-hub-control="light-position" />
-        </label>
-        <label class="hub-control">
-          <span>背景光の広がり</span>
-          <input type="range" min="0.5" max="1.7" step="0.01" data-hub-control="light-spread" />
-        </label>
-        <label class="hub-control">
-          <span>カード白ハイライト強度</span>
-          <input type="range" min="0.08" max="0.9" step="0.01" data-hub-control="card-highlight-strength" />
-        </label>
-        <label class="hub-control">
-          <span>カード内側の明るさ</span>
-          <input type="range" min="0.02" max="0.58" step="0.01" data-hub-control="card-inner-light" />
-        </label>
-        <label class="hub-control">
-          <span>文字影の強さ</span>
-          <input type="range" min="0.02" max="0.55" step="0.01" data-hub-control="text-shadow-strength" />
-        </label>
-        <label class="hub-control">
-          <span>文字の明るさ</span>
-          <input type="range" min="0.55" max="1" step="0.01" data-hub-control="text-strength" />
-        </label>
-        <label class="hub-control">
-          <span>全体サイズ</span>
-          <input type="range" min="0.8" max="1.24" step="0.01" data-hub-control="scale" />
-        </label>
-        <label class="hub-control">
-          <span>カード間隔</span>
-          <input type="range" min="4" max="28" step="1" data-hub-control="card-gap" />
-        </label>
+        <h3 class="hub-settings__group">背景</h3>
+        <label class="hub-control"><span>背景の明るさ</span><input type="range" min="0.58" max="1.48" step="0.01" data-hub-control="bg-lightness" /></label>
+        <label class="hub-control"><span>背景の暖色感</span><input type="range" min="0.68" max="1.42" step="0.01" data-hub-control="bg-warmth" /></label>
+        <label class="hub-control"><span>背景ぼかし光の強さ</span><input type="range" min="0" max="2" step="0.01" data-hub-control="light-strength" /></label>
+        <label class="hub-control"><span>背景グラデーション角度</span><input type="range" min="120" max="240" step="1" data-hub-control="bg-angle" /></label>
+        <label class="hub-control"><span>背景コントラスト</span><input type="range" min="0.78" max="1.3" step="0.01" data-hub-control="bg-contrast" /></label>
+
+        <h3 class="hub-settings__group">カード</h3>
+        <label class="hub-control"><span>パネル透明度</span><input type="range" min="0.05" max="0.6" step="0.01" data-hub-control="card-alpha" /></label>
+        <label class="hub-control"><span>パネルblur</span><input type="range" min="8" max="44" step="1" data-hub-control="card-blur" /></label>
+        <label class="hub-control"><span>パネル境界線の強さ</span><input type="range" min="0.08" max="0.92" step="0.01" data-hub-control="card-border-alpha" /></label>
+        <label class="hub-control"><span>パネル影の強さ</span><input type="range" min="0.02" max="0.5" step="0.01" data-hub-control="card-shadow-strength" /></label>
+        <label class="hub-control"><span>カード幅</span><input type="range" min="0.84" max="1.22" step="0.01" data-hub-control="card-width" /></label>
+        <label class="hub-control"><span>カード角丸</span><input type="range" min="14" max="52" step="1" data-hub-control="card-radius" /></label>
+        <label class="hub-control"><span>角丸のなめらかさ</span><input type="range" min="0.7" max="1.4" step="0.01" data-hub-control="card-radius-smooth" /></label>
+        <label class="hub-control"><span>上ハイライト位置</span><input type="range" min="-0.2" max="0.6" step="0.01" data-hub-control="card-highlight-y" /></label>
+        <label class="hub-control"><span>下グラデーション濃度</span><input type="range" min="0" max="0.4" step="0.01" data-hub-control="card-bottom-tint" /></label>
+        <label class="hub-control"><span>カード高さ</span><input type="range" min="150" max="380" step="1" data-hub-control="card-height" /></label>
+        <label class="hub-control"><span>カード内余白</span><input type="range" min="8" max="34" step="1" data-hub-control="card-padding" /></label>
+        <label class="hub-control"><span>カード内側曇り</span><input type="range" min="0.72" max="1.3" step="0.01" data-hub-control="frost-strength" /></label>
+        <label class="hub-control"><span>白フチの強さ</span><input type="range" min="0.72" max="1.3" step="0.01" data-hub-control="edge-white" /></label>
+        <h3 class="hub-settings__group">文字</h3>
+        <label class="hub-control"><span>文字位置 上下</span><input type="range" min="-22" max="22" step="1" data-hub-control="card-content-y" /></label>
+        <label class="hub-control"><span>文字位置 左右</span><input type="range" min="-18" max="18" step="1" data-hub-control="card-content-x" /></label>
+        <label class="hub-control"><span>文字ブロック間隔</span><input type="range" min="2" max="18" step="1" data-hub-control="card-text-gap" /></label>
+        <label class="hub-control"><span>タイトルサイズ</span><input type="range" min="0.82" max="1.24" step="0.01" data-hub-control="title-size" /></label>
+        <label class="hub-control"><span>日本語補足サイズ</span><input type="range" min="0.82" max="1.24" step="0.01" data-hub-control="ja-size" /></label>
+        <label class="hub-control"><span>英語説明サイズ</span><input type="range" min="0.78" max="1.28" step="0.01" data-hub-control="sub-size" /></label>
+        <label class="hub-control"><span>年代表示サイズ</span><input type="range" min="0.76" max="1.3" step="0.01" data-hub-control="year-size" /></label>
+        <label class="hub-control"><span>文字全体の行間</span><input type="range" min="0.88" max="1.2" step="0.01" data-hub-control="line-height" /></label>
+        <label class="hub-control"><span>文字の明るさ</span><input type="range" min="0.55" max="1" step="0.01" data-hub-control="text-strength" /></label>
+        <label class="hub-control"><span>文字影の強さ</span><input type="range" min="0.02" max="0.55" step="0.01" data-hub-control="text-shadow-strength" /></label>
+
+        <h3 class="hub-settings__group">影</h3>
+        <label class="hub-control"><span>影の距離</span><input type="range" min="0" max="44" step="1" data-hub-control="shadow-distance" /></label>
+        <label class="hub-control"><span>影のぼかし</span><input type="range" min="8" max="64" step="1" data-hub-control="shadow-blur" /></label>
+        <label class="hub-control"><span>影の濃さ</span><input type="range" min="0.04" max="0.5" step="0.01" data-hub-control="shadow-alpha" /></label>
+        <label class="hub-control"><span>影の下方向</span><input type="range" min="-12" max="34" step="1" data-hub-control="shadow-y" /></label>
+        <label class="hub-control"><span>影の横方向</span><input type="range" min="-12" max="34" step="1" data-hub-control="shadow-x" /></label>
+        <label class="hub-control"><span>影色の暖色感</span><input type="range" min="0.72" max="1.3" step="0.01" data-hub-control="shadow-warmth" /></label>
+        <label class="hub-control"><span>影の広がり</span><input type="range" min="0.72" max="1.4" step="0.01" data-hub-control="shadow-spread" /></label>
+        <label class="hub-control"><span>内側ハイライト</span><input type="range" min="0.04" max="0.8" step="0.01" data-hub-control="inner-highlight" /></label>
+        <label class="hub-control"><span>下辺の接地影</span><input type="range" min="0" max="1" step="0.01" data-hub-control="ground-shadow" /></label>
+        <label class="hub-control"><span>影バリエーション</span><select data-hub-control="shadow-mode"><option value="Soft">Soft</option><option value="Floating">Floating</option><option value="Deep">Deep</option><option value="Flat">Flat</option><option value="Glow">Glow</option></select></label>
+
+        <h3 class="hub-settings__group">下部</h3>
+        <label class="hub-control"><span>全体サイズ</span><input type="range" min="0.8" max="1.24" step="0.01" data-hub-control="scale" /></label>
+        <label class="hub-control"><span>全体左右余白</span><input type="range" min="0.72" max="1.28" step="0.01" data-hub-control="page-padding-x" /></label>
+        <label class="hub-control"><span>全体上下余白</span><input type="range" min="0.72" max="1.28" step="0.01" data-hub-control="page-padding-y" /></label>
+        <label class="hub-control"><span>Extensions位置</span><input type="range" min="-0.2" max="0.8" step="0.01" data-hub-control="extensions-y" /></label>
+        <label class="hub-control"><span>Extensionsサイズ</span><input type="range" min="0.84" max="1.18" step="0.01" data-hub-control="extensions-size" /></label>
+        <label class="hub-control"><span>カード間隔</span><input type="range" min="4" max="28" step="1" data-hub-control="card-gap" /></label>
+        <label class="hub-control"><span>pill透明度</span><input type="range" min="0.06" max="0.34" step="0.01" data-hub-control="pill-alpha" /></label>
+        <label class="hub-control"><span>pill境界線</span><input type="range" min="0.12" max="0.7" step="0.01" data-hub-control="pill-border-alpha" /></label>
       </div>
 
       <div class="hub-settings__footer">
