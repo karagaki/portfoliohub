@@ -1,0 +1,1190 @@
+{
+  "source_name": "星空科学館_来館案内ページ改善_分別デモサンプル",
+  "source_type": "DEMO / SAMPLE / 架空プロジェクト分類確認",
+  "conversation_count": 1,
+  "message_count": 54,
+  "user_count": 27,
+  "assistant_count": 27,
+  "candidate_count": 54,
+  "timeline_count": 54,
+  "evolution_count": 8,
+  "conversation_id": "demo-fiction-starry-museum-20260605",
+  "quality": {
+    "confirmedAdds": 20,
+    "confirmedUpdates": 8,
+    "excludedTransients": 0,
+    "ignoredPostConfirmationDrifts": 0,
+    "lastQualityAction": "demo_sample_classification",
+    "lastQualityAt": "2026-06-05",
+    "lowConfidenceIdentity": false,
+    "measurementResetAt": "",
+    "pendingObservations": 14
+  },
+  "contracts": [
+    {
+      "label": "公開デモ前提",
+      "statement": "このデータは架空の施設案内ページ改善を題材にしたサンプルであり、実在の個人情報・実案件・利用者状況を含まない。",
+      "type": "context",
+      "priority": 5
+    }
+  ],
+  "source_note": "公開デモ用の架空サンプルです。星空科学館の来館案内ページ改善を題材に、回収した会話がどのように分別され、引き継ぎ書・仕様書・対策書・デザイン知・改善課題へ割り振られるかを確認できます。実データではなく、分類ごとの見え方を確認するための内容です。",
+  "presentation_overview": {
+    "name": "星空科学館 来館案内ページ改善",
+    "tagline": "架空施設の案内ページを題材に、分別結果が何へ残るかを確認するデモ",
+    "scenario": "親子連れ向けの来館案内ページを、迷わず判断できる構成へ整理する。",
+    "before": "展示説明・料金・予約・イベント情報が混在し、初見ユーザーが何を見ればよいか分かりづらい。",
+    "current_truth": "来館判断に必要な情報、予約導線、未確認情報、デザイン判断を分けて残す。",
+    "dont_break": [
+      "未確認の金額や日付を確定情報として扱わない",
+      "主操作ボタンの文言を混在させない",
+      "専門用語を入口に置きすぎない"
+    ],
+    "next_actions": [
+      "料金・休館日・定員の公式確認",
+      "スマホ幅で主操作位置を確認",
+      "FAQ不足の整理"
+    ],
+    "handoff": "次回は対象利用者、トップの3要素、予約導線、未確認情報から確認する。",
+    "chat_thread": "架空の会話ログを想定したデモデータ",
+    "extracted": "54件の分別候補",
+    "candidates": 54
+  },
+  "case_title": "星空科学館の来館案内ページ改善を題材に、分別後に残る結果を確認する架空デモ",
+  "candidates": [
+    {
+      "capture_candidate_id": "demo_01",
+      "suggested_category": "mission",
+      "adopted_category": "mission",
+      "suggested_statement": "星空科学館の来館案内ページは、初めて訪れる家族が30秒以内に来館判断できる入口にする。",
+      "adopted_statement": "星空科学館の来館案内ページは、初めて訪れる家族が30秒以内に来館判断できる入口にする。",
+      "source_label": "引き継ぎ書候補",
+      "review_state": "edited_approved",
+      "usable_for_current_state": true,
+      "relation": "unmatched",
+      "compare_relation": "unmatched",
+      "current_relation": "unmatched",
+      "evidence": [
+        {
+          "role": "USER",
+          "order": 1,
+          "text": "親子連れが見ても、行く価値と予約方法がすぐ分かるページにしたいです。"
+        }
+      ],
+      "demo_output_group": "handoff"
+    },
+    {
+      "capture_candidate_id": "demo_02",
+      "suggested_category": "context",
+      "adopted_category": "context",
+      "suggested_statement": "主な利用者は小学生の子どもを連れた保護者、休日に行き先を探している家族、学校行事の下見担当とする。",
+      "adopted_statement": "主な利用者は小学生の子どもを連れた保護者、休日に行き先を探している家族、学校行事の下見担当とする。",
+      "source_label": "引き継ぎ書候補",
+      "review_state": "pending",
+      "usable_for_current_state": false,
+      "relation": "new",
+      "compare_relation": "new",
+      "current_relation": "new",
+      "evidence": [
+        {
+          "role": "ASSISTANT",
+          "order": 2,
+          "text": "誰向けの案内なのかを最初に固定した方が迷いません。"
+        }
+      ],
+      "demo_output_group": "handoff"
+    },
+    {
+      "capture_candidate_id": "demo_03",
+      "suggested_category": "next_action",
+      "adopted_category": "next_action",
+      "suggested_statement": "再開時は「対象利用者」「今日見せる主情報」「予約導線」「未確認情報」の順に確認する。",
+      "adopted_statement": "再開時は「対象利用者」「今日見せる主情報」「予約導線」「未確認情報」の順に確認する。",
+      "source_label": "引き継ぎ書候補",
+      "review_state": "insufficient_evidence",
+      "usable_for_current_state": false,
+      "relation": "update",
+      "compare_relation": "update",
+      "current_relation": "update",
+      "evidence": [
+        {
+          "role": "USER",
+          "order": 3,
+          "text": "次回作業者が迷わないよう、見る順番を決めて残します。"
+        }
+      ],
+      "demo_output_group": "handoff"
+    },
+    {
+      "capture_candidate_id": "demo_04",
+      "suggested_category": "decision",
+      "adopted_category": "decision",
+      "suggested_statement": "入口では施設の詳しい歴史より、所要時間・対象年齢・予約要否を優先する判断を採用する。",
+      "adopted_statement": "入口では施設の詳しい歴史より、所要時間・対象年齢・予約要否を優先する判断を採用する。",
+      "source_label": "引き継ぎ書候補",
+      "review_state": "edited_approved",
+      "usable_for_current_state": true,
+      "relation": "same",
+      "compare_relation": "same",
+      "current_relation": "same",
+      "evidence": [
+        {
+          "role": "ASSISTANT",
+          "order": 4,
+          "text": "詳しい説明より先に、来館判断に必要なものを出す方がよいです。"
+        }
+      ],
+      "demo_output_group": "handoff"
+    },
+    {
+      "capture_candidate_id": "demo_05",
+      "suggested_category": "decision",
+      "adopted_category": "decision",
+      "suggested_statement": "料金・開館時間・休館日は公式確認が必要な前提として扱い、仮文面のまま公開しない。",
+      "adopted_statement": "料金・開館時間・休館日は公式確認が必要な前提として扱い、仮文面のまま公開しない。",
+      "source_label": "引き継ぎ書候補",
+      "review_state": "pending",
+      "usable_for_current_state": false,
+      "relation": "issue",
+      "compare_relation": "issue",
+      "current_relation": "issue",
+      "evidence": [
+        {
+          "role": "USER",
+          "order": 5,
+          "text": "数字や営業情報はデモ文面のまま使わず、必ず確認対象にします。"
+        }
+      ],
+      "demo_output_group": "handoff"
+    },
+    {
+      "capture_candidate_id": "demo_06",
+      "suggested_category": "next_action",
+      "adopted_category": "next_action",
+      "suggested_statement": "次回の修正依頼では、トップ、料金、予約、よくある質問の4ブロックだけを対象にする。",
+      "adopted_statement": "次回の修正依頼では、トップ、料金、予約、よくある質問の4ブロックだけを対象にする。",
+      "source_label": "引き継ぎ書候補",
+      "review_state": "edited_approved",
+      "usable_for_current_state": true,
+      "relation": "unmatched",
+      "compare_relation": "unmatched",
+      "current_relation": "unmatched",
+      "evidence": [
+        {
+          "role": "ASSISTANT",
+          "order": 6,
+          "text": "修正範囲を絞ることで、余計な全体改変を防ぎます。"
+        }
+      ],
+      "demo_output_group": "handoff"
+    },
+    {
+      "capture_candidate_id": "demo_07",
+      "suggested_category": "requirement",
+      "adopted_category": "requirement",
+      "suggested_statement": "トップには「プラネタリウム」「体験展示」「週末イベント」の3つを並べ、各項目から詳細へ進める。",
+      "adopted_statement": "トップには「プラネタリウム」「体験展示」「週末イベント」の3つを並べ、各項目から詳細へ進める。",
+      "source_label": "仕様書候補",
+      "review_state": "pending",
+      "usable_for_current_state": false,
+      "relation": "new",
+      "compare_relation": "new",
+      "current_relation": "new",
+      "evidence": [
+        {
+          "role": "USER",
+          "order": 7,
+          "text": "最初に何ができる施設なのかを3つに絞って見せます。"
+        }
+      ],
+      "demo_output_group": "spec"
+    },
+    {
+      "capture_candidate_id": "demo_08",
+      "suggested_category": "requirement",
+      "adopted_category": "requirement",
+      "suggested_statement": "予約ボタンはファーストビュー内とイベント詳細下の2箇所に置く。",
+      "adopted_statement": "予約ボタンはファーストビュー内とイベント詳細下の2箇所に置く。",
+      "source_label": "仕様書候補",
+      "review_state": "insufficient_evidence",
+      "usable_for_current_state": false,
+      "relation": "update",
+      "compare_relation": "update",
+      "current_relation": "update",
+      "evidence": [
+        {
+          "role": "ASSISTANT",
+          "order": 8,
+          "text": "予約導線が埋もれないよう、入口と詳細後の両方に置きます。"
+        }
+      ],
+      "demo_output_group": "spec"
+    },
+    {
+      "capture_candidate_id": "demo_09",
+      "suggested_category": "requirement",
+      "adopted_category": "requirement",
+      "suggested_statement": "料金表は大人・小学生・未就学児の3区分を基本にし、団体料金は折りたたみ補足にする。",
+      "adopted_statement": "料金表は大人・小学生・未就学児の3区分を基本にし、団体料金は折りたたみ補足にする。",
+      "source_label": "仕様書候補",
+      "review_state": "edited_approved",
+      "usable_for_current_state": true,
+      "relation": "same",
+      "compare_relation": "same",
+      "current_relation": "same",
+      "evidence": [
+        {
+          "role": "USER",
+          "order": 9,
+          "text": "家族がまず見る料金だけを上に出します。"
+        }
+      ],
+      "demo_output_group": "spec"
+    },
+    {
+      "capture_candidate_id": "demo_10",
+      "suggested_category": "requirement",
+      "adopted_category": "requirement",
+      "suggested_statement": "イベントカードには対象年齢、所要時間、予約要否、雨天時の扱いを必ず表示する。",
+      "adopted_statement": "イベントカードには対象年齢、所要時間、予約要否、雨天時の扱いを必ず表示する。",
+      "source_label": "仕様書候補",
+      "review_state": "pending",
+      "usable_for_current_state": false,
+      "relation": "issue",
+      "compare_relation": "issue",
+      "current_relation": "issue",
+      "evidence": [
+        {
+          "role": "ASSISTANT",
+          "order": 10,
+          "text": "参加判断に必要な要素をカード内に固定します。"
+        }
+      ],
+      "demo_output_group": "spec"
+    },
+    {
+      "capture_candidate_id": "demo_11",
+      "suggested_category": "invariant",
+      "adopted_category": "invariant",
+      "suggested_statement": "主操作ボタンの文言を途中で「申込」「予約」「参加する」に混在させない。",
+      "adopted_statement": "主操作ボタンの文言を途中で「申込」「予約」「参加する」に混在させない。",
+      "source_label": "仕様書候補",
+      "review_state": "edited_approved",
+      "usable_for_current_state": true,
+      "relation": "unmatched",
+      "compare_relation": "unmatched",
+      "current_relation": "unmatched",
+      "evidence": [
+        {
+          "role": "USER",
+          "order": 11,
+          "text": "同じ操作に別の言葉を使うと迷うため統一します。"
+        }
+      ],
+      "demo_output_group": "spec"
+    },
+    {
+      "capture_candidate_id": "demo_12",
+      "suggested_category": "invariant",
+      "adopted_category": "invariant",
+      "suggested_statement": "未確認の金額・日付・定員を確定情報として表示しない。",
+      "adopted_statement": "未確認の金額・日付・定員を確定情報として表示しない。",
+      "source_label": "仕様書候補",
+      "review_state": "pending",
+      "usable_for_current_state": false,
+      "relation": "new",
+      "compare_relation": "new",
+      "current_relation": "new",
+      "evidence": [
+        {
+          "role": "ASSISTANT",
+          "order": 12,
+          "text": "事実確認前の情報を断定表示しないルールにします。"
+        }
+      ],
+      "demo_output_group": "spec"
+    },
+    {
+      "capture_candidate_id": "demo_13",
+      "suggested_category": "failure_evidence",
+      "adopted_category": "failure_evidence",
+      "suggested_statement": "展示説明を増やしすぎると予約ボタンが下へ流れ、主操作が見つけにくくなる。",
+      "adopted_statement": "展示説明を増やしすぎると予約ボタンが下へ流れ、主操作が見つけにくくなる。",
+      "source_label": "対策書候補",
+      "review_state": "insufficient_evidence",
+      "usable_for_current_state": false,
+      "relation": "update",
+      "compare_relation": "update",
+      "current_relation": "update",
+      "evidence": [
+        {
+          "role": "USER",
+          "order": 13,
+          "text": "説明追加で予約導線が埋もれた過去案を対策対象にします。"
+        }
+      ],
+      "demo_output_group": "countermeasure"
+    },
+    {
+      "capture_candidate_id": "demo_14",
+      "suggested_category": "failure_evidence",
+      "adopted_category": "failure_evidence",
+      "suggested_statement": "専門用語を見出しに置くと、初見の保護者が内容を判断しづらくなる。",
+      "adopted_statement": "専門用語を見出しに置くと、初見の保護者が内容を判断しづらくなる。",
+      "source_label": "対策書候補",
+      "review_state": "edited_approved",
+      "usable_for_current_state": true,
+      "relation": "same",
+      "compare_relation": "same",
+      "current_relation": "same",
+      "evidence": [
+        {
+          "role": "ASSISTANT",
+          "order": 14,
+          "text": "天文用語は補足へ回し、入口は平易にします。"
+        }
+      ],
+      "demo_output_group": "countermeasure"
+    },
+    {
+      "capture_candidate_id": "demo_15",
+      "suggested_category": "failure_evidence",
+      "adopted_category": "failure_evidence",
+      "suggested_statement": "料金表の注釈が長いと、基本料金と例外条件の区別が崩れる。",
+      "adopted_statement": "料金表の注釈が長いと、基本料金と例外条件の区別が崩れる。",
+      "source_label": "対策書候補",
+      "review_state": "pending",
+      "usable_for_current_state": false,
+      "relation": "issue",
+      "compare_relation": "issue",
+      "current_relation": "issue",
+      "evidence": [
+        {
+          "role": "USER",
+          "order": 15,
+          "text": "基本料金と例外は別表示にします。"
+        }
+      ],
+      "demo_output_group": "countermeasure"
+    },
+    {
+      "capture_candidate_id": "demo_16",
+      "suggested_category": "failure_evidence",
+      "adopted_category": "failure_evidence",
+      "suggested_statement": "写真を大きくしすぎると、スマホで予約・料金への到達が遅くなる。",
+      "adopted_statement": "写真を大きくしすぎると、スマホで予約・料金への到達が遅くなる。",
+      "source_label": "対策書候補",
+      "review_state": "edited_approved",
+      "usable_for_current_state": true,
+      "relation": "unmatched",
+      "compare_relation": "unmatched",
+      "current_relation": "unmatched",
+      "evidence": [
+        {
+          "role": "ASSISTANT",
+          "order": 16,
+          "text": "写真優先で操作が沈まないよう確認します。"
+        }
+      ],
+      "demo_output_group": "countermeasure"
+    },
+    {
+      "capture_candidate_id": "demo_17",
+      "suggested_category": "failure_evidence",
+      "adopted_category": "failure_evidence",
+      "suggested_statement": "イベント一覧に対象年齢がないと、家族向けか大人向けか判断できない。",
+      "adopted_statement": "イベント一覧に対象年齢がないと、家族向けか大人向けか判断できない。",
+      "source_label": "対策書候補",
+      "review_state": "pending",
+      "usable_for_current_state": false,
+      "relation": "new",
+      "compare_relation": "new",
+      "current_relation": "new",
+      "evidence": [
+        {
+          "role": "USER",
+          "order": 17,
+          "text": "対象年齢の欠落は確認ゲートにします。"
+        }
+      ],
+      "demo_output_group": "countermeasure"
+    },
+    {
+      "capture_candidate_id": "demo_18",
+      "suggested_category": "failure_evidence",
+      "adopted_category": "failure_evidence",
+      "suggested_statement": "休館日とイベント開催日が別ページに分かれると、来館可否の確認が二度手間になる。",
+      "adopted_statement": "休館日とイベント開催日が別ページに分かれると、来館可否の確認が二度手間になる。",
+      "source_label": "対策書候補",
+      "review_state": "insufficient_evidence",
+      "usable_for_current_state": false,
+      "relation": "update",
+      "compare_relation": "update",
+      "current_relation": "update",
+      "evidence": [
+        {
+          "role": "ASSISTANT",
+          "order": 18,
+          "text": "開館情報とイベント日を同時に見られる構造にします。"
+        }
+      ],
+      "demo_output_group": "countermeasure"
+    },
+    {
+      "capture_candidate_id": "demo_19",
+      "suggested_category": "failure_evidence",
+      "adopted_category": "failure_evidence",
+      "suggested_statement": "予約不要イベントと要予約イベントを同じ見た目で並べると、行動の違いが伝わらない。",
+      "adopted_statement": "予約不要イベントと要予約イベントを同じ見た目で並べると、行動の違いが伝わらない。",
+      "source_label": "対策書候補",
+      "review_state": "edited_approved",
+      "usable_for_current_state": true,
+      "relation": "same",
+      "compare_relation": "same",
+      "current_relation": "same",
+      "evidence": [
+        {
+          "role": "USER",
+          "order": 19,
+          "text": "予約要否の表示差を必須にします。"
+        }
+      ],
+      "demo_output_group": "countermeasure"
+    },
+    {
+      "capture_candidate_id": "demo_20",
+      "suggested_category": "failure_evidence",
+      "adopted_category": "failure_evidence",
+      "suggested_statement": "「詳しくはこちら」だけのリンクでは、何が見られるか分からない。",
+      "adopted_statement": "「詳しくはこちら」だけのリンクでは、何が見られるか分からない。",
+      "source_label": "対策書候補",
+      "review_state": "pending",
+      "usable_for_current_state": false,
+      "relation": "issue",
+      "compare_relation": "issue",
+      "current_relation": "issue",
+      "evidence": [
+        {
+          "role": "ASSISTANT",
+          "order": 20,
+          "text": "リンク文言は遷移先の内容が分かる表記にします。"
+        }
+      ],
+      "demo_output_group": "countermeasure"
+    },
+    {
+      "capture_candidate_id": "demo_21",
+      "suggested_category": "unresolved",
+      "adopted_category": "unresolved",
+      "suggested_statement": "未確認の料金改定情報が混ざっており、公開前に公式確認が必要。",
+      "adopted_statement": "未確認の料金改定情報が混ざっており、公開前に公式確認が必要。",
+      "source_label": "対策書候補",
+      "review_state": "edited_approved",
+      "usable_for_current_state": true,
+      "relation": "unmatched",
+      "compare_relation": "unmatched",
+      "current_relation": "unmatched",
+      "evidence": [
+        {
+          "role": "USER",
+          "order": 21,
+          "text": "料金改定の可能性を未解決として残します。"
+        }
+      ],
+      "demo_output_group": "countermeasure"
+    },
+    {
+      "capture_candidate_id": "demo_22",
+      "suggested_category": "unresolved",
+      "adopted_category": "unresolved",
+      "suggested_statement": "雨天時の屋外観察会の扱いが未確認。中止・屋内代替・延期のどれかを確認する。",
+      "adopted_statement": "雨天時の屋外観察会の扱いが未確認。中止・屋内代替・延期のどれかを確認する。",
+      "source_label": "対策書候補",
+      "review_state": "pending",
+      "usable_for_current_state": false,
+      "relation": "new",
+      "compare_relation": "new",
+      "current_relation": "new",
+      "evidence": [
+        {
+          "role": "ASSISTANT",
+          "order": 22,
+          "text": "雨天時の扱いが不足しています。"
+        }
+      ],
+      "demo_output_group": "countermeasure"
+    },
+    {
+      "capture_candidate_id": "demo_23",
+      "suggested_category": "unresolved",
+      "adopted_category": "unresolved",
+      "suggested_statement": "団体予約と一般予約の入口を分ける必要があるか未確認。",
+      "adopted_statement": "団体予約と一般予約の入口を分ける必要があるか未確認。",
+      "source_label": "対策書候補",
+      "review_state": "insufficient_evidence",
+      "usable_for_current_state": false,
+      "relation": "update",
+      "compare_relation": "update",
+      "current_relation": "update",
+      "evidence": [
+        {
+          "role": "USER",
+          "order": 23,
+          "text": "予約種別の分岐を確認項目にします。"
+        }
+      ],
+      "demo_output_group": "countermeasure"
+    },
+    {
+      "capture_candidate_id": "demo_24",
+      "suggested_category": "unresolved",
+      "adopted_category": "unresolved",
+      "suggested_statement": "ベビーカー置き場、授乳室、再入場可否の案内有無が未確認。",
+      "adopted_statement": "ベビーカー置き場、授乳室、再入場可否の案内有無が未確認。",
+      "source_label": "対策書候補",
+      "review_state": "edited_approved",
+      "usable_for_current_state": true,
+      "relation": "same",
+      "compare_relation": "same",
+      "current_relation": "same",
+      "evidence": [
+        {
+          "role": "ASSISTANT",
+          "order": 24,
+          "text": "家族向け案内として必要な施設情報を確認します。"
+        }
+      ],
+      "demo_output_group": "countermeasure"
+    },
+    {
+      "capture_candidate_id": "demo_25",
+      "suggested_category": "unresolved",
+      "adopted_category": "unresolved",
+      "suggested_statement": "写真素材の権利状態が未確認。公開サンプルでは差し替え前提にする。",
+      "adopted_statement": "写真素材の権利状態が未確認。公開サンプルでは差し替え前提にする。",
+      "source_label": "対策書候補",
+      "review_state": "pending",
+      "usable_for_current_state": false,
+      "relation": "issue",
+      "compare_relation": "issue",
+      "current_relation": "issue",
+      "evidence": [
+        {
+          "role": "USER",
+          "order": 25,
+          "text": "素材権利を確認しないまま使わない条件です。"
+        }
+      ],
+      "demo_output_group": "countermeasure"
+    },
+    {
+      "capture_candidate_id": "demo_26",
+      "suggested_category": "unresolved",
+      "adopted_category": "unresolved",
+      "suggested_statement": "イベント定員の表記が年度ごとに変わる可能性がある。固定文面化せず管理項目にする。",
+      "adopted_statement": "イベント定員の表記が年度ごとに変わる可能性がある。固定文面化せず管理項目にする。",
+      "source_label": "対策書候補",
+      "review_state": "edited_approved",
+      "usable_for_current_state": true,
+      "relation": "unmatched",
+      "compare_relation": "unmatched",
+      "current_relation": "unmatched",
+      "evidence": [
+        {
+          "role": "ASSISTANT",
+          "order": 26,
+          "text": "定員情報を固定文面にしないようにします。"
+        }
+      ],
+      "demo_output_group": "countermeasure"
+    },
+    {
+      "capture_candidate_id": "demo_27",
+      "suggested_category": "unresolved",
+      "adopted_category": "unresolved",
+      "suggested_statement": "展示リニューアル予定の有無が未確認。古い展示名を正本化しない。",
+      "adopted_statement": "展示リニューアル予定の有無が未確認。古い展示名を正本化しない。",
+      "source_label": "対策書候補",
+      "review_state": "pending",
+      "usable_for_current_state": false,
+      "relation": "new",
+      "compare_relation": "new",
+      "current_relation": "new",
+      "evidence": [
+        {
+          "role": "USER",
+          "order": 27,
+          "text": "古い名称の混入を防ぎます。"
+        }
+      ],
+      "demo_output_group": "countermeasure"
+    },
+    {
+      "capture_candidate_id": "demo_28",
+      "suggested_category": "unresolved",
+      "adopted_category": "unresolved",
+      "suggested_statement": "交通アクセスの駐車場台数が未確認。断定表示を避ける。",
+      "adopted_statement": "交通アクセスの駐車場台数が未確認。断定表示を避ける。",
+      "source_label": "対策書候補",
+      "review_state": "insufficient_evidence",
+      "usable_for_current_state": false,
+      "relation": "update",
+      "compare_relation": "update",
+      "current_relation": "update",
+      "evidence": [
+        {
+          "role": "ASSISTANT",
+          "order": 28,
+          "text": "駐車場情報は確認対象です。"
+        }
+      ],
+      "demo_output_group": "countermeasure"
+    },
+    {
+      "capture_candidate_id": "demo_29",
+      "suggested_category": "next_action",
+      "adopted_category": "next_action",
+      "suggested_statement": "次回はトップの主操作、料金表、イベントカード、FAQの順に確認する。",
+      "adopted_statement": "次回はトップの主操作、料金表、イベントカード、FAQの順に確認する。",
+      "source_label": "対策書候補",
+      "review_state": "edited_approved",
+      "usable_for_current_state": true,
+      "relation": "same",
+      "compare_relation": "same",
+      "current_relation": "same",
+      "evidence": [
+        {
+          "role": "USER",
+          "order": 29,
+          "text": "確認順を固定して再発を防ぎます。"
+        }
+      ],
+      "demo_output_group": "countermeasure"
+    },
+    {
+      "capture_candidate_id": "demo_30",
+      "suggested_category": "next_action",
+      "adopted_category": "next_action",
+      "suggested_statement": "公開前チェックでは、金額・日付・予約要否・対象年齢の4項目を必ず照合する。",
+      "adopted_statement": "公開前チェックでは、金額・日付・予約要否・対象年齢の4項目を必ず照合する。",
+      "source_label": "対策書候補",
+      "review_state": "pending",
+      "usable_for_current_state": false,
+      "relation": "issue",
+      "compare_relation": "issue",
+      "current_relation": "issue",
+      "evidence": [
+        {
+          "role": "ASSISTANT",
+          "order": 30,
+          "text": "確認ゲートとして使います。"
+        }
+      ],
+      "demo_output_group": "countermeasure"
+    },
+    {
+      "capture_candidate_id": "demo_31",
+      "suggested_category": "next_action",
+      "adopted_category": "next_action",
+      "suggested_statement": "スマホ幅で予約ボタンがファーストビュー内に残るか確認する。",
+      "adopted_statement": "スマホ幅で予約ボタンがファーストビュー内に残るか確認する。",
+      "source_label": "対策書候補",
+      "review_state": "edited_approved",
+      "usable_for_current_state": true,
+      "relation": "unmatched",
+      "compare_relation": "unmatched",
+      "current_relation": "unmatched",
+      "evidence": [
+        {
+          "role": "USER",
+          "order": 31,
+          "text": "レスポンシブ確認を次行動にします。"
+        }
+      ],
+      "demo_output_group": "countermeasure"
+    },
+    {
+      "capture_candidate_id": "demo_32",
+      "suggested_category": "next_action",
+      "adopted_category": "next_action",
+      "suggested_statement": "専門用語を残す場合は、見出しではなく補足カードへ移動する。",
+      "adopted_statement": "専門用語を残す場合は、見出しではなく補足カードへ移動する。",
+      "source_label": "対策書候補",
+      "review_state": "pending",
+      "usable_for_current_state": false,
+      "relation": "new",
+      "compare_relation": "new",
+      "current_relation": "new",
+      "evidence": [
+        {
+          "role": "ASSISTANT",
+          "order": 32,
+          "text": "分かりやすさの修正行動です。"
+        }
+      ],
+      "demo_output_group": "countermeasure"
+    },
+    {
+      "capture_candidate_id": "demo_33",
+      "suggested_category": "next_action",
+      "adopted_category": "next_action",
+      "suggested_statement": "イベント一覧のカードごとに「誰向けか」を1行で入れる。",
+      "adopted_statement": "イベント一覧のカードごとに「誰向けか」を1行で入れる。",
+      "source_label": "対策書候補",
+      "review_state": "insufficient_evidence",
+      "usable_for_current_state": false,
+      "relation": "update",
+      "compare_relation": "update",
+      "current_relation": "update",
+      "evidence": [
+        {
+          "role": "USER",
+          "order": 33,
+          "text": "参加判断の欠落対策です。"
+        }
+      ],
+      "demo_output_group": "countermeasure"
+    },
+    {
+      "capture_candidate_id": "demo_34",
+      "suggested_category": "next_action",
+      "adopted_category": "next_action",
+      "suggested_statement": "FAQへ「何歳から楽しめるか」「予約なしで入れるか」「雨でも行けるか」を追加する。",
+      "adopted_statement": "FAQへ「何歳から楽しめるか」「予約なしで入れるか」「雨でも行けるか」を追加する。",
+      "source_label": "対策書候補",
+      "review_state": "edited_approved",
+      "usable_for_current_state": true,
+      "relation": "same",
+      "compare_relation": "same",
+      "current_relation": "same",
+      "evidence": [
+        {
+          "role": "ASSISTANT",
+          "order": 34,
+          "text": "よくある疑問を先回りします。"
+        }
+      ],
+      "demo_output_group": "countermeasure"
+    },
+    {
+      "capture_candidate_id": "demo_35",
+      "suggested_category": "next_action",
+      "adopted_category": "next_action",
+      "suggested_statement": "画像差し替え時は、写真の迫力より案内文の可読性を優先して確認する。",
+      "adopted_statement": "画像差し替え時は、写真の迫力より案内文の可読性を優先して確認する。",
+      "source_label": "対策書候補",
+      "review_state": "pending",
+      "usable_for_current_state": false,
+      "relation": "issue",
+      "compare_relation": "issue",
+      "current_relation": "issue",
+      "evidence": [
+        {
+          "role": "USER",
+          "order": 35,
+          "text": "見栄えだけで操作性を落とさない確認です。"
+        }
+      ],
+      "demo_output_group": "countermeasure"
+    },
+    {
+      "capture_candidate_id": "demo_36",
+      "suggested_category": "next_action",
+      "adopted_category": "next_action",
+      "suggested_statement": "古い営業情報を見つけた場合は、本文修正ではなく確認待ちリストへ移す。",
+      "adopted_statement": "古い営業情報を見つけた場合は、本文修正ではなく確認待ちリストへ移す。",
+      "source_label": "対策書候補",
+      "review_state": "edited_approved",
+      "usable_for_current_state": true,
+      "relation": "unmatched",
+      "compare_relation": "unmatched",
+      "current_relation": "unmatched",
+      "evidence": [
+        {
+          "role": "ASSISTANT",
+          "order": 36,
+          "text": "未確認情報の混入対策です。"
+        }
+      ],
+      "demo_output_group": "countermeasure"
+    },
+    {
+      "capture_candidate_id": "demo_37",
+      "suggested_category": "design_direction",
+      "adopted_category": "design_direction",
+      "suggested_statement": "トップの見出しは「宇宙を学ぶ」より「今日、子どもと何を体験できるか」が伝わる表現にする。",
+      "adopted_statement": "トップの見出しは「宇宙を学ぶ」より「今日、子どもと何を体験できるか」が伝わる表現にする。",
+      "source_label": "デザイン知候補",
+      "review_state": "pending",
+      "usable_for_current_state": false,
+      "relation": "new",
+      "compare_relation": "new",
+      "current_relation": "new",
+      "evidence": [
+        {
+          "role": "USER",
+          "order": 37,
+          "text": "抽象的な魅力より、行動が想像できる見出しを優先します。"
+        }
+      ],
+      "demo_output_group": "design"
+    },
+    {
+      "capture_candidate_id": "demo_38",
+      "suggested_category": "design_direction",
+      "adopted_category": "design_direction",
+      "suggested_statement": "カードは写真・体験名・対象年齢・所要時間・予約要否の順に配置する。",
+      "adopted_statement": "カードは写真・体験名・対象年齢・所要時間・予約要否の順に配置する。",
+      "source_label": "デザイン知候補",
+      "review_state": "insufficient_evidence",
+      "usable_for_current_state": false,
+      "relation": "update",
+      "compare_relation": "update",
+      "current_relation": "update",
+      "evidence": [
+        {
+          "role": "ASSISTANT",
+          "order": 38,
+          "text": "視線の順番を揃えます。"
+        }
+      ],
+      "demo_output_group": "design"
+    },
+    {
+      "capture_candidate_id": "demo_39",
+      "suggested_category": "design_direction",
+      "adopted_category": "design_direction",
+      "suggested_statement": "強調色は予約や来館判断の主操作に限定し、説明ラベルには使いすぎない。",
+      "adopted_statement": "強調色は予約や来館判断の主操作に限定し、説明ラベルには使いすぎない。",
+      "source_label": "デザイン知候補",
+      "review_state": "edited_approved",
+      "usable_for_current_state": true,
+      "relation": "same",
+      "compare_relation": "same",
+      "current_relation": "same",
+      "evidence": [
+        {
+          "role": "USER",
+          "order": 39,
+          "text": "色の役割を限定します。"
+        }
+      ],
+      "demo_output_group": "design"
+    },
+    {
+      "capture_candidate_id": "demo_40",
+      "suggested_category": "design_direction",
+      "adopted_category": "design_direction",
+      "suggested_statement": "小学生向けの説明は、漢字を避けるよりも一文を短くして意味を分ける。",
+      "adopted_statement": "小学生向けの説明は、漢字を避けるよりも一文を短くして意味を分ける。",
+      "source_label": "デザイン知候補",
+      "review_state": "pending",
+      "usable_for_current_state": false,
+      "relation": "issue",
+      "compare_relation": "issue",
+      "current_relation": "issue",
+      "evidence": [
+        {
+          "role": "ASSISTANT",
+          "order": 40,
+          "text": "読みやすさの基準を残します。"
+        }
+      ],
+      "demo_output_group": "design"
+    },
+    {
+      "capture_candidate_id": "demo_41",
+      "suggested_category": "design_direction",
+      "adopted_category": "design_direction",
+      "suggested_statement": "料金表は罫線で詰め込まず、家族単位で比較しやすい余白を確保する。",
+      "adopted_statement": "料金表は罫線で詰め込まず、家族単位で比較しやすい余白を確保する。",
+      "source_label": "デザイン知候補",
+      "review_state": "edited_approved",
+      "usable_for_current_state": true,
+      "relation": "unmatched",
+      "compare_relation": "unmatched",
+      "current_relation": "unmatched",
+      "evidence": [
+        {
+          "role": "USER",
+          "order": 41,
+          "text": "表の見やすさを判断基準にします。"
+        }
+      ],
+      "demo_output_group": "design"
+    },
+    {
+      "capture_candidate_id": "demo_42",
+      "suggested_category": "design_direction",
+      "adopted_category": "design_direction",
+      "suggested_statement": "スマホでは写真を縦に重ねすぎず、主操作までのスクロール距離を短くする。",
+      "adopted_statement": "スマホでは写真を縦に重ねすぎず、主操作までのスクロール距離を短くする。",
+      "source_label": "デザイン知候補",
+      "review_state": "pending",
+      "usable_for_current_state": false,
+      "relation": "new",
+      "compare_relation": "new",
+      "current_relation": "new",
+      "evidence": [
+        {
+          "role": "ASSISTANT",
+          "order": 42,
+          "text": "モバイル導線の基準です。"
+        }
+      ],
+      "demo_output_group": "design"
+    },
+    {
+      "capture_candidate_id": "demo_43",
+      "suggested_category": "design_direction",
+      "adopted_category": "design_direction",
+      "suggested_statement": "イベントカードの「予約必要」はラベルではなく、押せる導線として見える位置に置く。",
+      "adopted_statement": "イベントカードの「予約必要」はラベルではなく、押せる導線として見える位置に置く。",
+      "source_label": "デザイン知候補",
+      "review_state": "insufficient_evidence",
+      "usable_for_current_state": false,
+      "relation": "update",
+      "compare_relation": "update",
+      "current_relation": "update",
+      "evidence": [
+        {
+          "role": "USER",
+          "order": 43,
+          "text": "状態表示と操作の区別を明確にします。"
+        }
+      ],
+      "demo_output_group": "design"
+    },
+    {
+      "capture_candidate_id": "demo_44",
+      "suggested_category": "design_direction",
+      "adopted_category": "design_direction",
+      "suggested_statement": "FAQは長文回答にせず、先頭1行で結論を出してから補足する。",
+      "adopted_statement": "FAQは長文回答にせず、先頭1行で結論を出してから補足する。",
+      "source_label": "デザイン知候補",
+      "review_state": "edited_approved",
+      "usable_for_current_state": true,
+      "relation": "same",
+      "compare_relation": "same",
+      "current_relation": "same",
+      "evidence": [
+        {
+          "role": "ASSISTANT",
+          "order": 44,
+          "text": "読まれやすい回答構造です。"
+        }
+      ],
+      "demo_output_group": "design"
+    },
+    {
+      "capture_candidate_id": "demo_45",
+      "suggested_category": "design_direction",
+      "adopted_category": "design_direction",
+      "suggested_statement": "未確認情報は薄い警告色で区別し、確定情報と同じ見た目にしない。",
+      "adopted_statement": "未確認情報は薄い警告色で区別し、確定情報と同じ見た目にしない。",
+      "source_label": "デザイン知候補",
+      "review_state": "pending",
+      "usable_for_current_state": false,
+      "relation": "issue",
+      "compare_relation": "issue",
+      "current_relation": "issue",
+      "evidence": [
+        {
+          "role": "USER",
+          "order": 45,
+          "text": "確認状態を見た目で判断できるようにします。"
+        }
+      ],
+      "demo_output_group": "design"
+    },
+    {
+      "capture_candidate_id": "demo_46",
+      "suggested_category": "design_direction",
+      "adopted_category": "design_direction",
+      "suggested_statement": "写真の雰囲気は暗い宇宙感だけに寄せず、親子の安心感が伝わる明るさも混ぜる。",
+      "adopted_statement": "写真の雰囲気は暗い宇宙感だけに寄せず、親子の安心感が伝わる明るさも混ぜる。",
+      "source_label": "デザイン知候補",
+      "review_state": "edited_approved",
+      "usable_for_current_state": true,
+      "relation": "unmatched",
+      "compare_relation": "unmatched",
+      "current_relation": "unmatched",
+      "evidence": [
+        {
+          "role": "ASSISTANT",
+          "order": 46,
+          "text": "施設の印象づくりの判断基準です。"
+        }
+      ],
+      "demo_output_group": "design"
+    },
+    {
+      "capture_candidate_id": "demo_47",
+      "suggested_category": "improvement",
+      "adopted_category": "improvement",
+      "suggested_statement": "次回改善では、来館前チェックリストを小さなカードとして追加する案を検討する。",
+      "adopted_statement": "次回改善では、来館前チェックリストを小さなカードとして追加する案を検討する。",
+      "source_label": "改善課題候補",
+      "review_state": "pending",
+      "usable_for_current_state": false,
+      "relation": "new",
+      "compare_relation": "new",
+      "current_relation": "new",
+      "evidence": [
+        {
+          "role": "USER",
+          "order": 47,
+          "text": "来館判断をさらに早くする改善案です。"
+        }
+      ],
+      "demo_output_group": "improvement"
+    },
+    {
+      "capture_candidate_id": "demo_48",
+      "suggested_category": "improvement",
+      "adopted_category": "improvement",
+      "suggested_statement": "予約フォームへの遷移後に、選択中イベント名が引き継がれるかを確認する。",
+      "adopted_statement": "予約フォームへの遷移後に、選択中イベント名が引き継がれるかを確認する。",
+      "source_label": "改善課題候補",
+      "review_state": "insufficient_evidence",
+      "usable_for_current_state": false,
+      "relation": "update",
+      "compare_relation": "update",
+      "current_relation": "update",
+      "evidence": [
+        {
+          "role": "ASSISTANT",
+          "order": 48,
+          "text": "導線の後段改善です。"
+        }
+      ],
+      "demo_output_group": "improvement"
+    },
+    {
+      "capture_candidate_id": "demo_49",
+      "suggested_category": "evolution",
+      "adopted_category": "evolution",
+      "suggested_statement": "季節イベントが増えた場合は、常設展示と期間限定イベントを分ける必要がある。",
+      "adopted_statement": "季節イベントが増えた場合は、常設展示と期間限定イベントを分ける必要がある。",
+      "source_label": "改善課題候補",
+      "review_state": "edited_approved",
+      "usable_for_current_state": true,
+      "relation": "same",
+      "compare_relation": "same",
+      "current_relation": "same",
+      "evidence": [
+        {
+          "role": "USER",
+          "order": 49,
+          "text": "情報量増加に備える改善です。"
+        }
+      ],
+      "demo_output_group": "improvement"
+    },
+    {
+      "capture_candidate_id": "demo_50",
+      "suggested_category": "evolution",
+      "adopted_category": "evolution",
+      "suggested_statement": "学校団体向けページを別入口に分けるか、一般来館と共存させるかを検討する。",
+      "adopted_statement": "学校団体向けページを別入口に分けるか、一般来館と共存させるかを検討する。",
+      "source_label": "改善課題候補",
+      "review_state": "pending",
+      "usable_for_current_state": false,
+      "relation": "issue",
+      "compare_relation": "issue",
+      "current_relation": "issue",
+      "evidence": [
+        {
+          "role": "ASSISTANT",
+          "order": 50,
+          "text": "対象者が増えた場合の拡張候補です。"
+        }
+      ],
+      "demo_output_group": "improvement"
+    },
+    {
+      "capture_candidate_id": "demo_51",
+      "suggested_category": "result",
+      "adopted_category": "result",
+      "suggested_statement": "公開後の問い合わせ内容を集め、FAQの不足を更新候補へ回す。",
+      "adopted_statement": "公開後の問い合わせ内容を集め、FAQの不足を更新候補へ回す。",
+      "source_label": "改善課題候補",
+      "review_state": "edited_approved",
+      "usable_for_current_state": true,
+      "relation": "unmatched",
+      "compare_relation": "unmatched",
+      "current_relation": "unmatched",
+      "evidence": [
+        {
+          "role": "USER",
+          "order": 51,
+          "text": "運用後に改善へつなげます。"
+        }
+      ],
+      "demo_output_group": "improvement"
+    },
+    {
+      "capture_candidate_id": "demo_52",
+      "suggested_category": "improvement",
+      "adopted_category": "improvement",
+      "suggested_statement": "スマホ確認で主操作が下がる場合は、トップ構成を写真優先から情報優先へ切り替える。",
+      "adopted_statement": "スマホ確認で主操作が下がる場合は、トップ構成を写真優先から情報優先へ切り替える。",
+      "source_label": "改善課題候補",
+      "review_state": "pending",
+      "usable_for_current_state": false,
+      "relation": "new",
+      "compare_relation": "new",
+      "current_relation": "new",
+      "evidence": [
+        {
+          "role": "ASSISTANT",
+          "order": 52,
+          "text": "検証結果に応じた改善です。"
+        }
+      ],
+      "demo_output_group": "improvement"
+    },
+    {
+      "capture_candidate_id": "demo_53",
+      "suggested_category": "evolution",
+      "adopted_category": "evolution",
+      "suggested_statement": "イベント枠の増減に合わせ、カード数が多い時の一覧折りたたみを検討する。",
+      "adopted_statement": "イベント枠の増減に合わせ、カード数が多い時の一覧折りたたみを検討する。",
+      "source_label": "改善課題候補",
+      "review_state": "insufficient_evidence",
+      "usable_for_current_state": false,
+      "relation": "update",
+      "compare_relation": "update",
+      "current_relation": "update",
+      "evidence": [
+        {
+          "role": "USER",
+          "order": 53,
+          "text": "将来の情報量増加対策です。"
+        }
+      ],
+      "demo_output_group": "improvement"
+    },
+    {
+      "capture_candidate_id": "demo_54",
+      "suggested_category": "improvement",
+      "adopted_category": "improvement",
+      "suggested_statement": "デモ確認後、サンプルとして見せる分類名と実運用の分類名を分けて整理する。",
+      "adopted_statement": "デモ確認後、サンプルとして見せる分類名と実運用の分類名を分けて整理する。",
+      "source_label": "改善課題候補",
+      "review_state": "edited_approved",
+      "usable_for_current_state": true,
+      "relation": "same",
+      "compare_relation": "same",
+      "current_relation": "same",
+      "evidence": [
+        {
+          "role": "ASSISTANT",
+          "order": 54,
+          "text": "サンプルの分かりやすさを改善します。"
+        }
+      ],
+      "demo_output_group": "improvement"
+    }
+  ]
+}

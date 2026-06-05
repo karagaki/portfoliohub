@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UI/UX Animation Tools</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/ui/UI_all.css">
+    <link rel="stylesheet" href="css/ui/UI_Table.css">
+    <link rel="stylesheet" href="css/ui/UI_Canvas.css">
+    <link rel="stylesheet" href="css/ui/UI_Button.css">
+    <link rel="stylesheet" href="css/ui/UI_Color.css">
+    <link rel="stylesheet" href="css/ui/UI_Cursor.css">
+    <link rel="stylesheet" href="css/ui/UI_SoftUI.css">
+    <link rel="stylesheet" href="css/ui/UI_Neumorphism.css">
+    <link rel="stylesheet" href="css/ui/UI_SpatialPlaneView.css">
+</head>
+<body>
+    <script>
+        (function() {
+            const savedTheme = localStorage.getItem('uiVariantMain') || localStorage.getItem('uiVariant');
+            const selectedTheme = savedTheme === 'variant-2-neumorphism' ? savedTheme : 'variant-1-glass';
+            const preset = selectedTheme === 'variant-2-neumorphism'
+                ? (localStorage.getItem('uiNeumorphismVariantPreset') || 'custom:初期設定')
+                : (localStorage.getItem('uiVariantPreset') || 'custom:初期設定');
+            document.body.setAttribute('data-ui-booting', '1');
+            // Glass の既存レイアウト指定を常に土台として保持し、外観テーマだけを重ねる。
+            document.body.setAttribute('data-ui-variant', 'variant-1-glass');
+            document.body.setAttribute('data-ui-theme', selectedTheme === 'variant-2-neumorphism' ? 'neumorphism' : 'glass');
+            document.body.setAttribute('data-ui-preset', preset === 'default' ? '1' : preset);
+        })();
+    </script>
+
+    <div id="custom-cursor"></div>
+    <div id="main-container">
+        <div id="content-wrapper">
+            <div id="canvas-stage">
+                <div id="sketch-holder"></div>
+                <div id="case-comparison"></div>
+            </div>
+        </div>
+        <div id="ui-wrapper">
+            <div id="ui-variant-panel" class="ui-variant-panel">
+                <label for="ui-variant-select">UIバリエーション</label>
+                <select id="ui-variant-select" aria-label="UIバリエーション">
+                    <option value="variant-1-glass">Glassmorphism グラスモーフィズム</option>
+                    <option value="variant-2-neumorphism">Neumorphism ニューモフィズム</option>
+                </select>
+                <div id="ui-preset-panel" class="ui-preset-panel" aria-live="polite">
+                    <select id="ui-preset-select" aria-label="Glass preset">
+                        <option value="custom:ガラス-1">ガラス-1</option>
+                        <option value="custom:ガラス-2">ガラス-2</option>
+                    </select>
+                </div>
+            </div>
+            <div id="ui-container">
+                <div id="canvas-size-container" class="ui-container"></div>
+                <div id="button-container" class="ui-container"></div>
+                <div id="color-container" class="ui-container"></div>
+                <div id="slider-container" class="ui-container"></div>
+                <div id="cursor-container" class="ui-container"></div>
+                <div id="svg-file-container" class="ui-container"></div>
+                <div id="svg-anime-container" class="ui-container"></div>
+                <div id="load-container" class="ui-container"></div>
+                <div id="vector-container" class="ui-container"></div>
+            </div>
+        </div>
+    </div>
+    <!-- 外部ライブラリ -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+
+    <!-- メイン描画・状態管理 -->
+    <script src="js/main.js"></script>
+
+    <!-- UIパネル生成処理 -->
+    <script src="js/ui/UI_Table.js"></script>
+    <script src="js/ui/UI_Canvas.js"></script>
+    <script src="js/ui/UI_Button.js"></script>
+    <script src="js/ui/UI_Color.js"></script>
+    <script src="js/ui/UI_Slider.js"></script>
+    <script src="js/ui/UI_HelpCaption.js"></script>
+    <script src="js/ui/UI_Cursor.js"></script>
+    <script src="js/ui/UI_SVGfile.js"></script>
+    <script src="js/ui/UI_SVGanime.js"></script>
+    <script src="js/ui/UI_all.js"></script>
+    <script src="js/ui/UI_SpatialPlaneView.js"></script>
+    <script src="js/ui/UI_GlassPanels.js"></script>
+    <script src="js/ui/UI_State.js"></script>
+    <script src="js/ui/UI_Variant.js"></script>
+
+    <!-- UI部品・操作補助 -->
+    <script src="js/components/Cursor_A.js"></script>
+    <script src="js/components/Button_Save.js"></script>
+    <script src="js/components/Table_Next.js"></script>
+
+    <!-- SVG・ベクター操作処理 -->
+    <script src="js/controllers/Cntl_SVGfile.js"></script>
+    <script src="js/controllers/Cntl_SVGanime.js"></script>
+    <script src="js/controllers/Cntl_Vector.js"></script>
+
+    <!-- 描画処理 case0〜case11 -->
+    <script src="js/cases/case0.js"></script>
+    <script src="js/cases/case1.js"></script>
+    <script src="js/cases/case2.js"></script>
+    <script src="js/cases/case3.js"></script>
+    <script src="js/cases/case4.js"></script>
+    <script src="js/cases/case5.js"></script>
+    <script src="js/cases/case6.js"></script>
+    <script src="js/cases/case7.js"></script>
+    <script src="js/cases/case8.js"></script>
+    <script src="js/cases/case9.js"></script>
+    <script src="js/cases/case10.js"></script>
+    <script src="js/cases/case11.js"></script>
+    <!-- Phase 1: UI非変更の設定snapshot管理基盤 -->
+    <script src="js/state/ArtworkSnapshotStore.js"></script>
+    <!-- Phase 1.3-C: UI未接続のRuntimeCase生成基盤 -->
+    <script src="js/state/RuntimeCaseFactory.js"></script>
+    <!-- Phase 2: 点設定snapshotのRuntime適用検証。UI/描画へ未接続 -->
+    <script src="js/state/RuntimePointSnapshotAdapter.js"></script>
+    <!-- Phase 3: 周期設定snapshotのRuntime検証。UI/描画へ未接続 -->
+    <script src="js/state/RuntimeCycleSnapshotAdapter.js"></script>
+    <!-- Phase 4: 配色・背景・流線/残像snapshotの独立性検証。実適用へ未接続 -->
+    <script src="js/state/RuntimeVisualSnapshotAdapter.js"></script>
+    <!-- Phase 4.2: 視覚snapshot復元計画の独立性検証。実適用へ未接続 -->
+    <script src="js/state/RuntimeVisualApplyPlanAdapter.js"></script>
+    <!-- Phase 4.3: 実表示の色経路を含むsnapshot検証。実適用へ未接続 -->
+    <script src="js/state/RuntimeDisplayedColorSnapshotAdapter.js"></script>
+    <!-- Phase 4.4: Console明示実行のみの3秒視覚preview。流線/残像は未変更 -->
+    <script src="js/state/RuntimeVisualLivePreviewAdapter.js"></script>
+    <!-- Phase 5: Console操作のみの統合slot実表示切替。流線/残像・登録UIは未接続 -->
+    <script src="js/state/RuntimeIntegratedSlotApplyAdapter.js"></script>
+</body>
+</html>

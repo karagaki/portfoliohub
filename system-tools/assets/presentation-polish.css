@@ -1,0 +1,919 @@
+/* System Tools presentation polish layer. Minimal overrides only. */
+.logo .chord,
+.logo small,
+.logo .toolname,
+.start-title-block h2,
+.start-title-block p,
+.start-value b,
+.start-value p,
+.nav button,
+.guided-action-copy b,
+.guided-action-copy p,
+.portfolio-purpose b,
+.portfolio-purpose small {
+  word-break: keep-all;
+  overflow-wrap: normal;
+  line-break: strict;
+}
+
+.logo small {
+  letter-spacing: .08em;
+  line-height: 1.55;
+  text-wrap: balance;
+}
+
+.logo .toolname {
+  line-height: 1.55;
+  text-wrap: balance;
+}
+
+.start-title-block p {
+  max-width: 760px;
+  text-wrap: pretty;
+}
+
+.presentation-value-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  align-items: stretch;
+}
+
+.presentation-value-grid .start-value {
+  min-height: 136px;
+  height: 100%;
+}
+
+.presentation-value-grid .start-value b {
+  min-height: 2.8em;
+  line-height: 1.4;
+}
+
+.presentation-problem-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 2px;
+}
+
+.presentation-problem-grid > div {
+  min-height: 74px;
+  border-radius: 16px;
+  padding: 15px 17px;
+  background: var(--neumo-pressed);
+  box-shadow: inset 3px 3px 7px rgba(157,168,179,.16), inset -3px -3px 7px rgba(255,255,255,.34);
+}
+
+.presentation-problem-grid b {
+  display: block;
+  font-size: 12px;
+  margin-bottom: 7px;
+  color: var(--tx);
+}
+
+.presentation-problem-grid span {
+  display: block;
+  color: var(--mut);
+  font-size: 11px;
+  line-height: 1.7;
+  word-break: keep-all;
+  overflow-wrap: normal;
+}
+
+.nav-direct-section.presentation-support-nav {
+  margin-top: 2px;
+}
+
+.nav-direct-section.presentation-support-nav .nav-direct-subtitle {
+  word-break: keep-all;
+}
+
+.portfolio-purpose,
+.workflow-brief-card,
+.portfolio-preview-item,
+.portfolio-output-shelf-card,
+.goal-metric,
+.goal-stage,
+.start-value {
+  text-wrap: pretty;
+}
+
+@media (max-width: 1160px) {
+  .presentation-value-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+
+/* v351: presentation accident demo / continuation story */
+.presentation-accident-strip {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  gap: 14px;
+  align-items: stretch;
+  margin-bottom: 14px;
+}
+.accident-card {
+  min-height: 132px;
+  border-radius: 18px;
+  padding: 18px 18px 16px;
+  background: var(--neumo-raised);
+  box-shadow: var(--shadow-soft);
+}
+.accident-card span {
+  display: inline-block;
+  font-size: 10px;
+  letter-spacing: .14em;
+  margin-bottom: 10px;
+  color: var(--mut);
+  white-space: nowrap;
+}
+.accident-card b {
+  display: block;
+  font-size: 16px;
+  line-height: 1.45;
+  margin-bottom: 8px;
+  word-break: keep-all;
+  overflow-wrap: normal;
+}
+.accident-card p {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.75;
+  color: var(--mut);
+  word-break: keep-all;
+  overflow-wrap: normal;
+  text-wrap: pretty;
+}
+.accident-card.before {
+  box-shadow: inset 4px 4px 9px rgba(127,82,72,.10), inset -4px -4px 9px rgba(255,255,255,.34);
+}
+.accident-card.after {
+  box-shadow: 8px 8px 18px rgba(149,158,166,.14), -8px -8px 18px rgba(255,255,255,.55);
+}
+.accident-arrow {
+  align-self: center;
+  font-size: 22px;
+  line-height: 1;
+  color: var(--mut);
+  padding: 0 2px;
+}
+.presentation-story-copy p {
+  text-wrap: pretty;
+}
+.start-demo-button {
+  min-width: 212px;
+}
+@media (max-width: 1180px) {
+  .presentation-accident-strip {
+    grid-template-columns: 1fr;
+  }
+  .accident-arrow {
+    text-align: center;
+    transform: rotate(90deg);
+  }
+}
+
+
+/* v352: presentation chat extraction / 1-second comprehension */
+.nav .portfolio-nav-no {
+  flex: 0 0 auto;
+}
+.nav button {
+  font-size: 12px;
+  line-height: 1.35;
+  gap: 6px;
+}
+.presentation-chat-layout {
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, .95fr) minmax(260px, .9fr);
+  align-items: stretch;
+  gap: 14px;
+}
+.presentation-chat-card,
+.presentation-extract-card,
+.presentation-handoff-card {
+  min-height: 418px;
+}
+.presentation-card-heading span {
+  display: inline-block;
+  font-size: 10px;
+  letter-spacing: .13em;
+  color: var(--mut);
+  margin-bottom: 6px;
+  white-space: nowrap;
+}
+.presentation-card-heading h3 {
+  margin: 0 0 7px;
+  font-size: 17px;
+  line-height: 1.35;
+  word-break: keep-all;
+  overflow-wrap: normal;
+}
+.presentation-card-heading p {
+  margin: 0 0 13px;
+  color: var(--mut);
+  font-size: 12px;
+  line-height: 1.65;
+  word-break: keep-all;
+  overflow-wrap: normal;
+  text-wrap: pretty;
+}
+.presentation-chat-thread {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.chat-bubble {
+  border-radius: 16px;
+  padding: 12px 14px;
+  max-width: 92%;
+  background: var(--neumo-raised);
+  box-shadow: 5px 5px 12px rgba(149,158,166,.12), -5px -5px 12px rgba(255,255,255,.50);
+}
+.chat-bubble.user {
+  align-self: flex-end;
+  background: rgba(235,238,236,.70);
+  box-shadow: inset 3px 3px 8px rgba(149,158,166,.12), inset -3px -3px 8px rgba(255,255,255,.38);
+}
+.chat-bubble.assistant {
+  align-self: flex-start;
+}
+.chat-bubble label {
+  display: block;
+  font-size: 10px;
+  letter-spacing: .12em;
+  color: var(--mut);
+  margin-bottom: 5px;
+}
+.chat-bubble p {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.65;
+  word-break: keep-all;
+  overflow-wrap: normal;
+  text-wrap: pretty;
+}
+.presentation-extract-list,
+.presentation-handoff-stack {
+  display: grid;
+  gap: 10px;
+}
+.presentation-extract-list div,
+.presentation-handoff-stack section {
+  border-radius: 15px;
+  padding: 12px 13px;
+  background: rgba(255,255,255,.42);
+  box-shadow: inset 2px 2px 6px rgba(149,158,166,.10), inset -2px -2px 6px rgba(255,255,255,.34);
+}
+.presentation-extract-list b,
+.presentation-handoff-stack b {
+  display: block;
+  font-size: 13px;
+  line-height: 1.35;
+  margin-bottom: 4px;
+  word-break: keep-all;
+}
+.presentation-extract-list span,
+.presentation-handoff-stack p {
+  display: block;
+  margin: 0;
+  color: var(--mut);
+  font-size: 11px;
+  line-height: 1.55;
+  word-break: keep-all;
+  overflow-wrap: normal;
+}
+.presentation-handoff-stack label {
+  display: block;
+  color: var(--accent, #9f8b39);
+  font-size: 10px;
+  letter-spacing: .12em;
+  margin-bottom: 4px;
+  white-space: nowrap;
+}
+@media (max-width: 1280px) {
+  .presentation-chat-layout {
+    grid-template-columns: 1fr;
+  }
+  .presentation-chat-card,
+  .presentation-extract-card,
+  .presentation-handoff-card {
+    min-height: auto;
+  }
+}
+
+/* v359: System Tools presentation flow - fixed reference layout, no text clipping */
+.mroak-three-flow{
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 34px;
+  align-items: stretch;
+}
+.mroak-flow-card{
+  position: relative;
+  height: 118px;
+  min-height: 118px;
+  padding: 0;
+  border-radius: 22px;
+  overflow: hidden;
+  display: block;
+}
+.mroak-flow-title{
+  position: absolute;
+  left: 28px;
+  top: 18px;
+  display: flex;
+  align-items: baseline;
+  gap: 3px;
+  width: 132px;
+  white-space: nowrap;
+  color: rgba(32, 39, 39, .68);
+  pointer-events: none;
+}
+.mroak-flow-kanji{
+  line-height: .9;
+  font-size: 50px;
+  font-weight: 760;
+  letter-spacing: -.08em;
+  font-family: var(--display-font, var(--font-serif, serif));
+}
+.mroak-flow-kana{
+  margin-left: 3px;
+  font-size: 28px;
+  font-weight: 720;
+  line-height: 1;
+  letter-spacing: -.06em;
+  font-family: var(--display-font, var(--font-serif, serif));
+}
+.mroak-flow-number{
+  position: absolute;
+  right: 22px;
+  top: 20px;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: .08em;
+  color: rgba(40, 48, 48, .28);
+}
+.mroak-flow-card b{
+  display:none;
+}
+.mroak-flow-card p{
+  position: absolute;
+  left: 140px;
+  right: 28px;
+  bottom: 18px;
+  width: auto;
+  max-width: calc(100% - 168px);
+  margin: 0;
+  line-height: 1.58;
+  font-size: 11.8px;
+  font-weight: 720;
+  letter-spacing: .005em;
+  color: rgba(40, 48, 48, .64);
+  white-space: normal;
+  word-break: keep-all;
+  overflow-wrap: normal;
+  text-wrap: auto;
+}
+.mroak-flow-card.value-2 .mroak-flow-title{
+  top: 17px;
+}
+.mroak-flow-card.value-2 .mroak-flow-kanji{
+  font-size: 52px;
+}
+.mroak-flow-card.value-2 .mroak-flow-kana{
+  font-size: 29px;
+}
+.mroak-flow-card.value-2 p{
+  left: 140px;
+  max-width: calc(100% - 168px);
+  font-size: 11.8px;
+  font-weight: 760;
+}
+@media (max-width: 1280px){
+  .mroak-three-flow{gap:26px;}
+  .mroak-flow-card{height:118px; min-height:118px;}
+  .mroak-flow-title{left:24px; top:18px; width:120px;}
+  .mroak-flow-kanji{font-size:48px;}
+  .mroak-flow-kana{font-size:27px;}
+  .mroak-flow-number{right:20px; top:20px;}
+  .mroak-flow-card.value-2 .mroak-flow-kanji{font-size:50px;}
+  .mroak-flow-card.value-2 .mroak-flow-kana{font-size:28px;}
+  .mroak-flow-card p{left:132px; right:22px; max-width:calc(100% - 154px); bottom:17px; font-size:11.2px; line-height:1.55;}
+  .mroak-flow-card.value-2 p{left:132px; max-width:calc(100% - 154px); font-size:11.2px;}
+}
+.nav-direct .nav-child{
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+.portfolio-nav-no{
+  min-width: 2.1em;
+  text-align:center;
+}
+
+
+/* v362: fix System Tools flow cards - exact 2-line text and single number */
+.mroak-flow-card.start-value::before{
+  content: none !important;
+  counter-increment: none !important;
+}
+.mroak-flow-number{
+  right: 28px !important;
+  top: 20px !important;
+  font-size: 13px !important;
+  line-height: 1 !important;
+}
+.mroak-flow-card p{
+  left: 42% !important;
+  right: 40px !important;
+  bottom: 28px !important;
+  max-width: none !important;
+  width: auto !important;
+  font-size: 11.2px !important;
+  line-height: 1.72 !important;
+  font-weight: 720 !important;
+  letter-spacing: 0 !important;
+  white-space: normal !important;
+  overflow: visible !important;
+}
+.mroak-flow-card p span{
+  display: block;
+  white-space: nowrap;
+}
+.mroak-flow-card.value-2 p{
+  left: 44% !important;
+  font-size: 11.2px !important;
+  max-width: none !important;
+}
+.mroak-flow-card.value-3 p{
+  left: 44% !important;
+}
+@media (max-width: 1280px){
+  .mroak-flow-card p{
+    left: 40% !important;
+    right: 30px !important;
+    bottom: 24px !important;
+    font-size: 10.4px !important;
+    line-height: 1.7 !important;
+  }
+  .mroak-flow-card.value-2 p,
+  .mroak-flow-card.value-3 p{left:42% !important;}
+}
+
+
+/* v351: start page wording and spacing for kashinoki */
+.jarvis-start-page .start-title-block{
+  padding-top: 22px;
+  padding-bottom: 52px;
+}
+.jarvis-start-page .start-overline{
+  margin-bottom: 18px;
+  font-size: 11px;
+  letter-spacing: .20em;
+  text-transform: lowercase;
+  color: rgba(92, 102, 98, .62);
+}
+.jarvis-start-page .start-title-block h2{
+  max-width: 1040px;
+  margin-bottom: 0;
+}
+.jarvis-start-page .start-title-block h2::after{
+  bottom: -22px;
+  width: min(430px, 42%);
+  height: 6px;
+  opacity: .82;
+}
+.jarvis-start-page .start-title-keep{
+  letter-spacing: -.072em;
+}
+.jarvis-start-page .start-value-grid{
+  margin-top: 10px;
+  margin-bottom: 42px;
+  gap: 46px;
+}
+.jarvis-start-page .start-value-grid::before{
+  top: 50%;
+  left: 20%;
+  right: 20%;
+  background: linear-gradient(90deg, transparent 0 6%, rgba(91, 105, 101, .20) 6% 38%, transparent 38% 44%, rgba(91, 105, 101, .20) 44% 76%, transparent 76%);
+}
+.jarvis-start-page .mroak-flow-title{
+  left: 34px !important;
+  top: 18px !important;
+  width: auto !important;
+}
+.jarvis-start-page .mroak-flow-kanji{
+  font-size: 58px !important;
+  line-height: .92 !important;
+  letter-spacing: 0 !important;
+}
+.jarvis-start-page .mroak-flow-kana{
+  display: none !important;
+}
+.jarvis-start-page .mroak-flow-number{
+  display: none !important;
+}
+.jarvis-start-page .mroak-flow-card p{
+  left: 104px !important;
+  right: 34px !important;
+  bottom: 25px !important;
+  font-size: 12px !important;
+  line-height: 1.76 !important;
+  font-weight: 720 !important;
+}
+.jarvis-start-page .start-demo-panel{
+  min-height: 182px;
+  margin-top: 0;
+  padding: 34px 46px;
+  grid-template-columns: minmax(0, 1fr) minmax(230px, 300px);
+  row-gap: 10px;
+}
+.jarvis-start-page .start-demo-kicker{
+  font-size: 22px;
+  line-height: 1.25;
+  letter-spacing: -.04em;
+  font-weight: 760;
+  color: rgba(44, 52, 50, .78);
+}
+.jarvis-start-page .start-demo-copy{
+  gap: 0;
+  max-width: 700px;
+}
+.jarvis-start-page .start-demo-copy p,
+.jarvis-start-page .start-demo-copy p:first-child{
+  font-size: 16.2px;
+  line-height: 1.86;
+  font-weight: 660;
+  letter-spacing: .015em;
+  color: rgba(82, 92, 88, .78);
+}
+.jarvis-start-page .start-demo-button{
+  height: 50px;
+}
+@media (max-width: 1280px){
+  .jarvis-start-page .start-value-grid{ gap: 30px; }
+  .jarvis-start-page .mroak-flow-card p{ left: 96px !important; right: 26px !important; font-size: 11.2px !important; }
+  .jarvis-start-page .mroak-flow-kanji{ font-size: 54px !important; }
+}
+@media (max-width: 860px){
+  .jarvis-start-page .start-title-block{ padding-bottom: 38px; }
+  .jarvis-start-page .start-title-keep{ white-space: normal; }
+  .jarvis-start-page .start-value-grid{ gap: 14px; margin-bottom: 26px; }
+  .jarvis-start-page .mroak-flow-card p{ left: 104px !important; right: 24px !important; bottom: 24px !important; }
+  .jarvis-start-page .start-demo-panel{ grid-template-columns: 1fr; grid-template-areas: "kicker" "copy" "action"; padding: 28px 24px; }
+  .jarvis-start-page .start-demo-kicker{ font-size: 19px; }
+  .jarvis-start-page .start-demo-copy p,
+  .jarvis-start-page .start-demo-copy p:first-child{ font-size: 14.5px; }
+}
+
+
+/* v356: restore Start flow cards to three full cards: 集める / 分ける / 活かす */
+.jarvis-start-page .start-value-grid{
+  margin-top: 18px !important;
+  margin-bottom: 42px !important;
+  gap: 40px !important;
+}
+.jarvis-start-page .start-value-grid::before{
+  top: 50% !important;
+  left: 18% !important;
+  right: 18% !important;
+  background: linear-gradient(90deg, transparent 0 5%, rgba(91,105,101,.18) 5% 39%, transparent 39% 45%, rgba(91,105,101,.18) 45% 79%, transparent 79%) !important;
+}
+.jarvis-start-page .mroak-flow-card{
+  min-height: 128px !important;
+  height: 128px !important;
+}
+.jarvis-start-page .mroak-flow-title{
+  left: 34px !important;
+  top: 22px !important;
+  width: 170px !important;
+  display: flex !important;
+  align-items: baseline !important;
+  gap: 4px !important;
+}
+.jarvis-start-page .mroak-flow-kanji{
+  font-size: 58px !important;
+  line-height: .9 !important;
+  letter-spacing: -.06em !important;
+}
+.jarvis-start-page .mroak-flow-kana{
+  display: inline !important;
+  font-size: 31px !important;
+  line-height: 1 !important;
+  letter-spacing: -.08em !important;
+  font-weight: 780 !important;
+}
+.jarvis-start-page .mroak-flow-number{
+  display: block !important;
+  position: absolute !important;
+  top: 24px !important;
+  right: 34px !important;
+  font-size: 17px !important;
+  letter-spacing: .08em !important;
+  color: rgba(75,82,80,.34) !important;
+}
+.jarvis-start-page .mroak-flow-card p{
+  left: 158px !important;
+  right: 34px !important;
+  bottom: 28px !important;
+  max-width: calc(100% - 198px) !important;
+  font-size: 13px !important;
+  line-height: 1.65 !important;
+  font-weight: 720 !important;
+  text-align: left !important;
+}
+.jarvis-start-page .mroak-flow-card.value-2 p,
+.jarvis-start-page .mroak-flow-card.value-3 p{
+  left: 158px !important;
+}
+.jarvis-start-page .mroak-flow-card.value-2 .mroak-flow-title,
+.jarvis-start-page .mroak-flow-card.value-3 .mroak-flow-title{
+  left: 34px !important;
+}
+@media (max-width: 1280px){
+  .jarvis-start-page .start-value-grid{gap: 28px !important;}
+  .jarvis-start-page .mroak-flow-title{left: 26px !important; width: 144px !important;}
+  .jarvis-start-page .mroak-flow-kanji{font-size: 52px !important;}
+  .jarvis-start-page .mroak-flow-kana{font-size: 27px !important;}
+  .jarvis-start-page .mroak-flow-number{right: 26px !important;}
+  .jarvis-start-page .mroak-flow-card p{left: 136px !important; right: 26px !important; max-width: calc(100% - 162px) !important; font-size: 11.6px !important;}
+  .jarvis-start-page .mroak-flow-card.value-2 p,
+  .jarvis-start-page .mroak-flow-card.value-3 p{left: 136px !important;}
+}
+
+
+/* v359: remove duplicate page meta labels above each content title and hide presentation-only badge. */
+.page-location,
+.top .badge {
+  display: none !important;
+}
+
+/* v359: keep content headings as the single visible title area. */
+.portfolio-page .heading {
+  margin-top: 0 !important;
+}
+
+/* v370: START 3工程カードの文字欠け防止。
+   カード幅が縮んでも説明文をタイトル横に押し込まず、下段へ逃がして必ず読める構造にする。 */
+.jarvis-start-page .start-value-grid.mroak-three-flow{
+  grid-template-columns: repeat(3, minmax(220px, 1fr)) !important;
+  gap: clamp(20px, 3vw, 40px) !important;
+  align-items: stretch !important;
+}
+.jarvis-start-page .mroak-flow-card{
+  position: relative !important;
+  min-height: clamp(132px, 11vw, 150px) !important;
+  height: auto !important;
+  padding: 0 !important;
+  overflow: visible !important;
+}
+.jarvis-start-page .mroak-flow-title,
+.jarvis-start-page .mroak-flow-card.value-2 .mroak-flow-title,
+.jarvis-start-page .mroak-flow-card.value-3 .mroak-flow-title{
+  position: absolute !important;
+  left: clamp(22px, 2.4vw, 34px) !important;
+  top: clamp(18px, 2vw, 24px) !important;
+  width: calc(100% - 92px) !important;
+  max-width: none !important;
+  display: flex !important;
+  align-items: baseline !important;
+  gap: 4px !important;
+  white-space: nowrap !important;
+}
+.jarvis-start-page .mroak-flow-kanji{
+  font-size: clamp(48px, 5.1vw, 64px) !important;
+  line-height: .9 !important;
+}
+.jarvis-start-page .mroak-flow-kana{
+  font-size: clamp(24px, 2.6vw, 32px) !important;
+  line-height: 1 !important;
+}
+.jarvis-start-page .mroak-flow-number{
+  top: clamp(20px, 2.2vw, 27px) !important;
+  right: clamp(22px, 2.4vw, 34px) !important;
+  font-size: clamp(14px, 1.35vw, 17px) !important;
+}
+.jarvis-start-page .mroak-flow-card p,
+.jarvis-start-page .mroak-flow-card.value-2 p,
+.jarvis-start-page .mroak-flow-card.value-3 p{
+  position: absolute !important;
+  left: clamp(22px, 2.4vw, 34px) !important;
+  right: clamp(22px, 2.4vw, 34px) !important;
+  bottom: clamp(18px, 2vw, 25px) !important;
+  max-width: none !important;
+  width: auto !important;
+  margin: 0 !important;
+  font-size: clamp(10.5px, 1.05vw, 13px) !important;
+  line-height: 1.55 !important;
+  text-align: left !important;
+  overflow: visible !important;
+}
+.jarvis-start-page .mroak-flow-card p span{
+  display: block !important;
+  white-space: nowrap !important;
+}
+
+@media (max-width: 860px){
+  .jarvis-start-page .start-value-grid.mroak-three-flow{
+    grid-template-columns: 1fr !important;
+  }
+  .jarvis-start-page .mroak-flow-card{
+    min-height: 136px !important;
+  }
+  .jarvis-start-page .mroak-flow-card p span{
+    white-space: normal !important;
+  }
+}
+
+/* v373: start flow cards - two translucent description tabs, no overlap */
+.mroak-flow-card{
+  height: 126px;
+  min-height: 126px;
+  overflow: hidden;
+}
+.mroak-flow-title{
+  left: 28px;
+  top: 17px;
+  width: auto;
+  max-width: calc(100% - 96px);
+  z-index: 3;
+}
+.mroak-flow-kanji{
+  font-size: clamp(46px, 4vw, 54px);
+}
+.mroak-flow-kana{
+  font-size: clamp(25px, 2.15vw, 30px);
+}
+.mroak-flow-number{
+  z-index: 3;
+}
+.mroak-flow-card p,
+.mroak-flow-card.value-2 p,
+.mroak-flow-card.value-3 p{
+  position: absolute;
+  left: 30px;
+  right: 28px;
+  top: 75px;
+  bottom: auto;
+  width: auto;
+  max-width: none;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 5px;
+  line-height: 1;
+  font-size: 11.2px;
+  font-weight: 760;
+  letter-spacing: .01em;
+  text-align: right;
+  color: rgba(40, 48, 48, .68);
+  pointer-events: none;
+  z-index: 4;
+}
+.mroak-flow-card p span{
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 21px;
+  max-width: 100%;
+  padding: 3px 12px 4px;
+  box-sizing: border-box;
+  border-radius: 999px;
+  background: rgba(255,255,255,.34);
+  border: 1px solid rgba(255,255,255,.34);
+  box-shadow:
+    inset 1px 1px 2px rgba(255,255,255,.48),
+    inset -1px -1px 3px rgba(70,75,75,.10);
+  white-space: nowrap;
+}
+@media (max-width: 1280px){
+  .mroak-flow-card{height:126px; min-height:126px;}
+  .mroak-flow-title{left:24px; top:16px; max-width:calc(100% - 88px);}
+  .mroak-flow-card p,
+  .mroak-flow-card.value-2 p,
+  .mroak-flow-card.value-3 p{
+    left: 24px;
+    right: 22px;
+    top: 74px;
+    font-size: 10.4px;
+    gap: 5px;
+  }
+  .mroak-flow-card p span{min-height:20px; padding:3px 10px 4px;}
+}
+
+/* v375: START 3工程カード安全修正
+   - 説明文のカプセル枠を廃止
+   - 大見出しと説明文の縦領域を分離
+   - クリック時のインク演出がカード外へはみ出さないよう強制クリップ */
+.jarvis-start-page .start-value-grid.mroak-three-flow{
+  grid-template-columns: repeat(3, minmax(260px, 1fr)) !important;
+  gap: clamp(28px, 3vw, 44px) !important;
+}
+.jarvis-start-page .mroak-flow-card{
+  position: relative !important;
+  height: clamp(152px, 11.5vw, 166px) !important;
+  min-height: clamp(152px, 11.5vw, 166px) !important;
+  overflow: hidden !important;
+  contain: paint !important;
+  padding: 0 !important;
+}
+.jarvis-start-page .mroak-flow-title,
+.jarvis-start-page .mroak-flow-card.value-2 .mroak-flow-title,
+.jarvis-start-page .mroak-flow-card.value-3 .mroak-flow-title{
+  position: absolute !important;
+  left: clamp(28px, 2.6vw, 38px) !important;
+  top: clamp(22px, 2vw, 28px) !important;
+  width: auto !important;
+  max-width: calc(100% - 120px) !important;
+  z-index: 3 !important;
+  display: flex !important;
+  align-items: baseline !important;
+  white-space: nowrap !important;
+  pointer-events: none !important;
+}
+.jarvis-start-page .mroak-flow-kanji{
+  font-size: clamp(54px, 4.55vw, 68px) !important;
+  line-height: .88 !important;
+}
+.jarvis-start-page .mroak-flow-kana{
+  font-size: clamp(28px, 2.4vw, 36px) !important;
+  line-height: 1 !important;
+}
+.jarvis-start-page .mroak-flow-number{
+  top: clamp(25px, 2.2vw, 32px) !important;
+  right: clamp(28px, 2.6vw, 38px) !important;
+  z-index: 3 !important;
+}
+.jarvis-start-page .mroak-flow-card p,
+.jarvis-start-page .mroak-flow-card.value-2 p,
+.jarvis-start-page .mroak-flow-card.value-3 p{
+  position: absolute !important;
+  left: clamp(34px, 3vw, 46px) !important;
+  right: clamp(30px, 2.8vw, 42px) !important;
+  top: auto !important;
+  bottom: clamp(22px, 2vw, 28px) !important;
+  width: auto !important;
+  max-width: none !important;
+  margin: 0 !important;
+  display: grid !important;
+  gap: 2px !important;
+  justify-items: end !important;
+  align-items: end !important;
+  z-index: 3 !important;
+  pointer-events: none !important;
+  text-align: right !important;
+  color: rgba(43, 52, 51, .70) !important;
+  font-size: clamp(11px, .86vw, 13px) !important;
+  line-height: 1.45 !important;
+  font-weight: 760 !important;
+  letter-spacing: .005em !important;
+}
+.jarvis-start-page .mroak-flow-card p span{
+  display: block !important;
+  max-width: 100% !important;
+  min-height: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  white-space: nowrap !important;
+}
+.jarvis-start-page .mroak-flow-card .start-ink-drop,
+.jarvis-start-page .start-value .start-ink-drop{
+  z-index: 1 !important;
+  max-width: none !important;
+  max-height: none !important;
+}
+.jarvis-start-page .mroak-flow-card > *:not(.start-ink-drop){
+  position: relative;
+  z-index: 3;
+}
+@media (max-width: 1280px){
+  .jarvis-start-page .start-value-grid.mroak-three-flow{
+    grid-template-columns: repeat(3, minmax(230px, 1fr)) !important;
+    gap: clamp(20px, 2.5vw, 32px) !important;
+  }
+  .jarvis-start-page .mroak-flow-card{
+    height: 150px !important;
+    min-height: 150px !important;
+  }
+  .jarvis-start-page .mroak-flow-card p,
+  .jarvis-start-page .mroak-flow-card.value-2 p,
+  .jarvis-start-page .mroak-flow-card.value-3 p{
+    left: 24px !important;
+    right: 24px !important;
+    bottom: 20px !important;
+    font-size: 11px !important;
+  }
+}
+@media (max-width: 860px){
+  .jarvis-start-page .start-value-grid.mroak-three-flow{
+    grid-template-columns: 1fr !important;
+  }
+  .jarvis-start-page .mroak-flow-card{
+    height: 154px !important;
+    min-height: 154px !important;
+  }
+  .jarvis-start-page .mroak-flow-card p span{
+    white-space: normal !important;
+  }
+}

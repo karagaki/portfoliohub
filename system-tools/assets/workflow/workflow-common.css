@@ -1,0 +1,2998 @@
+/* System Tools workflow band extracted from index.html. */
+/* source-range: index.html#L1690-L3734 */
+
+    /* v85: 01 会話と資料を整理 / STEP説明パネルは表示後に固定し、黄色い主操作ボタンのみ後追い表示する。 */
+    /* v81: 01 会話と資料を整理 / レイアウト予告・注視時間仕様 v2.2 実装。 */
+    #portfolio-collect .heading {
+      margin-bottom: 16px
+    }
+
+    #portfolio-collect .portfolio-connection-panel {
+      min-height: 114px
+    }
+
+    #portfolio-collect .portfolio-flow-cue {
+      min-height: 72px
+    }
+
+    #portfolio-collect .portfolio-metric-card {
+      min-height: 138px
+    }
+
+    #portfolio-collect #portfolioStepSlot {
+      min-height: 96px
+    }
+
+    #portfolio-collect.portfolio-disconnected .portfolio-flow-cue,
+    #portfolio-collect.portfolio-disconnected .portfolio-metric-card {
+      opacity: .68
+    }
+
+    .portfolio-connection-panel {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 14px;
+      align-items: center;
+      margin-bottom: 12px;
+      border: 1px solid rgba(202, 210, 32, .22);
+    }
+
+    .portfolio-connection-panel .connection-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      margin-bottom: 5px;
+      font-size: 10px;
+      letter-spacing: .08em;
+      color: var(--mut);
+      text-transform: uppercase
+    }
+
+    .portfolio-connection-panel .connection-kicker::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--guide-yellow-strong, rgba(236, 239, 66, .92));
+      box-shadow: 0 0 0 4px rgba(236, 239, 66, .12)
+    }
+
+    .portfolio-connection-panel.is-connected .connection-kicker::before {
+      background: #83b57f;
+      box-shadow: 0 0 0 4px rgba(131, 181, 127, .12)
+    }
+
+    .portfolio-connection-panel.is-warning .connection-kicker::before {
+      background: #d2a54c;
+      box-shadow: 0 0 0 4px rgba(210, 165, 76, .15)
+    }
+
+    .portfolio-connection-panel h3 {
+      margin: 0 0 4px;
+      font-size: 16px;
+      color: var(--tx)
+    }
+
+    .portfolio-connection-panel p {
+      margin: 0;
+      color: var(--mut);
+      font-size: 12px;
+      line-height: 1.55
+    }
+
+    .portfolio-connection-panel .connection-meta {
+      display: flex;
+      gap: 7px;
+      flex-wrap: wrap;
+      margin-top: 8px
+    }
+
+    .portfolio-connection-panel .connection-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: var(--nm-shared-surface);
+      color: var(--tx);
+      font-size: 10px;
+      box-shadow: inset 0 calc(.2 * var(--nm-offset)) calc(.42 * var(--nm-blur)) var(--nm-shadow-color), inset 0 calc(-.2 * var(--nm-offset)) calc(.42 * var(--nm-blur)) var(--nm-light-color)
+    }
+
+    .portfolio-connection-panel .connection-actions {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 7px
+    }
+
+    .portfolio-connection-panel .connection-actions .btn {
+      white-space: nowrap
+    }
+
+    .portfolio-connection-panel .connection-help {
+      font-size: 10px;
+      color: var(--mut);
+      text-align: right;
+      max-width: 240px;
+      line-height: 1.45
+    }
+
+    .portfolio-connection-shell {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 14px;
+      align-items: center;
+      width: 100%;
+      opacity: .42
+    }
+
+    .portfolio-connection-shell .shell-lines {
+      display: grid;
+      gap: 8px
+    }
+
+    .portfolio-connection-shell .shell-lines i {
+      display: block;
+      height: 9px;
+      border-radius: 999px;
+      background: rgba(30, 42, 39, .08)
+    }
+
+    .portfolio-connection-shell .shell-lines i:nth-child(1) {
+      width: 82px
+    }
+
+    .portfolio-connection-shell .shell-lines i:nth-child(2) {
+      width: 248px;
+      height: 13px
+    }
+
+    .portfolio-connection-shell .shell-lines i:nth-child(3) {
+      width: 315px
+    }
+
+    .portfolio-connection-shell .shell-action {
+      width: 180px;
+      height: 40px;
+      border-radius: 11px;
+      background: var(--nm-shared-surface)
+    }
+
+    #portfolio-collect.portfolio-disconnected .portfolio-connection-panel {
+      background: rgba(236, 239, 66, .08);
+      border-color: rgba(202, 210, 32, .46)
+    }
+
+    #portfolio-collect.portfolio-disconnected .portfolio-connection-panel .btn.primary {
+      background: var(--guide-yellow-strong, rgba(236, 239, 66, .92));
+      color: var(--guide-ink, #29312c) !important
+    }
+
+    .portfolio-flow-cue {
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 12px
+    }
+
+    .portfolio-flow-cue>div {
+      transition: opacity .15s linear
+    }
+
+    .portfolio-flow-cue .portfolio-flow-arrow {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 34px;
+      font-style: normal;
+      font-weight: 800;
+      font-size: 20px;
+      color: rgba(80, 88, 72, .72);
+      transform: translateX(0);
+      will-change: transform, opacity, filter;
+    }
+
+    .portfolio-flow-cue .portfolio-flow-arrow::before {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      left: -44px;
+      right: -44px;
+      top: 50%;
+      height: 2px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(236, 239, 66, 0), rgba(236, 239, 66, .78), rgba(236, 239, 66, 0));
+      opacity: 0;
+      transform: translateY(-50%) scaleX(.05);
+      transform-origin: left center;
+    }
+
+    .portfolio-metric-card {
+      margin-bottom: 12px
+    }
+
+    .portfolio-metrics-number-only .portfolio-metric {
+      min-height: 74px
+    }
+
+    .portfolio-metrics-number-only .portfolio-metric b {
+      display: block;
+      will-change: transform, opacity
+    }
+
+    .portfolio-metric b.is-counting {
+      font-variant-numeric: tabular-nums
+    }
+
+    #portfolio-collect .portfolio-step-disabled .guided-action {
+      opacity: .68;
+      background: var(--nm-shared-surface);
+      border: 1px solid rgba(100, 100, 100, .08)
+    }
+
+    #portfolio-collect .portfolio-step-shell {
+      height: 90px;
+      border: 1px solid rgba(20, 25, 34, .06);
+      border-radius: 16px;
+      background: var(--nm-shared-surface);
+      box-shadow: var(--sh);
+      opacity: .54
+    }
+
+    /* 01の見出し下線アニメーションは shared-guide.css の共通契約で管理する。 */
+
+    /* 未接続: 構図は固定したまま、JSON読込だけを約2.20秒で主操作へする。 */
+    #portfolio-collect.portfolio-disconnected.workflow-animate:not(.guide-show-all) .portfolio-connection-panel>* {
+      opacity: 0;
+      transform: translateY(4px)
+    }
+
+    #portfolio-collect.portfolio-disconnected.workflow-animate:not(.guide-show-all) .portfolio-connection-panel>div:first-child {
+      animation: portfolioPanelReveal .35s ease-out .60s forwards
+    }
+
+    #portfolio-collect.portfolio-disconnected.workflow-animate:not(.guide-show-all) .portfolio-connection-panel .connection-actions {
+      animation: portfolioPanelReveal .35s ease-out 1.10s forwards
+    }
+
+    #portfolio-collect.portfolio-disconnected.workflow-animate:not(.guide-show-all) .connection-actions .btn.primary {
+      opacity: 0;
+      transform: translateY(3px);
+      animation: portfolioCTAReveal .45s ease-out 1.10s forwards, portfolioCTAOnePulse .35s ease-out 1.55s 1
+    }
+
+    #portfolio-collect.portfolio-disconnected.workflow-animate:not(.guide-show-all) .connection-help {
+      opacity: 0;
+      animation: portfolioSimpleReveal .30s ease-out 1.90s forwards
+    }
+
+    #portfolio-collect.portfolio-disconnected .portfolio-flow-cue>div,
+    #portfolio-collect.portfolio-disconnected .portfolio-flow-cue .portfolio-flow-arrow {
+      opacity: .5
+    }
+
+    /* 接続済み: 接続情報の器は固定表示、内容のみ1.70秒から見せる。 */
+    #portfolio-collect.portfolio-connected.workflow-animate:not(.guide-show-all) .portfolio-connection-panel>* {
+      opacity: 0;
+      transform: translateY(4px)
+    }
+
+    #portfolio-collect.portfolio-connected.workflow-animate:not(.guide-show-all) .portfolio-connection-panel>div:first-child {
+      animation: portfolioPanelReveal .55s ease-out 1.70s forwards
+    }
+
+    #portfolio-collect.portfolio-connected.workflow-animate:not(.guide-show-all) .portfolio-connection-panel .connection-actions {
+      animation: portfolioPanelReveal .55s ease-out 1.78s forwards
+    }
+
+    /* 3工程: 枠と文字位置は初期に把握でき、3.15秒で正規濃度へ移る。 */
+    #portfolio-collect.portfolio-connected.workflow-animate:not(.guide-show-all) .portfolio-flow-cue>div {
+      opacity: .34;
+      animation: portfolioCopyFocus .50s ease-out 3.15s forwards
+    }
+
+    #portfolio-collect.portfolio-connected.workflow-animate:not(.guide-show-all) .portfolio-flow-cue .portfolio-flow-arrow {
+      opacity: .28
+    }
+
+    @keyframes portfolioCopyFocus {
+      from {
+        opacity: .34
+      }
+
+      to {
+        opacity: 1
+      }
+    }
+
+    /* 矢印: 左の工程から右の工程へ渡ることが分かるよう、各矢印を左→右へ移動させる。 */
+    #portfolio-collect.portfolio-connected.workflow-animate:not(.guide-show-all) .portfolio-flow-cue .portfolio-flow-arrow:nth-of-type(1) {
+      animation: portfolioArrowTravel .92s cubic-bezier(.22, .75, .24, 1) 4.45s forwards
+    }
+
+    #portfolio-collect.portfolio-connected.workflow-animate:not(.guide-show-all) .portfolio-flow-cue .portfolio-flow-arrow:nth-of-type(1)::before {
+      animation: portfolioArrowTrail .92s cubic-bezier(.22, .75, .24, 1) 4.45s forwards
+    }
+
+    #portfolio-collect.portfolio-connected.workflow-animate:not(.guide-show-all) .portfolio-flow-cue .portfolio-flow-arrow:nth-of-type(2) {
+      animation: portfolioArrowTravel .92s cubic-bezier(.22, .75, .24, 1) 5.20s forwards
+    }
+
+    #portfolio-collect.portfolio-connected.workflow-animate:not(.guide-show-all) .portfolio-flow-cue .portfolio-flow-arrow:nth-of-type(2)::before {
+      animation: portfolioArrowTrail .92s cubic-bezier(.22, .75, .24, 1) 5.20s forwards
+    }
+
+    @keyframes portfolioArrowTravel {
+      0% {
+        opacity: .22;
+        transform: translateX(-46px) scale(.96);
+        filter: brightness(.96)
+      }
+
+      18% {
+        opacity: .94;
+        filter: brightness(1.08)
+      }
+
+      72% {
+        opacity: 1;
+        transform: translateX(46px) scale(1.02);
+        filter: brightness(1.08)
+      }
+
+      100% {
+        opacity: .78;
+        transform: translateX(46px) scale(1);
+        filter: brightness(1)
+      }
+    }
+
+    @keyframes portfolioArrowTrail {
+      0% {
+        opacity: 0;
+        transform: translateY(-50%) scaleX(.05)
+      }
+
+      18% {
+        opacity: .42
+      }
+
+      72% {
+        opacity: .78;
+        transform: translateY(-50%) scaleX(1)
+      }
+
+      100% {
+        opacity: .18;
+        transform: translateY(-50%) scaleX(1)
+      }
+    }
+
+    /* 数字: 枠・ラベルは0.00秒から固定。数字だけを5.85秒以降に提示。 */
+    #portfolio-collect.portfolio-connected.workflow-animate:not(.guide-show-all) .portfolio-metrics-number-only .portfolio-metric b {
+      opacity: 0;
+      transform: translateY(3px) scale(.98);
+      animation: portfolioNumberOnly .22s ease-out forwards
+    }
+
+    #portfolio-collect.portfolio-connected.workflow-animate:not(.guide-show-all) .portfolio-metrics-number-only .portfolio-metric:nth-child(1) b {
+      animation-delay: 5.85s
+    }
+
+    #portfolio-collect.portfolio-connected.workflow-animate:not(.guide-show-all) .portfolio-metrics-number-only .portfolio-metric:nth-child(2) b {
+      animation-delay: 6.15s
+    }
+
+    #portfolio-collect.portfolio-connected.workflow-animate:not(.guide-show-all) .portfolio-metrics-number-only .portfolio-metric:nth-child(3) b {
+      animation-delay: 6.45s
+    }
+
+    #portfolio-collect.portfolio-connected.workflow-animate:not(.guide-show-all) .portfolio-metrics-number-only .portfolio-metric:nth-child(4) b {
+      animation-delay: 6.75s
+    }
+
+    @keyframes portfolioNumberOnly {
+      from {
+        opacity: 0;
+        transform: translateY(3px) scale(.98)
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1)
+      }
+    }
+
+    /* STEP: 枠は初期表示。内容は8.07秒以降のみ注視対象となる。 */
+    #portfolio-collect.portfolio-connected.workflow-animate:not(.guide-show-all) .guided-action-slot .guided-action {
+      animation: none !important;
+      opacity: 1;
+      transform: none;
+      border: 1px solid rgba(202, 210, 32, .18);
+      background: var(--nm-shared-surface)
+    }
+
+    #portfolio-collect.portfolio-connected.workflow-animate:not(.guide-show-all) .guided-action-copy {
+      opacity: 0;
+      transform: translateY(4px);
+      animation: portfolioPanelReveal .50s cubic-bezier(.22, .61, .28, 1) 8.07s forwards
+    }
+
+    #portfolio-collect.portfolio-connected .guided-action-copy b {
+      position: relative;
+      display: inline-block;
+      isolation: isolate
+    }
+
+    #portfolio-collect.portfolio-connected .guided-action-copy b::after {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      left: -3px;
+      right: -6px;
+      bottom: -.04em;
+      height: .72em;
+      border-radius: 3px 9px 8px 3px;
+      background: var(--guide-yellow-strong, rgba(236, 239, 66, .92));
+      opacity: 0;
+      transform: scaleX(0) skewX(-1.2deg);
+      transform-origin: left center
+    }
+
+    #portfolio-collect.portfolio-connected.workflow-animate:not(.guide-show-all) .guided-action-copy b::after {
+      animation: portfolioStepHighlighter 1.10s cubic-bezier(.22, .61, .28, 1) 8.57s forwards
+    }
+
+    #portfolio-collect.portfolio-connected.guide-show-all .guided-action-copy b::after {
+      opacity: .9;
+      transform: scaleX(1) skewX(-1.2deg)
+    }
+
+    #portfolio-collect.portfolio-connected.workflow-animate:not(.guide-show-all) .workflow-primary-target {
+      opacity: 0;
+      transform: translateY(4px);
+      animation: workflowButtonReveal .45s cubic-bezier(.22, .61, .28, 1) 9.67s forwards, portfolioCTAOnePulse .45s ease-out 10.12s 1;
+      background: var(--guide-yellow-strong, rgba(236, 239, 66, .92)) !important;
+      color: var(--guide-ink, #29312c) !important
+    }
+
+    @keyframes portfolioStepHighlighter {
+      0% {
+        opacity: .10;
+        transform: scaleX(0) skewX(-1.2deg)
+      }
+
+      100% {
+        opacity: .90;
+        transform: scaleX(1) skewX(-1.2deg)
+      }
+    }
+
+    #portfolio-collect.portfolio-disconnected.workflow-animate .guided-action-slot .guided-action {
+      animation: none !important;
+      opacity: 1 !important;
+      transform: none !important
+    }
+
+    @keyframes portfolioPanelReveal {
+      from {
+        opacity: 0;
+        transform: translateY(4px)
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0)
+      }
+    }
+
+    @keyframes portfolioCTAReveal {
+      from {
+        opacity: 0;
+        transform: translateY(3px)
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0)
+      }
+    }
+
+    @keyframes portfolioCTAOnePulse {
+
+      0%,
+      100% {
+        filter: brightness(1);
+        transform: translateY(0)
+      }
+
+      50% {
+        filter: brightness(1.055);
+        transform: translateY(-1px)
+      }
+    }
+
+    @keyframes portfolioSimpleReveal {
+      from {
+        opacity: 0
+      }
+
+      to {
+        opacity: 1
+      }
+    }
+
+    @media(max-width:760px) {
+      .portfolio-connection-panel {
+        grid-template-columns: 1fr
+      }
+
+      .portfolio-connection-panel .connection-actions {
+        align-items: flex-start
+      }
+
+      .portfolio-connection-panel .connection-help {
+        text-align: left;
+        max-width: none
+      }
+    }
+
+    /* v84: 読込済み証跡を削除せず、入口の未接続状態を安全に確認できる。 */
+    .connection-actions .connection-secondary-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 8px
+    }
+
+    .connection-actions .btn.connection-test-btn {
+      font-size: 10px;
+      opacity: .82
+    }
+
+    .connection-detached-note {
+      margin-top: 8px;
+      padding: 8px 10px;
+      border-radius: 10px;
+      background: var(--nm-shared-surface);
+      font-size: 10px;
+      line-height: 1.55;
+      color: var(--mut)
+    }
+
+    /* 01の入口テンポでも、見出し下線は shared-guide.css の共通契約で管理する。 */
+
+    #portfolio-collect.portfolio-connected.portfolio-entrance-fade.workflow-animate:not(.guide-show-all) .portfolio-connection-panel>div:first-child {
+      animation: portfolioPanelReveal 1.80s cubic-bezier(.22, .61, .28, 1) 2.00s forwards;
+    }
+
+    #portfolio-collect.portfolio-connected.portfolio-entrance-fade.workflow-animate:not(.guide-show-all) .portfolio-connection-panel .connection-actions {
+      animation: portfolioPanelReveal 1.35s cubic-bezier(.22, .61, .28, 1) 2.35s forwards;
+    }
+
+    #portfolio-collect.portfolio-connected.portfolio-entrance-fade.workflow-animate:not(.guide-show-all) .portfolio-flow-cue>div {
+      opacity: .34;
+      animation: portfolioCopyFocus 1.60s cubic-bezier(.22, .61, .28, 1) 4.05s forwards;
+    }
+
+    #portfolio-collect.portfolio-connected.portfolio-entrance-fade.workflow-animate:not(.guide-show-all) .portfolio-flow-cue .portfolio-flow-arrow:nth-of-type(1) {
+      animation: portfolioArrowTravel 1.05s cubic-bezier(.22, .75, .24, 1) 5.90s forwards;
+    }
+
+    #portfolio-collect.portfolio-connected.portfolio-entrance-fade.workflow-animate:not(.guide-show-all) .portfolio-flow-cue .portfolio-flow-arrow:nth-of-type(1)::before {
+      animation: portfolioArrowTrail 1.05s cubic-bezier(.22, .75, .24, 1) 5.90s forwards;
+    }
+
+    #portfolio-collect.portfolio-connected.portfolio-entrance-fade.workflow-animate:not(.guide-show-all) .portfolio-flow-cue .portfolio-flow-arrow:nth-of-type(2) {
+      animation: portfolioArrowTravel 1.05s cubic-bezier(.22, .75, .24, 1) 6.78s forwards;
+    }
+
+    #portfolio-collect.portfolio-connected.portfolio-entrance-fade.workflow-animate:not(.guide-show-all) .portfolio-flow-cue .portfolio-flow-arrow:nth-of-type(2)::before {
+      animation: portfolioArrowTrail 1.05s cubic-bezier(.22, .75, .24, 1) 6.78s forwards;
+    }
+
+    #portfolio-collect.portfolio-connected.portfolio-entrance-fade.workflow-animate:not(.guide-show-all) .portfolio-metrics-number-only .portfolio-metric b {
+      animation-duration: .75s;
+      animation-timing-function: cubic-bezier(.22, .61, .28, 1);
+    }
+
+    #portfolio-collect.portfolio-connected.portfolio-entrance-fade.workflow-animate:not(.guide-show-all) .portfolio-metrics-number-only .portfolio-metric:nth-child(1) b {
+      animation-delay: 7.20s
+    }
+
+    #portfolio-collect.portfolio-connected.portfolio-entrance-fade.workflow-animate:not(.guide-show-all) .portfolio-metrics-number-only .portfolio-metric:nth-child(2) b {
+      animation-delay: 7.65s
+    }
+
+    #portfolio-collect.portfolio-connected.portfolio-entrance-fade.workflow-animate:not(.guide-show-all) .portfolio-metrics-number-only .portfolio-metric:nth-child(3) b {
+      animation-delay: 8.10s
+    }
+
+    #portfolio-collect.portfolio-connected.portfolio-entrance-fade.workflow-animate:not(.guide-show-all) .portfolio-metrics-number-only .portfolio-metric:nth-child(4) b {
+      animation-delay: 8.55s
+    }
+
+    #portfolio-collect.portfolio-connected.portfolio-entrance-fade.workflow-animate:not(.guide-show-all) .guided-action-copy {
+      animation: portfolioPanelReveal .80s cubic-bezier(.22, .61, .28, 1) 9.75s forwards;
+    }
+
+    #portfolio-collect.portfolio-connected.portfolio-entrance-fade.workflow-animate:not(.guide-show-all) .guided-action-copy b::after {
+      animation: portfolioStepHighlighter 1.20s cubic-bezier(.22, .61, .28, 1) 10.05s forwards;
+    }
+
+    #portfolio-collect.portfolio-connected.portfolio-entrance-fade.workflow-animate:not(.guide-show-all) .workflow-primary-target {
+      animation: workflowButtonReveal .90s cubic-bezier(.22, .61, .28, 1) 11.25s forwards,
+        portfolioCTAOnePulse .50s ease-out 12.15s 1;
+    }
+
+    @media(prefers-reduced-motion:reduce) {
+
+      #portfolio-collect.workflow-animate .heading h2 span::after,
+      #portfolio-collect.portfolio-connected.workflow-animate .portfolio-connection-panel>*,
+      #portfolio-collect.portfolio-connected.workflow-animate .portfolio-flow-cue>div,
+      #portfolio-collect.portfolio-connected.workflow-animate .portfolio-flow-cue .portfolio-flow-arrow,
+      #portfolio-collect.portfolio-connected.workflow-animate .portfolio-metrics-number-only .portfolio-metric b,
+      #portfolio-collect.portfolio-connected.workflow-animate .guided-action-copy,
+      #portfolio-collect.workflow-animate .workflow-primary-target,
+      #portfolio-collect.portfolio-disconnected.workflow-animate .portfolio-connection-panel>*,
+      #portfolio-collect.portfolio-disconnected.workflow-animate .connection-actions .btn.primary,
+      #portfolio-collect.portfolio-disconnected.workflow-animate .connection-help {
+        animation: none !important;
+        opacity: 1 !important;
+        transform: none !important
+      }
+    }
+
+
+
+
+    /* v166: 06の確定予定パネルは長文をパネル内で制御し、ページ全体を縦に引き伸ばさない。 */
+    /* v167: 回収済みの対話カウントは表示後performance.now()実時間ベースで3秒に固定。 */
+    #portfolio-next .portfolio-final-card {
+      min-width: 0;
+      overflow: hidden
+    }
+
+    #portfolio-next #portfolioPreview {
+      max-height: clamp(220px, calc(100vh - 520px), 360px);
+      overflow: auto;
+      overscroll-behavior: contain;
+      padding-right: 4px
+    }
+
+    #portfolio-next #portfolioPreview::-webkit-scrollbar {
+      width: 5px
+    }
+
+    #portfolio-next #portfolioPreview::-webkit-scrollbar-thumb {
+      background: rgba(70, 80, 72, .18);
+      border-radius: 999px
+    }
+
+    #portfolio-next #portfolioPreview .portfolio-preview-item {
+      padding: 8px 0
+    }
+
+    #portfolio-next #portfolioPreview .portfolio-preview-item p {
+      display: -webkit-box;
+      -webkit-line-clamp: 4;
+      -webkit-box-orient: vertical;
+      overflow: hidden
+    }
+
+    #portfolio-next .portfolio-final-note {
+      font-size: 9px;
+      line-height: 1.5
+    }
+
+    /* v102: 02/03はスクロールで探させず、要点カード・選択詳細・状態フィルターで判断できる工程骨格へ整理。 */
+    .portfolio-main-nav .nav-direct-title::after {
+      content: " 工場ライン";
+      font-size: 9px;
+      color: var(--mut);
+      font-weight: 500;
+      margin-left: 4px
+    }
+
+    .project-main-nav .nav-direct-title::after {
+      content: " 成果物棚";
+      font-size: 9px;
+      color: var(--mut);
+      font-weight: 500;
+      margin-left: 4px
+    }
+
+    .import-main-nav {
+      opacity: .82
+    }
+
+    .import-main-nav .nav-child {
+      font-size: 10px
+    }
+
+
+    /* v102: スクロールで探させない工程骨格 */
+    .workflow-guide-page {
+      max-width: 1220px;
+      margin: 0 auto
+    }
+
+    .workflow-brief {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(120px, 1fr));
+      gap: 10px;
+      margin: 0 0 16px
+    }
+
+    .workflow-brief-card {
+      border: 1px solid rgba(106, 128, 123, .12);
+      background: rgba(255, 255, 255, .44);
+      border-radius: 15px;
+      padding: 13px 14px;
+      box-shadow: inset -2px -2px 5px rgba(255, 255, 255, .38), inset 2px 2px 5px rgba(157, 168, 179, .08)
+    }
+
+    .workflow-brief-card span {
+      display: block;
+      color: var(--mut);
+      font-size: 10px;
+      letter-spacing: .08em;
+      margin-bottom: 7px
+    }
+
+    .workflow-brief-card b {
+      font-size: 22px;
+      font-weight: 560;
+      color: #435653
+    }
+
+    /* v150: 02 summary cards become compact filter buttons. */
+    #captureQualitySummary.workflow-brief {
+      grid-template-columns: repeat(4, minmax(120px, 1fr));
+      gap: 8px;
+      margin: 0 0 14px
+    }
+
+    #captureQualitySummary .workflow-brief-card {
+      min-height: 40px;
+      padding: 7px 12px;
+      border-radius: 12px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      text-align: left;
+      cursor: pointer;
+      transition: transform .16s ease, box-shadow .16s ease, border-color .16s ease, background .16s ease
+    }
+
+    #captureQualitySummary .workflow-brief-card span {
+      margin: 0;
+      font-size: 9.5px;
+      line-height: 1.2;
+      letter-spacing: .05em
+    }
+
+    #captureQualitySummary .workflow-brief-card b {
+      font-size: 16px;
+      line-height: 1;
+      text-align: right;
+      justify-self: end;
+      min-width: 22px;
+      font-weight: 650;
+      color: #435653
+    }
+
+    #captureQualitySummary .workflow-brief-card:hover {
+      transform: translateY(-1px);
+      border-color: rgba(211, 237, 37, .38);
+      box-shadow: 0 8px 20px rgba(58, 66, 64, .08), inset -2px -2px 5px rgba(255, 255, 255, .45), inset 2px 2px 5px rgba(157, 168, 179, .08)
+    }
+
+    #captureQualitySummary .workflow-brief-card.is-active {
+      background: rgba(239, 255, 77, .22);
+      border-color: rgba(210, 238, 42, .72);
+      box-shadow: 0 0 0 1px rgba(217, 242, 45, .35), 0 8px 22px rgba(72, 78, 48, .08)
+    }
+
+    .workflow-filter-note {
+      margin: 0 0 10px;
+      color: #6b7774;
+      font-size: 11px;
+      line-height: 1.55
+    }
+
+    .workflow-filter-note b {
+      color: #33413e
+    }
+
+    @media(max-width:760px) {
+      #captureQualitySummary.workflow-brief {
+        grid-template-columns: repeat(2, minmax(0, 1fr))
+      }
+    }
+
+    /* v153: 02 right rail must stay inside the visible work area and avoid bulky scroll UI. */
+    #portfolio-quality .workflow-fulltext-layout {
+      grid-template-columns: minmax(0, 1fr) minmax(272px, 340px);
+      gap: 16px;
+      align-items: start
+    }
+
+    #portfolio-quality .workflow-range-panel.workflow-side-card {
+      min-width: 0;
+      overflow: hidden
+    }
+
+    #portfolio-quality .workflow-range-scroll {
+      max-height: clamp(260px, calc(100vh - 470px), 520px);
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding: 0 4px 4px 0;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(103, 119, 115, .26) transparent;
+      overscroll-behavior: contain
+    }
+
+    #portfolio-quality .workflow-range-scroll::-webkit-scrollbar {
+      width: 4px
+    }
+
+    #portfolio-quality .workflow-range-scroll::-webkit-scrollbar-track {
+      background: transparent
+    }
+
+    #portfolio-quality .workflow-range-scroll::-webkit-scrollbar-thumb {
+      background: rgba(103, 119, 115, .20);
+      border-radius: 999px
+    }
+
+    #portfolio-quality .workflow-range-list {
+      gap: 8px
+    }
+
+    #portfolio-quality .workflow-range-item {
+      padding: 10px 11px;
+      border-radius: 13px;
+      max-width: 100%;
+      overflow: hidden
+    }
+
+    #portfolio-quality .workflow-card-meta {
+      gap: 4px;
+      margin-top: 0
+    }
+
+    #portfolio-quality .workflow-chip {
+      min-height: 20px;
+      padding: 0 7px;
+      font-size: 9px;
+      white-space: nowrap
+    }
+
+    #portfolio-quality .workflow-sequence-chip {
+      background: rgba(235, 240, 237, .96);
+      color: #586864;
+      font-weight: 650
+    }
+
+    #portfolio-quality .workflow-range-summary h4 {
+      font-size: 11.5px;
+      line-height: 1.42;
+      margin-top: 7px;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      word-break: break-word
+    }
+
+    #portfolio-quality .workflow-range-summary::after {
+      font-size: 9.5px;
+      margin-top: 6px
+    }
+
+    @media(max-width:1180px) {
+      #portfolio-quality .workflow-range-scroll {
+        max-height: 360px
+      }
+    }
+
+
+    /* v132: 02/03 full-text first review layouts. Keep the source text dominant and make side controls supportive. */
+    .workflow-fulltext-box mark {
+      background: rgba(223, 255, 66, .38);
+      border-radius: 6px;
+      padding: 1px 3px;
+      color: #273330
+    }
+
+    .workflow-fallback-view {
+      min-height: 320px
+    }
+
+    .workflow-fulltext-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.48fr) minmax(300px, .52fr);
+      gap: 16px;
+      align-items: start;
+      margin-bottom: 16px
+    }
+
+    .workflow-fulltext-card {
+      padding: 19px 20px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, .58);
+      box-shadow: var(--sh);
+      border: 1px solid rgba(109, 129, 125, .10)
+    }
+
+    .workflow-fulltext-card h3,
+    .workflow-range-panel h3 {
+      margin: 0 0 8px;
+      font-size: 17px;
+      color: #2f3d3a
+    }
+
+    .workflow-fulltext-card p,
+    .workflow-range-panel p {
+      margin: 0 0 12px;
+      color: #60716d;
+      font-size: 11px;
+      line-height: 1.65
+    }
+
+    .workflow-fulltext-box {
+      max-height: 500px;
+      overflow: auto;
+      padding: 17px 18px;
+      border-radius: 14px;
+      background: rgba(238, 242, 240, .72);
+      font-size: 12px;
+      line-height: 2.02;
+      color: #40504d;
+      white-space: pre-wrap;
+      box-shadow: inset 8px 8px 18px rgba(142, 151, 150, .10), inset -8px -8px 18px rgba(255, 255, 255, .62)
+    }
+
+    .workflow-fulltext-mark {
+      display: inline;
+      padding: 2px 4px;
+      border-radius: 5px;
+      background: rgba(236, 239, 66, .46);
+      box-shadow: 0 0 0 1px rgba(216, 221, 32, .22);
+      font-weight: 700;
+      color: #26322f
+    }
+
+    .workflow-fulltext-candidate-title {
+      display: block;
+      margin: 0 0 6px;
+      font-weight: 800;
+      color: #26322f;
+      line-height: 1.7
+    }
+
+    .workflow-fulltext-mark.alt {
+      background: rgba(213, 236, 228, .82);
+      box-shadow: 0 0 0 1px rgba(117, 159, 145, .16)
+    }
+
+    .workflow-range-panel.workflow-side-card {
+      position: relative;
+      top: auto;
+      padding: 4px 0 0;
+      border: 0;
+      background: transparent;
+      box-shadow: none;
+      border-radius: 0
+    }
+
+    .workflow-range-panel.workflow-side-card h3 {
+      font-size: 15px;
+      margin-bottom: 7px
+    }
+
+    .workflow-range-panel.workflow-side-card>p {
+      font-size: 10.5px;
+      line-height: 1.6;
+      margin-bottom: 10px
+    }
+
+    .workflow-range-list {
+      display: grid;
+      gap: 9px
+    }
+
+    .workflow-range-item {
+      position: relative;
+      padding: 12px 13px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, .50);
+      border: 1px solid rgba(109, 129, 125, .10);
+      box-shadow: 0 8px 22px rgba(68, 78, 75, .06), inset -5px -5px 12px rgba(255, 255, 255, .45), inset 5px 5px 12px rgba(146, 154, 153, .05)
+    }
+
+    .workflow-range-item.is-active {
+      background: rgba(255, 250, 226, .70);
+      border-color: rgba(219, 188, 83, .34)
+    }
+
+    .workflow-range-item h4 {
+      margin: 7px 0 7px;
+      font-size: 12.5px;
+      color: #31413e
+    }
+
+    .workflow-range-item p {
+      margin: 0 0 9px;
+      font-size: 10.5px;
+      line-height: 1.58;
+      color: #60716d
+    }
+
+    .workflow-range-summary {
+      display: block;
+      width: 100%;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      text-align: left;
+      cursor: pointer
+    }
+
+    .workflow-range-summary h4 {
+      margin: 8px 0 0;
+      font-size: 13px;
+      line-height: 1.45;
+      color: #2f3f3c
+    }
+
+    .workflow-range-summary::after {
+      content: '詳細を開く';
+      display: inline-flex;
+      margin-top: 8px;
+      font-size: 10px;
+      letter-spacing: .08em;
+      color: #71827f
+    }
+
+    .workflow-range-item.is-open .workflow-range-summary::after {
+      content: '詳細を閉じる'
+    }
+
+    .workflow-range-body {
+      display: none;
+      padding-top: 9px
+    }
+
+    .workflow-range-item.is-open .workflow-range-body {
+      display: block
+    }
+
+    .workflow-range-item.is-open {
+      background: rgba(255, 250, 226, .70);
+      border-color: rgba(219, 188, 83, .34)
+    }
+
+    .workflow-range-actions {
+      display: flex;
+      gap: 7px;
+      flex-wrap: wrap
+    }
+
+    .workflow-range-actions .btn {
+      min-height: 32px;
+      padding: 0 12px
+    }
+
+    .workflow-range-actions .btn.danger {
+      color: var(--bad);
+      background: rgba(255, 255, 255, .45);
+      border: 1px solid rgba(180, 70, 82, .18)
+    }
+
+    .workflow-review-layout {
+      display: grid;
+      grid-template-columns: minmax(320px, .76fr) minmax(0, 1.24fr) minmax(245px, .42fr);
+      gap: 16px;
+      align-items: start;
+      margin-bottom: 16px
+    }
+
+    .workflow-context-mini .workflow-fulltext-box {
+      max-height: 380px;
+      font-size: 11px;
+      line-height: 1.9
+    }
+
+    .workflow-decompose-list {
+      display: grid;
+      gap: 11px
+    }
+
+    .workflow-decompose-item {
+      padding: 13px 14px;
+      border-radius: 15px;
+      background: rgba(255, 255, 255, .60);
+      border: 1px solid rgba(109, 129, 125, .12);
+      box-shadow: var(--sh)
+    }
+
+    .workflow-decompose-item.is-active {
+      background: rgba(255, 250, 226, .72);
+      border-color: rgba(219, 188, 83, .38)
+    }
+
+    .workflow-decompose-item h3 {
+      font-size: 14px;
+      margin: 7px 0;
+      color: #33433f
+    }
+
+    .workflow-decompose-item p {
+      margin: 0;
+      color: #60716d;
+      font-size: 11px;
+      line-height: 1.62
+    }
+
+    .workflow-class-list {
+      display: grid;
+      gap: 7px
+    }
+
+    .workflow-class-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 10px;
+      border-radius: 12px;
+      background: rgba(238, 245, 242, .58);
+      font-size: 11px;
+      color: #465752
+    }
+
+    .workflow-class-row b {
+      color: #2f3d3a
+    }
+
+    .workflow-class-row.is-current {
+      background: rgb(240, 240, 237);
+      border-color: transparent;
+      box-shadow: inset calc(.55 * var(--nm-offset, 8px)) calc(.55 * var(--nm-offset, 8px)) calc(.82 * var(--nm-blur, 16px)) var(--nm-shadow-color, rgba(153,153,151,.32)), inset calc(-.55 * var(--nm-offset, 8px)) calc(-.55 * var(--nm-offset, 8px)) calc(.82 * var(--nm-blur, 16px)) var(--nm-light-color, rgba(255,255,255,.58))
+    }
+
+    .workflow-review-layout>.workflow-side-card {
+      position: relative;
+      top: auto;
+      border: 0;
+      background: transparent;
+      box-shadow: none;
+      border-radius: 0;
+      padding: 4px 0 0
+    }
+
+    .workflow-review-layout>.workflow-side-card h3 {
+      font-size: 15px;
+      margin-bottom: 8px
+    }
+
+    .workflow-review-layout>.workflow-side-card p {
+      font-size: 10.5px;
+      line-height: 1.6;
+      margin-bottom: 10px
+    }
+
+    @media(max-width:1180px) {
+
+      .workflow-fulltext-layout,
+      .workflow-review-layout {
+        grid-template-columns: 1fr
+      }
+
+      .workflow-fulltext-box {
+        max-height: 320px
+      }
+
+      .workflow-range-panel.workflow-side-card,
+      .workflow-review-layout>.workflow-side-card {
+        padding: 14px;
+        border: 1px solid rgba(110, 132, 128, .11);
+        background: rgba(255, 255, 255, .38);
+        border-radius: 18px;
+        box-shadow: var(--sh)
+      }
+    }
+
+    .workflow-stage-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 330px;
+      gap: 16px;
+      align-items: start;
+      margin-bottom: 16px
+    }
+
+    .workflow-stage-layout.three {
+      grid-template-columns: 280px minmax(0, 1fr) 330px
+    }
+
+    .workflow-card-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px
+    }
+
+    .workflow-mini-card {
+      border: 1px solid rgba(109, 129, 125, .13);
+      background: rgba(255, 255, 255, .50);
+      border-radius: 17px;
+      padding: 15px 16px;
+      box-shadow: var(--sh);
+      min-height: 150px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px
+    }
+
+    .workflow-mini-card.is-active {
+      background: rgba(255, 250, 226, .56);
+      border-color: rgba(219, 188, 83, .34)
+    }
+
+    .workflow-mini-card h3 {
+      font-size: 14px;
+      margin: 0;
+      color: #3e504c
+    }
+
+    .workflow-mini-card p {
+      margin: 0;
+      color: #60716d;
+      font-size: 12px;
+      line-height: 1.65
+    }
+
+    .workflow-card-meta {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-top: auto
+    }
+
+    .workflow-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      min-height: 23px;
+      padding: 0 8px;
+      border-radius: 999px;
+      background: rgba(238, 242, 240, .9);
+      color: #677672;
+      font-size: 10px
+    }
+
+    .workflow-chip.ok {
+      background: var(--goodb);
+      color: var(--good)
+    }
+
+    .workflow-chip.warn {
+      background: var(--holdb);
+      color: var(--hold)
+    }
+
+    .workflow-chip.bad {
+      background: var(--badb);
+      color: var(--bad)
+    }
+
+    .workflow-side-card {
+      position: sticky;
+      top: 0;
+      border: 1px solid rgba(110, 132, 128, .13);
+      background: rgba(255, 255, 255, .45);
+      border-radius: 20px;
+      padding: 18px;
+      box-shadow: var(--sh)
+    }
+
+    .workflow-side-card h3 {
+      margin: 0 0 12px
+    }
+
+    .workflow-side-card p {
+      color: #61716e;
+      font-size: 12px;
+      line-height: 1.7
+    }
+
+    .workflow-side-list {
+      display: grid;
+      gap: 9px;
+      margin-top: 12px
+    }
+
+    .workflow-side-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      padding: 10px 11px;
+      border-radius: 12px;
+      background: rgba(238, 242, 240, .72);
+      font-size: 12px
+    }
+
+    .workflow-side-row b {
+      font-weight: 600
+    }
+
+    .workflow-side-row span {
+      color: var(--mut);
+      font-size: 11px
+    }
+
+    .workflow-filter-row {
+      display: flex;
+      gap: 7px;
+      flex-wrap: wrap;
+      margin-bottom: 12px
+    }
+
+    .workflow-filter {
+      border: 1px solid rgba(104, 127, 123, .13);
+      background: rgba(255, 255, 255, .52);
+      border-radius: 999px;
+      padding: 8px 10px;
+      color: #5f716d;
+      font-size: 11px
+    }
+
+    .workflow-filter.is-active {
+      background: rgb(240, 240, 237);
+      color: var(--tx, #22282b);
+      border-color: transparent;
+      box-shadow: inset calc(.55 * var(--nm-offset, 8px)) calc(.55 * var(--nm-offset, 8px)) calc(.82 * var(--nm-blur, 16px)) var(--nm-shadow-color, rgba(153,153,151,.32)), inset calc(-.55 * var(--nm-offset, 8px)) calc(-.55 * var(--nm-offset, 8px)) calc(.82 * var(--nm-blur, 16px)) var(--nm-light-color, rgba(255,255,255,.58));
+      font-weight: 650
+    }
+
+    .workflow-detail-box {
+      border: 1px solid rgba(104, 127, 123, .13);
+      border-radius: 15px;
+      background: rgba(238, 242, 240, .58);
+      padding: 13px;
+      line-height: 1.65;
+      font-size: 12px;
+      color: #566661
+    }
+
+    .workflow-detail-box summary {
+      cursor: pointer;
+      font-weight: 650;
+      color: #435653
+    }
+
+    .workflow-primary-row {
+      margin-top: 14px
+    }
+
+    .workflow-secondary-link {
+      border: 0;
+      background: transparent;
+      color: #7b8985;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      font-size: 12px;
+      margin-left: 8px
+    }
+
+    .artifact-shelf-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 12px
+    }
+
+    .artifact-shelf-card {
+      min-height: 170px
+    }
+
+    .artifact-shelf-card b {
+      display: block;
+      font-size: 15px;
+      margin: 5px 0 9px
+    }
+
+    .artifact-shelf-card small {
+      display: block;
+      color: var(--mut);
+      line-height: 1.55
+    }
+
+    @media(max-width:1100px) {
+
+      .workflow-stage-layout,
+      .workflow-stage-layout.three {
+        grid-template-columns: 1fr
+      }
+
+      .workflow-side-card {
+        position: relative
+      }
+
+      .workflow-card-grid,
+      .artifact-shelf-grid {
+        grid-template-columns: 1fr
+      }
+
+      .workflow-brief {
+        grid-template-columns: repeat(2, minmax(0, 1fr))
+      }
+    }
+
+    /* v127: 05/06 outcome screens refinement */
+    .portfolio-page #portfolioPurposes.portfolio-purposes {
+      grid-template-columns: 1fr;
+      gap: 10px
+    }
+
+    .portfolio-page .portfolio-purpose {
+      min-height: 84px;
+      padding: 13px 14px 13px 52px;
+      display: block
+    }
+
+    .portfolio-page .portfolio-purpose .portfolio-code {
+      position: absolute;
+      left: 14px;
+      top: 16px;
+      width: 26px;
+      height: 26px;
+      font-size: 11px;
+      margin: 0
+    }
+
+    .portfolio-page .portfolio-purpose b {
+      font-size: 13px;
+      line-height: 1.4
+    }
+
+    .portfolio-page .portfolio-purpose small {
+      font-size: 10.5px;
+      line-height: 1.55
+    }
+
+    .portfolio-page .portfolio-purpose .portfolio-state {
+      font-size: 9.5px
+    }
+
+    .portfolio-deliverable-preview {
+      min-height: 330px;
+      display: grid;
+      gap: 12px;
+      align-content: start
+    }
+
+    .portfolio-deliverable-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 4px
+    }
+
+    .portfolio-deliverable-head h3 {
+      margin: 0;
+      font-size: 17px
+    }
+
+    .portfolio-deliverable-head p {
+      margin: 5px 0 0;
+      color: var(--mut);
+      font-size: 11px;
+      line-height: 1.7
+    }
+
+    .portfolio-deliverable-type {
+      font-size: 10px;
+      color: #71817d;
+      background: rgba(238, 242, 240, .82);
+      border-radius: 999px;
+      padding: 6px 9px;
+      white-space: nowrap
+    }
+
+    .portfolio-deliverable-body {
+      border-radius: 18px;
+      background: rgba(255, 255, 255, .42);
+      box-shadow: inset calc(.28 * var(--nm-offset)) calc(.28 * var(--nm-offset)) calc(.7 * var(--nm-blur)) rgba(108, 120, 116, .16), inset calc(-.28 * var(--nm-offset)) calc(-.28 * var(--nm-offset)) calc(.7 * var(--nm-blur)) rgba(255, 255, 255, .65);
+      padding: 16px
+    }
+
+    .portfolio-deliverable-body label {
+      display: block;
+      font-size: 10px;
+      color: var(--mut);
+      letter-spacing: .08em;
+      margin-bottom: 8px
+    }
+
+    .portfolio-deliverable-body b {
+      display: block;
+      font-size: 15px;
+      line-height: 1.6;
+      margin-bottom: 8px;
+      color: #2d3836
+    }
+
+    .portfolio-deliverable-body p {
+      margin: 0;
+      color: #5b6966;
+      font-size: 12px;
+      line-height: 1.8
+    }
+
+    .portfolio-deliverable-checks {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px
+    }
+
+    .portfolio-deliverable-check {
+      border-radius: 14px;
+      background: rgba(241, 245, 243, .78);
+      padding: 10px 11px;
+      font-size: 11px;
+      color: #52635f
+    }
+
+    .portfolio-deliverable-check b {
+      display: block;
+      color: #273330;
+      font-size: 11.5px;
+      margin-bottom: 4px
+    }
+
+    .workflow-side-card.outcome-check {
+      display: grid;
+      align-content: start;
+      gap: 10px
+    }
+
+    .workflow-side-card.outcome-check .workflow-side-row {
+      background: rgba(244, 247, 245, .78)
+    }
+
+    .portfolio-empty-note {
+      border-radius: 16px;
+      background: rgba(241, 245, 243, .72);
+      padding: 14px 15px;
+      color: #5f6f6b;
+      font-size: 12px;
+      line-height: 1.75
+    }
+
+    @media(max-width:1100px) {
+      .portfolio-final-layout {
+        grid-template-columns: 1fr
+      }
+
+      .portfolio-deliverable-checks {
+        grid-template-columns: 1fr
+      }
+
+      .portfolio-page #portfolioPurposes.portfolio-purposes {
+        grid-template-columns: 1fr
+      }
+    }
+
+
+    /* v128: 05/06 finalization screens — make candidate list and final confirmation visible by default. */
+    .portfolio-purpose-list-card {
+      padding: 16px;
+      min-height: 330px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px
+    }
+
+    .portfolio-purpose-list-card h3 {
+      margin: 0;
+      font-size: 16px;
+      color: #2f3d3a
+    }
+
+    .portfolio-purpose-list-card p {
+      margin: 0;
+      color: var(--mut);
+      font-size: 11px;
+      line-height: 1.7
+    }
+
+    .portfolio-purpose-list-card .portfolio-purposes {
+      display: grid;
+      gap: 9px;
+      margin-top: 4px
+    }
+
+    .portfolio-page .portfolio-purpose {
+      border: 1px solid rgba(104, 127, 123, .13);
+      background: rgba(255, 255, 255, .46);
+      border-radius: 15px;
+      box-shadow: inset -2px -2px 5px rgba(255, 255, 255, .38), inset 2px 2px 5px rgba(157, 168, 179, .08);
+      text-align: left;
+      position: relative;
+      color: #40514d
+    }
+
+    .portfolio-page .portfolio-purpose.selected {
+      background: rgb(240, 240, 237);
+      border-color: transparent;
+      box-shadow: inset calc(.55 * var(--nm-offset, 8px)) calc(.55 * var(--nm-offset, 8px)) calc(.82 * var(--nm-blur, 16px)) var(--nm-shadow-color, rgba(153,153,151,.32)), inset calc(-.55 * var(--nm-offset, 8px)) calc(-.55 * var(--nm-offset, 8px)) calc(.82 * var(--nm-blur, 16px)) var(--nm-light-color, rgba(255,255,255,.58))
+    }
+
+    .portfolio-page .portfolio-purpose:disabled {
+      opacity: .58;
+      filter: saturate(.6);
+      cursor: not-allowed
+    }
+
+    .portfolio-purpose-empty {
+      border-radius: 15px;
+      background: rgba(241, 245, 243, .72);
+      padding: 13px;
+      color: #61716e;
+      font-size: 12px;
+      line-height: 1.7
+    }
+
+    #portfolioPurposeAction .guided-action {
+      margin-top: 0
+    }
+
+    .portfolio-next-summary {
+      min-height: auto !important;
+      padding: 15px 18px !important;
+      background: rgba(255, 255, 255, .50) !important;
+      border: 1px solid rgba(105, 126, 121, .13) !important;
+      box-shadow: var(--sh) !important;
+      display: grid;
+      gap: 5px
+    }
+
+    .portfolio-final-card {
+      display: grid;
+      align-content: start;
+      gap: 10px
+    }
+
+    .portfolio-final-card #portfolioPreview:empty::before {
+      content: '05で成果物を選択すると、ここに確定予定の内容を表示します。';
+      display: block;
+      border-radius: 16px;
+      background: rgba(241, 245, 243, .72);
+      padding: 15px;
+      color: #60716e;
+      font-size: 12px;
+      line-height: 1.7
+    }
+
+    .portfolio-final-note {
+      margin-top: 8px !important;
+      color: #61716e;
+      font-size: 12px;
+      line-height: 1.7
+    }
+
+    .portfolio-final-action .btn.primary {
+      box-shadow: var(--sh);
+    }
+
+    @media(max-width:1180px) {
+      .workflow-stage-layout.three {
+        grid-template-columns: 1fr
+      }
+
+      .portfolio-purpose-list-card {
+        min-height: auto
+      }
+    }
+
+
+    /* v147: START紹介ページ 情報設計/視線誘導の再整理。装飾追加ではなく、見出し→3工程→DEMO説明→体験カード→主ボタンの所属を明確化。 */
+    .jarvis-start-page {
+      background: #efefec;
+      overflow-x: hidden;
+    }
+
+    .start-hero {
+      width: min(1120px, calc(100% - 72px));
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 20px 0 40px;
+      box-sizing: border-box;
+    }
+
+    .start-title-block {
+      padding: 18px 10px 30px;
+    }
+
+    .start-title-block h2 {
+      max-width: 920px;
+      font-size: clamp(40px, 4.35vw, 60px);
+      line-height: 1.1;
+      letter-spacing: -.072em;
+    }
+
+    .start-title-line {
+      display: block
+    }
+
+    .start-title-keep {
+      white-space: nowrap
+    }
+
+    .start-title-block h2::after {
+      width: min(500px, 54%);
+      height: 7px;
+      bottom: -11px;
+    }
+
+    .start-title-block p {
+      max-width: 740px;
+      margin-top: 33px;
+      font-size: 14px;
+      line-height: 1.95;
+      color: #747d7a;
+    }
+
+    .start-value-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 22px;
+      margin: 0 0 28px;
+    }
+
+    .start-value {
+      min-height: 112px;
+      padding: 22px 24px 20px;
+    }
+
+    .start-value b {
+      font-size: 15px;
+    }
+
+    .start-value p {
+      font-size: 11.5px;
+      line-height: 1.66;
+    }
+
+    .start-demo-panel {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(300px, 360px);
+      grid-template-areas:
+        "kicker action"
+        "copy action";
+      align-items: center;
+      column-gap: 48px;
+      row-gap: 16px;
+      min-height: 300px;
+      padding: 38px 44px;
+      margin: 0 0 16px;
+      box-sizing: border-box;
+      background: var(--nm-shared-surface) !important;
+    }
+
+    .start-demo-kicker {
+      grid-area: kicker;
+      align-self: end;
+      margin: 0 0 0 2px;
+      font-size: 9px;
+      letter-spacing: .22em;
+      color: #828b88;
+    }
+
+    .start-demo-copy {
+      grid-area: copy;
+      display: grid;
+      gap: 24px;
+      align-self: start;
+      max-width: 720px;
+    }
+
+    .start-demo-copy p {
+      margin: 0;
+      color: #616966;
+      letter-spacing: .025em;
+    }
+
+    .start-demo-copy p:first-child {
+      font-size: 18px;
+      font-weight: 760;
+      line-height: 1.68;
+      color: #5c6461;
+    }
+
+    .start-demo-copy p+p {
+      font-size: 16.5px;
+      font-weight: 690;
+      line-height: 1.76;
+      color: #68706d;
+    }
+
+    .start-demo-action {
+      grid-area: action;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-self: stretch;
+      gap: 16px;
+      min-height: 100%;
+      padding: 10px 0;
+      box-sizing: border-box;
+    }
+
+    .start-demo-action-card {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 14px;
+      min-height: 170px;
+      padding: 22px 24px;
+      border-radius: 20px;
+      background: rgba(239, 240, 236, .58);
+      box-shadow: inset 6px 6px 16px rgba(139, 149, 146, .13), inset -6px -6px 16px rgba(255, 255, 255, .56);
+      box-sizing: border-box;
+    }
+
+    .start-demo-action-title {
+      margin: 0;
+      font-size: 11px;
+      font-weight: 850;
+      letter-spacing: .08em;
+      color: #44504d;
+    }
+
+    .start-demo-points {
+      display: grid;
+      gap: 9px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .start-demo-points li {
+      position: relative;
+      padding-left: 14px;
+      font-size: 11px;
+      line-height: 1.58;
+      color: #707a77;
+      font-weight: 680;
+    }
+
+    .start-demo-points li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: .68em;
+      width: 5px;
+      height: 5px;
+      border-radius: 999px;
+      background: var(--nm-accent);
+      box-shadow: 0 0 0 3px rgba(221, 255, 54, .14);
+    }
+
+    .start-demo-button {
+      width: 100%;
+      min-width: 0;
+      height: 54px;
+      margin: 0;
+      border-radius: 14px;
+      font-weight: 850;
+      letter-spacing: .01em;
+      box-shadow: 0 10px 20px rgba(188, 205, 45, .22), 0 4px 10px rgba(74, 80, 69, .14);
+    }
+
+    .start-real-entry {
+      width: 100%;
+      max-width: none;
+      margin: 0;
+      padding: 12px 4px 0 0;
+      display: grid;
+      justify-items: end;
+      text-align: right;
+      box-sizing: border-box;
+    }
+
+    .start-real-entry-inner {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      grid-template-areas: "text button" "note button";
+      align-items: center;
+      gap: 4px 16px;
+      width: min(100%, 560px);
+    }
+
+    .start-real-entry label {
+      grid-area: text;
+      justify-self: end;
+      margin: 0;
+      font-size: 11px;
+      font-weight: 800;
+      color: #3f4744;
+    }
+
+    .start-real-entry p {
+      grid-area: note;
+      justify-self: end;
+      margin: 0;
+      font-size: 10px;
+      line-height: 1.55;
+      color: #7c8683;
+    }
+
+    .start-real-entry .btn {
+      grid-area: button;
+      justify-self: end;
+      min-width: 170px;
+    }
+
+    @media(max-width:980px) {
+      .start-hero {
+        width: min(100%, calc(100% - 40px))
+      }
+
+      .start-title-block h2 {
+        font-size: clamp(34px, 7vw, 48px)
+      }
+
+      .start-title-keep {
+        white-space: normal
+      }
+
+      .start-title-block h2::after {
+        width: 70%
+      }
+
+      .start-value-grid {
+        grid-template-columns: 1fr;
+        gap: 14px
+      }
+
+      .start-demo-panel {
+        grid-template-columns: 1fr;
+        grid-template-areas: "kicker" "copy" "action";
+        min-height: 0;
+        padding: 30px 26px;
+      }
+
+      .start-demo-action {
+        padding: 0;
+        gap: 14px
+      }
+
+      .start-real-entry {
+        justify-items: stretch;
+        text-align: left;
+        padding-right: 0
+      }
+
+      .start-real-entry-inner {
+        width: 100%;
+        grid-template-columns: 1fr;
+        grid-template-areas: "text" "note" "button";
+        gap: 6px;
+      }
+
+      .start-real-entry label,
+      .start-real-entry p {
+        justify-self: start;
+        text-align: left
+      }
+
+      .start-real-entry .btn {
+        justify-self: stretch;
+        width: 100%
+      }
+    }
+
+    @media(max-width:640px) {
+      .start-hero {
+        width: min(100%, calc(100% - 28px));
+        padding-top: 16px
+      }
+
+      .start-title-block {
+        padding-left: 2px;
+        padding-right: 2px
+      }
+
+      .start-title-block h2 {
+        font-size: 32px;
+        line-height: 1.16
+      }
+
+      .start-title-block p br {
+        display: none
+      }
+
+      .start-demo-copy p:first-child {
+        font-size: 16px
+      }
+
+      .start-demo-copy p+p {
+        font-size: 15px
+      }
+    }
+
+
+
+/* System Tools workflow common extracted from index.html. */
+/* source: index.html#jarvis-v064-workflow-common-band (10941-11667) */
+
+    /* v151: 02 quality summary/filter and compact candidate rail */
+    .workflow-brief-card {
+      min-height: 48px !important;
+      padding: 10px 18px !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+      gap: 16px !important;
+      text-align: left !important;
+      cursor: pointer !important
+    }
+
+    .workflow-brief-card span {
+      font-size: 11px !important;
+      letter-spacing: .02em;
+      color: var(--mut) !important
+    }
+
+    .workflow-brief-card b {
+      margin-left: auto !important;
+      text-align: right !important;
+      font-size: 26px !important;
+      line-height: 1 !important;
+      font-weight: 780 !important;
+      color: var(--tx) !important
+    }
+
+    .workflow-brief-card.is-active {
+      border-color: rgba(216, 240, 24, .78) !important;
+      background: rgba(236, 255, 92, .16) !important;
+      box-shadow: inset 0 0 0 1px rgba(216, 240, 24, .25), var(--sh) !important
+    }
+
+    .workflow-filter-caption {
+      grid-column: 1/-1;
+      margin: 2px 0 0;
+      font-size: 10px;
+      line-height: 1.6;
+      color: var(--mut)
+    }
+
+    .workflow-range-panel {
+      align-self: start;
+      max-height: calc(100vh - 300px);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column
+    }
+
+    .workflow-range-scroll {
+      min-height: 0;
+      overflow-y: auto;
+      padding-right: 4px;
+      margin-right: -4px;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(53, 60, 55, .18) transparent
+    }
+
+    .workflow-range-scroll::-webkit-scrollbar {
+      width: 6px
+    }
+
+    .workflow-range-scroll::-webkit-scrollbar-track {
+      background: transparent
+    }
+
+    .workflow-range-scroll::-webkit-scrollbar-thumb {
+      background: rgba(53, 60, 55, .16);
+      border-radius: 999px
+    }
+
+    .workflow-range-scroll:hover::-webkit-scrollbar-thumb {
+      background: rgba(53, 60, 55, .28)
+    }
+
+    .workflow-range-list {
+      gap: 10px !important
+    }
+
+    .workflow-range-item {
+      border-radius: 15px !important
+    }
+
+    .workflow-range-summary {
+      padding: 12px 13px !important
+    }
+
+    .workflow-range-summary h4 {
+      font-size: 12px !important;
+      line-height: 1.55 !important;
+      margin: 7px 0 0 !important;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden
+    }
+
+    .workflow-card-meta {
+      gap: 5px !important
+    }
+
+    .workflow-chip {
+      padding: 3px 7px !important;
+      font-size: 8.5px !important
+    }
+
+    .workflow-mini-marker {
+      width: 18px;
+      height: 18px;
+      justify-content: center;
+      padding: 0 !important;
+      font-weight: 800
+    }
+
+    .workflow-range-body {
+      padding: 0 13px 13px !important
+    }
+
+    /* v152: keep quality filter counts stable and make right candidate rail compact without horizontal clipping. */
+    #portfolio-quality .workflow-fulltext-layout {
+      grid-template-columns: minmax(0, 1fr) minmax(260px, 320px) !important;
+      gap: 14px !important;
+      align-items: start !important;
+      overflow: visible !important;
+    }
+
+    #portfolio-quality .workflow-side-card,
+    #portfolio-quality .workflow-range-panel {
+      min-width: 0 !important;
+      overflow: hidden !important;
+    }
+
+    #portfolio-quality .workflow-range-scroll {
+      overflow-y: auto !important;
+      overflow-x: hidden !important;
+      max-height: calc(100vh - 355px) !important;
+      padding-right: 0 !important;
+      margin-right: 0 !important;
+      scrollbar-width: none !important;
+      -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 14px, #000 calc(100% - 24px), transparent 100%);
+      mask-image: linear-gradient(to bottom, transparent 0, #000 14px, #000 calc(100% - 24px), transparent 100%);
+    }
+
+    #portfolio-quality .workflow-range-scroll::-webkit-scrollbar {
+      width: 0;
+      height: 0
+    }
+
+    #portfolio-quality .workflow-range-list {
+      min-width: 0 !important;
+      gap: 9px !important;
+      padding: 8px 0 18px !important;
+    }
+
+    #portfolio-quality .workflow-range-item {
+      min-width: 0 !important;
+      max-width: 100% !important;
+      overflow: hidden !important;
+      box-sizing: border-box !important;
+    }
+
+    #portfolio-quality .workflow-card-meta {
+      display: flex !important;
+      flex-wrap: wrap !important;
+      gap: 5px !important;
+      min-width: 0 !important;
+    }
+
+    #portfolio-quality .workflow-range-summary h4 {
+      max-width: 100% !important;
+      overflow-wrap: anywhere !important;
+      word-break: normal !important;
+    }
+
+    #portfolio-quality .workflow-chip {
+      max-width: 100% !important;
+      white-space: nowrap !important;
+    }
+
+    @media(max-width:1100px) {
+      #portfolio-quality .workflow-fulltext-layout {
+        grid-template-columns: 1fr !important
+      }
+
+      #portfolio-quality .workflow-range-scroll {
+        max-height: 420px !important;
+        scrollbar-width: thin !important
+      }
+
+      #portfolio-quality .workflow-range-scroll::-webkit-scrollbar {
+        width: 5px;
+        height: 0
+      }
+    }
+
+    .workflow-range-body p {
+      font-size: 10px !important;
+      line-height: 1.7 !important;
+      margin: 0 0 10px !important
+    }
+
+    .workflow-range-actions {
+      gap: 8px !important;
+      flex-wrap: wrap
+    }
+
+    .workflow-range-actions .btn {
+      padding: 8px 12px !important;
+      font-size: 11px !important
+    }
+
+    @media(max-width:1120px) {
+      .workflow-range-panel {
+        max-height: none
+      }
+
+      .workflow-range-scroll {
+        max-height: 420px
+      }
+    }
+
+
+
+    /* v154: 02 filter numbers are low-emphasis fixed counters; right candidate rail must fit above lower actions. */
+    #captureQualitySummary.workflow-brief {
+      grid-template-columns: repeat(4, minmax(118px, 1fr)) !important;
+      gap: 8px !important;
+      margin: 0 0 14px !important;
+    }
+
+    #captureQualitySummary .workflow-brief-card {
+      min-height: 34px !important;
+      height: 34px !important;
+      padding: 6px 12px !important;
+      border-radius: 11px !important;
+      display: grid !important;
+      grid-template-columns: minmax(0, 1fr) auto !important;
+      align-items: center !important;
+      gap: 10px !important;
+    }
+
+    #captureQualitySummary .workflow-brief-card span {
+      font-size: 9px !important;
+      line-height: 1 !important;
+      letter-spacing: .03em !important;
+      color: #7b8783 !important;
+      font-weight: 600 !important;
+    }
+
+    #captureQualitySummary .workflow-brief-card b {
+      font-size: 15px !important;
+      line-height: 1 !important;
+      min-width: 18px !important;
+      margin-left: auto !important;
+      justify-self: end !important;
+      text-align: right !important;
+      color: #43504d !important;
+      font-weight: 680 !important;
+    }
+
+    #captureQualitySummary .workflow-brief-card.is-active b {
+      font-size: 15px !important;
+      color: #2f3d39 !important;
+    }
+
+    #portfolio-quality .workflow-fulltext-layout {
+      grid-template-columns: minmax(0, 1fr) minmax(246px, 300px) !important;
+      gap: 14px !important;
+      align-items: start !important;
+    }
+
+    #portfolio-quality .workflow-side-card.workflow-range-panel {
+      max-height: clamp(235px, calc(100vh - 500px), 360px) !important;
+      min-height: 0 !important;
+      overflow: hidden !important;
+      display: flex !important;
+      flex-direction: column !important;
+    }
+
+    #portfolio-quality .workflow-range-panel>h3 {
+      font-size: 13px !important;
+      line-height: 1.25 !important;
+      margin-bottom: 6px !important;
+    }
+
+    #portfolio-quality .workflow-range-panel>p {
+      font-size: 9.5px !important;
+      line-height: 1.45 !important;
+      margin: 0 0 8px !important;
+    }
+
+    #portfolio-quality .workflow-filter-note {
+      font-size: 9.5px !important;
+      line-height: 1.35 !important;
+      margin: 0 0 7px !important;
+    }
+
+    #portfolio-quality .workflow-range-scroll {
+      flex: 1 1 auto !important;
+      min-height: 0 !important;
+      max-height: none !important;
+      overflow-y: auto !important;
+      overflow-x: hidden !important;
+      padding: 2px 2px 12px 0 !important;
+      margin: 0 !important;
+      scrollbar-width: none !important;
+      -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 calc(100% - 20px), transparent 100%) !important;
+      mask-image: linear-gradient(to bottom, #000 0, #000 calc(100% - 20px), transparent 100%) !important;
+    }
+
+    #portfolio-quality .workflow-range-scroll::-webkit-scrollbar {
+      width: 0 !important;
+      height: 0 !important
+    }
+
+    #portfolio-quality .workflow-range-list {
+      gap: 7px !important;
+      padding: 0 0 14px !important
+    }
+
+    #portfolio-quality .workflow-range-item {
+      border-radius: 12px !important;
+      box-shadow: 0 8px 18px rgba(49, 59, 55, .055) !important
+    }
+
+    #portfolio-quality .workflow-range-summary {
+      padding: 8px 9px !important
+    }
+
+    #portfolio-quality .workflow-card-meta {
+      gap: 4px !important;
+      align-items: center !important
+    }
+
+    #portfolio-quality .workflow-chip {
+      font-size: 8px !important;
+      min-height: 17px !important;
+      padding: 0 5px !important;
+      line-height: 17px !important
+    }
+
+    #portfolio-quality .workflow-range-summary h4 {
+      font-size: 11px !important;
+      line-height: 1.38 !important;
+      margin: 6px 0 0 !important;
+      -webkit-line-clamp: 3 !important;
+      overflow-wrap: anywhere !important;
+    }
+
+    #portfolio-quality .workflow-range-summary::after {
+      font-size: 9px !important;
+      margin-top: 5px !important
+    }
+
+    @media(max-width:1100px) {
+      #portfolio-quality .workflow-fulltext-layout {
+        grid-template-columns: 1fr !important
+      }
+
+      #portfolio-quality .workflow-side-card.workflow-range-panel {
+        max-height: 340px !important
+      }
+    }
+
+    @media(max-width:760px) {
+      #captureQualitySummary.workflow-brief {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important
+      }
+    }
+
+
+
+    /* v157: 02/04 display fit fixes and nav current-state cleanup.
+   - 02 right candidate rail height follows the left full-text card.
+   - 04 adopts the compact counter/three-column layout used by 02/03.
+   - only the current page, not the whole portfolio flow, appears emphasized in the left nav. */
+    .nav-child.active:not(.is-current-page),
+    .theme-neumorphism .nav-child.active:not(.is-current-page),
+    .theme-neumorphism .nav-child.nav-shared.active:not(.is-current-page) {
+      color: #7b8783 !important;
+      font-weight: 520 !important;
+      background: var(--nm-purpose-surface) !important;
+      box-shadow: calc(-.55 * var(--nm-offset)) calc(-.55 * var(--nm-offset)) var(--nm-blur) var(--nm-light-color), calc(.55 * var(--nm-offset)) calc(.55 * var(--nm-offset)) var(--nm-blur) var(--nm-shadow-color) !important;
+    }
+
+    .nav-child.active:not(.is-current-page) .portfolio-nav-no,
+    .theme-neumorphism .nav-child.active:not(.is-current-page) .portfolio-nav-no {
+      color: var(--mut) !important;
+      font-weight: 650 !important
+    }
+
+    .nav-child.is-current-page,
+    .theme-neumorphism .nav-child.is-current-page {
+      color: var(--tx) !important;
+      font-weight: 720 !important;
+    }
+
+    .nav-child.is-current-page .portfolio-nav-no {
+      color: #516663 !important;
+      font-weight: 760 !important
+    }
+
+    #portfolio-quality .workflow-fulltext-layout {
+      align-items: start !important;
+      grid-template-columns: minmax(0, 1fr) minmax(258px, 320px) !important;
+      gap: 16px !important
+    }
+
+    #portfolio-quality .workflow-range-panel.workflow-side-card {
+      box-sizing: border-box !important;
+      overflow: hidden !important;
+      min-height: 0 !important;
+      display: flex !important;
+      flex-direction: column !important;
+      position: relative !important;
+      top: auto !important
+    }
+
+    #portfolio-quality .workflow-range-scroll {
+      flex: 1 1 auto !important;
+      min-height: 0 !important;
+      overflow-y: auto !important;
+      overflow-x: hidden !important;
+      scrollbar-width: none !important;
+      -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 calc(100% - 18px), transparent 100%) !important;
+      mask-image: linear-gradient(to bottom, #000 0, #000 calc(100% - 18px), transparent 100%) !important
+    }
+
+    #portfolio-quality .workflow-range-scroll::-webkit-scrollbar {
+      width: 0 !important;
+      height: 0 !important
+    }
+
+    /* v161: final 02 right rail bottom alignment and 04 unmatched comparison bucket. */
+    #portfolio-quality .workflow-fulltext-layout {
+      align-items: start !important;
+    }
+
+    #portfolio-quality .workflow-fulltext-card {
+      box-sizing: border-box !important;
+    }
+
+    #portfolio-quality .workflow-range-panel.workflow-side-card {
+      height: var(--quality-left-card-height, auto) !important;
+      max-height: var(--quality-left-card-height, none) !important;
+      align-self: start !important;
+      box-sizing: border-box !important;
+    }
+
+    #portfolio-quality .workflow-range-scroll {
+      -webkit-mask-image: none !important;
+      mask-image: none !important;
+    }
+
+    #portfolio-current .workflow-brief-meaning {
+      margin: -4px 0 14px !important;
+      font-size: 10px !important;
+      line-height: 1.55 !important;
+      color: #6d7b77 !important;
+    }
+
+    #portfolio-current .workflow-brief-meaning b {
+      color: #2f3d3a !important;
+      font-weight: 720 !important;
+    }
+
+
+
+    /* v168: 04/06の文言・成果確認UIを整理。 */
+    .workflow-card-help {
+      margin: -2px 0 10px !important;
+      color: #74827f !important;
+      font-size: 10.5px !important;
+      line-height: 1.55 !important
+    }
+
+    #portfolio-current #workflowCompareItems .workflow-side-row {
+      grid-template-columns: 34px minmax(0, 1fr) !important
+    }
+
+    #portfolio-current #workflowCompareItems .workflow-side-row b {
+      font-size: 10px !important;
+      color: #6f7d79 !important;
+      white-space: nowrap !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important
+    }
+
+    #portfolio-current #workflowCompareItems .workflow-side-row span {
+      font-size: 10.5px !important;
+      line-height: 1.5 !important;
+      color: #33413e !important;
+      -webkit-line-clamp: 2 !important
+    }
+
+    #portfolio-current #workflowCompareCurrent {
+      max-height: 230px !important
+    }
+
+    #portfolio-current #workflowCompareCurrent .compare-selected-card {
+      display: grid;
+      gap: 9px;
+      border: 1px solid transparent;
+      background: rgb(240, 240, 237);
+      border-radius: 16px;
+      padding: 15px;
+      box-shadow: inset calc(.55 * var(--nm-offset, 8px)) calc(.55 * var(--nm-offset, 8px)) calc(.82 * var(--nm-blur, 16px)) var(--nm-shadow-color, rgba(153,153,151,.32)), inset calc(-.55 * var(--nm-offset, 8px)) calc(-.55 * var(--nm-offset, 8px)) calc(.82 * var(--nm-blur, 16px)) var(--nm-light-color, rgba(255,255,255,.58))
+    }
+
+    #portfolio-current #workflowCompareCurrent .compare-selected-card h4 {
+      margin: 0;
+      font-size: 12px;
+      color: #6f7d79;
+      letter-spacing: .02em
+    }
+
+    #portfolio-current #workflowCompareCurrent .compare-selected-card b {
+      font-size: 15px;
+      line-height: 1.45;
+      color: #26322f
+    }
+
+    #portfolio-current #workflowCompareCurrent .compare-selected-card p {
+      margin: 0;
+      color: #566763;
+      font-size: 11px;
+      line-height: 1.65
+    }
+
+    #portfolio-next .portfolio-next-summary label,
+    #portfolio-next .portfolio-final-card .portfolio-label {
+      font-size: 9px !important;
+      letter-spacing: .14em !important;
+      color: #7b8a86 !important;
+      text-transform: uppercase !important
+    }
+
+    #portfolio-next .portfolio-next-summary b {
+      font-size: 15px !important;
+      line-height: 1.45 !important
+    }
+
+    #portfolio-next .portfolio-next-summary p {
+      font-size: 11px !important;
+      line-height: 1.7 !important
+    }
+
+    #portfolio-next .portfolio-final-layout {
+      grid-template-columns: minmax(0, 1fr) minmax(280px, 330px) !important;
+      gap: 16px !important;
+      align-items: start !important
+    }
+
+    #portfolio-next .portfolio-final-card {
+      gap: 8px !important
+    }
+
+    #portfolio-next .portfolio-final-card h3 {
+      margin: 0 0 2px !important;
+      font-size: 18px !important;
+      line-height: 1.35 !important
+    }
+
+    #portfolio-next .portfolio-final-lead {
+      margin: 0 0 8px !important;
+      color: #61716e !important;
+      font-size: 11.5px !important;
+      line-height: 1.7 !important
+    }
+
+    #portfolio-next #portfolioPreview {
+      max-height: clamp(210px, calc(100vh - 520px), 330px) !important;
+      background: rgba(250, 252, 250, .58);
+      border: 1px solid rgba(105, 126, 121, .10);
+      border-radius: 16px;
+      padding: 10px 12px !important
+    }
+
+    #portfolio-next #portfolioPreview .portfolio-preview-item {
+      padding: 8px 0 !important
+    }
+
+    #portfolio-next #portfolioPreview .portfolio-preview-item label {
+      font-size: 9px !important;
+      letter-spacing: .08em !important
+    }
+
+    #portfolio-next #portfolioPreview .portfolio-preview-item p {
+      font-size: 11px !important;
+      line-height: 1.6 !important;
+      -webkit-line-clamp: 3 !important
+    }
+
+    #portfolio-next .portfolio-final-note {
+      font-size: 10px !important;
+      color: #6f7d79 !important;
+      line-height: 1.65 !important
+    }
+
+    #portfolio-next .portfolio-improve-card h3 {
+      font-size: 18px !important;
+      line-height: 1.35 !important
+    }
+
+    #portfolio-next .portfolio-improve-card p {
+      font-size: 11px !important;
+      line-height: 1.7 !important;
+      color: #61716e !important
+    }
+
+    @media(max-width:1120px) {
+      #portfolio-next .portfolio-final-layout {
+        grid-template-columns: 1fr !important
+      }
+    }
+
+
+    #portfolio-next.page.active {
+      padding-bottom: 110px !important;
+    }
+
+    #portfolio-next .portfolio-next-summary {
+      padding: 8px 12px !important;
+      margin: 6px 0 8px !important;
+      grid-template-columns: auto 1fr !important;
+    }
+
+    #portfolio-next .portfolio-next-summary b {
+      font-size: 13px !important;
+      line-height: 1.25 !important;
+    }
+
+    #portfolio-next .portfolio-next-summary p {
+      font-size: 9.8px !important;
+      line-height: 1.35 !important;
+      -webkit-line-clamp: 1 !important;
+    }
+
+    #portfolio-next .workflow-brief {
+      margin: 7px 0 !important;
+    }
+
+    #portfolio-next .portfolio-final-layout {
+      max-height: clamp(300px, calc(100vh - 430px), 430px) !important;
+    }
+
+    #portfolio-next .portfolio-final-card,
+    #portfolio-next .portfolio-output-shelf,
+    #portfolio-next .portfolio-improve-card {
+      max-height: inherit !important;
+    }
+
+    #portfolio-next .portfolio-output-shelf-card {
+      padding: 7px 9px !important;
+    }
+
+    #portfolio-next .portfolio-output-shelf-grid,
+    #portfolio-next .portfolio-improve-card .workflow-side-list {
+      max-height: calc(100vh - 525px) !important;
+    }
+
+    /* v202: 誘導操作をアイコン化し、01〜06では主操作枠の外側右下へ配置 */
+    .guided-action-slot {
+      position: relative;
+    }
+
+    .floating-guide-controls .guide-control-button {
+      width: 38px !important;
+      min-width: 38px !important;
+      height: 38px !important;
+      padding: 0 !important;
+      display: grid !important;
+      place-items: center !important;
+      border-radius: 13px !important;
+      font-size: 0 !important;
+      line-height: 0 !important;
+    }
+
+    .floating-guide-controls .guide-control-button img {
+      width: 19px;
+      height: 19px;
+      display: block;
+      opacity: .86;
+      pointer-events: none;
+    }
+
+    .floating-guide-controls .guide-control-button.replay {
+      background: rgba(246, 247, 243, .82) !important;
+    }
+
+    .floating-guide-controls .guide-control-button.show-all {
+      background: var(--jarvis-accent-72, var(--nm-accent)) !important;
+    }
+
+    .floating-guide-controls.is-workflow-docked {
+      position: absolute !important;
+      right: 6px !important;
+      bottom: -48px !important;
+      left: auto !important;
+      display: none;
+      padding: 6px !important;
+      gap: 8px !important;
+      border-radius: 16px !important;
+      background: rgba(239, 239, 236, .54) !important;
+      z-index: 126;
+    }
+
+    .floating-guide-controls.is-workflow-docked.is-visible {
+      display: flex !important;
+    }
+
+    .floating-guide-controls.is-workflow-docked+* {
+      margin-top: 0;
+    }
+
+    @media(max-width:720px) {
+      .floating-guide-controls.is-workflow-docked {
+        right: 0 !important;
+        bottom: -46px !important;
+        left: auto !important;
+        justify-content: flex-end !important;
+      }
+
+      .floating-guide-controls.is-workflow-docked .guide-control-button {
+        flex: 0 0 38px !important;
+        max-width: 38px !important;
+      }
+    }
+
+/* v223: 02 の登録候補 / 了承済み / 要修正 / 除外の数値だけ、01と同じ実時間ベースのカウント表示へ寄せる。 */
+#portfolio-quality #captureQualitySummary .workflow-brief-card b[data-quality-final] {
+  font-variant-numeric: tabular-nums;
+  will-change: opacity, transform;
+}
+
+#portfolio-quality #captureQualitySummary .workflow-brief-card b.is-quality-counting {
+  font-variant-numeric: tabular-nums;
+}
+
+/* v033: strengthen the page-owned workflow shells so the selected state is obvious
+   and the 05 dock sits in the action band instead of hanging low. */
+html body #portfolio-quality #captureQualitySummary .workflow-brief-card,
+html body #portfolio-review .portfolio-summary-card,
+html body #portfolio-current .workflow-filter-brief .workflow-brief-card,
+html body #portfolio-purpose .workflow-filter-brief .workflow-brief-card {
+  background: rgb(240, 240, 237) !important;
+  border: 1px solid rgba(104, 127, 123, .10) !important;
+  box-shadow: rgba(247, 247, 246, .843) -5.6px -5.6px 6px 0px, rgba(153, 153, 151, .43) 5.6px 5.6px 6px 0px !important;
+}
+
+html body #portfolio-quality #captureQualitySummary .workflow-brief-card.is-active,
+html body #portfolio-review .portfolio-summary-card.is-active,
+html body #portfolio-current .workflow-filter-brief .workflow-brief-card.is-active,
+html body #portfolio-purpose .workflow-filter-brief .workflow-brief-card.is-active {
+  background: rgb(240, 240, 237) !important;
+  color: var(--tx, #22282b) !important;
+  border-color: transparent !important;
+  box-shadow: inset calc(.55 * var(--nm-offset, 8px)) calc(.55 * var(--nm-offset, 8px)) calc(.82 * var(--nm-blur, 16px)) var(--nm-shadow-color, rgba(153,153,151,.32)), inset calc(-.55 * var(--nm-offset, 8px)) calc(-.55 * var(--nm-offset, 8px)) calc(.82 * var(--nm-blur, 16px)) var(--nm-light-color, rgba(255,255,255,.58)) !important;
+}
+
+html body #portfolio-quality .workflow-fulltext-card,
+html body #portfolio-quality .workflow-range-panel,
+html body #portfolio-review .workflow-review-layout.v155-review-carousel > .workflow-fulltext-card,
+html body #portfolio-review .workflow-review-layout.v155-review-carousel > .workflow-review-carousel-card {
+  background: rgb(240, 240, 237) !important;
+  border: 1px solid rgba(104, 127, 123, .10) !important;
+  box-shadow: rgba(247, 247, 246, .843) -5.6px -5.6px 6px 0px, rgba(153, 153, 151, .43) 5.6px 5.6px 6px 0px !important;
+}
+
+html body #portfolio-review .portfolio-summary {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
+
+html body #portfolio-purpose .floating-guide-controls.is-workflow-docked {
+  bottom: 130px !important;
+}
+
+/* JARVIS common UI contract: neumorphic panel base used by workflow 02-05 major panels. */
+html body #portfolio-quality .workflow-brief-card.jarvis-filter-button,
+html body #portfolio-review .portfolio-summary-card.jarvis-filter-button,
+html body #portfolio-current .workflow-filter-brief .workflow-brief-card.jarvis-filter-button,
+html body #portfolio-purpose .workflow-filter-brief .workflow-brief-card.jarvis-filter-button {
+  background: rgb(240, 240, 237) !important;
+  color: var(--tx) !important;
+  border: 1px solid rgba(104, 127, 123, .10) !important;
+  border-radius: 12px !important;
+  box-shadow: rgba(247, 247, 246, .843) -5.6px -5.6px 6px 0px, rgba(153, 153, 151, .43) 5.6px 5.6px 6px 0px !important;
+  box-sizing: border-box !important;
+  /* Do not set transition here.
+     Page-owned reveal sequences (02-05 count buttons) must control opacity/transform timing.
+     A previous common transition with !important forced a fast ~0.18s reveal and prevented
+     workflow-02/03/04/05.css from honoring their configured fade duration. */
+}
+
+/* JARVIS common UI contract: filter/summary button base for workflow 02-05 summary cards. */
+html body #portfolio-quality .workflow-brief-card.jarvis-filter-button.is-selected,
+html body #portfolio-quality .workflow-brief-card.jarvis-filter-button.is-active,
+html body #portfolio-review .portfolio-summary-card.jarvis-filter-button.is-selected,
+html body #portfolio-review .portfolio-summary-card.jarvis-filter-button.is-active,
+html body #portfolio-current .workflow-filter-brief .workflow-brief-card.jarvis-filter-button.is-selected,
+html body #portfolio-current .workflow-filter-brief .workflow-brief-card.jarvis-filter-button.is-active,
+html body #portfolio-purpose .workflow-filter-brief .workflow-brief-card.jarvis-filter-button.is-selected,
+html body #portfolio-purpose .workflow-filter-brief .workflow-brief-card.jarvis-filter-button.is-active {
+  background: rgb(240, 240, 237) !important;
+  color: var(--tx, #22282b) !important;
+  border-color: transparent !important;
+  box-shadow: inset calc(.55 * var(--nm-offset, 8px)) calc(.55 * var(--nm-offset, 8px)) calc(.82 * var(--nm-blur, 16px)) var(--nm-shadow-color, rgba(153,153,151,.32)), inset calc(-.55 * var(--nm-offset, 8px)) calc(-.55 * var(--nm-offset, 8px)) calc(.82 * var(--nm-blur, 16px)) var(--nm-light-color, rgba(255,255,255,.58)) !important;
+  transform: translateY(1px) !important;
+}
+
+html body #portfolio-purpose .portfolio-purpose.selected {
+  background: rgb(240, 240, 237) !important;
+  color: var(--tx, #22282b) !important;
+  border: 1px solid transparent !important;
+  box-shadow: inset calc(.55 * var(--nm-offset, 8px)) calc(.55 * var(--nm-offset, 8px)) calc(.82 * var(--nm-blur, 16px)) var(--nm-shadow-color, rgba(153,153,151,.32)), inset calc(-.55 * var(--nm-offset, 8px)) calc(-.55 * var(--nm-offset, 8px)) calc(.82 * var(--nm-blur, 16px)) var(--nm-light-color, rgba(255,255,255,.58)) !important;
+  transform: translateY(1px) !important;
+}
+
+html body #portfolio-purpose .portfolio-purpose:not(.selected) {
+  background: rgb(240, 240, 237) !important;
+  border: 1px solid rgba(104, 127, 123, .10) !important;
+  box-shadow: rgba(247, 247, 246, .843) -5.6px -5.6px 6px 0px, rgba(153, 153, 151, .43) 5.6px 5.6px 6px 0px !important;
+}
+
+/* JARVIS common UI contract: selected state for filter/summary button emphasis. */
+html body #portfolio-quality .workflow-brief-card.jarvis-filter-button span,
+html body #portfolio-review .portfolio-summary-card.jarvis-filter-button span,
+html body #portfolio-current .workflow-filter-brief .workflow-brief-card.jarvis-filter-button span,
+html body #portfolio-purpose .workflow-filter-brief .workflow-brief-card.jarvis-filter-button span {
+  color: #7b8783 !important;
+}
+
+html body #portfolio-quality .workflow-brief-card.jarvis-filter-button b,
+html body #portfolio-review .portfolio-summary-card.jarvis-filter-button b,
+html body #portfolio-current .workflow-filter-brief .workflow-brief-card.jarvis-filter-button b,
+html body #portfolio-purpose .workflow-filter-brief .workflow-brief-card.jarvis-filter-button b {
+  color: #43504d !important;
+}
+
+/* JARVIS common UI contract: visible shell + staged inner reveal for 03/05 panels. */
+html body #portfolio-quality .workflow-fulltext-card.jarvis-neumo-panel,
+html body #portfolio-quality .workflow-range-panel.jarvis-neumo-panel,
+html body #portfolio-review .workflow-fulltext-card.jarvis-neumo-panel,
+html body #portfolio-review .workflow-review-carousel-card.jarvis-neumo-panel,
+html body #portfolio-review .workflow-side-card.jarvis-neumo-panel,
+html body #portfolio-current .compare-selected-card.jarvis-neumo-panel,
+html body #portfolio-current .workflow-side-card.jarvis-neumo-panel,
+html body #portfolio-purpose .portfolio-purpose-list-card.jarvis-neumo-panel,
+html body #portfolio-purpose .portfolio-deliverable-preview.jarvis-neumo-panel,
+html body #portfolio-purpose .workflow-side-card.jarvis-neumo-panel {
+  background: rgb(240, 240, 237) !important;
+  border: 1px solid rgba(104, 127, 123, .10) !important;
+  border-radius: 19px !important;
+  box-shadow: rgba(247, 247, 246, .843) -5.6px -5.6px 6px 0px, rgba(153, 153, 151, .43) 5.6px 5.6px 6px 0px !important;
+  box-sizing: border-box !important;
+  padding: 18px !important;
+}
+
+/* JARVIS common UI contract: staged item reveal used inside the shared shells. */
+html body #portfolio-quality .workflow-fulltext-card.jarvis-reveal-shell,
+html body #portfolio-quality .workflow-range-panel.jarvis-reveal-shell,
+html body #portfolio-review .workflow-fulltext-card.jarvis-reveal-shell,
+html body #portfolio-review .workflow-review-carousel-card.jarvis-reveal-shell,
+html body #portfolio-review .workflow-side-card.jarvis-reveal-shell,
+html body #portfolio-current .compare-selected-card.jarvis-reveal-shell,
+html body #portfolio-current .workflow-side-card.jarvis-reveal-shell,
+html body #portfolio-purpose .portfolio-purpose-list-card.jarvis-reveal-shell,
+html body #portfolio-purpose .portfolio-deliverable-preview.jarvis-reveal-shell,
+html body #portfolio-purpose .workflow-side-card.jarvis-reveal-shell {
+  opacity: 1 !important;
+  transform: none !important;
+  visibility: visible !important;
+  filter: none !important;
+  animation: none !important;
+}
+
+html body .jarvis-reveal-item {
+  will-change: opacity, transform, filter;
+  transition: opacity .48s cubic-bezier(.22, .61, .28, 1), transform .48s cubic-bezier(.22, .61, .28, 1), filter .48s cubic-bezier(.22, .61, .28, 1);
+}
+
+/* JARVIS common UI contract: inline guide controls aligned to the 05 action band. */
+html body #portfolio-purpose .guided-action-slot.jarvis-guide-controls--inline {
+  padding-bottom: 0 !important;
+}
+
+html body #portfolio-purpose .guided-action-slot.jarvis-guide-controls--inline > .floating-guide-controls.is-workflow-docked {
+  bottom: 23px !important;
+  top: auto !important;
+}
+
+html body #portfolio-purpose .floating-guide-controls.is-workflow-docked.jarvis-guide-controls--inline {
+  bottom: 23px !important;
+  top: auto !important;
+}
+
+/* v367: 未接続確認中のJSON操作ボタンと説明文の整列補正。 */
+#portfolio-collect.portfolio-disconnected .portfolio-connection-panel .connection-actions {
+  align-items: center;
+  justify-content: center;
+  min-width: min(520px, 100%);
+}
+
+#portfolio-collect.portfolio-disconnected .portfolio-connection-panel .connection-actions > .btn.primary {
+  width: min(520px, 100%);
+  justify-content: center;
+  text-align: center;
+}
+
+#portfolio-collect.portfolio-disconnected .portfolio-connection-panel .connection-secondary-actions {
+  width: min(520px, 100%);
+  justify-content: center;
+  margin-top: 10px;
+}
+
+#portfolio-collect.portfolio-disconnected .portfolio-connection-panel .connection-secondary-actions .btn.secondary {
+  width: min(340px, 100%);
+  justify-content: center;
+  text-align: center;
+}
+
+#portfolio-collect.portfolio-disconnected .portfolio-connection-panel .connection-help {
+  max-width: 560px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+@media (max-width: 760px) {
+  #portfolio-collect.portfolio-disconnected .portfolio-connection-panel .connection-actions,
+  #portfolio-collect.portfolio-disconnected .portfolio-connection-panel .connection-actions > .btn.primary,
+  #portfolio-collect.portfolio-disconnected .portfolio-connection-panel .connection-secondary-actions,
+  #portfolio-collect.portfolio-disconnected .portfolio-connection-panel .connection-secondary-actions .btn.secondary {
+    width: 100%;
+    min-width: 0;
+  }
+
+  #portfolio-collect.portfolio-disconnected .portfolio-connection-panel .connection-help {
+    white-space: normal;
+    max-width: none;
+  }
+}
+
+
+/* v369: JSON再接続ボタンの強調色文字反映、別JSONボタンの垂直中央揃え、デモ対象外JSON案内の調整。 */
+#portfolio-collect.portfolio-disconnected .portfolio-connection-panel .connection-actions > .btn.primary,
+#portfolio-collect.portfolio-disconnected .portfolio-connection-panel .connection-actions > .btn.primary *,
+#portfolio-collect.portfolio-disconnected .portfolio-connection-panel button.btn.primary,
+#portfolio-collect.portfolio-disconnected .portfolio-connection-panel button.btn.primary * {
+  color: var(--nm-accent-ink, #fff) !important;
+  -webkit-text-fill-color: var(--nm-accent-ink, #fff) !important;
+}
+
+#portfolio-collect.portfolio-disconnected .portfolio-connection-panel .connection-secondary-actions .btn.secondary,
+#portfolio-collect.portfolio-connected .portfolio-connection-panel .connection-secondary-actions .btn.secondary,
+#portfolio-collect.portfolio-connected .portfolio-connection-panel .connection-actions > label.btn.secondary {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  line-height: 1 !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}

@@ -1,0 +1,1125 @@
+/* v180: settings/support management pages clarity and compact layout */
+#display-settings,
+#capture-import-queue,
+#unified-backup,
+#target-manage {
+  max-width: 1180px !important;
+  margin: 0 auto !important;
+  padding-bottom: 72px !important;
+}
+
+#capture-import-queue,
+#unified-backup,
+#target-manage {
+  overflow: hidden !important;
+}
+
+#display-settings {
+  overflow: visible !important;
+}
+
+#display-settings .heading,
+#capture-import-queue .heading,
+#unified-backup .heading,
+#target-manage .heading {
+  margin-bottom: 18px !important;
+}
+
+#display-settings .heading h2,
+#capture-import-queue .heading h2,
+#unified-backup .heading h2,
+#target-manage .heading h2 {
+  font-size: 30px !important;
+  line-height: 1.2 !important;
+}
+
+#display-settings .heading p,
+#capture-import-queue .heading p,
+#unified-backup .heading p,
+#target-manage .heading p {
+  font-size: 14px !important;
+  line-height: 1.65 !important;
+  max-width: 860px !important;
+}
+
+#display-settings .settings-tabbar {
+  max-width: 640px !important;
+  width: 100% !important;
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+}
+
+#display-settings .settings-tab {
+  height: 36px !important;
+  padding: 0 14px !important;
+  font-size: 13px !important;
+}
+
+#display-settings .settings-layout {
+  grid-template-columns: minmax(320px, 520px) minmax(240px, 1fr) !important;
+  gap: 18px !important;
+  max-width: 100% !important;
+  overflow: visible !important;
+}
+
+#display-settings .card {
+  max-width: 100% !important;
+  min-width: 0 !important;
+}
+
+#display-settings .setting-row {
+  grid-template-columns: 74px minmax(130px, 1fr) 86px !important;
+  gap: 10px !important;
+}
+
+#display-settings .setting-row label {
+  font-size: 13px !important;
+}
+
+#display-settings .setting-row input[type="text"] {
+  width: 86px !important;
+  max-width: 86px !important;
+  font-size: 12px !important;
+}
+
+#display-settings .settings-preview {
+  min-height: 300px !important;
+  overflow: visible !important;
+}
+
+#display-settings .settings-preview-panel {
+  width: min(360px, 92%) !important;
+  min-height: 150px !important;
+  height: auto !important;
+  padding: 22px !important;
+  overflow: visible !important;
+}
+
+#display-settings .registration-settings-grid {
+  grid-template-columns: minmax(320px, 500px) minmax(260px, 1fr) !important;
+  gap: 18px !important;
+}
+
+#display-settings .settings-note {
+  padding: 10px 12px !important;
+  margin-top: 12px !important;
+}
+
+#unified-backup .backup-warning {
+  padding: 13px 16px !important;
+  margin-bottom: 12px !important;
+}
+
+#unified-backup .backup-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 14px !important;
+}
+
+#unified-backup .backup-panel {
+  padding: 17px 18px !important;
+  min-height: 0 !important;
+}
+
+#unified-backup .backup-flow {
+  padding: 16px 18px !important;
+  margin-top: 14px !important;
+}
+
+#unified-backup .backup-flow ol {
+  margin: 8px 0 0 18px !important;
+  font-size: 12px !important;
+  line-height: 1.8 !important;
+}
+
+#unified-backup .backup-result {
+  padding: 13px 16px !important;
+  margin-top: 12px !important;
+}
+
+#capture-import-queue .import-queue-intro {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) auto !important;
+  align-items: center !important;
+  gap: 16px !important;
+  padding: 16px 18px !important;
+  margin-bottom: 14px !important;
+}
+
+#capture-import-queue .import-queue-intro b {
+  font-size: 15px !important;
+}
+
+#capture-import-queue .import-queue-intro p {
+  font-size: 12px !important;
+  line-height: 1.65 !important;
+  margin: 5px 0 0 !important;
+  max-width: 720px !important;
+}
+
+#capture-import-queue .import-queue-summary {
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 10px !important;
+  margin: 10px 0 14px !important;
+}
+
+#capture-import-queue .import-queue-summary .card,
+#capture-import-queue .import-queue-summary>div {
+  min-height: 38px !important;
+  padding: 8px 12px !important;
+}
+
+#capture-import-queue .import-queue-grid {
+  display: grid !important;
+  grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr) !important;
+  gap: 16px !important;
+  align-items: start !important;
+  max-height: calc(100vh - 360px) !important;
+  overflow: hidden !important;
+}
+
+#capture-import-queue .import-queue-grid>.card {
+  min-height: 0 !important;
+  max-height: calc(100vh - 370px) !important;
+  overflow: hidden !important;
+  padding: 16px 18px !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+#capture-import-queue .import-queue-list,
+#capture-import-queue .thread-ledger-list,
+#capture-import-queue .import-alert-list {
+  min-height: 0 !important;
+  overflow: auto !important;
+  padding-right: 3px !important;
+}
+
+#capture-import-queue .import-queue-list {
+  max-height: calc(100vh - 475px) !important;
+}
+
+#capture-import-queue .thread-ledger-list {
+  max-height: calc(50vh - 215px) !important;
+}
+
+#capture-import-queue .import-alert-list {
+  max-height: calc(50vh - 240px) !important;
+}
+
+#capture-import-queue .import-section-title {
+  margin-bottom: 10px !important;
+}
+
+#capture-import-queue .import-section-title h3 {
+  font-size: 16px !important;
+}
+
+#target-manage .manage-grid {
+  display: grid !important;
+  grid-template-columns: minmax(320px, 480px) minmax(280px, 1fr) !important;
+  gap: 16px !important;
+  align-items: start !important;
+}
+
+#target-manage .card {
+  padding: 18px 20px !important;
+  min-height: 0 !important;
+}
+
+#target-manage .target-form {
+  display: grid !important;
+  gap: 10px !important;
+}
+
+#target-manage .target-list {
+  max-height: calc(100vh - 470px) !important;
+  overflow: auto !important;
+  padding-right: 3px !important;
+}
+
+#display-settings .settings-layout,
+#display-settings .registration-settings-grid {
+  align-items: start;
+}
+
+#display-settings .setting-row input[type="text"] {
+  min-width: 88px;
+  max-width: 112px;
+}
+
+#display-settings dialog {
+  border: 0;
+  border-radius: 18px;
+  padding: 22px;
+  background: var(--p);
+  box-shadow: var(--sh);
+  max-width: 460px;
+}
+
+#target-manage .heading p {
+  max-width: 820px;
+  line-height: 1.75;
+}
+
+#target-manage .target-form input,
+#target-manage .target-form select {
+  min-height: 42px;
+}
+
+@media(max-width:980px) {
+  #display-settings .settings-layout,
+  #display-settings .registration-settings-grid,
+  #unified-backup .backup-grid,
+  #capture-import-queue .import-queue-grid,
+  #target-manage .manage-grid {
+    grid-template-columns: 1fr !important;
+    max-height: none !important;
+    overflow: visible !important
+  }
+
+  #capture-import-queue .import-queue-grid>.card {
+    max-height: 420px !important
+  }
+
+  .capture-import-queue-page .import-queue-summary {
+    grid-template-columns: repeat(2, 1fr) !important
+  }
+}
+
+/* source: index.html#jarvis-v063-admin-artifact-band (7142-7804) */
+    /* v98: System Tools本体とConversation Captureのバックアップ入口を本体側へ集約。 */
+    .backup-main-nav {
+      display: grid;
+      gap: 5px;
+      margin: 13px 0;
+      padding: 14px 0;
+      border-top: 1px solid rgba(100, 120, 115, .1);
+      border-bottom: 1px solid rgba(100, 120, 115, .1)
+    }
+
+    .unified-backup-page {
+      padding-bottom: 92px
+    }
+
+    .backup-warning {
+      display: grid;
+      gap: 6px;
+      margin-bottom: 13px;
+      border: 1px solid rgba(210, 165, 76, .38)
+    }
+
+    .backup-warning b {
+      font-size: 13px
+    }
+
+    .backup-warning p {
+      margin: 0;
+      color: var(--mut);
+      font-size: 11px;
+      line-height: 1.7
+    }
+
+    .backup-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 13px;
+      margin-bottom: 13px
+    }
+
+    .backup-panel h3,
+    .backup-flow h3 {
+      margin: 0 0 10px;
+      font-size: 14px
+    }
+
+    .backup-panel p,
+    .backup-flow li {
+      font-size: 11px;
+      line-height: 1.7;
+      color: var(--mut)
+    }
+
+    .backup-actions {
+      display: flex;
+      gap: 9px;
+      flex-wrap: wrap;
+      margin-top: 13px
+    }
+
+    .backup-flow ol {
+      margin: 0;
+      padding-left: 20px
+    }
+
+    .backup-result {
+      font-size: 11px;
+      line-height: 1.7;
+      color: var(--mut)
+    }
+
+    @media(max-width:1000px) {
+      .backup-grid {
+        grid-template-columns: 1fr
+      }
+    }
+
+    /* v97: 回収JSONを版として保持し、同一スレッドの追加分だけを補充する。 */
+    .import-main-nav {
+      display: grid;
+      gap: 5px;
+      margin: 13px 0;
+      padding: 14px 0;
+      border-top: 1px solid rgba(100, 120, 115, .1);
+      border-bottom: 1px solid rgba(100, 120, 115, .1)
+    }
+
+    .capture-import-queue-page {
+      padding-bottom: 92px
+    }
+
+    .import-queue-intro {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 18px;
+      padding: 18px 20px;
+      margin-bottom: 13px
+    }
+
+    .import-queue-intro b {
+      font-size: 14px
+    }
+
+    .import-queue-intro p {
+      font-size: 10px;
+      line-height: 1.65;
+      color: var(--mut);
+      margin: 7px 0 0
+    }
+
+    .import-queue-summary {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+      margin-bottom: 13px
+    }
+
+    .import-summary-card {
+      padding: 12px 14px;
+      border-radius: 14px;
+      background: var(--p);
+      box-shadow: var(--sh)
+    }
+
+    .import-summary-card span {
+      display: block;
+      color: var(--mut);
+      font-size: 9px;
+      margin-bottom: 7px
+    }
+
+    .import-summary-card b {
+      font-size: 22px
+    }
+
+    .import-queue-grid {
+      display: grid;
+      grid-template-columns: minmax(390px, 1.1fr) minmax(330px, .9fr);
+      gap: 13px;
+      align-items: start
+    }
+
+    .import-section-title {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 12px
+    }
+
+    .import-section-title h3 {
+      font-size: 13px;
+      margin: 0
+    }
+
+    .import-section-title span {
+      font-size: 10px;
+      color: var(--mut)
+    }
+
+    .import-queue-list,
+    .thread-ledger-list,
+    .import-alert-list {
+      display: grid;
+      gap: 8px
+    }
+
+    .import-row {
+      padding: 12px;
+      border-radius: 13px;
+      background: var(--nm-shared-surface)
+    }
+
+    .import-row-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: flex-start;
+      margin-bottom: 7px
+    }
+
+    .import-row-head b {
+      font-size: 11px;
+      line-height: 1.5;
+      overflow-wrap: anywhere
+    }
+
+    .import-row-head span {
+      font-size: 9px;
+      padding: 5px 8px;
+      border-radius: 999px;
+      background: var(--p);
+      white-space: nowrap
+    }
+
+    .import-row-stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      margin: 8px 0
+    }
+
+    .import-row-stats i {
+      font-style: normal;
+      font-size: 9px;
+      padding: 5px 7px;
+      border-radius: 999px;
+      background: var(--p);
+      color: var(--mut)
+    }
+
+    .import-row-stats i.new {
+      color: var(--good)
+    }
+
+    .import-row-stats i.warn {
+      color: #80601d;
+      background: #fff0bf
+    }
+
+    .import-row small {
+      display: block;
+      color: var(--mut);
+      font-size: 9px;
+      line-height: 1.5
+    }
+
+    .import-row-actions {
+      display: flex;
+      gap: 7px;
+      margin-top: 10px
+    }
+
+    .import-row-actions .btn {
+      font-size: 10px;
+      padding: 8px 11px
+    }
+
+    .thread-ledger-item,
+    .import-alert-item {
+      padding: 11px 12px;
+      border-radius: 12px;
+      background: var(--nm-shared-surface)
+    }
+
+    .thread-ledger-item label,
+    .import-alert-item label {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      color: var(--mut);
+      font-size: 9px;
+      margin-bottom: 6px
+    }
+
+    .thread-ledger-item p,
+    .import-alert-item p {
+      margin: 0;
+      font-size: 10px;
+      line-height: 1.6
+    }
+
+    .import-alert-title {
+      margin-top: 18px
+    }
+
+    .import-alert-item.warn {
+      border: 1px solid rgba(210, 165, 76, .35)
+    }
+
+    .import-empty {
+      padding: 14px;
+      color: var(--mut);
+      font-size: 10px;
+      background: var(--nm-shared-surface);
+      border-radius: 12px
+    }
+
+    @media(max-width:1000px) {
+      .import-queue-intro {
+        display: block
+      }
+
+      .import-queue-intro .btn {
+        margin-top: 13px
+      }
+
+      .import-queue-summary,
+      .import-queue-grid {
+        grid-template-columns: 1fr
+      }
+    }
+
+    /* v96: 過去回収を待たず、現在有効なプロジェクト仕様正本を先に作る。 */
+    .project-main-nav {
+      display: grid;
+      gap: 5px;
+      margin: 13px 0;
+      padding: 14px 0;
+      border-top: 1px solid rgba(100, 120, 115, .1);
+      border-bottom: 1px solid rgba(100, 120, 115, .1)
+    }
+
+    .project-spec-page {
+      padding-bottom: 92px
+    }
+
+    .project-spec-intro {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 18px;
+      padding: 17px 20px;
+      margin-bottom: 13px
+    }
+
+    .project-spec-intro b {
+      font-size: 14px
+    }
+
+    .project-spec-intro p {
+      font-size: 10px;
+      line-height: 1.6;
+      color: var(--mut);
+      margin: 7px 0 0
+    }
+
+    .project-spec-route {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap
+    }
+
+    .project-spec-route span {
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: var(--nm-shared-surface);
+      font-size: 10px;
+      font-weight: 650
+    }
+
+    .project-spec-route i {
+      font-style: normal;
+      color: var(--mut)
+    }
+
+    .project-spec-setup {
+      padding: 17px 19px;
+      margin-bottom: 13px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px
+    }
+
+    .project-spec-setup h3 {
+      margin: 0 0 7px;
+      font-size: 14px
+    }
+
+    .project-spec-setup p {
+      font-size: 10px;
+      color: var(--mut);
+      margin: 0;
+      line-height: 1.6
+    }
+
+    .spec-project-create {
+      display: flex;
+      gap: 8px;
+      align-items: center
+    }
+
+    .spec-project-create input,
+    .spec-project-select {
+      border: 0;
+      border-radius: 11px;
+      background: var(--nm-shared-surface);
+      padding: 11px 12px;
+      color: var(--tx);
+      font: inherit;
+      font-size: 11px;
+      min-width: 210px
+    }
+
+    .project-spec-top-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 13px;
+      margin-bottom: 13px
+    }
+
+    .spec-section-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px
+    }
+
+    .spec-section-title h3 {
+      font-size: 13px;
+      margin: 0
+    }
+
+    .spec-section-title span {
+      font-size: 10px;
+      color: var(--mut)
+    }
+
+    .spec-readiness {
+      display: grid;
+      gap: 7px
+    }
+
+    .spec-readiness-row {
+      padding: 9px 11px;
+      border-radius: 11px;
+      background: var(--nm-shared-surface);
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      font-size: 10px
+    }
+
+    .spec-readiness-row.missing {
+      border: 1px solid rgba(210, 165, 76, .38)
+    }
+
+    .spec-readiness-row.present {
+      border: 1px solid rgba(131, 181, 127, .22)
+    }
+
+    .spec-readiness-row small {
+      color: var(--mut);
+      font-size: 9px
+    }
+
+    .spec-preview {
+      width: 100%;
+      height: 174px;
+      box-sizing: border-box;
+      border: 0;
+      border-radius: 12px;
+      background: var(--nm-shared-surface);
+      padding: 12px;
+      color: var(--tx);
+      font: inherit;
+      font-size: 10px;
+      line-height: 1.65;
+      resize: vertical
+    }
+
+    .project-spec-editor {
+      margin-bottom: 13px
+    }
+
+    .spec-tabs {
+      display: flex;
+      gap: 7px;
+      flex-wrap: wrap;
+      margin-bottom: 14px
+    }
+
+    .spec-tab {
+      border: 0;
+      border-radius: 999px;
+      background: var(--nm-shared-surface);
+      padding: 9px 12px;
+      color: var(--tx);
+      font: inherit;
+      font-size: 10px;
+      cursor: pointer
+    }
+
+    .spec-tab.active {
+      background: var(--nm-accent)
+    }
+
+    .spec-tab small {
+      color: var(--mut);
+      margin-left: 5px
+    }
+
+    .project-spec-edit-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 292px;
+      gap: 13px
+    }
+
+    .spec-item-list {
+      display: grid;
+      gap: 8px;
+      min-height: 142px
+    }
+
+    .spec-item {
+      padding: 11px 12px;
+      border-radius: 12px;
+      background: var(--nm-shared-surface)
+    }
+
+    .spec-item label {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      font-size: 9px;
+      color: var(--mut);
+      margin-bottom: 6px
+    }
+
+    .spec-item p {
+      font-size: 11px;
+      line-height: 1.6;
+      margin: 0 0 8px
+    }
+
+    .spec-item select {
+      border: 0;
+      border-radius: 9px;
+      background: var(--p);
+      padding: 6px 8px;
+      color: var(--tx);
+      font: inherit;
+      font-size: 9px
+    }
+
+    .spec-add-panel {
+      padding: 13px;
+      border-radius: 14px;
+      background: var(--nm-shared-surface)
+    }
+
+    .spec-add-panel h4 {
+      font-size: 12px;
+      margin: 0 0 10px
+    }
+
+    .spec-add-panel select,
+    .spec-add-panel textarea {
+      width: 100%;
+      box-sizing: border-box;
+      border: 0;
+      border-radius: 10px;
+      background: var(--p);
+      padding: 10px;
+      color: var(--tx);
+      font: inherit;
+      font-size: 10px;
+      margin-bottom: 9px
+    }
+
+    .spec-add-panel textarea {
+      height: 95px;
+      resize: vertical
+    }
+
+    .spec-package-import {
+      padding: 16px 18px
+    }
+
+    .spec-package-list {
+      display: grid;
+      gap: 8px
+    }
+
+    .spec-package-candidate {
+      padding: 10px 11px;
+      border-radius: 11px;
+      background: var(--nm-shared-surface);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px
+    }
+
+    .spec-package-candidate p {
+      font-size: 10px;
+      line-height: 1.55;
+      margin: 3px 0 0
+    }
+
+    .spec-package-candidate label {
+      font-size: 9px;
+      color: var(--mut)
+    }
+
+    .spec-empty {
+      font-size: 10px;
+      color: var(--mut);
+      padding: 12px 0
+    }
+
+    @media(max-width:1000px) {
+
+      .project-spec-intro,
+      .project-spec-setup {
+        display: block
+      }
+
+      .project-spec-route,
+      .spec-project-create {
+        margin-top: 13px
+      }
+
+      .project-spec-top-grid,
+      .project-spec-edit-grid {
+        grid-template-columns: 1fr
+      }
+    }
+
+    /* v95: 実JSONから制作知識と不足検知へ進む中核の最小実装。 */
+    .core-main-nav {
+      display: grid;
+      gap: 5px;
+      margin: 13px 0;
+      padding: 14px 0;
+      border-top: 1px solid rgba(100, 120, 115, .1);
+      border-bottom: 1px solid rgba(100, 120, 115, .1)
+    }
+
+    .core-knowledge-page {
+      padding-bottom: 92px
+    }
+
+    .core-route {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      padding: 15px 18px;
+      margin-bottom: 13px
+    }
+
+    .core-route span {
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: var(--nm-shared-surface);
+      font-size: 11px;
+      font-weight: 650
+    }
+
+    .core-route i {
+      font-style: normal;
+      color: var(--mut)
+    }
+
+    .core-source-panel {
+      margin-bottom: 13px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 18px;
+      padding: 18px 20px
+    }
+
+    .core-source-panel h3 {
+      margin: 5px 0;
+      font-size: 16px
+    }
+
+.core-source-panel p {
+  margin: 0;
+  color: var(--mut);
+  font-size: 11px;
+  line-height: 1.6
+}
+
+/* v183: 回収データ取込の取込待ちJSONを1件表示のカルーセルへ変更 */
+#capture-import-queue .import-queue-list.import-carousel-enabled {
+  display: block !important;
+  overflow: visible !important;
+  max-height: none !important;
+  padding-right: 0 !important;
+}
+
+#capture-import-queue .import-carousel-head {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 10px !important;
+  margin: 0 0 10px !important;
+}
+
+#capture-import-queue .import-carousel-counter {
+  font-size: 10px !important;
+  color: var(--mut) !important;
+  white-space: nowrap !important;
+}
+
+#capture-import-queue .import-carousel-nav {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+}
+
+#capture-import-queue .import-carousel-nav .btn {
+  width: 34px !important;
+  height: 34px !important;
+  min-width: 34px !important;
+  padding: 0 !important;
+  border-radius: 999px !important;
+  display: grid !important;
+  place-items: center !important;
+  font-size: 14px !important;
+}
+
+#capture-import-queue .import-carousel-card .import-row {
+  background: var(--nm-shared-surface) !important;
+  box-shadow: inset calc(.25 * var(--nm-offset)) calc(.25 * var(--nm-offset)) calc(.55 * var(--nm-blur)) var(--nm-shadow-color), inset calc(-.25 * var(--nm-offset)) calc(-.25 * var(--nm-offset)) calc(.55 * var(--nm-blur)) var(--nm-light-color) !important;
+  padding: 16px !important;
+  min-height: 190px !important;
+}
+
+#capture-import-queue .import-row-actions {
+  justify-content: flex-start !important;
+  flex-wrap: wrap !important;
+}
+
+#capture-import-queue .import-queue-grid>.card:first-child {
+  max-height: none !important;
+  overflow: visible !important;
+}
+
+#capture-import-queue .import-queue-list .import-empty {
+  padding: 18px !important;
+  border-radius: 14px !important;
+  background: var(--nm-shared-surface) !important;
+  color: var(--mut) !important;
+}
+
+/* v183: 強調色連動の取りこぼし補正。固定黄色/薄黄色を強調色の濃淡へ寄せる */
+.workflow-brief-card.is-active,
+#portfolio-current .workflow-brief-card.is-active,
+#portfolio-purpose .workflow-brief-card.is-active,
+#portfolio-next .workflow-brief-card.is-active,
+#portfolio-review .portfolio-summary-card.is-active,
+.portfolio-output-shelf-card.is-selected,
+.artifact-step-strip,
+.artifact-metric:first-child,
+.artifact-use-tag,
+.artifact-pill,
+.artifact-candidate-item.is-selected,
+.portfolio-purpose.selected,
+.portfolio-selected,
+.portfolio-next-summary,
+.workflow-decompose-item.is-active,
+.workflow-class-row.is-current,
+.capture-pill.warn,
+.import-row-stats i.warn,
+.capture-warning {
+  background: var(--jarvis-accent-12) !important;
+  border-color: var(--jarvis-accent-54) !important;
+}
+
+.artifact-code,
+.portfolio-code,
+.artifact-index,
+.portfolio-purpose.selected .portfolio-code {
+  background: var(--nm-accent) !important;
+  color: var(--nm-accent-ink) !important;
+}
+
+.artifact-step-strip,
+.artifact-metric:first-child,
+.artifact-candidate-card .artifact-candidate-status .artifact-pill,
+.artifact-important-note {
+  box-shadow: inset 0 0 0 1px var(--jarvis-accent-22), var(--sh) !important;
+}
+
+.workflow-brief-card.is-active b,
+.artifact-metric:first-child b,
+.artifact-pill strong {
+  color: var(--text) !important;
+}
+
+.workflow-fulltext-mark,
+.guided-action-copy b::after,
+#portfolio-collect.portfolio-connected .guided-action-copy b::after {
+  background: var(--jarvis-accent-46) !important;
+  box-shadow: 0 0 0 1px var(--jarvis-accent-22) !important;
+}
+
+.demo-sample-pill,
+.start-demo-kicker,
+.capture-pill.ok,
+.workflow-chip.ok {
+  background: var(--jarvis-accent-16) !important;
+}
+
+
+/* v379: registration demo mode toggle and protected buttons. */
+#display-settings .demo-mode-setting {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 14px !important;
+  padding: 12px 14px !important;
+  margin: 14px 0 12px !important;
+  border-radius: 18px !important;
+  background: color-mix(in srgb, var(--jarvis-surface, #efefec) 84%, var(--jarvis-accent, #ecff5c) 16%) !important;
+  box-shadow: inset 7px 7px 14px rgba(130, 140, 132, .18), inset -7px -7px 14px rgba(255,255,255,.62) !important;
+}
+#display-settings .demo-mode-setting b {
+  display: block !important;
+  font-size: 13px !important;
+  color: #53645f !important;
+}
+#display-settings .demo-mode-setting small {
+  display: block !important;
+  margin-top: 4px !important;
+  color: #74827f !important;
+  line-height: 1.55 !important;
+}
+#display-settings .demo-mode-toggle {
+  min-width: 72px !important;
+  height: 38px !important;
+  border: 0 !important;
+  border-radius: 999px !important;
+  cursor: pointer !important;
+  color: #61706b !important;
+  background: rgba(255,255,255,.44) !important;
+  box-shadow: inset 4px 4px 9px rgba(132,142,136,.18), inset -4px -4px 9px rgba(255,255,255,.66) !important;
+}
+#display-settings .demo-mode-toggle.is-on {
+  color: #4d5d57 !important;
+  background: color-mix(in srgb, var(--jarvis-accent, #ecff5c) 34%, rgba(255,255,255,.58) 66%) !important;
+}
+#display-settings .registration-protect-actions .btn:disabled {
+  opacity: .36 !important;
+  cursor: not-allowed !important;
+  pointer-events: none !important;
+  filter: saturate(.45) !important;
+}

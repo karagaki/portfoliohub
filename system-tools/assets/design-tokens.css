@@ -1,0 +1,66 @@
+/* System Tools UI foundation tokens.
+   This file adds semantic variables for future panel/layout/animation work.
+   Existing values are intentionally not replaced here. */
+
+:root {
+  /* Panel geometry */
+  --jarvis-panel-height-xs: 120px;
+  --jarvis-panel-height-sm: 160px;
+  --jarvis-panel-height-md: 220px;
+  --jarvis-panel-height-lg: 300px;
+  --jarvis-panel-height-xl: 420px;
+
+  --jarvis-panel-gap-xs: 8px;
+  --jarvis-panel-gap-sm: 12px;
+  --jarvis-panel-gap-md: 16px;
+  --jarvis-panel-gap-lg: 20px;
+
+  --jarvis-panel-padding-xs: 10px 12px;
+  --jarvis-panel-padding-sm: 14px 16px;
+  --jarvis-panel-padding-md: 18px 20px;
+  --jarvis-panel-padding-lg: 22px 24px;
+
+  --jarvis-panel-radius-sm: 14px;
+  --jarvis-panel-radius-md: 18px;
+  --jarvis-panel-radius-lg: 22px;
+  --jarvis-panel-radius-xl: 28px;
+
+  --jarvis-panel-shadow-soft: 0 8px 20px rgba(30, 44, 43, 0.08);
+  --jarvis-panel-shadow-medium: 0 14px 28px rgba(30, 44, 43, 0.12);
+  --jarvis-panel-shadow-strong: 0 18px 36px rgba(30, 44, 43, 0.16);
+
+  --jarvis-panel-density-dense: 0.92;
+  --jarvis-panel-density-comfortable: 1;
+  --jarvis-panel-density-roomy: 1.08;
+
+  /* Text */
+  --jarvis-text-size-xs: 12px;
+  --jarvis-text-size-sm: 13px;
+  --jarvis-text-size-md: 15px;
+  --jarvis-text-size-lg: 18px;
+  --jarvis-text-size-xl: 22px;
+
+  --jarvis-text-weight-regular: 400;
+  --jarvis-text-weight-medium: 500;
+  --jarvis-text-weight-strong: 700;
+  --jarvis-text-weight-heavy: 800;
+
+  /* Status / emphasis */
+  --jarvis-status-color-ready: #4c6f5a;
+  --jarvis-status-color-warning: #9b6b16;
+  --jarvis-status-color-active: #2f6b7a;
+  --jarvis-status-color-complete: #3e7d45;
+  --jarvis-status-color-muted: #798581;
+  --jarvis-emphasis-color: #8f6d24;
+
+  /* Motion */
+  --jarvis-animation-duration-fast: 120ms;
+  --jarvis-animation-duration-normal: 180ms;
+  --jarvis-animation-duration-slow: 280ms;
+  --jarvis-animation-delay-short: 80ms;
+  --jarvis-animation-delay-medium: 160ms;
+  --jarvis-animation-delay-long: 240ms;
+  --jarvis-interaction-response-duration: 140ms;
+  --jarvis-reveal-timing: 320ms;
+  --jarvis-fade-timing: 220ms;
+}

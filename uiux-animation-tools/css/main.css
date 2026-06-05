@@ -1,0 +1,4220 @@
+/* main.css */
+
+#ui-container {
+    gap: 2px; /* すべてのコンテナ間の間隔を2pxに設定 */
+}
+
+#canvas-size-container,
+#button-container,
+#color-container,
+#slider-container,
+#case-info,
+#load-container,
+#cursor-container {
+    margin-bottom: 0 !important; /* すべてのmargin-bottomを0に設定 */
+    width: 100%;
+}
+
+#cursor-container {
+    display: none !important;
+}
+
+
+html {
+    background: #e1e1e1;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    font-size: 14px;  /*主にヘッダー*/
+    overflow: hidden;
+}
+
+body[data-ui-booting="1"] {
+    visibility: hidden;
+}
+
+body[data-ui-ready="1"] {
+    visibility: visible;
+}
+
+#main-container {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    height: 100vh;
+    min-width: 1100px;
+    position: relative;
+}
+
+#content-wrapper {
+    flex: 1 1 auto;
+    display: block;
+    padding: 0;
+    overflow: hidden;
+    min-width: 700px;
+    position: relative;
+    z-index: 1;
+}
+
+#canvas-stage {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background: #e1e1e1;
+    z-index: 1;
+}
+
+#sketch-holder {
+    position: absolute;
+    overflow: hidden;
+}
+
+#ui-wrapper {
+    flex: 0 0 340px;
+    width: 340px;
+    height: 100vh;
+    overflow: visible;
+    position: relative;
+    z-index: 3;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-wrapper {
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 40;
+    background: transparent;
+    backdrop-filter: none;
+}
+
+.ui-variant-panel {
+    margin-bottom: 4px;
+    padding: 5px 7px;
+    background: #f4f4f4;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    box-sizing: border-box;
+}
+
+.ui-variant-panel label {
+    font-size: 12px;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.ui-variant-panel select {
+    min-width: 128px;
+    font: inherit;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-wrapper {
+    width: auto;
+    background: transparent;
+    overflow: visible;
+    pointer-events: none;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-floating-layer {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 60;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-floating-layer > * {
+    pointer-events: auto;
+    position: fixed;
+}
+
+body[data-ui-variant="variant-1-glass"] #main-container {
+    display: block;
+}
+
+body[data-ui-variant="variant-1-glass"] #content-wrapper {
+    width: 100%;
+    min-width: 0;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-variant-panel {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 4px;
+    margin-bottom: 0;
+    padding: 8px 10px;
+    background: rgba(255, 255, 255, calc(var(--glass-opacity, 0) * 0.02));
+    -webkit-backdrop-filter:
+        blur(calc(var(--glass-blur-amount, 0) * 8px))
+        saturate(calc(1 + var(--glass-saturation, 0) * 0.02));
+    backdrop-filter:
+        blur(calc(var(--glass-blur-amount, 0) * 8px))
+        saturate(calc(1 + var(--glass-saturation, 0) * 0.02));
+    border-style: solid;
+    border-width: calc(var(--glass-edge-width, 1.2) * 0.2px);
+    border-color: rgba(255, 255, 255, calc(var(--glass-edge-intensity, 0) * 0.08));
+    border-top-color: rgba(255, 255, 255, calc(var(--glass-refraction-strength, 0) * 0.12));
+    border-left-color: rgba(255, 255, 255, calc(var(--glass-edge-intensity, 0) * 0.04));
+    border-radius: calc(var(--glass-corner-radius, 12) * 1px);
+    box-shadow:
+        calc(var(--glass-drop-shadow-offset-x, var(--glass-shadow-direction-x, 0) * var(--glass-drop-shadow-distance, 8)) * 1px)
+        calc(var(--glass-drop-shadow-offset-y, var(--glass-shadow-direction-y, 1) * var(--glass-drop-shadow-distance, 8)) * 1px)
+        calc(var(--glass-drop-shadow-soft-blur, var(--glass-shadow-spread, 0) * 0.45) * 1px)
+        var(--glass-drop-shadow-color-rgba, rgba(28, 35, 50, calc(var(--glass-shadow-opacity, 0) * 0.16))),
+        inset calc(var(--glass-shadow-direction-x, 0) * var(--glass-shadow-distance, 8) * 1px) calc(var(--glass-shadow-direction-y, 1) * var(--glass-shadow-distance, 8) * 1px) calc(var(--glass-shadow-spread, 0) * 0.32px) var(--glass-shadow-color-rgba, rgba(28,35,50,0.18)),
+        inset calc(var(--glass-highlight-direction-x, 0) * -1 * var(--glass-shadow-distance, 8) * 0.45px) calc(var(--glass-highlight-direction-y, -1) * -1 * var(--glass-shadow-distance, 8) * 0.45px) 0 rgba(255, 255, 255, calc(var(--glass-refraction-strength, 0) * 0.12));
+    color: #17202a;
+}
+
+body[data-ui-variant="variant-1-glass"] .ui-variant-panel,
+body[data-ui-variant="variant-1-glass"] #canvas-size-container,
+body[data-ui-variant="variant-1-glass"] #button-container,
+body[data-ui-variant="variant-1-glass"] #color-container,
+body[data-ui-variant="variant-1-glass"] #slider-container,
+body[data-ui-variant="variant-1-glass"] #cursor-container,
+body[data-ui-variant="variant-1-glass"] #svg-file-container,
+body[data-ui-variant="variant-1-glass"] #svg-anime-container,
+body[data-ui-variant="variant-1-glass"] #load-container,
+body[data-ui-variant="variant-1-glass"] #vector-container {
+    background: rgba(255, 255, 255, 0.015);
+}
+
+body[data-ui-variant="variant-1-glass"] #cursor-container {
+    display: none !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 3px;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    overflow: visible;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-refraction-layer {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    border-radius: inherit;
+    z-index: 0;
+    opacity: calc(var(--glass-refraction-strength, 0) * 0.42);
+    mask-image: radial-gradient(140% 120% at 50% 44%, transparent 0%, #000 45%, #000 68%, transparent 100%);
+    -webkit-mask-image: radial-gradient(140% 120% at 50% 44%, transparent 0%, #000 45%, #000 68%, transparent 100%);
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-refraction-image {
+    position: absolute;
+    left: calc(var(--refraction-panel-left, 0px) * -1);
+    top: calc(var(--refraction-panel-top, 0px) * -1);
+    width: var(--refraction-viewport-width, 100vw);
+    height: var(--refraction-viewport-height, 100vh);
+    object-fit: none;
+    object-position: 0 0;
+    transform:
+        translate(calc(var(--glass-refraction-offset-x, 0px) * 1px), calc(var(--glass-refraction-offset-y, 0px) * 1px))
+        scale(var(--glass-refraction-scale, 1))
+        skewX(calc(var(--glass-refraction-strength, 0.69) * 0.6deg));
+    transform-origin: center;
+    filter:
+        blur(calc(var(--glass-blur-amount, 0) * 1px))
+        saturate(calc(1 + var(--glass-saturation, 0) * 0.12))
+        contrast(calc(1 + var(--glass-refraction-strength, 0) * 0.08));
+    mix-blend-mode: normal;
+    opacity: 0.92;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel::before,
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel::after {
+    content: none;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel::before {
+    background: none;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel::after {
+    box-shadow: none;
+    opacity: 1;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel.collapsed .glass-preset-details,
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-details[hidden] {
+    display: none !important;
+}
+
+body:not([data-ui-variant="variant-1-glass"]) #ui-preset-panel {
+    display: none;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel label {
+    font-size: 10px;
+    font-weight: bold;
+    color: #17202a;
+    white-space: nowrap;
+    min-width: 0;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel select {
+    width: 100%;
+    min-width: 0;
+    font: inherit;
+    padding: 1px 0;
+    border-radius: 0;
+    border: 1px solid #E6E6E6 !important;
+    background: transparent !important;
+    color: #17202a;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    box-shadow: 0 0 0 1px #E6E6E6 inset !important;
+    outline: 1px solid #E6E6E6;
+    outline-offset: 0;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-details-toggle {
+    width: 20px;
+    min-width: 20px;
+    flex: 0 0 20px;
+    text-align: left;
+    justify-content: flex-start;
+    padding: 0 2px;
+    font-size: 12px;
+    line-height: 1.1;
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none;
+    color: transparent !important;
+    min-height: 20px;
+    text-shadow: none !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-header-row {
+    display: grid;
+    grid-template-columns: 20px minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 4px;
+    min-width: 0;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel #ui-preset-select {
+    grid-column: 2;
+    width: 100%;
+    min-width: 0;
+    max-width: none;
+    flex: none;
+    /* テーマ切替後も、Glass の通常 select へ即時復元して余計な輪郭を残さない。 */
+    appearance: none;
+    -webkit-appearance: none;
+    outline: 0 !important;
+    box-shadow:
+        0 1px 0 rgba(255, 255, 255, 0.18) inset,
+        0 5px 14px rgba(12, 18, 28, 0.08) !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel #ui-preset-select:focus-visible {
+    outline: 2px solid rgba(255, 255, 255, 0.78);
+    outline-offset: 2px;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-selected-lock {
+    grid-column: 3;
+    justify-self: end;
+    font-size: 11px;
+    line-height: 1;
+    opacity: 1;
+    color: #17202a;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-details {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    max-height: none;
+    overflow-y: auto;
+    /* 操作列は絶対配置のため、展開内容の下端を確保して欠けを防ぐ。 */
+    padding: 0 0 30px;
+    min-height: 0;
+    position: relative;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-rows {
+    /* Glass は従来の全パラメータ表示を2列で保持する。Neumorphism の行構成は下段のテーマ限定指定で切り替える。 */
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2px 8px;
+    max-height: none;
+    overflow: visible;
+    padding-right: 0;
+    min-height: 0;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-rows,
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-rows::before,
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-rows::after {
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    border: 0 !important;
+    outline: 0 !important;
+    box-shadow: none !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-category-header {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 0;
+    padding: 1px 0;
+    margin: 2px 0 0;
+    font-size: 9px;
+    line-height: 1;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: rgba(23, 32, 42, 0.72);
+    border-bottom: 1px solid rgba(230, 230, 230, 0.28);
+    box-sizing: border-box;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-category-note {
+    font-size: 8px;
+    line-height: 1;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: rgba(23, 32, 42, 0.54);
+    white-space: nowrap;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-category-header:has(+ .glass-preset-category-header) {
+    display: none;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-row-line {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2px 8px;
+    min-width: 0;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-row-line-full .glass-preset-row {
+    grid-column: 1 / -1;
+}
+
+/* Neumorphism の整理済み6行だけは一列ずつ積み、詰まり過ぎない余白を確保する。
+   Glass の全パラメータ用 grid へは影響させない。 */
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel .glass-preset-details {
+    gap: 8px;
+    padding-bottom: 34px;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel .glass-preset-rows {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel .glass-preset-row-line {
+    gap: 4px 12px;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-row {
+    display: grid;
+    grid-template-columns: minmax(58px, 0.75fr) minmax(0, 1fr) minmax(28px, auto);
+    gap: 2px;
+    align-items: center;
+    min-width: 0;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-row-color {
+    grid-template-columns: minmax(58px, 0.75fr) minmax(72px, 1.2fr) minmax(36px, auto);
+    align-items: center;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-row-color input[type="color"] {
+    width: 72px !important;
+    height: 14px !important;
+    block-size: 14px !important;
+    min-width: 72px !important;
+    min-height: 14px !important;
+    max-height: 14px !important;
+    display: block !important;
+    align-self: center !important;
+    justify-self: center !important;
+    margin-left: 4px !important;
+    padding: 0 !important;
+    border-radius: 999px !important;
+    border: 1px solid rgba(255, 255, 255, 0.34) !important;
+    box-shadow:
+        inset 0 1px 1px rgba(255, 255, 255, 0.18),
+        0 1px 3px rgba(16, 24, 36, 0.08) !important;
+    overflow: hidden !important;
+    -webkit-appearance: none !important;
+    appearance: none !important;
+    line-height: 0 !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-row-color input[type="color"]::-webkit-color-swatch-wrapper {
+    padding: 0 !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-row-color input[type="color"]::-webkit-color-swatch {
+    border: 0 !important;
+    border-radius: 999px !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-row-color input[type="color"]::-moz-color-swatch {
+    border: 0 !important;
+    border-radius: 999px !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-label,
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-value,
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-status {
+    font-size: 10px;
+    color: rgba(23, 32, 42, 0.86);
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-label {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
+    margin-left: -1px;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-lock {
+    flex: none;
+    justify-self: end;
+    font-size: 11px;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-value {
+    min-width: 36px;
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+    padding-right: 1px;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-variant-panel > #ui-preset-panel {
+    width: 100%;
+    flex: none;
+    align-self: stretch;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-actions {
+    display: flex;
+    justify-content: flex-start;
+    gap: 4px;
+    min-height: 18px;
+    align-items: center;
+    flex-wrap: nowrap;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 1px;
+    margin-top: 0;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-actions > button {
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 25px;
+    padding: 0 8px;
+    line-height: 1;
+    margin: 0;
+    vertical-align: middle;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-edit-lock-toggle {
+    width: 22px;
+    min-width: 22px;
+    flex: 0 0 22px;
+    padding: 0;
+    margin-left: auto;
+    opacity: 1;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-edit-lock-toggle.is-unlocked {
+    opacity: 0.35;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-edit-lock-toggle:disabled {
+    opacity: 0.25;
+    cursor: default;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-save {
+    width: auto;
+    flex: 0 0 auto;
+    min-width: 50px;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-export,
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-import {
+    flex: 0 0 auto;
+    min-width: 52px;
+    padding: 0 8px;
+    font-size: 10px;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-details,
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-rows,
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-actions,
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-details-toggle,
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-save {
+    border: none !important;
+    outline: 0 !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    background-image: none !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-status {
+    position: static;
+    min-height: 16px;
+    padding: 0 4px;
+    border-radius: 0;
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+    opacity: 0;
+    transform: translateY(-2px);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    pointer-events: none;
+    white-space: nowrap;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-status.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel input[type="range"][data-glass-param] {
+    width: 100%;
+    min-width: 0;
+    height: 12px;
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent;
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel input[type="range"][data-glass-param]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background:
+        radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.68) 55%, rgba(198, 210, 224, 0.34) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.42);
+    box-shadow: 0 1px 3px rgba(17, 24, 34, 0.16);
+    margin-top: -4px;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel input[type="range"][data-glass-param]::-moz-range-thumb {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background:
+        radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.68) 55%, rgba(198, 210, 224, 0.34) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.42);
+    box-shadow: 0 1px 3px rgba(17, 24, 34, 0.16);
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel input[type="range"][data-glass-param]::-webkit-slider-runnable-track {
+    height: 2px;
+    border-radius: 999px;
+    background:
+        linear-gradient(90deg, rgba(244, 244, 244, 0.56), rgba(244, 244, 244, 0.36), rgba(244, 244, 244, 0.56));
+    border: 1px solid rgba(244, 244, 244, 0.38);
+    box-shadow: inset 0 1px 1px rgba(11, 18, 28, 0.1);
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel input[type="range"][data-glass-param]::-moz-range-track {
+    height: 2px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, rgba(244, 244, 244, 0.56), rgba(244, 244, 244, 0.36), rgba(244, 244, 244, 0.56));
+    border: 1px solid rgba(244, 244, 244, 0.38);
+    box-shadow: inset 0 1px 1px rgba(11, 18, 28, 0.1);
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-save {
+    background: transparent;
+    border: 1px solid rgba(244, 244, 244, 0.56);
+    color: #17202a;
+    box-shadow: none;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-panel-reset {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: #17202a;
+    backdrop-filter: blur(8px) saturate(1.02);
+    -webkit-backdrop-filter: blur(8px) saturate(1.02);
+    z-index: 61;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-save {
+    flex: 0 0 auto;
+    padding: 0 12px;
+    font-size: 10px;
+    min-height: 25px;
+    background: transparent !important;
+    border-radius: 999px;
+    border: 1px solid rgba(230, 230, 230, 0.42) !important;
+    box-shadow: none;
+    color: #17202a;
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-dup,
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-new,
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-rename,
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-delete,
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-export,
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-import {
+    flex: 0 0 auto;
+    padding: 0 8px;
+    min-height: 25px;
+    font-size: 10px;
+    background: transparent !important;
+    /* テーマ切替後も、Glass の操作列寸法を Neumorphism の runtime 指定で膨らませない。 */
+    border: 1px solid rgba(230, 230, 230, 0.42) !important;
+    border-radius: 999px;
+    color: #17202a;
+    box-shadow: none;
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-control-bar {
+    position: fixed;
+    right: 24px;
+    bottom: 24px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 6px;
+    z-index: 62;
+    pointer-events: none;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-control-bar button,
+body[data-ui-variant="variant-1-glass"] #glass-control-bar [role="button"],
+body[data-ui-variant="variant-1-glass"] #glass-control-bar select,
+body[data-ui-variant="variant-1-glass"] #glass-control-bar input {
+    pointer-events: auto;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-control-bar #glass-settings-toggle,
+body[data-ui-variant="variant-1-glass"] #glass-control-bar #glass-panel-reset,
+body[data-ui-variant="variant-1-glass"] #glass-control-bar .canvas-trail-mode-button,
+body[data-ui-variant="variant-1-glass"] #glass-control-bar .canvas-bottom-color-button {
+    position: static;
+    left: auto;
+    right: auto;
+    top: auto;
+    bottom: auto;
+    margin-left: 0;
+    width: auto;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-settings-toggle {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: #17202a;
+    backdrop-filter: blur(8px) saturate(1.02);
+    -webkit-backdrop-filter: blur(8px) saturate(1.02);
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-settings-panel .glass-settings-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2px;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-settings-panel .glass-settings-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 3px 4px;
+    align-content: start;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-settings-panel .glass-settings-section {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-settings-panel .glass-settings-section-label {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    min-height: 0;
+    padding: 0;
+    margin: 0;
+    font-size: 7px;
+    line-height: 1;
+    font-weight: 700;
+    letter-spacing: 0.025em;
+    color: rgba(23, 32, 42, 0.58);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-settings-panel .glass-settings-section-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px;
+    min-width: 0;
+}
+
+body[data-ui-variant="variant-1-glass"] .glass-chip {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 18px;
+    padding: 1px 6px;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: rgba(255, 255, 255, 0.06);
+    color: #17202a;
+    font-size: 9px;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    min-width: 0;
+}
+
+body[data-ui-variant="variant-1-glass"] .glass-chip.is-on {
+    background: rgba(255, 255, 255, 0.16);
+    border-color: rgba(255, 255, 255, 0.24);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16);
+}
+
+body[data-ui-variant="variant-1-glass"] #case-comparison {
+    position: fixed !important;
+    height: fit-content;
+    min-height: 0;
+    max-height: none;
+    overflow: hidden;
+    padding: 7px 6px 6px;
+}
+
+body[data-ui-variant="variant-1-glass"] #case-comparison .case-comparison-controls {
+    padding: 0;
+    gap: 0;
+    min-height: 0;
+}
+
+body[data-ui-variant="variant-1-glass"] #case-comparison .case-comparison-title,
+body[data-ui-variant="variant-1-glass"] #case-comparison .case-comparison-current {
+    display: none;
+}
+
+body[data-ui-variant="variant-1-glass"] #case-table th.parameter-toggle {
+    position: relative;
+    color: rgba(18, 28, 40, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 25px;
+    min-width: 25px;
+    max-width: 25px;
+    min-height: 33px;
+    box-sizing: border-box;
+    padding-left: 1px;
+    padding-right: 1px;
+    padding-top: 6px;
+    padding-bottom: 7px;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.08s ease;
+}
+
+body[data-ui-variant="variant-1-glass"] #case-table th.parameter-toggle,
+body[data-ui-variant="variant-1-glass"] #case-table th.case-header {
+    pointer-events: auto;
+}
+
+body[data-ui-variant="variant-1-glass"] #case-table th.parameter-toggle .toggle-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.25em;
+    min-height: 16px;
+    min-width: 1.25em;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1;
+    margin-top: -1px;
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-select: none;
+    border-radius: 0;
+    transition: color 0.2s ease, transform 0.08s ease;
+}
+
+body[data-ui-variant="variant-1-glass"] #case-table td,
+body[data-ui-variant="variant-1-glass"] #case-table td.changed-value,
+body[data-ui-variant="variant-1-glass"] #case-table td.current-case {
+    pointer-events: auto;
+}
+
+body[data-ui-variant="variant-1-glass"] #case-toggle-debug-overlay {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9999;
+    display: none;
+}
+
+body[data-ui-variant="variant-1-glass"] #case-toggle-debug-overlay .case-toggle-debug-rect,
+body[data-ui-variant="variant-1-glass"] #case-toggle-debug-overlay .case-toggle-debug-point,
+body[data-ui-variant="variant-1-glass"] #case-toggle-debug-overlay .case-toggle-debug-label {
+    position: absolute;
+    box-sizing: border-box;
+}
+
+body[data-ui-variant="variant-1-glass"] #case-toggle-debug-overlay .case-toggle-debug-rect-toggle {
+    border: 1px solid rgba(255, 99, 132, 0.75);
+    background: rgba(255, 99, 132, 0.08);
+}
+
+body[data-ui-variant="variant-1-glass"] #case-toggle-debug-overlay .case-toggle-debug-rect-icon {
+    border: 1px solid rgba(66, 128, 228, 0.75);
+    background: rgba(66, 128, 228, 0.08);
+}
+
+body[data-ui-variant="variant-1-glass"] #case-toggle-debug-overlay .case-toggle-debug-point {
+    width: 6px;
+    height: 6px;
+    border-radius: 999px;
+    background: rgba(255, 230, 0, 0.95);
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2);
+}
+
+body[data-ui-variant="variant-1-glass"] #case-toggle-debug-overlay .case-toggle-debug-label {
+    right: 0;
+    bottom: 0;
+    max-width: 160px;
+    padding: 2px 4px;
+    background: rgba(18, 28, 40, 0.75);
+    color: #fff;
+    font-size: 10px;
+    line-height: 1.2;
+    border-radius: 4px;
+    white-space: nowrap;
+}
+
+body[data-ui-variant="variant-1-glass"][data-case-toggle-debug="1"] #case-toggle-debug-overlay {
+    display: block;
+}
+
+body[data-ui-variant="variant-1-glass"] #case-table th.parameter-toggle[aria-expanded="true"] .toggle-icon {
+    color: rgba(66, 128, 228, 0.98);
+}
+
+body[data-ui-variant="variant-1-glass"] #case-table th.parameter-toggle[aria-expanded="false"] .toggle-icon {
+    color: rgba(246, 176, 96, 0.98);
+}
+
+body[data-ui-variant="variant-1-glass"] #case-table th.parameter-toggle:hover {
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.08)),
+        rgba(255, 255, 255, 0.04);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.14),
+        0 1px 5px rgba(16, 24, 36, 0.05);
+}
+
+body[data-ui-variant="variant-1-glass"] #case-table th.parameter-toggle:active {
+    transform: translateY(1px);
+    background:
+        linear-gradient(180deg, rgba(66, 128, 228, 0.24), rgba(66, 128, 228, 0.12)),
+        rgba(66, 128, 228, 0.06);
+}
+
+body[data-ui-variant="variant-1-glass"] #case-table th.parameter-toggle:focus-visible {
+    outline: 1px solid rgba(66, 128, 228, 0.42);
+    outline-offset: 1px;
+}
+
+body[data-ui-variant="variant-1-glass"] #case-table th,
+body[data-ui-variant="variant-1-glass"] #case-table td {
+    padding-top: 1px;
+    padding-bottom: 1px;
+}
+
+body[data-ui-variant="variant-1-glass"] #case-table thead th {
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-settings-close,
+body[data-ui-variant="variant-1-glass"] #glass-settings-toggle,
+body[data-ui-variant="variant-1-glass"] #glass-panel-reset,
+body[data-ui-variant="variant-1-glass"] .glass-settings-close,
+body[data-ui-variant="variant-1-glass"] .glass-settings-close-test {
+    padding: 3px 8px;
+    font-size: 11px;
+    border-radius: 999px;
+}
+
+body[data-ui-variant="variant-1-glass"] .glass-settings-close {
+    background: rgba(255, 255, 255, 0.12);
+    color: #17202a;
+}
+
+body[data-ui-variant="variant-1-glass"] .glass-settings-close-test {
+    background: rgba(255, 255, 255, 0.12);
+    color: #17202a;
+}
+
+body[data-ui-variant="variant-1-glass"] .glass-settings-close {
+    display: none !important;
+}
+
+body[data-ui-variant="variant-1-glass"] input[type="text"],
+body[data-ui-variant="variant-1-glass"] input[type="number"],
+body[data-ui-variant="variant-1-glass"] select,
+body[data-ui-variant="variant-1-glass"] input[type="color"],
+body[data-ui-variant="variant-1-glass"] button {
+    background: rgba(255, 255, 255, 0.12);
+    color: #17202a;
+    border-color: rgba(255, 255, 255, 0.28);
+    box-shadow:
+        inset 0 1px 1px rgba(255, 255, 255, 0.18),
+        0 1px 3px rgba(16, 24, 36, 0.08);
+}
+
+body[data-ui-variant="variant-1-glass"] #button-container button {
+    border-color: rgba(255, 255, 255, 0.32);
+}
+
+body[data-ui-variant="variant-1-glass"] #button-container button,
+body[data-ui-variant="variant-1-glass"] #glass-control-bar button,
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel button {
+    transition:
+        background-color 0.14s ease,
+        border-color 0.14s ease,
+        box-shadow 0.14s ease,
+        color 0.14s ease,
+        transform 0.14s ease,
+        filter 0.14s ease;
+}
+
+body[data-ui-variant="variant-1-glass"] #button-container button:hover,
+body[data-ui-variant="variant-1-glass"] #glass-control-bar button:hover,
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel button:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.42);
+    box-shadow:
+        inset 0 1px 1px rgba(255, 255, 255, 0.24),
+        0 2px 6px rgba(16, 24, 36, 0.12);
+    color: #0f1722;
+    filter: brightness(1.02);
+}
+
+body[data-ui-variant="variant-1-glass"] #button-container button:active,
+body[data-ui-variant="variant-1-glass"] #glass-control-bar button:active,
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel button:active {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.24);
+    box-shadow:
+        inset 0 1px 1px rgba(16, 24, 36, 0.12),
+        0 1px 2px rgba(16, 24, 36, 0.06);
+    color: #18212d;
+    transform: translateY(1px);
+    filter: brightness(0.98);
+}
+
+body[data-ui-variant="variant-1-glass"] #button-container button:focus-visible,
+body[data-ui-variant="variant-1-glass"] #glass-control-bar button:focus-visible,
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel button:focus-visible {
+    outline: 2px solid rgba(255, 255, 255, 0.78);
+    outline-offset: 2px;
+}
+
+body[data-ui-variant="variant-1-glass"] input[type="range"].slider,
+body[data-ui-variant="variant-1-glass"] #canvas-size-slider,
+body[data-ui-variant="variant-1-glass"] #color-container .slider,
+body[data-ui-variant="variant-1-glass"] #slider-container .slider,
+body[data-ui-variant="variant-1-glass"] #svg-anime-container .slider,
+body[data-ui-variant="variant-1-glass"] #vector-container .slider {
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.3), rgba(142, 162, 183, 0.3));
+}
+
+body[data-ui-variant="variant-1-glass"] input[type="range"].slider::-webkit-slider-thumb,
+body[data-ui-variant="variant-1-glass"] input[type="range"].slider::-moz-range-thumb,
+body[data-ui-variant="variant-1-glass"] #canvas-size-slider::-webkit-slider-thumb,
+body[data-ui-variant="variant-1-glass"] #canvas-size-slider::-moz-range-thumb,
+body[data-ui-variant="variant-1-glass"] #color-container .slider::-webkit-slider-thumb,
+body[data-ui-variant="variant-1-glass"] #color-container .slider::-moz-range-thumb,
+body[data-ui-variant="variant-1-glass"] #slider-container .slider::-webkit-slider-thumb,
+body[data-ui-variant="variant-1-glass"] #slider-container .slider::-moz-range-thumb,
+body[data-ui-variant="variant-1-glass"] #svg-anime-container .slider::-webkit-slider-thumb,
+body[data-ui-variant="variant-1-glass"] #svg-anime-container .slider::-moz-range-thumb,
+body[data-ui-variant="variant-1-glass"] #vector-container .slider::-webkit-slider-thumb,
+body[data-ui-variant="variant-1-glass"] #vector-container .slider::-moz-range-thumb {
+    background: rgba(255, 255, 255, 0.82);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 0 1px 3px rgba(15, 22, 34, 0.2);
+}
+
+body[data-ui-variant="variant-1-glass"] .ui-variant-panel label {
+    color: #17202a;
+    text-shadow: none;
+    filter: none;
+    background: none;
+    -webkit-text-stroke: 0;
+    -webkit-text-fill-color: currentColor;
+}
+
+body[data-ui-variant="variant-1-glass"] .ui-variant-panel select {
+    min-width: 138px;
+    padding: 4px 8px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.38);
+    background: rgba(255, 255, 255, 0.12);
+    color: #17202a;
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.24);
+    -webkit-backdrop-filter: blur(8px) saturate(1.03);
+    backdrop-filter: blur(8px) saturate(1.03);
+}
+
+/* Glass: layout base */
+body[data-ui-variant="variant-1-glass"] #ui-container {
+    padding: 4px;
+    background: transparent;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    border: 0;
+    border-radius: 16px;
+    box-shadow: none;
+    overflow: visible;
+    position: static;
+    width: 0;
+    height: 0;
+    min-width: 0;
+    min-height: 0;
+    margin: 0;
+    opacity: 0;
+    pointer-events: none;
+}
+
+body[data-ui-variant="variant-1-glass"] .ui-container {
+    background: rgba(255, 255, 255, 0.01);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-top-color: rgba(255, 255, 255, 0.08);
+    border-left-color: rgba(255, 255, 255, 0.03);
+    border-radius: 12px;
+    box-shadow:
+        0 4px 10px rgba(26, 34, 48, 0.02),
+        inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    overflow: hidden;
+    position: fixed;
+    width: min(320px, calc(100vw - 24px));
+    max-width: min(320px, calc(100vw - 24px));
+    min-width: 320px;
+    box-sizing: border-box;
+    right: auto;
+    left: auto;
+}
+
+/* Glass: floating layer */
+body[data-ui-variant="variant-1-glass"] #glass-control-bar {
+    position: fixed;
+    left: 24px;
+    right: 24px;
+    bottom: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    z-index: 62;
+    pointer-events: none;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-control-bar button,
+body[data-ui-variant="variant-1-glass"] #glass-control-bar [role="button"],
+body[data-ui-variant="variant-1-glass"] #glass-control-bar select,
+body[data-ui-variant="variant-1-glass"] #glass-control-bar input {
+    pointer-events: auto;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-control-bar #glass-settings-toggle,
+body[data-ui-variant="variant-1-glass"] #glass-control-bar #glass-panel-reset {
+    position: static;
+    left: auto;
+    right: auto;
+    top: auto;
+    bottom: auto;
+    margin-left: 0;
+    width: 100%;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-settings-toggle {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: #17202a;
+    backdrop-filter: blur(8px) saturate(1.02);
+    -webkit-backdrop-filter: blur(8px) saturate(1.02);
+}
+
+/* Glass: panel common */
+body[data-ui-variant="variant-1-glass"] #glass-settings-panel,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-5 {
+    position: fixed;
+    display: block;
+    min-width: 0;
+    box-sizing: border-box;
+    pointer-events: auto;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-settings-panel[hidden],
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-5[hidden],
+body[data-ui-variant="variant-1-glass"] #glass-settings-panel.is-hidden,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-5.is-hidden,
+body[data-ui-variant="variant-1-glass"] #glass-settings-panel.glass-forced-hidden,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-5.glass-forced-hidden {
+    display: none !important;
+    visibility: hidden !important;
+}
+
+body[data-ui-variant="variant-1-glass"] .glass-panel-visibility-animating {
+    transition:
+        opacity var(--glass-panel-visibility-duration, 0.7s) var(--glass-panel-visibility-easing, ease),
+        transform var(--glass-panel-visibility-duration, 0.7s) var(--glass-panel-visibility-easing, ease);
+    will-change: opacity, transform;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7 {
+    --glass-panel-visibility-duration: 0.7s;
+    --glass-panel-visibility-easing: ease;
+}
+
+body[data-ui-variant="variant-1-glass"] .glass-panel-visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+}
+
+body[data-ui-variant="variant-1-glass"] .glass-panel-hiding {
+    opacity: 0;
+    transform: translateY(6px) scale(0.98);
+    pointer-events: none;
+}
+
+/* Glass: panel header/content common */
+body[data-ui-variant="variant-1-glass"] #glass-settings-panel .ui-header,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-5 .ui-header {
+    min-height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    cursor: move;
+    pointer-events: auto;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3 .ui-header,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-4 .ui-header,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-5 .ui-header,
+body[data-ui-variant="variant-1-glass"] #glass-settings-panel .ui-header {
+    height: 24px;
+    min-height: 24px;
+    box-sizing: border-box;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6 .ui-header {
+    height: 24px;
+    min-height: 24px;
+    box-sizing: border-box;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-settings-panel .ui-content,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-5 .ui-content {
+    padding: 3px 5px 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    height: auto;
+    min-height: 0;
+    max-height: 168px;
+    overflow: auto;
+}
+
+/* Glass: panel collapsed common */
+body[data-ui-variant="variant-1-glass"] .ui-container .ui-content,
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-details,
+body[data-ui-variant="variant-1-glass"] #case-comparison #case-table {
+    overflow: hidden;
+    max-height: 999px;
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+body[data-ui-variant="variant-1-glass"] .ui-container.collapsed {
+    height: fit-content !important;
+    min-height: 0 !important;
+    overflow: hidden;
+}
+
+body[data-ui-variant="variant-1-glass"] .ui-container.collapsed .ui-content,
+body[data-ui-variant="variant-1-glass"] .ui-container .ui-content.glass-panel-collapse-animating,
+body[data-ui-variant="variant-1-glass"] .ui-container .ui-content.glass-panel-content-open,
+body[data-ui-variant="variant-1-glass"] .ui-container .ui-content.glass-panel-content-closing,
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-details.glass-panel-collapse-animating,
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-details.glass-panel-content-open,
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-details.glass-panel-content-closing {
+    transition:
+        max-height 0.7s ease,
+        opacity 0.7s ease,
+        transform 0.7s ease;
+    will-change: max-height, opacity, transform;
+}
+
+/* Case comparison: keep the table layout stable and animate the body as one layer.
+   Avoid per-cell clip/height animation because it causes stepped, column-by-column motion. */
+body[data-ui-variant="variant-1-glass"] #case-comparison #case-table {
+    max-height: none;
+    opacity: 1;
+    transform: none;
+}
+
+body[data-ui-variant="variant-1-glass"] #case-comparison #case-table tbody {
+    opacity: 1;
+    transform: translateY(0);
+    transition:
+        opacity 0.7s ease,
+        transform 0.7s ease;
+    will-change: opacity, transform;
+}
+
+body[data-ui-variant="variant-1-glass"] #case-comparison #case-table.case-comparison-expanding-start tbody,
+body[data-ui-variant="variant-1-glass"] #case-comparison #case-table.case-comparison-collapsing tbody,
+body[data-ui-variant="variant-1-glass"] #case-comparison #case-table.parameters-hidden tbody {
+    opacity: 0;
+    transform: translateY(-4px);
+    pointer-events: none;
+}
+
+body[data-ui-variant="variant-1-glass"] #case-comparison #case-table.case-comparison-expanding tbody {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+body[data-ui-variant="variant-1-glass"] #case-comparison #case-table tbody tr,
+body[data-ui-variant="variant-1-glass"] #case-comparison #case-table tbody td {
+    transition: none;
+    will-change: auto;
+    clip-path: none;
+}
+
+body[data-ui-variant="variant-1-glass"] #case-comparison #case-table.case-comparison-collapsing tbody td,
+body[data-ui-variant="variant-1-glass"] #case-comparison #case-table.parameters-hidden tbody td {
+    pointer-events: none;
+}
+
+body[data-ui-variant="variant-1-glass"] .ui-container.collapsed .ui-content,
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-details.glass-panel-content-closing {
+    max-height: 0;
+    opacity: 0;
+    transform: translateY(6px) scale(0.98);
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+/* Glass: panel positions */
+/* Glass: settings panel 5-5 - 表示設定パネル */
+body[data-ui-variant="variant-1-glass"] #glass-settings-panel {
+    right: 24px;
+    bottom: 120px;
+    left: auto;
+    top: auto;
+    width: min(300px, calc(100vw - 24px));
+    max-width: min(300px, calc(100vw - 24px));
+    min-width: 0;
+    height: fit-content;
+    min-height: 0;
+    max-height: 168px;
+    z-index: 63;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.015);
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-5 {
+    right: 24px;
+    bottom: 24px;
+    left: auto;
+    top: auto;
+    width: min(300px, calc(100vw - 24px));
+    max-width: min(300px, calc(100vw - 24px));
+    z-index: 63;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    filter: none !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-settings-panel:not(.collapsed),
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-5:not(.collapsed) {
+    height: auto;
+    min-height: 0;
+    max-height: fit-content;
+    align-self: flex-start;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-settings-panel:not(.collapsed) .ui-content,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-5:not(.collapsed) .ui-content {
+    height: auto;
+    min-height: 0;
+    max-height: none;
+    padding-bottom: 2px;
+    overflow: auto;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-settings-panel.collapsed .ui-content {
+    display: none;
+}
+
+body[data-ui-variant="variant-1-glass"] #button-container,
+body[data-ui-variant="variant-1-glass"] #canvas-size-container,
+body[data-ui-variant="variant-1-glass"] #color-container,
+body[data-ui-variant="variant-1-glass"] #slider-container,
+body[data-ui-variant="variant-1-glass"] #cursor-container {
+    min-height: 0;
+    height: auto;
+}
+
+body[data-ui-variant="variant-1-glass"] #button-container {
+    display: none !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-control-bar .canvas-bottom-control-row {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 4px;
+    align-items: stretch;
+    justify-content: end;
+    width: auto;
+    white-space: nowrap;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-control-bar .canvas-control-group {
+    pointer-events: none;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-control-bar .canvas-bottom-control-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: end;
+    pointer-events: none;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-control-bar .canvas-bottom-control-wrap button,
+body[data-ui-variant="variant-1-glass"] #glass-control-bar .canvas-bottom-control-wrap [role="button"],
+body[data-ui-variant="variant-1-glass"] #glass-control-bar .canvas-bottom-control-wrap select,
+body[data-ui-variant="variant-1-glass"] #glass-control-bar .canvas-bottom-control-wrap input {
+    pointer-events: auto;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-control-bar .canvas-control-group button,
+body[data-ui-variant="variant-1-glass"] #glass-control-bar .canvas-control-group [role="button"],
+body[data-ui-variant="variant-1-glass"] #glass-control-bar .canvas-control-group select,
+body[data-ui-variant="variant-1-glass"] #glass-control-bar .canvas-control-group input {
+    pointer-events: auto;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-control-bar .glass-control-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    width: clamp(48px, 6vw, 100px);
+    min-width: 0;
+    max-width: clamp(48px, 6vw, 100px);
+    height: 30px;
+    min-height: 30px;
+    max-height: 30px;
+    padding: 0 6px;
+    border-radius: 15px;
+    font-size: clamp(8px, 0.9vw, 12px);
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    flex: 0 1 auto;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-control-bar .canvas-trail-mode-button,
+body[data-ui-variant="variant-1-glass"] #glass-control-bar #glass-panel-reset {
+    text-align: center;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-control-bar #next-case-btn,
+body[data-ui-variant="variant-1-glass"] #glass-control-bar #glass-panel-code-explain,
+body[data-ui-variant="variant-1-glass"] #glass-control-bar #glass-panel-reset,
+body[data-ui-variant="variant-1-glass"] #glass-control-bar .canvas-trail-mode-button,
+body[data-ui-variant="variant-1-glass"] #glass-control-bar .canvas-bottom-color-button {
+    min-width: 0;
+    flex: 0 1 auto;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-control-bar #next-case-btn {
+    width: clamp(44px, 5vw, 68px);
+    max-width: clamp(44px, 5vw, 68px);
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-control-bar #glass-panel-code-explain {
+    width: clamp(58px, 8vw, 94px);
+    max-width: clamp(58px, 8vw, 94px);
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-control-bar #glass-panel-reset {
+    width: clamp(58px, 8vw, 94px);
+    max-width: clamp(58px, 8vw, 94px);
+}
+
+body[data-ui-variant="variant-1-glass"] .code-explain-overlay {
+    position: fixed;
+    inset: 0;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.7s ease;
+}
+
+body[data-ui-variant="variant-1-glass"] .code-explain-overlay.is-open {
+    opacity: 1;
+}
+
+body[data-ui-variant="variant-1-glass"] .code-explain-overlay .code-explain-panel {
+    opacity: 0;
+    transition: opacity 0.7s ease;
+}
+
+body[data-ui-variant="variant-1-glass"] .code-explain-overlay.is-open .code-explain-panel {
+    opacity: 1;
+}
+
+body[data-ui-variant="variant-1-glass"] .code-explain-overlay.is-closing .code-explain-panel {
+    opacity: 0;
+}
+
+body[data-ui-variant="variant-1-glass"] .code-explain-overlay .code-explain-panel {
+    pointer-events: auto;
+}
+
+body[data-ui-variant="variant-1-glass"] .code-explain-overlay[aria-hidden="true"] {
+    opacity: 0;
+    pointer-events: none;
+}
+
+body[data-ui-variant="variant-1-glass"] .code-explain-overlay[hidden],
+body[data-ui-variant="variant-1-glass"] .code-explain-overlay.is-hidden {
+    display: none !important;
+    visibility: hidden !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-control-bar .canvas-trail-mode-button {
+    width: clamp(48px, 6.8vw, 86px);
+    max-width: clamp(48px, 6.8vw, 86px);
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-control-bar .canvas-bottom-color-button {
+    position: relative;
+    padding: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    justify-content: stretch;
+    width: clamp(48.504px, 6.8714vw, 84.882px);
+    max-width: clamp(48.504px, 6.8714vw, 84.882px);
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-control-bar .canvas-bottom-color-button.selected,
+body[data-ui-variant="variant-1-glass"] #glass-control-bar .canvas-bottom-color-button.is-selected {
+    outline: none;
+    box-shadow:
+        0 0 0 2px rgba(17, 24, 34, 0.72),
+        0 5px 14px rgba(17, 24, 34, 0.2);
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-control-bar .canvas-bottom-color-swatch {
+    position: absolute;
+    inset: 4px;
+    border-radius: 11px;
+    background: var(--canvas-bottom-color-value, #e1e1e1);
+    border: 1px solid rgba(255, 255, 255, 0.32);
+    box-shadow:
+        inset 0 1px 1px rgba(255, 255, 255, 0.22),
+        inset 0 -1px 1px rgba(17, 24, 34, 0.08);
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-control-bar .canvas-bottom-color-button input[type="color"] {
+    position: absolute;
+    inset: 0;
+    appearance: none;
+    -webkit-appearance: none;
+    width: 100%;
+    height: 100%;
+    min-height: 30px;
+    padding: 0;
+    border: 0;
+    border-radius: inherit;
+    background: transparent;
+    display: block;
+    opacity: 0;
+    cursor: pointer;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-control-bar .canvas-bottom-color-button input[type="color"]::-webkit-color-swatch-wrapper {
+    padding: 0;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-control-bar .canvas-bottom-color-button input[type="color"]::-webkit-color-swatch {
+    border: 0;
+    border-radius: inherit;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-control-bar .canvas-bottom-color-button input[type="color"]::-moz-color-swatch {
+    border: 0;
+    border-radius: inherit;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-control-bar .canvas-bottom-control-row > select {
+    display: none !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-control-bar .glass-panel-quick-toggle-row {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 6px;
+    align-items: center;
+    justify-content: end;
+    width: auto;
+    white-space: nowrap;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-control-bar .glass-panel-quick-toggle-button {
+    width: 28px;
+    min-width: 28px;
+    max-width: 28px;
+    height: 28px;
+    min-height: 28px;
+    max-height: 28px;
+    padding: 0;
+    border-radius: 999px;
+    font-size: 12px;
+    line-height: 1;
+    flex: 0 0 28px;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-control-bar .glass-panel-quick-toggle-button.is-active,
+body[data-ui-variant="variant-1-glass"] #glass-control-bar .glass-panel-quick-toggle-button.is-visible {
+    background: rgba(255, 255, 255, 0.24) !important;
+    border-color: rgba(255, 255, 255, 0.5) !important;
+    color: rgba(255, 255, 255, 0.94) !important;
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.16) !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-control-bar .glass-panel-quick-toggle-button.is-active:hover,
+body[data-ui-variant="variant-1-glass"] #glass-control-bar .glass-panel-quick-toggle-button.is-visible:hover {
+    background: rgba(255, 255, 255, 0.3) !important;
+    border-color: rgba(255, 255, 255, 0.58) !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-control-bar #glass-panel-code-explain.is-active,
+body[data-ui-variant="variant-1-glass"] #glass-control-bar #glass-panel-code-explain.is-visible {
+    background: rgba(255, 255, 255, 0.24) !important;
+    border-color: rgba(255, 255, 255, 0.5) !important;
+    color: rgba(255, 255, 255, 0.94) !important;
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.16) !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-control-bar #glass-panel-code-explain.is-active:hover,
+body[data-ui-variant="variant-1-glass"] #glass-control-bar #glass-panel-code-explain.is-visible:hover {
+    background: rgba(255, 255, 255, 0.3) !important;
+    border-color: rgba(255, 255, 255, 0.58) !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3 .ui-content,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-4 .ui-content,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6 .ui-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    padding: 1px 2px 2px;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3 .row {
+    display: grid;
+    grid-template-columns: 72px minmax(0, 1fr) auto;
+    gap: 1px 2px;
+    align-items: center;
+    min-width: 0;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-4 .slider-layout,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6 .slider-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(80px, 1.02fr) auto;
+    gap: 2px;
+    align-items: center;
+    min-width: 0;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3 .row-label,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-4 .slider-label,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6 .slider-label {
+    min-width: 0;
+    font-size: 5px;
+    line-height: 1;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3 .row-label {
+    font-weight: 700;
+    color: rgba(23, 32, 42, 0.7);
+    text-align: left;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-4 .label-value-container,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6 .label-value-container {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1px;
+    min-width: 0;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3 .row-control {
+    min-width: 0;
+    display: contents;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3 .row-control select,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3 .row-control input,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3 .row-control button {
+    width: 100%;
+    min-width: 0;
+    height: 18px;
+    padding: 0 5px;
+    border-radius: 2px;
+    box-shadow: none;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-4 .slider-value,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6 .slider-value {
+    min-width: 38px;
+    text-align: right;
+    white-space: nowrap;
+    font-size: 8pt;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-4 .slider-container,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6 .slider-container {
+    width: 100%;
+    margin: 0 0 0 18px;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-4 input[type="range"].slider {
+    width: 100% !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-4 .slider-layout {
+    grid-template-columns: minmax(64px, 0.7fr) minmax(0, 1.5fr) minmax(52px, auto) minmax(56px, auto) !important;
+    gap: 2px !important;
+    padding-left: 0 !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-4 .slider-value {
+    text-align: right;
+    justify-self: end;
+    margin-left: 0;
+    min-width: 52px;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-4 input[type="range"].slider::-webkit-slider-thumb,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6 input[type="range"].slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 11px !important;
+    height: 11px !important;
+    min-width: 11px !important;
+    min-height: 11px !important;
+    border-radius: 50%;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-4 input[type="range"].slider::-moz-range-thumb,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6 input[type="range"].slider::-moz-range-thumb {
+    width: 11px !important;
+    height: 11px !important;
+    min-width: 11px !important;
+    min-height: 11px !important;
+    border-radius: 50%;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-4 .default-container,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6 .default-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 2px;
+    min-width: 0;
+    margin-left: 6px;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-4 .default-label,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6 .default-label {
+    font-size: 7px;
+    white-space: nowrap;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-4 .default-value,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6 .default-value {
+    display: none !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-4 .reset-btn,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6 .reset-btn {
+    min-height: 18px;
+    padding: 0 4px;
+    font-size: 8px;
+    white-space: nowrap;
+    min-width: 34px;
+}
+
+#color-container .ui-content {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    padding: 3px 4px 4px;
+}
+
+#color-container .palette-top {
+    display: grid;
+    grid-template-columns: minmax(76px, 0.58fr) minmax(0, 1.42fr);
+    gap: 3px;
+    align-items: start;
+}
+
+#color-container .palette-preview-block,
+#color-container .palette-chip-block {
+    min-width: 0;
+}
+
+#color-container .palette-label {
+    margin: 0 0 2px;
+    font-size: 8px;
+    line-height: 1;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: rgba(23, 32, 42, 0.58);
+}
+
+#color-container .palette-preview {
+    width: 100%;
+    min-height: 22px;
+    border-radius: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+}
+
+#color-container .palette-chip-grid {
+    display: grid;
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    gap: 1px;
+}
+
+#color-container .palette-chip {
+    min-height: 14px;
+    border-radius: 4px;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
+    padding: 0 2px;
+    box-sizing: border-box;
+    font-size: 7px;
+    line-height: 1;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: rgba(23, 32, 42, 0.9);
+}
+
+#color-container .palette-chip.is-dark {
+    color: #fff;
+}
+
+#color-container .palette-controls {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3px;
+}
+
+#color-container .palette-row {
+    display: grid;
+    grid-template-columns: minmax(28px, 0.28fr) minmax(0, 1.72fr);
+    gap: 3px;
+    align-items: center;
+    min-width: 0;
+}
+
+#color-container .row-label {
+    font-size: 5px;
+    line-height: 1;
+    color: rgba(23, 32, 42, 0.64);
+}
+
+#color-container .row-control,
+#color-container .palette-inline-controls {
+    min-width: 0;
+}
+
+#color-container .palette-inline-controls {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 3px;
+}
+
+#color-container .palette-inline-controls > * {
+    min-width: 0;
+}
+
+#color-container select,
+#color-container input[type="number"] {
+    height: 16px;
+    padding: 0 3px;
+    font-size: 8px;
+}
+
+#color-container .palette-mini-btn,
+#color-container .palette-toggle {
+    height: 16px;
+    padding: 0 5px;
+    border-radius: 999px;
+    font-size: 7px;
+    line-height: 1;
+}
+
+#color-container .palette-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    background: rgba(255, 255, 255, 0.55);
+}
+
+#color-container .palette-toggle input {
+    margin: 0;
+}
+
+#color-container .color-frame {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 3px;
+}
+
+#color-container .slider-group {
+    margin-bottom: 0;
+    padding: 1px 2px;
+}
+
+#color-container .slider-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1px;
+    align-items: center;
+    min-width: 0;
+}
+
+#color-container .label-value-container {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1px;
+    min-width: 0;
+}
+
+#color-container .slider-label {
+    font-size: 7px;
+    line-height: 1;
+}
+
+#color-container .slider-value,
+#color-container .default-value {
+    font-size: 6px;
+    line-height: 1;
+}
+
+#color-container .slider-container {
+    width: 100%;
+    margin: 0;
+}
+
+#color-container .slider {
+    width: 100%;
+    margin: 0;
+}
+
+#color-container .default-container {
+    display: none;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 1px;
+    min-width: 0;
+}
+
+#color-container .reset-btn {
+    min-height: 14px;
+    padding: 0 4px;
+    font-size: 6px;
+}
+
+#color-container .palette-row {
+    grid-column: 1 / -1;
+}
+
+#color-container .palette-panel,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3 .palette-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+#color-container .palette-section,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3 .palette-section {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+}
+
+#color-container .palette-section-title,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3 .palette-section-title {
+    font-size: 8px;
+    line-height: 1;
+    color: rgba(23, 32, 42, 0.72);
+    font-weight: 700;
+}
+
+#color-container .palette-preview-strip,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3 .palette-preview-strip {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2px;
+    align-items: stretch;
+    padding: 2px;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.36);
+    box-shadow:
+        inset 0 0 0 1px rgba(36, 84, 156, 0.08),
+        0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+#color-container .palette-preview,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3 .palette-preview {
+    min-height: 18px;
+    border-radius: 3px;
+    background-size: 180% 100%;
+    background-position: 0% 0%;
+    border: 1px solid rgba(255, 255, 255, 0.38);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.28),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.08);
+}
+
+#color-container .palette-chip-grid,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3 .palette-chip-grid {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 1px;
+    align-content: start;
+}
+
+#color-container .palette-chip,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3 .palette-chip {
+    min-height: 12px;
+    border-radius: 2px;
+    padding: 0 2px;
+}
+
+#color-container .palette-system-tabs,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3 .palette-system-tabs {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 2px;
+    min-width: 0;
+}
+
+#color-container .palette-system-tab,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3 .palette-system-tab {
+    display: grid;
+    grid-template-rows: auto 4px auto;
+    gap: 3px;
+    align-items: center;
+    text-align: left;
+    padding: 4px 6px;
+    min-height: 34px;
+    border-radius: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: none;
+    background: rgba(255, 255, 255, 0.5);
+}
+
+#color-container .palette-system-tab.is-active,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3 .palette-system-tab.is-active {
+    border-color: rgba(40, 90, 180, 0.42);
+    background: rgba(255, 255, 255, 1);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.96), 0 4px 10px rgba(0, 0, 0, 0.12);
+}
+
+#color-container .palette-system-tab-name,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3 .palette-system-tab-name {
+    font-size: 11px;
+    line-height: 1;
+    font-weight: 700;
+}
+
+#color-container .palette-system-tab-bar,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3 .palette-system-tab-bar {
+    display: block;
+    height: 5px;
+    border-radius: 3px;
+    background: linear-gradient(90deg, rgba(60, 82, 112, 0.35), rgba(150, 176, 204, 0.65));
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.24),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+}
+
+#color-container .palette-system-tab-desc,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3 .palette-system-tab-desc,
+#color-container .row-value,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3 .row-value {
+    font-size: 9px;
+    line-height: 1;
+    color: rgba(23, 32, 42, 0.58);
+    min-width: 0;
+    text-align: right;
+}
+
+#color-container .palette-detail-group {
+    display: grid;
+    gap: 3px;
+}
+
+#color-container .palette-controls,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3 .palette-controls,
+#color-container .palette-details,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3 .palette-details {
+    display: grid;
+    gap: 2px;
+}
+
+#color-container .palette-row,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3 .palette-row {
+    display: grid;
+    grid-template-columns: minmax(30px, 0.24fr) minmax(0, 1fr) minmax(30px, 0.28fr);
+    gap: 2px;
+    align-items: center;
+    min-width: 0;
+    flex: none;
+}
+
+#color-container .row-label,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3 .row-label {
+    font-size: 7px;
+    line-height: 1;
+    font-weight: 700;
+    color: rgba(23, 32, 42, 0.68);
+}
+
+#color-container .row-control,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3 .row-control {
+    min-width: 0;
+}
+
+#color-container .row-control select,
+#color-container .row-control input,
+#color-container .row-control button,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3 .row-control select,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3 .row-control input,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3 .row-control button {
+    width: 100%;
+    min-width: 0;
+    height: 18px;
+    padding: 0 4px;
+    border-radius: 3px;
+    box-shadow: none;
+}
+
+#color-container .palette-inline-controls,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3 .palette-inline-controls {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) auto;
+    gap: 1px;
+}
+
+#color-container .palette-toggle,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3 .palette-toggle,
+#color-container .palette-mini-btn,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3 .palette-mini-btn,
+#color-container .palette-seg-btn,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3 .palette-seg-btn {
+    height: 18px;
+    padding: 0 4px;
+    border-radius: 3px;
+}
+
+#color-container .palette-seg-controls,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3 .palette-seg-controls {
+    display: grid;
+    gap: 1px;
+    min-width: 0;
+}
+
+#color-container #color-mode-buttons,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3 #color-mode-buttons {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+#color-container #color-engine-assign-buttons,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3 #color-engine-assign-buttons {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+
+#color-container .palette-seg-btn,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3 .palette-seg-btn,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3 .palette-seg-controls {
+    display: none;
+}
+
+#color-container .palette-details[hidden],
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3 .palette-details[hidden] {
+    display: none;
+}
+
+#color-container .palette-rgb-frame,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3 .palette-rgb-frame {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2px;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3 .palette-rgb-detail .palette-row {
+    grid-template-columns: minmax(44px, 0.36fr) minmax(0, 1fr) minmax(0, 0fr);
+}
+
+#color-container .palette-rgb-row,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3 .palette-rgb-row {
+    display: grid;
+    grid-template-columns: minmax(34px, 0.25fr) minmax(0, 1fr) minmax(28px, 0.18fr) minmax(36px, 0.25fr) auto;
+    gap: 2px;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+    border-radius: 0;
+    box-shadow: none;
+    background: transparent;
+}
+
+#color-container .palette-rgb-row .slider-label,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3 .palette-rgb-row .slider-label {
+    font-size: 7px;
+}
+
+#color-container .palette-rgb-row .slider-value,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3 .palette-rgb-row .slider-value {
+    min-width: 28px;
+    text-align: right;
+}
+
+#color-container .palette-rgb-row .default-value,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3 .palette-rgb-row .default-value {
+    font-size: 7px;
+    color: rgba(23, 32, 42, 0.58);
+    text-align: right;
+}
+
+#color-container .palette-rgb-row .reset-btn,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3 .palette-rgb-row .reset-btn {
+    min-height: 18px;
+    padding: 0 5px;
+    font-size: 7px;
+    border-radius: 3px;
+}
+
+body[data-ui-variant="variant-1-glass"] #color-container .ui-content {
+    padding: 2px 3px 3px;
+    gap: 2px;
+}
+
+body[data-ui-variant="variant-1-glass"] #color-container .palette-label,
+body[data-ui-variant="variant-1-glass"] #color-container .row-label {
+    color: rgba(23, 32, 42, 0.7);
+}
+
+body[data-ui-variant="variant-1-glass"] #color-container .palette-preview,
+body[data-ui-variant="variant-1-glass"] #color-container .palette-chip,
+body[data-ui-variant="variant-1-glass"] #color-container .palette-toggle {
+    border-color: rgba(255, 255, 255, 0.16);
+    background: rgba(255, 255, 255, 0.06);
+}
+
+@media (max-width: 1200px) {
+    body[data-ui-variant="variant-1-glass"] #glass-control-bar .canvas-bottom-control-row {
+        gap: 3px;
+    }
+
+    body[data-ui-variant="variant-1-glass"] #glass-control-bar .glass-control-pill {
+        width: clamp(42px, 5.4vw, 74px);
+        max-width: clamp(42px, 5.4vw, 74px);
+        font-size: 8px;
+        padding: 0 4px;
+    }
+
+    body[data-ui-variant="variant-1-glass"] #glass-control-bar .canvas-bottom-control-wrap {
+        gap: 12px;
+    }
+
+    body[data-ui-variant="variant-1-glass"] #glass-control-bar .canvas-bottom-color-button {
+        width: clamp(42.441px, 5.8609vw, 72.756px);
+        max-width: clamp(42.441px, 5.8609vw, 72.756px);
+    }
+
+    body[data-ui-variant="variant-1-glass"] #glass-control-bar #next-case-btn {
+        width: clamp(40px, 4.5vw, 58px);
+        max-width: clamp(40px, 4.5vw, 58px);
+    }
+
+    body[data-ui-variant="variant-1-glass"] #glass-control-bar #glass-panel-code-explain,
+    body[data-ui-variant="variant-1-glass"] #glass-control-bar #glass-panel-reset {
+        width: clamp(52px, 7vw, 78px);
+        max-width: clamp(52px, 7vw, 78px);
+    }
+
+    body[data-ui-variant="variant-1-glass"] #glass-control-bar .canvas-trail-mode-button {
+        width: clamp(42px, 5.8vw, 72px);
+        max-width: clamp(42px, 5.8vw, 72px);
+    }
+
+    body[data-ui-variant="variant-1-glass"] #glass-control-bar .glass-panel-quick-toggle-row {
+        gap: 4px;
+    }
+
+    body[data-ui-variant="variant-1-glass"] #glass-control-bar .glass-panel-quick-toggle-button {
+        width: 24px;
+        min-width: 24px;
+        max-width: 24px;
+        height: 24px;
+        min-height: 24px;
+        max-height: 24px;
+        flex-basis: 24px;
+        font-size: 10px;
+    }
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-control-bar .canvas-trail-mode-button.is-active,
+body[data-ui-variant="variant-1-glass"] #glass-control-bar .canvas-trail-mode-button.is-visible {
+    background: rgba(255, 255, 255, 0.24) !important;
+    border-color: rgba(255, 255, 255, 0.5) !important;
+    color: rgba(255, 255, 255, 0.94) !important;
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.16) !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-control-bar .canvas-trail-mode-button.is-active:hover,
+body[data-ui-variant="variant-1-glass"] #glass-control-bar .canvas-trail-mode-button.is-visible:hover {
+    background: rgba(255, 255, 255, 0.3) !important;
+    border-color: rgba(255, 255, 255, 0.58) !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #button-container.collapsed,
+body[data-ui-variant="variant-1-glass"] #canvas-size-container.collapsed,
+body[data-ui-variant="variant-1-glass"] #color-container.collapsed,
+body[data-ui-variant="variant-1-glass"] #slider-container.collapsed,
+body[data-ui-variant="variant-1-glass"] #cursor-container.collapsed {
+    height: fit-content;
+}
+
+/* Glass: cursor panel 5 - collapsed例外あり */
+/* Glass: case comparison */
+body[data-ui-variant="variant-1-glass"] #case-comparison {
+    width: auto;
+    max-width: min(980px, calc(100vw - 24px));
+    min-width: 0;
+    height: fit-content;
+    min-height: 0;
+    max-height: none;
+    overflow: hidden;
+    padding: 7px 6px 6px;
+}
+
+body[data-ui-variant="variant-1-glass"] #case-comparison .case-comparison-controls {
+    padding: 0;
+    gap: 0;
+    min-height: 0;
+}
+
+body[data-ui-variant="variant-1-glass"] #case-comparison .case-comparison-title,
+body[data-ui-variant="variant-1-glass"] #case-comparison .case-comparison-current {
+    display: none;
+}
+
+body[data-ui-variant="variant-1-glass"] #case-table th,
+body[data-ui-variant="variant-1-glass"] #case-table td {
+    padding-top: 1px;
+    padding-bottom: 1px;
+}
+
+body[data-ui-variant="variant-1-glass"] #case-table thead th {
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-container,
+body[data-ui-variant="variant-1-glass"] .ui-container,
+body[data-ui-variant="variant-1-glass"] .ui-header,
+body[data-ui-variant="variant-1-glass"] #ui-variant-panel,
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel {
+    background-color: rgba(255, 255, 255, 0.06);
+}
+
+body[data-ui-variant="variant-1-glass"] .ui-container .ui-content,
+body[data-ui-variant="variant-1-glass"] #case-comparison .case-comparison-controls,
+body[data-ui-variant="variant-1-glass"] #case-comparison #case-table {
+    background-color: rgba(255, 255, 255, 0.02);
+}
+
+body[data-ui-variant="variant-1-glass"] #case-comparison {
+    position: absolute;
+    left: 12px;
+    top: -4px;
+    bottom: auto;
+    z-index: 4;
+    margin: 0;
+    overflow: hidden;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-container .ui-container,
+body[data-ui-variant="variant-1-glass"] #glass-settings-panel,
+body[data-ui-variant="variant-1-glass"] #glass-panel-reset,
+body[data-ui-variant="variant-1-glass"] #ui-variant-panel,
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+}
+
+body[data-ui-variant="variant-1-glass"] .ui-container .ui-content,
+body[data-ui-variant="variant-1-glass"] .ui-variant-panel,
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel {
+    min-width: 0;
+}
+
+body[data-ui-variant="variant-1-glass"] .ui-container .ui-content > * {
+    max-width: 100%;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-settings-toggle,
+body[data-ui-variant="variant-1-glass"] #glass-settings-panel {
+    pointer-events: auto;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-4,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7 {
+    transition: top 0.35s ease, left 0.35s ease, opacity 0.7s ease, transform 0.7s ease;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-variant-panel.viewport-tracking-animate,
+body[data-ui-variant="variant-1-glass"] #case-comparison.viewport-tracking-animate {
+    transition: left 1400ms ease, top 1400ms ease, opacity 0.7s ease, transform 0.7s ease;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3.glass-panel-collapse-animating,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-4.glass-panel-collapse-animating,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6.glass-panel-collapse-animating,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7.glass-panel-collapse-animating {
+    transition: top 0.35s ease, left 0.35s ease, height 0.7s ease, opacity 0.7s ease, transform 0.7s ease;
+    overflow: hidden;
+    will-change: top, left, height;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3.glass-panel-moving,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-4.glass-panel-moving,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6.glass-panel-moving,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7.glass-panel-moving {
+    will-change: top, left;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3.glass-panel-flip-moving,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-4.glass-panel-flip-moving,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6.glass-panel-flip-moving,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7.glass-panel-flip-moving {
+    will-change: transform;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3.is-dragging,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-4.is-dragging,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6.is-dragging,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7.is-dragging,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3[data-glass-dragging="true"],
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-4[data-glass-dragging="true"],
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6[data-glass-dragging="true"],
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7[data-glass-dragging="true"] {
+    transition: none !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-variant-panel.glass-panel-dragging,
+body[data-ui-variant="variant-1-glass"] #ui-variant-panel[data-glass-dragging="true"],
+body[data-ui-variant="variant-1-glass"] #case-comparison.glass-panel-dragging,
+body[data-ui-variant="variant-1-glass"] #case-comparison[data-glass-dragging="true"] {
+    transition: none !important;
+}
+
+body[data-ui-variant="variant-1-glass"] .ui-container.is-dragging {
+    transition: none !important;
+    box-shadow:
+        0 3px 6px rgba(26, 34, 48, 0.04),
+        inset 0 1px 0 rgba(255, 255, 255, 0.03);
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+}
+
+body[data-ui-variant="variant-1-glass"] .ui-container.is-dragging .ui-content,
+body[data-ui-variant="variant-1-glass"] .ui-container.is-dragging .preview-container,
+body[data-ui-variant="variant-1-glass"] .ui-container.is-dragging .glass-settings-list {
+    transition: none !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #sketch-holder {
+    position: absolute;
+    z-index: 2;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-wrapper #ui-container,
+body[data-ui-variant="variant-1-glass"][data-ui-preset="1"] #ui-container,
+body[data-ui-variant="variant-1-glass"][data-ui-preset="2"] #ui-container,
+body[data-ui-variant="variant-1-glass"][data-ui-preset="3"] #ui-container,
+body[data-ui-variant="variant-1-glass"][data-ui-preset="4"] #ui-container,
+body[data-ui-variant="variant-1-glass"][data-ui-preset="5"] #ui-container {
+    background: transparent;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-wrapper .ui-container,
+body[data-ui-variant="variant-1-glass"] #ui-wrapper .ui-header {
+    background: rgba(255, 255, 255, 0.04);
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-preset="1"] #ui-variant-panel {
+    background:
+        linear-gradient(180deg,
+            rgba(255, 255, 255, calc(0.2 + var(--glass-opacity, 0.05) * 0.35)),
+            rgba(255, 255, 255, calc(var(--glass-opacity, 0.05) * 0.08))
+        ),
+        rgba(250, 252, 255, 0.08);
+    -webkit-backdrop-filter:
+        blur(calc(8px + var(--glass-blur-amount, 0.25) * 18px))
+        saturate(calc(1.03 + var(--glass-saturation, 0) * 0.45))
+        brightness(calc(1 + var(--glass-brightness, 0) * 0.28));
+    backdrop-filter:
+        blur(calc(8px + var(--glass-blur-amount, 0.25) * 18px))
+        saturate(calc(1.03 + var(--glass-saturation, 0) * 0.45))
+        brightness(calc(1 + var(--glass-brightness, 0) * 0.28));
+    border-color: rgba(255, 255, 255, calc(0.18 + var(--glass-edge-intensity, 0.05) * 0.25));
+    border-top-color: rgba(255, 255, 255, calc(0.28 + var(--glass-fresnel, 1) * 0.08));
+    border-left-color: rgba(255, 255, 255, calc(0.12 + var(--glass-edge-intensity, 0.05) * 0.18));
+    box-shadow:
+        0 calc(6px + var(--glass-z-radius, 0) * 0.16) calc(14px + var(--glass-shadow-spread, 24) * 0.8) rgba(26, 33, 46, calc(0.1 + var(--glass-shadow-opacity, 0.3) * 0.55)),
+        inset 0 1px 0 rgba(255, 255, 255, calc(0.18 + var(--glass-fresnel, 1) * 0.08)),
+        inset 0 0 0 1px rgba(255, 255, 255, calc(0.08 + var(--glass-edge-intensity, 0.05) * 0.12));
+    color: #1a2531;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-preset="1"] #ui-preset-panel {
+    background:
+        linear-gradient(180deg,
+            rgba(255, 255, 255, calc(0.16 + var(--glass-opacity, 0.05) * 0.28)),
+            rgba(255, 255, 255, calc(var(--glass-opacity, 0.05) * 0.05))
+        ),
+        rgba(250, 252, 255, 0.05);
+    -webkit-backdrop-filter:
+        blur(calc(6px + var(--glass-blur-amount, 0.25) * 16px))
+        saturate(calc(1.02 + var(--glass-saturation, 0) * 0.4))
+        brightness(calc(1 + var(--glass-brightness, 0) * 0.22));
+    backdrop-filter:
+        blur(calc(6px + var(--glass-blur-amount, 0.25) * 16px))
+        saturate(calc(1.02 + var(--glass-saturation, 0) * 0.4))
+        brightness(calc(1 + var(--glass-brightness, 0) * 0.22));
+    border-color: rgba(255, 255, 255, calc(0.14 + var(--glass-edge-intensity, 0.05) * 0.22));
+    box-shadow:
+        0 calc(4px + var(--glass-z-radius, 0) * 0.12) calc(12px + var(--glass-shadow-spread, 24) * 0.65) rgba(26, 33, 46, calc(0.08 + var(--glass-shadow-opacity, 0.3) * 0.5)),
+        inset 0 1px 0 rgba(255, 255, 255, calc(0.12 + var(--glass-fresnel, 1) * 0.06));
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-preset="1"] #ui-preset-panel label,
+body[data-ui-variant="variant-1-glass"][data-ui-preset="1"] .ui-variant-panel label,
+body[data-ui-variant="variant-1-glass"][data-ui-preset="1"] .ui-header,
+body[data-ui-variant="variant-1-glass"][data-ui-preset="1"] .ui-content {
+    color: #1a2531;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-preset="1"] #ui-preset-panel select,
+body[data-ui-variant="variant-1-glass"][data-ui-preset="1"] .ui-variant-panel select {
+    background: rgba(250, 252, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.18);
+    color: #1a2531;
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.18);
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-preset="1"] #ui-container {
+    background: rgba(250, 252, 255, 0.03);
+    -webkit-backdrop-filter: blur(8px) saturate(1.03);
+    backdrop-filter: blur(8px) saturate(1.03);
+    border-color: rgba(255, 255, 255, 0.1);
+    box-shadow:
+        0 10px 20px rgba(18, 24, 36, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-preset="1"] .ui-container {
+    background: rgba(250, 252, 255, 0.04);
+    border-color: rgba(255, 255, 255, 0.12);
+    border-top-color: rgba(255, 255, 255, 0.2);
+    border-left-color: rgba(255, 255, 255, 0.08);
+    box-shadow:
+        0 5px 12px rgba(26, 34, 48, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-preset="1"] .ui-header {
+    background: linear-gradient(180deg, rgba(250, 252, 255, 0.14), rgba(250, 252, 255, 0.06));
+    border-bottom-color: rgba(255, 255, 255, 0.1);
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-preset="1"] #case-comparison {
+    background: rgba(250, 252, 255, 0.01);
+    border-radius: 6px;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-preset="2"] #ui-variant-panel,
+body[data-ui-variant="variant-1-glass"][data-ui-preset="2"] #ui-preset-panel,
+body[data-ui-variant="variant-1-glass"][data-ui-preset="2"] #case-comparison {
+    background: rgba(255, 255, 255, 0.08);
+    -webkit-backdrop-filter: blur(6px) saturate(1.02);
+    backdrop-filter: blur(6px) saturate(1.02);
+    border-color: rgba(255, 255, 255, 0.16);
+    box-shadow:
+        0 6px 16px rgba(20, 28, 40, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.16);
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-preset="2"] #ui-container,
+body[data-ui-variant="variant-1-glass"][data-ui-preset="2"] .ui-container {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(255, 255, 255, 0.12);
+    border-top-color: rgba(255, 255, 255, 0.22);
+    border-left-color: rgba(255, 255, 255, 0.1);
+    box-shadow:
+        0 8px 18px rgba(18, 24, 36, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-preset="2"] .ui-header {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.06));
+    color: #16212c;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-preset="2"] #ui-variant-panel label,
+body[data-ui-variant="variant-1-glass"][data-ui-preset="2"] #ui-preset-panel label,
+body[data-ui-variant="variant-1-glass"][data-ui-preset="2"] .ui-variant-panel label,
+body[data-ui-variant="variant-1-glass"][data-ui-preset="2"] .ui-header,
+body[data-ui-variant="variant-1-glass"][data-ui-preset="2"] .ui-content {
+    color: #18222d;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-preset="2"] #ui-variant-panel select,
+body[data-ui-variant="variant-1-glass"][data-ui-preset="2"] #ui-preset-panel select,
+body[data-ui-variant="variant-1-glass"][data-ui-preset="2"] .ui-variant-panel select {
+    background: rgba(255, 255, 255, 0.14);
+    border-color: rgba(255, 255, 255, 0.28);
+    color: #17202a;
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.18);
+    -webkit-backdrop-filter: blur(6px) saturate(1.02);
+    backdrop-filter: blur(6px) saturate(1.02);
+}
+
+#ui-container {
+    width: 100%;
+    height: 100%;
+    padding: 3px;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    overflow-y: auto;
+    overflow-x: hidden;
+    position: relative;
+    z-index: 3;
+}
+
+.ui-container {
+    flex-shrink: 0;
+    margin-bottom: 0;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+}
+
+#sketch-holder {
+    position: relative;
+    width: 100%;
+    min-height: 0;
+    z-index: 1;
+}
+
+#sketch-holder canvas {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    margin: 0 auto;
+    transform: none !important;
+    display: block;
+    z-index: 1;
+}
+
+#case-comparison {
+    position: relative;
+    z-index: 6;
+    pointer-events: auto;
+}
+
+.ui-header {
+    padding: 8px 10px;
+    background-color: #e0e0e0;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.ui-content {
+    transition: max-height 0.15s ease-out, opacity 0.15s ease-out, padding 0.15s ease-out;
+    overflow: hidden;
+}
+
+.ui-container.collapsed .ui-content {
+    max-height: 0;
+    opacity: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+/* スクロールバーのスタイリング */
+#ui-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+#ui-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+#ui-container::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+#ui-container::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-container,
+body[data-ui-variant="variant-1-glass"] .ui-container,
+body[data-ui-variant="variant-1-glass"] .ui-header,
+body[data-ui-variant="variant-1-glass"] #case-comparison {
+    background: rgba(255, 255, 255, calc(var(--glass-opacity, 0) * 0.03)) !important;
+    -webkit-backdrop-filter:
+        blur(calc(var(--glass-blur-amount, 0) * 11px))
+        saturate(calc(1 + var(--glass-saturation, 0) * 0.03)) !important;
+    backdrop-filter:
+        blur(calc(var(--glass-blur-amount, 0) * 11px))
+        saturate(calc(1 + var(--glass-saturation, 0) * 0.03)) !important;
+    border-color: rgba(255, 255, 255, calc(var(--glass-edge-intensity, 0) * 0.1)) !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel::before {
+    background:
+        linear-gradient(
+            calc(130deg + var(--glass-twist, 0) * 18deg),
+            rgba(255, 255, 255, calc(0.2 + var(--glass-refraction-strength, 0.69) * 0.18)),
+            rgba(255, 255, 255, 0) 28%
+        ),
+        radial-gradient(
+            120% 78% at calc(12% + var(--glass-twist, 0) * 4%) calc(8% + var(--glass-z-radius, 40) * 0.04%),
+            rgba(255, 255, 255, calc(0.16 + var(--glass-specular, 0) * 0.22)),
+            rgba(255, 255, 255, 0) 40%
+        ) !important;
+    opacity: calc(0.92 - var(--glass-opacity, 0.08) * 0.35) !important;
+    filter:
+        blur(calc(var(--glass-blur-amount, 0.25) * 1.2px))
+        drop-shadow(calc(var(--glass-chromatic-shift, 0.05) * -6px) 0 0 rgba(255, 92, 138, calc(0.12 + var(--glass-specular, 0) * 0.18)))
+        drop-shadow(calc(var(--glass-chromatic-shift, 0.05) * 6px) 0 0 rgba(92, 150, 255, calc(0.12 + var(--glass-specular, 0) * 0.2))) !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel::after {
+    background:
+        linear-gradient(140deg, rgba(255, 255, 255, calc(0.12 + var(--glass-fresnel, 1) * 0.12)), rgba(255, 255, 255, 0) 26%),
+        linear-gradient(220deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0) 38%),
+        linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, calc(0.12 + var(--glass-edge-intensity, 0.05) * 0.2)) 50%, rgba(255, 255, 255, 0) 100%) !important;
+    box-shadow:
+        inset 4px 4px 0 rgba(255, 255, 255, calc(0.12 + var(--glass-edge-intensity, 0.05) * 0.18)),
+        inset -4px -4px 0 rgba(58, 84, 120, calc(0.08 + var(--glass-shadow-opacity, 0.3) * 0.22)),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.08) !important;
+    opacity: 1 !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel,
+body[data-ui-variant="variant-1-glass"] #case-comparison {
+    border-radius: calc(min(var(--glass-corner-radius, 15), 6) * 1px) !important;
+    background:
+        linear-gradient(180deg,
+            rgba(255, 255, 255, calc(0.18 + var(--glass-opacity, 0.08) * 0.22)),
+            rgba(255, 255, 255, calc(var(--glass-opacity, 0.08) * 0.03))
+        ) !important;
+    border-style: solid !important;
+    border-width: calc(var(--glass-edge-width, 1.2) * 0.2px) !important;
+    border-color: rgba(255, 255, 255, calc(0.12 + var(--glass-edge-intensity, 0.05) * 0.28)) !important;
+    box-shadow:
+        0 calc(8px + var(--glass-z-radius, 0) * 0.06) calc(18px + var(--glass-shadow-spread, 0) * 0.45)
+            var(--glass-shadow-color-rgba, rgba(18, 24, 36, calc(var(--glass-shadow-opacity, 0.3) * 0.42))),
+        inset 0 1px 0 rgba(255, 255, 255, calc(0.08 + var(--glass-fresnel, 1) * 0.1)),
+        inset 0 0 0 calc(var(--glass-edge-width, 1.2) * 1px) rgba(255, 255, 255, calc(var(--glass-edge-intensity, 0.05) * 0.14)),
+        inset 0 0 calc(var(--glass-bevel-mode, 0) * 12px) rgba(255, 255, 255, calc(var(--glass-bevel-mode, 0) * 0.08)) !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-variant-panel::before,
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel::before,
+body[data-ui-variant="variant-1-glass"] #case-comparison::before {
+    background-position:
+        calc(50% + var(--glass-inner-warp, 0) * 5%)
+        calc(0% + var(--glass-inner-warp, 0) * 2.5%) !important;
+    filter:
+        blur(calc(var(--glass-blur-amount, 0.25) * 0.9px))
+        drop-shadow(calc(var(--glass-chromatic-shift, 0.05) * -5px) 0 0 rgba(255, 92, 138, calc(0.08 + var(--glass-specular, 0) * 0.12)))
+        drop-shadow(calc(var(--glass-chromatic-shift, 0.05) * 5px) 0 0 rgba(92, 150, 255, calc(0.08 + var(--glass-specular, 0) * 0.12))) !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-variant-panel::before {
+    opacity: var(--glass-palette-before-opacity, var(--glass-palette-alpha, 0.18)) !important;
+    background:
+        radial-gradient(145% 120% at var(--glass-highlight-pos-x, 50%) var(--glass-highlight-pos-y, 0%),
+            var(--glass-reflection-color-rgba, rgba(255, 255, 255, 0.12)),
+            rgba(255, 255, 255, 0) 46%
+        ),
+        linear-gradient(135deg,
+            var(--glass-reflection-color-rgba, rgba(255, 255, 255, 0.12)),
+            rgba(255, 255, 255, 0) 58%
+        ) !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-variant-panel::after,
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel::after,
+body[data-ui-variant="variant-1-glass"] #case-comparison::after {
+    transform: translateY(calc(var(--glass-inner-warp, 0) * -2px)) !important;
+    box-shadow:
+        inset 4px 4px 0 rgba(255, 255, 255, calc(0.08 + var(--glass-edge-intensity, 0.05) * 0.1 + var(--glass-highlight-x, 0) * 0.02)),
+        inset calc(var(--glass-shadow-x, 0) * -1 * var(--glass-shadow-distance, 8) * 0.34px) calc(var(--glass-shadow-y, 0) * -1 * var(--glass-shadow-distance, 8) * 0.34px) 0 var(--glass-shadow-color-rgba, rgba(58, 84, 120, calc((0.08 + var(--glass-shadow-opacity, 0.3) * 0.18) * (1 - var(--glass-shadow-color-influence, 0))))),
+        inset calc(var(--glass-shadow-x, 0) * -1 * var(--glass-shadow-distance, 8) * 0.48px) calc(var(--glass-shadow-y, 0) * -1 * var(--glass-shadow-distance, 8) * 0.48px) 0 rgba(17, 24, 34, calc(0.12 + var(--glass-shadow-opacity, 0.3) * 0.18 + var(--glass-shadow-y, 0) * -0.02)),
+        inset calc(var(--glass-shadow-x, 0) * -1 * var(--glass-shadow-distance, 8) * 0.18px) calc(var(--glass-shadow-y, 0) * -1 * var(--glass-shadow-distance, 8) * 0.18px) 0 var(--glass-reflection-color-rgba, rgba(138, 98, 72, calc(var(--glass-shadow-opacity, 0.3) * var(--glass-shadow-color-influence, 0) * 0.16))),
+        inset 0 0 calc(var(--glass-bevel-mode, 0) * 8px) rgba(255, 255, 255, calc(var(--glass-bevel-mode, 0) * 0.06)) !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-variant-panel::after {
+    content: "";
+    opacity: var(--glass-palette-after-opacity, var(--glass-palette-alpha, 0.18)) !important;
+    background:
+        radial-gradient(132% 92% at var(--glass-shadow-pos-x, 50%) var(--glass-shadow-pos-y, 100%),
+            var(--glass-shadow-color-rgba, rgba(58, 84, 120, 0.12)),
+            rgba(17, 24, 34, 0) 70%
+        ),
+        linear-gradient(calc(var(--glass-light-angle, 0deg) + 180deg),
+            rgba(17, 24, 34, calc(var(--glass-shadow-color-alpha, 1) * (0.16 + var(--glass-shadow-opacity, 0.3) * 0.32) * (0.7 + var(--glass-shadow-color-influence, 0) * 0.3))),
+            rgba(17, 24, 34, 0) 68%
+        ) !important;
+    mix-blend-mode: multiply;
+    box-shadow:
+        inset 4px 4px 0 rgba(255, 255, 255, calc((var(--glass-palette-after-opacity, var(--glass-palette-alpha, 0.18)) * 0.08) * (0.65 + var(--glass-highlight-y, 0) * 0.35))),
+        inset -4px -4px 0 rgba(17, 24, 34, calc((var(--glass-palette-after-opacity, var(--glass-palette-alpha, 0.18)) * (0.18 + var(--glass-shadow-opacity, 0.3) * 0.28)) * (0.75 + var(--glass-shadow-y, 0) * -0.12))),
+        inset -1px -1px 0 var(--glass-shadow-color-rgba, rgba(58, 84, 120, calc(var(--glass-shadow-opacity, 0.3) * 0.18))),
+        inset 0 0 calc(var(--glass-bevel-mode, 0) * 8px) rgba(255, 255, 255, calc(var(--glass-bevel-mode, 0) * 0.06)) !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-container {
+    box-shadow:
+        0 8px 18px rgba(18, 24, 36, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-preset="2"] #ui-container {
+    position: relative;
+    overflow: hidden;
+    --glass-blur: calc(8px + var(--glass-blur-amount, 0.25) * 24px);
+    --glass-light-angle: 110deg;
+    --glass-depth: calc(1 + var(--glass-fresnel, 1) * 0.35);
+    filter:
+        blur(calc(var(--glass-blur-amount, 0.25) * 0.7px))
+        saturate(calc(1 + var(--glass-saturation, 0)))
+        brightness(calc(1 + var(--glass-brightness, 0)));
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-preset="2"] #ui-container::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    border-radius: clamp(8px, calc(var(--glass-corner-radius, 15) * 1px), 15px);
+    background:
+        radial-gradient(128% 92% at 12% 10%, rgba(255, 255, 255, calc(var(--glass-refraction-strength, 0.69) * 0.34)), rgba(255, 255, 255, 0) 24%),
+        radial-gradient(92% 132% at 86% 16%, rgba(92, 146, 255, calc(var(--glass-edge-intensity, 0.05) * 0.6)), rgba(92, 146, 255, 0) 34%),
+        radial-gradient(122% 144% at 52% 110%, rgba(58, 92, 140, calc(var(--glass-depth) * 0.28)), rgba(58, 92, 140, 0) 44%),
+        linear-gradient(var(--glass-light-angle), rgba(255, 255, 255, calc(var(--glass-refraction-strength, 0.69) * 0.38)) 0%, rgba(255, 255, 255, 0.22) 12%, rgba(255, 255, 255, 0.08) 22%, rgba(255, 255, 255, 0) 52%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0));
+    mix-blend-mode: screen;
+    opacity: var(--glass-opacity, 1);
+    filter:
+        blur(calc(var(--glass-blur-amount, 0.25) * 0.35px))
+        drop-shadow(calc(var(--glass-refraction-offset-x, 0px) * -0.12) 0 0 rgba(255, 255, 255, 0.08))
+        drop-shadow(calc(var(--glass-chromatic-shift, 0.05) * -8px) 0 0 rgba(255, 92, 138, calc(var(--glass-specular, 0) * 0.08)))
+        drop-shadow(calc(var(--glass-chromatic-shift, 0.05) * 8px) 0 0 rgba(92, 150, 255, calc(var(--glass-specular, 0) * 0.08)));
+    transform:
+        translate(calc(var(--glass-refraction-offset-x, 0px) * 1px), calc(var(--glass-refraction-offset-y, 0px) * 1px))
+        scale(var(--glass-refraction-scale, 1))
+        skewX(calc(var(--glass-refraction-strength, 0.69) * 1.2deg))
+        skewY(calc(var(--glass-refraction-strength, 0.69) * -0.8deg));
+    background-position:
+        calc(14% + var(--glass-refraction-offset-x, 0px) * 2%)
+        calc(10% + var(--glass-refraction-offset-y, 0px) * 1.4%),
+        calc(86% - var(--glass-refraction-offset-x, 0px) * 1.2%)
+        calc(16% + var(--glass-refraction-offset-y, 0px) * 1.1%),
+        calc(52% + var(--glass-refraction-offset-x, 0px) * 1.1%)
+        calc(110% + var(--glass-refraction-offset-y, 0px) * 1.2%),
+        calc(50% + var(--glass-refraction-offset-x, 0px) * 0.6%)
+        calc(12% + var(--glass-refraction-offset-y, 0px) * 0.8%),
+        center;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-preset="2"] #ui-container::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    border-radius: calc(var(--glass-corner-radius, 16) * 1px);
+    background:
+        linear-gradient(135deg, rgba(255, 255, 255, calc(0.3 + var(--glass-refraction-strength, 0.69) * 0.1)), rgba(255, 255, 255, 0) 24%),
+        linear-gradient(205deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0) 36%),
+        linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, calc(0.16 + var(--glass-edge-intensity, 0.05) * 0.12)) 50%, rgba(255, 255, 255, 0) 100%),
+        radial-gradient(120% 80% at 50% 12%, rgba(255, 255, 255, calc(0.14 + var(--glass-specular, 0) * 0.12)), rgba(255, 255, 255, 0) 54%);
+    mask-image:
+        radial-gradient(140% 120% at 50% 48%, #000 54%, transparent 100%);
+    -webkit-mask-image:
+        radial-gradient(140% 120% at 50% 48%, #000 54%, transparent 100%);
+    box-shadow:
+        inset 4px 4px 0 rgba(255, 255, 255, calc(var(--glass-edge-intensity, 0.05) * 0.08)),
+        inset -4px -4px 0 rgba(58, 84, 120, calc(var(--glass-shadow-opacity, 0.3) * 0.18)),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+    opacity: 0.8;
+    mix-blend-mode: soft-light;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-preset="2"] #ui-container > *,
+body[data-ui-variant="variant-1-glass"][data-ui-preset="2"] .ui-container > *,
+body[data-ui-variant="variant-1-glass"][data-ui-preset="2"] #ui-variant-panel > *,
+body[data-ui-variant="variant-1-glass"][data-ui-preset="2"] #ui-preset-panel > *,
+body[data-ui-variant="variant-1-glass"][data-ui-preset="2"] #case-comparison > *,
+body[data-ui-variant="variant-1-glass"][data-ui-preset="1"] #ui-container > *,
+body[data-ui-variant="variant-1-glass"][data-ui-preset="1"] .ui-container > *,
+body[data-ui-variant="variant-1-glass"][data-ui-preset="1"] #ui-variant-panel > *,
+body[data-ui-variant="variant-1-glass"][data-ui-preset="1"] #ui-preset-panel > *,
+body[data-ui-variant="variant-1-glass"][data-ui-preset="1"] #case-comparison > *,
+body[data-ui-variant="variant-1-glass"][data-ui-preset="3"] #ui-container > *,
+body[data-ui-variant="variant-1-glass"][data-ui-preset="3"] .ui-container > *,
+body[data-ui-variant="variant-1-glass"][data-ui-preset="3"] #ui-variant-panel > *,
+body[data-ui-variant="variant-1-glass"][data-ui-preset="3"] #ui-preset-panel > *,
+body[data-ui-variant="variant-1-glass"][data-ui-preset="3"] #case-comparison > *,
+body[data-ui-variant="variant-1-glass"][data-ui-preset="4"] #ui-container > *,
+body[data-ui-variant="variant-1-glass"][data-ui-preset="4"] .ui-container > *,
+body[data-ui-variant="variant-1-glass"][data-ui-preset="4"] #ui-variant-panel > *,
+body[data-ui-variant="variant-1-glass"][data-ui-preset="4"] #ui-preset-panel > *,
+body[data-ui-variant="variant-1-glass"][data-ui-preset="4"] #case-comparison > *,
+body[data-ui-variant="variant-1-glass"][data-ui-preset="5"] #ui-container > *,
+body[data-ui-variant="variant-1-glass"][data-ui-preset="5"] .ui-container > *,
+body[data-ui-variant="variant-1-glass"][data-ui-preset="5"] #ui-variant-panel > *,
+body[data-ui-variant="variant-1-glass"][data-ui-preset="5"] #ui-preset-panel > *,
+body[data-ui-variant="variant-1-glass"][data-ui-preset="5"] #case-comparison > * {
+    position: relative;
+    z-index: 1;
+}
+
+body[data-ui-variant="variant-1-glass"] .ui-container .ui-content,
+body[data-ui-variant="variant-1-glass"] .ui-container.collapsed .ui-content,
+body[data-ui-variant="variant-1-glass"] #case-comparison .case-comparison-controls,
+body[data-ui-variant="variant-1-glass"] #case-comparison #case-table,
+body[data-ui-variant="variant-1-glass"] #case-comparison.collapsed #case-table {
+    background: rgba(255, 255, 255, 0.02) !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-variant-panel {
+    position: relative;
+    background:
+        linear-gradient(180deg,
+            rgba(255, 255, 255, calc(var(--glass-palette-alpha, 0.18) * 0.08)),
+            rgba(255, 255, 255, calc(var(--glass-palette-alpha, 0.18) * 0.03)) 42%,
+            rgba(255, 255, 255, 0) 78%
+        ) !important;
+    background-color: var(--glass-surface-rgba, rgba(248, 251, 255, 1)) !important;
+    color: #17202a !important;
+    box-shadow:
+        0 calc(var(--glass-drop-shadow-distance, 0) * 1px)
+            calc(var(--glass-drop-shadow-blur, 0) * 1px)
+            var(--glass-drop-shadow-color-rgba),
+        0 calc(6px + var(--glass-z-radius, 0) * 0.2) calc(16px + var(--glass-shadow-spread, 0) * 1px)
+            rgba(17, 24, 34, var(--glass-palette-shadow-alpha, 0)),
+        inset 0 1px 0 rgba(255, 255, 255, var(--glass-palette-highlight-alpha, 0)),
+        inset 0 0 0 1px rgba(255, 255, 255, var(--glass-palette-inset-shadow-alpha, 0)) !important;
+    filter: drop-shadow(
+        0 calc(var(--glass-drop-shadow-distance, 0) * 1px)
+          calc(var(--glass-drop-shadow-blur, 0) * 1px)
+          var(--glass-drop-shadow-color-rgba)
+    ) !important;
+    mix-blend-mode: normal !important;
+    border: 1px solid rgba(255, 255, 255, var(--glass-border-alpha, var(--glass-palette-border-alpha, 0.18))) !important;
+    outline: 0 !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-variant-panel::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    z-index: 0;
+    opacity: var(--glass-palette-before-opacity, var(--glass-palette-alpha, 0.18)) !important;
+    background:
+        radial-gradient(128% 84% at var(--glass-highlight-pos-x, 50%) var(--glass-highlight-pos-y, 0%),
+            rgba(255, 255, 255, calc(var(--glass-reflection-color-alpha, 1) * (0.18 + var(--glass-reflection-color-alpha, 1) * 0.42) * (0.55 + var(--glass-specular, 0) * 0.45))),
+            var(--glass-reflection-color-rgba, rgba(255, 255, 255, 0.12)) 24%,
+            rgba(255, 255, 255, 0) 64%
+        ),
+        linear-gradient(var(--glass-light-angle, 0deg),
+            rgba(255, 255, 255, calc(var(--glass-reflection-color-alpha, 1) * (0.24 + var(--glass-reflection-color-alpha, 1) * 0.28) * (0.45 + var(--glass-fresnel, 1) * 0.35))),
+            rgba(255, 255, 255, 0) 60%
+        ),
+        linear-gradient(135deg,
+            rgba(255, 255, 255, calc(var(--glass-reflection-color-alpha, 1) * 0.12)),
+            rgba(255, 255, 255, 0) 72%
+        );
+    mix-blend-mode: screen;
+    backdrop-filter:
+        blur(calc(var(--glass-blur-amount, 0) * 28px))
+        saturate(calc(1 + var(--glass-saturation, 0) * 0.5))
+        brightness(calc(1 + var(--glass-brightness, 0) * 0.22)) !important;
+    -webkit-backdrop-filter:
+        blur(calc(var(--glass-blur-amount, 0) * 28px))
+        saturate(calc(1 + var(--glass-saturation, 0) * 0.5))
+        brightness(calc(1 + var(--glass-brightness, 0) * 0.22)) !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel {
+    border-style: solid !important;
+    border-width: calc(var(--glass-edge-width, 1.2) * 0.2px) !important;
+    border-color: rgba(255, 255, 255, calc(0.12 + var(--glass-edge-intensity, 0.05) * 0.35)) !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-variant-panel #ui-preset-panel .glass-preset-details-toggle,
+body[data-ui-variant="variant-1-glass"] #ui-variant-panel #ui-preset-panel .glass-preset-save,
+body[data-ui-variant="variant-1-glass"] #ui-variant-panel #ui-preset-panel .glass-preset-dup,
+body[data-ui-variant="variant-1-glass"] #ui-variant-panel #ui-preset-panel .glass-preset-new,
+body[data-ui-variant="variant-1-glass"] #ui-variant-panel #ui-preset-panel .glass-preset-rename,
+body[data-ui-variant="variant-1-glass"] #ui-variant-panel #ui-preset-panel .glass-preset-delete {
+    border: 1px solid rgba(230, 230, 230, 0.42) !important;
+    box-shadow: none !important;
+    color: #17202a !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-variant-panel #ui-preset-panel .glass-preset-details-toggle {
+    color: transparent !important;
+    text-shadow: none !important;
+    background: transparent !important;
+    background-image: none !important;
+    box-shadow: none !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-variant-panel #ui-preset-panel button.glass-preset-details-toggle,
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel button.glass-preset-details-toggle {
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    border: 0 !important;
+    border-color: transparent !important;
+    box-shadow: none !important;
+    outline: 0 !important;
+    color: transparent !important;
+    text-shadow: none !important;
+    -webkit-appearance: none !important;
+    appearance: none !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-variant-panel #ui-preset-panel .glass-preset-separator {
+    background: rgba(244, 244, 244, 0.5) !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-variant-panel #ui-preset-panel input[type="range"][data-glass-param]::-webkit-slider-runnable-track,
+body[data-ui-variant="variant-1-glass"] #ui-variant-panel #ui-preset-panel input[type="range"][data-glass-param]::-moz-range-track {
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    border-color: rgba(244, 244, 244, 0.38) !important;
+    box-shadow: inset 0 1px 1px rgba(11, 18, 28, 0.1) !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-variant-panel #ui-preset-panel .glass-preset-details-toggle:hover,
+body[data-ui-variant="variant-1-glass"] #ui-variant-panel #ui-preset-panel .glass-preset-save:hover,
+body[data-ui-variant="variant-1-glass"] #ui-variant-panel #ui-preset-panel .glass-preset-dup:hover,
+body[data-ui-variant="variant-1-glass"] #ui-variant-panel #ui-preset-panel .glass-preset-new:hover,
+body[data-ui-variant="variant-1-glass"] #ui-variant-panel #ui-preset-panel .glass-preset-rename:hover,
+body[data-ui-variant="variant-1-glass"] #ui-variant-panel #ui-preset-panel .glass-preset-delete:hover {
+    background-color: rgba(255, 255, 255, 0.03) !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-variant-panel #ui-preset-panel select {
+    background: transparent !important;
+    border: 1px solid #E6E6E6 !important;
+    color: #17202a !important;
+    box-shadow: 0 0 0 1px #E6E6E6 inset !important;
+    outline: 0 !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-details,
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-rows,
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-row,
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-actions,
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-details-toggle,
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-save,
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-status,
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-label,
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-value,
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel input[type="range"][data-glass-param] {
+    background-color: transparent !important;
+    background-image: none !important;
+    box-shadow: none !important;
+    filter: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    opacity: 1 !important;
+    mix-blend-mode: normal !important;
+    text-shadow: none !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-details {
+    overflow: hidden;
+}
+
+/* TRANSPARENT REGION CONTRACT (Glass / 派生テーマ共通の前提):
+ * #ui-preset-panel とその details / rows / actions は配置用の透明層。
+ * 面色・反射色・テーマ背景を直接付与しないこと。色を置く対象は外側の物理パネルと実操作部品のみ。
+ * Neumorphism もこの透明領域区分を継承し、余計な板状面を発生させない。
+ */
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel {
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    border: 0 !important;
+    outline: 0 !important;
+    box-shadow: none !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-details {
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    border: 0 !important;
+    outline: 0 !important;
+    box-shadow: none !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-category-header {
+    border-bottom: 0 !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-row {
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    border: 0 !important;
+    outline: 0 !important;
+    box-shadow: none !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-actions {
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    border: 0 !important;
+    outline: 0 !important;
+    box-shadow: none !important;
+}
+
+body[data-ui-variant="variant-1-glass"] .ui-help-caption {
+    position: fixed;
+    left: 50%;
+    bottom: 16px;
+    transform: translateX(-50%);
+    z-index: 50;
+    max-width: min(640px, calc(100vw - 40px));
+    padding: 5px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    line-height: 1.2;
+    letter-spacing: 0.02em;
+    background: rgba(255, 255, 255, 0.14);
+    color: rgba(17, 24, 39, 0.95);
+    text-shadow: none;
+    pointer-events: none;
+}
+
+body[data-ui-variant="variant-1-glass"][data-canvas-bg-tone="dark"] .ui-help-caption {
+    color: rgba(255, 255, 255, 0.96);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+}
+
+body[data-ui-variant="variant-1-glass"][data-canvas-bg-tone="light"] .ui-help-caption {
+    color: rgba(17, 24, 39, 0.95);
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-details::before,
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-details::after,
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-row::before,
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-row::after,
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-actions::before,
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-actions::after {
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    border: 0 !important;
+    outline: 0 !important;
+    box-shadow: none !important;
+    content: none !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel {
+    background:
+        linear-gradient(180deg,
+            rgba(255, 255, 255, calc(0.12 + var(--glass-opacity, 0.08) * 0.22)),
+            rgba(255, 255, 255, calc(var(--glass-opacity, 0.08) * 0.04))
+        ) !important;
+    border: 1px solid rgba(255, 255, 255, calc(0.1 + var(--glass-edge-intensity, 0.05) * 0.2)) !important;
+    border-color: rgba(255, 255, 255, calc(0.1 + var(--glass-edge-intensity, 0.05) * 0.2)) !important;
+    box-shadow:
+        0 calc(6px + var(--glass-z-radius, 0) * 0.12) calc(16px + var(--glass-shadow-spread, 0) * 0.8)
+            rgba(17, 24, 34, calc(var(--glass-shadow-opacity, 0.3) * 0.65)),
+        inset 0 1px 0 rgba(255, 255, 255, calc(0.08 + var(--glass-fresnel, 1) * 0.1)),
+        inset 0 0 0 1px rgba(255, 255, 255, calc(var(--glass-edge-intensity, 0.05) * 0.2)) !important;
+    outline: 0 !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    filter: none !important;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-preset="2"] #case-comparison {
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, calc(var(--glass-opacity, 0) * 0.08)), rgba(255, 255, 255, 0.02)),
+        rgba(255, 255, 255, calc(var(--glass-opacity, 0) * 0.028)) !important;
+    border: 1px solid rgba(255, 255, 255, calc(var(--glass-edge-intensity, 0) * 0.12));
+    border-top-color: rgba(255, 255, 255, calc(var(--glass-refraction-strength, 0) * 0.18));
+    border-left-color: rgba(255, 255, 255, calc(var(--glass-edge-intensity, 0) * 0.08));
+    box-shadow:
+        0 10px calc(var(--glass-shadow-spread, 0) * 0.22) rgba(8, 12, 18, calc(var(--glass-shadow-opacity, 0) * 0.08)),
+        inset 0 1px 0 rgba(255, 255, 255, calc(var(--glass-refraction-strength, 0) * 0.1));
+    backdrop-filter:
+        blur(calc(var(--glass-blur-amount, 0) * 12px))
+        saturate(calc(1 + var(--glass-saturation, 0) * 0.08));
+    -webkit-backdrop-filter:
+        blur(calc(var(--glass-blur-amount, 0) * 12px))
+        saturate(calc(1 + var(--glass-saturation, 0) * 0.08));
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-preset="2"] #case-table {
+    background: transparent;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-preset="2"] #case-table th,
+body[data-ui-variant="variant-1-glass"][data-ui-preset="2"] #case-table td {
+    border-color: rgba(255, 255, 255, 0.12);
+    color: rgba(18, 28, 40, 0.92);
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.08);
+    background-clip: padding-box;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-preset="2"] #case-table th {
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0.1)),
+        rgba(255, 255, 255, 0.04) !important;
+    color: rgba(16, 24, 36, 0.92);
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-preset="2"] #case-table tr:nth-child(even) {
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02)),
+        rgba(255, 255, 255, 0.02);
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-preset="2"] #case-table tr:hover {
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.04)),
+        rgba(255, 255, 255, 0.03);
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-preset="2"] #case-table tr:nth-child(2) th {
+    background:
+        linear-gradient(180deg, rgba(232, 240, 255, 0.3), rgba(232, 240, 255, 0.12)),
+        rgba(232, 240, 255, 0.04);
+    color: rgba(18, 28, 40, 0.82);
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-preset="2"] #case-table th.case-header {
+    background:
+        linear-gradient(180deg, rgba(104, 184, 127, 0.32), rgba(104, 184, 127, 0.16)),
+        rgba(104, 184, 127, 0.08) !important;
+    color: rgba(18, 28, 40, 0.94);
+    border-color: rgba(255, 255, 255, 0.18);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.18),
+        0 1px 6px rgba(10, 16, 26, 0.06);
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-preset="2"] #case-table th.case-header.current-case {
+    background:
+        linear-gradient(180deg, rgba(66, 128, 228, 0.34), rgba(66, 128, 228, 0.18)),
+        rgba(66, 128, 228, 0.08) !important;
+    color: rgba(248, 252, 255, 0.96);
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-preset="2"] #case-table th.case-header:hover {
+    background:
+        linear-gradient(180deg, rgba(246, 176, 96, 0.34), rgba(246, 176, 96, 0.18)),
+        rgba(246, 176, 96, 0.08) !important;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-preset="2"] #case-table th.case-header.current-case:hover {
+    background:
+        linear-gradient(180deg, rgba(74, 146, 238, 0.38), rgba(74, 146, 238, 0.2)),
+        rgba(74, 146, 238, 0.1) !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #case-table th.case-header,
+body[data-ui-variant="variant-1-glass"][data-ui-preset="2"] #case-table th.case-header {
+    border-color: transparent !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    outline: none !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #case-table th.case-header.current-case,
+body[data-ui-variant="variant-1-glass"][data-ui-preset="2"] #case-table th.case-header.current-case {
+    border-color: transparent !important;
+    box-shadow: none !important;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-preset="2"] #case-table td.current-case {
+    background:
+        linear-gradient(180deg, rgba(224, 240, 255, 0.28), rgba(224, 240, 255, 0.12)),
+        rgba(224, 240, 255, 0.06);
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-preset="2"] #case-table td {
+    background: transparent;
+    border-color: transparent;
+    box-shadow: none;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-preset="2"] #case-table td.unavailable-case,
+body[data-ui-variant="variant-1-glass"][data-ui-preset="2"] #case-table th.unavailable-case {
+    background:
+        linear-gradient(180deg, rgba(152, 162, 175, 0.3), rgba(152, 162, 175, 0.16)),
+        rgba(152, 162, 175, 0.06);
+    color: rgba(248, 251, 255, 0.94);
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-preset="2"] .changed-value,
+body[data-ui-variant="variant-1-glass"][data-ui-preset="2"] #case-table td.changed-value {
+    color: rgba(18, 28, 40, 0.98);
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-preset="2"] #case-comparison::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 999px;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-preset="2"] #case-comparison::-webkit-scrollbar-thumb {
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.22), rgba(96, 126, 165, 0.34)),
+        rgba(255, 255, 255, 0.08);
+    border-radius: 999px;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-preset="2"] #case-comparison::-webkit-scrollbar-thumb:hover {
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.3), rgba(96, 126, 165, 0.42)),
+        rgba(255, 255, 255, 0.1);
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-preset="2"] #case-comparison,
+body[data-ui-variant="variant-1-glass"][data-ui-preset="2"] #case-table,
+body[data-ui-variant="variant-1-glass"][data-ui-preset="2"] #case-table th,
+body[data-ui-variant="variant-1-glass"][data-ui-preset="2"] #case-table td {
+    transition: background-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+body[data-ui-variant="variant-1-glass"] #case-comparison {
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02)),
+        rgba(255, 255, 255, 0.025);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-top-color: rgba(255, 255, 255, 0.16);
+    border-left-color: rgba(255, 255, 255, 0.06);
+    box-shadow:
+        0 8px 18px rgba(16, 22, 32, 0.06),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px) saturate(1.04);
+    -webkit-backdrop-filter: blur(10px) saturate(1.04);
+}
+
+body[data-ui-variant="variant-1-glass"] #case-table tr:nth-child(2) th {
+    background:
+        linear-gradient(180deg, rgba(238, 241, 246, 0.2), rgba(238, 241, 246, 0.08)),
+        rgba(238, 241, 246, 0.02);
+    color: rgba(18, 28, 40, 0.78);
+}
+
+body[data-ui-variant="variant-1-glass"] #case-table th.case-header {
+    background:
+        linear-gradient(180deg, rgba(236, 239, 244, 0.16), rgba(236, 239, 244, 0.06)),
+        rgba(236, 239, 244, 0.02);
+    color: rgba(18, 28, 40, 0.88);
+}
+
+body[data-ui-variant="variant-1-glass"] #case-table th.case-header.current-case {
+    background:
+        linear-gradient(180deg, rgba(66, 128, 228, 0.26), rgba(66, 128, 228, 0.14)),
+        rgba(66, 128, 228, 0.06);
+    color: rgba(248, 252, 255, 0.94);
+}
+
+body[data-ui-variant="variant-1-glass"] #case-table th.case-header:hover {
+    background:
+        linear-gradient(180deg, rgba(220, 224, 231, 0.18), rgba(220, 224, 231, 0.08)),
+        rgba(220, 224, 231, 0.04);
+}
+
+body[data-ui-variant="variant-1-glass"] #case-table th.case-header.current-case:hover {
+    background:
+        linear-gradient(180deg, rgba(74, 146, 238, 0.28), rgba(74, 146, 238, 0.14)),
+        rgba(74, 146, 238, 0.07);
+}
+
+body[data-ui-variant="variant-1-glass"] #case-table td.current-case {
+    background:
+        linear-gradient(180deg, rgba(224, 240, 255, 0), rgba(224, 240, 255, 0)),
+        rgba(224, 240, 255, 0);
+}
+
+body[data-ui-variant="variant-1-glass"] #case-table td {
+    background: transparent;
+    border-color: transparent;
+    box-shadow: none;
+}
+
+body[data-ui-variant="variant-1-glass"] #case-table {
+    background: transparent;
+}
+
+body[data-ui-variant="variant-1-glass"] #case-table th,
+body[data-ui-variant="variant-1-glass"] #case-table td {
+    border-color: rgba(255, 255, 255, 0.1);
+    color: rgba(18, 28, 40, 0.9);
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.08);
+    background-clip: padding-box;
+}
+
+body[data-ui-variant="variant-1-glass"] #case-table {
+    table-layout: fixed;
+}
+
+body[data-ui-variant="variant-1-glass"] #case-table tbody td {
+    text-align: center;
+    vertical-align: middle;
+    width: 17px;
+    min-width: 17px;
+    max-width: 17px;
+}
+
+body[data-ui-variant="variant-1-glass"] #case-table tbody td:first-child {
+    text-align: left;
+    width: auto;
+    min-width: 0;
+    max-width: none;
+}
+
+body[data-ui-variant="variant-1-glass"] #case-table th {
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.08)),
+        rgba(255, 255, 255, 0.03);
+    color: rgba(16, 24, 36, 0.9);
+}
+
+body[data-ui-variant="variant-1-glass"] #case-table tr:nth-child(even) {
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02)),
+        rgba(255, 255, 255, 0.015);
+}
+
+body[data-ui-variant="variant-1-glass"] #case-table tr:hover {
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.03)),
+        rgba(255, 255, 255, 0.02);
+}
+
+body[data-ui-variant="variant-1-glass"] #case-table tr:nth-child(2) th {
+    background:
+        linear-gradient(180deg, rgba(232, 240, 255, 0.24), rgba(232, 240, 255, 0.1)),
+        rgba(232, 240, 255, 0.03);
+    color: rgba(18, 28, 40, 0.82);
+}
+
+body[data-ui-variant="variant-1-glass"] #case-table th.case-header {
+    background:
+        linear-gradient(180deg, rgba(104, 184, 127, 0), rgba(104, 184, 127, 0)),
+        rgba(104, 184, 127, 0);
+    color: rgba(18, 28, 40, 0.92);
+    width: 34px !important;
+    min-width: 34px !important;
+    max-width: 34px !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #case-table th.case-header.current-case {
+    background:
+        linear-gradient(180deg, rgba(66, 128, 228, 0.26), rgba(66, 128, 228, 0.14)),
+        rgba(66, 128, 228, 0.06);
+    color: rgba(248, 252, 255, 0.94);
+}
+
+body[data-ui-variant="variant-1-glass"] #case-table th.case-header:hover {
+    background:
+        linear-gradient(180deg, rgba(246, 176, 96, 0.22), rgba(246, 176, 96, 0.1)),
+        rgba(246, 176, 96, 0.04);
+}
+
+body[data-ui-variant="variant-1-glass"] #case-table th.case-header.current-case:hover {
+    background:
+        linear-gradient(180deg, rgba(74, 146, 238, 0.28), rgba(74, 146, 238, 0.14)),
+        rgba(74, 146, 238, 0.07);
+}
+
+body[data-ui-variant="variant-1-glass"] #case-table td.current-case {
+    background:
+        linear-gradient(180deg, rgba(224, 240, 255, 0), rgba(224, 240, 255, 0)),
+        rgba(224, 240, 255, 0);
+}
+
+body[data-ui-variant="variant-1-glass"] #case-table thead tr:nth-child(2) th:nth-child(odd):not(:first-child),
+body[data-ui-variant="variant-1-glass"] #case-table tbody tr td:nth-child(odd):not(:first-child) {
+    width: 17px;
+    min-width: 17px;
+    max-width: 17px;
+}
+
+body[data-ui-variant="variant-1-glass"] #case-table tbody tr td:nth-child(even) {
+    visibility: hidden;
+    color: transparent;
+    background: transparent;
+    border-color: transparent;
+    pointer-events: none;
+}
+
+body[data-ui-variant="variant-1-glass"] #case-table thead tr:nth-child(2) {
+    display: none;
+}
+
+body[data-ui-variant="variant-1-glass"] #case-table td.unavailable-case,
+body[data-ui-variant="variant-1-glass"] #case-table th.unavailable-case {
+    background:
+        linear-gradient(180deg, rgba(152, 162, 175, 0.24), rgba(152, 162, 175, 0.12)),
+        rgba(152, 162, 175, 0.04);
+    color: rgba(248, 251, 255, 0.92);
+}
+
+body[data-ui-variant="variant-1-glass"] .changed-value,
+body[data-ui-variant="variant-1-glass"] #case-table td.changed-value {
+    color: rgba(18, 28, 40, 0.98);
+}
+
+body[data-ui-variant="variant-1-glass"] #case-table tbody td,
+body[data-ui-variant="variant-1-glass"] #case-table tbody tr td {
+    background: transparent !important;
+    border-color: transparent !important;
+    box-shadow: none !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #case-comparison::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.04);
+}
+
+body[data-ui-variant="variant-1-glass"] #case-comparison::-webkit-scrollbar-thumb {
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(96, 126, 165, 0.24)),
+        rgba(255, 255, 255, 0.05);
+}
+
+body[data-ui-variant="variant-1-glass"] #case-comparison::-webkit-scrollbar-thumb:hover {
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.26), rgba(96, 126, 165, 0.3)),
+        rgba(255, 255, 255, 0.06);
+}
+
+body[data-ui-variant="variant-1-glass"] #case-comparison,
+body[data-ui-variant="variant-1-glass"] #case-table,
+body[data-ui-variant="variant-1-glass"] #case-table th,
+body[data-ui-variant="variant-1-glass"] #case-table td {
+    transition: background-color 0.2s ease, box-shadow 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+body[data-ui-variant="variant-1-glass"] #case-comparison {
+    position: fixed;
+    height: auto;
+    min-height: 0;
+    max-height: 220px;
+    overflow: auto;
+    align-self: flex-start;
+    display: block;
+    width: auto;
+    min-width: 0;
+}
+
+body[data-ui-variant="variant-1-glass"] #case-comparison.collapsed {
+    min-height: 0;
+    pointer-events: auto !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #case-comparison #case-table {
+    min-width: max-content;
+}
+
+body[data-ui-variant="variant-1-glass"] #case-comparison.collapsed tbody,
+body[data-ui-variant="variant-1-glass"] #case-comparison.collapsed tbody tr,
+body[data-ui-variant="variant-1-glass"] #case-comparison.collapsed tbody td {
+    pointer-events: none !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #case-comparison.collapsed #case-table,
+body[data-ui-variant="variant-1-glass"] #case-comparison.collapsed thead,
+body[data-ui-variant="variant-1-glass"] #case-comparison.collapsed thead tr,
+body[data-ui-variant="variant-1-glass"] #case-comparison.collapsed th.case-header,
+body[data-ui-variant="variant-1-glass"] #case-comparison.collapsed th.case-header *,
+body[data-ui-variant="variant-1-glass"] #case-comparison.collapsed th.parameter-toggle,
+body[data-ui-variant="variant-1-glass"] #case-comparison.collapsed th.parameter-toggle *,
+body[data-ui-variant="variant-1-glass"] #case-comparison.collapsed button {
+    pointer-events: auto !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-control-bar {
+    pointer-events: none !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-control-bar button,
+body[data-ui-variant="variant-1-glass"] #glass-control-bar [role="button"],
+body[data-ui-variant="variant-1-glass"] #glass-control-bar select,
+body[data-ui-variant="variant-1-glass"] #glass-control-bar input {
+    pointer-events: auto !important;
+}
+
+body[data-ui-variant="variant-1-glass"] .ui-container:not(#ui-preset-panel),
+body[data-ui-variant="variant-1-glass"] #case-comparison,
+body[data-ui-variant="variant-1-glass"] .code-explain-panel {
+    border-color: var(--glass-edge-color-rgba, rgba(255, 255, 255, 0.42)) !important;
+    border-width: calc(var(--glass-edge-width, 1.2) * 0.2px) !important;
+    border-radius: calc(var(--glass-corner-radius, 12) * 1px) !important;
+    background:
+        linear-gradient(180deg,
+            rgba(255, 255, 255, calc(var(--glass-opacity, 0.08) * 0.18)),
+            rgba(255, 255, 255, calc(var(--glass-opacity, 0.08) * 0.04))
+        ),
+        var(--glass-surface-rgba, rgba(248, 251, 255, 0.18)) !important;
+    box-shadow:
+        calc(var(--glass-drop-shadow-offset-x, 0) * 1px)
+        calc(var(--glass-drop-shadow-offset-y, 8) * 1px)
+        calc(var(--glass-drop-shadow-soft-blur, 18) * 1px)
+        var(--glass-drop-shadow-color-rgba, rgba(29, 38, 54, 0.1)),
+        inset 0 1px 0 var(--glass-reflection-color-rgba, rgba(255, 255, 255, 0.18)),
+        inset 0 0 0 calc(max(0px, var(--glass-edge-width, 1.2) * var(--glass-edge-blend, 0.45) * 1px))
+        var(--glass-edge-color-rgba, rgba(255, 255, 255, 0.22)) !important;
+    -webkit-backdrop-filter:
+        blur(calc(8px + var(--glass-blur-amount, 0.25) * 18px))
+        saturate(calc(1.03 + var(--glass-saturation, 0) * 0.45))
+        brightness(calc(1 + var(--glass-brightness, 0) * 0.28)) !important;
+    backdrop-filter:
+        blur(calc(8px + var(--glass-blur-amount, 0.25) * 18px))
+        saturate(calc(1.03 + var(--glass-saturation, 0) * 0.45))
+        brightness(calc(1 + var(--glass-brightness, 0) * 0.28)) !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-control-bar .glass-control-pill:not(.is-active):not(.is-visible),
+body[data-ui-variant="variant-1-glass"] #glass-control-bar .glass-panel-quick-toggle-button:not(.is-active):not(.is-visible),
+body[data-ui-variant="variant-1-glass"] #glass-control-bar .canvas-trail-mode-button:not(.is-active):not(.is-visible),
+body[data-ui-variant="variant-1-glass"] #glass-control-bar .canvas-bottom-color-button:not(.selected):not(.is-selected) {
+    background:
+        linear-gradient(180deg,
+            rgba(255, 255, 255, calc(var(--glass-opacity, 0.08) * 0.32)),
+            rgba(255, 255, 255, calc(var(--glass-opacity, 0.08) * 0.08))
+        ),
+        var(--glass-surface-rgba, rgba(248, 251, 255, 0.12)) !important;
+    border-color: var(--glass-edge-color-rgba, rgba(255, 255, 255, 0.28)) !important;
+    box-shadow:
+        0 4px calc(var(--glass-drop-shadow-soft-blur, 18) * 0.45px)
+        var(--glass-drop-shadow-color-rgba, rgba(29, 38, 54, 0.08)),
+        inset 0 1px 0 var(--glass-reflection-color-rgba, rgba(255, 255, 255, 0.16)) !important;
+    -webkit-backdrop-filter:
+        blur(calc(4px + var(--glass-blur-amount, 0.25) * 10px))
+        saturate(calc(1.02 + var(--glass-saturation, 0) * 0.32)) !important;
+    backdrop-filter:
+        blur(calc(4px + var(--glass-blur-amount, 0.25) * 10px))
+        saturate(calc(1.02 + var(--glass-saturation, 0) * 0.32)) !important;
+}
+
+/* Glass final face-layer separation fix 260510
+   - Reflection/shadow are face highlights only.
+   - Edge is border/inset-edge only.
+   - Drop shadow is outer box-shadow only.
+   - #ui-preset-panel remains a visual-free layout frame. */
+body[data-ui-variant="variant-1-glass"] #ui-variant-panel {
+    position: fixed !important;
+    overflow: hidden !important;
+    border-style: solid !important;
+    border-width: calc(var(--glass-edge-width, 1.2) * 0.2px) !important;
+    border-color: var(--glass-edge-color-rgba, rgba(255, 255, 255, 0.42)) !important;
+    border-radius: calc(var(--glass-corner-radius, 12) * 1px) !important;
+    background:
+        linear-gradient(180deg,
+            rgba(255, 255, 255, calc(var(--glass-palette-alpha, 0.18) * 0.08)),
+            rgba(255, 255, 255, calc(var(--glass-palette-alpha, 0.18) * 0.03)) 44%,
+            rgba(255, 255, 255, 0) 100%
+        ),
+        var(--glass-surface-rgba, rgba(248, 251, 255, 0.18)) !important;
+    box-shadow:
+        calc(var(--glass-drop-shadow-offset-x, 0) * 1px)
+        calc(var(--glass-drop-shadow-offset-y, 8) * 1px)
+        calc(var(--glass-drop-shadow-sharp-blur, 4) * 1px)
+        var(--glass-drop-shadow-color-rgba, rgba(29, 38, 54, 0.14)),
+        calc(var(--glass-drop-shadow-offset-x, 0) * 1px)
+        calc(var(--glass-drop-shadow-offset-y, 8) * 1px)
+        calc(var(--glass-drop-shadow-soft-blur, 18) * 1px)
+        var(--glass-drop-shadow-color-rgba, rgba(29, 38, 54, 0.10)),
+        inset 0 0 0 calc(max(0px, var(--glass-edge-width, 1.2) * var(--glass-edge-blend, 0.45) * 1px))
+        var(--glass-edge-color-rgba, rgba(255, 255, 255, 0.22)) !important;
+    filter: none !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-variant-panel::before,
+body[data-ui-variant="variant-1-glass"] #ui-variant-panel::after {
+    content: "" !important;
+    position: absolute !important;
+    inset: 0 !important;
+    border-radius: inherit !important;
+    pointer-events: none !important;
+    z-index: 0 !important;
+    border: 0 !important;
+    outline: 0 !important;
+    box-shadow: none !important;
+    filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    transform: none !important;
+}
+
+/* Face reflection only: bright highlight on the light side of the panel face. */
+body[data-ui-variant="variant-1-glass"] #ui-variant-panel::before {
+    opacity: calc(0.28 + min(1, var(--glass-refraction-strength, 0.18)) * 0.52) !important;
+    background:
+        radial-gradient(calc(var(--glass-reflection-size, 92) * 1%) calc(var(--glass-reflection-size, 92) * 0.78%) at var(--glass-highlight-pos-x, 50%) var(--glass-highlight-pos-y, 0%),
+            var(--glass-reflection-color-rgba, rgba(255, 255, 255, 0.55)) 0%,
+            rgba(255, 255, 255, calc(var(--glass-reflection-color-alpha, 1) * 0.22)) 24%,
+            rgba(255, 255, 255, 0) 64%
+        ),
+        linear-gradient(var(--glass-light-angle, 0deg),
+            rgba(255, 255, 255, calc(var(--glass-reflection-color-alpha, 1) * 0.16)) 0%,
+            rgba(255, 255, 255, 0) 58%
+        ) !important;
+    mix-blend-mode: screen !important;
+}
+
+/* Face shadow only: dark face highlight at the point-opposite side of reflection. */
+body[data-ui-variant="variant-1-glass"] #ui-variant-panel::after {
+    opacity: calc(0.18 + var(--glass-shadow-opacity, 0.3) * 0.72) !important;
+    background:
+        radial-gradient(calc(var(--glass-shadow-size, 100) * 1%) calc(var(--glass-shadow-size, 100) * 0.78%) at var(--glass-shadow-pos-x, 50%) var(--glass-shadow-pos-y, 100%),
+            var(--glass-shadow-color-rgba, rgba(58, 84, 120, 0.42)) 0%,
+            rgba(17, 24, 34, calc(var(--glass-shadow-opacity, 0.3) * var(--glass-shadow-color-alpha, 1) * 0.28)) 30%,
+            rgba(17, 24, 34, 0) calc(58% + min(42%, var(--glass-shadow-spread, 24) * 0.22%))
+        ) !important;
+    mix-blend-mode: multiply !important;
+}
+
+/* Keep content above face-highlight layers. */
+body[data-ui-variant="variant-1-glass"] #ui-variant-panel > * {
+    position: relative !important;
+    z-index: 1 !important;
+}
+
+/* The preset panel is a layout frame only: no panel face, no edge, no reflection, no face-shadow, no drop-shadow. */
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel,
+body[data-ui-variant="variant-1-glass"][data-ui-preset="1"] #ui-preset-panel,
+body[data-ui-variant="variant-1-glass"][data-ui-preset="2"] #ui-preset-panel,
+body[data-ui-variant="variant-1-glass"][data-ui-preset="3"] #ui-preset-panel,
+body[data-ui-variant="variant-1-glass"][data-ui-preset="4"] #ui-preset-panel,
+body[data-ui-variant="variant-1-glass"][data-ui-preset="5"] #ui-preset-panel {
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    border: 0 !important;
+    border-width: 0 !important;
+    border-color: transparent !important;
+    outline: 0 !important;
+    box-shadow: none !important;
+    filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel::before,
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel::after,
+body[data-ui-variant="variant-1-glass"][data-ui-preset="1"] #ui-preset-panel::before,
+body[data-ui-variant="variant-1-glass"][data-ui-preset="1"] #ui-preset-panel::after,
+body[data-ui-variant="variant-1-glass"][data-ui-preset="2"] #ui-preset-panel::before,
+body[data-ui-variant="variant-1-glass"][data-ui-preset="2"] #ui-preset-panel::after,
+body[data-ui-variant="variant-1-glass"][data-ui-preset="3"] #ui-preset-panel::before,
+body[data-ui-variant="variant-1-glass"][data-ui-preset="3"] #ui-preset-panel::after,
+body[data-ui-variant="variant-1-glass"][data-ui-preset="4"] #ui-preset-panel::before,
+body[data-ui-variant="variant-1-glass"][data-ui-preset="4"] #ui-preset-panel::after,
+body[data-ui-variant="variant-1-glass"][data-ui-preset="5"] #ui-preset-panel::before,
+body[data-ui-variant="variant-1-glass"][data-ui-preset="5"] #ui-preset-panel::after {
+    content: none !important;
+    display: none !important;
+    background: none !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    filter: none !important;
+    opacity: 0 !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #case-comparison {
+    background-color: var(--glass-surface-rgba, rgba(248, 251, 255, 0.18)) !important;
+    background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02)) !important;
+    border-color: var(--glass-edge-color-rgba, rgba(255, 255, 255, 0.42)) !important;
+    box-shadow:
+        calc(var(--glass-drop-shadow-offset-x, 0) * 1px)
+        calc(var(--glass-drop-shadow-offset-y, 8) * 1px)
+        calc(var(--glass-drop-shadow-soft-blur, 18) * 1px)
+        var(--glass-drop-shadow-color-rgba, rgba(29, 38, 54, 0.1)),
+        inset 0 1px 0 var(--glass-reflection-color-rgba, rgba(255, 255, 255, 0.18)),
+        inset 0 0 0 calc(max(0px, var(--glass-edge-width, 1.2) * var(--glass-edge-blend, 0.45) * 1px))
+        var(--glass-edge-color-rgba, rgba(255, 255, 255, 0.22)) !important;
+}
+
+body[data-ui-variant="variant-1-glass"] .ui-container .ui-header,
+body[data-ui-variant="variant-1-glass"] .ui-container .ui-content,
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel,
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-details,
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-row,
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-actions {
+    background-color: color-mix(in srgb, var(--glass-surface-rgba, rgba(248, 251, 255, 0.18)) 72%, transparent) !important;
+    border-color: var(--glass-edge-color-rgba, rgba(255, 255, 255, 0.28)) !important;
+    color: var(--glass-text, rgba(15, 24, 36, 0.94)) !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-variant-panel select,
+body[data-ui-variant="variant-1-glass"] #ui-variant-panel input,
+body[data-ui-variant="variant-1-glass"] #ui-variant-panel button,
+body[data-ui-variant="variant-1-glass"] #ui-preset-select,
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel select,
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel input,
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel button,
+body[data-ui-variant="variant-1-glass"] .ui-container select,
+body[data-ui-variant="variant-1-glass"] .ui-container input,
+body[data-ui-variant="variant-1-glass"] .ui-container button {
+    background-color: color-mix(in srgb, var(--glass-surface-rgba, rgba(248, 251, 255, 0.18)) 78%, transparent) !important;
+    color: var(--glass-text, rgba(15, 24, 36, 0.94)) !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-preset-select {
+    border: 1px solid rgba(255, 255, 255, 0.18) !important;
+    outline: 0 !important;
+    box-shadow:
+        0 1px 0 rgba(255, 255, 255, 0.18) inset,
+        0 5px 14px rgba(12, 18, 28, 0.08) !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-variant-select {
+    appearance: none;
+    -webkit-appearance: none;
+    border: 1px solid transparent !important;
+    border-color: transparent !important;
+    outline: 0 !important;
+    background-clip: padding-box;
+    box-shadow:
+        0 5px 14px rgba(12, 18, 28, 0.08) !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-variant-select:focus:not(:focus-visible) {
+    border: 1px solid transparent !important;
+    border-color: transparent !important;
+    outline: 0 !important;
+    box-shadow: 0 5px 14px rgba(12, 18, 28, 0.08) !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-variant-select:focus-visible {
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    outline: 1px solid rgba(127, 168, 224, 0.55) !important;
+    outline-offset: 2px;
+    background-clip: padding-box;
+    box-shadow:
+        0 5px 14px rgba(12, 18, 28, 0.1) !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-actions > button,
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-edit-lock-toggle {
+    border: 1px solid rgba(230, 230, 230, 0.42) !important;
+    box-shadow: none !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel input[type="range"][data-glass-param] {
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    box-shadow: none !important;
+    border: 0 !important;
+    outline: 0 !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #case-table,
+body[data-ui-variant="variant-1-glass"] #case-table thead,
+body[data-ui-variant="variant-1-glass"] #case-table tbody,
+body[data-ui-variant="variant-1-glass"] #case-table tr,
+body[data-ui-variant="variant-1-glass"] #case-table th,
+body[data-ui-variant="variant-1-glass"] #case-table td {
+    background-color: color-mix(in srgb, var(--glass-surface-rgba, rgba(248, 251, 255, 0.18)) 52%, transparent) !important;
+    border-color: var(--glass-edge-color-rgba, rgba(255, 255, 255, 0.24)) !important;
+    color: var(--glass-text, rgba(15, 24, 36, 0.94)) !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #case-table th.case-header,
+body[data-ui-variant="variant-1-glass"] #case-table td.current-case,
+body[data-ui-variant="variant-1-glass"] #case-table td.changed-value {
+    background-color: color-mix(in srgb, var(--glass-surface-rgba, rgba(248, 251, 255, 0.18)) 68%, white 16%) !important;
+    border-color: var(--glass-edge-color-rgba, rgba(255, 255, 255, 0.32)) !important;
+    color: var(--glass-text, rgba(15, 24, 36, 0.94)) !important;
+    transition: color 2s ease, -webkit-text-fill-color 2s ease, background-color 0.5s ease, border-color 0.5s ease;
+}
+
+
+/* Glass bottom controls contrast guard 260518
+   背景が白系になった時でも、表示中ボタンと主要操作ボタンを背景に溶かさない。 */
+body[data-ui-variant="variant-1-glass"].glass-bg-light #glass-control-bar .glass-control-pill,
+body[data-ui-variant="variant-1-glass"].glass-bg-light #glass-control-bar .glass-panel-quick-toggle-button,
+body[data-ui-variant="variant-1-glass"].glass-bg-light #glass-control-bar .canvas-trail-mode-button,
+body[data-ui-variant="variant-1-glass"].glass-bg-light #glass-control-bar #glass-panel-code-explain {
+    color: rgba(16, 24, 42, 0.9) !important;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.72) !important;
+    transition: color 2s ease, -webkit-text-fill-color 2s ease, background-color 0.14s ease, border-color 0.14s ease, box-shadow 0.14s ease, transform 0.14s ease, filter 0.14s ease;
+}
+
+body[data-ui-variant="variant-1-glass"].glass-bg-light #glass-control-bar .glass-control-pill:not(.is-active):not(.is-visible),
+body[data-ui-variant="variant-1-glass"].glass-bg-light #glass-control-bar .glass-panel-quick-toggle-button:not(.is-active):not(.is-visible),
+body[data-ui-variant="variant-1-glass"].glass-bg-light #glass-control-bar .canvas-trail-mode-button:not(.is-active):not(.is-visible),
+body[data-ui-variant="variant-1-glass"].glass-bg-light #glass-control-bar .canvas-bottom-color-button:not(.selected):not(.is-selected) {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(238, 244, 255, 0.48)) !important;
+    border-color: rgba(255, 125, 172, 0.54) !important;
+    box-shadow:
+        0 8px 22px rgba(28, 36, 54, 0.12),
+        0 0 0 1px rgba(255, 255, 255, 0.72) inset,
+        inset 0 1px 0 rgba(255, 255, 255, 0.86) !important;
+}
+
+body[data-ui-variant="variant-1-glass"].glass-bg-light #glass-control-bar .glass-panel-quick-toggle-button.is-active,
+body[data-ui-variant="variant-1-glass"].glass-bg-light #glass-control-bar .glass-panel-quick-toggle-button.is-visible,
+body[data-ui-variant="variant-1-glass"].glass-bg-light #glass-control-bar .canvas-trail-mode-button.is-active,
+body[data-ui-variant="variant-1-glass"].glass-bg-light #glass-control-bar .canvas-trail-mode-button.is-visible,
+body[data-ui-variant="variant-1-glass"].glass-bg-light #glass-control-bar #glass-panel-code-explain.is-active,
+body[data-ui-variant="variant-1-glass"].glass-bg-light #glass-control-bar #glass-panel-code-explain.is-visible {
+    color: rgba(10, 18, 34, 0.96) !important;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.86), rgba(232, 241, 255, 0.64)) !important;
+    border-color: rgba(255, 105, 162, 0.78) !important;
+    box-shadow:
+        0 0 0 0.1pt rgba(255, 86, 150, 0.68),
+        0 10px 26px rgba(28, 36, 54, 0.16),
+        inset 0 1px 0 rgba(255, 255, 255, 0.92) !important;
+}
+
+body[data-ui-variant="variant-1-glass"].glass-bg-light #glass-control-bar .glass-panel-quick-toggle-button.is-active::after,
+body[data-ui-variant="variant-1-glass"].glass-bg-light #glass-control-bar .glass-panel-quick-toggle-button.is-visible::after,
+body[data-ui-variant="variant-1-glass"].glass-bg-light #glass-control-bar .canvas-trail-mode-button.is-active::after,
+body[data-ui-variant="variant-1-glass"].glass-bg-light #glass-control-bar .canvas-trail-mode-button.is-visible::after,
+body[data-ui-variant="variant-1-glass"].glass-bg-light #glass-control-bar #glass-panel-code-explain.is-active::after,
+body[data-ui-variant="variant-1-glass"].glass-bg-light #glass-control-bar #glass-panel-code-explain.is-visible::after {
+    content: "";
+    position: absolute;
+    right: 7px;
+    top: 7px;
+    width: 5px;
+    height: 5px;
+    border-radius: 999px;
+    background: rgba(255, 86, 150, 0.9);
+    box-shadow: 0 0 8px rgba(255, 86, 150, 0.68);
+    pointer-events: none;
+}
+
+body[data-ui-variant="variant-1-glass"].glass-bg-light #glass-control-bar .glass-control-pill,
+body[data-ui-variant="variant-1-glass"].glass-bg-dark #glass-control-bar .glass-control-pill {
+    position: relative;
+}
+
+body[data-ui-variant="variant-1-glass"].glass-bg-dark #glass-control-bar .glass-control-pill,
+body[data-ui-variant="variant-1-glass"].glass-bg-dark #glass-control-bar .glass-panel-quick-toggle-button,
+body[data-ui-variant="variant-1-glass"].glass-bg-dark #glass-control-bar .canvas-trail-mode-button,
+body[data-ui-variant="variant-1-glass"].glass-bg-dark #glass-control-bar #glass-panel-code-explain {
+    color: rgba(255, 255, 255, 0.94) !important;
+    transition: color 2s ease, -webkit-text-fill-color 2s ease, background-color 0.14s ease, border-color 0.14s ease, box-shadow 0.14s ease, transform 0.14s ease, filter 0.14s ease;
+}
+
+/* =========================================================
+   Glass bottom control active state override
+   目的: 表示中ボタン全体の線色/太さを統一し、右上ドットを消す
+   対象: #glass-control-bar 内の 1/2/3/5/6/d/C/流線表示/残像表示/コード解説/配置リセット等
+   ========================================================= */
+
+body[data-ui-variant="variant-1-glass"].glass-bg-light #glass-control-bar .glass-panel-quick-toggle-button.is-active::after,
+body[data-ui-variant="variant-1-glass"].glass-bg-light #glass-control-bar .glass-panel-quick-toggle-button.is-visible::after,
+body[data-ui-variant="variant-1-glass"].glass-bg-light #glass-control-bar .canvas-trail-mode-button.is-active::after,
+body[data-ui-variant="variant-1-glass"].glass-bg-light #glass-control-bar .canvas-trail-mode-button.is-visible::after,
+body[data-ui-variant="variant-1-glass"].glass-bg-light #glass-control-bar #glass-panel-code-explain.is-active::after,
+body[data-ui-variant="variant-1-glass"].glass-bg-light #glass-control-bar #glass-panel-code-explain.is-visible::after {
+    content: none !important;
+    display: none !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-control-bar button.is-active::after,
+body[data-ui-variant="variant-1-glass"] #glass-control-bar button.is-visible::after,
+body[data-ui-variant="variant-1-glass"] #glass-control-bar .glass-control-pill.is-active::after,
+body[data-ui-variant="variant-1-glass"] #glass-control-bar .glass-control-pill.is-visible::after,
+body[data-ui-variant="variant-1-glass"] #glass-control-bar .glass-panel-quick-toggle-button.is-active::after,
+body[data-ui-variant="variant-1-glass"] #glass-control-bar .glass-panel-quick-toggle-button.is-visible::after,
+body[data-ui-variant="variant-1-glass"] #glass-control-bar .canvas-trail-mode-button.is-active::after,
+body[data-ui-variant="variant-1-glass"] #glass-control-bar .canvas-trail-mode-button.is-visible::after,
+body[data-ui-variant="variant-1-glass"] #glass-control-bar #glass-panel-code-explain.is-active::after,
+body[data-ui-variant="variant-1-glass"] #glass-control-bar #glass-panel-code-explain.is-visible::after {
+    content: none !important;
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel,
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-details,
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-category-header,
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-row,
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-actions,
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-details::before,
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-details::after,
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-row::before,
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-row::after,
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-actions::before,
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-actions::after {
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    border: 0 !important;
+    outline: 0 !important;
+    box-shadow: none !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-category-header {
+    border-bottom: 0 !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel,
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-details,
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-rows,
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-row,
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-actions {
+    --glass-surface-rgba: rgba(0, 0, 0, 0) !important;
+    --glass-edge-color-rgba: rgba(0, 0, 0, 0) !important;
+    --glass-reflection-color-rgba: rgba(0, 0, 0, 0) !important;
+    --glass-shadow-color-rgba: rgba(0, 0, 0, 0) !important;
+    --glass-drop-shadow-color-rgba: rgba(0, 0, 0, 0) !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-header-row,
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-details,
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-rows,
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-actions,
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel #ui-preset-select,
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel input[type="range"][data-glass-param],
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel input[type="range"][data-glass-param]::-webkit-slider-runnable-track,
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel input[type="range"][data-glass-param]::-moz-range-track,
+body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-details-toggle {
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    box-shadow: none !important;
+}
+
+body[data-ui-variant="variant-1-glass"] .ui-help-caption {
+    position: fixed;
+    left: 50%;
+    bottom: 16px;
+    transform: translateX(-50%);
+    z-index: 50;
+    max-width: min(640px, calc(100vw - 40px));
+    padding: 5px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    line-height: 1.2;
+    letter-spacing: 0.02em;
+    background: rgba(255, 255, 255, 0.14);
+    color: rgba(17, 24, 39, 0.95);
+    text-shadow: none;
+    pointer-events: none;
+}
+
+body[data-ui-variant="variant-1-glass"][data-canvas-bg-tone="dark"] .ui-help-caption {
+    color: rgba(255, 255, 255, 0.96);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+}
+
+body[data-ui-variant="variant-1-glass"][data-canvas-bg-tone="light"] .ui-help-caption {
+    color: rgba(17, 24, 39, 0.95);
+}
+
+/* DOCK PANEL SAFE FRAME:
+   内部UIを無理に縮めないため、右側4パネルを同幅で拡張し右端を維持する。 */
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-4,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7 {
+    width: min(276px, calc(100vw - 32px)) !important;
+    max-width: min(276px, calc(100vw - 32px)) !important;
+    min-width: min(276px, calc(100vw - 32px)) !important;
+    box-sizing: border-box !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3 .ui-header,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-4 .ui-header,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6 .ui-header,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7 .ui-header {
+    height: 24px !important;
+    min-height: 24px !important;
+    box-sizing: border-box !important;
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3 .ui-content,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-4 .ui-content,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6 .ui-content,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7 .ui-content {
+    box-sizing: border-box !important;
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+    padding-bottom: 12px !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3.collapsed .ui-content,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-4.collapsed .ui-content,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6.collapsed .ui-content,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7.collapsed .ui-content {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    max-height: 0 !important;
+    overflow: hidden !important;
+}
+
+body[data-ui-variant="variant-1-glass"].glass-theme-layout-settling #glass-cursor-panel-3,
+body[data-ui-variant="variant-1-glass"].glass-theme-layout-settling #glass-cursor-panel-4,
+body[data-ui-variant="variant-1-glass"].glass-theme-layout-settling #glass-cursor-panel-6,
+body[data-ui-variant="variant-1-glass"].glass-theme-layout-settling #glass-cursor-panel-7,
+body[data-ui-variant="variant-1-glass"].glass-theme-layout-settling #glass-cursor-panel-3 .ui-content,
+body[data-ui-variant="variant-1-glass"].glass-theme-layout-settling #glass-cursor-panel-4 .ui-content,
+body[data-ui-variant="variant-1-glass"].glass-theme-layout-settling #glass-cursor-panel-6 .ui-content,
+body[data-ui-variant="variant-1-glass"].glass-theme-layout-settling #glass-cursor-panel-7 .ui-content {
+    transition: none !important;
+}

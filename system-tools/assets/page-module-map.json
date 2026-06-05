@@ -1,0 +1,62 @@
+{
+  "workflow": {
+    "01": {
+      "pageId": "portfolio-collect",
+      "css": "assets/workflow/workflow-01.css",
+      "js": "assets/workflow/workflow-01.js"
+    },
+    "02": {
+      "pageId": "portfolio-quality",
+      "css": "assets/workflow/workflow-02.css",
+      "js": "assets/workflow/workflow-02.js"
+    },
+    "03": {
+      "pageId": "portfolio-review",
+      "css": "assets/workflow/workflow-03.css",
+      "js": "assets/workflow/workflow-03.js"
+    },
+    "04": {
+      "pageId": "portfolio-current",
+      "css": "assets/workflow/workflow-04.css",
+      "js": "assets/workflow/workflow-04.js"
+    },
+    "05": {
+      "pageId": "portfolio-purpose",
+      "css": "assets/workflow/workflow-05.css",
+      "js": "assets/workflow/workflow-05.js"
+    },
+    "06": {
+      "pageId": "portfolio-next",
+      "css": "assets/workflow/workflow-06.css",
+      "js": "assets/workflow/workflow-06.js"
+    }
+  },
+  "goal": {
+    "A": {
+      "pageId": "flow-conversation",
+      "css": "assets/goal/goal-a.css",
+      "js": "assets/goal/goal-a.js"
+    },
+    "B": {
+      "pageId": "flow-document",
+      "css": "assets/goal/goal-b.css",
+      "js": "assets/goal/goal-b.js"
+    },
+    "C": {
+      "pageId": "flow-update",
+      "css": "assets/goal/goal-c.css",
+      "js": "assets/goal/goal-c.js"
+    },
+    "D": {
+      "pageId": "flow-use",
+      "css": "assets/goal/goal-d.css",
+      "js": "assets/goal/goal-d.js"
+    },
+    "E": {
+      "pageId": "flow-evidence",
+      "css": "assets/goal/goal-e.css",
+      "js": "assets/goal/goal-e.js"
+    }
+  },
+  "note": "v268 separates 01-06 and A-E into page-owned CSS/JS entry files. Existing inline legacy blocks are not fully deleted in this safety pass."
+}

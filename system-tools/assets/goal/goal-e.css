@@ -1,0 +1,124 @@
+/* System Tools goal E: 証跡から改善判断へ
+   Scope: #flow-evidence
+   Future E-specific visual/animation rules belong here.
+*/
+
+#flow-evidence {
+  /* intentionally empty in v268 to preserve current appearance */
+}
+
+.artifact-page {
+  padding-bottom: 96px !important;
+}
+
+.artifact-page .artifact-step-strip {
+  gap: 12px !important;
+  padding: 14px 16px !important;
+}
+
+.artifact-page .artifact-step-strip .step-pill {
+  min-width: 72px !important;
+  height: 32px !important;
+  font-size: 11px !important;
+}
+
+.artifact-page .artifact-step-strip b {
+  font-size: 13px !important;
+  line-height: 1.35 !important;
+}
+
+.artifact-page .artifact-step-strip small {
+  font-size: 11px !important;
+  line-height: 1.5 !important;
+}
+
+.artifact-page .artifact-metrics {
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 8px !important;
+  margin: 12px 0 14px !important;
+}
+
+.artifact-page .artifact-metric {
+  height: 34px !important;
+  padding: 0 10px !important;
+  border-radius: 11px !important;
+  background: rgba(255, 255, 255, .58) !important;
+  border: 1px solid rgba(203, 214, 210, .42) !important;
+  box-shadow: inset -2px -2px 5px rgba(255, 255, 255, .42), inset 2px 2px 5px rgba(151, 163, 173, .06) !important;
+}
+
+.artifact-page .artifact-metric span {
+  font-size: 9px !important;
+  line-height: 1 !important;
+  letter-spacing: .03em !important;
+}
+
+.artifact-page .artifact-metric b {
+  font-size: 13px !important;
+  line-height: 1 !important;
+}
+
+.artifact-page .artifact-workflow-layout {
+  gap: 14px !important;
+}
+
+.artifact-page .artifact-role-card h3,
+.artifact-page .artifact-candidate-card h3,
+.artifact-page .artifact-use-card h3 {
+  font-size: 18px !important;
+  margin-bottom: 11px !important;
+}
+
+.artifact-page .artifact-role-row {
+  grid-template-columns: 70px minmax(0, 1fr) !important;
+  gap: 8px !important;
+  padding: 9px 0 !important;
+}
+
+.artifact-page .artifact-role-row b,
+.artifact-page .artifact-role-row span {
+  font-size: 12px !important;
+  line-height: 1.55 !important;
+}
+
+.artifact-page .artifact-copy-panel {
+  gap: 8px !important;
+}
+
+.artifact-page .artifact-copy-panel .btn {
+  height: 38px !important;
+}
+
+.artifact-page .artifact-important-note {
+  margin-top: 10px !important;
+  padding: 10px 12px !important;
+  font-size: 11px !important;
+  line-height: 1.55 !important;
+}
+
+.artifact-page .artifact-guide-dock {
+  position: relative !important;
+  overflow: visible !important;
+  padding-bottom: 56px !important;
+}
+
+.artifact-page .floating-guide-controls.is-workflow-docked {
+  display: flex !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+  bottom: -34px !important;
+}
+
+@media(max-width:1100px) {
+  .artifact-page .artifact-metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+/* final override: compact A-E panels and keep guide controls visible from the first frame */
+.artifact-page .artifact-metrics { grid-template-columns: repeat(4, minmax(0, 1fr)) !important; }
+.artifact-page .artifact-metric { height: 34px !important; padding: 0 10px !important; background: rgba(255, 255, 255, .58) !important; box-shadow: inset -2px -2px 5px rgba(255, 255, 255, .42), inset 2px 2px 5px rgba(151, 163, 173, .06) !important; }
+.artifact-page .artifact-guide-dock { padding-bottom: 56px !important; overflow: visible !important; }
+.artifact-page .floating-guide-controls.is-workflow-docked { display: flex !important; opacity: 1 !important; visibility: visible !important; pointer-events: auto !important; bottom: -34px !important; }
+.artifact-page { padding-bottom: 96px !important; }

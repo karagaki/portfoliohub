@@ -1,0 +1,701 @@
+/* System Tools workflow 05: 成果物を確認
+   v323: normalize 05 entry reveal order and keep filter clicks from replaying the sequence.
+   Policy:
+   - Return / skip controls: visible from the first frame.
+   - Top STEP 5 shell: visible from the first frame; text reveals by JS class order.
+   - Bottom action shell: visible from the first frame at the original full-width position; inner text/button reveal last by JS class order.
+   - No full document observer; no layout rewrite; no CSS transition-delay-only replay.
+*/
+
+#portfolio-purpose{
+  --workflow05-reveal-y: 5px;
+}
+
+#portfolio-purpose #floatingGuideControls,
+#floatingGuideControls[data-target-page="portfolio-purpose"]{
+  display:flex !important;
+  opacity:1 !important;
+  visibility:visible !important;
+  transform:none !important;
+  filter:none !important;
+  animation:none !important;
+  pointer-events:auto !important;
+}
+
+/* Shells are initial objects. */
+#portfolio-purpose .workflow-step-guide,
+#portfolio-purpose .portfolio05-step-intro,
+#portfolio-purpose #portfolioPurposeAction,
+#portfolio-purpose #portfolioPurposeAction .guided-action{
+  opacity:1 !important;
+  transform:none !important;
+  filter:none !important;
+  visibility:visible !important;
+  animation:none !important;
+  pointer-events:auto !important;
+}
+
+#portfolio-purpose #portfolioPurposeAction{
+  display:block !important;
+  width:100% !important;
+  max-width:none !important;
+  box-sizing:border-box !important;
+}
+
+#portfolio-purpose #portfolioPurposeAction .guided-action{
+  display:grid !important;
+  grid-template-columns:minmax(240px,1fr) auto !important;
+  grid-template-areas:
+    "copy primary"
+    "copy back" !important;
+  align-items:center !important;
+  gap:15px !important;
+  width:100% !important;
+  max-width:none !important;
+  box-sizing:border-box !important;
+}
+
+#portfolio-purpose #portfolioPurposeAction .guided-action-copy{
+  grid-area:copy !important;
+  min-width:0 !important;
+}
+
+#portfolio-purpose #portfolioPurposeAction .guided-action .btn.primary{
+  grid-area:primary !important;
+  width:auto !important;
+  max-width:none !important;
+  justify-self:end !important;
+  white-space:nowrap !important;
+}
+
+#portfolio-purpose #portfolioPurposeAction .guided-action .workflow-secondary-link{
+  grid-area:back !important;
+  justify-self:end !important;
+  margin:0 !important;
+  white-space:nowrap !important;
+}
+
+#portfolio-purpose .portfolio-deliverable-preview {
+  padding: 16px 18px !important;
+}
+
+#portfolio-purpose .portfolio-deliverable-head {
+  gap: 12px !important;
+  margin-bottom: 2px !important;
+}
+
+#portfolio-purpose #portfolioEvidence.portfolio-deliverable-body {
+  padding: 14px 16px !important;
+  border-radius: 14px !important;
+  box-sizing: border-box !important;
+}
+
+#portfolio-purpose #portfolioEvidence.portfolio-deliverable-body label {
+  display: block !important;
+  margin-bottom: 6px !important;
+}
+
+#portfolio-purpose #portfolioEvidence.portfolio-deliverable-body b {
+  display: block !important;
+  line-height: 1.45 !important;
+}
+
+#portfolio-purpose #portfolioEvidence.portfolio-deliverable-body p {
+  margin-top: 8px !important;
+}
+
+#portfolio-purpose .guided-action {
+  align-items: start !important;
+}
+
+#portfolio-purpose .guide-icon-dock-anchor {
+  position: relative !important;
+  overflow: visible !important;
+  padding-bottom: 38px !important;
+}
+
+#portfolio-purpose .floating-guide-controls.is-workflow-docked {
+  display: flex !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+  bottom: 130px !important;
+}
+
+#portfolio-purpose.page.active {
+  padding-bottom: 94px !important;
+}
+
+@media(max-width:820px) {
+  #portfolio-purpose #portfolioPurposeAction .guided-action {
+    grid-template-columns: 1fr !important;
+    grid-template-areas:
+      "copy"
+      "primary"
+      "back" !important;
+  }
+
+  #portfolio-purpose #portfolioPurposeAction .guided-action .btn.primary {
+    justify-self: start !important;
+    width: max-content !important;
+  }
+
+  #portfolio-purpose #portfolioPurposeAction .guided-action .workflow-secondary-link {
+    justify-self: start !important;
+  }
+}
+
+/* 05 reveal targets are hidden until workflow-05.js explicitly marks them visible. */
+#portfolio-purpose:not(.guide-show-all) .jv05-reveal{
+  opacity:0 !important;
+  transform:translateY(var(--workflow05-reveal-y)) !important;
+  visibility:hidden !important;
+  filter:none !important;
+  animation:none !important;
+  transition:opacity .46s cubic-bezier(.22,.61,.28,1), transform .46s cubic-bezier(.22,.61,.28,1) !important;
+  pointer-events:none !important;
+}
+
+#portfolio-purpose:not(.guide-show-all) .jv05-reveal.jv05-visible,
+#portfolio-purpose.guide-show-all .jv05-reveal,
+#portfolio-purpose.jv05-complete .jv05-reveal{
+  opacity:1 !important;
+  transform:none !important;
+  visibility:visible !important;
+  filter:none !important;
+  animation:none !important;
+  pointer-events:auto !important;
+}
+
+
+/* v283: 05 summary cards participate in the sequence after the STEP intro. */
+#portfolio-purpose.page.active:not(.guide-show-all):not(.jv05-complete) .workflow-brief-card.jv05-reveal:not(.jv05-visible){
+  opacity:0 !important;
+  transform:translateY(var(--workflow05-reveal-y)) !important;
+  visibility:hidden !important;
+  pointer-events:none !important;
+}
+
+#portfolio-purpose.page.active:not(.guide-show-all):not(.jv05-complete) .portfolio-purpose-list-card.jv05-reveal:not(.jv05-visible),
+#portfolio-purpose.page.active:not(.guide-show-all):not(.jv05-complete) #portfolioPurposes .portfolio-purpose.jv05-reveal:not(.jv05-visible),
+#portfolio-purpose.page.active:not(.guide-show-all):not(.jv05-complete) .portfolio-deliverable-preview.jv05-reveal:not(.jv05-visible),
+#portfolio-purpose.page.active:not(.guide-show-all):not(.jv05-complete) .portfolio-deliverable-head.jv05-reveal:not(.jv05-visible),
+#portfolio-purpose.page.active:not(.guide-show-all):not(.jv05-complete) #portfolioEvidence.jv05-reveal:not(.jv05-visible),
+#portfolio-purpose.page.active:not(.guide-show-all):not(.jv05-complete) .portfolio-deliverable-check.jv05-reveal:not(.jv05-visible),
+#portfolio-purpose.page.active:not(.guide-show-all):not(.jv05-complete) .outcome-check.jv05-reveal:not(.jv05-visible),
+#portfolio-purpose.page.active:not(.guide-show-all):not(.jv05-complete) .outcome-check .workflow-side-row.jv05-reveal:not(.jv05-visible){
+  opacity:0 !important;
+  transform:translateY(var(--workflow05-reveal-y)) !important;
+  visibility:hidden !important;
+  pointer-events:none !important;
+}
+
+/* Pre-JS fallback: hide the 05 middle columns on entry until workflow-05.js attaches reveal classes. */
+#portfolio-purpose.page.active:not(.guide-show-all):not(.jv05-complete):not(.jv05-running) .portfolio-purpose-list-card,
+#portfolio-purpose.page.active:not(.guide-show-all):not(.jv05-complete):not(.jv05-running) .portfolio-deliverable-preview,
+#portfolio-purpose.page.active:not(.guide-show-all):not(.jv05-complete):not(.jv05-running) .outcome-check,
+#portfolio-purpose.page.active:not(.guide-show-all):not(.jv05-complete):not(.jv05-running) #portfolioPurposeAction{
+  opacity:0 !important;
+  transform:translateY(var(--workflow05-reveal-y)) !important;
+  visibility:hidden !important;
+  pointer-events:none !important;
+}
+
+/* Pre-JS fallback: hide known inner targets on 05 while active so they do not flash before JS attaches classes. */
+#portfolio-purpose.page.active:not(.guide-show-all):not(.jv05-complete) .workflow-step-guide .workflow-step-number:not(.jv05-visible),
+#portfolio-purpose.page.active:not(.guide-show-all):not(.jv05-complete) .workflow-step-guide .workflow-step-copy > b:not(.jv05-visible),
+#portfolio-purpose.page.active:not(.guide-show-all):not(.jv05-complete) .workflow-step-guide .workflow-step-copy > small:not(.jv05-visible),
+#portfolio-purpose.page.active:not(.guide-show-all):not(.jv05-complete) #portfolioPurposeAction .guided-action-copy > label:not(.jv05-visible),
+#portfolio-purpose.page.active:not(.guide-show-all):not(.jv05-complete) #portfolioPurposeAction .guided-action-copy > b:not(.jv05-visible),
+#portfolio-purpose.page.active:not(.guide-show-all):not(.jv05-complete) #portfolioPurposeAction .guided-action-copy > p:not(.jv05-visible),
+#portfolio-purpose.page.active:not(.guide-show-all):not(.jv05-complete) #portfolioPurposeAction .guided-action > .btn.primary:not(.jv05-visible){
+  opacity:0 !important;
+  transform:translateY(var(--workflow05-reveal-y)) !important;
+  visibility:hidden !important;
+  pointer-events:none !important;
+}
+
+
+/* v281: when entering 05 from another page, old/common scripts may briefly create the action DOM before workflow-05.js starts.
+   Keep inner action targets hidden until this file explicitly adds .jv05-visible or show-all is requested. */
+#portfolio-purpose.page.active:not(.guide-show-all) #portfolioPurposeAction .guided-action-copy > label:not(.jv05-visible),
+#portfolio-purpose.page.active:not(.guide-show-all) #portfolioPurposeAction .guided-action-copy > b:not(.jv05-visible),
+#portfolio-purpose.page.active:not(.guide-show-all) #portfolioPurposeAction .guided-action-copy > p:not(.jv05-visible),
+#portfolio-purpose.page.active:not(.guide-show-all) #portfolioPurposeAction .guided-action > .btn.primary:not(.jv05-visible){
+  opacity:0 !important;
+  transform:translateY(var(--workflow05-reveal-y)) !important;
+  visibility:hidden !important;
+  pointer-events:none !important;
+}
+
+#portfolio-purpose.page.active.jv05-complete #portfolioPurposeAction .guided-action-copy > label,
+#portfolio-purpose.page.active.jv05-complete #portfolioPurposeAction .guided-action-copy > b,
+#portfolio-purpose.page.active.jv05-complete #portfolioPurposeAction .guided-action-copy > p,
+#portfolio-purpose.page.active.jv05-complete #portfolioPurposeAction .guided-action > .btn.primary,
+#portfolio-purpose.page.active.guide-show-all #portfolioPurposeAction .guided-action-copy > label,
+#portfolio-purpose.page.active.guide-show-all #portfolioPurposeAction .guided-action-copy > b,
+#portfolio-purpose.page.active.guide-show-all #portfolioPurposeAction .guided-action-copy > p,
+#portfolio-purpose.page.active.guide-show-all #portfolioPurposeAction .guided-action > .btn.primary{
+  opacity:1 !important;
+  transform:none !important;
+  visibility:visible !important;
+  pointer-events:auto !important;
+}
+
+@media(max-width:820px){
+  #portfolio-purpose #portfolioPurposeAction .guided-action{
+    grid-template-columns:1fr !important;
+  }
+  #portfolio-purpose #portfolioPurposeAction .guided-action .btn.primary{
+    justify-self:start !important;
+    width:max-content !important;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  #portfolio-purpose .jv05-reveal,
+  #portfolio-purpose #floatingGuideControls,
+  #portfolio-purpose #portfolioPurposeAction,
+  #portfolio-purpose #portfolioPurposeAction .guided-action{
+    opacity:1 !important;
+    transform:none !important;
+    filter:none !important;
+    visibility:visible !important;
+    animation:none !important;
+    pointer-events:auto !important;
+    transition:none !important;
+  }
+}
+
+/* v177: 05 選択中の成果物パネルを画面内に収め、本文だけを内部スクロールにする */
+#portfolio-purpose .workflow-stage-layout.three {
+  align-items: start !important;
+}
+
+#portfolio-purpose .portfolio-deliverable-preview {
+  min-height: 0 !important;
+  max-height: clamp(360px, calc(100vh - 430px), 560px) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: hidden !important;
+}
+
+#portfolio-purpose .portfolio-deliverable-head {
+  flex: 0 0 auto !important;
+}
+
+#portfolio-purpose #portfolioEvidence.portfolio-deliverable-body {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  overflow: auto !important;
+  overscroll-behavior: contain !important;
+  padding-right: 12px !important;
+}
+
+#portfolio-purpose #portfolioEvidence.portfolio-deliverable-body::-webkit-scrollbar {
+  width: 5px;
+}
+
+#portfolio-purpose #portfolioEvidence.portfolio-deliverable-body::-webkit-scrollbar-thumb {
+  background: rgba(70, 80, 72, .18);
+  border-radius: 999px;
+}
+
+#portfolio-purpose .portfolio-deliverable-checks {
+  flex: 0 0 auto !important;
+}
+
+@media(max-width:1100px) {
+  #portfolio-purpose .portfolio-deliverable-preview {
+    max-height: none !important;
+  }
+
+  #portfolio-purpose #portfolioEvidence.portfolio-deliverable-body {
+    max-height: clamp(260px, 45vh, 520px) !important;
+  }
+}
+
+/* v210: portfolio-purpose guide animation sequence and reduced-motion fallback */
+#portfolio-purpose.workflow-animate:not(.guide-show-all) .workflow-step-guide,
+#portfolio-purpose.workflow-animate:not(.guide-show-all) .workflow-filter-brief .workflow-brief-card,
+#portfolio-purpose.workflow-animate:not(.guide-show-all) .portfolio-purpose-list-card,
+#portfolio-purpose.workflow-animate:not(.guide-show-all) #portfolioPurposes .portfolio-purpose,
+#portfolio-purpose.workflow-animate:not(.guide-show-all) .portfolio-deliverable-preview,
+#portfolio-purpose.workflow-animate:not(.guide-show-all) .portfolio-deliverable-head,
+#portfolio-purpose.workflow-animate:not(.guide-show-all) #portfolioEvidence,
+#portfolio-purpose.workflow-animate:not(.guide-show-all) .portfolio-deliverable-check,
+#portfolio-purpose.workflow-animate:not(.guide-show-all) .outcome-check,
+#portfolio-purpose.workflow-animate:not(.guide-show-all) #portfolioPurposeAction,
+#portfolio-purpose.workflow-animate:not(.guide-show-all) #floatingGuideControls {
+  opacity: 0;
+  transform: translateY(10px);
+  animation: jarvisV207GuideRise .58s cubic-bezier(.22, .61, .28, 1) forwards;
+}
+
+#portfolio-purpose.workflow-animate:not(.guide-show-all) .workflow-step-guide {
+  animation-delay: .48s
+}
+
+#portfolio-purpose.workflow-animate:not(.guide-show-all) .workflow-filter-brief .workflow-brief-card:nth-child(1) {
+  animation-delay: .92s
+}
+
+#portfolio-purpose.workflow-animate:not(.guide-show-all) .workflow-filter-brief .workflow-brief-card:nth-child(2) {
+  animation-delay: 1.08s
+}
+
+#portfolio-purpose.workflow-animate:not(.guide-show-all) .workflow-filter-brief .workflow-brief-card:nth-child(3) {
+  animation-delay: 1.24s
+}
+
+#portfolio-purpose.workflow-animate:not(.guide-show-all) .workflow-filter-brief .workflow-brief-card:nth-child(4) {
+  animation-delay: 1.40s
+}
+
+#portfolio-purpose.workflow-animate:not(.guide-show-all) .portfolio-purpose-list-card {
+  animation-delay: 1.74s
+}
+
+#portfolio-purpose.workflow-animate:not(.guide-show-all) #portfolioPurposes .portfolio-purpose:nth-child(1) {
+  animation-delay: 2.08s
+}
+
+#portfolio-purpose.workflow-animate:not(.guide-show-all) #portfolioPurposes .portfolio-purpose:nth-child(2) {
+  animation-delay: 2.22s
+}
+
+#portfolio-purpose.workflow-animate:not(.guide-show-all) #portfolioPurposes .portfolio-purpose:nth-child(3) {
+  animation-delay: 2.36s
+}
+
+#portfolio-purpose.workflow-animate:not(.guide-show-all) #portfolioPurposes .portfolio-purpose:nth-child(4) {
+  animation-delay: 2.50s
+}
+
+#portfolio-purpose.workflow-animate:not(.guide-show-all) #portfolioPurposes .portfolio-purpose:nth-child(5) {
+  animation-delay: 2.64s
+}
+
+#portfolio-purpose.workflow-animate:not(.guide-show-all) .portfolio-deliverable-preview {
+  animation-delay: 3.02s
+}
+
+#portfolio-purpose.workflow-animate:not(.guide-show-all) .portfolio-deliverable-head {
+  animation-delay: 3.24s
+}
+
+#portfolio-purpose.workflow-animate:not(.guide-show-all) #portfolioEvidence {
+  animation-delay: 3.48s
+}
+
+#portfolio-purpose.workflow-animate:not(.guide-show-all) .portfolio-deliverable-check:nth-child(1) {
+  animation-delay: 3.82s
+}
+
+#portfolio-purpose.workflow-animate:not(.guide-show-all) .portfolio-deliverable-check:nth-child(2) {
+  animation-delay: 3.96s
+}
+
+#portfolio-purpose.workflow-animate:not(.guide-show-all) .portfolio-deliverable-check:nth-child(3) {
+  animation-delay: 4.10s
+}
+
+#portfolio-purpose.workflow-animate:not(.guide-show-all) .outcome-check {
+  animation-delay: 4.48s
+}
+
+#portfolio-purpose.workflow-animate:not(.guide-show-all) .outcome-check .workflow-side-row:nth-child(1) {
+  animation-delay: 4.72s
+}
+
+#portfolio-purpose.workflow-animate:not(.guide-show-all) .outcome-check .workflow-side-row:nth-child(2) {
+  animation-delay: 4.84s
+}
+
+#portfolio-purpose.workflow-animate:not(.guide-show-all) .outcome-check .workflow-side-row:nth-child(3) {
+  animation-delay: 4.96s
+}
+
+#portfolio-purpose.workflow-animate:not(.guide-show-all) .outcome-check .workflow-side-row:nth-child(4) {
+  animation-delay: 5.08s
+}
+
+#portfolio-purpose.workflow-animate:not(.guide-show-all) .outcome-check .workflow-side-row:nth-child(5) {
+  animation-delay: 5.20s
+}
+
+#portfolio-purpose.workflow-animate:not(.guide-show-all) #portfolioPurposeAction {
+  animation-delay: 5.58s
+}
+
+#portfolio-purpose.workflow-animate:not(.guide-show-all) #floatingGuideControls {
+  animation-delay: 5.88s
+}
+
+#portfolio-purpose.workflow-animate:not(.guide-show-all) #portfolioPurposes .portfolio-purpose.selected,
+#portfolio-purpose.workflow-animate:not(.guide-show-all) #portfolioPurposes .portfolio-purpose.is-selected,
+#portfolio-purpose.workflow-animate:not(.guide-show-all) #portfolioPurposes .portfolio-purpose:first-child {
+  animation-name: jarvisV207GuideRise, jarvisV207GuideGlow;
+  animation-duration: .58s, 1.25s;
+  animation-delay: 2.08s, 2.76s;
+  animation-fill-mode: forwards, none;
+}
+
+#portfolio-purpose.guide-show-all .workflow-step-guide,
+#portfolio-purpose.guide-show-all .workflow-filter-brief .workflow-brief-card,
+#portfolio-purpose.guide-show-all .portfolio-purpose-list-card,
+#portfolio-purpose.guide-show-all #portfolioPurposes .portfolio-purpose,
+#portfolio-purpose.guide-show-all .portfolio-deliverable-preview,
+#portfolio-purpose.guide-show-all .portfolio-deliverable-head,
+#portfolio-purpose.guide-show-all #portfolioEvidence,
+#portfolio-purpose.guide-show-all .portfolio-deliverable-check,
+#portfolio-purpose.guide-show-all .outcome-check,
+#portfolio-purpose.guide-show-all #portfolioPurposeAction {
+  opacity: 1 !important;
+  transform: none !important;
+  filter: none !important;
+  animation: none !important;
+}
+
+@media(prefers-reduced-motion:reduce) {
+
+  #portfolio-purpose.workflow-animate .workflow-step-guide,
+  #portfolio-purpose.workflow-animate .workflow-filter-brief .workflow-brief-card,
+  #portfolio-purpose.workflow-animate .portfolio-purpose-list-card,
+  #portfolio-purpose.workflow-animate #portfolioPurposes .portfolio-purpose,
+  #portfolio-purpose.workflow-animate .portfolio-deliverable-preview,
+  #portfolio-purpose.workflow-animate .portfolio-deliverable-head,
+  #portfolio-purpose.workflow-animate #portfolioEvidence,
+  #portfolio-purpose.workflow-animate .portfolio-deliverable-check,
+  #portfolio-purpose.workflow-animate .outcome-check,
+  #portfolio-purpose.workflow-animate #portfolioPurposeAction {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    animation: none !important;
+  }
+}
+
+/* v344: 05 center-panel height contract.
+   Keep the selected-deliverable column usable with long text: the shell keeps a bounded height,
+   and only the body scrolls. Older v194-v199 migrated height overrides were removed here because
+   they alternated between max-height:none and exact-height sync, causing the center panel to grow with long text. */
+#portfolio-purpose .workflow-stage-layout.three {
+  align-items: start !important;
+  max-height: none !important;
+  overflow: visible !important;
+}
+
+#portfolio-purpose .portfolio-purpose-list-card,
+#portfolio-purpose .portfolio-deliverable-preview {
+  min-height: 0 !important;
+  height: clamp(340px, calc(100vh - 320px), 520px) !important;
+  max-height: clamp(340px, calc(100vh - 320px), 520px) !important;
+  overflow: hidden !important;
+  display: flex !important;
+  flex-direction: column !important;
+  box-sizing: border-box !important;
+}
+
+#portfolio-purpose .portfolio-deliverable-head,
+#portfolio-purpose .portfolio-deliverable-checks {
+  flex: 0 0 auto !important;
+}
+
+#portfolio-purpose #portfolioPurposes.portfolio-purposes,
+#portfolio-purpose #portfolioEvidence.portfolio-deliverable-body {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  overflow: auto !important;
+  overscroll-behavior: contain !important;
+  box-sizing: border-box !important;
+  padding-right: 6px !important;
+}
+
+/* v346: Restore the visible selection frame inside the 05 deliverable list.
+   The v344 internal scroll contract clipped the selected card's blue outer frame/shadow
+   because the scroll viewport sat directly on the card edge. Keep the list scrollable,
+   but give the viewport its own inset so the selection frame is not trimmed. */
+#portfolio-purpose #portfolioPurposes.portfolio-purposes {
+  padding: 4px 6px 10px 6px !important;
+  scroll-padding: 4px 6px 10px 6px !important;
+}
+
+#portfolio-purpose #portfolioPurposes.portfolio-purposes .portfolio-purpose {
+  box-sizing: border-box !important;
+}
+
+#portfolio-purpose #portfolioPurposes,
+#portfolio-purpose #portfolioEvidence.portfolio-deliverable-body {
+  scrollbar-width: thin !important;
+  scrollbar-color: transparent transparent !important;
+  transition: scrollbar-color .45s ease !important;
+}
+
+#portfolio-purpose #portfolioPurposes.jv05-scrollbar-active,
+#portfolio-purpose #portfolioEvidence.portfolio-deliverable-body.jv05-scrollbar-active {
+  scrollbar-color: rgba(70, 80, 72, .22) transparent !important;
+}
+
+#portfolio-purpose #portfolioPurposes::-webkit-scrollbar,
+#portfolio-purpose #portfolioEvidence.portfolio-deliverable-body::-webkit-scrollbar {
+  width: 5px !important;
+}
+
+#portfolio-purpose #portfolioPurposes::-webkit-scrollbar-track,
+#portfolio-purpose #portfolioEvidence.portfolio-deliverable-body::-webkit-scrollbar-track {
+  background: transparent !important;
+}
+
+#portfolio-purpose #portfolioPurposes::-webkit-scrollbar-thumb,
+#portfolio-purpose #portfolioEvidence.portfolio-deliverable-body::-webkit-scrollbar-thumb {
+  background: transparent !important;
+  border-radius: 999px !important;
+  transition: background-color .45s ease !important;
+}
+
+#portfolio-purpose #portfolioPurposes.jv05-scrollbar-active::-webkit-scrollbar-thumb,
+#portfolio-purpose #portfolioEvidence.portfolio-deliverable-body.jv05-scrollbar-active::-webkit-scrollbar-thumb {
+  background: rgba(70, 80, 72, .22) !important;
+}
+
+#portfolio-purpose .outcome-check {
+  height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
+}
+
+@media(max-width:1320px) {
+  #portfolio-purpose .portfolio-purpose-list-card,
+  #portfolio-purpose .portfolio-deliverable-preview {
+    height: auto !important;
+    max-height: 420px !important;
+  }
+
+  #portfolio-purpose #portfolioPurposes.portfolio-purposes,
+  #portfolio-purpose #portfolioEvidence.portfolio-deliverable-body {
+    max-height: 420px !important;
+  }
+}
+
+/* v300-redone: 05 uses shared guide-control placement from workflow-common.css. */
+html body #portfolio-purpose .guide-icon-dock-anchor,
+html body #portfolio-purpose .jarvis-action-panel-slot {
+  position: relative !important;
+  overflow: visible !important;
+  padding-bottom: 58px !important;
+}
+html body #portfolio-purpose .guided-action-slot.jarvis-guide-controls--inline > .floating-guide-controls.is-workflow-docked,
+html body #portfolio-purpose .floating-guide-controls.is-workflow-docked.jarvis-guide-controls--inline {
+  top: calc(100% + 8px) !important;
+  right: 0 !important;
+  bottom: auto !important;
+}
+
+
+/* v332: 05 responsive contract.
+   Narrow windows should stack the three outcome panels instead of squeezing the center preview column. */
+@media(max-width:1320px) {
+  #portfolio-purpose .workflow-stage-layout.three {
+    grid-template-columns: 1fr !important;
+  }
+
+  #portfolio-purpose .workflow-stage-layout.three > .card,
+  #portfolio-purpose .workflow-stage-layout.three > .workflow-side-card,
+  #portfolio-purpose .portfolio-purpose-list-card,
+  #portfolio-purpose .portfolio-deliverable-preview,
+  #portfolio-purpose .outcome-check {
+    min-width: 0 !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  #portfolio-purpose .portfolio-deliverable-preview {
+    height: auto !important;
+    max-height: 420px !important;
+  }
+
+  #portfolio-purpose #portfolioEvidence.portfolio-deliverable-body {
+    max-height: 420px !important;
+  }
+}
+
+/* v340: count summary buttons use the restored moderate reveal duration. */
+#portfolio-purpose .workflow-brief-card.jv05-reveal {
+  transition: opacity 1.3s cubic-bezier(.22,.61,.28,1), transform 1.3s cubic-bezier(.22,.61,.28,1) !important;
+}
+
+/* v378: stabilize STEP 5 bottom action text.
+   The action shell still participates in the page sequence, but the inner label/title/body/button no longer depends on competing legacy reveal classes. */
+#portfolio-purpose.page.active #portfolioPurposeAction .guided-action-copy > label,
+#portfolio-purpose.page.active #portfolioPurposeAction .guided-action-copy > b,
+#portfolio-purpose.page.active #portfolioPurposeAction .guided-action-copy > p,
+#portfolio-purpose.page.active #portfolioPurposeAction .guided-action > .btn.primary,
+#portfolio-purpose.page.active #portfolioPurposeAction .guided-action > .workflow-secondary-link{
+  opacity:1 !important;
+  visibility:visible !important;
+  transform:none !important;
+  filter:none !important;
+  animation:none !important;
+  pointer-events:auto !important;
+}
+
+#portfolio-purpose.page.active #portfolioPurposeAction .guided-action-copy{
+  display:block !important;
+  opacity:1 !important;
+  visibility:visible !important;
+  transform:none !important;
+}
+
+
+/* v382: STEP 5 action text must never disappear after dynamic render or guide replay. */
+html body #portfolio-purpose #portfolioPurposeAction .guided-action-copy > label,
+html body #portfolio-purpose #portfolioPurposeAction .guided-action-copy > b,
+html body #portfolio-purpose #portfolioPurposeAction .guided-action-copy > p,
+html body #portfolio-purpose #portfolioPurposeAction .guided-action > .btn.primary,
+html body #portfolio-purpose #portfolioPurposeAction .guided-action > .workflow-secondary-link{
+  display: revert !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: none !important;
+  filter: none !important;
+  clip-path: none !important;
+  animation: none !important;
+  pointer-events: auto !important;
+}
+
+
+/* v385: STEP 5 action copy layout normalization.
+   Keep "今行う主操作 活かす" and the following title/body aligned like other workflow pages.
+   The previous forced display:revert allowed inline baseline wrapping and made the title shift right. */
+html body #portfolio-purpose #portfolioPurposeAction .guided-action-copy{
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:flex-start !important;
+  gap:6px !important;
+  min-width:0 !important;
+  text-align:left !important;
+}
+html body #portfolio-purpose #portfolioPurposeAction .guided-action-copy > label,
+html body #portfolio-purpose #portfolioPurposeAction .guided-action-copy > b,
+html body #portfolio-purpose #portfolioPurposeAction .guided-action-copy > p{
+  display:block !important;
+  width:100% !important;
+  margin-left:0 !important;
+  margin-right:0 !important;
+  text-align:left !important;
+  line-height:1.45 !important;
+}
+html body #portfolio-purpose #portfolioPurposeAction .guided-action-copy > label{
+  width:auto !important;
+  max-width:100% !important;
+  line-height:1.2 !important;
+}
+html body #portfolio-purpose #portfolioPurposeAction .guided-action-copy .guided-action-badge{
+  display:inline-flex !important;
+  align-items:center !important;
+  vertical-align:baseline !important;
+  margin-left:6px !important;
+  white-space:nowrap !important;
+}

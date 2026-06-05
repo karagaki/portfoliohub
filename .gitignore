@@ -1,0 +1,6 @@
+.DS_Store
+*.log
+*.pid
+__pycache__/
+.portfolio_server.pid
+.portfolio_server.log

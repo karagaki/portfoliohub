@@ -1,0 +1,635 @@
+/* System Tools workflow 02: 使える範囲を確認
+   Scope: #portfolio-quality
+   This file is the page-owned CSS entry point.
+   Keep future 02-specific layout/animation rules here instead of adding new inline v-blocks to index.html.
+*/
+
+#portfolio-quality {
+  /* page-specific rules are intentionally empty in v268 to preserve current appearance */
+}
+
+#portfolio-quality .heading {
+  margin-bottom: 12px !important;
+}
+
+#portfolio-quality #captureQualitySummary.workflow-brief {
+  background: transparent !important;
+  box-shadow: none !important;
+  border: 0 !important;
+  padding: 0 !important;
+}
+
+#portfolio-quality .heading > div > p {
+  display: none !important;
+}
+
+#portfolio-quality .workflow-brief {
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 8px !important;
+  margin: 0 0 12px !important;
+}
+
+#portfolio-quality .workflow-brief-card {
+  min-height: 34px !important;
+  padding: 6px 10px !important;
+  border-radius: 12px !important;
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) auto !important;
+  align-items: center !important;
+  gap: 8px !important;
+  background: rgba(255, 255, 255, .62) !important;
+  border: 1px solid rgba(104, 127, 123, .12) !important;
+  box-shadow: inset -2px -2px 5px rgba(255, 255, 255, .45), inset 2px 2px 5px rgba(157, 168, 179, .08) !important;
+}
+
+#portfolio-quality .workflow-brief-card span {
+  margin: 0 !important;
+  font-size: 9px !important;
+  line-height: 1 !important;
+  letter-spacing: .04em !important;
+  color: #7b8783 !important;
+  font-weight: 600 !important;
+}
+
+#portfolio-quality .workflow-brief-card b {
+  font-size: 15px !important;
+  line-height: 1 !important;
+  min-width: 18px !important;
+  margin-left: auto !important;
+  justify-self: end !important;
+  text-align: right !important;
+  color: #43504d !important;
+  font-weight: 680 !important;
+}
+
+#portfolio-quality .workflow-brief-card:hover {
+  border-color: rgba(210, 238, 42, .40) !important;
+  box-shadow: 0 8px 18px rgba(58, 66, 64, .05), inset -2px -2px 5px rgba(255, 255, 255, .38), inset 2px 2px 5px rgba(157, 168, 179, .06) !important;
+}
+
+
+#portfolio-quality .guided-action {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) auto !important;
+  grid-template-areas:
+    "copy primary"
+    "copy back" !important;
+  gap: 6px 12px !important;
+  align-items: start !important;
+}
+
+#portfolio-quality .guided-action-copy {
+  grid-area: copy !important;
+  min-width: 0 !important;
+}
+
+#portfolio-quality .guided-action > .btn.primary {
+  grid-area: primary !important;
+  justify-self: end !important;
+  width: auto !important;
+  min-width: 0 !important;
+  white-space: nowrap !important;
+}
+
+#portfolio-quality .guided-action > .workflow-secondary-link {
+  grid-area: back !important;
+  justify-self: end !important;
+  margin: 0 !important;
+  white-space: nowrap !important;
+}
+
+@media(max-width:760px) {
+  #portfolio-quality .workflow-brief {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  #portfolio-quality .guided-action {
+    grid-template-columns: 1fr !important;
+    grid-template-areas:
+      "copy"
+      "primary"
+      "back" !important;
+  }
+
+  #portfolio-quality .guided-action > .btn.primary,
+  #portfolio-quality .guided-action > .workflow-secondary-link {
+    justify-self: start !important;
+  }
+}
+
+/* v207: workflow 02 guide animation. */
+@keyframes jarvisV207GuideRise {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+    filter: blur(2px)
+  }
+
+  45% {
+    opacity: 1;
+    filter: blur(.2px)
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0)
+  }
+}
+
+@keyframes jarvisV207GuideGlow {
+  0% {
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+    background: rgba(255, 255, 255, .48)
+  }
+
+  45% {
+    box-shadow: 0 0 0 3px var(--jarvis-accent-soft, rgba(223, 255, 66, .22));
+    background: var(--jarvis-accent-soft, rgba(223, 255, 66, .18))
+  }
+
+  100% {
+    box-shadow: 0 8px 22px rgba(68, 78, 75, .06);
+    background: rgba(255, 255, 255, .50)
+  }
+}
+
+#portfolio-quality.workflow-animate:not(.guide-show-all) .workflow-step-guide,
+#portfolio-quality.workflow-animate:not(.guide-show-all) #captureQualitySummary .workflow-brief-card,
+#portfolio-quality.workflow-animate:not(.guide-show-all) .workflow-fulltext-card,
+#portfolio-quality.workflow-animate:not(.guide-show-all) .workflow-range-panel,
+#portfolio-quality.workflow-animate:not(.guide-show-all) .workflow-range-item,
+#portfolio-quality.workflow-animate:not(.guide-show-all) .guided-action-slot,
+#portfolio-quality.workflow-animate:not(.guide-show-all) #floatingGuideControls {
+  opacity: 0;
+  transform: translateY(10px);
+  animation: jarvisV207GuideRise .58s cubic-bezier(.22, .61, .28, 1) forwards;
+}
+
+#portfolio-quality.workflow-animate:not(.guide-show-all) .workflow-step-guide {
+  animation-delay: .48s
+}
+
+#portfolio-quality.workflow-animate:not(.guide-show-all) #captureQualitySummary .workflow-brief-card:nth-child(1) {
+  animation-delay: .92s
+}
+
+#portfolio-quality.workflow-animate:not(.guide-show-all) #captureQualitySummary .workflow-brief-card:nth-child(2) {
+  animation-delay: 1.08s
+}
+
+#portfolio-quality.workflow-animate:not(.guide-show-all) #captureQualitySummary .workflow-brief-card:nth-child(3) {
+  animation-delay: 1.24s
+}
+
+#portfolio-quality.workflow-animate:not(.guide-show-all) #captureQualitySummary .workflow-brief-card:nth-child(4) {
+  animation-delay: 1.40s
+}
+
+#portfolio-quality.workflow-animate:not(.guide-show-all) .workflow-fulltext-card {
+  animation-delay: 1.76s
+}
+
+#portfolio-quality.workflow-animate:not(.guide-show-all) .workflow-range-panel {
+  animation-delay: 2.18s
+}
+
+#portfolio-quality .workflow-side-card.workflow-range-panel {
+  background: rgb(240, 240, 237) !important;
+  border: 1px solid rgba(104, 127, 123, .10) !important;
+  box-shadow: rgba(247, 247, 246, .843) -5.6px -5.6px 6px 0px, rgba(153, 153, 151, .43) 5.6px 5.6px 6px 0px !important;
+  padding: 18px !important;
+}
+
+#portfolio-quality.workflow-animate:not(.guide-show-all) .workflow-range-item:nth-child(1) {
+  animation-delay: 2.54s
+}
+
+#portfolio-quality.workflow-animate:not(.guide-show-all) .workflow-range-item:nth-child(2) {
+  animation-delay: 2.68s
+}
+
+#portfolio-quality.workflow-animate:not(.guide-show-all) .workflow-range-item:nth-child(3) {
+  animation-delay: 2.82s
+}
+
+#portfolio-quality.workflow-animate:not(.guide-show-all) .workflow-range-item:nth-child(4) {
+  animation-delay: 2.96s
+}
+
+#portfolio-quality.workflow-animate:not(.guide-show-all) .guided-action-slot {
+  animation-delay: 3.38s
+}
+
+#portfolio-quality.workflow-animate:not(.guide-show-all) #floatingGuideControls {
+  animation-delay: 3.70s
+}
+
+#portfolio-quality.workflow-animate:not(.guide-show-all) .workflow-fulltext-card {
+  animation-name: jarvisV207GuideRise;
+}
+
+#portfolio-quality.workflow-animate:not(.guide-show-all) .workflow-range-item:nth-child(1) {
+  animation-name: jarvisV207GuideRise, jarvisV207GuideGlow;
+  animation-duration: .58s, 1.25s;
+  animation-delay: 2.54s, 3.12s;
+  animation-fill-mode: forwards, none;
+}
+
+#portfolio-quality.guide-show-all .workflow-step-guide,
+#portfolio-quality.guide-show-all #captureQualitySummary .workflow-brief-card,
+#portfolio-quality.guide-show-all .workflow-fulltext-card,
+#portfolio-quality.guide-show-all .workflow-range-panel,
+#portfolio-quality.guide-show-all .workflow-range-item,
+#portfolio-quality.guide-show-all .guided-action-slot {
+  opacity: 1 !important;
+  transform: none !important;
+  filter: none !important;
+  animation: none !important;
+}
+
+@media(prefers-reduced-motion:reduce) {
+
+  #portfolio-quality.workflow-animate .workflow-step-guide,
+  #portfolio-quality.workflow-animate #captureQualitySummary .workflow-brief-card,
+  #portfolio-quality.workflow-animate .workflow-fulltext-card,
+  #portfolio-quality.workflow-animate .workflow-range-panel,
+  #portfolio-quality.workflow-animate .workflow-range-item,
+  #portfolio-quality.workflow-animate .guided-action-slot {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    animation: none !important;
+  }
+}
+
+/* v222: 02だけで検証。パネルの器は先に見せ、内容だけを順番に表示する。 */
+#portfolio-quality.workflow-animate:not(.guide-show-all) #floatingGuideControls,
+#portfolio-quality.workflow-animate:not(.guide-show-all) .floating-guide-controls {
+  opacity: 1 !important;
+  transform: none !important;
+  filter: none !important;
+  animation: none !important;
+  pointer-events: auto !important;
+}
+
+#portfolio-quality.workflow-animate:not(.guide-show-all) .workflow-step-guide,
+#portfolio-quality.workflow-animate:not(.guide-show-all) #captureQualitySummary .workflow-brief-card,
+#portfolio-quality.workflow-animate:not(.guide-show-all) .workflow-fulltext-card,
+#portfolio-quality.workflow-animate:not(.guide-show-all) .workflow-range-panel,
+#portfolio-quality.workflow-animate:not(.guide-show-all) .workflow-range-item,
+#portfolio-quality.workflow-animate:not(.guide-show-all) .guided-action-slot,
+#portfolio-quality.workflow-animate:not(.guide-show-all) .guided-action-slot .guided-action {
+  opacity: 1 !important;
+  transform: none !important;
+  filter: none !important;
+  animation: none !important;
+}
+
+#portfolio-quality.workflow-animate:not(.guide-show-all) .workflow-step-guide>*,
+#portfolio-quality.workflow-animate:not(.guide-show-all) #captureQualitySummary .workflow-brief-card>*,
+#portfolio-quality.workflow-animate:not(.guide-show-all) .workflow-fulltext-card>*,
+#portfolio-quality.workflow-animate:not(.guide-show-all) .workflow-range-panel>h3,
+#portfolio-quality.workflow-animate:not(.guide-show-all) .workflow-range-panel>p,
+#portfolio-quality.workflow-animate:not(.guide-show-all) .workflow-range-list,
+#portfolio-quality.workflow-animate:not(.guide-show-all) .workflow-range-item>*,
+#portfolio-quality.workflow-animate:not(.guide-show-all) .guided-action-copy,
+#portfolio-quality.workflow-animate:not(.guide-show-all) .guided-action .workflow-secondary-link,
+#portfolio-quality.workflow-animate:not(.guide-show-all) .workflow-primary-target {
+  opacity: 0;
+  transform: translateY(8px);
+  filter: blur(1.4px);
+  animation: jarvisV222GuideContentIn .72s cubic-bezier(.22, .61, .28, 1) forwards;
+}
+
+#portfolio-quality.workflow-animate:not(.guide-show-all) .workflow-step-guide>* {
+  animation-delay: .32s
+}
+
+#portfolio-quality.workflow-animate:not(.guide-show-all) #captureQualitySummary .workflow-brief-card:nth-child(1)>* {
+  animation-delay: .78s
+}
+
+#portfolio-quality.workflow-animate:not(.guide-show-all) #captureQualitySummary .workflow-brief-card:nth-child(2)>* {
+  animation-delay: .94s
+}
+
+#portfolio-quality.workflow-animate:not(.guide-show-all) #captureQualitySummary .workflow-brief-card:nth-child(3)>* {
+  animation-delay: 1.10s
+}
+
+#portfolio-quality.workflow-animate:not(.guide-show-all) #captureQualitySummary .workflow-brief-card:nth-child(4)>* {
+  animation-delay: 1.26s
+}
+
+#portfolio-quality.workflow-animate:not(.guide-show-all) .workflow-fulltext-card>h3 {
+  animation-delay: 1.62s
+}
+
+#portfolio-quality.workflow-animate:not(.guide-show-all) .workflow-fulltext-card>p {
+  animation-delay: 1.78s
+}
+
+#portfolio-quality.workflow-animate:not(.guide-show-all) .workflow-fulltext-card .workflow-fulltext-box {
+  animation-delay: 2.02s
+}
+
+#portfolio-quality.workflow-animate:not(.guide-show-all) .workflow-range-panel>h3 {
+  animation-delay: 2.42s
+}
+
+#portfolio-quality.workflow-animate:not(.guide-show-all) .workflow-range-panel>p {
+  animation-delay: 2.58s
+}
+
+#portfolio-quality.workflow-animate:not(.guide-show-all) .workflow-range-list {
+  animation-delay: 2.80s
+}
+
+#portfolio-quality.workflow-animate:not(.guide-show-all) .workflow-range-item:nth-child(1)>* {
+  animation-delay: 3.10s
+}
+
+#portfolio-quality.workflow-animate:not(.guide-show-all) .workflow-range-item:nth-child(2)>* {
+  animation-delay: 3.26s
+}
+
+#portfolio-quality.workflow-animate:not(.guide-show-all) .workflow-range-item:nth-child(3)>* {
+  animation-delay: 3.42s
+}
+
+#portfolio-quality.workflow-animate:not(.guide-show-all) .workflow-range-item:nth-child(4)>* {
+  animation-delay: 3.58s
+}
+
+#portfolio-quality.workflow-animate:not(.guide-show-all) .guided-action-copy {
+  animation-delay: 4.04s
+}
+
+#portfolio-quality.workflow-animate:not(.guide-show-all) .workflow-primary-target {
+  animation-delay: 4.64s
+}
+
+#portfolio-quality.workflow-animate:not(.guide-show-all) .guided-action .workflow-secondary-link {
+  animation-delay: 4.88s
+}
+
+#portfolio-quality.workflow-animate:not(.guide-show-all) .workflow-primary-target {
+  background: var(--nm-accent) !important;
+  color: var(--nm-accent-ink) !important;
+}
+
+#portfolio-quality.guide-show-all .workflow-step-guide>*,
+#portfolio-quality.guide-show-all #captureQualitySummary .workflow-brief-card>*,
+#portfolio-quality.guide-show-all .workflow-fulltext-card>*,
+#portfolio-quality.guide-show-all .workflow-range-panel>h3,
+#portfolio-quality.guide-show-all .workflow-range-panel>p,
+#portfolio-quality.guide-show-all .workflow-range-list,
+#portfolio-quality.guide-show-all .workflow-range-item>*,
+#portfolio-quality.guide-show-all .guided-action-copy,
+#portfolio-quality.guide-show-all .guided-action .workflow-secondary-link,
+#portfolio-quality.guide-show-all .workflow-primary-target {
+  opacity: 1 !important;
+  transform: none !important;
+  filter: none !important;
+  animation: none !important;
+  pointer-events: auto !important;
+}
+
+@keyframes jarvisV222GuideContentIn {
+  0% {
+    opacity: 0;
+    transform: translateY(8px);
+    filter: blur(1.4px)
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0)
+  }
+}
+
+@media(prefers-reduced-motion:reduce) {
+
+  #portfolio-quality.workflow-animate .workflow-step-guide>*,
+  #portfolio-quality.workflow-animate #captureQualitySummary .workflow-brief-card>*,
+  #portfolio-quality.workflow-animate .workflow-fulltext-card>*,
+  #portfolio-quality.workflow-animate .workflow-range-panel>h3,
+  #portfolio-quality.workflow-animate .workflow-range-panel>p,
+  #portfolio-quality.workflow-animate .workflow-range-list,
+  #portfolio-quality.workflow-animate .workflow-range-item>*,
+  #portfolio-quality.workflow-animate .guided-action-copy,
+  #portfolio-quality.workflow-animate .guided-action .workflow-secondary-link,
+  #portfolio-quality.workflow-animate .workflow-primary-target {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    animation: none !important;
+  }
+}
+
+/* v223: 02 の登録候補 / 了承済み / 要修正 / 除外の数値だけ、01と同じ実時間ベースのカウント表示へ寄せる。 */
+#portfolio-quality #captureQualitySummary .workflow-brief-card b[data-quality-final] {
+  font-variant-numeric: tabular-nums;
+  will-change: opacity, transform;
+}
+
+#portfolio-quality #captureQualitySummary .workflow-brief-card b.is-quality-counting {
+  font-variant-numeric: tabular-nums;
+}
+
+/* v154: 02 filter numbers are low-emphasis fixed counters; right candidate rail must fit above lower actions. */
+#captureQualitySummary.workflow-brief {
+  grid-template-columns: repeat(4, minmax(118px, 1fr)) !important;
+  gap: 8px !important;
+  margin: 0 0 14px !important;
+}
+
+#captureQualitySummary .workflow-brief-card {
+  min-height: 34px !important;
+  height: 34px !important;
+  padding: 6px 12px !important;
+  border-radius: 11px !important;
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) auto !important;
+  align-items: center !important;
+  gap: 10px !important;
+}
+
+#captureQualitySummary .workflow-brief-card span {
+  font-size: 9px !important;
+  line-height: 1 !important;
+  letter-spacing: .03em !important;
+  color: #7b8783 !important;
+  font-weight: 600 !important;
+}
+
+#captureQualitySummary .workflow-brief-card b {
+  font-size: 15px !important;
+  line-height: 1 !important;
+  min-width: 18px !important;
+  margin-left: auto !important;
+  justify-self: end !important;
+  text-align: right !important;
+  color: #43504d !important;
+  font-weight: 680 !important;
+}
+
+#captureQualitySummary .workflow-brief-card.is-active b {
+  font-size: 15px !important;
+  color: #2f3d39 !important;
+}
+
+#portfolio-quality .workflow-fulltext-layout {
+  grid-template-columns: minmax(0, 1fr) minmax(246px, 300px) !important;
+  gap: 14px !important;
+  align-items: start !important;
+}
+
+#portfolio-quality .workflow-side-card.workflow-range-panel {
+  max-height: clamp(235px, calc(100vh - 500px), 360px) !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+#portfolio-quality .workflow-range-panel>h3 {
+  font-size: 13px !important;
+  line-height: 1.25 !important;
+  margin-bottom: 6px !important;
+}
+
+#portfolio-quality .workflow-range-panel>p {
+  font-size: 9.5px !important;
+  line-height: 1.45 !important;
+  margin: 0 0 8px !important;
+}
+
+#portfolio-quality .workflow-filter-note {
+  font-size: 9.5px !important;
+  line-height: 1.35 !important;
+  margin: 0 0 7px !important;
+}
+
+#portfolio-quality .workflow-range-scroll {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  padding: 2px 2px 12px 0 !important;
+  margin: 0 !important;
+  scrollbar-width: none !important;
+  -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 calc(100% - 20px), transparent 100%) !important;
+  mask-image: linear-gradient(to bottom, #000 0, #000 calc(100% - 20px), transparent 100%) !important;
+}
+
+#portfolio-quality .workflow-range-scroll::-webkit-scrollbar {
+  width: 0 !important;
+  height: 0 !important
+}
+
+#portfolio-quality .workflow-range-list {
+  gap: 7px !important;
+  padding: 0 0 14px !important
+}
+
+#portfolio-quality .workflow-range-item {
+  border-radius: 12px !important;
+  box-shadow: 0 8px 18px rgba(49, 59, 55, .055) !important
+}
+
+#portfolio-quality .workflow-range-summary {
+  padding: 8px 9px !important
+}
+
+#portfolio-quality .workflow-card-meta {
+  gap: 4px !important;
+  align-items: center !important
+}
+
+#portfolio-quality .workflow-chip {
+  font-size: 8px !important;
+  min-height: 17px !important;
+  padding: 0 5px !important;
+  line-height: 17px !important
+}
+
+#portfolio-quality .workflow-range-summary h4 {
+  font-size: 11px !important;
+  line-height: 1.38 !important;
+  margin: 6px 0 0 !important;
+  -webkit-line-clamp: 3 !important;
+  overflow-wrap: anywhere !important;
+}
+
+#portfolio-quality .workflow-range-summary::after {
+  font-size: 9px !important;
+  margin-top: 5px !important
+}
+
+@media(max-width:1100px) {
+  #portfolio-quality .workflow-fulltext-layout {
+    grid-template-columns: 1fr !important
+  }
+
+  #portfolio-quality .workflow-side-card.workflow-range-panel {
+    max-height: 340px !important
+  }
+}
+
+@media(max-width:760px) {
+  #captureQualitySummary.workflow-brief {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important
+  }
+}
+
+/* final override: keep 02 compact and remove the bulky white panel feel */
+#portfolio-quality .heading > div > p { display: none !important; }
+#portfolio-quality .workflow-brief-card { background: rgba(255, 255, 255, .62) !important; box-shadow: inset -2px -2px 5px rgba(255, 255, 255, .45), inset 2px 2px 5px rgba(157, 168, 179, .08) !important; border: 1px solid rgba(104, 127, 123, .12) !important; }
+#portfolio-quality .guided-action { display: grid !important; grid-template-columns: minmax(0, 1fr) auto !important; grid-template-areas: "copy primary" "copy back" !important; }
+#portfolio-quality .guided-action > .workflow-secondary-link { grid-area: back !important; justify-self: end !important; margin: 0 !important; }
+
+/* v327: 02 page-owned reveal sequence. The sequence is controlled by workflow-02.js,
+   so filter clicks can update content without restarting or force-finishing the entry animation. */
+#portfolio-quality.jv02-page .jv02-target {
+  transition: opacity .42s cubic-bezier(.22, .61, .28, 1), transform .42s cubic-bezier(.22, .61, .28, 1), filter .42s cubic-bezier(.22, .61, .28, 1);
+}
+
+#portfolio-quality.jv02-page.active:not(.guide-show-all):not(.jv02-complete) .jv02-target:not(.jv02-visible) {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px);
+  filter: blur(1.2px);
+  pointer-events: none;
+}
+
+#portfolio-quality.jv02-page .jv02-target.jv02-visible,
+#portfolio-quality.jv02-page.guide-show-all .jv02-target,
+#portfolio-quality.jv02-page.jv02-complete .jv02-target {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  filter: blur(0);
+  pointer-events: auto;
+}
+
+#portfolio-quality.jv02-page #floatingGuideControls,
+#portfolio-quality.jv02-page .floating-guide-controls {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #portfolio-quality.jv02-page .jv02-target {
+    transition: none;
+  }
+}
+
+/* v340: count summary buttons use the restored moderate reveal duration. */
+#portfolio-quality.jv02-page .workflow-brief-card.jv02-target {
+  transition: opacity 1.3s cubic-bezier(.22, .61, .28, 1), transform 1.3s cubic-bezier(.22, .61, .28, 1), filter 1.3s cubic-bezier(.22, .61, .28, 1);
+}

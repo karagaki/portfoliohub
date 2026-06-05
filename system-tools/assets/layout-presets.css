@@ -1,0 +1,138 @@
+/* Source: design-tokens.css and panel-system.css provide the gap, padding,
+   and density tokens used here. This file only defines opt-in layout presets. */
+
+.jarvis-layout {
+  --jarvis-layout-gap: var(--jarvis-panel-gap-md);
+  --jarvis-layout-padding: var(--jarvis-panel-padding-md);
+  --jarvis-layout-density: var(--jarvis-panel-density-comfortable);
+  --jarvis-layout-item-min-width: 240px;
+  --jarvis-layout-rail-width: clamp(220px, 24vw, 280px);
+  --jarvis-layout-side-width: clamp(280px, 28vw, 360px);
+  display: grid;
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  gap: var(--jarvis-layout-gap);
+  padding: var(--jarvis-layout-padding);
+  align-items: start;
+  grid-auto-flow: row;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.jarvis-layout--stack {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.jarvis-layout--two-column {
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, var(--jarvis-layout-side-width));
+}
+
+.jarvis-layout--three-column {
+  grid-template-columns:
+    minmax(0, 1.15fr)
+    minmax(0, var(--jarvis-layout-side-width))
+    minmax(0, var(--jarvis-layout-rail-width));
+}
+
+.jarvis-layout--split {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.jarvis-layout--rail {
+  grid-template-columns: minmax(0, var(--jarvis-layout-rail-width)) minmax(0, 1fr);
+}
+
+.jarvis-layout--shelf {
+  grid-template-columns: none;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(min(100%, var(--jarvis-layout-item-min-width)), 1fr);
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x proximity;
+  scroll-padding-inline: var(--jarvis-layout-gap);
+}
+
+.jarvis-layout--carousel {
+  grid-template-columns: none;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(min(100%, clamp(280px, 72vw, 440px)), 1fr);
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: var(--jarvis-layout-gap);
+}
+
+.jarvis-layout--grid {
+  grid-template-columns:
+    repeat(auto-fit, minmax(min(100%, var(--jarvis-layout-item-min-width)), 1fr));
+}
+
+.jarvis-layout--detail {
+  grid-template-columns: minmax(0, 1.45fr) minmax(0, var(--jarvis-layout-side-width));
+}
+
+.jarvis-layout--compact {
+  --jarvis-layout-gap: var(--jarvis-panel-gap-sm);
+  --jarvis-layout-padding: var(--jarvis-panel-padding-sm);
+  --jarvis-layout-density: var(--jarvis-panel-density-dense);
+  --jarvis-layout-item-min-width: 220px;
+}
+
+.jarvis-layout--comfortable {
+  --jarvis-layout-gap: var(--jarvis-panel-gap-md);
+  --jarvis-layout-padding: var(--jarvis-panel-padding-md);
+  --jarvis-layout-density: var(--jarvis-panel-density-comfortable);
+  --jarvis-layout-item-min-width: 240px;
+}
+
+/* probe-safe: registry 接続確認専用の安全 modifier.
+   display / grid / gap / width を変えず、既存レイアウトを保つ。
+   見た目変更や構成変更は別 modifier で行う。 */
+.jarvis-layout--probe-safe {
+  --jarvis-layout-gap: 0;
+  --jarvis-layout-padding: 0;
+  --jarvis-layout-density: var(--jarvis-panel-density-comfortable);
+  --jarvis-layout-item-min-width: 0;
+  box-sizing: border-box;
+}
+
+.jarvis-layout--dense {
+  --jarvis-layout-gap: var(--jarvis-panel-gap-xs);
+  --jarvis-layout-padding: var(--jarvis-panel-padding-xs);
+  --jarvis-layout-density: var(--jarvis-panel-density-dense);
+  --jarvis-layout-item-min-width: 200px;
+}
+
+.jarvis-layout__header,
+.jarvis-layout__footer {
+  grid-column: 1 / -1;
+}
+
+.jarvis-layout__main,
+.jarvis-layout__side,
+.jarvis-layout__rail,
+.jarvis-layout__item {
+  min-width: 0;
+  min-height: 0;
+  align-self: start;
+}
+
+.jarvis-layout--shelf .jarvis-layout__item {
+  scroll-snap-align: start;
+}
+
+.jarvis-layout--carousel .jarvis-layout__item {
+  scroll-snap-align: center;
+}
+
+@media (max-width: 900px) {
+  .jarvis-layout--two-column,
+  .jarvis-layout--three-column,
+  .jarvis-layout--split,
+  .jarvis-layout--rail,
+  .jarvis-layout--detail {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

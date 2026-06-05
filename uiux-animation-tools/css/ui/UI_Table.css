@@ -1,0 +1,260 @@
+/* UI_Table.css - 5.描画 case切替パレット（番号のみ / 横縦アニメーション） */
+#case-comparison.case-palette-only,
+body[data-ui-variant="variant-1-glass"] #case-comparison.case-palette-only,
+body[data-ui-variant="variant-1-glass"][data-ui-preset="1"] #case-comparison.case-palette-only,
+body[data-ui-variant="variant-1-glass"][data-ui-preset="2"] #case-comparison.case-palette-only {
+    width: auto !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: visible !important;
+    background: transparent !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    pointer-events: none !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #case-comparison.case-palette-only::before,
+body[data-ui-variant="variant-1-glass"] #case-comparison.case-palette-only::after {
+    display: none !important;
+    content: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+#case-comparison.case-palette-only .case-button-stage {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+#case-comparison.case-palette-only .case-layout-toggle,
+#case-comparison.case-palette-only .case-choice-button {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 31px !important;
+    min-width: 31px !important;
+    max-width: 31px !important;
+    height: 31px !important;
+    min-height: 31px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: 1px solid rgba(255, 255, 255, 0.16) !important;
+    border-radius: 8px !important;
+    background: rgba(248, 251, 255, 0.10) !important;
+    color: rgba(18, 28, 40, 0.92) !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    line-height: 1 !important;
+    text-align: center !important;
+    box-sizing: border-box !important;
+    box-shadow: none !important;
+    cursor: pointer;
+    pointer-events: auto !important;
+    user-select: none;
+    -webkit-user-select: none;
+    will-change: transform;
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+#case-comparison.case-palette-only .case-layout-toggle {
+    color: rgba(66, 128, 228, 0.98) !important;
+    font-size: 13px !important;
+    z-index: 3;
+}
+
+#case-comparison.case-palette-only[data-layout="vertical"] .case-layout-toggle {
+    color: rgba(246, 176, 96, 0.98) !important;
+}
+
+#case-comparison.case-palette-only .case-choice-button:hover,
+#case-comparison.case-palette-only .case-layout-toggle:hover {
+    background: rgba(248, 251, 255, 0.22) !important;
+    border-color: rgba(255, 255, 255, 0.28) !important;
+}
+
+#case-comparison.case-palette-only .case-choice-button:active,
+#case-comparison.case-palette-only .case-layout-toggle:active {
+    background: rgba(66, 128, 228, 0.18) !important;
+}
+
+#case-comparison.case-palette-only .case-choice-button.current-case {
+    background: rgba(66, 128, 228, 0.26) !important;
+    border-color: rgba(66, 128, 228, 0.34) !important;
+    color: rgba(18, 28, 40, 0.98) !important;
+}
+
+/* 順次遷移中の到着先case。現在表示中の水色とは分離し、点滅させない。 */
+#case-comparison.case-palette-only .case-choice-button.transition-target-case {
+    border-color: rgba(30, 104, 225, 0.95) !important;
+    box-shadow: 0 0 0 2px rgba(30, 104, 225, 0.92) !important;
+}
+
+#case-comparison.case-palette-only .case-choice-button:disabled,
+#case-comparison.case-palette-only .case-choice-button.unavailable-case {
+    opacity: 0.4;
+    cursor: default;
+}
+
+#case-comparison.case-palette-only .case-choice-button:focus-visible,
+#case-comparison.case-palette-only .case-layout-toggle:focus-visible {
+    outline: 1px solid rgba(66, 128, 228, 0.52);
+    outline-offset: 2px;
+}
+
+
+/* Phase 6: case登録slot / 保存削除操作 */
+#case-comparison.case-palette-only .case-action-button,
+#case-comparison.case-palette-only .case-slot-button {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 31px;
+    height: 31px;
+    box-sizing: border-box;
+    appearance: none;
+    -webkit-appearance: none;
+    border-radius: 999px;
+    border: 1px solid rgba(34, 48, 70, 0.18);
+    background: rgba(244, 248, 253, 0.90);
+    color: rgba(20, 32, 48, 0.94);
+    font-size: 13px;
+    line-height: 1;
+    padding: 0;
+    cursor: pointer;
+    pointer-events: auto !important;
+    z-index: 2;
+    transition: opacity 180ms ease, box-shadow 180ms ease, border-color 180ms ease, background 180ms ease;
+}
+#case-comparison.case-palette-only .case-action-button:hover,
+#case-comparison.case-palette-only .case-slot-button:hover {
+    background: rgba(232, 242, 255, 0.98);
+    border-color: rgba(36, 112, 225, 0.45);
+}
+#case-comparison.case-palette-only .case-action-button:disabled,
+#case-comparison.case-palette-only .case-action-button.is-unavailable {
+    opacity: 0.34;
+    cursor: default;
+}
+#case-comparison.case-palette-only .case-slot-layer {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 3;
+}
+#case-comparison.case-palette-only .case-slot-button {
+    opacity: 0;
+    pointer-events: auto;
+    background: rgba(246, 250, 255, 0.96);
+}
+#case-comparison.case-palette-only .case-slot-button.is-visible {
+    opacity: 0.78;
+}
+#case-comparison.case-palette-only .case-slot-button.is-selected {
+    opacity: 1;
+    background: rgba(66, 128, 228, 0.70);
+    border-color: rgba(24, 91, 200, 0.94);
+    box-shadow: 0 0 0 2px rgba(24, 91, 200, 0.48);
+    color: rgba(255, 255, 255, 0.98);
+    font-weight: 700;
+}
+#case-comparison.case-palette-only .case-slot-button.is-draft-source {
+    opacity: 1;
+    background: rgba(66, 128, 228, 0.16);
+    border-color: rgba(24, 91, 200, 0.86);
+    border-style: dashed;
+    box-shadow: 0 0 0 2px rgba(24, 91, 200, 0.20);
+    color: rgba(22, 57, 116, 0.98);
+    font-weight: 700;
+}
+
+
+/* 操作ボタンの記号調整：文字サイズと縦位置はこのブロックで一括管理する */
+#case-comparison.case-palette-only .case-action-glyph {
+    display: inline-block;
+    line-height: 1;
+}
+
+#case-comparison.case-palette-only .case-add-slot-glyph {
+    font-size: 23.4px;
+    transform: translateY(1px);
+}
+
+#case-comparison.case-palette-only .case-update-slot-glyph {
+    font-size: 25.5px;
+    transform: translateY(-1.5px);
+}
+
+#case-comparison.case-palette-only .case-delete-slot-glyph {
+    font-size: 28.8px;
+}
+
+#case-comparison.case-palette-only .case-slot-status {
+    position: absolute;
+    right: 0;
+    bottom: 39px;
+    max-width: 170px;
+    padding: 5px 9px;
+    border-radius: 999px;
+    background: rgba(246, 250, 255, 0.94);
+    border: 1px solid rgba(34, 48, 70, 0.16);
+    color: rgba(24, 34, 48, 0.92);
+    font-size: 11px;
+    line-height: 1.2;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(4px);
+    transition: opacity 160ms ease, transform 160ms ease;
+    z-index: 6;
+}
+#case-comparison.case-palette-only .case-slot-status.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+#case-comparison.case-palette-only .case-slot-status[data-kind="success"] {
+    border-color: rgba(33, 121, 92, 0.36);
+}
+#case-comparison.case-palette-only .case-slot-status[data-kind="pending"] {
+    border-color: rgba(30, 104, 225, 0.34);
+}
+#case-comparison.case-palette-only .case-slot-status[data-kind="error"] {
+    border-color: rgba(190, 70, 70, 0.38);
+}
+
+#case-comparison.case-palette-only .case-slot-status[data-kind="draft"] {
+    border-color: rgba(24, 91, 200, 0.38);
+    background: rgba(236, 244, 255, 0.97);
+}
+
+#case-comparison.case-palette-only .case-slot-button.is-selected.is-draft-source {
+    opacity: 1;
+    background: rgba(66, 128, 228, 0.48);
+    border: 2px dashed rgba(24, 91, 200, 0.98);
+    box-shadow: 0 0 0 2px rgba(24, 91, 200, 0.28);
+    color: rgba(255, 255, 255, 0.98);
+    font-weight: 700;
+}
+
+/* Phase 6.5: 選択中slotを文字だけでなく丸全体の青枠で明示する */
+#case-comparison.case-palette-only .case-slot-button.is-selected {
+    border: 2px solid rgba(22, 97, 224, 0.98) !important;
+    outline: 2px solid rgba(22, 97, 224, 0.44);
+    outline-offset: 1px;
+    background: rgba(66, 128, 228, 0.40) !important;
+    color: rgba(15, 39, 78, 0.98) !important;
+    font-weight: 700;
+}
+#case-comparison.case-palette-only .case-slot-button.is-selected.is-draft-source {
+    border: 2px dashed rgba(22, 97, 224, 0.98) !important;
+    outline: 2px solid rgba(22, 97, 224, 0.38);
+    outline-offset: 1px;
+    background: rgba(66, 128, 228, 0.22) !important;
+}

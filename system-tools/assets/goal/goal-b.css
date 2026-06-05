@@ -1,0 +1,8 @@
+/* System Tools goal B: 仕様・再開前提から採用へ
+   Scope: #flow-document
+   Future B-specific visual/animation rules belong here.
+*/
+
+#flow-document {
+  /* intentionally empty in v268 to preserve current appearance */
+}

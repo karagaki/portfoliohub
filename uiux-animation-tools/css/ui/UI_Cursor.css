@@ -1,0 +1,579 @@
+
+
+
+/* UI_Cursor.css */
+
+#cursor-container .ui-content,
+#glass-settings-panel-test .ui-content {
+    transition: max-height 0.15s ease-out, opacity 0.15s ease-out, padding 0.15s ease-out;
+    max-height: 1000px;
+    opacity: 1;
+    padding: 3px 4px 4px;
+    background-color: #e8e8e8;
+}
+
+#glass-cursor-panel-4 .slider-group,
+#glass-cursor-panel-6 .slider-group {
+    margin-bottom: 0;
+    padding: 0;
+    box-shadow: none !important;
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+}
+
+#glass-cursor-panel-4 .slider-layout,
+#glass-cursor-panel-6 .slider-layout {
+    display: grid;
+    grid-template-columns: minmax(68px, 0.92fr) auto minmax(0, 1.95fr) minmax(38px, auto);
+    gap: 2px;
+    align-items: center;
+    min-width: 0;
+}
+
+#glass-cursor-panel-4 .slider-label,
+#glass-cursor-panel-6 .slider-label {
+    font-size: 8pt !important;
+    line-height: 1 !important;
+    white-space: nowrap;
+    min-width: 0;
+    margin-left: 1px;
+}
+
+#glass-cursor-panel-4 .cursor-toggle-checkbox,
+#glass-cursor-panel-6 .cursor-toggle-checkbox {
+    margin: 0;
+    justify-self: start;
+    margin-left: 0;
+    margin-right: 6px;
+}
+
+#glass-cursor-panel-4 .slider-value,
+#glass-cursor-panel-6 .slider-value {
+    display: block !important;
+    min-width: 38px;
+    text-align: right;
+    white-space: nowrap;
+    font-size: 8pt;
+    line-height: 1;
+    color: #333;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-4 .slider-value,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6 .slider-value {
+    display: block !important;
+    min-width: 34px;
+    text-align: right;
+    font-size: 9pt !important;
+    line-height: 1 !important;
+    color: #333 !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6 .slider-group,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6 .slider-layout,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6 .slider-container {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6 .slider-layout {
+    grid-template-columns: minmax(68px, 0.92fr) auto minmax(0, 2.15fr) minmax(40px, auto) !important;
+    gap: 2px !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6 .slider-label {
+    font-size: 8pt !important;
+    line-height: 1 !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6 .slider {
+    margin-left: 0 !important;
+    width: 100% !important;
+}
+
+#glass-cursor-panel-4 .slider-container,
+#glass-cursor-panel-6 .slider-container,
+#glass-settings-panel-test .slider-container {
+    width: 100%;
+    margin: 0;
+}
+
+#glass-cursor-panel-4 .slider,
+#glass-cursor-panel-6 .slider,
+#glass-settings-panel-test .slider {
+    width: 100%;
+    height: 3px;
+    background: #aaa;
+    margin-left: 0;
+}
+
+#cursor-container .slider-value,
+#glass-settings-panel-test .slider-value {
+    font-size: 7px;
+    color: #666;
+}
+
+#cursor-container .slider-layout {
+    display: grid;
+    grid-template-columns: minmax(44px, 0.68fr) auto minmax(0, 2.25fr) minmax(32px, auto);
+    gap: 1px;
+    align-items: center;
+    min-width: 0;
+}
+
+#cursor-container .cursor-toggle-checkbox {
+    justify-self: start;
+    margin: 0 4px 0 0;
+}
+
+#cursor-container .slider-container,
+#glass-settings-panel-test .slider-container {
+    width: calc(100% + 12px);
+    margin: 0 0 0 -12px;
+    justify-self: start;
+}
+
+#cursor-container .slider {
+    width: calc(100% + 12px);
+    height: 3px;
+    background: #aaa;
+    margin-left: 0;
+}
+
+#cursor-container .slider-group,
+#glass-settings-panel-test .slider-group {
+    margin-bottom: 1px;
+    padding: 2px 3px;
+    box-shadow: none;
+    background-color: rgba(255, 255, 255, 0.55);
+    border-radius: 3px;
+}
+
+#custom-cursor {
+    position: fixed;
+    pointer-events: none;
+    border: 1px solid rgba(255, 255, 255, 0.8); /* カーソルの枠線の色と透明度を調整 */
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    transition: width 0.3s, height 0.3s, border-width 0.3s;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5); /* カーソルに薄いグロー効果を追加 */
+}
+
+
+#custom-cursor::before,
+#custom-cursor::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  border: 1px solid white;
+}
+
+#custom-cursor::before {
+  width: 30px;
+  height: 30px;
+}
+
+#custom-cursor::after {
+  width: 10px;
+  height: 10px;
+}
+
+
+
+/* UI_Cursor.css */
+#cursor-container,
+#glass-settings-panel-test {
+    background-color: #e8e8e8;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+#cursor-container .ui-header,
+#glass-settings-panel-test .ui-header {
+    cursor: pointer;
+    padding: 4px 6px;
+    background-color: #d0d0d0;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#cursor-container .ui-settings-close,
+#glass-settings-panel-test .ui-settings-close {
+    margin-left: auto;
+    cursor: pointer;
+    border: none;
+    background: transparent;
+    padding: 0;
+    font: inherit;
+    font-weight: 700;
+    color: #222;
+}
+
+#cursor-container .ui-settings-close:hover,
+#glass-settings-panel-test .ui-settings-close:hover {
+    text-decoration: underline;
+}
+
+#cursor-container.collapsed .ui-content,
+#glass-settings-panel-test.collapsed .ui-content {
+    max-height: 0;
+    opacity: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+#glass-cursor-panel-1,
+#glass-cursor-panel-2,
+#glass-cursor-panel-3,
+#glass-cursor-panel-4,
+#glass-cursor-panel-5,
+#glass-cursor-panel-6 {
+    background-color: #e8e8e8;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+#glass-cursor-panel-1 .ui-content,
+#glass-cursor-panel-2 .ui-content,
+#glass-cursor-panel-3 .ui-content,
+#glass-cursor-panel-4 .ui-content,
+#glass-cursor-panel-5 .ui-content,
+#glass-cursor-panel-6 .ui-content {
+    transition: max-height 0.15s ease-out, opacity 0.15s ease-out, padding 0.15s ease-out;
+    max-height: 1000px;
+    opacity: 1;
+    padding: 3px 4px 4px;
+    background-color: #e8e8e8;
+}
+
+#glass-cursor-panel-1 .slider-value,
+#glass-cursor-panel-2 .slider-value,
+#glass-cursor-panel-3 .slider-value,
+#glass-cursor-panel-4 .slider-value,
+#glass-cursor-panel-5 .slider-value,
+#glass-cursor-panel-6 .slider-value {
+    font-size: 7px;
+    color: #666;
+}
+
+#glass-cursor-panel-1 .slider-container,
+#glass-cursor-panel-2 .slider-container,
+#glass-cursor-panel-3 .slider-container,
+#glass-cursor-panel-4 .slider-container,
+#glass-cursor-panel-5 .slider-container,
+#glass-cursor-panel-6 .slider-container {
+    width: calc(100% - 105px);
+    margin: 0;
+    margin-right: 6px;
+}
+
+#glass-cursor-panel-1 .slider,
+#glass-cursor-panel-2 .slider,
+#glass-cursor-panel-3 .slider,
+#glass-cursor-panel-4 .slider,
+#glass-cursor-panel-5 .slider,
+#glass-cursor-panel-6 .slider {
+    width: 110%;
+    height: 3px;
+    background: #aaa;
+    margin-left: -14px;
+}
+
+#glass-cursor-panel-1 .custom-cursor-toggle,
+#glass-cursor-panel-2 .custom-cursor-toggle,
+#glass-cursor-panel-3 .custom-cursor-toggle,
+#glass-cursor-panel-4 .custom-cursor-toggle,
+#glass-cursor-panel-5 .custom-cursor-toggle,
+#glass-cursor-panel-6 .custom-cursor-toggle {
+    margin-top: -1px;
+    margin-bottom: 2px;
+}
+
+#glass-cursor-panel-1 .custom-cursor-toggle label,
+#glass-cursor-panel-2 .custom-cursor-toggle label,
+#glass-cursor-panel-3 .custom-cursor-toggle label,
+#glass-cursor-panel-4 .custom-cursor-toggle label,
+#glass-cursor-panel-5 .custom-cursor-toggle label,
+#glass-cursor-panel-6 .custom-cursor-toggle label {
+    margin-right: 2px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+#glass-cursor-panel-1 .custom-cursor-toggle input[type="checkbox"],
+#glass-cursor-panel-2 .custom-cursor-toggle input[type="checkbox"],
+#glass-cursor-panel-3 .custom-cursor-toggle input[type="checkbox"],
+#glass-cursor-panel-4 .custom-cursor-toggle input[type="checkbox"],
+#glass-cursor-panel-5 .custom-cursor-toggle input[type="checkbox"],
+#glass-cursor-panel-6 .custom-cursor-toggle input[type="checkbox"] {
+    vertical-align: middle;
+}
+
+#glass-cursor-panel-1 .slider-group,
+#glass-cursor-panel-2 .slider-group,
+#glass-cursor-panel-3 .slider-group,
+#glass-cursor-panel-4 .slider-group,
+#glass-cursor-panel-5 .slider-group,
+#glass-cursor-panel-6 .slider-group {
+    margin-bottom: 1px;
+    padding: 2px 3px;
+    box-shadow: none;
+    background-color: rgba(255, 255, 255, 0.55);
+    border-radius: 3px;
+}
+
+#glass-cursor-panel-1 .ui-header,
+#glass-cursor-panel-2 .ui-header,
+#glass-cursor-panel-3 .ui-header,
+#glass-cursor-panel-4 .ui-header,
+#glass-cursor-panel-5 .ui-header,
+#glass-cursor-panel-6 .ui-header {
+    cursor: pointer;
+    padding: 4px 6px;
+    background-color: #d0d0d0;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#glass-cursor-panel-1.collapsed .ui-content,
+#glass-cursor-panel-2.collapsed .ui-content,
+#glass-cursor-panel-3.collapsed .ui-content,
+#glass-cursor-panel-4.collapsed .ui-content,
+#glass-cursor-panel-5.collapsed .ui-content,
+#glass-cursor-panel-6.collapsed .ui-content {
+    max-height: 0;
+    opacity: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+#cursor-container .slider::-webkit-slider-thumb,
+#cursor-container .slider::-moz-range-thumb,
+#glass-settings-panel-test .slider::-webkit-slider-thumb,
+#glass-settings-panel-test .slider::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    background: #000;
+}
+
+/* Glass: cursor panel readable text color fix */
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-1,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-2,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-4,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-5,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6 {
+  color: var(--glass-resolved-text-color, var(--auto-readable-text-color, #ffffff)) !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-1 *,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-2 *,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3 *,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-4 *,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-5 *,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6 * {
+  color: var(--glass-resolved-text-color, var(--auto-readable-text-color, #ffffff)) !important;
+  -webkit-text-fill-color: var(--glass-resolved-text-color, var(--auto-readable-text-color, #ffffff)) !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-1 .slider-value,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-2 .slider-value,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3 .slider-value,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-4 .slider-value,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-5 .slider-value,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6 .slider-value,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-1 .slider-label,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-2 .slider-label,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3 .slider-label,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-4 .slider-label,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-5 .slider-label,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6 .slider-label {
+  color: var(--glass-resolved-text-color, var(--auto-readable-text-color, #ffffff)) !important;
+  -webkit-text-fill-color: var(--glass-resolved-text-color, var(--auto-readable-text-color, #ffffff)) !important;
+}
+
+/* DOCK PANEL LAYOUT CONTRACT:
+   2.点 / 3.カーソル / 4.空間 は機能構造が異なるため、列構造を共有しない。 */
+
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7 * {
+    color: var(--glass-resolved-text-color, var(--auto-readable-text-color, #111827)) !important;
+    -webkit-text-fill-color: var(--glass-resolved-text-color, var(--auto-readable-text-color, #111827)) !important;
+}
+
+#glass-cursor-panel-7 {
+    background-color: #e8e8e8;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+#glass-cursor-panel-7 .ui-header {
+    cursor: pointer;
+    padding: 4px 6px;
+    background-color: #d0d0d0;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#glass-cursor-panel-7 .ui-content {
+    transition: max-height 0.15s ease-out, opacity 0.15s ease-out, padding 0.15s ease-out;
+    max-height: 1000px;
+    opacity: 1;
+    background-color: #e8e8e8;
+}
+
+#glass-cursor-panel-7.collapsed .ui-content {
+    max-height: 0;
+    opacity: 0;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+/* 2.点: label / slider / value / fixed */
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-4 .slider-layout {
+    display: grid !important;
+    grid-template-columns: 62px minmax(0, 1fr) 52px 40px !important;
+    column-gap: 5px !important;
+    align-items: center !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-4 .label-value-container {
+    grid-column: 1 !important;
+    min-width: 0 !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-4 .slider-container {
+    grid-column: 2 !important;
+    min-width: 0 !important;
+    width: 100% !important;
+    margin: 0 !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-4 .slider {
+    width: 100% !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-4 .cycle-container {
+    width: 100% !important;
+    max-width: none !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-4 .slider-value {
+    grid-column: 3 !important;
+    min-width: 52px !important;
+    width: 52px !important;
+    text-align: right !important;
+    white-space: nowrap !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-4 .default-container {
+    grid-column: 4 !important;
+    min-width: 40px !important;
+}
+
+/* 3.カーソル: label / checkbox / slider / value */
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6 .slider-layout {
+    display: grid !important;
+    grid-template-columns: 62px 16px minmax(0, 1fr) 52px !important;
+    column-gap: 5px !important;
+    align-items: center !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6 .slider-container {
+    min-width: 0 !important;
+    width: 100% !important;
+    margin: 0 !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6 .slider {
+    min-width: 0 !important;
+    width: 100% !important;
+    margin: 0 !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6 .slider-value {
+    min-width: 52px !important;
+    width: 52px !important;
+    text-align: right !important;
+    white-space: nowrap !important;
+}
+
+/* 4.空間: label / slider / value */
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7 .slider-layout {
+    display: grid !important;
+    grid-template-columns: 51px minmax(0, 1fr) 40px !important;
+    column-gap: 6px !important;
+    align-items: center !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7 .slider-label {
+    min-width: 0 !important;
+    font-size: 8pt !important;
+    line-height: 1.15 !important;
+    white-space: nowrap !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7 .slider-container {
+    min-width: 0 !important;
+    width: 100% !important;
+    margin: 0 !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7 .slider {
+    min-width: 0 !important;
+    width: 100% !important;
+    height: 3px !important;
+    margin: 0 !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7 .slider-value {
+    min-width: 40px !important;
+    width: 40px !important;
+    text-align: right !important;
+    justify-self: end !important;
+    white-space: nowrap !important;
+    font-size: 9pt !important;
+    line-height: 1 !important;
+}
+
+
+/* Glass dock compact frame: 4.空間のつまみを2.点/3.カーソルと同径へ統一する。 */
+body[data-ui-variant="variant-1-glass"][data-ui-theme="glass"] #glass-cursor-panel-7 input[type="range"].slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 11px !important;
+    height: 11px !important;
+    min-width: 11px !important;
+    min-height: 11px !important;
+    border-radius: 50% !important;
+}
+body[data-ui-variant="variant-1-glass"][data-ui-theme="glass"] #glass-cursor-panel-7 input[type="range"].slider::-moz-range-thumb {
+    width: 11px !important;
+    height: 11px !important;
+    min-width: 11px !important;
+    min-height: 11px !important;
+    border-radius: 50% !important;
+}

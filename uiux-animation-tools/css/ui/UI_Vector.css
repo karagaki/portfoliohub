@@ -1,0 +1,125 @@
+#vector-container {
+    margin-bottom: 0;
+    background-color: #e8e8e8;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+#vector-container .ui-header {
+    cursor: pointer;
+    padding: 8px 10px;
+    background-color: #d0d0d0;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#vector-container .ui-content {
+    transition: max-height 0.15s ease-out, opacity 0.15s ease-out, padding 0.15s ease-out;
+    max-height: 600px;
+    opacity: 1;
+    padding: 8px;
+    background-color: #e8e8e8;
+}
+
+#vector-container.collapsed .ui-content {
+    max-height: 0;
+    opacity: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+#vector-container .slider-group {
+    margin-bottom: 2px;
+    padding: 5px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.8);
+    background-color: #fefefe;
+    border-radius: 5px;
+}
+
+#vector-container .slider-layout {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 10px;
+}
+
+#vector-container .label-value-container {
+    width: 95px;
+    padding: 2px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+#vector-container .slider-label {
+    font-weight: bold;
+    margin-bottom: 1px;
+}
+
+#vector-container .slider-value {
+    font-weight: bold;
+    color: #333;
+}
+
+#vector-container .slider-container {
+    flex-grow: 1;
+    position: relative;
+    width: calc(100% - 200px);
+    margin: 0 -22px;
+}
+
+#vector-container .slider {
+    width: 90%;
+    -webkit-appearance: none;
+    height: 3px;
+    background: #999;
+    outline: none;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+    margin-left: -5%;
+}
+
+#vector-container .slider:hover {
+    opacity: 1;
+}
+
+#vector-container .slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #000;
+    cursor: pointer;
+}
+
+#vector-container .slider::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #000;
+    cursor: pointer;
+}
+
+.vector-setting {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f0f0f0;
+    padding: 6px 8px;
+    border-radius: 5px;
+    margin-top: 6px;
+}
+
+.vector-setting label {
+    font-size: 12px;
+    font-weight: bold;
+    color: #333;
+}
+
+.vector-setting input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+}

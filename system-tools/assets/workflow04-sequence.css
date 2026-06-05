@@ -1,0 +1,94 @@
+/* v267: 04「既存内容と照らす」専用。旧v系の上書き補正ではなく、04の演出制御をこのCSS/JSへ分離する。 */
+#portfolio-current.jv267-page .workflow-step-guide{
+  opacity:1!important;
+  visibility:visible!important;
+  transform:none!important;
+  filter:none!important;
+  backdrop-filter:none!important;
+  -webkit-backdrop-filter:none!important;
+  box-shadow:none!important;
+  background:linear-gradient(135deg,var(--jarvis-accent-16,rgba(216,72,236,.16)),var(--jarvis-accent-08,rgba(216,72,236,.08)))!important;
+  border:1px solid var(--jarvis-accent-54,rgba(216,72,236,.54))!important;
+}
+#portfolio-current.jv267-page .workflow-step-guide > *,
+#portfolio-current.jv267-page .workflow-step-guide > .workflow-step-copy > *{
+  visibility:visible!important;
+}
+#portfolio-current.jv267-page.jv267-playing:not(.guide-show-all):not(.jv267-complete) .jv267-target:not(.jv267-show){
+  opacity:0!important;
+  transform:translateY(8px)!important;
+  filter:blur(.35px)!important;
+  visibility:visible!important;
+  pointer-events:none!important;
+}
+#portfolio-current.jv267-page .jv267-target.jv267-show,
+#portfolio-current.jv267-page.guide-show-all .jv267-target,
+#portfolio-current.jv267-page.jv267-complete .jv267-target{
+  opacity:1!important;
+  transform:none!important;
+  filter:none!important;
+  visibility:visible!important;
+  pointer-events:auto!important;
+  transition:opacity .56s cubic-bezier(.22,.61,.28,1),transform .56s cubic-bezier(.22,.61,.28,1),filter .56s cubic-bezier(.22,.61,.28,1)!important;
+}
+#portfolio-current.jv267-page.jv267-playing:not(.guide-show-all):not(.jv267-complete) .workflow-filter-brief[data-workflow-brief="compare"] .workflow-brief-card:not(.jv267-show){
+  opacity:0!important;
+  transform:translateY(8px)!important;
+  visibility:visible!important;
+  pointer-events:none!important;
+}
+#portfolio-current.jv267-page .workflow-filter-brief[data-workflow-brief="compare"] .workflow-brief-card.jv267-show,
+#portfolio-current.jv267-page.guide-show-all .workflow-filter-brief[data-workflow-brief="compare"] .workflow-brief-card,
+#portfolio-current.jv267-page.jv267-complete .workflow-filter-brief[data-workflow-brief="compare"] .workflow-brief-card{
+  opacity:1!important;
+  transform:none!important;
+  visibility:visible!important;
+  transition:opacity .50s cubic-bezier(.22,.61,.28,1),transform .50s cubic-bezier(.22,.61,.28,1)!important;
+}
+#portfolio-current.jv267-page .workflow-stage-layout.three > .card,
+#portfolio-current.jv267-page .workflow-stage-layout.three > .workflow-side-card,
+#portfolio-current.jv267-page .guided-action-slot,
+#portfolio-current.jv267-page .guided-action-slot .guided-action{
+  opacity:1!important;
+  visibility:visible!important;
+}
+#portfolio-current.jv267-page #workflowCompareItems{
+  max-height:360px!important;
+  overflow-y:auto!important;
+  overflow-x:hidden!important;
+  padding-right:2px!important;
+  scrollbar-width:none!important;
+  -webkit-mask-image:linear-gradient(to bottom,#000 0,#000 calc(100% - 18px),transparent 100%)!important;
+  mask-image:linear-gradient(to bottom,#000 0,#000 calc(100% - 18px),transparent 100%)!important;
+}
+#portfolio-current.jv267-page #workflowCompareItems::-webkit-scrollbar{width:0!important;height:0!important;}
+#portfolio-current.jv267-page #workflowCompareItems .jv267-compare-row{
+  display:grid!important;
+  grid-template-columns:34px minmax(0,1fr)!important;
+  align-items:start!important;
+  gap:8px!important;
+  padding:8px 9px!important;
+  border-radius:10px!important;
+}
+#portfolio-current.jv267-page #workflowCompareItems .jv267-compare-row b{
+  font-size:10px!important;
+  line-height:1.35!important;
+  color:#6f7d79!important;
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+}
+#portfolio-current.jv267-page #workflowCompareItems .jv267-compare-row span{
+  font-size:10.5px!important;
+  line-height:1.5!important;
+  color:#33413e!important;
+}
+@media (prefers-reduced-motion: reduce){
+  #portfolio-current.jv267-page .jv267-target,
+  #portfolio-current.jv267-page .workflow-filter-brief[data-workflow-brief="compare"] .workflow-brief-card{
+    opacity:1!important;
+    transform:none!important;
+    filter:none!important;
+    transition:none!important;
+  }
+}

@@ -1,0 +1,749 @@
+/* System Tools workflow 03: 内容を分ける
+   Scope: #portfolio-review
+   This file is the page-owned CSS entry point.
+   Keep future 03-specific layout/animation rules here instead of adding new inline v-blocks to index.html.
+*/
+
+#portfolio-review {
+  /* page-specific rules are intentionally empty in v268 to preserve current appearance */
+}
+
+#portfolio-review .portfolio-summary {
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 8px !important;
+  margin: 0 0 12px !important;
+}
+
+#portfolio-review .portfolio-summary-card {
+  min-height: 34px !important;
+  padding: 7px 10px !important;
+  border-radius: 12px !important;
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) auto !important;
+  align-items: center !important;
+  gap: 8px !important;
+  background: transparent !important;
+  border: 1px solid rgba(203, 214, 210, .42) !important;
+  box-shadow: none !important;
+}
+
+#portfolio-review .portfolio-summary-card span {
+  margin: 0 !important;
+  font-size: 9px !important;
+  line-height: 1 !important;
+  letter-spacing: .04em !important;
+  color: #7b8783 !important;
+  font-weight: 600 !important;
+}
+
+#portfolio-review .portfolio-summary-card b {
+  font-size: 15px !important;
+  line-height: 1 !important;
+  min-width: 18px !important;
+  margin-left: auto !important;
+  justify-self: end !important;
+  text-align: right !important;
+  color: #43504d !important;
+  font-weight: 680 !important;
+}
+
+
+#portfolio-review .workflow-review-layout > .workflow-context-mini > .workflow-secondary-link {
+  display: none !important;
+}
+
+#portfolio-review .workflow-context-mini > .workflow-secondary-link {
+  display: none !important;
+}
+
+#portfolio-review .guided-action {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) auto !important;
+  grid-template-areas:
+    "copy primary"
+    "copy back" !important;
+  gap: 6px 12px !important;
+  align-items: start !important;
+}
+
+#portfolio-review .guided-action-copy {
+  grid-area: copy !important;
+  min-width: 0 !important;
+}
+
+#portfolio-review .guided-action > .btn.primary {
+  grid-area: primary !important;
+  justify-self: end !important;
+  width: auto !important;
+  min-width: 0 !important;
+  white-space: nowrap !important;
+}
+
+#portfolio-review .guided-action > .workflow-secondary-link {
+  grid-area: back !important;
+  justify-self: end !important;
+  margin: 0 !important;
+  white-space: nowrap !important;
+}
+
+@media(max-width:760px) {
+  #portfolio-review .portfolio-summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  #portfolio-review .guided-action {
+    grid-template-columns: 1fr !important;
+    grid-template-areas:
+      "copy"
+      "primary"
+      "back" !important;
+  }
+
+  #portfolio-review .guided-action > .btn.primary,
+  #portfolio-review .guided-action > .workflow-secondary-link {
+    justify-self: start !important;
+  }
+}
+
+/* final override: hide the left-side back button and keep 03 compact */
+#portfolio-review .workflow-context-mini > .workflow-secondary-link { display: none !important; }
+#portfolio-review .portfolio-summary-card { background: rgba(255, 255, 255, .58) !important; box-shadow: inset -2px -2px 5px rgba(255, 255, 255, .42), inset 2px 2px 5px rgba(151, 163, 173, .06) !important; border: 1px solid rgba(104, 127, 123, .10) !important; }
+#portfolio-review .guided-action { display: grid !important; grid-template-columns: minmax(0, 1fr) auto !important; grid-template-areas: "copy primary" "copy back" !important; }
+#portfolio-review .guided-action > .workflow-secondary-link { grid-area: back !important; justify-self: end !important; margin: 0 !important; }
+
+#portfolio-review.workflow-animate:not(.guide-show-all) .workflow-step-guide,
+#portfolio-review.workflow-animate:not(.guide-show-all) #portfolioAnalysisSummary .portfolio-summary-card,
+#portfolio-review.workflow-animate:not(.guide-show-all) .workflow-filter-row,
+#portfolio-review.workflow-animate:not(.guide-show-all) .workflow-context-mini,
+#portfolio-review.workflow-animate:not(.guide-show-all) .workflow-review-carousel-card,
+#portfolio-review.workflow-animate:not(.guide-show-all) .workflow-review-layout>.card:not(.workflow-context-mini):not(.workflow-side-card),
+#portfolio-review.workflow-animate:not(.guide-show-all) .workflow-review-nav,
+#portfolio-review.workflow-animate:not(.guide-show-all) .workflow-review-single,
+#portfolio-review.workflow-animate:not(.guide-show-all) .workflow-decompose-item,
+#portfolio-review.workflow-animate:not(.guide-show-all) .workflow-side-card,
+#portfolio-review.workflow-animate:not(.guide-show-all) .workflow-class-row,
+#portfolio-review.workflow-animate:not(.guide-show-all) .guided-action-slot,
+#portfolio-review.workflow-animate:not(.guide-show-all) #floatingGuideControls {
+  opacity: 0;
+  transform: translateY(10px);
+  filter: blur(2px);
+  animation: jarvisV207GuideRise .58s cubic-bezier(.22, .61, .28, 1) forwards;
+}
+
+#portfolio-review.workflow-animate:not(.guide-show-all) .workflow-step-guide {
+  animation-delay: .48s
+}
+
+#portfolio-review.workflow-animate:not(.guide-show-all) #portfolioAnalysisSummary .portfolio-summary-card:nth-child(1) {
+  animation-delay: .92s
+}
+
+#portfolio-review.workflow-animate:not(.guide-show-all) #portfolioAnalysisSummary .portfolio-summary-card:nth-child(2) {
+  animation-delay: 1.08s
+}
+
+#portfolio-review.workflow-animate:not(.guide-show-all) #portfolioAnalysisSummary .portfolio-summary-card:nth-child(3) {
+  animation-delay: 1.24s
+}
+
+#portfolio-review.workflow-animate:not(.guide-show-all) #portfolioAnalysisSummary .portfolio-summary-card:nth-child(4) {
+  animation-delay: 1.40s
+}
+
+#portfolio-review.workflow-animate:not(.guide-show-all) .workflow-filter-row {
+  animation-delay: 1.58s
+}
+
+#portfolio-review.workflow-animate:not(.guide-show-all) .workflow-context-mini {
+  animation-delay: 1.86s
+}
+
+#portfolio-review.workflow-animate:not(.guide-show-all) .workflow-review-carousel-card,
+#portfolio-review.workflow-animate:not(.guide-show-all) .workflow-review-layout>.card:not(.workflow-context-mini):not(.workflow-side-card) {
+  animation-delay: 2.28s
+}
+
+#portfolio-review.workflow-animate:not(.guide-show-all) .workflow-review-nav {
+  animation-delay: 2.68s
+}
+
+#portfolio-review.workflow-animate:not(.guide-show-all) .workflow-review-single,
+#portfolio-review.workflow-animate:not(.guide-show-all) .workflow-decompose-item:nth-child(1) {
+  animation-delay: 2.94s
+}
+
+#portfolio-review.workflow-animate:not(.guide-show-all) .workflow-side-card {
+  animation-delay: 3.30s
+}
+
+#portfolio-review.workflow-animate:not(.guide-show-all) .workflow-class-row:nth-child(1) {
+  animation-delay: 3.58s
+}
+
+#portfolio-review.workflow-animate:not(.guide-show-all) .workflow-class-row:nth-child(2) {
+  animation-delay: 3.70s
+}
+
+#portfolio-review.workflow-animate:not(.guide-show-all) .workflow-class-row:nth-child(3) {
+  animation-delay: 3.82s
+}
+
+#portfolio-review.workflow-animate:not(.guide-show-all) .workflow-class-row:nth-child(4) {
+  animation-delay: 3.94s
+}
+
+#portfolio-review.workflow-animate:not(.guide-show-all) .workflow-class-row:nth-child(5) {
+  animation-delay: 4.06s
+}
+
+#portfolio-review.workflow-animate:not(.guide-show-all) .workflow-class-row:nth-child(6) {
+  animation-delay: 4.18s
+}
+
+#portfolio-review.workflow-animate:not(.guide-show-all) .workflow-class-row:nth-child(7) {
+  animation-delay: 0.30s
+}
+
+#portfolio-review.workflow-animate:not(.guide-show-all) .guided-action-slot {
+  animation-delay: 4.70s
+}
+
+#portfolio-review.workflow-animate:not(.guide-show-all) #floatingGuideControls {
+  animation-delay: 5.02s
+}
+
+#portfolio-review.workflow-animate:not(.guide-show-all) .workflow-review-single,
+#portfolio-review.workflow-animate:not(.guide-show-all) .workflow-decompose-item:nth-child(1) {
+  animation-name: jarvisV207GuideRise, jarvisV207GuideGlow;
+  animation-duration: .58s, 1.25s;
+  animation-delay: 2.94s, 3.54s;
+  animation-fill-mode: forwards, none;
+}
+
+#portfolio-review.guide-show-all .workflow-step-guide,
+#portfolio-review.guide-show-all #portfolioAnalysisSummary .portfolio-summary-card,
+#portfolio-review.guide-show-all .workflow-filter-row,
+#portfolio-review.guide-show-all .workflow-context-mini,
+#portfolio-review.guide-show-all .workflow-review-carousel-card,
+#portfolio-review.guide-show-all .workflow-review-layout>.card,
+#portfolio-review.guide-show-all .workflow-review-nav,
+#portfolio-review.guide-show-all .workflow-review-single,
+#portfolio-review.guide-show-all .workflow-decompose-item,
+#portfolio-review.guide-show-all .workflow-side-card,
+#portfolio-review.guide-show-all .workflow-class-row,
+#portfolio-review.guide-show-all .guided-action-slot {
+  opacity: 1 !important;
+  transform: none !important;
+  filter: none !important;
+  animation: none !important;
+}
+
+@media(prefers-reduced-motion:reduce) {
+
+  #portfolio-review.workflow-animate .workflow-step-guide,
+  #portfolio-review.workflow-animate #portfolioAnalysisSummary .portfolio-summary-card,
+  #portfolio-review.workflow-animate .workflow-filter-row,
+  #portfolio-review.workflow-animate .workflow-context-mini,
+  #portfolio-review.workflow-animate .workflow-review-carousel-card,
+  #portfolio-review.workflow-animate .workflow-review-layout>.card,
+  #portfolio-review.workflow-animate .workflow-review-nav,
+  #portfolio-review.workflow-animate .workflow-review-single,
+  #portfolio-review.workflow-animate .workflow-decompose-item,
+  #portfolio-review.workflow-animate .workflow-side-card,
+  #portfolio-review.workflow-animate .workflow-class-row,
+  #portfolio-review.workflow-animate .guided-action-slot {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    animation: none !important;
+  }
+}
+
+/* v225: マニュアル順守。03だけで検証。パネルの器は先に見せ、内容・数値だけを順に表示する。 */
+#portfolio-review.workflow-animate:not(.guide-show-all) #floatingGuideControls,
+#portfolio-review.workflow-animate:not(.guide-show-all) .floating-guide-controls {
+  opacity: 1 !important;
+  transform: none !important;
+  filter: none !important;
+  animation: none !important;
+  pointer-events: auto !important;
+}
+
+#portfolio-review.workflow-animate:not(.guide-show-all) #portfolioAnalysisSummary .portfolio-summary-card,
+#portfolio-review.workflow-animate:not(.guide-show-all) .workflow-filter-row,
+#portfolio-review.workflow-animate:not(.guide-show-all) .workflow-filter,
+#portfolio-review.workflow-animate:not(.guide-show-all) .workflow-review-layout,
+#portfolio-review.workflow-animate:not(.guide-show-all) .workflow-fulltext-card,
+#portfolio-review.workflow-animate:not(.guide-show-all) .workflow-fallback-view>.card,
+#portfolio-review.workflow-animate:not(.guide-show-all) .workflow-side-card,
+#portfolio-review.workflow-animate:not(.guide-show-all) .workflow-decompose-item,
+#portfolio-review.workflow-animate:not(.guide-show-all) .workflow-class-row,
+#portfolio-review.workflow-animate:not(.guide-show-all) .guided-action-slot,
+#portfolio-review.workflow-animate:not(.guide-show-all) .guided-action-slot .guided-action {
+  opacity: 1 !important;
+  transform: none !important;
+  filter: none !important;
+  animation: none !important;
+}
+
+#portfolio-review.workflow-animate:not(.guide-show-all) #portfolioAnalysisSummary .portfolio-summary-card>*,
+#portfolio-review.workflow-animate:not(.guide-show-all) .workflow-filter-row>*,
+#portfolio-review.workflow-animate:not(.guide-show-all) .workflow-fulltext-card>*,
+#portfolio-review.workflow-animate:not(.guide-show-all) .workflow-fallback-view>.card>h3,
+#portfolio-review.workflow-animate:not(.guide-show-all) .workflow-fallback-view>.card>p,
+#portfolio-review.workflow-animate:not(.guide-show-all) .workflow-decompose-list,
+#portfolio-review.workflow-animate:not(.guide-show-all) .workflow-decompose-item>*,
+#portfolio-review.workflow-animate:not(.guide-show-all) .workflow-side-card>h3,
+#portfolio-review.workflow-animate:not(.guide-show-all) .workflow-side-card>p,
+#portfolio-review.workflow-animate:not(.guide-show-all) .workflow-class-list,
+#portfolio-review.workflow-animate:not(.guide-show-all) .workflow-class-row>*,
+#portfolio-review.workflow-animate:not(.guide-show-all) .guided-action-copy,
+#portfolio-review.workflow-animate:not(.guide-show-all) .guided-action .workflow-secondary-link,
+#portfolio-review.workflow-animate:not(.guide-show-all) .guided-action .btn.primary {
+  opacity: 0;
+  transform: translateY(8px);
+  filter: blur(1.4px);
+  animation: jarvisV225GuideContentIn .72s cubic-bezier(.22, .61, .28, 1) forwards;
+}
+
+#portfolio-review.workflow-animate:not(.guide-show-all) #portfolioAnalysisSummary .portfolio-summary-card:nth-child(1)>* {
+  animation-delay: .42s
+}
+
+#portfolio-review.workflow-animate:not(.guide-show-all) #portfolioAnalysisSummary .portfolio-summary-card:nth-child(2)>* {
+  animation-delay: .58s
+}
+
+#portfolio-review.workflow-animate:not(.guide-show-all) #portfolioAnalysisSummary .portfolio-summary-card:nth-child(3)>* {
+  animation-delay: .74s
+}
+
+#portfolio-review.workflow-animate:not(.guide-show-all) #portfolioAnalysisSummary .portfolio-summary-card:nth-child(4)>* {
+  animation-delay: .90s
+}
+
+#portfolio-review.workflow-animate:not(.guide-show-all) .workflow-filter-row>* {
+  animation-delay: 1.16s
+}
+
+#portfolio-review.workflow-animate:not(.guide-show-all) .workflow-fulltext-card>h3 {
+  animation-delay: 1.50s
+}
+
+#portfolio-review.workflow-animate:not(.guide-show-all) .workflow-fulltext-card>p {
+  animation-delay: 1.66s
+}
+
+#portfolio-review.workflow-animate:not(.guide-show-all) .workflow-fulltext-card .workflow-fulltext-box {
+  animation-delay: 1.92s
+}
+
+#portfolio-review.workflow-animate:not(.guide-show-all) .workflow-fulltext-card .workflow-secondary-link {
+  animation-delay: 2.16s
+}
+
+#portfolio-review.workflow-animate:not(.guide-show-all) .workflow-fallback-view>.card>h3 {
+  animation-delay: 2.48s
+}
+
+#portfolio-review.workflow-animate:not(.guide-show-all) .workflow-fallback-view>.card>p {
+  animation-delay: 2.64s
+}
+
+#portfolio-review.workflow-animate:not(.guide-show-all) .workflow-decompose-list {
+  animation-delay: 2.88s
+}
+
+#portfolio-review.workflow-animate:not(.guide-show-all) .workflow-decompose-item:nth-child(1)>* {
+  animation-delay: 3.12s
+}
+
+#portfolio-review.workflow-animate:not(.guide-show-all) .workflow-decompose-item:nth-child(2)>* {
+  animation-delay: 3.30s
+}
+
+#portfolio-review.workflow-animate:not(.guide-show-all) .workflow-side-card>h3 {
+  animation-delay: 3.66s
+}
+
+#portfolio-review.workflow-animate:not(.guide-show-all) .workflow-side-card>p {
+  animation-delay: 3.82s
+}
+
+#portfolio-review.workflow-animate:not(.guide-show-all) .workflow-class-list {
+  animation-delay: 4.04s
+}
+
+#portfolio-review.workflow-animate:not(.guide-show-all) .workflow-class-row:nth-child(1)>* {
+  animation-delay: 4.18s
+}
+
+#portfolio-review.workflow-animate:not(.guide-show-all) .workflow-class-row:nth-child(2)>* {
+  animation-delay: 0.32s
+}
+
+#portfolio-review.workflow-animate:not(.guide-show-all) .workflow-class-row:nth-child(3)>* {
+  animation-delay: 4.46s
+}
+
+#portfolio-review.workflow-animate:not(.guide-show-all) .workflow-class-row:nth-child(4)>* {
+  animation-delay: 4.60s
+}
+
+#portfolio-review.workflow-animate:not(.guide-show-all) .workflow-class-row:nth-child(5)>* {
+  animation-delay: 4.74s
+}
+
+#portfolio-review.workflow-animate:not(.guide-show-all) .guided-action-copy {
+  animation-delay: 5.12s
+}
+
+#portfolio-review.workflow-animate:not(.guide-show-all) .guided-action .btn.primary {
+  animation-delay: 5.70s
+}
+
+#portfolio-review.workflow-animate:not(.guide-show-all) .guided-action .workflow-secondary-link {
+  animation-delay: 5.92s
+}
+
+#portfolio-review.workflow-animate:not(.guide-show-all) .guided-action .btn.primary {
+  background: var(--nm-accent) !important;
+  color: var(--nm-accent-ink) !important;
+}
+
+#portfolio-review.guide-show-all #portfolioAnalysisSummary .portfolio-summary-card>*,
+#portfolio-review.guide-show-all .workflow-filter-row>*,
+#portfolio-review.guide-show-all .workflow-fulltext-card>*,
+#portfolio-review.guide-show-all .workflow-fallback-view>.card>h3,
+#portfolio-review.guide-show-all .workflow-fallback-view>.card>p,
+#portfolio-review.guide-show-all .workflow-decompose-list,
+#portfolio-review.guide-show-all .workflow-decompose-item>*,
+#portfolio-review.guide-show-all .workflow-side-card>h3,
+#portfolio-review.guide-show-all .workflow-side-card>p,
+#portfolio-review.guide-show-all .workflow-class-list,
+#portfolio-review.guide-show-all .workflow-class-row>*,
+#portfolio-review.guide-show-all .guided-action-copy,
+#portfolio-review.guide-show-all .guided-action .workflow-secondary-link,
+#portfolio-review.guide-show-all .guided-action .btn.primary {
+  opacity: 1 !important;
+  transform: none !important;
+  filter: none !important;
+  animation: none !important;
+  pointer-events: auto !important;
+}
+
+@keyframes jarvisV225GuideContentIn {
+  0% {
+    opacity: 0;
+    transform: translateY(8px);
+    filter: blur(1.4px)
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0)
+  }
+}
+
+@media(prefers-reduced-motion:reduce) {
+
+  #portfolio-review.workflow-animate #portfolioAnalysisSummary .portfolio-summary-card>*,
+  #portfolio-review.workflow-animate .workflow-filter-row>*,
+  #portfolio-review.workflow-animate .workflow-fulltext-card>*,
+  #portfolio-review.workflow-animate .workflow-fallback-view>.card>h3,
+  #portfolio-review.workflow-animate .workflow-fallback-view>.card>p,
+  #portfolio-review.workflow-animate .workflow-decompose-list,
+  #portfolio-review.workflow-animate .workflow-decompose-item>*,
+  #portfolio-review.workflow-animate .workflow-side-card>h3,
+  #portfolio-review.workflow-animate .workflow-side-card>p,
+  #portfolio-review.workflow-animate .workflow-class-list,
+  #portfolio-review.workflow-animate .workflow-class-row>*,
+  #portfolio-review.workflow-animate .guided-action-copy,
+  #portfolio-review.workflow-animate .guided-action .workflow-secondary-link,
+  #portfolio-review.workflow-animate .guided-action .btn.primary {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    animation: none !important;
+  }
+}
+
+/* v229: 03数値カウントの安定化。 */
+#portfolio-review #portfolioAnalysisSummary .portfolio-summary-card b[data-review-final] {
+  font-variant-numeric: tabular-nums;
+}
+
+#portfolio-review #portfolioAnalysisSummary .portfolio-summary-card b.is-review-counting {
+  font-variant-numeric: tabular-nums;
+}
+
+/* v155: 03 candidate review carousel aligned with 02 */
+#portfolio-review .portfolio-summary {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 9px;
+  margin-bottom: 10px
+}
+
+#portfolio-review .portfolio-summary-card {
+  height: 34px !important;
+  min-height: 34px !important;
+  padding: 7px 11px !important;
+  border-radius: 12px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  border: 1px solid rgba(104, 127, 123, .10);
+  background: rgba(255, 255, 255, .58);
+  box-shadow: 0 8px 20px rgba(49, 58, 55, .04);
+  cursor: pointer;
+  color: #60716d;
+  text-align: left
+}
+
+
+#portfolio-review .portfolio-summary-card span {
+  font-size: 9px !important;
+  margin: 0 !important;
+  color: inherit;
+  letter-spacing: .02em
+}
+
+#portfolio-review .portfolio-summary-card b {
+  font-size: 13px !important;
+  line-height: 1 !important;
+  color: #31413c;
+  margin-left: auto;
+  text-align: right;
+  font-weight: 700
+}
+
+#portfolio-review .workflow-filter-row {
+  display: none !important
+}
+
+.workflow-review-layout.v155-review-carousel {
+  grid-template-columns: minmax(260px, .72fr) minmax(0, 1.05fr) minmax(250px, .54fr);
+  gap: 16px;
+  align-items: start
+}
+
+.workflow-review-carousel-card {
+  min-height: 0;
+  padding: 18px 18px 16px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, .64);
+  border: 1px solid rgba(109, 129, 125, .10);
+  box-shadow: var(--sh)
+}
+
+.workflow-review-carousel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px
+}
+
+.workflow-review-carousel-title {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0
+}
+
+.workflow-review-carousel-title small {
+  font-size: 10px;
+  color: #75817e;
+  letter-spacing: .04em
+}
+
+.workflow-review-carousel-title b {
+  font-size: 16px;
+  line-height: 1.45;
+  color: #2f3d3a
+}
+
+.workflow-review-nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 0 0 auto
+}
+
+.workflow-review-nav button {
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  border: 1px solid rgba(104, 127, 123, .13);
+  background: rgba(255, 255, 255, .72);
+  box-shadow: 0 8px 16px rgba(35, 42, 40, .05);
+  font-weight: 800;
+  color: #384843
+}
+
+.workflow-review-nav button:disabled {
+  opacity: .35
+}
+
+.workflow-review-nav span {
+  font-size: 11px;
+  color: #6a7773;
+  min-width: 58px;
+  text-align: center
+}
+
+.workflow-review-single {
+  padding: 16px;
+  border-radius: 17px;
+  background: rgb(240, 240, 237);
+  border: 1px solid transparent;
+  box-shadow: inset calc(.55 * var(--nm-offset, 8px)) calc(.55 * var(--nm-offset, 8px)) calc(.82 * var(--nm-blur, 16px)) var(--nm-shadow-color, rgba(153,153,151,.32)), inset calc(-.55 * var(--nm-offset, 8px)) calc(-.55 * var(--nm-offset, 8px)) calc(.82 * var(--nm-blur, 16px)) var(--nm-light-color, rgba(255,255,255,.58))
+}
+
+
+.workflow-review-single .workflow-card-meta {
+  margin-bottom: 10px
+}
+
+.workflow-review-single h3 {
+  font-size: 16px;
+  line-height: 1.55;
+  margin: 0 0 9px;
+  color: #2f3d3a
+}
+
+.workflow-review-single p {
+  margin: 0;
+  color: #60716d;
+  font-size: 11px;
+  line-height: 1.75;
+  max-height: 7.2em;
+  overflow: hidden
+}
+
+.workflow-review-empty {
+  padding: 18px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, .58);
+  color: #6a7773;
+  font-size: 12px
+}
+
+.workflow-review-context-note {
+  font-size: 10.5px;
+  color: #75817e;
+  line-height: 1.65;
+  margin-top: 10px
+}
+
+.workflow-review-class-note {
+  margin-top: 10px;
+  font-size: 10.5px;
+  color: #75817e;
+  line-height: 1.65
+}
+
+@media(max-width:1180px) {
+  .workflow-review-layout.v155-review-carousel {
+    grid-template-columns: 1fr
+  }
+
+  .workflow-review-carousel-head {
+    align-items: flex-start
+  }
+
+  .workflow-review-nav {
+    align-self: flex-end
+  }
+}
+
+/* v327: 03 page-owned reveal sequence. The sequence is controlled by workflow-03.js,
+   so filter/navigation clicks can update content without restarting or force-finishing the entry animation. */
+#portfolio-review.jv03-page .jv03-target {
+  transition: opacity .42s cubic-bezier(.22, .61, .28, 1), transform .42s cubic-bezier(.22, .61, .28, 1), filter .42s cubic-bezier(.22, .61, .28, 1);
+}
+
+#portfolio-review.jv03-page.active:not(.guide-show-all):not(.jv03-complete) .jv03-target:not(.jv03-visible) {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px);
+  filter: blur(1.2px);
+  pointer-events: none;
+}
+
+#portfolio-review.jv03-page .jv03-target.jv03-visible,
+#portfolio-review.jv03-page.guide-show-all .jv03-target,
+#portfolio-review.jv03-page.jv03-complete .jv03-target {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  filter: blur(0);
+  pointer-events: auto;
+}
+
+#portfolio-review.jv03-page #floatingGuideControls,
+#portfolio-review.jv03-page .floating-guide-controls {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #portfolio-review.jv03-page .jv03-target {
+    transition: none;
+  }
+}
+
+
+/* v333: 03 responsive contract.
+   Keep 03 consistent with 04/05: narrow windows stack the review panels instead of squeezing the center carousel.
+   This is the page-owned responsive rule, not a late visual override. */
+@media(max-width:1320px) {
+  #portfolio-review .workflow-review-layout,
+  #portfolio-review .workflow-review-layout.v155-review-carousel {
+    display: grid;
+    grid-template-columns: 1fr !important;
+    gap: 16px;
+  }
+
+  #portfolio-review .workflow-review-layout.v155-review-carousel > .card,
+  #portfolio-review .workflow-review-layout.v155-review-carousel > .workflow-side-card,
+  #portfolio-review .workflow-review-layout.v155-review-carousel > .workflow-fulltext-card,
+  #portfolio-review .workflow-review-carousel-card {
+    min-width: 0;
+    width: 100%;
+    max-width: none;
+    box-sizing: border-box;
+  }
+}
+
+/* v340: count summary buttons use the restored moderate reveal duration. */
+#portfolio-review.jv03-page .workflow-brief-card.jv03-target {
+  transition: opacity 1.3s cubic-bezier(.22, .61, .28, 1), transform 1.3s cubic-bezier(.22, .61, .28, 1), filter 1.3s cubic-bezier(.22, .61, .28, 1);
+}
+
+/* v344: 03 center-panel height contract.
+   Long decomposition text should not stretch the whole page; the middle panel keeps a bounded height and scrolls internally. */
+#portfolio-review .workflow-review-carousel-card {
+  min-height: 0;
+  max-height: clamp(340px, calc(100vh - 320px), 520px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  box-sizing: border-box;
+}
+
+#portfolio-review .workflow-review-carousel-card::-webkit-scrollbar {
+  width: 5px;
+}
+
+#portfolio-review .workflow-review-carousel-card::-webkit-scrollbar-thumb {
+  background: rgba(70, 80, 72, .18);
+  border-radius: 999px;
+}
+
+@media(max-width:1320px) {
+  #portfolio-review .workflow-review-carousel-card {
+    max-height: 420px;
+  }
+}

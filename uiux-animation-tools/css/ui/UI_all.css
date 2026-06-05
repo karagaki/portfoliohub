@@ -1,0 +1,161 @@
+
+.ui-container.collapsed .ui-content {
+    max-height: 0 !important;
+    opacity: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+}
+
+/* 初期描画時は全UIを閉じた見た目にする（FOUC防止） */
+body:not(.ui-ready) .ui-container .ui-content {
+    max-height: 0 !important;
+    opacity: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+}
+
+body.ui-initializing .ui-container .ui-content {
+    transition: none !important;
+}
+
+/* 特定のコンテナに対する追加のスタイル */
+#load-container .ui-content,
+#cursor-container .ui-content {
+    padding: 8px;
+}
+
+/* UI_all.css */
+.ui-container {
+    margin-bottom: 0;
+    background-color: #e8e8e8;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.ui-header {
+    cursor: pointer;
+    padding: 8px 10px;
+    background-color: #d0d0d0;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.ui-header::after {
+    content: '▼';
+    transition: transform 0.15s ease-out;
+}
+
+.ui-container.collapsed .ui-header::after {
+    transform: rotate(-90deg);
+}
+
+.ui-container:not(.collapsed) .ui-content {
+    transition: max-height 0.12s ease-out, opacity 0.12s ease-out, padding 0.12s ease-out;
+    max-height: 600px;
+    opacity: 1;
+    padding: 8px;
+    background-color: #e8e8e8;
+    overflow: hidden;
+}
+
+.slider-group {
+    margin-bottom: 2px;
+    background-color: #fefefe;
+    padding: 5px;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.8);
+}
+
+/* カラー設定用のスライダーグループのスタイルを上書き */
+#color-container .slider-group {
+    background-color: transparent;
+    box-shadow: none;
+    padding: 0;
+}
+
+/* 白枠内のテキスト */
+.slider-layout { 
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 10px;
+}
+
+.label-value-container {
+    width: 95px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.slider-label {
+    font-weight: bold;
+    margin-bottom: 1px;
+}
+
+.slider-value {
+    font-weight: bold;
+    color: #333;
+}
+
+.slider-container {
+    flex-grow: 1;
+    position: relative;
+    width: calc(100% - 200px);
+    margin: 0 -22px;
+}
+
+.slider {
+    width: 130%;
+    -webkit-appearance: none;
+    height: 3px;
+    background: #999;
+    outline: none;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+    margin-left: -15%;
+}
+
+.slider:hover {
+    opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #000;
+    cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #000;
+    cursor: pointer;
+}
+
+.reset-btn {
+    font-size: 0.5em;
+    padding: 2px 4px;
+    background-color: #7070ff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    margin-right: -0.9px;
+}
+
+.reset-btn:hover {
+    background-color: #5858ff;
+}
+
+.changed-value {
+    color: #ff0000;
+}

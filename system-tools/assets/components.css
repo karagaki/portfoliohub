@@ -1,0 +1,767 @@
+/* System Tools base/component slice extracted from index.html. */
+/* source-range: index.html#L921-L1684 */
+
+    .phase-note {
+      color: var(--mut);
+      font-size: 11px
+    }
+
+    .goal-hero {
+      display: grid;
+      grid-template-columns: minmax(300px, 1.2fr) minmax(340px, .8fr);
+      gap: 14px;
+      margin-bottom: 14px
+    }
+
+    .goal-purpose {
+      padding: 21px
+    }
+
+    .goal-purpose .eyebrow {
+      font-size: 11px;
+      letter-spacing: .09em;
+      color: var(--ac);
+      font-weight: 650;
+      margin-bottom: 9px
+    }
+
+    .goal-purpose h3 {
+      font-size: 19px;
+      line-height: 1.45;
+      margin: 0 0 9px
+    }
+
+    .goal-purpose p {
+      margin: 0;
+      color: var(--mut);
+      line-height: 1.7
+    }
+
+    .goal-state {
+      padding: 17px
+    }
+
+    .goal-state h3 {
+      margin-bottom: 12px
+    }
+
+    .goal-metrics {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px
+    }
+
+    .goal-metric {
+      padding: 11px 10px;
+      border-radius: 11px;
+      background: var(--s);
+      min-height: 70px
+    }
+
+    .goal-metric label {
+      display: block;
+      color: var(--mut);
+      font-size: 11px;
+      margin-bottom: 7px;
+      line-height: 1.35
+    }
+
+    .goal-metric strong {
+      font-size: 22px;
+      font-weight: 570
+    }
+
+    .goal-body {
+      display: grid;
+      grid-template-columns: 1.02fr .98fr;
+      gap: 14px;
+      margin-bottom: 14px
+    }
+
+    .goal-panel {
+      padding: 18px
+    }
+
+    .goal-panel h3 {
+      margin-bottom: 12px
+    }
+
+    .goal-track {
+      display: grid;
+      gap: 8px
+    }
+
+    .goal-stage {
+      display: grid;
+      grid-template-columns: 24px 1fr auto;
+      gap: 9px;
+      align-items: center;
+      border: 1px solid var(--line);
+      border-radius: 11px;
+      padding: 10px 11px;
+      background: #fcfdfc
+    }
+
+    .goal-stage .stage-no {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--acb);
+      color: var(--ac);
+      display: grid;
+      place-items: center;
+      font-size: 11px;
+      font-weight: 650
+    }
+
+    .goal-stage b {
+      font-size: 13px;
+      font-weight: 560
+    }
+
+    .goal-stage small {
+      display: block;
+      color: var(--mut);
+      font-size: 11px;
+      margin-top: 4px
+    }
+
+    .goal-status {
+      font-size: 11px;
+      border-radius: 9px;
+      padding: 5px 8px;
+      background: var(--s);
+      color: var(--mut)
+    }
+
+    .goal-status.ready {
+      background: var(--goodb);
+      color: var(--good)
+    }
+
+    .goal-status.need {
+      background: var(--holdb);
+      color: var(--hold)
+    }
+
+    .goal-next {
+      padding: 16px;
+      border-radius: 14px;
+      background: var(--acb);
+      margin-bottom: 14px
+    }
+
+    .goal-next label {
+      display: block;
+      font-size: 11px;
+      color: var(--ac);
+      letter-spacing: .06em;
+      font-weight: 650;
+      margin-bottom: 7px
+    }
+
+    .goal-next b {
+      display: block;
+      font-size: 16px;
+      font-weight: 580;
+      margin-bottom: 7px;
+      color: #315e59
+    }
+
+    .goal-next p {
+      margin: 0 0 12px;
+      line-height: 1.55;
+      color: #55746d;
+      font-size: 12px
+    }
+
+    .goal-records {
+      display: grid;
+      gap: 8px
+    }
+
+    .goal-record {
+      border: 1px solid var(--line);
+      border-radius: 11px;
+      padding: 11px;
+      background: #fff
+    }
+
+    .goal-record .row {
+      margin-bottom: 5px
+    }
+
+    .goal-record b {
+      font-size: 13px
+    }
+
+    .goal-foot {
+      padding: 15px 17px;
+      border: 1px dashed #ccd8d4;
+      border-radius: 13px;
+      color: var(--mut);
+      font-size: 12px;
+      line-height: 1.68;
+      background: #fcfdfc
+    }
+
+    .goal-foot b {
+      color: var(--tx)
+    }
+
+    .goal-use-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 9px
+    }
+
+    .goal-use-card {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 13px;
+      background: #fff
+    }
+
+    .goal-use-card b {
+      display: block;
+      margin-bottom: 6px
+    }
+
+    .goal-use-card .muted {
+      min-height: 37px
+    }
+
+    .goal-use-card .buttons {
+      margin-top: 10px
+    }
+
+    .purpose-arrow {
+      color: var(--ac);
+      font-weight: 600
+    }
+
+    .goal-warning {
+      background: var(--holdb);
+      color: var(--hold);
+      padding: 12px 14px;
+      border-radius: 12px;
+      font-size: 12px;
+      line-height: 1.6;
+      margin-top: 12px
+    }
+
+    @media(max-width:1180px) {
+
+      .goal-hero,
+      .goal-body {
+        grid-template-columns: 1fr
+      }
+
+      .goal-metrics {
+        grid-template-columns: repeat(2, 1fr)
+      }
+    }
+
+    .system-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 14px
+    }
+
+    .system-map {
+      padding: 20px
+    }
+
+    .source-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(125px, 1fr));
+      gap: 9px;
+      margin-top: 14px
+    }
+
+    .source-node {
+      padding: 12px;
+      background: var(--s);
+      border-radius: 12px;
+      min-height: 94px
+    }
+
+    .source-node b {
+      display: block;
+      font-size: 13px;
+      margin-bottom: 5px
+    }
+
+    .source-node small {
+      display: block;
+      color: var(--mut);
+      font-size: 11px;
+      line-height: 1.45
+    }
+
+    .implementation {
+      display: inline-flex;
+      margin-top: 9px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      font-size: 10px;
+      font-weight: 650
+    }
+
+    .implementation.live {
+      background: var(--goodb);
+      color: var(--good)
+    }
+
+    .implementation.manual {
+      background: var(--holdb);
+      color: var(--hold)
+    }
+
+    .implementation.todo {
+      background: var(--badb);
+      color: var(--bad)
+    }
+
+    .cycle {
+      display: grid;
+      grid-template-columns: repeat(9, auto);
+      align-items: stretch;
+      gap: 7px;
+      margin-top: 14px
+    }
+
+    .cycle-node {
+      min-width: 116px;
+      padding: 13px 11px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fff
+    }
+
+    .cycle-node b {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 13px
+    }
+
+    .cycle-node small {
+      color: var(--mut);
+      font-size: 11px;
+      line-height: 1.45;
+      display: block
+    }
+
+    .cycle-arrow {
+      display: grid;
+      place-items: center;
+      color: #9eaaa7;
+      font-size: 18px
+    }
+
+    .output-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 9px;
+      margin-top: 14px
+    }
+
+    .output-node {
+      padding: 13px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fff
+    }
+
+    .output-node b {
+      display: block;
+      margin-bottom: 6px
+    }
+
+    .output-node p {
+      color: var(--mut);
+      font-size: 11px;
+      line-height: 1.5;
+      margin: 0
+    }
+
+    .map-callout {
+      padding: 16px;
+      border-radius: 14px;
+      background: var(--acb);
+      line-height: 1.65;
+      margin-top: 14px
+    }
+
+    .map-callout b {
+      color: var(--ac)
+    }
+
+    .data-route-table {
+      display: grid;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      overflow: hidden
+    }
+
+    .data-route-head,
+    .data-route-row {
+      display: grid;
+      grid-template-columns: 150px minmax(320px, 1.6fr) minmax(170px, .9fr) 108px;
+      gap: 12px;
+      align-items: center;
+      padding: 11px 13px
+    }
+
+    .data-route-head {
+      background: var(--s);
+      color: var(--mut);
+      font-size: 11px
+    }
+
+    .data-route-row {
+      border-top: 1px solid var(--line);
+      font-size: 12px
+    }
+
+    .data-route-row code,
+    .data-root code {
+      font-size: 11px;
+      background: var(--s);
+      padding: 2px 5px;
+      border-radius: 5px;
+      color: #566763
+    }
+
+    .data-root {
+      margin: 13px 0 0;
+      color: var(--mut);
+      font-size: 11px
+    }
+
+    @media(max-width:1200px) {
+
+      .data-route-head,
+      .data-route-row {
+        grid-template-columns: 1fr
+      }
+
+      .data-route-head {
+        display: none
+      }
+
+      .data-route-row {
+        gap: 7px
+      }
+    }
+
+    .stage-board {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px
+    }
+
+    .stage-card {
+      padding: 18px
+    }
+
+    .stage-card h3 {
+      margin-bottom: 6px
+    }
+
+    .stage-card>p {
+      margin: 0 0 14px;
+      color: var(--mut);
+      line-height: 1.55
+    }
+
+    .route-card {
+      padding: 13px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      margin-bottom: 9px;
+      background: #fcfdfc
+    }
+
+    .route-card b {
+      display: block;
+      margin-bottom: 5px
+    }
+
+    .route-card small {
+      display: block;
+      color: var(--mut);
+      line-height: 1.5
+    }
+
+    .route-card .buttons {
+      margin-top: 10px
+    }
+
+    .legend {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 13px
+    }
+
+    .legend span {
+      padding: 5px 9px;
+      border-radius: 999px;
+      font-size: 11px
+    }
+
+    .legend .live {
+      background: var(--goodb);
+      color: var(--good)
+    }
+
+    .legend .manual {
+      background: var(--holdb);
+      color: var(--hold)
+    }
+
+    .legend .todo {
+      background: var(--badb);
+      color: var(--bad)
+    }
+
+    @media(max-width:1350px) {
+
+      .source-grid,
+      .output-grid {
+        grid-template-columns: repeat(2, 1fr)
+      }
+
+      .cycle {
+        grid-template-columns: 1fr
+      }
+
+      .cycle-arrow {
+        transform: rotate(90deg)
+      }
+
+      .system-grid,
+      .stage-board {
+        grid-template-columns: 1fr
+      }
+    }
+
+    .trace-table {
+      display: grid;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      overflow: hidden;
+      margin-top: 13px
+    }
+
+    .trace-head,
+    .trace-row {
+      display: grid;
+      grid-template-columns: 1.12fr 1.2fr 1.16fr 1.16fr 108px 1.18fr;
+      gap: 10px;
+      align-items: start;
+      padding: 12px 13px
+    }
+
+    .trace-head {
+      background: var(--s);
+      color: var(--mut);
+      font-size: 11px;
+      font-weight: 600
+    }
+
+    .trace-row {
+      border-top: 1px solid var(--line);
+      font-size: 12px;
+      line-height: 1.55
+    }
+
+    .trace-row b {
+      display: block;
+      margin-bottom: 4px;
+      font-weight: 600
+    }
+
+    .trace-row small {
+      display: block;
+      color: var(--mut);
+      line-height: 1.5
+    }
+
+    .trace-row .implementation {
+      margin-top: 0
+    }
+
+    .trace-row {
+      transition: background .15s ease
+    }
+
+    .trace-row:hover {
+      background: #fbfdfc
+    }
+
+    .trace-cell {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 5px;
+      min-width: 0
+    }
+
+    .trace-main,
+    .trace-link {
+      appearance: none;
+      border: 0;
+      padding: 0;
+      background: transparent;
+      color: var(--ac);
+      text-align: left;
+      font-size: 12px;
+      line-height: 1.45;
+      font-weight: 620;
+      cursor: pointer
+    }
+
+    .trace-main {
+      font-size: 13px;
+      color: var(--tx)
+    }
+
+    .trace-main:hover,
+    .trace-link:hover {
+      text-decoration: underline
+    }
+
+    .trace-link:focus-visible,
+    .trace-main:focus-visible {
+      outline: 2px solid #b2cfca;
+      outline-offset: 3px;
+      border-radius: 3px
+    }
+
+    .trace-muted {
+      font-size: 11px;
+      color: var(--mut);
+      line-height: 1.45
+    }
+
+    .trace-link-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap
+    }
+
+    .trace-sep {
+      color: #c0cbc8
+    }
+
+    .open-detail {
+      display: inline-block;
+      margin-top: 3px;
+      color: var(--ac);
+      font-size: 11px;
+      font-weight: 650
+    }
+
+    .source-contract {
+      padding: 15px 16px;
+      border: 1px dashed #cad7d2;
+      border-radius: 13px;
+      background: #fcfdfc;
+      margin-top: 13px;
+      font-size: 12px;
+      line-height: 1.7;
+      color: #54625e
+    }
+
+    .source-contract b {
+      color: var(--tx)
+    }
+
+    .specific-list {
+      display: grid;
+      gap: 9px
+    }
+
+    .specific-card {
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      padding: 13px;
+      background: #fcfdfc
+    }
+
+    .specific-card h4 {
+      margin: 0 0 7px;
+      font-size: 14px
+    }
+
+    .specific-card dl {
+      display: grid;
+      grid-template-columns: 112px 1fr;
+      margin: 0;
+      font-size: 11px;
+      line-height: 1.6
+    }
+
+    .specific-card dt {
+      color: var(--mut)
+    }
+
+    .specific-card dd {
+      margin: 0
+    }
+
+    .specific-card .buttons {
+      margin-top: 10px
+    }
+
+    @media(max-width:1400px) {
+      .trace-head {
+        display: none
+      }
+
+      .trace-row {
+        grid-template-columns: 1fr 1fr;
+        gap: 11px 16px;
+        padding: 15px 16px
+      }
+
+      .trace-row span {
+        min-width: 0
+      }
+
+      .trace-row span:before {
+        display: block;
+        content: attr(data-label);
+        color: var(--mut);
+        font-size: 10px;
+        margin-bottom: 3px
+      }
+
+      .trace-row .trace-summary {
+        grid-column: 1/-1;
+        padding-bottom: 8px;
+        border-bottom: 1px solid var(--line)
+      }
+
+      .trace-row .trace-summary:before {
+        display: none
+      }
+    }
+
+    @media(max-width:760px) {
+      .trace-row {
+        grid-template-columns: 1fr
+      }
+
+      .trace-row .trace-summary {
+        grid-column: auto
+      }
+    }
+
+    /* v11 / Page-location guide + Neumorphism surface.
+ * Palette and light/shadow direction are based on the supplied P5js Neumorphism initial setting:
+ * base #E2E7EB, raised #E5EAEE, pressed #DCE1E6, light upper-left / shadow lower-right.
+ */

@@ -1,0 +1,1739 @@
+/* UI_Neumorphism.css
+ * Glass の構造・寸法・配置を維持し、Neumorphism 選択時のみ表面質感を変更する。
+ * 基準色: rgb(226, 231, 235) / #E2E7EB
+ * このファイルでは width / height / position / inset / margin / padding / gap /
+ * border-radius / font-size / line-height / transform を変更しない。
+ */
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] {
+  --neumo-base: rgb(226, 231, 235);
+  --neumo-base-soft: rgba(226, 231, 235, 0.96);
+  --neumo-base-raised: rgb(229, 234, 238);
+  --neumo-base-pressed: rgb(220, 225, 230);
+  --neumo-highlight: rgba(255, 255, 255, 0.92);
+  --neumo-highlight-soft: rgba(255, 255, 255, 0.55);
+  --neumo-shadow: rgba(157, 168, 179, 0.52);
+  --neumo-shadow-soft: rgba(161, 172, 184, 0.30);
+  --neumo-depth: 7px;
+  --neumo-blur: 18px;
+  --neumo-control-depth: 4px;
+  --neumo-control-blur: 9px;
+  --neumo-light-x: -1;
+  --neumo-light-y: -1;
+  --neumo-shadow-x: 1;
+  --neumo-shadow-y: 1;
+  --neumo-control-light-x: -1;
+  --neumo-control-light-y: -1;
+  --neumo-control-shadow-x: 1;
+  --neumo-control-shadow-y: 1;
+  --neumo-text: rgba(46, 58, 76, 0.94);
+  --neumo-text-muted: rgba(46, 58, 76, 0.62);
+  --neumo-text-light-shadow: rgba(255, 255, 255, 0.08);
+  --neumo-text-dark-shadow: rgba(0, 0, 0, 0.16);
+  --neumo-text-shadow-value: none;
+  --neumo-accent: rgba(113, 153, 216, 0.40);
+  --neumo-accent-edge: rgba(103, 144, 211, 0.52);
+  --neumo-track-surface: rgb(216, 222, 227);
+  --neumo-thumb-surface: rgb(229, 234, 238);
+}
+
+/* パネル面。既存の角丸・外形・余白は Glass 側のまま使用する。 */
+/* PAINTED SURFACE CONTRACT:
+ * 面色・凹凸影を付けてよいのは、ユーザーが「面」として認識する物理パネルだけ。
+ * #ui-preset-panel / #ui-container / details / rows / actions は配置用の透明構造であり、
+ * テーマ色を直接塗ってはならない。透明領域を塗ると、余計な板状面が発生する。
+ */
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-variant-panel,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] .glass-panel {
+  background-color: var(--neumo-base-soft) !important;
+  background-image: none !important;
+  border-color: rgba(255, 255, 255, 0.18) !important;
+  box-shadow:
+    calc(var(--neumo-light-x) * var(--neumo-depth) * 0.6) calc(var(--neumo-light-y) * var(--neumo-depth) * 0.6) 10px var(--neumo-highlight-soft),
+    calc(var(--neumo-shadow-x) * var(--neumo-depth) * 0.7) calc(var(--neumo-shadow-y) * var(--neumo-depth) * 0.7) 10px var(--neumo-shadow-soft),
+    inset calc(var(--neumo-light-x) * -1px) calc(var(--neumo-light-y) * -1px) 0 var(--neumo-highlight-soft),
+    inset calc(var(--neumo-shadow-x) * -1px) calc(var(--neumo-shadow-y) * -1px) 0 var(--neumo-shadow-soft) !important;
+  color: var(--neumo-text) !important;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"]:has(#ui-preset-panel input[data-glass-param="neumoPanelSurfaceShape"][value="convex"]) #ui-variant-panel,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"]:has(#ui-preset-panel input[data-glass-param="neumoPanelSurfaceShape"][value="convex"]) #glass-cursor-panel-3,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"]:has(#ui-preset-panel input[data-glass-param="neumoPanelSurfaceShape"][value="convex"]) #glass-cursor-panel-4,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"]:has(#ui-preset-panel input[data-glass-param="neumoPanelSurfaceShape"][value="convex"]) #glass-cursor-panel-6,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"]:has(#ui-preset-panel input[data-glass-param="neumoPanelSurfaceShape"][value="convex"]) #glass-cursor-panel-7 {
+  background-image:
+    linear-gradient(
+      calc(135deg + (var(--neumo-light-x) * 0deg)),
+      var(--neumo-highlight-soft),
+      transparent 38%
+    ),
+    linear-gradient(
+      calc(315deg + (var(--neumo-shadow-x) * 0deg)),
+      transparent 52%,
+      var(--neumo-shadow-soft)
+    ) !important;
+  box-shadow:
+    calc(var(--neumo-light-x) * var(--neumo-depth) * 0.85) calc(var(--neumo-light-y) * var(--neumo-depth) * 0.85) 12px var(--neumo-highlight-soft),
+    calc(var(--neumo-shadow-x) * var(--neumo-depth) * 1.05) calc(var(--neumo-shadow-y) * var(--neumo-depth) * 1.05) 14px var(--neumo-shadow-soft),
+    inset calc(var(--neumo-light-x) * -1px) calc(var(--neumo-light-y) * -1px) 0 var(--neumo-highlight-soft),
+    inset calc(var(--neumo-shadow-x) * -1px) calc(var(--neumo-shadow-y) * -1px) 0 var(--neumo-shadow-soft) !important;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"]:has(#ui-preset-panel input[data-glass-param="neumoPanelSurfaceShape"][value="concave"]) #ui-variant-panel,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"]:has(#ui-preset-panel input[data-glass-param="neumoPanelSurfaceShape"][value="concave"]) #glass-cursor-panel-3,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"]:has(#ui-preset-panel input[data-glass-param="neumoPanelSurfaceShape"][value="concave"]) #glass-cursor-panel-4,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"]:has(#ui-preset-panel input[data-glass-param="neumoPanelSurfaceShape"][value="concave"]) #glass-cursor-panel-6,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"]:has(#ui-preset-panel input[data-glass-param="neumoPanelSurfaceShape"][value="concave"]) #glass-cursor-panel-7 {
+  background-image:
+    linear-gradient(
+      calc(315deg + (var(--neumo-shadow-x) * 0deg)),
+      var(--neumo-shadow-soft),
+      transparent 42%
+    ),
+    linear-gradient(
+      calc(135deg + (var(--neumo-light-x) * 0deg)),
+      transparent 50%,
+      var(--neumo-highlight-soft)
+    ) !important;
+  box-shadow:
+    inset calc(var(--neumo-light-x) * 1px) calc(var(--neumo-light-y) * 1px) 0 var(--neumo-highlight-soft),
+    inset calc(var(--neumo-shadow-x) * 1px) calc(var(--neumo-shadow-y) * 1px) 0 var(--neumo-shadow-soft),
+    inset calc(var(--neumo-light-x) * 2px) calc(var(--neumo-light-y) * 2px) 10px rgba(255, 255, 255, 0.08),
+    inset calc(var(--neumo-shadow-x) * 2px) calc(var(--neumo-shadow-y) * 2px) 12px var(--neumo-shadow-soft) !important;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"]:has(#ui-preset-panel input[data-glass-param="neumoPanelSurfaceShape"][value="pressed"]) #ui-variant-panel,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"]:has(#ui-preset-panel input[data-glass-param="neumoPanelSurfaceShape"][value="pressed"]) #glass-cursor-panel-3,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"]:has(#ui-preset-panel input[data-glass-param="neumoPanelSurfaceShape"][value="pressed"]) #glass-cursor-panel-4,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"]:has(#ui-preset-panel input[data-glass-param="neumoPanelSurfaceShape"][value="pressed"]) #glass-cursor-panel-6,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"]:has(#ui-preset-panel input[data-glass-param="neumoPanelSurfaceShape"][value="pressed"]) #glass-cursor-panel-7 {
+  background-image:
+    linear-gradient(
+      calc(315deg + (var(--neumo-shadow-x) * 0deg)),
+      var(--neumo-shadow-soft),
+      transparent 40%
+    ),
+    linear-gradient(
+      calc(135deg + (var(--neumo-light-x) * 0deg)),
+      transparent 55%,
+      var(--neumo-highlight-soft)
+    ) !important;
+  box-shadow:
+    inset calc(var(--neumo-light-x) * 2px) calc(var(--neumo-light-y) * 2px) 10px var(--neumo-highlight-soft),
+    inset calc(var(--neumo-shadow-x) * 2px) calc(var(--neumo-shadow-y) * 2px) 14px var(--neumo-shadow-soft),
+    inset 0 0 0 1px var(--neumo-shadow-soft) !important;
+}
+
+/* Glass の反射・艶レイヤーは Neumorphism では使わない。透明配置層は塗らず、物理面は影で読ませる。 */
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-variant-panel::before,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] .glass-panel::before,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] .glass-panel::after {
+  opacity: 0 !important;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-variant-panel::after {
+  opacity: 0 !important;
+  background: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  filter: none !important;
+}
+
+/* TRANSPARENT REGION CONTRACT:
+ * Glass で面色を持たない配置層は Neumorphism でも面色を持たない。
+ * ここは今後のテーマ調整でも削除・塗り潰し禁止。色は外側の物理パネルと実操作部品にだけ与える。
+ */
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-wrapper,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-container,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel .glass-preset-details,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel .glass-preset-rows,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel .glass-preset-row,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel .glass-preset-actions,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel .glass-preset-header-row,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel .glass-preset-category-header {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  border-color: transparent !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+}
+
+/* パラメータ欄内の操作ボタンは透明構造ではなく実操作面なので、凹凸を許可する。 */
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel .glass-preset-save,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel .glass-preset-dup,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel .glass-preset-new,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel .glass-preset-rename,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel .glass-preset-delete,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel .glass-preset-export,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel .glass-preset-import {
+  background-color: var(--neumo-base-raised) !important;
+  background-image: none !important;
+  border-color: rgba(255, 255, 255, 0.14) !important;
+  box-shadow:
+    calc(var(--neumo-control-light-x) * 1px) calc(var(--neumo-control-light-y) * 1px) 3px var(--neumo-highlight-soft),
+    calc(var(--neumo-control-shadow-x) * 1px) calc(var(--neumo-control-shadow-y) * 1px) 3px var(--neumo-shadow-soft) !important;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel .neumo-light-direction-group {
+  display: flex;
+  justify-content: center;
+  gap: 3px;
+  min-width: 0;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel .neumo-light-direction-button {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  min-width: 20px;
+  height: 18px;
+  min-height: 18px;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 6px;
+  background-color: var(--neumo-base-raised);
+  background-image: none;
+  color: var(--neumo-text);
+  font: inherit;
+  font-size: 11px;
+  line-height: 16px;
+  text-align: center;
+  box-shadow:
+    calc(var(--neumo-control-light-x) * 1px) calc(var(--neumo-control-light-y) * 1px) 3px var(--neumo-highlight-soft),
+    calc(var(--neumo-control-shadow-x) * 1px) calc(var(--neumo-control-shadow-y) * 1px) 3px var(--neumo-shadow-soft) !important;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel .neumo-light-direction-button:hover,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel .neumo-light-direction-button:focus,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel .neumo-light-direction-button:focus-visible {
+  background-color: var(--neumo-base-raised);
+  background-image: none;
+  color: var(--neumo-text);
+  outline: none;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel .neumo-light-direction-button.is-active,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel .neumo-light-direction-button[aria-pressed="true"],
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel .neumo-light-direction-button:active {
+  background-color: var(--neumo-base-pressed);
+  background-image: none;
+  color: var(--neumo-text);
+  box-shadow:
+    inset calc(var(--neumo-control-shadow-x) * 1px) calc(var(--neumo-control-shadow-y) * 1px) 3px var(--neumo-shadow),
+    inset calc(var(--neumo-control-light-x) * 1px) calc(var(--neumo-control-light-y) * 1px) 3px var(--neumo-highlight-soft) !important;
+}
+
+/* 入力・選択・ボタン。外形は変えず、柔らかな連続面として浮き上げる。 */
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-variant-panel select,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-variant-panel #ui-preset-panel #ui-preset-select {
+  background-color: var(--neumo-base-raised) !important;
+  background-image: none !important;
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  outline-style: none !important;
+  outline-width: 0 !important;
+  outline-color: transparent !important;
+  outline-offset: 0 !important;
+  box-shadow:
+    calc(var(--neumo-control-light-x) * var(--neumo-control-depth)) calc(var(--neumo-control-light-y) * var(--neumo-control-depth)) var(--neumo-control-blur) var(--neumo-highlight-soft),
+    calc(var(--neumo-control-shadow-x) * var(--neumo-control-depth)) calc(var(--neumo-control-shadow-y) * var(--neumo-control-depth)) var(--neumo-control-blur) var(--neumo-shadow-soft),
+    inset calc(var(--neumo-control-light-x) * -1px) calc(var(--neumo-control-light-y) * -1px) 0 var(--neumo-highlight-soft) !important;
+  color: var(--neumo-text) !important;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] .ui-container select,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] .ui-container input[type="text"],
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] .ui-container input[type="number"],
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] .ui-container input[type="color"],
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] .ui-container button:not(.glass-preset-details-toggle),
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-control-bar .glass-control-pill,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-control-bar button {
+  background-color: var(--neumo-base-raised) !important;
+  background-image: none !important;
+  border-color: rgba(255, 255, 255, 0.16) !important;
+  box-shadow:
+    calc(var(--neumo-control-light-x) * var(--neumo-control-depth)) calc(var(--neumo-control-light-y) * var(--neumo-control-depth)) var(--neumo-control-blur) var(--neumo-highlight),
+    calc(var(--neumo-control-shadow-x) * var(--neumo-control-depth)) calc(var(--neumo-control-shadow-y) * var(--neumo-control-depth)) var(--neumo-control-blur) var(--neumo-shadow-soft),
+    inset calc(var(--neumo-control-light-x) * -1px) calc(var(--neumo-control-light-y) * -1px) 0 var(--neumo-highlight-soft) !important;
+  color: var(--neumo-text) !important;
+}
+
+/* 押下・選択状態。select はマウス選択後に :focus が残るため、押下表現は keyboard focus と分離する。 */
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] .ui-container button:not(.glass-preset-details-toggle):active,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-control-bar .glass-control-pill.is-active,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-control-bar .canvas-bottom-color-button:is(.selected, .is-selected) {
+  background-color: var(--neumo-base-pressed) !important;
+  background-image: none !important;
+  box-shadow:
+    inset calc(var(--neumo-control-shadow-x) * var(--neumo-control-depth)) calc(var(--neumo-control-shadow-y) * var(--neumo-control-depth)) var(--neumo-control-blur) var(--neumo-shadow),
+    inset calc(var(--neumo-control-light-x) * var(--neumo-control-depth)) calc(var(--neumo-control-light-y) * var(--neumo-control-depth)) var(--neumo-control-blur) var(--neumo-highlight) !important;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-variant-panel select:focus:not(:focus-visible),
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-variant-panel #ui-preset-panel #ui-preset-select:focus:not(:focus-visible) {
+  background-color: var(--neumo-base-raised) !important;
+  background-image: none !important;
+  outline-style: none !important;
+  outline-width: 0 !important;
+  outline-color: transparent !important;
+  box-shadow:
+    calc(var(--neumo-control-light-x) * var(--neumo-control-depth)) calc(var(--neumo-control-light-y) * var(--neumo-control-depth)) var(--neumo-control-blur) var(--neumo-highlight-soft),
+    calc(var(--neumo-control-shadow-x) * var(--neumo-control-depth)) calc(var(--neumo-control-shadow-y) * var(--neumo-control-depth)) var(--neumo-control-blur) var(--neumo-shadow-soft),
+    inset calc(var(--neumo-control-light-x) * -1px) calc(var(--neumo-control-light-y) * -1px) 0 var(--neumo-highlight-soft) !important;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-variant-panel select:focus-visible,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-variant-panel #ui-preset-panel #ui-preset-select:focus-visible {
+  background-color: var(--neumo-base-raised) !important;
+  background-image: none !important;
+  outline-style: none !important;
+  outline-width: 0 !important;
+  outline-color: transparent !important;
+  box-shadow:
+    calc(var(--neumo-control-light-x) * var(--neumo-control-depth)) calc(var(--neumo-control-light-y) * var(--neumo-control-depth)) var(--neumo-control-blur) var(--neumo-highlight-soft),
+    calc(var(--neumo-control-shadow-x) * var(--neumo-control-depth)) calc(var(--neumo-control-shadow-y) * var(--neumo-control-depth)) var(--neumo-control-blur) var(--neumo-shadow-soft),
+    0 0 0 1px rgba(113, 153, 216, 0.18),
+    inset calc(var(--neumo-control-light-x) * -1px) calc(var(--neumo-control-light-y) * -1px) 0 var(--neumo-highlight-soft) !important;
+}
+
+/* スライダー。溝を沈め、つまみを同色面から滑らかに隆起させる。 */
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] input[type="range"].slider,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #canvas-size-slider,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-variant-panel #ui-preset-panel input[type="range"][data-glass-param],
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] .cycle-track {
+  background-color: var(--neumo-track-surface) !important;
+  background-image: linear-gradient(180deg, var(--neumo-shadow-soft), var(--neumo-highlight-soft)) !important;
+  box-shadow:
+    inset calc(var(--neumo-control-shadow-x) * 2px) calc(var(--neumo-control-shadow-y) * 2px) 4px var(--neumo-shadow-soft),
+    inset calc(var(--neumo-control-light-x) * 2px) calc(var(--neumo-control-light-y) * 2px) 4px var(--neumo-highlight-soft) !important;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] input[type="range"].slider::-webkit-slider-thumb,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #canvas-size-slider::-webkit-slider-thumb,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-variant-panel #ui-preset-panel input[type="range"][data-glass-param]::-webkit-slider-thumb,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] .cycle-handle {
+  background-color: rgba(248, 250, 252, 0.98) !important;
+  background-image: radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.96), rgba(255, 255, 255, 0.78) 52%, rgba(215, 224, 233, 0.42) 100%) !important;
+  border-color: rgba(255, 255, 255, 0.22) !important;
+  box-shadow:
+    calc(var(--neumo-control-light-x) * var(--neumo-control-depth)) calc(var(--neumo-control-light-y) * var(--neumo-control-depth)) var(--neumo-control-blur) var(--neumo-highlight),
+    calc(var(--neumo-control-shadow-x) * var(--neumo-control-depth)) calc(var(--neumo-control-shadow-y) * var(--neumo-control-depth)) var(--neumo-control-blur) var(--neumo-shadow) !important;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] input[type="range"].slider::-moz-range-thumb,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #canvas-size-slider::-moz-range-thumb {
+  background-color: rgba(248, 250, 252, 0.98) !important;
+  background-image: radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.96), rgba(255, 255, 255, 0.78) 52%, rgba(215, 224, 233, 0.42) 100%) !important;
+  border-color: rgba(255, 255, 255, 0.22) !important;
+  box-shadow:
+    calc(var(--neumo-control-light-x) * var(--neumo-control-depth)) calc(var(--neumo-control-light-y) * var(--neumo-control-depth)) var(--neumo-control-blur) var(--neumo-highlight),
+    calc(var(--neumo-control-shadow-x) * var(--neumo-control-depth)) calc(var(--neumo-control-shadow-y) * var(--neumo-control-depth)) var(--neumo-control-blur) var(--neumo-shadow) !important;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-variant-panel #ui-preset-panel input[type="range"][data-glass-param]::-moz-range-thumb {
+  background-color: rgba(248, 250, 252, 0.98) !important;
+  background-image: radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.96), rgba(255, 255, 255, 0.78) 52%, rgba(215, 224, 233, 0.42) 100%) !important;
+  border-color: rgba(255, 255, 255, 0.22) !important;
+  box-shadow:
+    calc(var(--neumo-control-light-x) * var(--neumo-control-depth)) calc(var(--neumo-control-light-y) * var(--neumo-control-depth)) var(--neumo-control-blur) var(--neumo-highlight),
+    calc(var(--neumo-control-shadow-x) * var(--neumo-control-depth)) calc(var(--neumo-control-shadow-y) * var(--neumo-control-depth)) var(--neumo-control-blur) var(--neumo-shadow) !important;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-variant-panel #ui-preset-panel .cursor-toggle-checkbox,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-6 .cursor-toggle-checkbox {
+  -webkit-appearance: none;
+  appearance: none;
+  position: relative;
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  min-width: 16px;
+  min-height: 16px;
+  max-width: 16px;
+  max-height: 16px;
+  margin: 0 4px 0 0;
+  padding: 0;
+  box-sizing: border-box;
+  line-height: 0;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  border-radius: 3px;
+  background-color: var(--neumo-base-raised) !important;
+  background-image: none !important;
+  box-shadow:
+    calc(var(--neumo-control-light-x) * 2px) calc(var(--neumo-control-light-y) * 2px) 3px var(--neumo-highlight-soft),
+    calc(var(--neumo-control-shadow-x) * 2px) calc(var(--neumo-control-shadow-y) * 2px) 3px var(--neumo-shadow-soft),
+    inset 0 0 0 rgba(0, 0, 0, 0) !important;
+  color: var(--neumo-text) !important;
+  outline: none !important;
+  vertical-align: middle;
+  cursor: pointer;
+  transform: translate(-1.65px, -1.65px);
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-variant-panel #ui-preset-panel .cursor-toggle-checkbox::before,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-variant-panel #ui-preset-panel .cursor-toggle-checkbox::after,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-6 .cursor-toggle-checkbox::before,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-6 .cursor-toggle-checkbox::after {
+  content: "";
+  position: absolute;
+  opacity: 1;
+  pointer-events: none;
+  background-color: var(--neumo-text) !important;
+  border-radius: 1px;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-variant-panel #ui-preset-panel .cursor-toggle-checkbox::before {
+  width: 5px;
+  height: 2px;
+  left: 4px;
+  top: 8px;
+  transform: rotate(45deg);
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-variant-panel #ui-preset-panel .cursor-toggle-checkbox::after {
+  width: 9px;
+  height: 2px;
+  left: 5px;
+  top: 7px;
+  transform: rotate(-45deg);
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-variant-panel #ui-preset-panel .cursor-toggle-checkbox {
+  transform: translate(-1.65px, -1.65px);
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-variant-panel #ui-preset-panel .cursor-toggle-checkbox:not(:checked)::before,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-variant-panel #ui-preset-panel .cursor-toggle-checkbox:not(:checked)::after {
+  opacity: 0.96;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-variant-panel #ui-preset-panel .cursor-toggle-checkbox:checked,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-6 .cursor-toggle-checkbox:checked {
+  background-color: var(--neumo-base-pressed) !important;
+  box-shadow:
+    inset calc(var(--neumo-control-shadow-x) * 2px) calc(var(--neumo-control-shadow-y) * 2px) 3px var(--neumo-shadow),
+    inset calc(var(--neumo-control-light-x) * 2px) calc(var(--neumo-control-light-y) * 2px) 3px var(--neumo-highlight-soft) !important;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-variant-panel #ui-preset-panel .cursor-toggle-checkbox:focus,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-variant-panel #ui-preset-panel .cursor-toggle-checkbox:focus-visible,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-variant-panel #ui-preset-panel .cursor-toggle-checkbox:active,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-6 .cursor-toggle-checkbox:focus,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-6 .cursor-toggle-checkbox:focus-visible,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-6 .cursor-toggle-checkbox:active {
+  outline: none !important;
+  box-shadow:
+    calc(var(--neumo-control-light-x) * 2px) calc(var(--neumo-control-light-y) * 2px) 3px var(--neumo-highlight-soft),
+    calc(var(--neumo-control-shadow-x) * 2px) calc(var(--neumo-control-shadow-y) * 2px) 3px var(--neumo-shadow-soft),
+    inset 0 0 0 rgba(0, 0, 0, 0) !important;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-variant-panel #ui-preset-panel .cursor-toggle-checkbox:checked:focus,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-variant-panel #ui-preset-panel .cursor-toggle-checkbox:checked:focus-visible,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-variant-panel #ui-preset-panel .cursor-toggle-checkbox:checked:active,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-6 .cursor-toggle-checkbox:checked:focus,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-6 .cursor-toggle-checkbox:checked:focus-visible,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-6 .cursor-toggle-checkbox:checked:active {
+  outline: none !important;
+  box-shadow:
+    inset calc(var(--neumo-control-shadow-x) * 2px) calc(var(--neumo-control-shadow-y) * 2px) 3px var(--neumo-shadow),
+    inset calc(var(--neumo-control-light-x) * 2px) calc(var(--neumo-control-light-y) * 2px) 3px var(--neumo-highlight-soft) !important;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] input[type="checkbox"] {
+  accent-color: rgb(123, 159, 214);
+}
+
+/* 3.カーソルの 3 つの checkbox だけを、Neumorphism の浅い浮き面 / 凹面にする。 */
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-6 .cursor-toggle-checkbox {
+  -webkit-appearance: none;
+  appearance: none;
+  position: relative;
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  min-width: 16px;
+  min-height: 16px;
+  max-width: 16px;
+  max-height: 16px;
+  margin: 0 4px 0 0;
+  padding: 0;
+  box-sizing: border-box;
+  line-height: 0;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  border-radius: 3px;
+  background-color: var(--neumo-base-raised) !important;
+  background-image: none !important;
+  box-shadow:
+    calc(var(--neumo-control-light-x) * 2px) calc(var(--neumo-control-light-y) * 2px) 3px var(--neumo-highlight-soft),
+    calc(var(--neumo-control-shadow-x) * 2px) calc(var(--neumo-control-shadow-y) * 2px) 3px var(--neumo-shadow-soft),
+    inset 0 0 0 rgba(0, 0, 0, 0) !important;
+  color: var(--neumo-text) !important;
+  outline: none !important;
+  vertical-align: middle;
+  cursor: pointer;
+  transform: translate(-1.65px, -1.65px);
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-6 .cursor-toggle-checkbox::before,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-6 .cursor-toggle-checkbox::after {
+  content: "";
+  position: absolute;
+  opacity: 1;
+  pointer-events: none;
+  background-color: var(--neumo-text) !important;
+  border-radius: 1px;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-6 .cursor-toggle-checkbox:checked {
+  background-color: var(--neumo-base-pressed) !important;
+  box-shadow:
+    inset calc(var(--neumo-control-shadow-x) * 2px) calc(var(--neumo-control-shadow-y) * 2px) 3px var(--neumo-shadow),
+    inset calc(var(--neumo-control-light-x) * 2px) calc(var(--neumo-control-light-y) * 2px) 3px var(--neumo-highlight-soft) !important;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-6 .cursor-toggle-checkbox::before {
+  width: 5px;
+  height: 2px;
+  left: 4px;
+  top: 8px;
+  transform: rotate(45deg);
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-6 .cursor-toggle-checkbox::after {
+  width: 9px;
+  height: 2px;
+  left: 5px;
+  top: 7px;
+  transform: rotate(-45deg);
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-6 .cursor-toggle-checkbox:focus,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-6 .cursor-toggle-checkbox:focus-visible,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-6 .cursor-toggle-checkbox:active {
+  outline: none !important;
+  box-shadow:
+    calc(var(--neumo-control-light-x) * 2px) calc(var(--neumo-control-light-y) * 2px) 3px var(--neumo-highlight-soft),
+    calc(var(--neumo-control-shadow-x) * 2px) calc(var(--neumo-control-shadow-y) * 2px) 3px var(--neumo-shadow-soft),
+    inset 0 0 0 rgba(0, 0, 0, 0) !important;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-6 .cursor-toggle-checkbox:checked:focus,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-6 .cursor-toggle-checkbox:checked:focus-visible,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-6 .cursor-toggle-checkbox:checked:active {
+  outline: none !important;
+  box-shadow:
+    inset calc(var(--neumo-control-shadow-x) * 2px) calc(var(--neumo-control-shadow-y) * 2px) 3px var(--neumo-shadow),
+    inset calc(var(--neumo-control-light-x) * 2px) calc(var(--neumo-control-light-y) * 2px) 3px var(--neumo-highlight-soft) !important;
+}
+
+/* 5.描画は「番号列だけ」の設計を保護する。親領域を面として描画しない。 */
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #case-comparison.case-palette-only {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #case-comparison.case-palette-only::before,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #case-comparison.case-palette-only::after {
+  display: none !important;
+  content: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+/* 5.描画の個別ボタンだけを、元の形・位置のまま同色の柔らかな面にする。 */
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #case-comparison.case-palette-only .case-layout-toggle,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #case-comparison.case-palette-only .case-choice-button,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #case-comparison.case-palette-only .case-action-button,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #case-comparison.case-palette-only .case-slot-button {
+  background-color: var(--neumo-base-raised) !important;
+  background-image: linear-gradient(145deg, rgba(255, 255, 255, 0.16), rgba(185, 195, 205, 0.05)) !important;
+  border-color: rgba(255, 255, 255, 0.20) !important;
+  box-shadow:
+    calc(var(--neumo-control-light-x) * 2px) calc(var(--neumo-control-light-y) * 2px) 5px var(--neumo-highlight-soft),
+    calc(var(--neumo-control-shadow-x) * 2px) calc(var(--neumo-control-shadow-y) * 2px) 5px var(--neumo-shadow-soft) !important;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #case-comparison.case-palette-only .case-choice-button.current-case,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #case-comparison.case-palette-only .case-slot-button.is-selected {
+  background-color: var(--neumo-base-pressed) !important;
+  background-image: none !important;
+  border-color: transparent !important;
+  color: var(--neumo-text) !important;
+  box-shadow:
+    inset calc(var(--neumo-control-shadow-x) * var(--neumo-control-depth)) calc(var(--neumo-control-shadow-y) * var(--neumo-control-depth)) var(--neumo-control-blur) var(--neumo-shadow),
+    inset calc(var(--neumo-control-light-x) * var(--neumo-control-depth)) calc(var(--neumo-control-light-y) * var(--neumo-control-depth)) var(--neumo-control-blur) var(--neumo-highlight) !important;
+}
+
+/* 1.配色 パネルの操作ボタンは、Neumorphism 時だけ OFF 凹面 / ON 凸面を正本にする。 */
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #color-container .color-theme-actions,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-theme-actions {
+  background: transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #color-container .color-assign-btn,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #color-container .color-blend-btn,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #color-container .color-theme-recolor-btn,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-assign-btn,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-blend-btn,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-theme-recolor-btn {
+  -webkit-appearance: none !important;
+  appearance: none !important;
+  background-color: var(--neumo-base-raised) !important;
+  background-image: none !important;
+  border: 1px solid rgba(255, 255, 255, 0.24) !important;
+  box-shadow:
+    inset calc(var(--neumo-control-shadow-x) * 2px) calc(var(--neumo-control-shadow-y) * 2px) 3px var(--neumo-shadow-soft),
+    inset calc(var(--neumo-control-light-x) * 2px) calc(var(--neumo-control-light-y) * 2px) 3px var(--neumo-highlight-soft) !important;
+  outline: none !important;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #color-container .color-theme-card,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-theme-card {
+  -webkit-appearance: none !important;
+  appearance: none !important;
+  background-color: var(--neumo-base-pressed) !important;
+  background-image: none !important;
+  border: 1px solid rgba(255, 255, 255, 0.20) !important;
+  box-shadow:
+    inset calc(var(--neumo-control-shadow-x) * 2px) calc(var(--neumo-control-shadow-y) * 2px) 3px var(--neumo-shadow-soft),
+    inset calc(var(--neumo-control-light-x) * 2px) calc(var(--neumo-control-light-y) * 2px) 3px var(--neumo-highlight-soft) !important;
+  filter: none !important;
+  opacity: 1 !important;
+  outline: none !important;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #color-container .color-theme-card:hover,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-theme-card:hover {
+  background-color: var(--neumo-base-pressed) !important;
+  background-image: none !important;
+  border-color: rgba(255, 255, 255, 0.20) !important;
+  box-shadow:
+    inset calc(var(--neumo-control-shadow-x) * 2px) calc(var(--neumo-control-shadow-y) * 2px) 3px var(--neumo-shadow-soft),
+    inset calc(var(--neumo-control-light-x) * 2px) calc(var(--neumo-control-light-y) * 2px) 3px var(--neumo-highlight-soft) !important;
+  filter: none !important;
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #color-container .color-theme-card.is-active,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #color-container .color-theme-card[aria-pressed="true"],
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-theme-card.is-active,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-theme-card[aria-pressed="true"] {
+  background-color: var(--neumo-base-raised) !important;
+  background-image: none !important;
+  border-color: rgba(255, 255, 255, 0.20) !important;
+  box-shadow:
+    calc(var(--neumo-control-light-x) * 2px) calc(var(--neumo-control-light-y) * 2px) 3px var(--neumo-highlight-soft),
+    calc(var(--neumo-control-shadow-x) * 2px) calc(var(--neumo-control-shadow-y) * 2px) 3px var(--neumo-shadow-soft),
+    inset calc(var(--neumo-control-light-x) * -1px) calc(var(--neumo-control-light-y) * -1px) 0 var(--neumo-highlight-soft) !important;
+  filter: none !important;
+  opacity: 1 !important;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #color-container .color-theme-card:focus,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #color-container .color-theme-card:focus-visible,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #color-container .color-theme-card:active,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-theme-card:focus,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-theme-card:focus-visible,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-theme-card:active {
+  outline: none !important;
+  box-shadow:
+    inset calc(var(--neumo-control-shadow-x) * 2px) calc(var(--neumo-control-shadow-y) * 2px) 3px var(--neumo-shadow-soft),
+    inset calc(var(--neumo-control-light-x) * 2px) calc(var(--neumo-control-light-y) * 2px) 3px var(--neumo-highlight-soft) !important;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #color-container .color-theme-card.is-active:focus,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #color-container .color-theme-card.is-active:focus-visible,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #color-container .color-theme-card.is-active:active,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #color-container .color-theme-card[aria-pressed="true"]:focus,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #color-container .color-theme-card[aria-pressed="true"]:focus-visible,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #color-container .color-theme-card[aria-pressed="true"]:active,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-theme-card.is-active:focus,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-theme-card.is-active:focus-visible,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-theme-card.is-active:active,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-theme-card[aria-pressed="true"]:focus,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-theme-card[aria-pressed="true"]:focus-visible,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-theme-card[aria-pressed="true"]:active {
+  outline: none !important;
+  box-shadow:
+    calc(var(--neumo-control-light-x) * 2px) calc(var(--neumo-control-light-y) * 2px) 3px var(--neumo-highlight-soft),
+    calc(var(--neumo-control-shadow-x) * 2px) calc(var(--neumo-control-shadow-y) * 2px) 3px var(--neumo-shadow-soft),
+    inset calc(var(--neumo-control-light-x) * -1px) calc(var(--neumo-control-light-y) * -1px) 0 var(--neumo-highlight-soft) !important;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #color-container .color-theme-card::before,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #color-container .color-theme-card::after,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-theme-card::before,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-theme-card::after {
+  background: transparent !important;
+  box-shadow: none !important;
+  opacity: 0 !important;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #color-container .color-assign-btn.is-active,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #color-container .color-assign-btn[aria-pressed="true"],
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #color-container .color-blend-btn.is-active,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #color-container .color-blend-btn[aria-pressed="true"],
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-assign-btn.is-active,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-assign-btn[aria-pressed="true"],
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-blend-btn.is-active,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-blend-btn[aria-pressed="true"] {
+  background-color: var(--neumo-base-raised) !important;
+  background-image: none !important;
+  border-color: rgba(255, 255, 255, 0.20) !important;
+  box-shadow:
+    calc(var(--neumo-control-light-x) * 2px) calc(var(--neumo-control-light-y) * 2px) 3px var(--neumo-highlight-soft),
+    calc(var(--neumo-control-shadow-x) * 2px) calc(var(--neumo-control-shadow-y) * 2px) 3px var(--neumo-shadow-soft),
+    inset calc(var(--neumo-control-light-x) * -1px) calc(var(--neumo-control-light-y) * -1px) 0 var(--neumo-highlight-soft) !important;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #color-container .color-assign-btn,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #color-container .color-blend-btn {
+  color: var(--neumo-text) !important;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #color-container .color-assign-btn:not(.is-active):not([aria-pressed="true"]),
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #color-container .color-blend-btn:not(.is-active):not([aria-pressed="true"]),
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-assign-btn:not(.is-active):not([aria-pressed="true"]),
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-blend-btn:not(.is-active):not([aria-pressed="true"]) {
+  background-color: var(--neumo-base-pressed) !important;
+  box-shadow:
+    inset calc(var(--neumo-control-shadow-x) * 2px) calc(var(--neumo-control-shadow-y) * 2px) 3px var(--neumo-shadow-soft),
+    inset calc(var(--neumo-control-light-x) * 2px) calc(var(--neumo-control-light-y) * 2px) 3px var(--neumo-highlight-soft) !important;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #color-container .color-blend-btn.is-active,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #color-container .color-blend-btn[aria-pressed="true"],
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-blend-btn.is-active,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-blend-btn[aria-pressed="true"] {
+  background-color: rgba(204, 219, 235, 0.98) !important;
+  border-color: rgba(182, 205, 230, 0.46) !important;
+  box-shadow:
+    calc(var(--neumo-control-light-x) * 2px) calc(var(--neumo-control-light-y) * 2px) 3px var(--neumo-highlight-soft),
+    calc(var(--neumo-control-shadow-x) * 2px) calc(var(--neumo-control-shadow-y) * 2px) 3px var(--neumo-shadow-soft),
+    inset calc(var(--neumo-control-light-x) * -1px) calc(var(--neumo-control-light-y) * -1px) 0 var(--neumo-highlight-soft) !important;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-blend-btn {
+  background-color: var(--neumo-base-raised) !important;
+  background-image: none !important;
+  border: 1px solid rgba(255, 255, 255, 0.24) !important;
+  box-shadow:
+    inset calc(var(--neumo-control-shadow-x) * 2px) calc(var(--neumo-control-shadow-y) * 2px) 3px var(--neumo-shadow-soft),
+    inset calc(var(--neumo-control-light-x) * 2px) calc(var(--neumo-control-light-y) * 2px) 3px var(--neumo-highlight-soft) !important;
+  outline: none !important;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-blend-btn:not(.is-active):not([aria-pressed="true"]) {
+  background-color: var(--neumo-base-pressed) !important;
+  box-shadow:
+    inset calc(var(--neumo-control-shadow-x) * 2px) calc(var(--neumo-control-shadow-y) * 2px) 3px var(--neumo-shadow-soft),
+    inset calc(var(--neumo-control-light-x) * 2px) calc(var(--neumo-control-light-y) * 2px) 3px var(--neumo-highlight-soft) !important;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-blend-btn:focus,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-blend-btn:focus-visible,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-blend-btn:active {
+  outline: none !important;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #color-container .color-theme-recolor-btn,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-theme-recolor-btn {
+  background-color: var(--neumo-base-pressed) !important;
+  box-shadow:
+    inset calc(var(--neumo-control-shadow-x) * 2px) calc(var(--neumo-control-shadow-y) * 2px) 3px var(--neumo-shadow-soft),
+    inset calc(var(--neumo-control-light-x) * 2px) calc(var(--neumo-control-light-y) * 2px) 3px var(--neumo-highlight-soft) !important;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #color-container .color-theme-recolor-btn:active,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-theme-recolor-btn:active {
+  background-color: var(--neumo-base-raised) !important;
+  box-shadow:
+    calc(var(--neumo-control-light-x) * 2px) calc(var(--neumo-control-light-y) * 2px) 3px var(--neumo-highlight-soft),
+    calc(var(--neumo-control-shadow-x) * 2px) calc(var(--neumo-control-shadow-y) * 2px) 3px var(--neumo-shadow-soft),
+    inset calc(var(--neumo-control-light-x) * -1px) calc(var(--neumo-control-light-y) * -1px) 0 var(--neumo-highlight-soft) !important;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #color-container .color-blend-btn.is-active,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #color-container .color-blend-btn[aria-pressed="true"],
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-blend-btn.is-active,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-blend-btn[aria-pressed="true"] {
+  color: var(--neumo-text) !important;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #color-container .color-blend-btn.is-active *,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #color-container .color-blend-btn[aria-pressed="true"] *,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-blend-btn.is-active *,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-blend-btn[aria-pressed="true"] * {
+  color: var(--neumo-text) !important;
+}
+
+/* DEPTH EXPRESSION:
+ * Neumorphism では物理パネルを背景面の一部として見せ、描画線だけを前景で交差させる。
+ * 前景canvasは操作を奪わず、UIの位置・寸法・DOM構造を変更しない。
+ * 透明配置層は Glass / Neumorphism とも着色禁止。
+ * 見えている Neumorphism UI 全体は描画の後ろに置き、縁・影・文字・操作部の上も描画が通る。
+ * レイアウト寸法を変更せず、surface 表現のみを変更する。
+ */
+#neumorphism-drawing-foreground {
+  display: none;
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 10000;
+  background: transparent !important;
+}
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #neumorphism-drawing-foreground {
+  display: block;
+}
+
+/* INK RETENTION PROBE v2:
+ * 流線は従来どおり常に通過させる。
+ * その通過跡（墨の幅で調整される残像）だけをNeumorphismパネル面上に短時間保持する。
+ * Glassの前後関係や透明な配置層は変更しない。
+ */
+#neumorphism-ink-foreground {
+  display: none;
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  background: transparent !important;
+}
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #neumorphism-ink-foreground {
+  display: block;
+}
+
+
+/* THEMESBERG-INSPIRED VISUAL SURFACE PASS
+ * 公式デモで確認できる raised / inset の使い分けを参照するが、
+ * 既存 DOM・寸法・余白・角丸・文字サイズ・開閉レイアウトは変更しない。
+ * 右側の実在パネルは .glass-panel ではなく .glass-settings-panel.ui-container のため、
+ * テーマ切替直後にも必ず同じ Neumorphism 面を適用する。
+ */
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-3,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-4,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-6,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-7 {
+  background-color: var(--neumo-base) !important;
+  background-image: linear-gradient(145deg, rgba(255, 255, 255, 0.11), rgba(188, 198, 208, 0.035)) !important;
+  border-color: rgba(255, 255, 255, 0.50) !important;
+  border-top-color: rgba(255, 255, 255, 0.72) !important;
+  border-left-color: rgba(255, 255, 255, 0.63) !important;
+  box-shadow:
+    calc(var(--neumo-light-x) * 4px) calc(var(--neumo-light-y) * 4px) 10px var(--neumo-highlight),
+    calc(var(--neumo-shadow-x) * 5px) calc(var(--neumo-shadow-y) * 5px) 12px var(--neumo-shadow-soft),
+    inset calc(var(--neumo-light-x) * -1px) calc(var(--neumo-light-y) * -1px) 1px var(--neumo-highlight-soft),
+    inset calc(var(--neumo-shadow-x) * -1px) calc(var(--neumo-shadow-y) * -1px) 1px var(--neumo-shadow-soft) !important;
+  color: var(--neumo-text) !important;
+}
+
+/* 実在パネルの Glass 反射膜だけを停止し、切替直後の Glass 残留を防ぐ。 */
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-3::before,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-3::after,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-4::before,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-4::after,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-6::before,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-6::after {
+  opacity: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+/* ヘッダーは別面化せず、パネルと一体の隆起面として扱う。 */
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-3 .ui-header,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-4 .ui-header,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-6 .ui-header {
+  background: linear-gradient(180deg, var(--neumo-highlight-soft), transparent) !important;
+  border-bottom-color: var(--neumo-shadow-soft) !important;
+  color: var(--neumo-text) !important;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.72) !important;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-variant-panel .ui-header,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-3 .ui-header,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-4 .ui-header,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-6 .ui-header,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-variant-panel .ui-header *,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-variant-panel > label,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-3 .ui-header *,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-4 .ui-header *,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-6 .ui-header *,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-variant-panel .glass-preset-value.neumo-text-lighting-target,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-variant-panel .glass-preset-actions > button:not(.glass-preset-edit-lock-toggle),
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-control-bar #next-case-btn,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-control-bar #glass-panel-reset,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-control-bar #glass-panel-code-explain {
+  text-shadow: var(--neumo-text-shadow-value) !important;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-variant-panel .glass-preset-label,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-variant-panel .glass-preset-value:not(.neumo-text-lighting-target),
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-variant-panel .glass-preset-details-toggle,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-variant-panel .glass-preset-selected-lock,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-variant-panel .glass-preset-actions > button:not(.glass-preset-save):not(.glass-preset-dup):not(.glass-preset-new):not(.glass-preset-rename):not(.glass-preset-delete):not(.glass-preset-export):not(.glass-preset-import),
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-control-bar .canvas-bottom-color-button,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-control-bar .glass-control-pill,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-control-bar .glass-panel-quick-toggle-button,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-control-bar .glass-panel-quick-toggle-button *,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-control-bar .canvas-bottom-color-button *,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-control-bar #next-case-btn *,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-control-bar #glass-panel-reset *,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-control-bar #glass-panel-code-explain * {
+  text-shadow: none !important;
+}
+
+/* TRANSPARENT INNER CONTENT CONTRACT:
+ * 各パネル内部の配置層・行・配色グリッドへ面色を敷かない。
+ * パネル本体と操作可能な部品だけが Neumorphism の面を持つ。
+ */
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-3 .ui-content,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-4 .ui-content,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-6 .ui-content,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-theme-section,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-theme-grid,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-4 .slider-group,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-4 .slider-layout,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-6 .slider-group,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-6 .slider-layout {
+  background: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+}
+
+/* スライダーは配置を維持したまま視認性だけ引き締める。 */
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-4 input[type="range"].slider,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-6 input[type="range"].slider,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-variant-panel #ui-preset-panel input[type="range"][data-glass-param] {
+  background-color: var(--neumo-track-surface) !important;
+  background-image: linear-gradient(180deg, var(--neumo-shadow-soft), var(--neumo-highlight-soft)) !important;
+  border-color: rgba(255, 255, 255, 0.46) !important;
+  box-shadow:
+    inset calc(var(--neumo-control-shadow-x) * 2px) calc(var(--neumo-control-shadow-y) * 2px) 4px var(--neumo-shadow),
+    inset calc(var(--neumo-control-light-x) * 2px) calc(var(--neumo-control-light-y) * 2px) 3px var(--neumo-highlight),
+    0 1px 0 var(--neumo-highlight-soft) !important;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-variant-panel #ui-preset-panel input[type="range"][data-glass-param]::-webkit-slider-runnable-track {
+  background-color: var(--neumo-track-surface) !important;
+  background-image: linear-gradient(180deg, var(--neumo-shadow-soft), var(--neumo-highlight-soft)) !important;
+  border-color: rgba(255, 255, 255, 0.46) !important;
+  box-shadow:
+    inset calc(var(--neumo-control-shadow-x) * 2px) calc(var(--neumo-control-shadow-y) * 2px) 4px var(--neumo-shadow),
+    inset calc(var(--neumo-control-light-x) * 2px) calc(var(--neumo-control-light-y) * 2px) 3px var(--neumo-highlight),
+    0 1px 0 var(--neumo-highlight-soft) !important;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-variant-panel #ui-preset-panel input[type="range"][data-glass-param]::-moz-range-track {
+  background-color: var(--neumo-track-surface) !important;
+  background-image: linear-gradient(180deg, var(--neumo-shadow-soft), var(--neumo-highlight-soft)) !important;
+  border-color: rgba(255, 255, 255, 0.46) !important;
+  box-shadow:
+    inset calc(var(--neumo-control-shadow-x) * 2px) calc(var(--neumo-control-shadow-y) * 2px) 4px var(--neumo-shadow),
+    inset calc(var(--neumo-control-light-x) * 2px) calc(var(--neumo-control-light-y) * 2px) 3px var(--neumo-highlight),
+    0 1px 0 var(--neumo-highlight-soft) !important;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-4 input[type="range"].slider::-webkit-slider-thumb,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-6 input[type="range"].slider::-webkit-slider-thumb,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel input[type="range"][data-glass-param]::-webkit-slider-thumb {
+  background-color: var(--neumo-thumb-surface) !important;
+  box-shadow:
+    0 0 0 1px var(--neumo-shadow-soft),
+    calc(var(--neumo-control-light-x) * 2px) calc(var(--neumo-control-light-y) * 2px) 5px var(--neumo-highlight),
+    calc(var(--neumo-control-shadow-x) * 2px) calc(var(--neumo-control-shadow-y) * 2px) 5px var(--neumo-shadow) !important;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-4 input[type="range"].slider::-moz-range-thumb,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-6 input[type="range"].slider::-moz-range-thumb,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel input[type="range"][data-glass-param]::-moz-range-thumb {
+  background-color: var(--neumo-thumb-surface) !important;
+  box-shadow:
+    0 0 0 1px var(--neumo-shadow-soft),
+    calc(var(--neumo-control-light-x) * 2px) calc(var(--neumo-control-light-y) * 2px) 5px var(--neumo-highlight),
+    calc(var(--neumo-control-shadow-x) * 2px) calc(var(--neumo-control-shadow-y) * 2px) 5px var(--neumo-shadow) !important;
+}
+
+/* 右下などの丸い操作ボタンは寸法を変えず、ON 時は浅い凹み面にする。 */
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-control-bar button:is(.is-active, .is-visible),
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-control-bar .glass-control-pill:is(.is-active, .is-visible),
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-control-bar .canvas-bottom-color-button:is(.selected, .is-selected),
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-control-bar #glass-panel-code-explain:is(.is-active, .is-visible),
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-control-bar #next-case-btn:active,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-control-bar #glass-panel-reset:active,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-control-bar .glass-panel-quick-toggle-button:active,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-control-bar .canvas-bottom-color-button:active,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-control-bar #glass-panel-code-explain:active {
+  background-color: var(--neumo-base-pressed) !important;
+  background-image: none !important;
+  border-color: rgba(255, 255, 255, 0.18) !important;
+  box-shadow:
+    inset calc(var(--neumo-control-shadow-x) * 2px) calc(var(--neumo-control-shadow-y) * 2px) 3px var(--neumo-shadow),
+    inset calc(var(--neumo-control-light-x) * 2px) calc(var(--neumo-control-light-y) * 2px) 3px var(--neumo-highlight),
+    inset 0 0 0 1px rgba(126, 140, 156, 0.18),
+    0 1px 0 rgba(255, 255, 255, 0.20) !important;
+}
+
+body[data-ui-variant="variant-1-glass"].glass-bg-light[data-ui-theme="neumorphism"] #glass-control-bar .canvas-bottom-color-button.selected,
+body[data-ui-variant="variant-1-glass"].glass-bg-light[data-ui-theme="neumorphism"] #glass-control-bar .canvas-bottom-color-button.is-selected,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-control-bar .canvas-bottom-color-button.selected,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-control-bar .canvas-bottom-color-button.is-selected {
+  border-color: rgba(255, 255, 255, 0.18) !important;
+}
+
+/* Neumorphism では、Glass 側の赤いアクティブ印を引き継がない。
+   状態 class は残し、押下面と色差だけで判別する。 */
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-control-bar #glass-panel-code-explain.is-active::after,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-control-bar #glass-panel-code-explain.is-visible::after {
+  content: none !important;
+  display: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-control-bar #glass-panel-code-explain.is-active,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-control-bar #glass-panel-code-explain.is-visible {
+  border-color: rgba(255, 255, 255, 0.18) !important;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-variant-panel #ui-preset-panel .glass-preset-actions > button:not(.glass-preset-edit-lock-toggle) {
+  background-color: var(--neumo-base-raised) !important;
+  background-image: none !important;
+  border-width: 1px !important;
+  border-color: rgba(255, 255, 255, 0.14) !important;
+  box-shadow:
+    calc(var(--neumo-control-light-x) * 1px) calc(var(--neumo-control-light-y) * 1px) 3px var(--neumo-highlight-soft),
+    calc(var(--neumo-control-shadow-x) * 1px) calc(var(--neumo-control-shadow-y) * 1px) 3px var(--neumo-shadow-soft) !important;
+}
+
+/* FINAL AUTHORITY: control-bar buttons reuse the Glass DOM structure only.
+   In Neumorphism, appearance is fully owned here and must not inherit Glass gloss/hover. */
+/* OFF / non-selected: this needs an explicit state selector because the Glass light-background
+   rule also targets non-active controls with !important. */
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-control-bar#glass-control-bar .canvas-trail-mode-button[aria-pressed="false"],
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-control-bar#glass-control-bar .canvas-trail-mode-button[aria-pressed="false"]:hover,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-control-bar#glass-control-bar .glass-panel-quick-toggle-button:not([aria-pressed="true"]),
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-control-bar#glass-control-bar .glass-panel-quick-toggle-button:not([aria-pressed="true"]):hover,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-control-bar#glass-control-bar #next-case-btn#next-case-btn,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-control-bar#glass-control-bar #next-case-btn#next-case-btn:hover,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-control-bar#glass-control-bar #glass-panel-reset#glass-panel-reset,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-control-bar#glass-control-bar #glass-panel-reset#glass-panel-reset:hover,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-control-bar#glass-control-bar #glass-panel-code-explain#glass-panel-code-explain:not(.is-active):not(.is-visible),
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-control-bar#glass-control-bar #glass-panel-code-explain#glass-panel-code-explain:not(.is-active):not(.is-visible):hover {
+  background-color: var(--neumo-base-raised) !important;
+  background-image: none !important;
+  border-color: rgba(155, 168, 181, 0.26) !important;
+  color: var(--neumo-text) !important;
+  text-shadow: none !important;
+  filter: none !important;
+  transition: none !important;
+  box-shadow:
+    calc(var(--neumo-control-light-x) * 3px) calc(var(--neumo-control-light-y) * 3px) 6px var(--neumo-highlight-soft),
+    calc(var(--neumo-control-shadow-x) * 3px) calc(var(--neumo-control-shadow-y) * 3px) 6px var(--neumo-shadow-soft),
+    inset 0 0 0 1px var(--neumo-highlight-soft) !important;
+}
+
+/* Trail selection is defined only by aria-pressed; hover must not alter the chosen surface. */
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-control-bar#glass-control-bar .canvas-trail-mode-button[aria-pressed="true"],
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-control-bar#glass-control-bar .canvas-trail-mode-button[aria-pressed="true"]:hover,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-control-bar#glass-control-bar .glass-panel-quick-toggle-button[aria-pressed="true"],
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-control-bar#glass-control-bar .glass-panel-quick-toggle-button[aria-pressed="true"]:hover,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-control-bar#glass-control-bar #glass-panel-code-explain#glass-panel-code-explain:is(.is-active, .is-visible),
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-control-bar#glass-control-bar #glass-panel-code-explain#glass-panel-code-explain:is(.is-active, .is-visible):hover,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-control-bar#glass-control-bar #next-case-btn#next-case-btn:active,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-control-bar#glass-control-bar #glass-panel-reset#glass-panel-reset:active,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-control-bar#glass-control-bar .glass-panel-quick-toggle-button[data-action="toggle-utility-openclose"]:active {
+  background-color: var(--neumo-base-pressed) !important;
+  background-image: none !important;
+  border-color: rgba(140, 154, 168, 0.24) !important;
+  color: var(--neumo-text) !important;
+  text-shadow: none !important;
+  filter: none !important;
+  transition: none !important;
+  box-shadow:
+    inset calc(var(--neumo-control-shadow-x) * 3px) calc(var(--neumo-control-shadow-y) * 3px) 5px var(--neumo-shadow),
+    inset calc(var(--neumo-control-light-x) * 3px) calc(var(--neumo-control-light-y) * 3px) 5px var(--neumo-highlight),
+    inset 0 0 0 1px rgba(125, 140, 156, 0.15) !important;
+}
+
+/* No Glass shine, active dot, or hover overlay is allowed on these Neumorphism controls. */
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-control-bar#glass-control-bar .canvas-trail-mode-button::before,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-control-bar#glass-control-bar .canvas-trail-mode-button::after,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-control-bar#glass-control-bar .glass-panel-quick-toggle-button::before,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-control-bar#glass-control-bar .glass-panel-quick-toggle-button::after,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-control-bar#glass-control-bar #next-case-btn#next-case-btn::before,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-control-bar#glass-control-bar #next-case-btn#next-case-btn::after,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-control-bar#glass-control-bar #glass-panel-reset#glass-panel-reset::before,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-control-bar#glass-control-bar #glass-panel-reset#glass-panel-reset::after,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-control-bar#glass-control-bar #glass-panel-code-explain#glass-panel-code-explain::before,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-control-bar#glass-control-bar #glass-panel-code-explain#glass-panel-code-explain::after {
+  content: none !important;
+  display: none !important;
+  opacity: 0 !important;
+  background: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  filter: none !important;
+}
+
+/* ID_P5JS260524_053: UIバリエーションの密度と range 表現を、Neumorphism 面として再調整する。
+ * Glassmorphism には作用させず、既存の保存・状態・パネル配置ロジックは変更しない。
+ * 6行構成は維持しつつ、行間と操作列までの呼吸を戻し、詰まり感だけを解消する。 */
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel .glass-preset-details {
+  gap: 12px !important;
+  padding-bottom: 48px !important;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel .glass-preset-rows {
+  gap: 12px !important;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel .glass-preset-row-line {
+  gap: 6px 18px !important;
+  align-items: center !important;
+  min-height: 30px;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel .glass-preset-row-line-full {
+  margin: 1px 0 3px;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel .glass-preset-actions {
+  bottom: 8px !important;
+}
+
+/* UIバリエーションの range は入力要素全体を帯にせず、細い凹溝と白い丸thumbだけを描く。 */
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-variant-panel #ui-preset-panel input[type="range"][data-glass-param] {
+  -webkit-appearance: none !important;
+  appearance: none !important;
+  height: 20px !important;
+  background: transparent !important;
+  background-image: none !important;
+  border: 0 !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-variant-panel #ui-preset-panel input[type="range"][data-glass-param]::-webkit-slider-runnable-track {
+  height: 5px !important;
+  border: 0 !important;
+  border-radius: 999px !important;
+  background: var(--neumo-base-pressed) !important;
+  background-image: none !important;
+  box-shadow:
+    inset calc(var(--neumo-control-shadow-x) * 1.5px) calc(var(--neumo-control-shadow-y) * 1.5px) 3px var(--neumo-shadow-soft),
+    inset calc(var(--neumo-control-light-x) * 1px) calc(var(--neumo-control-light-y) * 1px) 2px var(--neumo-highlight-soft) !important;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-variant-panel #ui-preset-panel input[type="range"][data-glass-param]::-moz-range-track {
+  height: 5px !important;
+  border: 0 !important;
+  border-radius: 999px !important;
+  background: var(--neumo-base-pressed) !important;
+  background-image: none !important;
+  box-shadow:
+    inset calc(var(--neumo-control-shadow-x) * 1.5px) calc(var(--neumo-control-shadow-y) * 1.5px) 3px var(--neumo-shadow-soft),
+    inset calc(var(--neumo-control-light-x) * 1px) calc(var(--neumo-control-light-y) * 1px) 2px var(--neumo-highlight-soft) !important;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-variant-panel #ui-preset-panel input[type="range"][data-glass-param]::-webkit-slider-thumb {
+  -webkit-appearance: none !important;
+  appearance: none !important;
+  width: 18px !important;
+  height: 18px !important;
+  margin-top: -6.5px !important;
+  border: 1px solid rgba(186, 196, 206, 0.42) !important;
+  border-radius: 50% !important;
+  background: rgba(250, 251, 252, 0.98) !important;
+  background-image: none !important;
+  box-shadow:
+    calc(var(--neumo-control-light-x) * 2px) calc(var(--neumo-control-light-y) * 2px) 4px var(--neumo-highlight-soft),
+    calc(var(--neumo-control-shadow-x) * 2px) calc(var(--neumo-control-shadow-y) * 2px) 5px var(--neumo-shadow-soft),
+    inset 0 1px 1px rgba(255, 255, 255, 0.74) !important;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-variant-panel #ui-preset-panel input[type="range"][data-glass-param]::-moz-range-thumb {
+  width: 18px !important;
+  height: 18px !important;
+  border: 1px solid rgba(186, 196, 206, 0.42) !important;
+  border-radius: 50% !important;
+  background: rgba(250, 251, 252, 0.98) !important;
+  background-image: none !important;
+  box-shadow:
+    calc(var(--neumo-control-light-x) * 2px) calc(var(--neumo-control-light-y) * 2px) 4px var(--neumo-highlight-soft),
+    calc(var(--neumo-control-shadow-x) * 2px) calc(var(--neumo-control-shadow-y) * 2px) 5px var(--neumo-shadow-soft),
+    inset 0 1px 1px rgba(255, 255, 255, 0.74) !important;
+}
+
+
+
+
+/* PANEL7 INTEGRATION:
+   4.空間を 3.カーソルと同じNeumorphism面・スライダー質感へ揃える。 */
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-7::before,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-7::after {
+  opacity: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-3 .ui-header,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-4 .ui-header,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-6 .ui-header,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-7 .ui-header {
+  background: linear-gradient(180deg, var(--neumo-highlight-soft), transparent) !important;
+  border-bottom-color: var(--neumo-shadow-soft) !important;
+  color: var(--neumo-text) !important;
+  text-shadow: var(--neumo-text-shadow-value) !important;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-7 .ui-content,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-7 .slider-group,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-7 .slider-layout,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-7 .slider-container {
+  background: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-4 input[type="range"].slider,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-6 input[type="range"].slider,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-7 input[type="range"].slider {
+  height: 3px !important;
+  min-height: 3px !important;
+  background-color: var(--neumo-track-surface) !important;
+  background-image: linear-gradient(180deg, var(--neumo-shadow-soft), var(--neumo-highlight-soft)) !important;
+  border-color: rgba(255, 255, 255, 0.46) !important;
+  box-shadow:
+    inset calc(var(--neumo-control-shadow-x) * 2px) calc(var(--neumo-control-shadow-y) * 2px) 4px var(--neumo-shadow),
+    inset calc(var(--neumo-control-light-x) * 2px) calc(var(--neumo-control-light-y) * 2px) 3px var(--neumo-highlight),
+    0 1px 0 var(--neumo-highlight-soft) !important;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-4 input[type="range"].slider::-webkit-slider-thumb,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-6 input[type="range"].slider::-webkit-slider-thumb,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-7 input[type="range"].slider::-webkit-slider-thumb {
+  -webkit-appearance: none !important;
+  appearance: none !important;
+  width: 11px !important;
+  height: 11px !important;
+  min-width: 11px !important;
+  min-height: 11px !important;
+  border-radius: 50% !important;
+  background-color: var(--neumo-thumb-surface) !important;
+  box-shadow:
+    0 0 0 1px var(--neumo-shadow-soft),
+    calc(var(--neumo-control-light-x) * 2px) calc(var(--neumo-control-light-y) * 2px) 5px var(--neumo-highlight),
+    calc(var(--neumo-control-shadow-x) * 2px) calc(var(--neumo-control-shadow-y) * 2px) 5px var(--neumo-shadow) !important;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-4 input[type="range"].slider::-moz-range-thumb,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-6 input[type="range"].slider::-moz-range-thumb,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-7 input[type="range"].slider::-moz-range-thumb {
+  width: 11px !important;
+  height: 11px !important;
+  min-width: 11px !important;
+  min-height: 11px !important;
+  border-radius: 50% !important;
+  background-color: var(--neumo-thumb-surface) !important;
+  box-shadow:
+    0 0 0 1px var(--neumo-shadow-soft),
+    calc(var(--neumo-control-light-x) * 2px) calc(var(--neumo-control-light-y) * 2px) 5px var(--neumo-highlight),
+    calc(var(--neumo-control-shadow-x) * 2px) calc(var(--neumo-control-shadow-y) * 2px) 5px var(--neumo-shadow) !important;
+}
+
+/* 前工程で決定した誤認防止表示を維持。 */
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-6 .cursor-toggle-checkbox:not(:checked)::before,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-6 .cursor-toggle-checkbox:not(:checked)::after,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-variant-panel #ui-preset-panel .cursor-toggle-checkbox:not(:checked)::before,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-variant-panel #ui-preset-panel .cursor-toggle-checkbox:not(:checked)::after {
+  opacity: 0.12 !important;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-6 .cursor-toggle-checkbox:checked::before,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-6 .cursor-toggle-checkbox:checked::after,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-variant-panel #ui-preset-panel .cursor-toggle-checkbox:checked::before,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-variant-panel #ui-preset-panel .cursor-toggle-checkbox:checked::after {
+  opacity: 1 !important;
+}
+
+/* UIバリエーションのNeumorphismつまみ小型化を維持。 */
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-variant-panel #ui-preset-panel input[type="range"][data-glass-param]::-webkit-slider-thumb {
+  width: 12px !important;
+  height: 12px !important;
+  margin-top: -3.5px !important;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-variant-panel #ui-preset-panel input[type="range"][data-glass-param]::-moz-range-thumb {
+  width: 12px !important;
+  height: 12px !important;
+}
+
+
+/* ID_P5JS260525_NEUMO_LAYOUT: UIバリエーションを1項目1行へ整理し、立体差を判別しやすくする。 */
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-variant-panel {
+  width: 390px !important;
+  padding: 14px 15px 12px !important;
+  gap: 9px !important;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel .glass-preset-details {
+  gap: 10px !important;
+  padding-bottom: 48px !important;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel .glass-preset-rows {
+  gap: 7px !important;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel .glass-preset-row-line {
+  display: block !important;
+  min-height: 29px !important;
+  margin: 0 !important;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel .glass-preset-row {
+  display: grid !important;
+  grid-template-columns: 92px minmax(0, 1fr) 45px !important;
+  column-gap: 10px !important;
+  min-height: 29px !important;
+  align-items: center !important;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel .glass-preset-row-color {
+  grid-template-columns: 92px minmax(0, 1fr) 70px !important;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel .glass-preset-row-color input[type="color"] {
+  width: 100% !important;
+  min-width: 0 !important;
+  height: 22px !important;
+  max-height: 22px !important;
+  margin-left: 0 !important;
+  justify-self: stretch !important;
+  border-radius: 11px !important;
+  border-color: rgba(255, 255, 255, 0.34) !important;
+  box-shadow:
+    inset calc(var(--neumo-control-shadow-x) * 2px) calc(var(--neumo-control-shadow-y) * 2px) 4px var(--neumo-shadow-soft),
+    inset calc(var(--neumo-control-light-x) * 2px) calc(var(--neumo-control-light-y) * 2px) 4px var(--neumo-highlight-soft) !important;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel .glass-preset-row-toggle .cursor-toggle-checkbox {
+  justify-self: start !important;
+  transform: none !important;
+  margin: 0 !important;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel .neumo-surface-shape-group {
+  grid-column: 2 / 4 !important;
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 6px !important;
+  width: 100% !important;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel .neumo-surface-shape-button {
+  height: 29px !important;
+  min-height: 29px !important;
+  padding: 0 5px !important;
+  border-radius: 11px !important;
+  border: 1px solid rgba(255, 255, 255, 0.22) !important;
+  background-color: var(--neumo-base-raised) !important;
+  color: var(--neumo-text) !important;
+  box-shadow:
+    calc(var(--neumo-control-light-x) * var(--neumo-control-depth)) calc(var(--neumo-control-light-y) * var(--neumo-control-depth)) var(--neumo-control-blur) var(--neumo-highlight-soft),
+    calc(var(--neumo-control-shadow-x) * var(--neumo-control-depth)) calc(var(--neumo-control-shadow-y) * var(--neumo-control-depth)) var(--neumo-control-blur) var(--neumo-shadow-soft) !important;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel .neumo-surface-shape-button.is-active,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel .neumo-surface-shape-button[aria-pressed="true"] {
+  background-color: var(--neumo-base-pressed) !important;
+  box-shadow:
+    inset calc(var(--neumo-control-shadow-x) * var(--neumo-control-depth)) calc(var(--neumo-control-shadow-y) * var(--neumo-control-depth)) var(--neumo-control-blur) var(--neumo-shadow),
+    inset calc(var(--neumo-control-light-x) * var(--neumo-control-depth)) calc(var(--neumo-control-light-y) * var(--neumo-control-depth)) var(--neumo-control-blur) var(--neumo-highlight-soft) !important;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel .neumo-light-direction-group {
+  grid-column: 2 / 4 !important;
+  display: grid !important;
+  grid-template-columns: repeat(4, 34px) !important;
+  gap: 8px !important;
+  justify-content: start !important;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel .neumo-light-direction-button {
+  width: 34px !important;
+  height: 29px !important;
+  min-width: 34px !important;
+  min-height: 29px !important;
+  border-radius: 10px !important;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel .glass-preset-row:has(.neumo-surface-shape-group) .glass-preset-value,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel .glass-preset-row:has(.neumo-light-direction-group) .glass-preset-value {
+  display: none !important;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel .glass-preset-actions {
+  gap: 6px !important;
+  flex-wrap: wrap !important;
+}
+
+/* 1〜4パネルと配置ボタンを含め、光・影・凹凸スライダーの差が外形へ明確に出るようにする。 */
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-variant-panel,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] .glass-panel {
+  border-color: rgba(255, 255, 255, 0.28) !important;
+  box-shadow:
+    calc(var(--neumo-light-x) * var(--neumo-depth) * 0.9) calc(var(--neumo-light-y) * var(--neumo-depth) * 0.9) calc(var(--neumo-blur) * 0.8) var(--neumo-highlight-soft),
+    calc(var(--neumo-shadow-x) * var(--neumo-depth) * 1.05) calc(var(--neumo-shadow-y) * var(--neumo-depth) * 1.05) calc(var(--neumo-blur) * 0.9) var(--neumo-shadow),
+    inset calc(var(--neumo-light-x) * -1.5px) calc(var(--neumo-light-y) * -1.5px) 1px var(--neumo-highlight-soft),
+    inset calc(var(--neumo-shadow-x) * -1.5px) calc(var(--neumo-shadow-y) * -1.5px) 1px var(--neumo-shadow-soft) !important;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] .ui-container button:not(.glass-preset-details-toggle),
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-control-bar .glass-control-pill,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-control-bar button {
+  border-color: rgba(255, 255, 255, 0.26) !important;
+  box-shadow:
+    calc(var(--neumo-control-light-x) * var(--neumo-control-depth)) calc(var(--neumo-control-light-y) * var(--neumo-control-depth)) var(--neumo-control-blur) var(--neumo-highlight),
+    calc(var(--neumo-control-shadow-x) * var(--neumo-control-depth)) calc(var(--neumo-control-shadow-y) * var(--neumo-control-depth)) var(--neumo-control-blur) var(--neumo-shadow),
+    inset calc(var(--neumo-control-light-x) * -1px) calc(var(--neumo-control-light-y) * -1px) 0 var(--neumo-highlight-soft) !important;
+}
+
+/* 表面ボタン選択時のパネル形状差を、共通コントラスト強化後も維持する。 */
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"]:has(#ui-preset-panel input[data-glass-param="neumoPanelSurfaceShape"][value="convex"]) #ui-variant-panel,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"]:has(#ui-preset-panel input[data-glass-param="neumoPanelSurfaceShape"][value="convex"]) #glass-cursor-panel-3,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"]:has(#ui-preset-panel input[data-glass-param="neumoPanelSurfaceShape"][value="convex"]) #glass-cursor-panel-4,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"]:has(#ui-preset-panel input[data-glass-param="neumoPanelSurfaceShape"][value="convex"]) #glass-cursor-panel-6,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"]:has(#ui-preset-panel input[data-glass-param="neumoPanelSurfaceShape"][value="convex"]) #glass-cursor-panel-7 {
+  box-shadow:
+    calc(var(--neumo-light-x) * var(--neumo-depth) * 1.2) calc(var(--neumo-light-y) * var(--neumo-depth) * 1.2) calc(var(--neumo-blur) * 0.78) var(--neumo-highlight),
+    calc(var(--neumo-shadow-x) * var(--neumo-depth) * 1.3) calc(var(--neumo-shadow-y) * var(--neumo-depth) * 1.3) calc(var(--neumo-blur) * 0.9) var(--neumo-shadow),
+    inset calc(var(--neumo-light-x) * -1px) calc(var(--neumo-light-y) * -1px) 0 var(--neumo-highlight-soft) !important;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"]:has(#ui-preset-panel input[data-glass-param="neumoPanelSurfaceShape"][value="concave"]) #ui-variant-panel,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"]:has(#ui-preset-panel input[data-glass-param="neumoPanelSurfaceShape"][value="concave"]) #glass-cursor-panel-3,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"]:has(#ui-preset-panel input[data-glass-param="neumoPanelSurfaceShape"][value="concave"]) #glass-cursor-panel-4,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"]:has(#ui-preset-panel input[data-glass-param="neumoPanelSurfaceShape"][value="concave"]) #glass-cursor-panel-6,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"]:has(#ui-preset-panel input[data-glass-param="neumoPanelSurfaceShape"][value="concave"]) #glass-cursor-panel-7 {
+  box-shadow:
+    inset calc(var(--neumo-shadow-x) * var(--neumo-depth) * 0.9) calc(var(--neumo-shadow-y) * var(--neumo-depth) * 0.9) calc(var(--neumo-blur) * 0.88) var(--neumo-shadow),
+    inset calc(var(--neumo-light-x) * var(--neumo-depth) * 0.68) calc(var(--neumo-light-y) * var(--neumo-depth) * 0.68) calc(var(--neumo-blur) * 0.62) var(--neumo-highlight-soft),
+    inset 0 0 0 1px var(--neumo-shadow-soft) !important;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"]:has(#ui-preset-panel input[data-glass-param="neumoPanelSurfaceShape"][value="pressed"]) #ui-variant-panel,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"]:has(#ui-preset-panel input[data-glass-param="neumoPanelSurfaceShape"][value="pressed"]) #glass-cursor-panel-3,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"]:has(#ui-preset-panel input[data-glass-param="neumoPanelSurfaceShape"][value="pressed"]) #glass-cursor-panel-4,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"]:has(#ui-preset-panel input[data-glass-param="neumoPanelSurfaceShape"][value="pressed"]) #glass-cursor-panel-6,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"]:has(#ui-preset-panel input[data-glass-param="neumoPanelSurfaceShape"][value="pressed"]) #glass-cursor-panel-7 {
+  box-shadow:
+    inset calc(var(--neumo-shadow-x) * var(--neumo-depth) * 1.12) calc(var(--neumo-shadow-y) * var(--neumo-depth) * 1.12) calc(var(--neumo-blur) * 0.94) var(--neumo-shadow),
+    inset calc(var(--neumo-light-x) * var(--neumo-depth) * 0.9) calc(var(--neumo-light-y) * var(--neumo-depth) * 0.9) calc(var(--neumo-blur) * 0.72) var(--neumo-highlight),
+    inset 0 0 0 1px var(--neumo-shadow) !important;
+}
+
+
+/* ID_P5JS260525_NEUMO_COMPACT_LAYOUT_02:
+ * 左=スライダー4行、右=チェック3行+予約空白1行。
+ * その下へ色、表面、光源方向、保存操作を圧縮配置する。
+ */
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-variant-panel {
+  width: 468px !important;
+  padding: 12px 14px 11px !important;
+  gap: 7px !important;
+}
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel .glass-preset-details {
+  gap: 8px !important;
+  padding-bottom: 37px !important;
+}
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel .glass-preset-rows {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 5px !important;
+}
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel .neumo-control-grid {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1.28fr) minmax(0, 1.05fr) !important;
+  column-gap: 14px !important;
+  align-items: start !important;
+}
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel .neumo-slider-column,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel .neumo-toggle-column {
+  display: grid !important;
+  grid-template-rows: repeat(4, 23px) !important;
+  row-gap: 2px !important;
+}
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel .neumo-slider-column .glass-preset-row {
+  display: grid !important;
+  grid-template-columns: 38px minmax(0, 1fr) 36px !important;
+  column-gap: 6px !important;
+  min-height: 23px !important;
+  align-items: center !important;
+}
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel .neumo-toggle-column .glass-preset-row {
+  display: grid !important;
+  grid-template-columns: minmax(72px, 1fr) 18px 30px !important;
+  column-gap: 5px !important;
+  min-height: 23px !important;
+  align-items: center !important;
+}
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel .neumo-right-slider-row,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel .neumo-right-slider-row .glass-preset-row {
+  min-height: 23px !important;
+}
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel .neumo-right-slider-row .glass-preset-row {
+  display: grid !important;
+  grid-template-columns: 38px minmax(0, 1fr) 30px !important;
+  column-gap: 5px !important;
+  align-items: center !important;
+}
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel .neumo-right-slider-row input[type="range"] {
+  width: 100% !important;
+  min-width: 0 !important;
+}
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel .neumo-color-row {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  column-gap: 20px !important;
+  margin-top: 1px !important;
+}
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel .neumo-color-row .glass-preset-row {
+  display: grid !important;
+  grid-template-columns: 40px minmax(0, 1fr) 57px !important;
+  column-gap: 7px !important;
+  min-height: 23px !important;
+  align-items: center !important;
+}
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel .neumo-color-row input[type="color"] {
+  width: 100% !important;
+  min-width: 0 !important;
+  height: 18px !important;
+  max-height: 18px !important;
+  margin: 0 !important;
+  justify-self: stretch !important;
+  border-radius: 999px !important;
+}
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel .neumo-shape-row .glass-preset-row,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel .neumo-direction-row .glass-preset-row {
+  display: grid !important;
+  grid-template-columns: 62px minmax(0, 1fr) !important;
+  column-gap: 12px !important;
+  min-height: 29px !important;
+  align-items: center !important;
+}
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel .neumo-surface-shape-group,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel .neumo-light-direction-group {
+  grid-column: 2 !important;
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 7px !important;
+  width: 100% !important;
+  justify-content: stretch !important;
+}
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel .neumo-surface-shape-button,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel .neumo-light-direction-button {
+  width: 100% !important;
+  min-width: 0 !important;
+  height: 27px !important;
+  min-height: 27px !important;
+  padding: 0 6px !important;
+  border-radius: 999px !important;
+  line-height: 25px !important;
+}
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel .neumo-shape-row .glass-preset-value,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel .neumo-direction-row .glass-preset-value {
+  display: none !important;
+}
+/* 複製〜保存と鍵は Glassmorphism と同じ平坦なボタン表現に戻す。 */
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel .glass-preset-actions {
+  gap: 4px !important;
+  bottom: 1px !important;
+  flex-wrap: nowrap !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel .glass-preset-actions > button,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel .glass-preset-edit-lock-toggle {
+  background-color: color-mix(in srgb, var(--glass-surface-rgba, rgba(248, 251, 255, 0.18)) 78%, transparent) !important;
+  background-image: none !important;
+  border: 1px solid rgba(230, 230, 230, 0.42) !important;
+  box-shadow: none !important;
+  color: var(--glass-text, rgba(15, 24, 36, 0.94)) !important;
+  text-shadow: none !important;
+}
+/* neumorphism.io の連続面と同様、外周の小さい段差となる 1px 内側リムは使用しない。 */
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-variant-panel,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] .glass-panel {
+  border-color: transparent !important;
+  background-image: none !important;
+  box-shadow:
+    calc(var(--neumo-light-x) * var(--neumo-depth)) calc(var(--neumo-light-y) * var(--neumo-depth)) var(--neumo-blur) var(--neumo-highlight),
+    calc(var(--neumo-shadow-x) * var(--neumo-depth)) calc(var(--neumo-shadow-y) * var(--neumo-depth)) var(--neumo-blur) var(--neumo-shadow) !important;
+}
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-3 .ui-header,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-4 .ui-header,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-6 .ui-header,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-7 .ui-header {
+  border-bottom-color: transparent !important;
+}
+/* 凸面: 外影のみで浮かせる。 */
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"]:has(#ui-preset-panel input[data-glass-param="neumoPanelSurfaceShape"][value="convex"]) #ui-variant-panel,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"]:has(#ui-preset-panel input[data-glass-param="neumoPanelSurfaceShape"][value="convex"]) #glass-cursor-panel-3,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"]:has(#ui-preset-panel input[data-glass-param="neumoPanelSurfaceShape"][value="convex"]) #glass-cursor-panel-4,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"]:has(#ui-preset-panel input[data-glass-param="neumoPanelSurfaceShape"][value="convex"]) #glass-cursor-panel-6,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"]:has(#ui-preset-panel input[data-glass-param="neumoPanelSurfaceShape"][value="convex"]) #glass-cursor-panel-7 {
+  background-image: none !important;
+  box-shadow:
+    calc(var(--neumo-light-x) * var(--neumo-depth) * 1.15) calc(var(--neumo-light-y) * var(--neumo-depth) * 1.15) calc(var(--neumo-blur) * 1.05) var(--neumo-highlight),
+    calc(var(--neumo-shadow-x) * var(--neumo-depth) * 1.18) calc(var(--neumo-shadow-y) * var(--neumo-depth) * 1.18) calc(var(--neumo-blur) * 1.12) var(--neumo-shadow) !important;
+}
+/* 凹面/押込面: 枠線を足さず、面内部の広い陰影だけで沈ませる。 */
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"]:has(#ui-preset-panel input[data-glass-param="neumoPanelSurfaceShape"][value="concave"]) #ui-variant-panel,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"]:has(#ui-preset-panel input[data-glass-param="neumoPanelSurfaceShape"][value="concave"]) #glass-cursor-panel-3,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"]:has(#ui-preset-panel input[data-glass-param="neumoPanelSurfaceShape"][value="concave"]) #glass-cursor-panel-4,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"]:has(#ui-preset-panel input[data-glass-param="neumoPanelSurfaceShape"][value="concave"]) #glass-cursor-panel-6,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"]:has(#ui-preset-panel input[data-glass-param="neumoPanelSurfaceShape"][value="concave"]) #glass-cursor-panel-7 {
+  background-image: none !important;
+  box-shadow:
+    inset calc(var(--neumo-shadow-x) * var(--neumo-depth) * 0.92) calc(var(--neumo-shadow-y) * var(--neumo-depth) * 0.92) var(--neumo-blur) var(--neumo-shadow),
+    inset calc(var(--neumo-light-x) * var(--neumo-depth) * 0.78) calc(var(--neumo-light-y) * var(--neumo-depth) * 0.78) calc(var(--neumo-blur) * 0.9) var(--neumo-highlight) !important;
+}
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"]:has(#ui-preset-panel input[data-glass-param="neumoPanelSurfaceShape"][value="pressed"]) #ui-variant-panel,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"]:has(#ui-preset-panel input[data-glass-param="neumoPanelSurfaceShape"][value="pressed"]) #glass-cursor-panel-3,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"]:has(#ui-preset-panel input[data-glass-param="neumoPanelSurfaceShape"][value="pressed"]) #glass-cursor-panel-4,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"]:has(#ui-preset-panel input[data-glass-param="neumoPanelSurfaceShape"][value="pressed"]) #glass-cursor-panel-6,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"]:has(#ui-preset-panel input[data-glass-param="neumoPanelSurfaceShape"][value="pressed"]) #glass-cursor-panel-7 {
+  background-image: none !important;
+  box-shadow:
+    inset calc(var(--neumo-shadow-x) * var(--neumo-depth) * 1.15) calc(var(--neumo-shadow-y) * var(--neumo-depth) * 1.15) calc(var(--neumo-blur) * 1.02) var(--neumo-shadow),
+    inset calc(var(--neumo-light-x) * var(--neumo-depth) * 0.95) calc(var(--neumo-light-y) * var(--neumo-depth) * 0.95) calc(var(--neumo-blur) * 0.95) var(--neumo-highlight) !important;
+}
+
+
+/* ID_P5JS260525_NEUMO_INK_PANEL_CONTROL_01:
+ * 追加パラメータの収容、右側ON/OFFの読みやすい配置、右側4パネルの単一面化。
+ */
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] {
+  --neumo-panel-radius: 16px;
+  --neumo-ink-coverage: 0.82;
+  --neumo-ink-fade-seconds: 1.2;
+  --neumo-ink-spread-seconds: 0.6;
+}
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel .neumo-slider-column,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel .neumo-toggle-column {
+  grid-template-rows: repeat(6, 23px) !important;
+  row-gap: 2px !important;
+}
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel .neumo-slider-column .glass-preset-row {
+  grid-template-columns: 56px minmax(0, 1fr) 34px !important;
+  column-gap: 5px !important;
+}
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel .neumo-toggle-column .glass-preset-row-toggle {
+  grid-template-columns: minmax(78px, 1fr) 30px 20px !important;
+  column-gap: 9px !important;
+}
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel .neumo-toggle-column .glass-preset-row-toggle .glass-preset-label {
+  grid-column: 1 !important;
+}
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel .neumo-toggle-column .glass-preset-row-toggle .glass-preset-value {
+  grid-column: 2 !important;
+  grid-row: 1 !important;
+  display: block !important;
+  justify-self: end !important;
+  text-align: right !important;
+  white-space: nowrap !important;
+}
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel .neumo-toggle-column .glass-preset-row-toggle .cursor-toggle-checkbox {
+  grid-column: 3 !important;
+  grid-row: 1 !important;
+  justify-self: end !important;
+}
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel .neumo-right-slider-row .glass-preset-row {
+  grid-template-columns: 58px minmax(0, 1fr) 32px !important;
+  column-gap: 5px !important;
+}
+/* 新規パラメータを含めても上下群の繋がりが読める余白にする。 */
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel .glass-preset-rows {
+  gap: 6px !important;
+}
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel .glass-preset-details {
+  padding-bottom: 38px !important;
+}
+/* 右側 1〜4 は外周枠・二枚重なり表現をなくし、一枚の面と影だけで表現する。 */
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-3,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-4,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-6,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-7 {
+  border: 0 !important;
+  outline: 0 !important;
+  border-radius: var(--neumo-panel-radius) !important;
+  background-image: none !important;
+}
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-3::before,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-3::after,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-4::before,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-4::after,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-6::before,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-6::after,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-7::before,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-7::after {
+  display: none !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+/* ヘッダーはカプセルの凸面にせず、同じ面色の平面へ方向性のある薄い光影のみを付ける。 */
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-3 .ui-header,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-4 .ui-header,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-6 .ui-header,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-7 .ui-header {
+  background: var(--neumo-base-soft) !important;
+  background-image: none !important;
+  border: 0 !important;
+  outline: 0 !important;
+  border-radius: var(--neumo-panel-radius) var(--neumo-panel-radius) 0 0 !important;
+  box-shadow:
+    inset 0 1px 0 var(--neumo-highlight-soft),
+    0 1px 0 var(--neumo-shadow-soft) !important;
+}
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-3.collapsed .ui-header,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-4.collapsed .ui-header,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-6.collapsed .ui-header,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-7.collapsed .ui-header {
+  border-radius: var(--neumo-panel-radius) !important;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-variant-panel {
+  border-radius: var(--neumo-panel-radius) !important;
+}
+
+
+/* C開閉の形状遷移: 内容面の収納と同期し、ヘッダーの下端だけを短くなじませる。 */
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-3 .ui-header,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-4 .ui-header,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-6 .ui-header,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-7 .ui-header {
+  transition: border-radius 0.34s ease, box-shadow 0.34s ease !important;
+}
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-3.glass-panel-collapse-animating[data-glass-collapse-target="closed"] .ui-header,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-4.glass-panel-collapse-animating[data-glass-collapse-target="closed"] .ui-header,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-6.glass-panel-collapse-animating[data-glass-collapse-target="closed"] .ui-header,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-7.glass-panel-collapse-animating[data-glass-collapse-target="closed"] .ui-header {
+  border-radius: var(--neumo-panel-radius) !important;
+}
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-3.glass-panel-collapse-animating[data-glass-collapse-target="open"] .ui-header,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-4.glass-panel-collapse-animating[data-glass-collapse-target="open"] .ui-header,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-6.glass-panel-collapse-animating[data-glass-collapse-target="open"] .ui-header,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-7.glass-panel-collapse-animating[data-glass-collapse-target="open"] .ui-header {
+  border-radius: var(--neumo-panel-radius) var(--neumo-panel-radius) 0 0 !important;
+}
