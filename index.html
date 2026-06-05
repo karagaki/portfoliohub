@@ -11,8 +11,8 @@
   <body>
     <main class="page">
       <section class="hero">
-        <h1>Making Tools for Making</h1>
-        <p class="lead">AI, UI, graphics, and small tools.</p>
+        <h1>Portfolio Hub</h1>
+        <p class="lead">Graphic works, system tools, and UI/UX animation experiments.</p>
       </section>
 
       <section class="cards" aria-label="portfolio sections">
@@ -92,7 +92,7 @@
         <label class="hub-control"><span>カード内側曇り</span><input type="range" min="0.72" max="1.3" step="0.01" data-hub-control="frost-strength" /></label>
         <label class="hub-control"><span>白フチの強さ</span><input type="range" min="0.72" max="1.3" step="0.01" data-hub-control="edge-white" /></label>
         <h3 class="hub-settings__group">文字</h3>
-        <label class="hub-control"><span>文字位置 上下</span><input type="range" min="-22" max="22" step="1" data-hub-control="card-content-y" /></label>
+        <label class="hub-control"><span>文字位置 上下</span><input type="range" min="-60" max="60" step="1" data-hub-control="card-content-y" /></label>
         <label class="hub-control"><span>文字位置 左右</span><input type="range" min="-18" max="18" step="1" data-hub-control="card-content-x" /></label>
         <label class="hub-control"><span>文字ブロック間隔</span><input type="range" min="2" max="18" step="1" data-hub-control="card-text-gap" /></label>
         <label class="hub-control"><span>タイトルサイズ</span><input type="range" min="0.82" max="1.24" step="0.01" data-hub-control="title-size" /></label>
@@ -127,7 +127,9 @@
       </div>
 
       <div class="hub-settings__footer">
+        <button class="hub-settings__copy" type="button">設定値をコピー</button>
         <button class="hub-settings__reset" type="button">初期設定へ戻す</button>
+        <span class="hub-settings__status" aria-live="polite" aria-atomic="true"></span>
       </div>
     </section>
   </body>

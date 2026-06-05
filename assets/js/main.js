@@ -59,6 +59,8 @@ const toggle = document.querySelector(".hub-settings-toggle");
 const panel = document.querySelector(".hub-settings");
 const closeBtn = document.querySelector(".hub-settings__close");
 const resetBtn = document.querySelector(".hub-settings__reset");
+const copyBtn = document.querySelector(".hub-settings__copy");
+const statusEl = document.querySelector(".hub-settings__status");
 
 function toValue(key, raw) {
   const numeric = Number(raw);
@@ -89,6 +91,51 @@ function readSettings() {
 
 function writeSettings(settings) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
+}
+
+function currentSettingsSnapshot() {
+  const snapshot = readSettings();
+  return {
+    name: "portfoliohub.visual-settings",
+    version: 1,
+    settings: snapshot,
+  };
+}
+
+function setStatus(message) {
+  if (!statusEl) return;
+  statusEl.textContent = message;
+  window.clearTimeout(setStatus._timer);
+  setStatus._timer = window.setTimeout(() => {
+    if (statusEl.textContent === message) statusEl.textContent = "";
+  }, 1600);
+}
+
+async function copySettings() {
+  const text = JSON.stringify(currentSettingsSnapshot(), null, 2);
+  try {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      await navigator.clipboard.writeText(text);
+    } else {
+      throw new Error("clipboard unavailable");
+    }
+    setStatus("コピーしました");
+  } catch {
+    try {
+      const ta = document.createElement("textarea");
+      ta.value = text;
+      ta.setAttribute("readonly", "true");
+      ta.style.position = "fixed";
+      ta.style.left = "-9999px";
+      document.body.appendChild(ta);
+      ta.select();
+      const ok = document.execCommand("copy");
+      ta.remove();
+      setStatus(ok ? "コピーしました" : "コピーできませんでした");
+    } catch {
+      setStatus("コピーできませんでした");
+    }
+  }
 }
 
 function applySettings(settings) {
@@ -251,10 +298,13 @@ if (toggle && panel) {
 
 if (closeBtn) closeBtn.addEventListener("click", () => setOpen(false));
 
+if (copyBtn) copyBtn.addEventListener("click", copySettings);
+
 if (resetBtn) {
   resetBtn.addEventListener("click", () => {
     applySettings(defaults);
     writeSettings(defaults);
+    setStatus("初期値に戻しました");
   });
 }
 
