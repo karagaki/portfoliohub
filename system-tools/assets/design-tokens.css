@@ -4,41 +4,41 @@
 
 :root {
   /* Panel geometry */
-  --jarvis-panel-height-xs: 120px;
-  --jarvis-panel-height-sm: 160px;
-  --jarvis-panel-height-md: 220px;
-  --jarvis-panel-height-lg: 300px;
-  --jarvis-panel-height-xl: 420px;
+  --jarvis-panel-height-xs: 108px;
+  --jarvis-panel-height-sm: 144px;
+  --jarvis-panel-height-md: 198px;
+  --jarvis-panel-height-lg: 270px;
+  --jarvis-panel-height-xl: 378px;
 
-  --jarvis-panel-gap-xs: 8px;
-  --jarvis-panel-gap-sm: 12px;
-  --jarvis-panel-gap-md: 16px;
-  --jarvis-panel-gap-lg: 20px;
+  --jarvis-panel-gap-xs: 6px;
+  --jarvis-panel-gap-sm: 9px;
+  --jarvis-panel-gap-md: 13px;
+  --jarvis-panel-gap-lg: 16px;
 
-  --jarvis-panel-padding-xs: 10px 12px;
-  --jarvis-panel-padding-sm: 14px 16px;
-  --jarvis-panel-padding-md: 18px 20px;
-  --jarvis-panel-padding-lg: 22px 24px;
+  --jarvis-panel-padding-xs: 8px 10px;
+  --jarvis-panel-padding-sm: 12px 14px;
+  --jarvis-panel-padding-md: 15px 17px;
+  --jarvis-panel-padding-lg: 18px 20px;
 
-  --jarvis-panel-radius-sm: 14px;
-  --jarvis-panel-radius-md: 18px;
-  --jarvis-panel-radius-lg: 22px;
-  --jarvis-panel-radius-xl: 28px;
+  --jarvis-panel-radius-sm: 12px;
+  --jarvis-panel-radius-md: 16px;
+  --jarvis-panel-radius-lg: 20px;
+  --jarvis-panel-radius-xl: 24px;
 
-  --jarvis-panel-shadow-soft: 0 8px 20px rgba(30, 44, 43, 0.08);
-  --jarvis-panel-shadow-medium: 0 14px 28px rgba(30, 44, 43, 0.12);
-  --jarvis-panel-shadow-strong: 0 18px 36px rgba(30, 44, 43, 0.16);
+  --jarvis-panel-shadow-soft: 0 7px 17px rgba(30, 44, 43, 0.07);
+  --jarvis-panel-shadow-medium: 0 12px 24px rgba(30, 44, 43, 0.11);
+  --jarvis-panel-shadow-strong: 0 16px 32px rgba(30, 44, 43, 0.15);
 
   --jarvis-panel-density-dense: 0.92;
   --jarvis-panel-density-comfortable: 1;
   --jarvis-panel-density-roomy: 1.08;
 
   /* Text */
-  --jarvis-text-size-xs: 12px;
-  --jarvis-text-size-sm: 13px;
-  --jarvis-text-size-md: 15px;
-  --jarvis-text-size-lg: 18px;
-  --jarvis-text-size-xl: 22px;
+  --jarvis-text-size-xs: 11px;
+  --jarvis-text-size-sm: 12px;
+  --jarvis-text-size-md: 14px;
+  --jarvis-text-size-lg: 16px;
+  --jarvis-text-size-xl: 20px;
 
   --jarvis-text-weight-regular: 400;
   --jarvis-text-weight-medium: 500;
@@ -60,7 +60,7 @@
   --jarvis-animation-delay-short: 80ms;
   --jarvis-animation-delay-medium: 160ms;
   --jarvis-animation-delay-long: 240ms;
-  --jarvis-interaction-response-duration: 140ms;
-  --jarvis-reveal-timing: 320ms;
-  --jarvis-fade-timing: 220ms;
+  --jarvis-interaction-response-duration: 130ms;
+  --jarvis-reveal-timing: 300ms;
+  --jarvis-fade-timing: 200ms;
 }
