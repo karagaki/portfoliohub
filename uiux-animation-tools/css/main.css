@@ -79,8 +79,8 @@ body[data-ui-ready="1"] {
 }
 
 #ui-wrapper {
-    flex: 0 0 238px;
-    width: 238px;
+    flex: 0 0 266px;
+    width: 266px;
     height: 100vh;
     overflow: visible;
     position: relative;
@@ -735,7 +735,9 @@ body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-import {
 
 body[data-ui-variant="variant-1-glass"] #glass-control-bar {
     position: fixed;
-    right: 24px;
+    left: 20px;
+    right: auto;
+    width: min(1114px, calc(100vw - 40px));
     bottom: 24px;
     display: flex;
     flex-direction: row;
@@ -1172,8 +1174,9 @@ body[data-ui-variant="variant-1-glass"] .ui-container {
 /* Glass: floating layer */
 body[data-ui-variant="variant-1-glass"] #glass-control-bar {
     position: fixed;
-    left: 24px;
-    right: 24px;
+    left: 20px;
+    right: auto;
+    width: min(1114px, calc(100vw - 40px));
     bottom: 24px;
     display: flex;
     flex-direction: column;
@@ -4177,9 +4180,9 @@ body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3,
 body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-4,
 body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6,
 body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7 {
-    width: min(276px, calc(100vw - 32px)) !important;
-    max-width: min(276px, calc(100vw - 32px)) !important;
-    min-width: min(276px, calc(100vw - 32px)) !important;
+    width: min(221px, calc(100vw - 32px)) !important;
+    max-width: min(221px, calc(100vw - 32px)) !important;
+    min-width: min(221px, calc(100vw - 32px)) !important;
     box-sizing: border-box !important;
 }
 
