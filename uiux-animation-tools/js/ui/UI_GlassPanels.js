@@ -38,8 +38,8 @@ window.UIGlassPanels = (function() {
     const LIQUID_GLASS_PRESET_EDIT_LOCKS_KEY = 'uiLiquidGlassPresetEditLocks';
     const LIQUID_GLASS_PRESET_CUSTOM_KEY = 'uiLiquidGlassCustomPresets';
     const LIQUID_GLASS_PRESET_SELECTION_KEY = 'uiLiquidGlassVariantPreset';
-    const RESET_EDGE_MARGIN = 30;
-    const PANEL_VISIBILITY_ANIMATION_MS = 700;
+    const RESET_EDGE_MARGIN = 24;
+    const PANEL_VISIBILITY_ANIMATION_MS = 560;
     const panelVisibilityTimers = new WeakMap();
     const panelCollapseTimers = new WeakMap();
     const panelDockHideTimers = new WeakMap();
@@ -98,27 +98,27 @@ window.UIGlassPanels = (function() {
         'vector-container'
     ];
     const DOCKED_HOME = new Map();
-    const SETTINGS_PANEL_DEFAULT_PLACEMENT = { right: 24, bottom: 120 };
+    const SETTINGS_PANEL_DEFAULT_PLACEMENT = { right: 20, bottom: 96 };
     const DEFAULT_LAYOUT = {
-        'ui-variant-panel': { x: 0, y: 0, left: 30, top: 30 },
+        'ui-variant-panel': { x: 0, y: 0, left: 24, top: 24 },
         'glass-control-bar': { x: 0, y: 0, right: RESET_EDGE_MARGIN, bottom: RESET_EDGE_MARGIN },
-        [SETTINGS_PANEL_ID]: { x: 0, y: 0, right: 24, top: 860 },
-        [SETTINGS_PANEL_TEST_ID]: { x: 0, y: 0, right: 24, bottom: 212 },
-        [CURSOR_PANEL_1_ID]: { x: 0, y: 0, right: 24, top: 512 },
-        [CURSOR_PANEL_2_ID]: { x: 0, y: 0, right: 24, top: 570 },
-        [CURSOR_PANEL_3_ID]: { x: 0, y: 0, right: 24, top: 628 },
-        [CURSOR_PANEL_4_ID]: { x: 0, y: 0, right: 24, top: 686 },
-        [CURSOR_PANEL_6_ID]: { x: 0, y: 0, right: 24, top: 744 },
-        [CURSOR_PANEL_7_ID]: { x: 0, y: 0, right: 24, top: 802 },
-        [CURSOR_PANEL_5_ID]: { x: 0, y: 0, right: 24, bottom: 24 },
-        'canvas-size-container': { x: 0, y: 0, right: 24, top: 232 },
-        'button-container': { x: 0, y: 0, right: 24, top: 302 },
-        'color-container': { x: 0, y: 0, right: 24, top: 372 },
-        'slider-container': { x: 0, y: 0, right: 24, top: 442 },
-        'svg-file-container': { x: 0, y: 0, right: 24, top: 582 },
-        'svg-anime-container': { x: 0, y: 0, right: 24, top: 652 },
-        'load-container': { x: 0, y: 0, right: 24, top: 722 },
-        'vector-container': { x: 0, y: 0, right: 24, top: 792 },
+        [SETTINGS_PANEL_ID]: { x: 0, y: 0, right: 20, top: 720 },
+        [SETTINGS_PANEL_TEST_ID]: { x: 0, y: 0, right: 20, bottom: 176 },
+        [CURSOR_PANEL_1_ID]: { x: 0, y: 0, right: 20, top: 408 },
+        [CURSOR_PANEL_2_ID]: { x: 0, y: 0, right: 20, top: 458 },
+        [CURSOR_PANEL_3_ID]: { x: 0, y: 0, right: 20, top: 508 },
+        [CURSOR_PANEL_4_ID]: { x: 0, y: 0, right: 20, top: 558 },
+        [CURSOR_PANEL_6_ID]: { x: 0, y: 0, right: 20, top: 608 },
+        [CURSOR_PANEL_7_ID]: { x: 0, y: 0, right: 20, top: 658 },
+        [CURSOR_PANEL_5_ID]: { x: 0, y: 0, right: 20, bottom: 20 },
+        'canvas-size-container': { x: 0, y: 0, right: 20, top: 180 },
+        'button-container': { x: 0, y: 0, right: 20, top: 238 },
+        'color-container': { x: 0, y: 0, right: 20, top: 296 },
+        'slider-container': { x: 0, y: 0, right: 20, top: 354 },
+        'svg-file-container': { x: 0, y: 0, right: 20, top: 470 },
+        'svg-anime-container': { x: 0, y: 0, right: 20, top: 528 },
+        'load-container': { x: 0, y: 0, right: 20, top: 586 },
+        'vector-container': { x: 0, y: 0, right: 20, top: 644 },
         'case-comparison': { x: 0, y: 0, left: RESET_EDGE_MARGIN, bottom: RESET_EDGE_MARGIN }
     };
     const dragState = {
@@ -6126,8 +6126,8 @@ window.UIGlassPanels = (function() {
             body[data-ui-variant="variant-1-glass"] #ui-container,
             body[data-ui-variant="variant-1-glass"] .ui-container,
             body[data-ui-variant="variant-1-glass"] #ui-variant-panel {
-                width: min(416px, calc(100vw - 24px));
-                max-width: min(416px, calc(100vw - 24px));
+                width: min(332px, calc(100vw - 20px));
+                max-width: min(332px, calc(100vw - 20px));
                 min-width: 0;
                 box-sizing: border-box;
             }
@@ -6140,8 +6140,8 @@ window.UIGlassPanels = (function() {
             body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7 {
                 position: fixed;
                 right: 24px;
-                width: min(320px, calc(100vw - 24px));
-                max-width: min(320px, calc(100vw - 24px));
+                width: min(256px, calc(100vw - 20px));
+                max-width: min(256px, calc(100vw - 20px));
                 min-width: 0;
                 box-sizing: border-box;
                 z-index: 62;
@@ -6154,8 +6154,8 @@ window.UIGlassPanels = (function() {
             body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6 { top: 802px; }
             body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7 { top: 860px; }
             body[data-ui-variant="variant-1-glass"] #ui-variant-panel {
-                width: min(416px, calc(100vw - 24px));
-                max-width: min(416px, calc(100vw - 24px));
+                width: min(332px, calc(100vw - 20px));
+                max-width: min(332px, calc(100vw - 20px));
             }
             body[data-ui-variant="variant-1-glass"] .ui-container.is-dragging .ui-header {
                 cursor: grabbing;

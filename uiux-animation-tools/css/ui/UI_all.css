@@ -28,13 +28,13 @@ body.ui-initializing .ui-container .ui-content {
 .ui-container {
     margin-bottom: 0;
     background-color: #e8e8e8;
-    border-radius: 5px;
+    border-radius: 4px;
     overflow: hidden;
 }
 
 .ui-header {
     cursor: pointer;
-    padding: 8px 10px;
+    padding: 6px 8px;
     background-color: #d0d0d0;
     font-weight: bold;
     display: flex;
@@ -53,18 +53,18 @@ body.ui-initializing .ui-container .ui-content {
 
 .ui-container:not(.collapsed) .ui-content {
     transition: max-height 0.12s ease-out, opacity 0.12s ease-out, padding 0.12s ease-out;
-    max-height: 600px;
+    max-height: 520px;
     opacity: 1;
-    padding: 8px;
+    padding: 6px;
     background-color: #e8e8e8;
     overflow: hidden;
 }
 
 .slider-group {
-    margin-bottom: 2px;
+    margin-bottom: 1px;
     background-color: #fefefe;
-    padding: 5px;
-    border-radius: 5px;
+    padding: 4px;
+    border-radius: 4px;
     box-shadow: 0 1px 3px rgba(0,0,0,0.8);
 }
 
@@ -80,11 +80,11 @@ body.ui-initializing .ui-container .ui-content {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    font-size: 10px;
+    font-size: 9px;
 }
 
 .label-value-container {
-    width: 95px;
+    width: 80px;
     flex-shrink: 0;
     display: flex;
     flex-direction: column;
@@ -103,8 +103,8 @@ body.ui-initializing .ui-container .ui-content {
 .slider-container {
     flex-grow: 1;
     position: relative;
-    width: calc(100% - 200px);
-    margin: 0 -22px;
+    width: calc(100% - 168px);
+    margin: 0 -16px;
 }
 
 .slider {
@@ -141,12 +141,12 @@ body.ui-initializing .ui-container .ui-content {
 }
 
 .reset-btn {
-    font-size: 0.5em;
+    font-size: 0.48em;
     padding: 2px 4px;
     background-color: #7070ff;
     color: #fff;
     border: none;
-    border-radius: 5px;
+    border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.2s;
     margin-right: -0.9px;
