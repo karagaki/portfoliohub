@@ -4,3 +4,7 @@
 __pycache__/
 .portfolio_server.pid
 .portfolio_server.log
+.portfoliohub_server.pid
+.portfoliohub_server.log
+PortfolioHub_起動.command
+PortfolioHub_停止.command
