@@ -1,7 +1,7 @@
 /* main.css */
 
 #ui-container {
-    gap: 0; /* すべてのコンテナ間の間隔を最小化 */
+    gap: 1px; /* すべてのコンテナ間の間隔を1pxに設定 */
 }
 
 #canvas-size-container,
@@ -32,7 +32,7 @@ body {
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
-    font-size: 11px;  /*主にヘッダー*/
+    font-size: 12px;  /*主にヘッダー*/
     overflow: hidden;
 }
 
@@ -49,7 +49,7 @@ body[data-ui-ready="1"] {
     flex-direction: row;
     align-items: flex-start;
     height: 100vh;
-    min-width: 900px;
+    min-width: 960px;
     position: relative;
 }
 
@@ -58,7 +58,7 @@ body[data-ui-ready="1"] {
     display: block;
     padding: 0;
     overflow: hidden;
-    min-width: 520px;
+    min-width: 560px;
     position: relative;
     z-index: 1;
 }
@@ -79,8 +79,8 @@ body[data-ui-ready="1"] {
 }
 
 #ui-wrapper {
-    flex: 0 0 266px;
-    width: 266px;
+    flex: 0 0 272px;
+    width: 272px;
     height: 100vh;
     overflow: visible;
     position: relative;
@@ -97,8 +97,8 @@ body[data-ui-variant="variant-1-glass"] #ui-wrapper {
 }
 
 .ui-variant-panel {
-    margin-bottom: 2px;
-    padding: 3px 5px;
+    margin-bottom: 3px;
+    padding: 4px 6px;
     background: #f4f4f4;
     border-radius: 6px;
     display: flex;
@@ -109,13 +109,13 @@ body[data-ui-variant="variant-1-glass"] #ui-wrapper {
 }
 
 .ui-variant-panel label {
-    font-size: 9px;
+    font-size: 10px;
     font-weight: bold;
     white-space: nowrap;
 }
 
 .ui-variant-panel select {
-    min-width: 92px;
+    min-width: 104px;
     font: inherit;
 }
 
@@ -153,9 +153,9 @@ body[data-ui-variant="variant-1-glass"] #ui-variant-panel {
     flex-direction: column;
     align-items: stretch;
     justify-content: flex-start;
-    gap: 2px;
+    gap: 3px;
     margin-bottom: 0;
-    padding: 5px 6px;
+    padding: 6px 8px;
     background: rgba(255, 255, 255, calc(var(--glass-opacity, 0) * 0.02));
     -webkit-backdrop-filter:
         blur(calc(var(--glass-blur-amount, 0) * 8px))
@@ -201,7 +201,7 @@ body[data-ui-variant="variant-1-glass"] #ui-preset-panel {
     flex-direction: column;
     align-items: stretch;
     justify-content: flex-start;
-    gap: 1px;
+    gap: 2px;
     margin: 0;
     padding: 0;
     position: relative;
@@ -259,12 +259,12 @@ body[data-ui-variant="variant-1-glass"] #ui-preset-panel::after {
 }
 
 body[data-ui-variant="variant-1-glass"] #ui-wrapper {
-    width: 238px;
+    width: 272px;
 }
 
 body[data-ui-variant="variant-1-glass"] #ui-variant-panel,
 body[data-ui-variant="variant-1-glass"] #ui-container {
-    width: 238px;
+    width: 272px;
 }
 
 body[data-ui-variant="variant-1-glass"] #ui-preset-panel.collapsed .glass-preset-details,
@@ -277,7 +277,7 @@ body:not([data-ui-variant="variant-1-glass"]) #ui-preset-panel {
 }
 
 body[data-ui-variant="variant-1-glass"] #ui-preset-panel label {
-    font-size: 9px;
+    font-size: 10px;
     font-weight: bold;
     color: #17202a;
     white-space: nowrap;
@@ -301,19 +301,19 @@ body[data-ui-variant="variant-1-glass"] #ui-preset-panel select {
 }
 
 body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-details-toggle {
-    width: 18px;
-    min-width: 18px;
-    flex: 0 0 18px;
+    width: 20px;
+    min-width: 20px;
+    flex: 0 0 20px;
     text-align: left;
     justify-content: flex-start;
     padding: 0 2px;
-    font-size: 10px;
+    font-size: 12px;
     line-height: 1.1;
     background: transparent !important;
     border: 0 !important;
     box-shadow: none;
     color: transparent !important;
-    min-height: 18px;
+    min-height: 20px;
     text-shadow: none !important;
 }
 
@@ -735,9 +735,7 @@ body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-import {
 
 body[data-ui-variant="variant-1-glass"] #glass-control-bar {
     position: fixed;
-    left: 20px;
-    right: auto;
-    width: min(1114px, calc(100vw - 40px));
+    right: 24px;
     bottom: 24px;
     display: flex;
     flex-direction: row;
@@ -1174,9 +1172,8 @@ body[data-ui-variant="variant-1-glass"] .ui-container {
 /* Glass: floating layer */
 body[data-ui-variant="variant-1-glass"] #glass-control-bar {
     position: fixed;
-    left: 20px;
-    right: auto;
-    width: min(1114px, calc(100vw - 40px));
+    left: 24px;
+    right: 24px;
     bottom: 24px;
     display: flex;
     flex-direction: column;
@@ -4180,9 +4177,9 @@ body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3,
 body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-4,
 body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6,
 body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7 {
-    width: min(221px, calc(100vw - 32px)) !important;
-    max-width: min(221px, calc(100vw - 32px)) !important;
-    min-width: min(221px, calc(100vw - 32px)) !important;
+    width: min(276px, calc(100vw - 32px)) !important;
+    max-width: min(276px, calc(100vw - 32px)) !important;
+    min-width: min(276px, calc(100vw - 32px)) !important;
     box-sizing: border-box !important;
 }
 

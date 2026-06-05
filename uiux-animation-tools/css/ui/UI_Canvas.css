@@ -33,7 +33,7 @@
     font-weight: bold;
     background-color: #fefefe;
     border-radius: 8px;
-    padding: 4px;
+    padding: 6px;
     width: 100%;
     box-sizing: border-box;
     box-shadow: 0 1px 3px rgba(0,0,0,0.8);
@@ -43,7 +43,7 @@
 
 /* ラベルのスタイル */
 #canvas-size-container label {
-    margin-right: 8px;
+    margin-right: 10px;
     white-space: nowrap;
 }
 
@@ -91,8 +91,8 @@
 
 /* スライダーコンテナのスタイル */
 #canvas-size-container .slider-container {
-    width: calc(100% - 84px);
-    margin-right: 8px;
+    width: calc(100% - 100px);
+    margin-right: 10px;
 }
 
 /* スライダーレイアウトのスタイル */

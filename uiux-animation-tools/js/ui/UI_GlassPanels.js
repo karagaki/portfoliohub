@@ -38,11 +38,8 @@ window.UIGlassPanels = (function() {
     const LIQUID_GLASS_PRESET_EDIT_LOCKS_KEY = 'uiLiquidGlassPresetEditLocks';
     const LIQUID_GLASS_PRESET_CUSTOM_KEY = 'uiLiquidGlassCustomPresets';
     const LIQUID_GLASS_PRESET_SELECTION_KEY = 'uiLiquidGlassVariantPreset';
-    const RESET_EDGE_MARGIN = 20;
-    const FLOATING_PANEL_WIDTH = 266;
-    const DOCK_PANEL_WIDTH = 221;
-    const CONTROL_BAR_WIDTH = 1114;
-    const PANEL_VISIBILITY_ANIMATION_MS = 560;
+    const RESET_EDGE_MARGIN = 30;
+    const PANEL_VISIBILITY_ANIMATION_MS = 700;
     const panelVisibilityTimers = new WeakMap();
     const panelCollapseTimers = new WeakMap();
     const panelDockHideTimers = new WeakMap();
@@ -101,27 +98,27 @@ window.UIGlassPanels = (function() {
         'vector-container'
     ];
     const DOCKED_HOME = new Map();
-    const SETTINGS_PANEL_DEFAULT_PLACEMENT = { right: 20, bottom: 96 };
+    const SETTINGS_PANEL_DEFAULT_PLACEMENT = { right: 24, bottom: 120 };
     const DEFAULT_LAYOUT = {
-        'ui-variant-panel': { x: 0, y: 0, left: 20, top: 20 },
+        'ui-variant-panel': { x: 0, y: 0, left: 30, top: 30 },
         'glass-control-bar': { x: 0, y: 0, right: RESET_EDGE_MARGIN, bottom: RESET_EDGE_MARGIN },
-        [SETTINGS_PANEL_ID]: { x: 0, y: 0, right: 20, top: 720 },
-        [SETTINGS_PANEL_TEST_ID]: { x: 0, y: 0, right: 16, bottom: 140 },
-        [CURSOR_PANEL_1_ID]: { x: 0, y: 0, right: 16, top: 328 },
-        [CURSOR_PANEL_2_ID]: { x: 0, y: 0, right: 16, top: 372 },
-        [CURSOR_PANEL_3_ID]: { x: 0, y: 0, right: 16, top: 416 },
-        [CURSOR_PANEL_4_ID]: { x: 0, y: 0, right: 16, top: 460 },
-        [CURSOR_PANEL_6_ID]: { x: 0, y: 0, right: 16, top: 504 },
-        [CURSOR_PANEL_7_ID]: { x: 0, y: 0, right: 16, top: 548 },
-        [CURSOR_PANEL_5_ID]: { x: 0, y: 0, right: 16, bottom: 16 },
-        'canvas-size-container': { x: 0, y: 0, right: 16, top: 144 },
-        'button-container': { x: 0, y: 0, right: 16, top: 190 },
-        'color-container': { x: 0, y: 0, right: 16, top: 236 },
-        'slider-container': { x: 0, y: 0, right: 16, top: 282 },
-        'svg-file-container': { x: 0, y: 0, right: 16, top: 376 },
-        'svg-anime-container': { x: 0, y: 0, right: 16, top: 422 },
-        'load-container': { x: 0, y: 0, right: 16, top: 468 },
-        'vector-container': { x: 0, y: 0, right: 16, top: 514 },
+        [SETTINGS_PANEL_ID]: { x: 0, y: 0, right: 24, top: 860 },
+        [SETTINGS_PANEL_TEST_ID]: { x: 0, y: 0, right: 24, bottom: 212 },
+        [CURSOR_PANEL_1_ID]: { x: 0, y: 0, right: 24, top: 512 },
+        [CURSOR_PANEL_2_ID]: { x: 0, y: 0, right: 24, top: 570 },
+        [CURSOR_PANEL_3_ID]: { x: 0, y: 0, right: 24, top: 628 },
+        [CURSOR_PANEL_4_ID]: { x: 0, y: 0, right: 24, top: 686 },
+        [CURSOR_PANEL_6_ID]: { x: 0, y: 0, right: 24, top: 744 },
+        [CURSOR_PANEL_7_ID]: { x: 0, y: 0, right: 24, top: 802 },
+        [CURSOR_PANEL_5_ID]: { x: 0, y: 0, right: 24, bottom: 24 },
+        'canvas-size-container': { x: 0, y: 0, right: 24, top: 232 },
+        'button-container': { x: 0, y: 0, right: 24, top: 302 },
+        'color-container': { x: 0, y: 0, right: 24, top: 372 },
+        'slider-container': { x: 0, y: 0, right: 24, top: 442 },
+        'svg-file-container': { x: 0, y: 0, right: 24, top: 582 },
+        'svg-anime-container': { x: 0, y: 0, right: 24, top: 652 },
+        'load-container': { x: 0, y: 0, right: 24, top: 722 },
+        'vector-container': { x: 0, y: 0, right: 24, top: 792 },
         'case-comparison': { x: 0, y: 0, left: RESET_EDGE_MARGIN, bottom: RESET_EDGE_MARGIN }
     };
     const dragState = {
@@ -6129,8 +6126,8 @@ window.UIGlassPanels = (function() {
             body[data-ui-variant="variant-1-glass"] #ui-container,
             body[data-ui-variant="variant-1-glass"] .ui-container,
             body[data-ui-variant="variant-1-glass"] #ui-variant-panel {
-                width: min(${FLOATING_PANEL_WIDTH}px, calc(100vw - 20px));
-                max-width: min(${FLOATING_PANEL_WIDTH}px, calc(100vw - 20px));
+                width: min(416px, calc(100vw - 24px));
+                max-width: min(416px, calc(100vw - 24px));
                 min-width: 0;
                 box-sizing: border-box;
             }
@@ -6142,23 +6139,23 @@ window.UIGlassPanels = (function() {
             body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6,
             body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7 {
                 position: fixed;
-                right: 20px;
-                width: min(${DOCK_PANEL_WIDTH}px, calc(100vw - 20px));
-                max-width: min(${DOCK_PANEL_WIDTH}px, calc(100vw - 20px));
+                right: 24px;
+                width: min(320px, calc(100vw - 24px));
+                max-width: min(320px, calc(100vw - 24px));
                 min-width: 0;
                 box-sizing: border-box;
                 z-index: 62;
             }
-            body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-1 { top: 328px; }
-            body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-2 { top: 372px; }
-            body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3 { top: 416px; }
-            body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-4 { top: 460px; }
-            body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-5 { top: 504px; }
-            body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6 { top: 548px; }
-            body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7 { top: 592px; }
+            body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-1 { top: 480px; }
+            body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-2 { top: 538px; }
+            body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3 { top: 596px; }
+            body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-4 { top: 686px; }
+            body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-5 { top: 744px; }
+            body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6 { top: 802px; }
+            body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7 { top: 860px; }
             body[data-ui-variant="variant-1-glass"] #ui-variant-panel {
-                width: min(${FLOATING_PANEL_WIDTH}px, calc(100vw - 20px));
-                max-width: min(${FLOATING_PANEL_WIDTH}px, calc(100vw - 20px));
+                width: min(416px, calc(100vw - 24px));
+                max-width: min(416px, calc(100vw - 24px));
             }
             body[data-ui-variant="variant-1-glass"] .ui-container.is-dragging .ui-header {
                 cursor: grabbing;
