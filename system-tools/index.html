@@ -2947,9 +2947,8 @@
         return fallback;
       }
     }
-    const API_PREFIX = '/a' + 'pi';
     async function api(path, opts = {}) {
-      console.warn(`[JARVIS] static demo skipped request: ${path}`);
+      console.warn(`[System Tools] static demo skipped request: ${path}`);
       return { ok: false, error: `${path} is disabled in the static demo` };
     }
     async function load() { STATE = normalizeWebState(null); render() }
@@ -2964,7 +2963,7 @@
         return `<div class="card" style="margin-bottom:12px"><div class="type">${esc(c.knowledge_type)} / ${esc(target)}</div><h3 style="margin:8px 0">${esc(c.summary)}</h3><div class="muted">根拠元: ${esc(src)}<br>候補理由: ${esc(c.why || '根拠に基づく候補')}</div><div class="buttons"><button class="btn primary" onclick="reviewQueue('${c.candidate_id}','approved_candidate')">承認候補として保持</button><button class="btn hold" onclick="reviewQueue('${c.candidate_id}','held')">保留</button><button class="btn danger" onclick="reviewQueue('${c.candidate_id}','rejected')">却下</button><button class="btn secondary" onclick="reviewQueue('${c.candidate_id}','pending','${c.target_system === 'JARVIS_DESIGN' ? 'JARVIS' : 'JARVIS_DESIGN'}')">${c.target_system === 'JARVIS_DESIGN' ? 'System Toolsへ変更' : 'Designへ変更'}</button></div></div>`;
       }).join('') : '<div class="empty">未承認候補はありません。</div>';
     }
-    async function reviewQueue(id, status, target) { const r = await api(API_PREFIX + '/candidate-review', { method: 'POST', body: JSON.stringify({ candidate_id: id, review_state: status, target_system: target }) }); if (!r.ok) { toast(r.error); return } await load(); page('queue'); toast(r.no_change ? r.message : '選別結果を保存しました。') }
+    async function reviewQueue(id, status, target) { const r = await api('candidate-review', { method: 'POST', body: JSON.stringify({ candidate_id: id, review_state: status, target_system: target }) }); if (!r.ok) { toast('静的デモでは承認候補の保存はできません。'); return } await load(); page('queue'); toast(r.no_change ? r.message : '選別結果を保存しました。') }
 
     function renderApproved() {
       const approved = STATE.candidates.filter(c => c.review_state === 'approved_candidate');
@@ -2998,9 +2997,9 @@
       const p = packs[0];
       qs('#applicationContent').innerHTML = `<div class="banner good"><b>適用準備文書を出力済み</b>　${esc(p.filename)}<br><span class="muted">適用先: ${esc(p.target_title)} / 保存先: public demo data area${esc(p.stored_path)}</span><div class="buttons"><button class="btn primary" onclick="copyLatestApplication()">全文コピー</button><button class="btn secondary" onclick="downloadLatestApplication()">Markdownをダウンロード</button></div></div><div class="card"><h3>Application Packプレビュー</h3><pre class="preview" style="max-height:560px">${esc(p.markdown)}</pre></div>`;
     }
-    async function generateApplication(target) { const r = await api(API_PREFIX + '/application-pack', { method: 'POST', body: JSON.stringify({ target_key: target }) }); if (!r.ok) { toast(r.error); return } await load(); page('application'); toast('Application Packを出力しました。') }
+    async function generateApplication(target) { toast('静的デモでは Application Pack の生成は行えません。'); return; }
     async function copyLatestApplication() { const p = (STATE.application_packs || [])[0]; if (!p) { toast('Application Packがありません。'); return } try { await navigator.clipboard.writeText(p.markdown); toast('Application Pack全文をコピーしました。') } catch (e) { toast('コピーできませんでした。Markdownダウンロードを使用してください。') } }
-    function downloadLatestApplication() { const p = (STATE.application_packs || [])[0]; if (!p) { toast('Application Packがありません。'); return } window.location.href = API_PREFIX + '/download-application-pack/' + encodeURIComponent(p.filename); toast('Markdownをダウンロードします。') }
+    function downloadLatestApplication() { const p = (STATE.application_packs || [])[0]; if (!p) { toast('Application Packがありません。'); return } toast('静的デモではダウンロードを行えません。表示内容をコピーしてください。') }
 
     function renderHandoff() {
       const packs = STATE.handoff_packs || [];
@@ -3008,13 +3007,13 @@
       const p = packs[0];
       qs('#handoffContent').innerHTML = `<div class="banner good"><b>再開用文書を出力済み</b>　${esc(p.filename)}<br><span class="muted">保存先: public demo data area${esc(p.stored_path)} / 本体 ${p.counts.jarvis}件 / Design ${p.counts.design}件</span><div class="buttons"><button class="btn primary" onclick="copyLatestHandoff()">全文コピー</button><button class="btn secondary" onclick="downloadLatestHandoff()">Markdownをダウンロード</button></div></div><div class="card"><h3>Handoff Packプレビュー</h3><pre class="preview" style="max-height:560px">${esc(p.markdown)}</pre></div>`;
     }
-    async function generateHandoff() { const r = await api(API_PREFIX + '/handoff-pack', { method: 'POST', body: JSON.stringify({}) }); if (!r.ok) { toast(r.error); return } await load(); page('handoff'); toast('Handoff Packを出力しました。') }
+    async function generateHandoff() { toast('静的デモでは Handoff Pack の生成は行えません。'); return; }
     async function copyLatestHandoff() { const p = (STATE.handoff_packs || [])[0]; if (!p) { toast('Handoff Packがありません。'); return } try { await navigator.clipboard.writeText(p.markdown); toast('Handoff Pack全文をコピーしました。') } catch (e) { toast('コピーできませんでした。Markdownダウンロードを使用してください。') } }
-    function downloadLatestHandoff() { const p = (STATE.handoff_packs || [])[0]; if (!p) { toast('Handoff Packがありません。'); return } window.location.href = API_PREFIX + '/download-handoff-pack/' + encodeURIComponent(p.filename); toast('Markdownをダウンロードします。') }
+    function downloadLatestHandoff() { const p = (STATE.handoff_packs || [])[0]; if (!p) { toast('Handoff Packがありません。'); return } toast('静的デモではダウンロードを行えません。表示内容をコピーしてください。') }
 
-    async function generatePack() { const r = await api(API_PREFIX + '/context-pack', { method: 'POST', body: JSON.stringify({}) }); if (!r.ok) { toast(r.error); return } await load(); page('pack'); toast('Context Packを出力しました。') }
+    async function generatePack() { toast('静的デモでは Context Pack の生成は行えません。'); return; }
     async function copyLatestPack() { const p = (STATE.context_packs || [])[0]; if (!p) { toast('Context Packがありません。'); return } try { await navigator.clipboard.writeText(p.markdown); toast('Context Pack全文をコピーしました。') } catch (e) { toast('コピーできませんでした。Markdownダウンロードを使用してください。') } }
-    function downloadLatestPack() { const p = (STATE.context_packs || [])[0]; if (!p) { toast('Context Packがありません。'); return } window.location.href = API_PREFIX + '/download-context-pack/' + encodeURIComponent(p.filename); toast('Markdownをダウンロードします。') }
+    function downloadLatestPack() { const p = (STATE.context_packs || [])[0]; if (!p) { toast('Context Packがありません。'); return } toast('静的デモではダウンロードを行えません。表示内容をコピーしてください。') }
 
 
     function goalMetrics(target, items) {
@@ -3062,9 +3061,9 @@
     }
     function currentTarget() { const rows = STATE.targets || []; if (!rows.length) return null; if (!SELECTED_TARGET || !rows.some(t => t.target_id === SELECTED_TARGET)) SELECTED_TARGET = rows[0].target_id; return rows.find(t => t.target_id === SELECTED_TARGET) }
     function linkedToTarget(kind, id, targetId) { return (STATE.target_links || []).some(l => l.target_id === targetId && l.collection_kind === kind && l.item_id === id) }
-    async function createTarget() { const name = qs('#targetName').value.trim(), target_kind = qs('#targetKind').value, goal = qs('#targetGoal').value.trim(); const r = await api(API_PREFIX + '/target', { method: 'POST', body: JSON.stringify({ name, target_kind, goal }) }); if (!r.ok) { toast(r.error); return } SELECTED_TARGET = r.target.target_id; qs('#targetName').value = ''; qs('#targetGoal').value = ''; await load(); if (RETURN_TO_INBOX_AFTER_TARGET_CREATE) { RETURN_TO_INBOX_AFTER_TARGET_CREATE = false; page('target-inbox'); toast('対象を登録しました。次に受信先へ回収ファイルを入れてください。'); } else { page('target-manage'); toast('対象を登録しました。') } }
+    async function createTarget() { const name = qs('#targetName').value.trim(), target_kind = qs('#targetKind').value, goal = qs('#targetGoal').value.trim(); const r = await api('target', { method: 'POST', body: JSON.stringify({ name, target_kind, goal }) }); if (!r.ok) { toast(r.error); return } SELECTED_TARGET = r.target.target_id; qs('#targetName').value = ''; qs('#targetGoal').value = ''; await load(); if (RETURN_TO_INBOX_AFTER_TARGET_CREATE) { RETURN_TO_INBOX_AFTER_TARGET_CREATE = false; page('target-inbox'); toast('対象を登録しました。次に受信先へ回収ファイルを入れてください。'); } else { page('target-manage'); toast('対象を登録しました。') } }
     function selectTarget(id) { SELECTED_TARGET = id; renderTargetHistory(); renderTargetInbox() }
-    async function toggleTargetLink(kind, encodedId, linked) { const target = currentTarget(); if (!target) { toast('先に対象を登録してください。'); return } const r = await api(API_PREFIX + '/target-link', { method: 'POST', body: JSON.stringify({ target_id: target.target_id, collection_kind: kind, item_id: decodeURIComponent(encodedId), linked }) }); if (!r.ok) { toast(r.error); return } await load(); page('target-link'); toast(linked ? '対象へ紐付けました。' : '紐付けを外しました。') }
+    async function toggleTargetLink(kind, encodedId, linked) { const target = currentTarget(); if (!target) { toast('先に対象を登録してください。'); return } const r = await api('target-link', { method: 'POST', body: JSON.stringify({ target_id: target.target_id, collection_kind: kind, item_id: decodeURIComponent(encodedId), linked }) }); if (!r.ok) { toast(r.error); return } await load(); page('target-link'); toast(linked ? '対象へ紐付けました。' : '紐付けを外しました。') }
 
     function classifiedForTarget(targetId) {
       return (STATE.meaning_classifications || []).filter(row => row.target_id === targetId);
@@ -3202,7 +3201,7 @@
         return;
       }
       const { name, target_kind, goal } = validation.values;
-      const r = await api(API_PREFIX + '/target', { method: 'POST', body: JSON.stringify({ name, target_kind, goal }) });
+      const r = await api('target', { method: 'POST', body: JSON.stringify({ name, target_kind, goal }) });
       if (!r.ok) { toast(r.error); updateInlineTargetRegistrationState(true); return }
       SELECTED_TARGET = r.target.target_id;
       qs('#inboxTargetName').value = ''; qs('#inboxTargetGoal').value = '';
@@ -3213,7 +3212,7 @@
       const target = selectedInboxTarget();
       if (!target) { toast('先に情報を結び付ける対象を登録してください。'); return }
       if (!file) return;
-      const r = await api(API_PREFIX + '/target-inbox-upload', { method: 'POST', body: JSON.stringify({ target_id: target.target_id, filename: file.name, content: await file.text() }) });
+      const r = await api('target-inbox-upload', { method: 'POST', body: JSON.stringify({ target_id: target.target_id, filename: file.name, content: await file.text() }) });
       if (!r.ok) { toast(r.error); return }
       await load(); page('target-inbox', INTAKE_PURPOSE_FLOW);
       toast(r.imported && r.imported.length ? '情報を取り込みました。内容を確認して分類へ進んでください。' : '同じ内容は既に取り込み済みです。');
@@ -3286,7 +3285,7 @@
     async function copyInboxPath() { const target = selectedInboxTarget(); if (!target) { toast('先に対象を登録してください。'); return } const path = (STATE.inbox_root || '') + '/' + target.target_id; try { await navigator.clipboard.writeText(path); toast('受信先をコピーしました。') } catch (e) { toast('受信先のコピーに失敗しました。') } }
     async function scanTargetInbox() {
       const target = selectedInboxTarget(); if (!target) { toast('先に対象を登録してください。'); return }
-      const r = await api(API_PREFIX + '/target-inbox-scan', { method: 'POST', body: JSON.stringify({ target_id: target.target_id }) });
+      const r = await api('target-inbox-scan', { method: 'POST', body: JSON.stringify({ target_id: target.target_id }) });
       if (!r.ok) { toast(r.error); return }
       await load();
       if (r.imported.length) toast(`${r.imported.length}件を取り込みました。会話・文書は確認後に対象へ紐付きます。`);
@@ -3314,13 +3313,13 @@
       const source_kind = qs('#collectionSourceKind').value;
       const connection_mode = qs('#collectionSourceMode').value;
       const purpose = qs('#collectionSourcePurpose').value.trim();
-      const r = await api(API_PREFIX + '/collection-source', { method: 'POST', body: JSON.stringify({ name, source_kind, connection_mode, purpose }) });
+      const r = await api('collection-source', { method: 'POST', body: JSON.stringify({ name, source_kind, connection_mode, purpose }) });
       if (!r.ok) { toast(r.error); return }
       qs('#collectionSourceName').value = ''; qs('#collectionSourcePurpose').value = '';
       await load(); page('collection-sources'); toast('回収元を登録しました。');
     }
     async function updateCollectionSourceMode(id, mode) {
-      const r = await api(API_PREFIX + '/collection-source-mode', { method: 'POST', body: JSON.stringify({ collection_source_id: id, connection_mode: mode }) });
+      const r = await api('collection-source-mode', { method: 'POST', body: JSON.stringify({ collection_source_id: id, connection_mode: mode }) });
       if (!r.ok) { toast(r.error); return }
       await load(); page('collection-sources'); toast('取込方法を更新しました。');
     }
@@ -3378,14 +3377,14 @@
       pills.innerHTML = classified.length ? classified.slice().reverse().slice(0, 10).map(row => `<span class="meaning-pill">${esc(row.meaning_category)} / ${esc(row.filename || row.receipt_id)}</span>`).join('') : '';
     }
     async function suggestMeaningClassification(receiptId) {
-      const r = await api(API_PREFIX + '/meaning-suggestion', { method: 'POST', body: JSON.stringify({ receipt_id: receiptId }) });
+      const r = await api('meaning-suggestion', { method: 'POST', body: JSON.stringify({ receipt_id: receiptId }) });
       if (!r.ok) { toast(r.error); return }
       await load(); page('meaning-classification'); toast('暫定候補を作成しました。内容を確認して確定してください。');
     }
     async function saveMeaningClassification(receiptId) {
       const meaning_category = qs('#meaning_' + receiptId).value;
       const note = qs('#meaning_note_' + receiptId).value.trim();
-      const r = await api(API_PREFIX + '/meaning-classification', { method: 'POST', body: JSON.stringify({ receipt_id: receiptId, meaning_category, note }) });
+      const r = await api('meaning-classification', { method: 'POST', body: JSON.stringify({ receipt_id: receiptId, meaning_category, note }) });
       if (!r.ok) { toast(r.error); return }
       await load(); page('meaning-classification'); toast('意味分類を保存しました。');
     }
@@ -3660,7 +3659,7 @@
       applyDemoModeSetting();
     }
     async function exportTargetRegistrations() { if (DEMO_MODE_SETTING) { toast('デモモード中は登録対象を書き出せません。'); return; }
-      const result = await api(API_PREFIX + '/export-target-registrations');
+      const result = await api('export-target-registrations');
       if (!result.ok) { toast(result.error || 'エクスポートできませんでした。'); return }
       const text = JSON.stringify(result.bundle, null, 2);
       const blob = new Blob([text], { type: 'application/json;charset=utf-8' });
@@ -3676,7 +3675,7 @@
       try
       {
         const bundle = JSON.parse(await file.text());
-        const result = await api(API_PREFIX + '/import-target-registrations', { method: 'POST', body: JSON.stringify({ bundle }) });
+        const result = await api('import-target-registrations', { method: 'POST', body: JSON.stringify({ bundle }) });
         if (!result.ok) { toast(result.error || 'インポートできませんでした。'); return }
         await load(); switchSettingsTab('registration');
         toast(`登録を復元しました。追加 ${result.added || 0}件 / 更新 ${result.updated || 0}件`);
@@ -3703,7 +3702,7 @@
     async function executeRegistrationConfirm(event) {
       event.preventDefault();
       const action = REGISTRATION_CONFIRM_ACTION;
-      const endpoint = action.type === 'reset' ? API_PREFIX + '/reset-target-registrations' : API_PREFIX + '/delete-target-registration';
+      const endpoint = action.type === 'reset' ? 'reset-target-registrations' : 'delete-target-registration';
       const body = action.type === 'reset' ? {} : { target_id: action.targetId };
       const result = await api(endpoint, { method: 'POST', body: JSON.stringify(body) });
       if (!result.ok) { toast(result.error || '消去できませんでした。'); return }
@@ -3774,7 +3773,7 @@
     }
     async function generateTargetPremise() {
       const target = premiseSelectedTarget(); if (!target) { toast('対象を選択してください。'); return }
-      const r = await api(API_PREFIX + '/target-premise-pack', { method: 'POST', body: JSON.stringify({ target_id: target.target_id }) });
+      const r = await api('target-premise-pack', { method: 'POST', body: JSON.stringify({ target_id: target.target_id }) });
       if (!r.ok) { toast(r.error); return }
       await load(); page('target-premise'); toast('AI作業用の前提文書を作成しました。');
     }
@@ -3786,7 +3785,7 @@
     function downloadTargetPremise() {
       const target = premiseSelectedTarget(), pack = (STATE.target_premise_packs || []).find(row => target && row.target_id === target.target_id);
       if (!pack) { toast('前提文書がありません。'); return }
-      window.location.href = API_PREFIX + '/download-target-premise-pack/' + encodeURIComponent(pack.filename);
+      window.location.href = 'download-target-premise-pack/' + encodeURIComponent(pack.filename);
     }
 
 
@@ -3813,7 +3812,7 @@
       const result_type = qs('#aiReturnType').value;
       const result_text = qs('#aiReturnText').value.trim();
       const check_note = qs('#aiReturnNote').value.trim();
-      const r = await api(API_PREFIX + '/ai-work-return', { method: 'POST', body: JSON.stringify({ target_id: target.target_id, premise_pack_id, result_type, result_text, check_note }) });
+      const r = await api('ai-work-return', { method: 'POST', body: JSON.stringify({ target_id: target.target_id, premise_pack_id, result_type, result_text, check_note }) });
       if (!r.ok) { toast(r.error); return }
       qs('#aiReturnText').value = ''; qs('#aiReturnNote').value = '';
       await load(); page('ai-work-return'); toast('AI作業結果を回収しました。次に分類確認へ進めます。');
@@ -3863,7 +3862,7 @@
     async function generateAIClassificationRequest() {
       const receipt = aiClassifyReceipt(); if (!receipt) { toast('分類対象の受信内容がありません。'); return }
       const collection_source_id = qs('#aiClassifySourceSelect').value;
-      const r = await api(API_PREFIX + '/ai-classification-request', { method: 'POST', body: JSON.stringify({ receipt_id: receipt.receipt_id, collection_source_id }) });
+      const r = await api('ai-classification-request', { method: 'POST', body: JSON.stringify({ receipt_id: receipt.receipt_id, collection_source_id }) });
       if (!r.ok) { toast(r.error); return }
       await load(); page('ai-classification-bridge'); toast('AI分類依頼文を作成しました。');
     }
@@ -3876,7 +3875,7 @@
     async function saveAIClassificationResponse() {
       const receipt = aiClassifyReceipt(); if (!receipt) { toast('分類対象の受信内容がありません。'); return }
       const payload = { receipt_id: receipt.receipt_id, collection_source_id: qs('#aiClassifySourceSelect').value, category: qs('#aiClassifyCategory').value, confidence: qs('#aiClassifyConfidence').value, reason: qs('#aiClassifyReason').value.trim(), conflicts: qs('#aiClassifyConflicts').value.trim() };
-      const r = await api(API_PREFIX + '/ai-classification-response', { method: 'POST', body: JSON.stringify(payload) });
+      const r = await api('ai-classification-response', { method: 'POST', body: JSON.stringify(payload) });
       if (!r.ok) { toast(r.error); return }
       qs('#aiClassifyReason').value = ''; qs('#aiClassifyConflicts').value = '';
       await load(); page('meaning-classification'); toast('AI分類候補を戻しました。内容を確認して確定してください。');
@@ -3885,8 +3884,8 @@
 
     function selectedTargetCandidateReceipt() { const select = qs('#targetCandidateReceiptSelect'); return select && (STATE.inbox_receipts || []).find(row => row.receipt_id === select.value) }
     function renderTargetLinkCandidates() { const select = qs('#targetCandidateReceiptSelect'), list = qs('#targetCandidateList'); if (!select || !list) return; const receipts = (STATE.inbox_receipts || []).slice().reverse(), keep = select.value || ''; select.innerHTML = receipts.length ? receipts.map(row => `<option value="${row.receipt_id}">${esc(row.filename || row.receipt_id)} / ${esc(row.target_id || '対象未設定')}</option>`).join('') : '<option value="">受信内容がありません</option>'; if (keep && receipts.some(row => row.receipt_id === keep)) select.value = keep; const receipt = selectedTargetCandidateReceipt(), suggestion = (STATE.target_link_suggestions || []).find(row => receipt && row.receipt_id === receipt.receipt_id); if (!suggestion) { list.innerHTML = '<div class="empty">対象候補はまだ作成されていません。</div>'; return } list.innerHTML = suggestion.candidates.length ? suggestion.candidates.map(row => `<div class="target-candidate-row"><div><b>${esc(row.target_name)}</b><small>${esc(row.reason)} / 暫定スコア ${esc(row.score)}</small></div><button class="btn secondary" onclick="confirmTargetLinkCandidate('${suggestion.receipt_id}','${row.target_id}')">${suggestion.status === 'confirmed' && suggestion.confirmed_target_id === row.target_id ? '反映済み' : '確認して反映'}</button></div>`).join('') : '<div class="empty">一致する対象候補がありません。</div>' }
-    async function generateTargetLinkCandidates() { const receipt = selectedTargetCandidateReceipt(); if (!receipt) { toast('受信内容がありません。'); return } const r = await api(API_PREFIX + '/target-link-suggestion', { method: 'POST', body: JSON.stringify({ receipt_id: receipt.receipt_id }) }); if (!r.ok) { toast(r.error); return } await load(); page('target-link-candidates'); toast('対象候補を作成しました。確認して反映してください。') }
-    async function confirmTargetLinkCandidate(receiptId, targetId) { const r = await api(API_PREFIX + '/target-link-confirm', { method: 'POST', body: JSON.stringify({ receipt_id: receiptId, target_id: targetId }) }); if (!r.ok) { toast(r.error); return } await load(); page('target-link-candidates'); toast('確認した対象へ紐付けました。') }
+    async function generateTargetLinkCandidates() { const receipt = selectedTargetCandidateReceipt(); if (!receipt) { toast('受信内容がありません。'); return } const r = await api('target-link-suggestion', { method: 'POST', body: JSON.stringify({ receipt_id: receipt.receipt_id }) }); if (!r.ok) { toast(r.error); return } await load(); page('target-link-candidates'); toast('対象候補を作成しました。確認して反映してください。') }
+    async function confirmTargetLinkCandidate(receiptId, targetId) { const r = await api('target-link-confirm', { method: 'POST', body: JSON.stringify({ receipt_id: receiptId, target_id: targetId }) }); if (!r.ok) { toast(r.error); return } await load(); page('target-link-candidates'); toast('確認した対象へ紐付けました。') }
 
 
     function improvementSelectedTarget() {
@@ -3912,12 +3911,12 @@
     }
     async function generateImprovementActions() {
       const target = improvementSelectedTarget(); if (!target) { toast('対象を選択してください。'); return }
-      const r = await api(API_PREFIX + '/improvement-actions', { method: 'POST', body: JSON.stringify({ target_id: target.target_id }) });
+      const r = await api('improvement-actions', { method: 'POST', body: JSON.stringify({ target_id: target.target_id }) });
       if (!r.ok) { toast(r.error); return }
       await load(); page('improvement-actions', 'stage-improve'); toast(r.actions.length ? '改善候補を作成しました。確認してください。' : '対象となる失敗・訂正・未分類結果はありません。');
     }
     async function confirmImprovementAction(actionId) {
-      const r = await api(API_PREFIX + '/improvement-action-confirm', { method: 'POST', body: JSON.stringify({ action_id: actionId }) });
+      const r = await api('improvement-action-confirm', { method: 'POST', body: JSON.stringify({ action_id: actionId }) });
       if (!r.ok) { toast(r.error); return }
       await load(); page('improvement-actions', 'stage-improve'); toast('改善候補を確認済みにしました。');
     }
@@ -4112,22 +4111,22 @@
       if (r.safe_to_reflect && r.reflection_state !== 'reflected') body += `<div class="buttons"><button class="btn primary" onclick="reflect('${r.review_id}')">${r.review_kind === 'document' ? '資料正本へ反映' : '正本へ反映'}</button></div>`;
       qs('#importResult').innerHTML = b + body;
     }
-    async function reflect(id) { const r = await api(API_PREFIX + '/reflect', { method: 'POST', body: JSON.stringify({ review_id: id }) }); if (!r.ok) { toast(r.error); return } toast('正本へ反映しました。'); await load(); const rev = STATE.reviews.find(x => x.review_id === id); page(rev?.review_kind === 'document' ? 'documents' : 'canonical') }
+    async function reflect(id) { const r = await api('reflect', { method: 'POST', body: JSON.stringify({ review_id: id }) }); if (!r.ok) { toast(r.error); return } toast('正本へ反映しました。'); await load(); const rev = STATE.reviews.find(x => x.review_id === id); page(rev?.review_kind === 'document' ? 'documents' : 'canonical') }
     function renderConversations() { const el = qs('#canonicalList'); if (!STATE.canonicals.length) { el.innerHTML = '<div class="empty">正本会話はありません。</div>'; return } el.innerHTML = STATE.canonicals.map(c => `<div class="card"><div class="row"><div><h3>${esc(c.title)}</h3><div class="muted">${c.messages.length}発言 / 反映版 ${c.reflected_snapshots.length}</div></div><button class="btn primary" onclick="generate('conversation','${c.conversation_id}')">候補を作成</button></div><div class="msglist">${c.messages.slice(-4).map(m => `<div class="msg"><div class="meta"><span class="role ${m.role}">${m.role.toUpperCase()}</span>#${m.sequence}</div><p>${esc(m.text_raw)}</p></div>`).join('')}</div></div>`).join('') }
     function renderDocuments() { const el = qs('#documentList'); if (!STATE.documents.length) { el.innerHTML = '<div class="empty">正本資料はありません。原文取込から既存資料を反映してください。</div>'; return } el.innerHTML = STATE.documents.map(d => { const isValidation = d.usage_scope === 'validation_only'; return `<div class="card" style="margin-bottom:12px;${isValidation ? 'background:#fbf7f2' : ''}"><div class="row"><div><h3>${esc(d.title)} ${isValidation ? '<span class="tag" style="margin-left:8px">検証用 / 再利用対象外</span>' : '<span class="tag" style="margin-left:8px">実運用対象</span>'}</h3><div class="muted">資料正本 / 反映版 ${d.reflected_snapshots.length}${d.latest_filename ? ' / 最新ファイル: ' + esc(d.latest_filename) : ''}</div></div><div class="buttons"><button class="btn secondary" onclick="pickDocumentUpdate('${d.document_id}')">新版を比較取込</button>${isValidation ? `<button class="btn secondary" onclick="changeDocumentScope('${d.document_id}','operational')">実運用対象へ戻す</button>` : `<button class="btn hold" onclick="changeDocumentScope('${d.document_id}','validation_only')">検証用に分類</button><button class="btn primary" onclick="generate('document','${d.document_id}')">資料から候補を作成</button>`}</div></div><pre class="preview">${esc(d.text_raw.slice(0, 420))}</pre></div>` }).join('') }
-    async function changeDocumentScope(id, scope) { const r = await api(API_PREFIX + '/document-usage-scope', { method: 'POST', body: JSON.stringify({ document_id: id, usage_scope: scope }) }); if (!r.ok) { toast(r.error); return } await load(); page('documents'); toast(scope === 'validation_only' ? '検証用として分離しました。候補化・再利用対象外になります。' : '実運用対象へ戻しました。') }
+    async function changeDocumentScope(id, scope) { const r = await api('document-usage-scope', { method: 'POST', body: JSON.stringify({ document_id: id, usage_scope: scope }) }); if (!r.ok) { toast(r.error); return } await load(); page('documents'); toast(scope === 'validation_only' ? '検証用として分離しました。候補化・再利用対象外になります。' : '実運用対象へ戻しました。') }
     function renderDocumentUpdateTargets() { const el = qs('#documentUpdateTargets'); if (!STATE.documents.length) { el.innerHTML = '<div class="empty">更新対象の正本資料はまだありません。</div>'; return } el.innerHTML = STATE.documents.map(d => `<div class="item" style="margin-bottom:8px"><b>${esc(d.title)}</b><div class="muted">反映版 ${d.reflected_snapshots.length}</div><div class="buttons"><button class="btn secondary" onclick="pickDocumentUpdate('${d.document_id}')">この資料の新版を選択</button></div></div>`).join('') }
     function pickDocumentUpdate(id) { qs('#updateFile').dataset.documentId = id; qs('#updateFile').click() }
-    async function submitDocumentUpdate(id, file) { const r = await api(API_PREFIX + '/import-document-update', { method: 'POST', body: JSON.stringify({ document_id: id, filename: file.name, content: await file.text() }) }); if (!r.ok) { toast(r.error); return } await load(); page('intake'); if (r.review) { showReview(r.review.review_id); toast('新版を比較用に取り込みました。差分確認後に反映してください。') } else { qs('#importResult').innerHTML = '<div class="banner neutral">同じ内容のため、正本資料は変更しません。</div>'; toast('同一内容です。追加反映はありません。') } }
-    async function generate(kind, id) { const r = await api(API_PREFIX + '/candidates', { method: 'POST', body: JSON.stringify({ kind, item_id: id }) }); if (!r.ok) { toast(r.error); return } await load(); const kept = (r.approved_preserved_ids || []).length; toast(kept ? `候補を再生成しました。承認候補 ${kept}件を維持しました。` : '根拠付き知識候補を作成しました。'); page(kept ? 'approved' : 'candidates') }
+    async function submitDocumentUpdate(id, file) { const r = await api('import-document-update', { method: 'POST', body: JSON.stringify({ document_id: id, filename: file.name, content: await file.text() }) }); if (!r.ok) { toast(r.error); return } await load(); page('intake'); if (r.review) { showReview(r.review.review_id); toast('新版を比較用に取り込みました。差分確認後に反映してください。') } else { qs('#importResult').innerHTML = '<div class="banner neutral">同じ内容のため、正本資料は変更しません。</div>'; toast('同一内容です。追加反映はありません。') } }
+    async function generate(kind, id) { const r = await api('candidates', { method: 'POST', body: JSON.stringify({ kind, item_id: id }) }); if (!r.ok) { toast(r.error); return } await load(); const kept = (r.approved_preserved_ids || []).length; toast(kept ? `候補を再生成しました。承認候補 ${kept}件を維持しました。` : '根拠付き知識候補を作成しました。'); page(kept ? 'approved' : 'candidates') }
     function filtered() { return STATE.candidates.filter(c => FILTER === 'ALL' || c.target_system === FILTER || c.review_state === FILTER) }
     function renderCandidates() { const items = filtered(); qs('#candidateCount').textContent = `候補 ${STATE.counts.candidates}件 / 承認候補 ${STATE.counts.approved_candidates}件`; const el = qs('#candidateList'); if (!items.length) { el.innerHTML = '<div class="empty">表示対象の候補はありません。</div>'; qs('#candidateDetail').innerHTML = '<div class="empty">候補を選択してください。</div>'; return } el.innerHTML = items.map((c, i) => `<button class="item candidate ${SELECTED === c.candidate_id || (!SELECTED && i === 0) ? 'active' : ''}" onclick="selectCandidate('${c.candidate_id}')"><div class="type">${esc(c.knowledge_type)} / ${esc(c.review_state)}</div><b>${esc(c.summary)}</b><span class="route ${c.target_system === 'JARVIS_DESIGN' ? 'design' : ''}">${c.target_system === 'JARVIS_DESIGN' ? 'Design Tools' : 'System Tools'}</span></button>`).join(''); let chosen = items.find(c => c.candidate_id === SELECTED) || items[0]; SELECTED = chosen.candidate_id; showCandidate(chosen) }
     function selectCandidate(id) { SELECTED = id; renderCandidates() }
     function showCandidate(c) { qs('#candidateDetail').innerHTML = `<h3>${esc(c.summary)}</h3><div class="kv"><label>候補種別</label><div>${esc(c.knowledge_type)}</div></div><div class="kv"><label>振り分け</label><div>${c.target_system === 'JARVIS_DESIGN' ? 'Design Tools' : 'System Tools'}</div></div><div class="kv"><label>状態</label><div>${esc(c.review_state)} / 強制適用なし</div></div><div class="kv"><label>根拠元</label><div>${esc(c.source_title || '未取得')} / ${c.source_kind === 'document' ? '資料正本' : '会話正本'}</div></div><div class="kv"><label>候補理由</label><div>${esc(c.why || '根拠に基づく候補')}</div></div><div class="quote"><b>該当箇所</b><br>${c.evidence.map(e => '<b>' + esc(e.label) + '</b><br>' + esc(e.fragment)).join('<br><br>')}</div><div class="buttons"><button class="btn primary" onclick="reviewCandidate('${c.candidate_id}','approved_candidate')">承認候補として保持</button><button class="btn hold" onclick="reviewCandidate('${c.candidate_id}','held')">保留</button><button class="btn danger" onclick="reviewCandidate('${c.candidate_id}','rejected')">却下</button></div><div class="buttons"><button class="btn secondary" onclick="reviewCandidate('${c.candidate_id}','${c.review_state}','JARVIS')">System Toolsへ</button><button class="btn secondary" onclick="reviewCandidate('${c.candidate_id}','${c.review_state}','JARVIS_DESIGN')">Design Toolsへ</button></div>` }
-    async function reviewCandidate(id, status, target) { const r = await api(API_PREFIX + '/candidate-review', { method: 'POST', body: JSON.stringify({ candidate_id: id, review_state: status, target_system: target }) }); if (!r.ok) { toast(r.error); return } await load(); if (r.no_change) { toast(r.message); if (status === 'approved_candidate') page('approved'); return } if (status === 'approved_candidate') { page('approved'); toast('承認候補として保存しました。台帳で証跡を確認できます。') } else { toast('候補の状態を保存しました。') } }
-    async function moveApproved(id, target) { const r = await api(API_PREFIX + '/candidate-review', { method: 'POST', body: JSON.stringify({ candidate_id: id, review_state: 'approved_candidate', target_system: target }) }); if (!r.ok) { toast(r.error); return } await load(); page('approved'); toast(r.no_change ? r.message : '承認候補の振り分けを修正しました。') }
+    async function reviewCandidate(id, status, target) { const r = await api('candidate-review', { method: 'POST', body: JSON.stringify({ candidate_id: id, review_state: status, target_system: target }) }); if (!r.ok) { toast(r.error); return } await load(); if (r.no_change) { toast(r.message); if (status === 'approved_candidate') page('approved'); return } if (status === 'approved_candidate') { page('approved'); toast('承認候補として保存しました。台帳で証跡を確認できます。') } else { toast('候補の状態を保存しました。') } }
+    async function moveApproved(id, target) { const r = await api('candidate-review', { method: 'POST', body: JSON.stringify({ candidate_id: id, review_state: 'approved_candidate', target_system: target }) }); if (!r.ok) { toast(r.error); return } await load(); page('approved'); toast(r.no_change ? r.message : '承認候補の振り分けを修正しました。') }
     qsa('.tab').forEach(b => b.onclick = () => { qsa('.tab').forEach(x => x.classList.toggle('active', x === b)); FILTER = b.dataset.filter; SELECTED = null; renderCandidates() });
-    async function doImport(filename, content) { const r = await api(API_PREFIX + '/import', { method: 'POST', body: JSON.stringify({ filename, content }) }); if (!r.ok) { toast(r.error); return } await load(); page('intake'); if (r.review) showReview(r.review.review_id); else qs('#importResult').innerHTML = `<div class="banner neutral">${r.status === 'same_source_reimport' ? '同一原文は既に保存済みです。発言・資料は増殖しません。' : '実験証跡として保存しました。'}</div>`; toast('取込処理が完了しました。') }
+    async function doImport(filename, content) { const r = await api('import', { method: 'POST', body: JSON.stringify({ filename, content }) }); if (!r.ok) { toast(r.error); return } await load(); page('intake'); if (r.review) showReview(r.review.review_id); else qs('#importResult').innerHTML = `<div class="banner neutral">${r.status === 'same_source_reimport' ? '同一原文は既に保存済みです。発言・資料は増殖しません。' : '実験証跡として保存しました。'}</div>`; toast('取込処理が完了しました。') }
     qs('#file').onchange = async e => { const f = e.target.files[0]; if (f) { await doImport(f.name, await f.text()); e.target.value = '' } }
 
     const registrationImportFile = qs('#targetRegistrationImportFile');
@@ -4154,7 +4153,7 @@
     ['dragenter', 'dragover'].forEach(evt => newDrop.addEventListener(evt, e => { e.preventDefault(); newDrop.classList.add('dragging') }));
     ['dragleave', 'drop'].forEach(evt => newDrop.addEventListener(evt, e => { e.preventDefault(); newDrop.classList.remove('dragging') }));
     newDrop.addEventListener('drop', async e => { const f = e.dataTransfer.files[0]; if (f) await doImport(f.name, await f.text()) });
-    qsa('.sample').forEach(b => b.onclick = async () => { const s = await api(API_PREFIX + '/sample/' + b.dataset.sample); doImport(s.filename, s.content) })
+    qsa('.sample').forEach(b => b.onclick = async () => { const s = await api('sample/' + b.dataset.sample); doImport(s.filename, s.content) })
     setInterval(() => { const page = qs('#target-inbox'); if (page && page.classList.contains('active')) refreshInboxWatcherState() }, 5000);
 
     const PORTFOLIO_DEFAULT = (PAGE_DEFINITIONS && PAGE_DEFINITIONS.PORTFOLIO_DEFAULT) || {}, PORTFOLIO_USES = (PAGE_DEFINITIONS && PAGE_DEFINITIONS.PORTFOLIO_USES) || []; let PORTFOLIO_DATA = PORTFOLIO_DEFAULT, PORTFOLIO_SELECTED = '';
@@ -4171,7 +4170,7 @@
       box.innerHTML = `現在の本体状態: 取込JSON ${imports}件 / プロジェクト ${projects}件 / 知識パッケージ ${packages}件`;
     }
     async function exportJarvisBackup() {
-      const result = await api(API_PREFIX + '/jarvis-backup-export', { method: 'POST', body: '{}' });
+      const result = await api('jarvis-backup-export', { method: 'POST', body: '{}' });
       if (!result.ok) { toast(result.error || 'バックアップを書き出せませんでした。'); return }
       const blob = new Blob([JSON.stringify(result, null, 2)], { type: 'application/json' });
       const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `SystemTools_Demo_backup_${backupStamp()}.json`; a.click(); URL.revokeObjectURL(a.href);
@@ -4179,12 +4178,12 @@
     }
     async function importJarvisBackupFile(file) {
       const raw = JSON.parse(await file.text());
-      const result = await api(API_PREFIX + '/jarvis-backup-import', { method: 'POST', body: JSON.stringify({ backup: raw }) });
+      const result = await api('jarvis-backup-import', { method: 'POST', body: JSON.stringify({ backup: raw }) });
       if (!result.ok) { toast(result.error); return }
       await load(); page('unified-backup'); toast('System Tools本体バックアップを読み込みました。');
     }
     async function importCaptureBackupFile(file) {
-      const result = await api(API_PREFIX + '/capture-backup-import', { method: 'POST', body: JSON.stringify({ filename: file.name, content: await file.text() }) });
+      const result = await api('capture-backup-import', { method: 'POST', body: JSON.stringify({ filename: file.name, content: await file.text() }) });
       if (!result.ok) { toast(result.error); return }
       await load(); page('capture-import-queue'); toast(`CaptureバックアップをIMPORTへ取り込みました。追加 ${Number(result.capture_import?.new_message_count || 0)}件。`);
     }
@@ -4244,7 +4243,7 @@
         let raw = null;
         try { raw = JSON.parse(content); } catch (error) { errors++; showUnsupportedJsonNotice(file.name, 'JSONとして解析できませんでした。'); continue }
         if (!isConversationCaptureExport(raw)) { rejected++; showUnsupportedJsonNotice(file.name, 'Conversation Capture用のconversations構造を確認できませんでした。'); continue }
-        const result = await api(API_PREFIX + '/capture-import', { method: 'POST', body: JSON.stringify({ filename: file.name, content }) });
+        const result = await api('capture-import', { method: 'POST', body: JSON.stringify({ filename: file.name, content }) });
         if (!result.ok) { errors++; showUnsupportedJsonNotice(file.name, result.error || '取り込み前の形式確認で停止しました。'); continue }
         if (result.status === 'same_content_noop') noops++; else imported++;
       }
@@ -4252,7 +4251,7 @@
       toast(`取込完了：新規版 ${imported}件 / 同一内容 ${noops}件${rejected ? ` / 対応外 ${rejected}件` : ''}${errors ? ` / 失敗 ${errors}件` : ''}`);
     }
     async function selectCaptureImport(importId, openCore) {
-      const result = await api(API_PREFIX + '/capture-import/select', { method: 'POST', body: JSON.stringify({ capture_import_id: importId }) });
+      const result = await api('capture-import/select', { method: 'POST', body: JSON.stringify({ capture_import_id: importId }) });
       if (!result.ok) { toast(result.error); return }
       await load(); renderImportQueue(); renderPortfolio(); renderCoreKnowledge();
       if (openCore) { page('core-knowledge') } else { page('capture-import-queue') }
@@ -4298,12 +4297,12 @@
     async function createProjectSpecProject() {
       const input = qs('#newProjectSpecName'), name = input?.value?.trim() || '';
       if (!name) { toast('プロジェクト名を入力してください。'); return }
-      const result = await api(API_PREFIX + '/project-spec/project', { method: 'POST', body: JSON.stringify({ name }) });
+      const result = await api('project-spec/project', { method: 'POST', body: JSON.stringify({ name }) });
       if (!result.ok) { toast(result.error); return }
       await load(); PROJECT_SPEC_CATEGORY = 'purpose'; toast(result.existing ? '登録済みプロジェクトを開きました。' : 'プロジェクトを登録しました。'); page('project-spec');
     }
     async function selectProjectSpecProject(id) {
-      const result = await api(API_PREFIX + '/project-spec/select-project', { method: 'POST', body: JSON.stringify({ project_id: id }) });
+      const result = await api('project-spec/select-project', { method: 'POST', body: JSON.stringify({ project_id: id }) });
       if (!result.ok) { toast(result.error); return }
       await load(); PROJECT_SPEC_CATEGORY = 'purpose'; page('project-spec');
     }
@@ -4312,19 +4311,19 @@
       const statement = qs('#projectSpecNewStatement').value.trim();
       if (!statement) { toast('登録する内容を入力してください。'); return }
       const payload = { project_id: project.project_id, category: PROJECT_SPEC_CATEGORY, item_state: qs('#projectSpecNewState').value, statement };
-      const result = await api(API_PREFIX + '/project-spec/item', { method: 'POST', body: JSON.stringify(payload) });
+      const result = await api('project-spec/item', { method: 'POST', body: JSON.stringify(payload) });
       if (!result.ok) { toast(result.error); return }
       qs('#projectSpecNewStatement').value = '';
       await load(); toast('仕様正本候補へ登録しました。'); page('project-spec');
     }
     async function updateProjectSpecItemState(itemId, stateValue) {
-      const result = await api(API_PREFIX + '/project-spec/item-state', { method: 'POST', body: JSON.stringify({ project_spec_item_id: itemId, item_state: stateValue }) });
+      const result = await api('project-spec/item-state', { method: 'POST', body: JSON.stringify({ project_spec_item_id: itemId, item_state: stateValue }) });
       if (!result.ok) { toast(result.error); return }
       await load(); renderProjectSpec();
     }
     async function adoptProjectKnowledge(packageId) {
       const project = activeProject(); if (!project) return;
-      const result = await api(API_PREFIX + '/project-spec/adopt-package', { method: 'POST', body: JSON.stringify({ project_id: project.project_id, knowledge_package_id: packageId, category: PROJECT_SPEC_CATEGORY, item_state: 'candidate' }) });
+      const result = await api('project-spec/adopt-package', { method: 'POST', body: JSON.stringify({ project_id: project.project_id, knowledge_package_id: packageId, category: PROJECT_SPEC_CATEGORY, item_state: 'candidate' }) });
       if (!result.ok) { toast(result.error); return }
       await load(); toast('選択中カテゴリへ知識パッケージを取り込みました。'); page('project-spec');
     }
@@ -4344,7 +4343,7 @@
     }
     async function runProjectSpecReadiness() {
       const project = activeProject(); if (!project) return;
-      const result = await api(API_PREFIX + '/project-spec/readiness', { method: 'POST', body: JSON.stringify({ project_id: project.project_id }) });
+      const result = await api('project-spec/readiness', { method: 'POST', body: JSON.stringify({ project_id: project.project_id }) });
       if (!result.ok) { toast(result.error); return }
       await load(); toast(result.check.missing_count ? `再開前に埋める項目が ${result.check.missing_count} 件あります。` : '再開に必要な最小条件が揃っています。'); page('project-spec');
     }
@@ -4425,14 +4424,14 @@
       el.innerHTML = `<h3>選択中の対話セット</h3><div class="core-turn"><label><span>USER</span><span>order ${user?.order || '—'}</span></label><p>${esc(user?.text || 'USER発言なし / 前文脈不足')}</p></div>${answers.length ? answers.map(answer => `<div class="core-turn"><label><span>AI</span><span>order ${answer.order || '—'}</span></label><p>${esc(answer.text || '')}</p></div>`).join('') : '<div class="core-turn"><label><span>AI</span><span>回答なし</span></label><p>このUSER発言に続くAI回答は原本にありません。</p></div>'}<div class="core-review-grid"><select id="coreEvaluation"><option value="unreviewed" ${row.evaluation === 'unreviewed' ? 'selected' : ''}>未判定</option><option value="success" ${row.evaluation === 'success' ? 'selected' : ''}>成功につながった理解</option><option value="needs_revision" ${row.evaluation === 'needs_revision' ? 'selected' : ''}>一部成立・要修正</option><option value="failure" ${row.evaluation === 'failure' ? 'selected' : ''}>解釈違いによる失敗</option><option value="rejected" ${row.evaluation === 'rejected' ? 'selected' : ''}>却下</option></select><select id="coreConnection"><option value="unchecked" ${row.connection === 'unchecked' ? 'selected' : ''}>未確認</option><option value="continued" ${row.connection === 'continued' ? 'selected' : ''}>継続</option><option value="revision_continued" ${row.connection === 'revision_continued' ? 'selected' : ''}>修正継続</option><option value="adopted_next" ${row.connection === 'adopted_next' ? 'selected' : ''}>採用して次へ</option><option value="cut" ${row.connection === 'cut' ? 'selected' : ''}>切断／却下</option><option value="new_topic" ${row.connection === 'new_topic' ? 'selected' : ''}>別論点へ移動</option></select><textarea id="coreReviewNote" placeholder="結果の理由・次に残す注意点">${esc(row.review_note || '')}</textarea></div><div class="buttons"><button class="btn secondary" onclick="saveCoreDialogueReview()">評価を保存</button></div>`;
     }
     async function deriveCoreDialogueSets() {
-      const result = await api(API_PREFIX + '/core/derive-selected', { method: 'POST', body: '{}' });
+      const result = await api('core/derive-selected', { method: 'POST', body: '{}' });
       if (!result.ok) { toast(result.error); return }
       await load(); toast(result.no_new_messages ? 'この版に新しい発言はありません。' : `今回追加分の対話セット ${result.dialogue_set_count}件を確認できます。`); page('core-knowledge');
     }
     async function saveCoreDialogueReview() {
       if (!CORE_SELECTED_SET_ID) return;
       const payload = { dialogue_set_id: CORE_SELECTED_SET_ID, evaluation: qs('#coreEvaluation').value, connection: qs('#coreConnection').value, note: qs('#coreReviewNote').value };
-      const result = await api(API_PREFIX + '/core/dialogue-review', { method: 'POST', body: JSON.stringify(payload) });
+      const result = await api('core/dialogue-review', { method: 'POST', body: JSON.stringify(payload) });
       if (!result.ok) { toast(result.error); return }
       await load(); toast('対話セットの評価を派生層へ保存しました。'); page('core-knowledge');
     }
@@ -4440,7 +4439,7 @@
       const importId = coreSelectedImportId();
       if (!CORE_SELECTED_SET_ID) { toast('先に対話セットを選択してください。'); return }
       const payload = { capture_import_id: importId, dialogue_set_id: CORE_SELECTED_SET_ID, category: qs('#corePackageCategory').value, package_state: qs('#corePackageState').value, statement: qs('#corePackageStatement').value };
-      const result = await api(API_PREFIX + '/core/knowledge-package', { method: 'POST', body: JSON.stringify(payload) });
+      const result = await api('core/knowledge-package', { method: 'POST', body: JSON.stringify(payload) });
       if (!result.ok) { toast(result.error); return }
       qs('#corePackageStatement').value = '';
       await load(); toast('知識パッケージとして格納しました。'); page('core-knowledge');
@@ -4448,7 +4447,7 @@
     async function runCoreSupportCheck() {
       const importId = coreSelectedImportId();
       if (!importId) { toast('先に回収JSONを接続してください。'); return }
-      const result = await api(API_PREFIX + '/core/support-check', { method: 'POST', body: JSON.stringify({ capture_import_id: importId }) });
+      const result = await api('core/support-check', { method: 'POST', body: JSON.stringify({ capture_import_id: importId }) });
       if (!result.ok) { toast(result.error); return }
       await load(); toast(result.support_check.missing_count ? `不足 ${result.support_check.missing_count}件を検出しました。` : '最低限の条件が揃っています。'); page('core-knowledge');
     }
@@ -4721,7 +4720,7 @@
       return imports[0] || null;
     }
     async function setCaptureConnectionMode(mode) {
-      const r = await api(API_PREFIX + '/capture-connection-mode', { method: 'POST', body: JSON.stringify({ mode }) });
+      const r = await api('capture-connection-mode', { method: 'POST', body: JSON.stringify({ mode }) });
       if (!r.ok) { toast(r.error || '接続状態を変更できません。'); return }
       await load(); renderPortfolio(); page('portfolio-collect');
       toast(mode === 'disconnected' ? '保存データは残したまま、未接続表示へ切り替えました。' : '保存済みの回収JSONへ再接続しました。');
@@ -5039,7 +5038,7 @@
       el.innerHTML = `<div class="workflow-review-layout v155-review-carousel"><div class="workflow-fulltext-card workflow-context-mini jarvis-neumo-panel jarvis-reveal-shell"><h3>02で確認した全文</h3><p>分解後も、元の文脈を見失わないために全文側を残します。</p><div class="workflow-fulltext-box">${renderWorkflowFullText(base, 'review')}</div><button class="workflow-secondary-link" onclick="page('portfolio-quality')">02へ戻って範囲を直す</button></div><div class="workflow-review-carousel-card jarvis-neumo-panel jarvis-reveal-shell"><div class="workflow-review-carousel-head"><div class="workflow-review-carousel-title"><small>${esc(filterLabel)} / ${filtered.length}件</small><b>分解候補を1件ずつ確認します</b></div><div class="workflow-review-nav"><button type="button" onclick="stepReviewCandidate(-1)" ${index <= 0 ? 'disabled' : ''}>◀</button><span>${filtered.length ? `${index + 1}/${filtered.length}` : '0/0'}</span><button type="button" onclick="stepReviewCandidate(1)" ${index >= filtered.length - 1 ? 'disabled' : ''}>▶</button></div></div>${detail}<p class="workflow-review-context-note">候補が多い場合でも一度に並べず、◀▶で切り替えて確認します。分類違いは右側で直し、範囲そのものが違う場合は02へ戻ります。</p></div><aside class="workflow-side-card jarvis-neumo-panel jarvis-reveal-shell"><h3>選択中項目の分類修正</h3><p>分類違いはここで直します。範囲そのものが違う場合は02へ戻ります。</p><div class="workflow-class-list"><div class="workflow-class-row is-current"><b>現在</b><span>${esc(pLabel(first.adopted_category || first.suggested_category || '未分類'))}</span></div><div class="workflow-class-row"><b>引き継ぎ</b><span>再開用</span></div><div class="workflow-class-row"><b>仕様</b><span>正本候補</span></div><div class="workflow-class-row"><b>対策</b><span>再発防止</span></div><div class="workflow-class-row"><b>デザイン知</b><span>判断基準</span></div><div class="workflow-class-row"><b>アイデア</b><span>stock</span></div><div class="workflow-class-row"><b>要確認 / 除外</b><span>混入防止</span></div></div><details class="workflow-detail-box" ${window.jarvisReviewDetailOpen ? 'open' : ''} onchange="window.jarvisReviewDetailOpen=this.open"><summary>原文・分解理由を開く</summary><p>${esc(evidenceText(first))}</p></details></aside></div>`;
     }
 
-    async function reviewCaptureCandidate(id, status) { if (PORTFOLIO_DEMO_MODE) { toast('Sample表示のため、候補状態は保存しません。'); return } const category = qs('#capcat_' + id)?.value || '', statement = qs('#captext_' + id)?.value || ''; const r = await api(API_PREFIX + '/capture-candidate-review', { method: 'POST', body: JSON.stringify({ capture_candidate_id: id, review_state: status, category, statement }) }); if (!r.ok) { toast(r.error); return } await load(); renderPortfolio(); toast(status === 'edited_approved' ? '採用済み情報として保存しました。' : '候補の確認状態を保存しました。') }
+    async function reviewCaptureCandidate(id, status) { if (PORTFOLIO_DEMO_MODE) { toast('Sample表示のため、候補状態は保存しません。'); return } const category = qs('#capcat_' + id)?.value || '', statement = qs('#captext_' + id)?.value || ''; const r = await api('capture-candidate-review', { method: 'POST', body: JSON.stringify({ capture_candidate_id: id, review_state: status, category, statement }) }); if (!r.ok) { toast(r.error); return } await load(); renderPortfolio(); toast(status === 'edited_approved' ? '採用済み情報として保存しました。' : '候補の確認状態を保存しました。') }
 
 
     let WORKFLOW_COMPARE_FILTER = 'unmatched';
