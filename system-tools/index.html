@@ -5,17 +5,17 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>AI制作継続アシスタント</title>
-    <link rel="stylesheet" href="assets/base-shell.css">
+    <link rel="stylesheet" href="assets/base-shell.css?v=481ce6b-static">
 
-  <link rel="stylesheet" href="assets/components.css">
-  <link rel="stylesheet" href="assets/design-tokens.css">
-  <link rel="stylesheet" href="assets/panel-system.css">
-  <link rel="stylesheet" href="assets/layout-presets.css">
-  <link rel="stylesheet" href="assets/theme-neumorphism.css">
-  <link rel="stylesheet" href="assets/system-map.css">
-  <link rel="stylesheet" href="assets/start.css">
-  <link rel="stylesheet" href="assets/workflow/workflow-common.css">
-  <link rel="stylesheet" href="assets/presentation-polish.css">
+  <link rel="stylesheet" href="assets/components.css?v=481ce6b-static">
+  <link rel="stylesheet" href="assets/design-tokens.css?v=481ce6b-static">
+  <link rel="stylesheet" href="assets/panel-system.css?v=481ce6b-static">
+  <link rel="stylesheet" href="assets/layout-presets.css?v=481ce6b-static">
+  <link rel="stylesheet" href="assets/theme-neumorphism.css?v=481ce6b-static">
+  <link rel="stylesheet" href="assets/system-map.css?v=481ce6b-static">
+  <link rel="stylesheet" href="assets/start.css?v=481ce6b-static">
+  <link rel="stylesheet" href="assets/workflow/workflow-common.css?v=481ce6b-static">
+  <link rel="stylesheet" href="assets/presentation-polish.css?v=481ce6b-static">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Zen+Antique+Soft&display=swap" rel="stylesheet">
@@ -2695,15 +2695,15 @@
     </main>
   </div>
   <div id="toast" class="toast"></div>
-  <script src="assets/page-definitions.js"></script>
-  <script src="assets/page-assist-copy.js"></script>
-  <script src="assets/page-assist-engine.js"></script>
-  <script src="assets/animation-presets.js"></script>
-  <script src="assets/interaction-presets.js"></script>
-  <script src="assets/data-bindings.js"></script>
-  <script src="assets/ui-registry.js"></script>
-  <script src="assets/ui-registry-consumer.js"></script>
-  <script src="assets/ui-registry-runtime-probe.js"></script>
+  <script src="assets/page-definitions.js?v=481ce6b-static"></script>
+  <script src="assets/page-assist-copy.js?v=481ce6b-static"></script>
+  <script src="assets/page-assist-engine.js?v=481ce6b-static"></script>
+  <script src="assets/animation-presets.js?v=481ce6b-static"></script>
+  <script src="assets/interaction-presets.js?v=481ce6b-static"></script>
+  <script src="assets/data-bindings.js?v=481ce6b-static"></script>
+  <script src="assets/ui-registry.js?v=481ce6b-static"></script>
+  <script src="assets/ui-registry-consumer.js?v=481ce6b-static"></script>
+  <script src="assets/ui-registry-runtime-probe.js?v=481ce6b-static"></script>
   <script>
     let STATE = null, FILTER = 'ALL', SELECTED = null; const qs = s => document.querySelector(s), qsa = s => [...document.querySelectorAll(s)];
     function toast(t) { const e = qs('#toast'); e.textContent = t; e.classList.add('show'); clearTimeout(toast.t); toast.t = setTimeout(() => e.classList.remove('show'), 2400) }
@@ -2758,7 +2758,7 @@
       controls.id = 'floatingGuideControls';
       controls.className = 'floating-guide-controls';
       controls.setAttribute('aria-label', '誘導アニメーション操作');
-      controls.innerHTML = '<button type="button" class="guide-control-button replay" aria-label="再度アニメ再生" title="再度アニメ再生"><img src="assets/guide/return.svg" alt="" aria-hidden="true"></button><button type="button" class="guide-control-button show-all" aria-label="アニメをスキップする" title="アニメをスキップする"><img src="assets/guide/skip.svg" alt="" aria-hidden="true"></button>';
+      controls.innerHTML = '<button type="button" class="guide-control-button replay" aria-label="再度アニメ再生" title="再度アニメ再生"><img src="assets/guide/return.svg?v=481ce6b-static" alt="" aria-hidden="true"></button><button type="button" class="guide-control-button show-all" aria-label="アニメをスキップする" title="アニメをスキップする"><img src="assets/guide/skip.svg?v=481ce6b-static" alt="" aria-hidden="true"></button>';
       const replay = controls.querySelector('.replay');
       const finish = controls.querySelector('.show-all');
       replay.onclick = () => { const id = controls.dataset.targetPage; if (id === 'jarvis-start') restartStartIntro(); else if (id === 'unified-backup') renderUnifiedBackup(); else if (id === 'capture-import-queue') renderImportQueue(); else if (id === 'project-spec') renderProjectSpec(); else if (id === 'core-knowledge') renderCoreKnowledge(); else if (id === 'portfolio-dialogue-sets') renderDialogueSetPage(); else if (id === 'system-map') restartSystemMapGuide(); else startWorkflowPageGuide(id) };
@@ -4562,8 +4562,8 @@
       const set = DIALOGUE_SETS.find(item => item.set_id === DIALOGUE_SELECTED_ID);
       if (!detail || !panel || !set) return;
       const review = dialogueReviewFor(set.set_id);
-      detail.innerHTML = `<div class="dialogue-turn-row user"><img class="dialogue-avatar" src="assets/dialogue/user.svg" alt="" aria-hidden="true"><div class="dialogue-turn-block"><label><span>USER</span><span>order ${set.user?.order || '—'}</span></label><p>${esc(set.user?.text || 'USER発言なし / 前文脈不足')}</p></div></div>` +
-        (set.assistants.length ? set.assistants.map(answer => `<div class="dialogue-turn-row ai"><div class="dialogue-turn-block"><label><span>AI</span><span>order ${answer.order || '—'}</span></label><p>${esc(answer.text || '')}</p></div><img class="dialogue-avatar" src="assets/dialogue/robot.svg" alt="" aria-hidden="true"></div>`).join('') : `<div class="dialogue-turn-row ai"><div class="dialogue-turn-block"><label><span>AI</span><span>回答なし</span></label><p>このUSER発言に続くAI回答は原本内にありません。</p></div><img class="dialogue-avatar" src="assets/dialogue/robot.svg" alt="" aria-hidden="true"></div>`);
+      detail.innerHTML = `<div class="dialogue-turn-row user"><img class="dialogue-avatar" src="assets/dialogue/user.svg?v=481ce6b-static" alt="" aria-hidden="true"><div class="dialogue-turn-block"><label><span>USER</span><span>order ${set.user?.order || '—'}</span></label><p>${esc(set.user?.text || 'USER発言なし / 前文脈不足')}</p></div></div>` +
+        (set.assistants.length ? set.assistants.map(answer => `<div class="dialogue-turn-row ai"><div class="dialogue-turn-block"><label><span>AI</span><span>order ${answer.order || '—'}</span></label><p>${esc(answer.text || '')}</p></div><img class="dialogue-avatar" src="assets/dialogue/robot.svg?v=481ce6b-static" alt="" aria-hidden="true"></div>`).join('') : `<div class="dialogue-turn-row ai"><div class="dialogue-turn-block"><label><span>AI</span><span>回答なし</span></label><p>このUSER発言に続くAI回答は原本内にありません。</p></div><img class="dialogue-avatar" src="assets/dialogue/robot.svg?v=481ce6b-static" alt="" aria-hidden="true"></div>`);
       const notes = review.notes || {};
       const noteFields = [['purpose', '核となる目的'], ['rule', '守る条件／禁止'], ['success', '成功した理解'], ['failure', '失敗理由'], ['sense', '感覚・判断基準'], ['future', '将来の機能候補']];
       panel.innerHTML = `<h3>この対話セットの仮評価</h3><div class="dialogue-review-selects"><div class="dialogue-review-field"><label>結果ラベル</label><select onchange="updateDialogueReview('evaluation',this.value)"><option ${review.evaluation === '未判定' ? 'selected' : ''}>未判定</option><option ${review.evaluation === '成功につながった理解' ? 'selected' : ''}>成功につながった理解</option><option ${review.evaluation === '一部成立・要修正' ? 'selected' : ''}>一部成立・要修正</option><option ${review.evaluation === '解釈違いによる失敗' ? 'selected' : ''}>解釈違いによる失敗</option><option ${review.evaluation === '却下' ? 'selected' : ''}>却下</option></select></div><div class="dialogue-review-field"><label>次セットとの関係</label><select onchange="updateDialogueReview('connection',this.value)"><option ${review.connection === '未確認' ? 'selected' : ''}>未確認</option><option ${review.connection === '継続' ? 'selected' : ''}>継続</option><option ${review.connection === '修正継続' ? 'selected' : ''}>修正継続</option><option ${review.connection === '採用して次へ' ? 'selected' : ''}>採用して次へ</option><option ${review.connection === '切断／却下' ? 'selected' : ''}>切断／却下</option><option ${review.connection === '別論点へ移動' ? 'selected' : ''}>別論点へ移動</option></select></div></div><div class="dialogue-note-grid">${noteFields.map(field => `<div><label>${field[1]}</label><textarea oninput="updateDialogueNote('${field[0]}',this.value)">${esc(notes[field[0]] || '')}</textarea></div>`).join('')}</div><p class="dialogue-save-note">Sample専用の確認状態としてブラウザ内に保持します。元JSONや本運用データは変更しません。</p><div class="dialogue-nav-actions"><button class="btn secondary" onclick="moveDialogueSet(-1)">← 前のセット</button><button class="btn secondary" onclick="moveDialogueSet(1)">次のセット →</button></div>`;
@@ -7922,8 +7922,8 @@
     })();
   </script>
 
-  <script src="assets/workflow/workflow-count-animation.js"></script>
-  <script src="assets/workflow/workflow-guide-sequence.js"></script>
+  <script src="assets/workflow/workflow-count-animation.js?v=481ce6b-static"></script>
+  <script src="assets/workflow/workflow-guide-sequence.js?v=481ce6b-static"></script>
 
 
   <script id="jarvis-v226-guide-control-stabilizer">
@@ -8082,31 +8082,31 @@
 
 
   <!-- JARVIS v268: page-owned CSS/JS entries for workflow 01-06 and goal A-E -->
-  <link rel="stylesheet" href="assets/shared-guide.css">
-  <link rel="stylesheet" href="assets/admin.css">
-  <link rel="stylesheet" href="assets/artifact.css">
-  <link rel="stylesheet" href="assets/workflow/workflow-01.css">
-  <link rel="stylesheet" href="assets/workflow/workflow-02.css">
-  <link rel="stylesheet" href="assets/workflow/workflow-03.css">
-  <link rel="stylesheet" href="assets/workflow/workflow-04.css">
-  <link rel="stylesheet" href="assets/workflow/workflow-05.css?v=388">
-  <link rel="stylesheet" href="assets/workflow/workflow-06.css">
-  <link rel="stylesheet" href="assets/goal/goal-a.css">
-  <link rel="stylesheet" href="assets/goal/goal-b.css">
-  <link rel="stylesheet" href="assets/goal/goal-c.css">
-  <link rel="stylesheet" href="assets/goal/goal-d.css">
-  <link rel="stylesheet" href="assets/goal/goal-e.css">
-  <script src="assets/workflow/workflow-01.js"></script>
-  <script src="assets/workflow/workflow-02.js"></script>
-  <script src="assets/workflow/workflow-03.js"></script>
-  <script src="assets/workflow/workflow-04.js"></script>
-  <script src="assets/workflow/workflow-05.js"></script>
-  <script src="assets/workflow/workflow-06.js"></script>
-  <script src="assets/goal/goal-a.js"></script>
-  <script src="assets/goal/goal-b.js"></script>
-  <script src="assets/goal/goal-c.js"></script>
-  <script src="assets/goal/goal-d.js"></script>
-  <script src="assets/goal/goal-e.js"></script>
+  <link rel="stylesheet" href="assets/shared-guide.css?v=481ce6b-static">
+  <link rel="stylesheet" href="assets/admin.css?v=481ce6b-static">
+  <link rel="stylesheet" href="assets/artifact.css?v=481ce6b-static">
+  <link rel="stylesheet" href="assets/workflow/workflow-01.css?v=481ce6b-static">
+  <link rel="stylesheet" href="assets/workflow/workflow-02.css?v=481ce6b-static">
+  <link rel="stylesheet" href="assets/workflow/workflow-03.css?v=481ce6b-static">
+  <link rel="stylesheet" href="assets/workflow/workflow-04.css?v=481ce6b-static">
+  <link rel="stylesheet" href="assets/workflow/workflow-05.css?v=481ce6b-static">
+  <link rel="stylesheet" href="assets/workflow/workflow-06.css?v=481ce6b-static">
+  <link rel="stylesheet" href="assets/goal/goal-a.css?v=481ce6b-static">
+  <link rel="stylesheet" href="assets/goal/goal-b.css?v=481ce6b-static">
+  <link rel="stylesheet" href="assets/goal/goal-c.css?v=481ce6b-static">
+  <link rel="stylesheet" href="assets/goal/goal-d.css?v=481ce6b-static">
+  <link rel="stylesheet" href="assets/goal/goal-e.css?v=481ce6b-static">
+  <script src="assets/workflow/workflow-01.js?v=481ce6b-static"></script>
+  <script src="assets/workflow/workflow-02.js?v=481ce6b-static"></script>
+  <script src="assets/workflow/workflow-03.js?v=481ce6b-static"></script>
+  <script src="assets/workflow/workflow-04.js?v=481ce6b-static"></script>
+  <script src="assets/workflow/workflow-05.js?v=481ce6b-static"></script>
+  <script src="assets/workflow/workflow-06.js?v=481ce6b-static"></script>
+  <script src="assets/goal/goal-a.js?v=481ce6b-static"></script>
+  <script src="assets/goal/goal-b.js?v=481ce6b-static"></script>
+  <script src="assets/goal/goal-c.js?v=481ce6b-static"></script>
+  <script src="assets/goal/goal-d.js?v=481ce6b-static"></script>
+  <script src="assets/goal/goal-e.js?v=481ce6b-static"></script>
   <script>
     (() => {
       let didInstall = false;
@@ -8133,12 +8133,12 @@
 
 </html>
   <!-- JARVIS v270: late page-owned workflow04 CSS to override legacy inline blocks -->
-  <link rel="stylesheet" href="assets/workflow/workflow-04.css?v=270">
+  <link rel="stylesheet" href="assets/workflow/workflow-04.css?v=481ce6b-static">
   <!-- JARVIS v277: late page-owned workflow05 CSS/JS to override legacy inline 05 guide blocks -->
-  <link rel="stylesheet" href="assets/workflow/workflow-05.css?v=388-late">
-  <script src="assets/workflow/workflow-05.js?v=388-late"></script>
+  <link rel="stylesheet" href="assets/workflow/workflow-05.css?v=481ce6b-static">
+  <script src="assets/workflow/workflow-05.js?v=481ce6b-static"></script>
 
   <!-- JARVIS v314: canonical workflow accent contract loaded after legacy late CSS. -->
-  <link rel="stylesheet" href="assets/workflow/workflow-06.css?v=286-late">
-  <link rel="stylesheet" href="assets/workflow/workflow-accent-contract.css?v=314">
-  <script src="assets/workflow/workflow-guide-labels.js"></script>
+  <link rel="stylesheet" href="assets/workflow/workflow-06.css?v=481ce6b-static">
+  <link rel="stylesheet" href="assets/workflow/workflow-accent-contract.css?v=481ce6b-static">
+  <script src="assets/workflow/workflow-guide-labels.js?v=481ce6b-static"></script>
