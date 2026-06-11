@@ -1,4 +1,4 @@
-/* JARVIS v314: canonical workflow accent contract.
+/* KASHINOKI v314: canonical workflow accent contract.
    Purpose: 01-05 workflow action panels and selected cards/buttons use Display Settings accent color from one managed place.
    Ownership: this file is the single source for workflow accent surfaces.
    Page-owned workflow-02/03/04/05 CSS must not redefine selected/action accent backgrounds.
@@ -6,40 +6,52 @@
 
 html body,
 html body .workflow-guide-page {
-  --jarvis-workflow-accent-fill: var(--jarvis-accent-07, color-mix(in srgb, var(--nm-accent, #8f6d24) 7%, transparent));
-  --jarvis-workflow-accent-border: var(--jarvis-accent-38, color-mix(in srgb, var(--nm-accent, #8f6d24) 34%, transparent));
-  --jarvis-workflow-accent-inset: var(--jarvis-accent-06, color-mix(in srgb, var(--nm-accent, #8f6d24) 6%, transparent));
-  --jarvis-workflow-accent-shadow: var(--jarvis-accent-06, color-mix(in srgb, var(--nm-accent, #8f6d24) 6%, transparent));
-  --jarvis-workflow-selected-surface: rgb(240, 240, 237);
-  --jarvis-workflow-selected-border: transparent;
-  --jarvis-workflow-selected-shadow: inset calc(.55 * var(--nm-offset, 8px)) calc(.55 * var(--nm-offset, 8px)) calc(.82 * var(--nm-blur, 16px)) var(--nm-shadow-color, rgba(153,153,151,.32)), inset calc(-.55 * var(--nm-offset, 8px)) calc(-.55 * var(--nm-offset, 8px)) calc(.82 * var(--nm-blur, 16px)) var(--nm-light-color, rgba(255,255,255,.58));
+  --kashinoki-workflow-accent-fill: var(--kashinoki-accent-07, color-mix(in srgb, var(--nm-accent, #8f6d24) 7%, transparent));
+  --kashinoki-workflow-accent-border: var(--kashinoki-accent-38, color-mix(in srgb, var(--nm-accent, #8f6d24) 34%, transparent));
+  --kashinoki-workflow-accent-inset: var(--kashinoki-accent-06, color-mix(in srgb, var(--nm-accent, #8f6d24) 6%, transparent));
+  --kashinoki-workflow-accent-shadow: var(--kashinoki-accent-06, color-mix(in srgb, var(--nm-accent, #8f6d24) 6%, transparent));
+  --kashinoki-workflow-selected-surface: rgb(240, 240, 237);
+  --kashinoki-workflow-selected-border: transparent;
+  --kashinoki-workflow-selected-shadow: inset calc(.55 * var(--nm-offset, 8px)) calc(.55 * var(--nm-offset, 8px)) calc(.82 * var(--nm-blur, 16px)) var(--nm-shadow-color, rgba(153,153,151,.32)), inset calc(-.55 * var(--nm-offset, 8px)) calc(-.55 * var(--nm-offset, 8px)) calc(.82 * var(--nm-blur, 16px)) var(--nm-light-color, rgba(255,255,255,.58));
 }
 
 /* 01-05 lower action panels and 04 upper STEP panel */
 html body #portfolio-collect.workflow-guide-page #portfolioStepSlot .guided-action,
 html body #portfolio-collect.workflow-guide-page #portfolioStepSlot .portfolio-step-shell,
-html body #portfolio-quality.workflow-guide-page .guided-action.jarvis-action-panel,
-html body #portfolio-review.workflow-guide-page .guided-action.jarvis-action-panel,
-html body #portfolio-current.workflow-guide-page .guided-action.jarvis-action-panel,
-html body #portfolio-purpose.workflow-guide-page .guided-action.jarvis-action-panel,
+html body #portfolio-quality.workflow-guide-page .guided-action.kashinoki-action-panel,
+html body #portfolio-review.workflow-guide-page .guided-action.kashinoki-action-panel,
+html body #portfolio-current.workflow-guide-page .guided-action.kashinoki-action-panel,
+html body #portfolio-purpose.workflow-guide-page .guided-action.kashinoki-action-panel,
+html body #portfolio-next.workflow-guide-page .guided-action.kashinoki-action-panel,
+html body #artifact-handoff.workflow-guide-page .guided-action.kashinoki-action-panel,
+html body #artifact-spec.workflow-guide-page .guided-action.kashinoki-action-panel,
+html body #artifact-countermeasure.workflow-guide-page .guided-action.kashinoki-action-panel,
+html body #artifact-design.workflow-guide-page .guided-action.kashinoki-action-panel,
+html body #artifact-ideas.workflow-guide-page .guided-action.kashinoki-action-panel,
 html body #portfolio-current.workflow-guide-page .workflow-step-guide,
 html body #portfolio-current.jv267-page .workflow-step-guide {
-  background: var(--jarvis-workflow-accent-fill) !important;
-  background-color: var(--jarvis-workflow-accent-fill) !important;
+  background: var(--kashinoki-workflow-accent-fill) !important;
+  background-color: var(--kashinoki-workflow-accent-fill) !important;
   background-image: none !important;
-  border: 1px solid var(--jarvis-workflow-accent-border) !important;
+  border: 1px solid var(--kashinoki-workflow-accent-border) !important;
   box-shadow:
-    inset 0 0 0 1px var(--jarvis-workflow-accent-inset),
+    inset 0 0 0 1px var(--kashinoki-workflow-accent-inset),
     -1px -1px 8px rgba(255,255,255,.32),
-    1px 1px 8px var(--jarvis-workflow-accent-shadow) !important;
+    1px 1px 8px var(--kashinoki-workflow-accent-shadow) !important;
 }
 
 html body #portfolio-collect.workflow-guide-page #portfolioStepSlot .guided-action::before,
 html body #portfolio-collect.workflow-guide-page #portfolioStepSlot .portfolio-step-shell::before,
-html body #portfolio-quality.workflow-guide-page .guided-action.jarvis-action-panel::before,
-html body #portfolio-review.workflow-guide-page .guided-action.jarvis-action-panel::before,
-html body #portfolio-current.workflow-guide-page .guided-action.jarvis-action-panel::before,
-html body #portfolio-purpose.workflow-guide-page .guided-action.jarvis-action-panel::before,
+html body #portfolio-quality.workflow-guide-page .guided-action.kashinoki-action-panel::before,
+html body #portfolio-review.workflow-guide-page .guided-action.kashinoki-action-panel::before,
+html body #portfolio-current.workflow-guide-page .guided-action.kashinoki-action-panel::before,
+html body #portfolio-purpose.workflow-guide-page .guided-action.kashinoki-action-panel::before,
+html body #portfolio-next.workflow-guide-page .guided-action.kashinoki-action-panel::before,
+html body #artifact-handoff.workflow-guide-page .guided-action.kashinoki-action-panel::before,
+html body #artifact-spec.workflow-guide-page .guided-action.kashinoki-action-panel::before,
+html body #artifact-countermeasure.workflow-guide-page .guided-action.kashinoki-action-panel::before,
+html body #artifact-design.workflow-guide-page .guided-action.kashinoki-action-panel::before,
+html body #artifact-ideas.workflow-guide-page .guided-action.kashinoki-action-panel::before,
 html body #portfolio-current.workflow-guide-page .workflow-step-guide::before,
 html body #portfolio-current.jv267-page .workflow-step-guide::before {
   content: none !important;
@@ -50,43 +62,43 @@ html body #portfolio-current.jv267-page .workflow-step-guide::before {
 /* 02-05 selected filter/status/deliverable cards.
    Selected state no longer uses accent color fill or outline.
    It is represented as a Neumorphism recessed surface so it stays in the same material world as convex cards. */
-html body #portfolio-quality.workflow-guide-page #captureQualitySummary .workflow-brief-card.jarvis-filter-button:is(.is-active,.is-selected,[aria-pressed="true"]),
-html body #portfolio-review.workflow-guide-page #portfolioAnalysisSummary .portfolio-summary-card.jarvis-filter-button:is(.is-active,.is-selected,[aria-pressed="true"]),
+html body #portfolio-quality.workflow-guide-page #captureQualitySummary .workflow-brief-card.kashinoki-filter-button:is(.is-active,.is-selected,[aria-pressed="true"]),
+html body #portfolio-review.workflow-guide-page #portfolioAnalysisSummary .portfolio-summary-card.kashinoki-filter-button:is(.is-active,.is-selected,[aria-pressed="true"]),
 html body #portfolio-review.workflow-guide-page .workflow-filter-row .workflow-filter:is(.is-active,.is-selected,[aria-pressed="true"]),
 html body #portfolio-review.workflow-guide-page .workflow-decompose-item.is-active,
 html body #portfolio-review.workflow-guide-page .workflow-review-single,
 html body #portfolio-review.workflow-guide-page .workflow-class-row.is-current,
 html body #portfolio-current.workflow-guide-page .workflow-class-row.is-current,
-html body #portfolio-current.workflow-guide-page .workflow-filter-brief .workflow-brief-card.jarvis-filter-button:is(.is-active,.is-selected,[aria-pressed="true"]),
+html body #portfolio-current.workflow-guide-page .workflow-filter-brief .workflow-brief-card.kashinoki-filter-button:is(.is-active,.is-selected,[aria-pressed="true"]),
 html body #portfolio-current.workflow-guide-page .workflow-filter-brief .workflow-brief-card:is(.is-active,.is-selected,[aria-pressed="true"]),
-html body #portfolio-purpose.workflow-guide-page .workflow-filter-brief .workflow-brief-card.jarvis-filter-button:is(.is-active,.is-selected,[aria-pressed="true"]),
+html body #portfolio-purpose.workflow-guide-page .workflow-filter-brief .workflow-brief-card.kashinoki-filter-button:is(.is-active,.is-selected,[aria-pressed="true"]),
 html body #portfolio-purpose.workflow-guide-page #portfolioPurposes .portfolio-purpose:is(.selected,.is-selected,[aria-pressed="true"]) {
-  background: var(--jarvis-workflow-selected-surface) !important;
-  background-color: var(--jarvis-workflow-selected-surface) !important;
+  background: var(--kashinoki-workflow-selected-surface) !important;
+  background-color: var(--kashinoki-workflow-selected-surface) !important;
   background-image: none !important;
   color: var(--text, var(--tx, #22282b)) !important;
-  border-color: var(--jarvis-workflow-selected-border) !important;
-  box-shadow: var(--jarvis-workflow-selected-shadow) !important;
+  border-color: var(--kashinoki-workflow-selected-border) !important;
+  box-shadow: var(--kashinoki-workflow-selected-shadow) !important;
   transform: translateY(1px) !important;
 }
 
-html body #portfolio-quality.workflow-guide-page #captureQualitySummary .workflow-brief-card.jarvis-filter-button:is(.is-active,.is-selected,[aria-pressed="true"])::before,
-html body #portfolio-review.workflow-guide-page #portfolioAnalysisSummary .portfolio-summary-card.jarvis-filter-button:is(.is-active,.is-selected,[aria-pressed="true"])::before,
+html body #portfolio-quality.workflow-guide-page #captureQualitySummary .workflow-brief-card.kashinoki-filter-button:is(.is-active,.is-selected,[aria-pressed="true"])::before,
+html body #portfolio-review.workflow-guide-page #portfolioAnalysisSummary .portfolio-summary-card.kashinoki-filter-button:is(.is-active,.is-selected,[aria-pressed="true"])::before,
 html body #portfolio-review.workflow-guide-page .workflow-filter-row .workflow-filter:is(.is-active,.is-selected,[aria-pressed="true"])::before,
-html body #portfolio-current.workflow-guide-page .workflow-filter-brief .workflow-brief-card.jarvis-filter-button:is(.is-active,.is-selected,[aria-pressed="true"])::before,
+html body #portfolio-current.workflow-guide-page .workflow-filter-brief .workflow-brief-card.kashinoki-filter-button:is(.is-active,.is-selected,[aria-pressed="true"])::before,
 html body #portfolio-current.workflow-guide-page .workflow-filter-brief .workflow-brief-card:is(.is-active,.is-selected,[aria-pressed="true"])::before,
-html body #portfolio-purpose.workflow-guide-page .workflow-filter-brief .workflow-brief-card.jarvis-filter-button:is(.is-active,.is-selected,[aria-pressed="true"])::before,
+html body #portfolio-purpose.workflow-guide-page .workflow-filter-brief .workflow-brief-card.kashinoki-filter-button:is(.is-active,.is-selected,[aria-pressed="true"])::before,
 html body #portfolio-purpose.workflow-guide-page #portfolioPurposes .portfolio-purpose:is(.selected,.is-selected,[aria-pressed="true"])::before {
   content: none !important;
   display: none !important;
 }
 
 /* Shared inactive surface for the same selectable families. */
-html body #portfolio-quality.workflow-guide-page #captureQualitySummary .workflow-brief-card.jarvis-filter-button:not(.is-active):not(.is-selected),
-html body #portfolio-review.workflow-guide-page #portfolioAnalysisSummary .portfolio-summary-card.jarvis-filter-button:not(.is-active):not(.is-selected),
-html body #portfolio-current.workflow-guide-page .workflow-filter-brief .workflow-brief-card.jarvis-filter-button:not(.is-active):not(.is-selected),
+html body #portfolio-quality.workflow-guide-page #captureQualitySummary .workflow-brief-card.kashinoki-filter-button:not(.is-active):not(.is-selected),
+html body #portfolio-review.workflow-guide-page #portfolioAnalysisSummary .portfolio-summary-card.kashinoki-filter-button:not(.is-active):not(.is-selected),
+html body #portfolio-current.workflow-guide-page .workflow-filter-brief .workflow-brief-card.kashinoki-filter-button:not(.is-active):not(.is-selected),
 html body #portfolio-current.workflow-guide-page .workflow-filter-brief .workflow-brief-card:not(.is-active):not(.is-selected),
-html body #portfolio-purpose.workflow-guide-page .workflow-filter-brief .workflow-brief-card.jarvis-filter-button:not(.is-active):not(.is-selected),
+html body #portfolio-purpose.workflow-guide-page .workflow-filter-brief .workflow-brief-card.kashinoki-filter-button:not(.is-active):not(.is-selected),
 html body #portfolio-purpose.workflow-guide-page #portfolioPurposes .portfolio-purpose:not(.selected):not(.is-selected) {
   background: rgb(240, 240, 237) !important;
   background-color: rgb(240, 240, 237) !important;
@@ -100,29 +112,79 @@ html body #portfolio-purpose.workflow-guide-page #portfolioPurposes .portfolio-p
    calculated from Display Settings, so blue/purple/dark accents do not leave dark text behind.
    This belongs here because workflow-accent-contract.css is the canonical owner of 01-05 workflow accent surfaces. */
 html body .workflow-guide-page {
-  --jarvis-workflow-accent-ink: var(--nm-accent-ink, #f7f7f4);
+  --kashinoki-workflow-accent-ink: var(--nm-accent-ink, #f7f7f4);
 }
 
 html body #portfolio-collect.workflow-guide-page #portfolioStepSlot .guided-action .btn.primary,
 html body #portfolio-collect.workflow-guide-page #portfolioStepSlot .guided-action .workflow-primary-target,
-html body #portfolio-quality.workflow-guide-page .guided-action.jarvis-action-panel .btn.primary,
-html body #portfolio-review.workflow-guide-page .guided-action.jarvis-action-panel .btn.primary,
-html body #portfolio-current.workflow-guide-page .guided-action.jarvis-action-panel .btn.primary,
-html body #portfolio-purpose.workflow-guide-page .guided-action.jarvis-action-panel .btn.primary,
+html body #portfolio-quality.workflow-guide-page .guided-action.kashinoki-action-panel .btn.primary,
+html body #portfolio-review.workflow-guide-page .guided-action.kashinoki-action-panel .btn.primary,
+html body #portfolio-current.workflow-guide-page .guided-action.kashinoki-action-panel .btn.primary,
+html body #portfolio-purpose.workflow-guide-page .guided-action.kashinoki-action-panel .btn.primary,
+html body #portfolio-next.workflow-guide-page .guided-action.kashinoki-action-panel .btn.primary,
 html body #portfolio-next.workflow-guide-page .portfolio-final-action .btn.primary,
 html body .workflow-guide-page .workflow-step-guide .workflow-step-number {
-  color: var(--jarvis-workflow-accent-ink) !important;
-  -webkit-text-fill-color: var(--jarvis-workflow-accent-ink) !important;
+  color: var(--kashinoki-workflow-accent-ink) !important;
+  -webkit-text-fill-color: var(--kashinoki-workflow-accent-ink) !important;
   text-shadow: none !important;
 }
 
 html body #portfolio-collect.workflow-guide-page #portfolioStepSlot .guided-action .btn.primary *,
 html body #portfolio-collect.workflow-guide-page #portfolioStepSlot .guided-action .workflow-primary-target *,
-html body #portfolio-quality.workflow-guide-page .guided-action.jarvis-action-panel .btn.primary *,
-html body #portfolio-review.workflow-guide-page .guided-action.jarvis-action-panel .btn.primary *,
-html body #portfolio-current.workflow-guide-page .guided-action.jarvis-action-panel .btn.primary *,
-html body #portfolio-purpose.workflow-guide-page .guided-action.jarvis-action-panel .btn.primary *,
+html body #portfolio-quality.workflow-guide-page .guided-action.kashinoki-action-panel .btn.primary *,
+html body #portfolio-review.workflow-guide-page .guided-action.kashinoki-action-panel .btn.primary *,
+html body #portfolio-current.workflow-guide-page .guided-action.kashinoki-action-panel .btn.primary *,
+html body #portfolio-purpose.workflow-guide-page .guided-action.kashinoki-action-panel .btn.primary *,
+html body #portfolio-next.workflow-guide-page .guided-action.kashinoki-action-panel .btn.primary *,
 html body #portfolio-next.workflow-guide-page .portfolio-final-action .btn.primary * {
   color: inherit !important;
   -webkit-text-fill-color: inherit !important;
+}
+
+/* v759: unify STEP02/STEP03 guide action panel accent density with STEP01.
+   STEP01 effective values:
+   fill   = --kashinoki-workflow-accent-fill  = --kashinoki-accent-07  / rgba(150,46,255,.07)
+   border = --kashinoki-workflow-accent-border= --kashinoki-accent-38  / rgba(150,46,255,.38)
+   inset  = --kashinoki-workflow-accent-inset = --kashinoki-accent-06  / rgba(150,46,255,.06)
+   shadow = --kashinoki-workflow-accent-shadow= --kashinoki-accent-06  / rgba(150,46,255,.06)
+   This block intentionally matches the higher-specificity v436 slot selector so STEP02 does not keep accent-12 / accent-16. */
+html body #portfolio-quality.workflow-guide-page .guided-action-slot.portfolio-action .guided-action.kashinoki-action-panel,
+html body #portfolio-review.workflow-guide-page .guided-action-slot.portfolio-action .guided-action.kashinoki-action-panel,
+html body #portfolio-quality.workflow-guide-page > .guided-action-slot.portfolio-action.kashinoki-action-panel-slot .guided-action.kashinoki-action-panel,
+html body #portfolio-review.workflow-guide-page > .kashinoki03-bottom-action.guided-action-slot .guided-action.kashinoki-action-panel {
+  background: var(--kashinoki-workflow-accent-fill, var(--kashinoki-accent-07, rgba(150,46,255,.07))) !important;
+  background-color: var(--kashinoki-workflow-accent-fill, var(--kashinoki-accent-07, rgba(150,46,255,.07))) !important;
+  background-image: none !important;
+  border-color: var(--kashinoki-workflow-accent-border, var(--kashinoki-accent-38, rgba(150,46,255,.38))) !important;
+  box-shadow:
+    inset 0 0 0 1px var(--kashinoki-workflow-accent-inset, var(--kashinoki-accent-06, rgba(150,46,255,.06))),
+    -1px -1px 8px rgba(255,255,255,.32),
+    1px 1px 8px var(--kashinoki-workflow-accent-shadow, var(--kashinoki-accent-06, rgba(150,46,255,.06))) !important;
+}
+
+
+/* v760: match STEP02/STEP03 upper guide panel density to STEP01 accent panel.
+   Numeric contract from STEP01: fill 7%, border 38%, inset 6%, shadow 6%.
+   This overrides the generic Neumorphism workflow-step-guide accent-12 / accent-54 rule. */
+html body.theme-neumorphism #portfolio-quality.workflow-guide-page > .workflow-step-guide,
+html body.theme-neumorphism #portfolio-review.workflow-guide-page > .workflow-step-guide,
+html body #portfolio-quality.workflow-guide-page > .workflow-step-guide,
+html body #portfolio-review.workflow-guide-page > .workflow-step-guide {
+  background: var(--kashinoki-workflow-accent-fill, var(--kashinoki-accent-07, rgba(150,46,255,.07))) !important;
+  background-color: var(--kashinoki-workflow-accent-fill, var(--kashinoki-accent-07, rgba(150,46,255,.07))) !important;
+  background-image: none !important;
+  border-color: var(--kashinoki-workflow-accent-border, var(--kashinoki-accent-38, rgba(150,46,255,.38))) !important;
+  box-shadow:
+    inset 0 0 0 1px var(--kashinoki-workflow-accent-inset, var(--kashinoki-accent-06, rgba(150,46,255,.06))),
+    -1px -1px 8px rgba(255,255,255,.32),
+    1px 1px 8px var(--kashinoki-workflow-accent-shadow, var(--kashinoki-accent-06, rgba(150,46,255,.06))) !important;
+}
+
+html body.theme-neumorphism #portfolio-quality.workflow-guide-page > .workflow-step-guide::before,
+html body.theme-neumorphism #portfolio-review.workflow-guide-page > .workflow-step-guide::before,
+html body #portfolio-quality.workflow-guide-page > .workflow-step-guide::before,
+html body #portfolio-review.workflow-guide-page > .workflow-step-guide::before {
+  content: none !important;
+  display: none !important;
+  background: transparent !important;
 }

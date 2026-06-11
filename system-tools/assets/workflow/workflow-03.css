@@ -127,7 +127,7 @@
   opacity: 0;
   transform: translateY(10px);
   filter: blur(2px);
-  animation: jarvisV207GuideRise .58s cubic-bezier(.22, .61, .28, 1) forwards;
+  animation: kashinokiV207GuideRise .58s cubic-bezier(.22, .61, .28, 1) forwards;
 }
 
 #portfolio-review.workflow-animate:not(.guide-show-all) .workflow-step-guide {
@@ -214,7 +214,7 @@
 
 #portfolio-review.workflow-animate:not(.guide-show-all) .workflow-review-single,
 #portfolio-review.workflow-animate:not(.guide-show-all) .workflow-decompose-item:nth-child(1) {
-  animation-name: jarvisV207GuideRise, jarvisV207GuideGlow;
+  animation-name: kashinokiV207GuideRise, kashinokiV207GuideGlow;
   animation-duration: .58s, 1.25s;
   animation-delay: 2.94s, 3.54s;
   animation-fill-mode: forwards, none;
@@ -303,7 +303,7 @@
   opacity: 0;
   transform: translateY(8px);
   filter: blur(1.4px);
-  animation: jarvisV225GuideContentIn .72s cubic-bezier(.22, .61, .28, 1) forwards;
+  animation: kashinokiV225GuideContentIn .72s cubic-bezier(.22, .61, .28, 1) forwards;
 }
 
 #portfolio-review.workflow-animate:not(.guide-show-all) #portfolioAnalysisSummary .portfolio-summary-card:nth-child(1)>* {
@@ -411,6 +411,41 @@
   color: var(--nm-accent-ink) !important;
 }
 
+
+
+/* v757: STEP3 lower registration action underline matched to STEP1 entrance-fade highlight. */
+#portfolio-review .guided-action-copy b{
+  position:relative;
+  display:inline-block;
+  width:max-content;
+  max-width:100%;
+  justify-self:start;
+  isolation:isolate;
+}
+#portfolio-review .guided-action-copy b::after{
+  content:"";
+  position:absolute;
+  z-index:-1;
+  left:-3px;
+  right:-6px;
+  bottom:-.04em;
+  height:.72em;
+  border-radius:3px 9px 8px 3px;
+  background:var(--kashinoki-accent-46, rgba(150,46,255,.46));
+  box-shadow:0 0 0 1px var(--kashinoki-accent-22, rgba(150,46,255,.22));
+  opacity:0;
+  transform:scaleX(0) skewX(-1.2deg);
+  transform-origin:left center;
+  pointer-events:none;
+}
+#portfolio-review.workflow-animate:not(.guide-show-all) .guided-action-copy b::after{
+  animation:portfolioStepHighlighter 1.20s cubic-bezier(.22,.61,.28,1) 4.02s forwards;
+}
+#portfolio-review.guide-show-all .guided-action-copy b::after{
+  opacity:.9;
+  transform:scaleX(1) skewX(-1.2deg);
+}
+
 #portfolio-review.guide-show-all #portfolioAnalysisSummary .portfolio-summary-card>*,
 #portfolio-review.guide-show-all .workflow-filter-row>*,
 #portfolio-review.guide-show-all .workflow-fulltext-card>*,
@@ -432,7 +467,7 @@
   pointer-events: auto !important;
 }
 
-@keyframes jarvisV225GuideContentIn {
+@keyframes kashinokiV225GuideContentIn {
   0% {
     opacity: 0;
     transform: translateY(8px);
@@ -699,7 +734,7 @@
 /* v333: 03 responsive contract.
    Keep 03 consistent with 04/05: narrow windows stack the review panels instead of squeezing the center carousel.
    This is the page-owned responsive rule, not a late visual override. */
-@media(max-width:1320px) {
+@media(max-width:1120px) {
   #portfolio-review .workflow-review-layout,
   #portfolio-review .workflow-review-layout.v155-review-carousel {
     display: grid;
@@ -742,7 +777,7 @@
   border-radius: 999px;
 }
 
-@media(max-width:1320px) {
+@media(max-width:1120px) {
   #portfolio-review .workflow-review-carousel-card {
     max-height: 420px;
   }

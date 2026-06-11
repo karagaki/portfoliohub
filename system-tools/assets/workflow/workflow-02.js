@@ -1,10 +1,10 @@
 (() => {
   "use strict";
-  if (window.__jarvisWorkflow02Installed) return;
-  window.__jarvisWorkflow02Installed = true;
+  if (window.__kashinokiWorkflow02Installed) return;
+  window.__kashinokiWorkflow02Installed = true;
 
   const PAGE_ID = "portfolio-quality";
-  const VERSION = "v327 / 02入場シーケンス安定化・フィルター非リセット";
+  const VERSION = 'v1.0761';
   let timers = [];
   let token = 0;
   let running = false;
@@ -26,8 +26,8 @@
   }
 
   function setVersion() {
-    window.JARVIS_WORKFLOW_PAGES = window.JARVIS_WORKFLOW_PAGES || {};
-    window.JARVIS_WORKFLOW_PAGES["02"] = {
+    window.KASHINOKI_WORKFLOW_PAGES = window.KASHINOKI_WORKFLOW_PAGES || {};
+    window.KASHINOKI_WORKFLOW_PAGES["02"] = {
       id: PAGE_ID,
       title: "使える範囲を確認",
       sequenceOwner: "assets/workflow/workflow-02.js",
@@ -68,7 +68,7 @@
       heading.insertAdjacentElement("afterend", guide);
     }
     guide.classList.add("workflow02-step-intro");
-    guide.innerHTML = '<span class="workflow-step-number">集める</span><span class="workflow-step-copy"><b>会話から集めた中身を確かめます</b><small>ChatGPT / User のやり取りから、仕様・失敗・禁止条件の素材を拾えているか確認します。</small></span>';
+    guide.innerHTML = '<span class="workflow-step-number">分ける</span><span class="workflow-step-copy"><b>会話から集めた中身を確かめます</b><small>ChatGPT / User のやり取りから、仕様・失敗・禁止条件の素材を拾えているか確認します。</small></span>';
     return guide;
   }
 
@@ -88,10 +88,39 @@
     return $$("#captureQualitySummary .workflow-brief-card", page);
   }
 
+  function chatHeaderTargets() {
+    const page = pageEl();
+    if (!page) return [];
+    return [
+      $("#captureQualityList .presentation-chat-card .presentation-card-heading > span", page),
+      $("#captureQualityList .presentation-chat-card .presentation-card-heading > h3", page),
+      $("#captureQualityList .presentation-chat-card .presentation-card-heading > p", page),
+      $("#captureQualityList .presentation-chat-card .presentation-chat-thread", page)
+    ].filter(Boolean);
+  }
+
+  function editorTargets() {
+    const page = pageEl();
+    if (!page) return [];
+    const editor = $("#captureQualityList .presentation-extract-card.kashinoki-v449-editor-panel", page)
+      || $("#captureQualityList .presentation-extract-card", page);
+    if (!editor) return [];
+    return [
+      $(".presentation-card-heading > span", editor),
+      $(".presentation-card-heading > h3", editor),
+      ...$$("[data-quality02-category-picks] [data-quality02-pick-category]", editor),
+      $(".kashinoki-v492-inline-filter-title", editor),
+      ...$$(".kashinoki-v449-mode-row .kashinoki-filter-button", editor),
+      $(".kashinoki-v449-opacity-row", editor)
+    ].filter(Boolean);
+  }
+
   function contentTargets() {
     const page = pageEl();
     if (!page) return [];
     return [
+      ...chatHeaderTargets(),
+      ...editorTargets(),
       $("#captureQualityList .workflow-fulltext-card > h3", page),
       $("#captureQualityList .workflow-fulltext-card > p", page),
       $("#captureQualityList .workflow-fulltext-card .workflow-fulltext-box", page),
@@ -130,6 +159,15 @@
     page.classList.remove("jv02-complete", "guide-show-all", "workflow-animate", "workflow-title-animate");
     markTargets();
     allTargets().forEach((el) => el.classList.remove("jv02-visible"));
+    /* v752: STEP2へ入った直後に最終値が一瞬見えるのを防ぐ。
+       カード表示前に分類ブリッジ側のカウントDOMも必ず0へ戻す。 */
+    try {
+      if (window.KashinoKiClassificationBridge02 && typeof window.KashinoKiClassificationBridge02.prepareCountsInitialZero === "function") {
+        window.KashinoKiClassificationBridge02.prepareCountsInitialZero();
+      } else if (typeof window.resetQualityCounts === "function") {
+        window.resetQualityCounts();
+      }
+    } catch (_) {}
   }
 
   function show(el) {
@@ -207,20 +245,35 @@
       if (typeof window.animateQualityCounts === "function") window.animateQualityCounts();
     });
 
-    after(CONTENT_START, () => { phase = "content"; show($("#captureQualityList .workflow-fulltext-card > h3", pageEl())); });
-    after(CONTENT_START + 0.24, () => show($("#captureQualityList .workflow-fulltext-card > p", pageEl())));
-    after(CONTENT_START + 0.52, () => show($("#captureQualityList .workflow-fulltext-card .workflow-fulltext-box", pageEl())));
-    after(CONTENT_START + 1.08, () => show($("#captureQualityList .workflow-range-panel > h3", pageEl())));
-    after(CONTENT_START + 1.34, () => show($("#captureQualityList .workflow-range-panel > p", pageEl())));
-    after(CONTENT_START + 1.60, () => show($("#captureQualityList .workflow-range-panel .workflow-filter-note", pageEl())));
-    after(CONTENT_START + 1.86, () => show($("#captureQualityList .workflow-range-list", pageEl())));
-    for (let i = 0; i < 6; i++) after(CONTENT_START + 2.08 + i * 0.12, () => show($$("#captureQualityList .workflow-range-item", pageEl())[i]));
+    after(CONTENT_START, () => { phase = "content"; show(chatHeaderTargets()[0]); });
+    after(CONTENT_START + 0.26, () => show(chatHeaderTargets()[1]));
+    after(CONTENT_START + 0.52, () => show(chatHeaderTargets()[2]));
+    after(CONTENT_START + 0.86, () => show(chatHeaderTargets()[3]));
 
-    after(CONTENT_START + 3.10, () => { phase = "action"; show(actionTargets()[0]); });
-    after(CONTENT_START + 3.30, () => show(actionTargets()[1]));
-    after(CONTENT_START + 3.50, () => show(actionTargets()[2]));
-    after(CONTENT_START + 3.76, () => { show(actionTargets()[3]); show(actionTargets()[4]); });
-    after(CONTENT_START + 4.14, () => {
+    const EDITOR_START = CONTENT_START + 1.18;
+    after(EDITOR_START, () => show(editorTargets()[0]));
+    after(EDITOR_START + 0.24, () => show(editorTargets()[1]));
+    for (let i = 0; i < 10; i++) after(EDITOR_START + 0.54 + i * 0.10, () => show($$("#captureQualityList .presentation-extract-card [data-quality02-category-picks] [data-quality02-pick-category]", pageEl())[i]));
+    after(EDITOR_START + 1.72, () => show($("#captureQualityList .presentation-extract-card .kashinoki-v492-inline-filter-title", pageEl())));
+    after(EDITOR_START + 1.94, () => show($$("#captureQualityList .presentation-extract-card .kashinoki-v449-mode-row .kashinoki-filter-button", pageEl())[0]));
+    after(EDITOR_START + 2.08, () => show($$("#captureQualityList .presentation-extract-card .kashinoki-v449-mode-row .kashinoki-filter-button", pageEl())[1]));
+    after(EDITOR_START + 2.28, () => show($("#captureQualityList .presentation-extract-card .kashinoki-v449-opacity-row", pageEl())));
+
+    after(CONTENT_START + 3.72, () => show($("#captureQualityList .workflow-fulltext-card > h3", pageEl())));
+    after(CONTENT_START + 3.96, () => show($("#captureQualityList .workflow-fulltext-card > p", pageEl())));
+    after(CONTENT_START + 4.24, () => show($("#captureQualityList .workflow-fulltext-card .workflow-fulltext-box", pageEl())));
+    after(CONTENT_START + 4.64, () => show($("#captureQualityList .workflow-range-panel > h3", pageEl())));
+    after(CONTENT_START + 4.90, () => show($("#captureQualityList .workflow-range-panel > p", pageEl())));
+    after(CONTENT_START + 5.16, () => show($("#captureQualityList .workflow-range-panel .workflow-filter-note", pageEl())));
+    after(CONTENT_START + 5.42, () => show($("#captureQualityList .workflow-range-list", pageEl())));
+    for (let i = 0; i < 6; i++) after(CONTENT_START + 5.64 + i * 0.12, () => show($$("#captureQualityList .workflow-range-item", pageEl())[i]));
+
+    const ACTION_START = EDITOR_START + 2.72;
+    after(ACTION_START, () => { phase = "action"; show(actionTargets()[0]); });
+    after(ACTION_START + 0.20, () => show(actionTargets()[1]));
+    after(ACTION_START + 0.40, () => show(actionTargets()[2]));
+    after(ACTION_START + 0.66, () => { show(actionTargets()[3]); show(actionTargets()[4]); });
+    after(ACTION_START + 1.04, () => {
       const current = pageEl();
       if (!current || !active()) return;
       phase = "complete";
@@ -233,10 +286,13 @@
 
   function scheduleRun(force = true) {
     if (pendingRun) clearTimeout(pendingRun);
+    /* v752: 120ms待つと、active化直後の静的表示が先に描画され、
+       その後で消えてフェードインする。ページ切替と同一タスク内で
+       02の非表示初期化を行うため0msへ変更する。 */
     pendingRun = setTimeout(() => {
       pendingRun = 0;
       if (active()) run(force);
-    }, 120);
+    }, 0);
   }
 
   function resetOnExit() {
@@ -261,14 +317,14 @@
   }
 
   function wrapFilter() {
-    if (typeof window.setQualityFilter === "function" && !window.setQualityFilter.__jarvisWorkflow02Wrapped) {
+    if (typeof window.setQualityFilter === "function" && !window.setQualityFilter.__kashinokiWorkflow02Wrapped) {
       const original = window.setQualityFilter;
       window.setQualityFilter = function(...args) {
         const result = original.apply(this, args);
         if (active()) afterFilterRender();
         return result;
       };
-      window.setQualityFilter.__jarvisWorkflow02Wrapped = true;
+      window.setQualityFilter.__kashinokiWorkflow02Wrapped = true;
     }
   }
 
@@ -284,7 +340,7 @@
   }
 
   const oldPage = window.page;
-  if (typeof oldPage === "function" && !oldPage.__jarvisWorkflow02Wrapped) {
+  if (typeof oldPage === "function" && !oldPage.__kashinokiWorkflow02Wrapped) {
     window.page = function(...args) {
       const wasActive = active();
       const result = oldPage.apply(this, args);
@@ -293,7 +349,7 @@
       else if (wasActive) resetOnExit();
       return result;
     };
-    window.page.__jarvisWorkflow02Wrapped = true;
+    window.page.__kashinokiWorkflow02Wrapped = true;
   }
 
   document.addEventListener("click", (ev) => {

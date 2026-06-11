@@ -1,9 +1,9 @@
 (function () {
   "use strict";
 
-  const VERSION_V275 = "v275 / 05STEP実DOM追加・冒頭表示復旧";
-  const VERSION_V283 = "v283 / 05STEP点滅抑制・数値カウント復旧";
-  const VERSION_V285 = "v285 / 06STEP強調色パネル初期表示固定";
+  const VERSION_V275 = 'v1.0749';
+  const VERSION_V283 = 'v1.0749';
+  const VERSION_V285 = 'v1.0749';
 
   function setVersion(version) {
     const side = document.querySelector(".side-version");
@@ -32,7 +32,7 @@
   (function () {
     function apply() {
       setVersion(VERSION_V275);
-      markPage("portfolio-quality", "jarvis-v207-quality-pilot");
+      markPage("portfolio-quality", "kashinoki-v207-quality-pilot");
     }
     document.addEventListener("DOMContentLoaded", apply);
     window.addEventListener("load", apply);
@@ -43,7 +43,7 @@
   (function () {
     function apply() {
       setVersion(VERSION_V275);
-      markPage("portfolio-review", "jarvis-v208-review-pilot");
+      markPage("portfolio-review", "kashinoki-v208-review-pilot");
     }
     document.addEventListener("DOMContentLoaded", apply);
     window.addEventListener("load", apply);
@@ -54,7 +54,7 @@
   (function () {
     function apply() {
       setVersion(VERSION_V275);
-      markPage("portfolio-purpose", "jarvis-v210-purpose-pilot");
+      markPage("portfolio-purpose", "kashinoki-v210-purpose-pilot");
     }
     document.addEventListener("DOMContentLoaded", apply);
     window.addEventListener("load", apply);
@@ -80,7 +80,7 @@
   (function () {
     function apply() {
       setVersion(VERSION_V275);
-      markPage("portfolio-next", "jarvis-v211-next-pilot");
+      markPage("portfolio-next", "kashinoki-v211-next-pilot");
     }
     document.addEventListener("DOMContentLoaded", apply);
     window.addEventListener("load", apply);

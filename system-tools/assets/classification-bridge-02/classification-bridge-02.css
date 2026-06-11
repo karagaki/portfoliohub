@@ -1,0 +1,628 @@
+/* v707: STEP 2 classification bridge. Uses existing Display Settings 3 category colors. */
+#portfolio-quality .ck02-bridge-panel{
+  margin: 14px 0 16px;
+  border-radius: 24px;
+  border: 1px solid rgba(80,76,92,.13);
+  background: rgba(239,239,236,.58);
+  box-shadow: 8px 8px 18px rgba(168,168,160,.22), -8px -8px 18px rgba(255,255,255,.72);
+  padding: 14px;
+  color: #24232a;
+}
+#portfolio-quality .ck02-bridge-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:10px;}
+#portfolio-quality .ck02-bridge-kicker{display:block;font-size:11px;letter-spacing:.10em;color:rgba(36,35,42,.56);margin-bottom:5px;}
+#portfolio-quality .ck02-bridge-head h3{margin:0;font-size:16px;line-height:1.35;letter-spacing:-.02em;}
+#portfolio-quality .ck02-bridge-head p{margin:5px 0 0;font-size:12px;line-height:1.7;color:rgba(36,35,42,.62);max-width:760px;}
+#portfolio-quality .ck02-bridge-toggle{border:0;border-radius:999px;padding:9px 14px;background:#24232a;color:#fff;font-size:12px;white-space:nowrap;cursor:pointer;}
+#portfolio-quality .ck02-bridge-body{display:none;gap:12px;}
+#portfolio-quality .ck02-bridge-panel.is-open .ck02-bridge-body{display:grid;}
+#portfolio-quality .ck02-actions{display:flex;flex-wrap:wrap;gap:8px;align-items:center;}
+#portfolio-quality .ck02-btn,#portfolio-quality .ck02-file-label{border:0;border-radius:999px;padding:9px 12px;background:rgba(36,35,42,.08);color:#24232a;border:1px solid rgba(36,35,42,.12);font-size:12px;cursor:pointer;display:inline-flex;gap:6px;align-items:center;}
+#portfolio-quality .ck02-btn-primary{background:#24232a;color:#fff;}
+#portfolio-quality .ck02-file-label input{display:none;}
+#portfolio-quality .ck02-status{font-size:12px;color:rgba(36,35,42,.62);line-height:1.6;padding:8px 10px;border-radius:14px;background:rgba(255,255,255,.48);border:1px solid rgba(36,35,42,.10);}
+
+#portfolio-quality .ck02-main-grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(310px,.85fr);gap:12px;align-items:start;}
+#portfolio-quality .ck02-sub-grid{display:grid;grid-template-columns:minmax(260px,.9fr) minmax(260px,1fr) minmax(260px,1fr);gap:12px;align-items:start;}
+#portfolio-quality .ck02-panel-inner{border-radius:18px;background:rgba(255,255,255,.42);border:1px solid rgba(36,35,42,.10);padding:12px;min-width:0;}
+#portfolio-quality .ck02-panel-inner h4{margin:0 0 9px;font-size:13px;letter-spacing:-.01em;}
+#portfolio-quality .ck02-conversation{max-height:430px;overflow:auto;padding-right:4px;}
+#portfolio-quality .ck02-chat-thread{display:grid;gap:10px;}
+#portfolio-quality .ck02-message.chat-bubble{margin:0;max-width:100%;}
+#portfolio-quality .ck02-message.chat-bubble > label{display:block;margin-bottom:6px;font-size:11px;opacity:.68;}
+#portfolio-quality .ck02-message.chat-bubble > p{margin:0;display:grid;gap:5px;}
+#portfolio-quality .ck02-chat-line{display:grid;grid-template-columns:34px minmax(0,1fr);gap:7px;align-items:start;border-radius:10px;padding:3px 4px;position:relative;}
+#portfolio-quality .ck02-chat-line:hover{background:rgba(36,35,42,.045);}
+#portfolio-quality .ck02-chat-line.is-focus{background:color-mix(in srgb, var(--ck02-line-color, #dfe7e4) 16%, transparent);}
+#portfolio-quality .ck02-line-no{font-size:6px;line-height:1.8;color:rgba(36,35,42,.46);font-variant-numeric:tabular-nums;}
+#portfolio-quality .ck02-line-text{font-size:12px;line-height:1.75;white-space:pre-wrap;word-break:break-word;text-underline-offset:.24em;text-decoration-thickness:2px;}
+#portfolio-quality .ck02-chat-line.is-annotated .ck02-line-text{text-decoration-line:underline;text-decoration-style:var(--ck02-line-style, solid);text-decoration-color:var(--ck02-line-color, currentColor);}
+#portfolio-quality .ck02-line-tags{grid-column:2;display:flex;flex-wrap:wrap;gap:5px;margin-top:1px;}
+#portfolio-quality .ck02-tag{font-size:6px;line-height:1;padding:4px 7px;border-radius:999px;background:rgba(255,255,255,.72);border:1px solid rgba(36,35,42,.12);color:rgba(36,35,42,.62);}
+#portfolio-quality .ck02-quality-chip{font-size:6px;line-height:1;padding:4px 7px;border-radius:999px;background:var(--ck02-chip-color, #dfe7e4);color:var(--ck02-chip-text, #1f2a27);border:1px solid color-mix(in srgb, var(--ck02-chip-color, #dfe7e4) 55%, transparent);}
+
+#portfolio-quality .ck02-annotation-editor{display:grid;gap:8px;max-height:430px;overflow:auto;padding-right:4px;}
+#portfolio-quality .ck02-editor-row{border-radius:15px;background:rgba(255,255,255,.58);border:1px solid rgba(36,35,42,.09);padding:10px;display:grid;gap:7px;}
+#portfolio-quality .ck02-editor-top{display:flex;justify-content:space-between;gap:8px;font-size:11px;color:rgba(36,35,42,.62);}
+#portfolio-quality .ck02-editor-row label{display:grid;gap:4px;font-size:11px;color:rgba(36,35,42,.58);}
+#portfolio-quality .ck02-editor-row select,#portfolio-quality .ck02-editor-row input,#portfolio-quality .ck02-editor-row textarea{width:100%;box-sizing:border-box;border-radius:11px;border:1px solid rgba(36,35,42,.12);background:rgba(255,255,255,.72);padding:7px 8px;font-size:12px;color:#24232a;}
+#portfolio-quality .ck02-editor-row textarea{min-height:48px;resize:vertical;line-height:1.55;}
+
+#portfolio-quality .ck02-category-list{display:grid;gap:8px;max-height:260px;overflow:auto;}
+#portfolio-quality .ck02-group{border-radius:15px;background:rgba(255,255,255,.56);border:1px solid rgba(36,35,42,.09);padding:10px;}
+#portfolio-quality .ck02-group h5{margin:0 0 7px;font-size:12px;display:flex;justify-content:space-between;gap:8px;}
+#portfolio-quality .ck02-group ul{margin:0;padding-left:0;list-style:none;display:grid;gap:6px;}
+#portfolio-quality .ck02-group li{font-size:11px;line-height:1.55;color:rgba(36,35,42,.66);border-top:1px solid rgba(36,35,42,.07);padding-top:6px;}
+#portfolio-quality .ck02-group li:first-child{border-top:0;padding-top:0;}
+#portfolio-quality .ck02-jump{border:0;background:transparent;padding:0;margin:0 0 2px;color:rgba(36,35,42,.72);font-size:11px;text-decoration:underline;cursor:pointer;}
+#portfolio-quality .ck02-summary-title{display:flex;flex-wrap:wrap;gap:5px;align-items:center;font-weight:700;color:#24232a;}
+#portfolio-quality .ck02-group p{margin:3px 0 0;}
+#portfolio-quality .ck02-textarea{width:100%;min-height:170px;resize:vertical;border-radius:16px;border:1px solid rgba(36,35,42,.13);background:rgba(255,255,255,.66);padding:10px;font:12px/1.65 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:#24232a;}
+#portfolio-quality .ck02-empty{margin:0;color:rgba(36,35,42,.58);font-size:12px;line-height:1.7;}
+#classificationLabLinkV704{display:none !important;}
+@media(max-width:900px){#portfolio-quality .ck02-bridge-head{display:grid;}#portfolio-quality .ck02-main-grid,#portfolio-quality .ck02-sub-grid{grid-template-columns:1fr;}}
+
+
+/* v707: STEP 2左パネルへの直接反映。既存会話カードのサイズ感を崩さず、表示設定色で分類を重ねる。 */
+#portfolio-quality .presentation-chat-card.ck02-left-reflection-card{
+  overflow:hidden !important;
+}
+#portfolio-quality .presentation-chat-card.ck02-left-reflection-card .presentation-chat-thread.ck02-left-reflection-thread{
+  display:grid !important;
+  gap:14px !important;
+  overflow-y:auto !important;
+  overflow-x:hidden !important;
+  padding-right:6px !important;
+  max-height:calc(100% - 92px) !important;
+  mask-image:none !important;
+  -webkit-mask-image:none !important;
+}
+#portfolio-quality .ck02-left-message.chat-bubble{
+  position:relative;
+}
+#portfolio-quality .ck02-left-message p{
+  display:block !important;
+  margin:0 !important;
+}
+#portfolio-quality .ck02-left-line{
+  display:block;
+  position:relative;
+  padding-left:32px;
+  margin:0 0 4px;
+  font-size:inherit;
+  line-height:inherit;
+}
+#portfolio-quality .ck02-left-line-no{
+  position:absolute;
+  left:0;
+  top:.08em;
+  width:24px;
+  font-size:9px;
+  line-height:1.8;
+  letter-spacing:.02em;
+  color:rgba(37,52,49,.38);
+  font-variant-numeric:tabular-nums;
+  user-select:none;
+}
+#portfolio-quality .ck02-left-line-text{
+  text-underline-offset:.22em;
+  text-decoration-thickness:2px;
+  text-decoration-color:var(--ck02-left-line-color, currentColor);
+}
+#portfolio-quality .ck02-left-line.is-annotated .ck02-left-line-text{
+  text-decoration-line:underline;
+  text-decoration-style:var(--ck02-left-line-style, solid);
+}
+#portfolio-quality .ck02-left-line-tags{
+  display:inline-flex;
+  flex-wrap:wrap;
+  gap:4px;
+  margin-left:8px;
+  vertical-align:baseline;
+}
+#portfolio-quality .ck02-left-line-tag,
+#portfolio-quality .ck02-muted-chip{
+  display:inline-flex;
+  align-items:center;
+  min-height:10px;
+  padding:2px 5px;
+  border-radius:999px;
+  font-size:6px;
+  line-height:1;
+  letter-spacing:.01em;
+  background:var(--ck02-left-chip-color, rgba(255,255,255,.72));
+  border:1px solid color-mix(in srgb, var(--ck02-left-chip-color, #dfe7e4) 58%, rgba(40,48,46,.12));
+  color:var(--ck02-left-chip-text, rgba(37,52,49,.66));
+  box-shadow:4px 4px 10px rgba(160,166,164,.14), -4px -4px 10px rgba(255,255,255,.52), inset 1px 1px 2px rgba(255,255,255,.24);
+}
+#portfolio-quality .ck02-left-message-tags{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  margin-top:10px;
+}
+#portfolio-quality .ck02-left-message-tags .ck02-quality-chip{
+  box-shadow:4px 4px 10px rgba(160,166,164,.18), -4px -4px 10px rgba(255,255,255,.58);
+}
+
+/* v713: 表示設定3の行番号表示/非表示をSTEP 2会話表示へ反映。 */
+#portfolio-quality .ck02-line-numbers-hidden .ck02-chat-line{
+  grid-template-columns:minmax(0,1fr) !important;
+}
+#portfolio-quality .ck02-line-numbers-hidden .ck02-line-no{
+  display:none !important;
+}
+#portfolio-quality .ck02-line-numbers-hidden .ck02-line-tags{
+  grid-column:1 !important;
+}
+#portfolio-quality .presentation-chat-card.ck02-line-numbers-hidden .ck02-left-line{
+  padding-left:0 !important;
+}
+#portfolio-quality .presentation-chat-card.ck02-line-numbers-hidden .ck02-left-line-no{
+  display:none !important;
+}
+
+/* v714: JSON messages[] を流し込むSTEP 2左パネルでも行番号DOMを生成して表示する。 */
+#portfolio-quality .presentation-chat-card .ck02-left-export-lines{
+  display:block;
+  margin:0;
+}
+#portfolio-quality .presentation-chat-card .ck02-export-line{
+  display:grid;
+  grid-template-columns:42px minmax(0,1fr);
+  column-gap:12px;
+  align-items:start;
+  padding:1px 0;
+  line-height:1.78;
+}
+#portfolio-quality .presentation-chat-card .ck02-export-line.is-blank{
+  min-height:12px;
+}
+#portfolio-quality .presentation-chat-card .ck02-export-line.is-blank .ck02-left-line-text{
+  min-height:12px;
+}
+#portfolio-quality .presentation-chat-card .ck02-left-line-no{
+  display:inline-block;
+  font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size:12px;
+  letter-spacing:.04em;
+  color:rgba(42,51,49,.38);
+  user-select:none;
+  text-align:right;
+  padding-top:1px;
+}
+#portfolio-quality .presentation-chat-card.ck02-line-numbers-hidden .ck02-export-line{
+  grid-template-columns:minmax(0,1fr) !important;
+}
+#portfolio-quality .presentation-chat-card.ck02-line-numbers-hidden .ck02-left-line-no{
+  display:none !important;
+}
+
+
+/* v722: STEP 2左パネルの行番号を二重表示・重なり防止。7ptで各行セル左上に固定。 */
+#portfolio-quality .ck02-left-message .ck02-left-line{
+  display:grid !important;
+  grid-template-columns:28px minmax(0,1fr) auto !important;
+  column-gap:8px !important;
+  align-items:start !important;
+  position:relative !important;
+  padding-left:0 !important;
+  margin:0 0 4px !important;
+}
+#portfolio-quality .ck02-left-message .ck02-left-line-no{
+  position:static !important;
+  display:block !important;
+  width:auto !important;
+  min-width:28px !important;
+  padding:0 !important;
+  margin:0 !important;
+  text-align:left !important;
+  font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace !important;
+  font-size:7pt !important;
+  line-height:1.25 !important;
+  letter-spacing:.02em !important;
+  color:rgba(42,51,49,.42) !important;
+  font-variant-numeric:tabular-nums !important;
+  user-select:none !important;
+}
+#portfolio-quality .ck02-left-message .ck02-left-line-text{
+  display:block !important;
+  min-width:0 !important;
+}
+#portfolio-quality .ck02-left-message .ck02-left-line-tags{
+  display:inline-flex !important;
+  align-self:start !important;
+  margin-left:8px !important;
+  padding-top:0 !important;
+}
+#portfolio-quality .presentation-chat-card.ck02-line-numbers-hidden .ck02-left-message .ck02-left-line{
+  grid-template-columns:minmax(0,1fr) auto !important;
+}
+#portfolio-quality .presentation-chat-card.ck02-line-numbers-hidden .ck02-left-message .ck02-left-line-no{
+  display:none !important;
+}
+
+
+/* v726: プレゼン前の表示調整。行番号・チップ・波線・分類カウントボタンの密度を整理。 */
+#portfolio-quality .ck02-left-message .ck02-left-line{
+  grid-template-columns:24px minmax(0,1fr) auto !important;
+  column-gap:7px !important;
+  margin:0 0 3px !important;
+  align-items:start !important;
+}
+#portfolio-quality .ck02-left-message .ck02-left-line-no{
+  min-width:24px !important;
+  font-size:7pt !important;
+  line-height:1 !important;
+  padding-top:0 !important;
+  align-self:start !important;
+  text-align:left !important;
+  color:rgba(42,51,49,.38) !important;
+}
+#portfolio-quality .ck02-left-line-text{
+  text-underline-offset:.18em !important;
+  text-decoration-thickness:1.25px !important;
+}
+#portfolio-quality .ck02-left-line.is-line-style-wavy .ck02-left-line-text{
+  text-decoration-thickness:1.15px !important;
+  text-underline-offset:.16em !important;
+}
+#portfolio-quality .ck02-left-line.is-line-style-dotted .ck02-left-line-text{
+  text-decoration-thickness:1.35px !important;
+  text-underline-offset:.18em !important;
+}
+#portfolio-quality .ck02-left-line-tags{
+  gap:2px !important;
+  margin-left:5px !important;
+}
+#portfolio-quality .ck02-left-line-tag,
+#portfolio-quality .ck02-muted-chip,
+#portfolio-quality .ck02-quality-chip{
+  min-height:10px !important;
+  font-size:6px !important;
+  line-height:1 !important;
+  padding:1px 4px !important;
+  border-radius:999px !important;
+}
+#portfolio-quality #captureQualitySummary[data-quality02-summary-owner="classification-bridge-02"]{
+  gap:5px 9px !important;
+  align-items:stretch !important;
+}
+#portfolio-quality #captureQualitySummary[data-quality02-summary-owner="classification-bridge-02"] .workflow-brief-card{
+  min-height:34px !important;
+  height:26px !important;
+  padding:4px 9px !important;
+  gap:6px !important;
+  align-items:center !important;
+}
+#portfolio-quality #captureQualitySummary[data-quality02-summary-owner="classification-bridge-02"] .workflow-brief-card span{
+  font-size:8.5px !important;
+  line-height:1 !important;
+  white-space:nowrap !important;
+}
+#portfolio-quality #captureQualitySummary[data-quality02-summary-owner="classification-bridge-02"] .workflow-brief-card b{
+  font-size:13.5px !important;
+  line-height:1 !important;
+  min-width:16px !important;
+}
+#portfolio-quality #captureQualitySummary[data-quality02-summary-owner="classification-bridge-02"] .workflow-brief-card b.is-quality-counting{
+  transform:translateY(-1px);
+}
+
+#portfolio-quality #captureQualitySummary[data-quality02-summary-owner="classification-bridge-02"] .quality02-filter-spacer,
+#portfolio-quality #captureQualitySummary[data-quality02-summary-owner="classification-bridge-02"] .ck02-quality-filter-spacer{
+  pointer-events:none !important;
+  opacity:.72 !important;
+  background:rgba(255,255,255,.64) !important;
+  box-shadow:inset 4px 4px 9px rgba(174,171,160,.35), inset -4px -4px 9px rgba(255,255,255,.86) !important;
+}
+#portfolio-quality .presentation-chat-card.ck02-line-numbers-hidden .ck02-left-message .ck02-left-line{
+  grid-template-columns:minmax(0,1fr) auto !important;
+}
+
+
+/* v734: STEP2分類カウントは既存02カード密度・Neumorphism表示に戻す。
+   classification-bridgeは数値だけを差し替え、カードの基本見た目は既存 workflow-brief-card に寄せる。 */
+#portfolio-quality #captureQualitySummary[data-quality02-summary-owner="classification-bridge-02"]{
+  display:grid !important;
+  grid-template-columns:repeat(5, minmax(0, 1fr)) !important;
+  gap:8px 10px !important;
+  align-items:stretch !important;
+}
+#portfolio-quality #captureQualitySummary[data-quality02-summary-owner="classification-bridge-02"] .workflow-brief-card{
+  min-height:34px !important;
+  height:34px !important;
+  padding:5px 9px !important;
+  border-radius:11px !important;
+}
+#portfolio-quality #captureQualitySummary[data-quality02-summary-owner="classification-bridge-02"] .workflow-brief-card span{
+  font-size:10px !important;
+  line-height:1 !important;
+}
+#portfolio-quality #captureQualitySummary[data-quality02-summary-owner="classification-bridge-02"] .workflow-brief-card b{
+  font-size:15px !important;
+  line-height:1 !important;
+}
+#portfolio-quality #captureQualitySummary[data-quality02-summary-owner="classification-bridge-02"] .quality02-filter-spacer,
+#portfolio-quality #captureQualitySummary[data-quality02-summary-owner="classification-bridge-02"] .ck02-quality-filter-spacer{
+  min-height:34px !important;
+  height:34px !important;
+  border-radius:11px !important;
+  background:rgba(255,255,255,.58) !important;
+  border:1px solid rgba(255,255,255,.72) !important;
+  box-shadow:inset -2px -2px 5px rgba(255,255,255,.42), inset 2px 2px 5px rgba(151,163,173,.06) !important;
+  pointer-events:none !important;
+}
+
+/* v735: ChatGPT本体の読み幅に近づけるため、STEP2左パネルの会話本文有効幅を一度絞る。
+   文字サイズ・行番号・チップは維持し、1行あたりの文字数だけを確認するための調整。 */
+#portfolio-quality .presentation-chat-card.ck02-left-reflection-card .presentation-chat-thread.ck02-left-reflection-thread{
+  max-width: 860px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  width: min(100%, 860px) !important;
+}
+#portfolio-quality .presentation-chat-card.ck02-left-reflection-card .ck02-left-message.chat-bubble{
+  max-width: 820px !important;
+}
+#portfolio-quality .presentation-chat-card.ck02-left-reflection-card .ck02-left-message.chat-bubble.is-user,
+#portfolio-quality .presentation-chat-card.ck02-left-reflection-card .ck02-left-message.chat-bubble.user,
+#portfolio-quality .presentation-chat-card.ck02-left-reflection-card .ck02-left-message.chat-bubble[data-role="user"]{
+  max-width: 780px !important;
+}
+#portfolio-quality .presentation-chat-card.ck02-left-reflection-card .ck02-left-message .ck02-left-line-text{
+  max-width: 100% !important;
+}
+
+
+/* v736: ChatGPT JSON原文の改行・空行・空白を保持する。
+   行番号/分類表示のために行DOMへ分解しても、空行を削らず段落間の呼吸を残す。 */
+#portfolio-quality .ck02-line-text,
+#portfolio-quality .ck02-left-line-text{
+  white-space:pre-wrap !important;
+}
+#portfolio-quality .ck02-chat-line.is-blank-line,
+#portfolio-quality .ck02-left-line.is-blank-line{
+  min-height:1.05em !important;
+  margin-bottom:0.42em !important;
+}
+#portfolio-quality .ck02-chat-line.is-blank-line .ck02-line-text,
+#portfolio-quality .ck02-left-line.is-blank-line .ck02-left-line-text{
+  text-decoration:none !important;
+  min-height:1.05em !important;
+}
+#portfolio-quality .ck02-chat-line.is-blank-line .ck02-line-tags,
+#portfolio-quality .ck02-left-line.is-blank-line .ck02-left-line-tags{
+  display:none !important;
+}
+
+
+/* v737: 10分類カウント末尾の空白枠は凸ボタン化させず、既存02と同じ白い輪郭枠に固定する。 */
+#portfolio-quality #captureQualitySummary .ck02-quality-filter-spacer,
+#portfolio-quality #captureQualitySummary .quality02-filter-spacer.ck02-quality-filter-spacer{
+  min-height:26px !important;
+  height:26px !important;
+  border-radius:10px !important;
+  background:transparent !important;
+  border:1px solid rgba(255,255,255,.72) !important;
+  box-shadow:none !important;
+  pointer-events:none !important;
+}
+
+/* v737: 罫線アート復元時の行は崩れにくいよう余白を詰める。 */
+#portfolio-quality .ck02-left-line-text{
+  white-space:pre-wrap !important;
+}
+
+/* v738: デモモード時は分類反映モード検証パネルを本番導線から非表示にする */
+body.demo-mode-setting-on #portfolio-quality #ck02BridgePanel{
+  display:none !important;
+}
+
+
+/* v739: デモモード中は分類反映モード検証パネルを確実に非表示。body classだけでなくJS側のhidden/classにも対応。 */
+#portfolio-quality #ck02BridgePanel[hidden],
+#portfolio-quality #ck02BridgePanel.is-demo-hidden,
+body.demo-mode-setting-on #portfolio-quality #ck02BridgePanel{
+  display:none !important;
+}
+
+
+/* v742: STEP2分類反映部品をNeumorphism表示設定へ再接続。
+   固定shadowではなく --nm-offset / --nm-blur / --nm-light-color / --nm-shadow-color を参照する。
+   またチャット枠下の分類チップ列は今後使わないため完全非表示。 */
+#portfolio-quality .ck02-left-message-tags,
+#portfolio-quality .ck02-left-message > .ck02-left-message-tags,
+#portfolio-quality .ck02-left-message .ck02-left-message-tags{
+  display:none !important;
+}
+
+html body.theme-neumorphism #portfolio-quality .presentation-chat-card.ck02-left-reflection-card,
+html body.theme-neumorphism #portfolio-quality .presentation-extract-card,
+html body.theme-neumorphism #portfolio-quality .ck02-panel-inner,
+html body.theme-neumorphism #portfolio-quality .ck02-bridge-panel{
+  background:var(--neumo-raised, rgba(240,240,237,.92)) !important;
+  box-shadow:
+    calc(-.62 * var(--nm-offset, 2px)) calc(-.62 * var(--nm-offset, 2px)) calc(.98 * var(--nm-blur, 11px)) var(--nm-light-color, rgba(255,255,255,.62)),
+    calc(.62 * var(--nm-offset, 2px)) calc(.62 * var(--nm-offset, 2px)) calc(.98 * var(--nm-blur, 11px)) var(--nm-shadow-color, rgba(30,40,35,.18)) !important;
+}
+
+html body.theme-neumorphism #portfolio-quality .ck02-left-message.chat-bubble,
+html body.theme-neumorphism #portfolio-quality #captureQualitySummary[data-quality02-summary-owner="classification-bridge-02"] .workflow-brief-card.kashinoki-filter-button,
+html body.theme-neumorphism #portfolio-quality .presentation-card-heading > .kashinoki-v451-left-actions.is-quality02-header-actions,
+html body.theme-neumorphism #portfolio-quality .ck02-btn,
+html body.theme-neumorphism #portfolio-quality .ck02-file-label{
+  background:var(--neumo-raised, rgba(255,255,255,.72)) !important;
+  box-shadow:
+    calc(-.45 * var(--nm-offset, 2px)) calc(-.45 * var(--nm-offset, 2px)) calc(.82 * var(--nm-blur, 11px)) var(--nm-light-color, rgba(255,255,255,.62)),
+    calc(.45 * var(--nm-offset, 2px)) calc(.45 * var(--nm-offset, 2px)) calc(.82 * var(--nm-blur, 11px)) var(--nm-shadow-color, rgba(30,40,35,.18)) !important;
+}
+
+html body.theme-neumorphism #portfolio-quality #captureQualitySummary[data-quality02-summary-owner="classification-bridge-02"] .workflow-brief-card.kashinoki-filter-button.is-active,
+html body.theme-neumorphism #portfolio-quality #captureQualitySummary[data-quality02-summary-owner="classification-bridge-02"] .workflow-brief-card.kashinoki-filter-button.is-selected,
+html body.theme-neumorphism #portfolio-quality #captureQualitySummary[data-quality02-summary-owner="classification-bridge-02"] .workflow-brief-card.kashinoki-filter-button[aria-pressed="true"]{
+  background:var(--neumo-pressed, rgba(255,255,255,.45)) !important;
+  box-shadow:
+    inset calc(.55 * var(--nm-offset, 2px)) calc(.55 * var(--nm-offset, 2px)) calc(.82 * var(--nm-blur, 11px)) var(--nm-shadow-color, rgba(30,40,35,.18)),
+    inset calc(-.55 * var(--nm-offset, 2px)) calc(-.55 * var(--nm-offset, 2px)) calc(.82 * var(--nm-blur, 11px)) var(--nm-light-color, rgba(255,255,255,.62)) !important;
+}
+
+html body.theme-neumorphism #portfolio-quality .ck02-left-line-tag,
+html body.theme-neumorphism #portfolio-quality .ck02-muted-chip,
+html body.theme-neumorphism #portfolio-quality .ck02-quality-chip{
+  box-shadow:
+    calc(-.24 * var(--nm-offset, 2px)) calc(-.24 * var(--nm-offset, 2px)) calc(.46 * var(--nm-blur, 11px)) var(--nm-light-color, rgba(255,255,255,.52)),
+    calc(.24 * var(--nm-offset, 2px)) calc(.24 * var(--nm-offset, 2px)) calc(.46 * var(--nm-blur, 11px)) var(--nm-shadow-color, rgba(30,40,35,.14)) !important;
+}
+
+html body.theme-neumorphism #portfolio-quality #captureQualitySummary[data-quality02-summary-owner="classification-bridge-02"] .quality02-filter-spacer,
+html body.theme-neumorphism #portfolio-quality #captureQualitySummary[data-quality02-summary-owner="classification-bridge-02"] .ck02-quality-filter-spacer{
+  background:transparent !important;
+  border:1px solid rgba(255,255,255,.72) !important;
+  box-shadow:none !important;
+}
+
+
+/* v744: STEP2の未確定/確定どちらの状態でも、02主要パネル・上部10分類カード・右編集ボタンを
+   表示設定のNeumorphism変数へ接続する。高さは空白枠と同じ26pxに固定。 */
+html body.theme-neumorphism #portfolio-quality .workflow-fulltext-card,
+html body.theme-neumorphism #portfolio-quality .workflow-side-card,
+html body.theme-neumorphism #portfolio-quality .workflow-range-panel,
+html body.theme-neumorphism #portfolio-quality .presentation-chat-card,
+html body.theme-neumorphism #portfolio-quality .presentation-extract-card,
+html body.theme-neumorphism #portfolio-quality .ck02-left-reflection-card{
+  background:var(--neumo-raised, var(--nm-shared-surface, rgba(240,240,237,.92))) !important;
+  border:1px solid rgba(104,127,123,.10) !important;
+  box-shadow:
+    calc(-.62 * var(--nm-offset, 8px)) calc(-.62 * var(--nm-offset, 8px)) calc(.98 * var(--nm-blur, 16px)) var(--nm-light-color, rgba(255,255,255,.62)),
+    calc(.62 * var(--nm-offset, 8px)) calc(.62 * var(--nm-offset, 8px)) calc(.98 * var(--nm-blur, 16px)) var(--nm-shadow-color, rgba(153,153,151,.32)) !important;
+}
+html body.theme-neumorphism #portfolio-quality #captureQualitySummary.workflow-brief .workflow-brief-card.kashinoki-filter-button,
+html body.theme-neumorphism #portfolio-quality #captureQualitySummary.workflow-brief .workflow-brief-card,
+html body.theme-neumorphism #portfolio-quality [data-quality02-filter-mode],
+html body.theme-neumorphism #portfolio-quality #quality02FilterSettingsCard .workflow-brief-card{
+  background:var(--neumo-raised, var(--nm-shared-surface, rgba(240,240,237,.92))) !important;
+  border:1px solid rgba(104,127,123,.10) !important;
+  box-shadow:
+    calc(-.45 * var(--nm-offset, 8px)) calc(-.45 * var(--nm-offset, 8px)) calc(.82 * var(--nm-blur, 16px)) var(--nm-light-color, rgba(255,255,255,.62)),
+    calc(.45 * var(--nm-offset, 8px)) calc(.45 * var(--nm-offset, 8px)) calc(.82 * var(--nm-blur, 16px)) var(--nm-shadow-color, rgba(153,153,151,.32)) !important;
+}
+html body.theme-neumorphism #portfolio-quality #captureQualitySummary.workflow-brief .workflow-brief-card.kashinoki-filter-button.is-active,
+html body.theme-neumorphism #portfolio-quality #captureQualitySummary.workflow-brief .workflow-brief-card.kashinoki-filter-button.is-selected,
+html body.theme-neumorphism #portfolio-quality #captureQualitySummary.workflow-brief .workflow-brief-card[aria-pressed="true"],
+html body.theme-neumorphism #portfolio-quality [data-quality02-filter-mode].is-active,
+html body.theme-neumorphism #portfolio-quality [data-quality02-filter-mode].is-selected,
+html body.theme-neumorphism #portfolio-quality [data-quality02-filter-mode][aria-pressed="true"],
+html body.theme-neumorphism #portfolio-quality #quality02FilterSettingsCard .workflow-brief-card.is-active,
+html body.theme-neumorphism #portfolio-quality #quality02FilterSettingsCard .workflow-brief-card.is-selected{
+  background:var(--neumo-pressed, rgba(240,240,237,.78)) !important;
+  box-shadow:
+    inset calc(.55 * var(--nm-offset, 8px)) calc(.55 * var(--nm-offset, 8px)) calc(.82 * var(--nm-blur, 16px)) var(--nm-shadow-color, rgba(153,153,151,.32)),
+    inset calc(-.55 * var(--nm-offset, 8px)) calc(-.55 * var(--nm-offset, 8px)) calc(.82 * var(--nm-blur, 16px)) var(--nm-light-color, rgba(255,255,255,.62)) !important;
+}
+#portfolio-quality #captureQualitySummary[data-quality02-summary-owner="classification-bridge-02"],
+#portfolio-quality #captureQualitySummary.workflow-brief{
+  grid-template-columns:repeat(5, minmax(0, 1fr)) !important;
+  gap:8px 10px !important;
+}
+#portfolio-quality #captureQualitySummary[data-quality02-summary-owner="classification-bridge-02"] .workflow-brief-card,
+#portfolio-quality #captureQualitySummary.workflow-brief .workflow-brief-card{
+  min-height:26px !important;
+  height:26px !important;
+  padding:4px 9px !important;
+  border-radius:11px !important;
+  align-items:center !important;
+}
+#portfolio-quality #captureQualitySummary[data-quality02-summary-owner="classification-bridge-02"] .quality02-filter-spacer,
+#portfolio-quality #captureQualitySummary[data-quality02-summary-owner="classification-bridge-02"] .ck02-quality-filter-spacer,
+#portfolio-quality #captureQualitySummary.workflow-brief .quality02-filter-spacer,
+#portfolio-quality #captureQualitySummary.workflow-brief .ck02-quality-filter-spacer{
+  min-height:26px !important;
+  height:26px !important;
+  border-radius:11px !important;
+  background:transparent !important;
+  border:1px solid rgba(255,255,255,.72) !important;
+  box-shadow:none !important;
+  pointer-events:none !important;
+}
+#portfolio-quality #captureQualitySummary[data-quality02-summary-owner="classification-bridge-02"] .workflow-brief-card span,
+#portfolio-quality #captureQualitySummary.workflow-brief .workflow-brief-card span{
+  font-size:8.5px !important;
+  line-height:1 !important;
+}
+#portfolio-quality #captureQualitySummary[data-quality02-summary-owner="classification-bridge-02"] .workflow-brief-card b,
+#portfolio-quality #captureQualitySummary.workflow-brief .workflow-brief-card b{
+  font-size:13.5px !important;
+  line-height:1 !important;
+}
+
+/* v748: STEP2上部分類カウントボタンのCSS正本。
+   旧v746/v747の追加ブロックは削除し、ここだけで高さ・凸影・凹影・空白枠を管理する。
+   対象: #captureQualitySummary 配下の分類カウントボタン。 */
+#portfolio-quality #captureQualitySummary.workflow-brief,
+#portfolio-quality #captureQualitySummary.ck02-quality-count-summary,
+#portfolio-quality #captureQualitySummary[data-quality02-summary-owner="classification-bridge-02"]{
+  display:grid !important;
+  grid-template-columns:repeat(5, minmax(0, 1fr)) !important;
+  gap:8px 10px !important;
+  align-items:stretch !important;
+}
+#portfolio-quality #captureQualitySummary.workflow-brief .workflow-brief-card,
+#portfolio-quality #captureQualitySummary.ck02-quality-count-summary .workflow-brief-card,
+#portfolio-quality #captureQualitySummary[data-quality02-summary-owner="classification-bridge-02"] .workflow-brief-card{
+  min-height:26px !important;
+  height:26px !important;
+  padding:4px 9px !important;
+  border-radius:11px !important;
+  align-items:center !important;
+}
+#portfolio-quality #captureQualitySummary.workflow-brief .workflow-brief-card span,
+#portfolio-quality #captureQualitySummary.ck02-quality-count-summary .workflow-brief-card span,
+#portfolio-quality #captureQualitySummary[data-quality02-summary-owner="classification-bridge-02"] .workflow-brief-card span{
+  font-size:8.5px !important;
+  line-height:1 !important;
+  white-space:nowrap !important;
+}
+#portfolio-quality #captureQualitySummary.workflow-brief .workflow-brief-card b,
+#portfolio-quality #captureQualitySummary.ck02-quality-count-summary .workflow-brief-card b,
+#portfolio-quality #captureQualitySummary[data-quality02-summary-owner="classification-bridge-02"] .workflow-brief-card b{
+  font-size:13.5px !important;
+  line-height:1 !important;
+}
+html body.theme-neumorphism #portfolio-quality #captureQualitySummary.workflow-brief .workflow-brief-card:not(.quality02-filter-spacer):not(.ck02-quality-filter-spacer):not(.is-active):not(.is-selected):not([aria-pressed="true"]),
+html body.theme-neumorphism #portfolio-quality #captureQualitySummary.ck02-quality-count-summary .workflow-brief-card:not(.quality02-filter-spacer):not(.ck02-quality-filter-spacer):not(.is-active):not(.is-selected):not([aria-pressed="true"]),
+html body.theme-neumorphism #portfolio-quality #captureQualitySummary[data-quality02-summary-owner="classification-bridge-02"] .workflow-brief-card:not(.quality02-filter-spacer):not(.ck02-quality-filter-spacer):not(.is-active):not(.is-selected):not([aria-pressed="true"]){
+  background:var(--neumo-raised, var(--nm-shared-surface, #efefec)) !important;
+  border:1px solid rgba(104,127,123,.10) !important;
+  box-shadow:
+    calc(-.50 * var(--nm-offset, 5.6px)) calc(-.50 * var(--nm-offset, 5.6px)) calc(.24 * var(--nm-blur, 6px)) var(--nm-light-color, rgba(255,255,255,.62)),
+    calc(.50 * var(--nm-offset, 5.6px)) calc(.50 * var(--nm-offset, 5.6px)) calc(.24 * var(--nm-blur, 6px)) var(--nm-shadow-color, rgba(153,153,151,.32)) !important;
+}
+html body.theme-neumorphism #portfolio-quality #captureQualitySummary.workflow-brief .workflow-brief-card.is-active,
+html body.theme-neumorphism #portfolio-quality #captureQualitySummary.workflow-brief .workflow-brief-card.is-selected,
+html body.theme-neumorphism #portfolio-quality #captureQualitySummary.workflow-brief .workflow-brief-card[aria-pressed="true"],
+html body.theme-neumorphism #portfolio-quality #captureQualitySummary.ck02-quality-count-summary .workflow-brief-card.is-active,
+html body.theme-neumorphism #portfolio-quality #captureQualitySummary.ck02-quality-count-summary .workflow-brief-card.is-selected,
+html body.theme-neumorphism #portfolio-quality #captureQualitySummary.ck02-quality-count-summary .workflow-brief-card[aria-pressed="true"],
+html body.theme-neumorphism #portfolio-quality #captureQualitySummary[data-quality02-summary-owner="classification-bridge-02"] .workflow-brief-card.is-active,
+html body.theme-neumorphism #portfolio-quality #captureQualitySummary[data-quality02-summary-owner="classification-bridge-02"] .workflow-brief-card.is-selected,
+html body.theme-neumorphism #portfolio-quality #captureQualitySummary[data-quality02-summary-owner="classification-bridge-02"] .workflow-brief-card[aria-pressed="true"]{
+  background:var(--neumo-pressed, rgba(239,239,236,.72)) !important;
+  box-shadow:
+    inset calc(.58 * var(--nm-offset, 5.6px)) calc(.58 * var(--nm-offset, 5.6px)) calc(.70 * var(--nm-blur, 6px)) var(--nm-shadow-color, rgba(153,153,151,.32)),
+    inset calc(-.58 * var(--nm-offset, 5.6px)) calc(-.58 * var(--nm-offset, 5.6px)) calc(.70 * var(--nm-blur, 6px)) var(--nm-light-color, rgba(255,255,255,.62)) !important;
+}
+#portfolio-quality #captureQualitySummary.workflow-brief .quality02-filter-spacer,
+#portfolio-quality #captureQualitySummary.workflow-brief .ck02-quality-filter-spacer,
+#portfolio-quality #captureQualitySummary.ck02-quality-count-summary .quality02-filter-spacer,
+#portfolio-quality #captureQualitySummary.ck02-quality-count-summary .ck02-quality-filter-spacer,
+#portfolio-quality #captureQualitySummary[data-quality02-summary-owner="classification-bridge-02"] .quality02-filter-spacer,
+#portfolio-quality #captureQualitySummary[data-quality02-summary-owner="classification-bridge-02"] .ck02-quality-filter-spacer{
+  min-height:26px !important;
+  height:26px !important;
+  padding:0 !important;
+  border-radius:11px !important;
+  background:transparent !important;
+  border:1px solid rgba(255,255,255,.72) !important;
+  box-shadow:none !important;
+  pointer-events:none !important;
+}

@@ -1,0 +1,90 @@
+/* KASHINOKI v435: 02と同じ強調色連動パネルを03〜06の上下誘導へ適用。
+   Scope: guided action panels only. 02の既存パネル構造・Neumorphism本体は変更しない。
+   Accent source: Display Settings -> --nm-accent / --nm-accent-ink / --kashinoki-accent-* */
+html body {
+  --kashinoki-guide-panel-bg: var(--kashinoki-accent-12, color-mix(in srgb, var(--nm-accent, #962eff) 12%, transparent));
+  --kashinoki-guide-panel-border: var(--kashinoki-accent-38, color-mix(in srgb, var(--nm-accent, #962eff) 38%, transparent));
+  --kashinoki-guide-panel-shadow: var(--kashinoki-accent-16, color-mix(in srgb, var(--nm-accent, #962eff) 16%, transparent));
+  --kashinoki-guide-panel-text: var(--tx, rgba(46,58,76,.94));
+  --kashinoki-guide-panel-muted: var(--mut, rgba(46,58,76,.66));
+  --kashinoki-guide-panel-ink: var(--nm-accent-ink, #fff);
+}
+
+html body #portfolio-quality.workflow-guide-page .guided-action-slot.portfolio-action .guided-action.kashinoki-action-panel,
+html body #portfolio-review.workflow-guide-page .guided-action-slot.portfolio-action .guided-action.kashinoki-action-panel,
+html body #portfolio-current.workflow-guide-page .guided-action-slot.portfolio-action .guided-action.kashinoki-action-panel,
+html body #portfolio-purpose.workflow-guide-page .guided-action-slot.portfolio-action .guided-action.kashinoki-action-panel,
+html body #portfolio-next.workflow-guide-page .guided-action-slot.portfolio-action .guided-action.kashinoki-action-panel {
+  background: var(--kashinoki-guide-panel-bg) !important;
+  background-color: var(--kashinoki-guide-panel-bg) !important;
+  background-image: none !important;
+  border: 1px solid var(--kashinoki-guide-panel-border) !important;
+  color: var(--kashinoki-guide-panel-text) !important;
+  box-shadow:
+    inset 0 0 0 1px var(--kashinoki-accent-06, rgba(150,46,255,.06)),
+    -1px -1px 8px rgba(255,255,255,.36),
+    1px 1px 8px var(--kashinoki-guide-panel-shadow) !important;
+}
+
+html body #portfolio-quality.workflow-guide-page .guided-action-slot.portfolio-action .guided-action.kashinoki-action-panel::before,
+html body #portfolio-review.workflow-guide-page .guided-action-slot.portfolio-action .guided-action.kashinoki-action-panel::before,
+html body #portfolio-current.workflow-guide-page .guided-action-slot.portfolio-action .guided-action.kashinoki-action-panel::before,
+html body #portfolio-purpose.workflow-guide-page .guided-action-slot.portfolio-action .guided-action.kashinoki-action-panel::before,
+html body #portfolio-next.workflow-guide-page .guided-action-slot.portfolio-action .guided-action.kashinoki-action-panel::before {
+  content: none !important;
+  display: none !important;
+}
+
+html body #portfolio-quality.workflow-guide-page .guided-action-slot.portfolio-action .guided-action.kashinoki-action-panel label,
+html body #portfolio-review.workflow-guide-page .guided-action-slot.portfolio-action .guided-action.kashinoki-action-panel label,
+html body #portfolio-current.workflow-guide-page .guided-action-slot.portfolio-action .guided-action.kashinoki-action-panel label,
+html body #portfolio-purpose.workflow-guide-page .guided-action-slot.portfolio-action .guided-action.kashinoki-action-panel label,
+html body #portfolio-next.workflow-guide-page .guided-action-slot.portfolio-action .guided-action.kashinoki-action-panel label,
+html body #portfolio-quality.workflow-guide-page .guided-action-slot.portfolio-action .guided-action.kashinoki-action-panel p,
+html body #portfolio-review.workflow-guide-page .guided-action-slot.portfolio-action .guided-action.kashinoki-action-panel p,
+html body #portfolio-current.workflow-guide-page .guided-action-slot.portfolio-action .guided-action.kashinoki-action-panel p,
+html body #portfolio-purpose.workflow-guide-page .guided-action-slot.portfolio-action .guided-action.kashinoki-action-panel p,
+html body #portfolio-next.workflow-guide-page .guided-action-slot.portfolio-action .guided-action.kashinoki-action-panel p {
+  color: var(--kashinoki-guide-panel-muted) !important;
+}
+
+html body #portfolio-quality.workflow-guide-page .guided-action-slot.portfolio-action .guided-action.kashinoki-action-panel b,
+html body #portfolio-review.workflow-guide-page .guided-action-slot.portfolio-action .guided-action.kashinoki-action-panel b,
+html body #portfolio-current.workflow-guide-page .guided-action-slot.portfolio-action .guided-action.kashinoki-action-panel b,
+html body #portfolio-purpose.workflow-guide-page .guided-action-slot.portfolio-action .guided-action.kashinoki-action-panel b,
+html body #portfolio-next.workflow-guide-page .guided-action-slot.portfolio-action .guided-action.kashinoki-action-panel b {
+  color: var(--kashinoki-guide-panel-text) !important;
+}
+
+html body #portfolio-quality.workflow-guide-page .guided-action-slot.portfolio-action .guided-action.kashinoki-action-panel .guided-action-badge,
+html body #portfolio-review.workflow-guide-page .guided-action-slot.portfolio-action .guided-action.kashinoki-action-panel .guided-action-badge,
+html body #portfolio-current.workflow-guide-page .guided-action-slot.portfolio-action .guided-action.kashinoki-action-panel .guided-action-badge,
+html body #portfolio-purpose.workflow-guide-page .guided-action-slot.portfolio-action .guided-action.kashinoki-action-panel .guided-action-badge,
+html body #portfolio-next.workflow-guide-page .guided-action-slot.portfolio-action .guided-action.kashinoki-action-panel .guided-action-badge {
+  background: var(--kashinoki-accent-18, color-mix(in srgb, var(--nm-accent, #962eff) 18%, transparent)) !important;
+  border: 1px solid var(--kashinoki-accent-32, color-mix(in srgb, var(--nm-accent, #962eff) 32%, transparent)) !important;
+  color: var(--kashinoki-guide-panel-text) !important;
+}
+
+html body #portfolio-quality.workflow-guide-page .guided-action-slot.portfolio-action .guided-action.kashinoki-action-panel .btn.primary,
+html body #portfolio-review.workflow-guide-page .guided-action-slot.portfolio-action .guided-action.kashinoki-action-panel .btn.primary,
+html body #portfolio-current.workflow-guide-page .guided-action-slot.portfolio-action .guided-action.kashinoki-action-panel .btn.primary,
+html body #portfolio-purpose.workflow-guide-page .guided-action-slot.portfolio-action .guided-action.kashinoki-action-panel .btn.primary,
+html body #portfolio-next.workflow-guide-page .guided-action-slot.portfolio-action .guided-action.kashinoki-action-panel .btn.primary {
+  background: var(--nm-accent, #962eff) !important;
+  background-color: var(--nm-accent, #962eff) !important;
+  background-image: none !important;
+  color: var(--kashinoki-guide-panel-ink) !important;
+  -webkit-text-fill-color: var(--kashinoki-guide-panel-ink) !important;
+  border-color: transparent !important;
+  box-shadow: -3px -3px 7px rgba(255,255,255,.36), 4px 4px 9px var(--kashinoki-accent-30, rgba(150,46,255,.30)) !important;
+}
+
+html body #portfolio-quality.workflow-guide-page .guided-action-slot.portfolio-action .guided-action.kashinoki-action-panel .btn.primary *,
+html body #portfolio-review.workflow-guide-page .guided-action-slot.portfolio-action .guided-action.kashinoki-action-panel .btn.primary *,
+html body #portfolio-current.workflow-guide-page .guided-action-slot.portfolio-action .guided-action.kashinoki-action-panel .btn.primary *,
+html body #portfolio-purpose.workflow-guide-page .guided-action-slot.portfolio-action .guided-action.kashinoki-action-panel .btn.primary *,
+html body #portfolio-next.workflow-guide-page .guided-action-slot.portfolio-action .guided-action.kashinoki-action-panel .btn.primary * {
+  color: inherit !important;
+  -webkit-text-fill-color: inherit !important;
+}

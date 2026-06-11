@@ -1,0 +1,78 @@
+/* Public display scale layer
+   Uniformly scales the System Tools demo for portfolio viewing without changing
+   the internal page, panel, workflow, or animation layout rules. */
+:root {
+  --public-demo-scale: 0.8;
+  --public-demo-scale-inverse: 1.25;
+}
+
+html,
+body {
+  min-width: 100%;
+  min-height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+body > .app {
+  width: calc(100vw * var(--public-demo-scale-inverse));
+  min-height: calc(100vh * var(--public-demo-scale-inverse));
+  height: auto;
+  padding-bottom: calc(32px * var(--public-demo-scale-inverse));
+  box-sizing: border-box;
+  transform: scale(var(--public-demo-scale));
+  transform-origin: top left;
+}
+
+@media (max-width: 900px) {
+  body > .app {
+    width: 100vw;
+    min-height: 100vh;
+    height: auto;
+    padding-bottom: 0;
+    transform: none;
+  }
+}
+
+/* v403: match workflow/artifact pages to the START page design width.
+   Keep the existing 80% outer display scale, but prevent 01-06 / A-E pages
+   from stretching wider than the START hero width. */
+:root {
+  --public-demo-page-max-width: 1030px;
+}
+
+#portfolio-collect.active,
+#portfolio-quality.active,
+#portfolio-review.active,
+#portfolio-current.active,
+#portfolio-purpose.active,
+#portfolio-next.active,
+#artifact-intent.active,
+#artifact-handoff.active,
+#artifact-spec.active,
+#artifact-countermeasure.active,
+#artifact-design.active,
+#artifact-ideas.active {
+  width: min(var(--public-demo-page-max-width), 100%) !important;
+  max-width: var(--public-demo-page-max-width) !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  box-sizing: border-box !important;
+}
+
+#portfolio-collect.active > *,
+#portfolio-quality.active > *,
+#portfolio-review.active > *,
+#portfolio-current.active > *,
+#portfolio-purpose.active > *,
+#portfolio-next.active > *,
+#artifact-intent.active > *,
+#artifact-handoff.active > *,
+#artifact-spec.active > *,
+#artifact-countermeasure.active > *,
+#artifact-design.active > *,
+#artifact-ideas.active > * {
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+

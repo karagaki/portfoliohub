@@ -1,7 +1,7 @@
 (() => {
   "use strict";
-  window.JARVIS_WORKFLOW_PAGES = window.JARVIS_WORKFLOW_PAGES || {};
-  window.JARVIS_WORKFLOW_PAGES["01"] = {
+  window.KASHINOKI_WORKFLOW_PAGES = window.KASHINOKI_WORKFLOW_PAGES || {};
+  window.KASHINOKI_WORKFLOW_PAGES["01"] = {
     id: "portfolio-collect",
     title: "会話と判断を整理",
     sequenceOwner: "assets/workflow/workflow-01.js",

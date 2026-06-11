@@ -1,6 +1,6 @@
 (function () {
-  /* jarvis-v226-portfolio02-count-animation-stable */
-  const VERSION = 'v246 / 04固定文言制御・比較修正';
+  /* kashinoki-v226-portfolio02-count-animation-stable */
+  const VERSION = 'v1.0761';
   const ROOT_SELECTOR = '#portfolio-quality';
   const VALUE_SELECTOR = '#captureQualitySummary .workflow-brief-card b';
   const DURATION = 3000;
@@ -13,7 +13,11 @@
   }
 
   function page() { return document.querySelector(ROOT_SELECTOR); }
-  function values() { return Array.from(document.querySelectorAll(`${ROOT_SELECTOR} ${VALUE_SELECTOR}`)); }
+  function bridgeOwned() {
+    const summary = document.querySelector(`${ROOT_SELECTOR} #captureQualitySummary`);
+    return summary && summary.getAttribute('data-quality02-summary-owner') === 'classification-bridge-02';
+  }
+  function values() { if (bridgeOwned()) return []; return Array.from(document.querySelectorAll(`${ROOT_SELECTOR} ${VALUE_SELECTOR}`)); }
   function numbers(text) { return [...String(text || '').matchAll(/\d+/g)].map(m => Number(m[0])); }
   function hasNonZeroNumber(text) { return numbers(text).some(n => n > 0); }
   function formatLike(text, nums) { let i = 0; return String(text).replace(/\d+/g, () => String(nums[i++] ?? 0)); }
@@ -34,8 +38,18 @@
   }
   function cancel(el) { if (el && el._qualityCountFrame) { cancelAnimationFrame(el._qualityCountFrame); el._qualityCountFrame = null; } }
   function cancelAll() { values().forEach(cancel); }
-  function finishQualityCounts() { values().forEach(el => { cancel(el); el.textContent = finalText(el); el.classList.remove('is-quality-counting'); }); }
+  function finishQualityCounts() {
+    if (bridgeOwned()) {
+      try { window.KashinoKiClassificationBridge02?.finishCounts?.(); } catch (_) {}
+      return;
+    }
+    values().forEach(el => { cancel(el); el.textContent = finalText(el); el.classList.remove('is-quality-counting'); });
+  }
   function resetQualityCounts() {
+    if (bridgeOwned()) {
+      try { window.KashinoKiClassificationBridge02?.prepareCountsInitialZero?.(); } catch (_) {}
+      return;
+    }
     prepareQualityCounts();
     values().forEach(el => {
       cancel(el);
@@ -57,7 +71,7 @@
     let start = null;
     function tick(now) {
       const root = page();
-      if (token !== window.__jarvisQualityCountToken) { cancel(el); return; }
+      if (token !== window.__kashinokiQualityCountToken) { cancel(el); return; }
       if (!root || root.classList.contains('guide-show-all')) { el.textContent = text; el.classList.remove('is-quality-counting'); el._qualityCountFrame = null; return; }
       if (!isVisible(el))
       {
@@ -86,29 +100,38 @@
   }
   window.isQualityCountsActive = isQualityCounting;
   function animateQualityCounts() {
+    if (bridgeOwned()) {
+      try { window.KashinoKiClassificationBridge02?.animateCounts?.(); } catch (_) {}
+      return;
+    }
     const root = page();
     if (!root) return;
     prepareQualityCounts();
     if (root.classList.contains('guide-show-all')) { finishQualityCounts(); return; }
     if (isQualityCounting()) return;
-    window.__jarvisQualityCountToken = (window.__jarvisQualityCountToken || 0) + 1;
-    const token = window.__jarvisQualityCountToken;
+    window.__kashinokiQualityCountToken = (window.__kashinokiQualityCountToken || 0) + 1;
+    const token = window.__kashinokiQualityCountToken;
     resetQualityCounts();
     values().forEach((el, index) => animateOne(el, index, token));
   }
   window.animateQualityCounts = animateQualityCounts;
   window.finishQualityCounts = finishQualityCounts;
   window.cancelQualityCounts = cancelAll;
-  document.addEventListener('jarvis:guide-start', (ev) => { if (ev.detail?.id === 'portfolio-quality') setTimeout(animateQualityCounts, 80); });
-  document.addEventListener('jarvis:guide-finish', (ev) => { if (ev.detail?.id === 'portfolio-quality') finishQualityCounts(); });
+  window.resetQualityCounts = resetQualityCounts;
+  document.addEventListener('kashinoki:guide-start', (ev) => {
+    /* v754: portfolio-quality のカウント開始は workflow-02.js の COUNT_NUMBER_START に一本化する。
+       guide-start直後の80ms開始は、STEP2表示シーケンスより先に数値を動かす二重経路だったため停止。 */
+    if (ev.detail?.id === 'portfolio-quality') return;
+  });
+  document.addEventListener('kashinoki:guide-finish', (ev) => { if (ev.detail?.id === 'portfolio-quality') finishQualityCounts(); });
   document.addEventListener('DOMContentLoaded', () => { setVersion(); prepareQualityCounts(); });
   window.addEventListener('load', () => { setVersion(); prepareQualityCounts(); });
   setVersion();
 })();
 
-/* jarvis-v229-portfolio03-count-safe */
+/* kashinoki-v229-portfolio03-count-safe */
 (function () {
-  const VERSION = 'v246 / 04固定文言制御・比較修正';
+  const VERSION = 'v1.0761';
   const ROOT_SELECTOR = '#portfolio-review';
   const VALUE_SELECTOR = '#portfolioAnalysisSummary .portfolio-summary-card b';
   const DURATION = 3000;
@@ -124,7 +147,11 @@
 
   function root() { return document.querySelector(ROOT_SELECTOR); }
   function active() { return !!root()?.classList.contains('active'); }
-  function values() { return Array.from(document.querySelectorAll(`${ROOT_SELECTOR} ${VALUE_SELECTOR}`)); }
+  function bridgeOwned() {
+    const summary = document.querySelector(`${ROOT_SELECTOR} #captureQualitySummary`);
+    return summary && summary.getAttribute('data-quality02-summary-owner') === 'classification-bridge-02';
+  }
+  function values() { if (bridgeOwned()) return []; return Array.from(document.querySelectorAll(`${ROOT_SELECTOR} ${VALUE_SELECTOR}`)); }
   function nums(text) { return [...String(text || '').matchAll(/\d+/g)].map(m => Number(m[0])); }
   function hasNonZero(text) { return nums(text).some(n => n > 0); }
   function formatLike(text, numbers) { let i = 0; return String(text || '').replace(/\d+/g, () => String(numbers[i++] ?? 0)); }
@@ -144,10 +171,10 @@
   }
   function finalText(el) { return (el?.getAttribute('data-review-final') || el?.textContent || '0').trim(); }
   function cancelElement(el) {
-    if (el && el._jarvisV229CountFrame)
+    if (el && el._kashinokiV229CountFrame)
     {
-      cancelAnimationFrame(el._jarvisV229CountFrame);
-      el._jarvisV229CountFrame = null;
+      cancelAnimationFrame(el._kashinokiV229CountFrame);
+      el._kashinokiV229CountFrame = null;
     }
   }
   function cancelAll() {
@@ -192,7 +219,7 @@
       {
         el.textContent = final;
         el.classList.remove('is-review-counting');
-        el._jarvisV229CountFrame = null;
+        el._kashinokiV229CountFrame = null;
         return;
       }
       if (start === null) start = now;
@@ -200,7 +227,7 @@
       if (elapsed < delay)
       {
         el.textContent = formatLike(final, n.map(() => 0));
-        el._jarvisV229CountFrame = requestAnimationFrame(tick);
+        el._kashinokiV229CountFrame = requestAnimationFrame(tick);
         return;
       }
       const t = Math.min(1, (elapsed - delay) / DURATION);
@@ -209,17 +236,17 @@
       el.textContent = t >= 1 ? final : formatLike(final, current);
       if (t < 1)
       {
-        el._jarvisV229CountFrame = requestAnimationFrame(tick);
+        el._kashinokiV229CountFrame = requestAnimationFrame(tick);
       } else
       {
         el.classList.remove('is-review-counting');
-        el._jarvisV229CountFrame = null;
+        el._kashinokiV229CountFrame = null;
       }
     }
-    el._jarvisV229CountFrame = requestAnimationFrame(tick);
+    el._kashinokiV229CountFrame = requestAnimationFrame(tick);
   }
   function isReviewCounting() {
-    return values().some(el => !!el._jarvisV229CountFrame || el.classList.contains('is-review-counting'));
+    return values().some(el => !!el._kashinokiV229CountFrame || el.classList.contains('is-review-counting'));
   }
   window.isReviewCountsActive = isReviewCounting;
   function animateReviewCounts(force = false) {
@@ -240,10 +267,10 @@
       if (active()) animateReviewCounts(!!force);
     }, force ? 120 : START_DELAY);
   }
-  document.addEventListener('jarvis:guide-start', (ev) => {
+  document.addEventListener('kashinoki:guide-start', (ev) => {
     if (ev.detail?.id === 'portfolio-review') schedule(false);
   });
-  document.addEventListener('jarvis:guide-finish', (ev) => {
+  document.addEventListener('kashinoki:guide-finish', (ev) => {
     if (ev.detail?.id === 'portfolio-review') finish();
   });
   document.addEventListener('click', (ev) => {

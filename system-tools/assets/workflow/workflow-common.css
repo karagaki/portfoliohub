@@ -416,7 +416,7 @@
     #portfolio-collect.portfolio-connected.workflow-animate:not(.guide-show-all) .guided-action-copy {
       opacity: 0;
       transform: translateY(4px);
-      animation: portfolioPanelReveal .50s cubic-bezier(.22, .61, .28, 1) 8.07s forwards
+      animation: portfolioPanelReveal .50s cubic-bezier(.22, .61, .28, 1) 8.95s forwards
     }
 
     #portfolio-collect.portfolio-connected .guided-action-copy b {
@@ -441,7 +441,7 @@
     }
 
     #portfolio-collect.portfolio-connected.workflow-animate:not(.guide-show-all) .guided-action-copy b::after {
-      animation: portfolioStepHighlighter 1.10s cubic-bezier(.22, .61, .28, 1) 8.57s forwards
+      animation: portfolioStepHighlighter 1.10s cubic-bezier(.22, .61, .28, 1) 9.45s forwards
     }
 
     #portfolio-collect.portfolio-connected.guide-show-all .guided-action-copy b::after {
@@ -452,7 +452,7 @@
     #portfolio-collect.portfolio-connected.workflow-animate:not(.guide-show-all) .workflow-primary-target {
       opacity: 0;
       transform: translateY(4px);
-      animation: workflowButtonReveal .45s cubic-bezier(.22, .61, .28, 1) 9.67s forwards, portfolioCTAOnePulse .45s ease-out 10.12s 1;
+      animation: workflowButtonReveal .45s cubic-bezier(.22, .61, .28, 1) 10.55s forwards, portfolioCTAOnePulse .45s ease-out 11.00s 1;
       background: var(--guide-yellow-strong, rgba(236, 239, 66, .92)) !important;
       color: var(--guide-ink, #29312c) !important
     }
@@ -1701,7 +1701,7 @@
 
 
     /* v147: START紹介ページ 情報設計/視線誘導の再整理。装飾追加ではなく、見出し→3工程→DEMO説明→体験カード→主ボタンの所属を明確化。 */
-    .jarvis-start-page {
+    .kashinoki-start-page {
       background: #efefec;
       overflow-x: hidden;
     }
@@ -2029,7 +2029,7 @@
 
 
 /* System Tools workflow common extracted from index.html. */
-/* source: index.html#jarvis-v064-workflow-common-band (10941-11667) */
+/* source: index.html#kashinoki-v064-workflow-common-band (10941-11667) */
 
     /* v151: 02 quality summary/filter and compact candidate rail */
     .workflow-brief-card {
@@ -2722,7 +2722,7 @@
     }
 
     .floating-guide-controls .guide-control-button.show-all {
-      background: var(--jarvis-accent-72, var(--nm-accent)) !important;
+      background: var(--kashinoki-accent-72, var(--nm-accent)) !important;
     }
 
     .floating-guide-controls.is-workflow-docked {
@@ -2811,11 +2811,11 @@ html body #portfolio-purpose .floating-guide-controls.is-workflow-docked {
   bottom: 130px !important;
 }
 
-/* JARVIS common UI contract: neumorphic panel base used by workflow 02-05 major panels. */
-html body #portfolio-quality .workflow-brief-card.jarvis-filter-button,
-html body #portfolio-review .portfolio-summary-card.jarvis-filter-button,
-html body #portfolio-current .workflow-filter-brief .workflow-brief-card.jarvis-filter-button,
-html body #portfolio-purpose .workflow-filter-brief .workflow-brief-card.jarvis-filter-button {
+/* KASHINOKI common UI contract: neumorphic panel base used by workflow 02-05 major panels. */
+html body #portfolio-quality .workflow-brief-card.kashinoki-filter-button,
+html body #portfolio-review .portfolio-summary-card.kashinoki-filter-button,
+html body #portfolio-current .workflow-filter-brief .workflow-brief-card.kashinoki-filter-button,
+html body #portfolio-purpose .workflow-filter-brief .workflow-brief-card.kashinoki-filter-button {
   background: rgb(240, 240, 237) !important;
   color: var(--tx) !important;
   border: 1px solid rgba(104, 127, 123, .10) !important;
@@ -2828,15 +2828,15 @@ html body #portfolio-purpose .workflow-filter-brief .workflow-brief-card.jarvis-
      workflow-02/03/04/05.css from honoring their configured fade duration. */
 }
 
-/* JARVIS common UI contract: filter/summary button base for workflow 02-05 summary cards. */
-html body #portfolio-quality .workflow-brief-card.jarvis-filter-button.is-selected,
-html body #portfolio-quality .workflow-brief-card.jarvis-filter-button.is-active,
-html body #portfolio-review .portfolio-summary-card.jarvis-filter-button.is-selected,
-html body #portfolio-review .portfolio-summary-card.jarvis-filter-button.is-active,
-html body #portfolio-current .workflow-filter-brief .workflow-brief-card.jarvis-filter-button.is-selected,
-html body #portfolio-current .workflow-filter-brief .workflow-brief-card.jarvis-filter-button.is-active,
-html body #portfolio-purpose .workflow-filter-brief .workflow-brief-card.jarvis-filter-button.is-selected,
-html body #portfolio-purpose .workflow-filter-brief .workflow-brief-card.jarvis-filter-button.is-active {
+/* KASHINOKI common UI contract: filter/summary button base for workflow 02-05 summary cards. */
+html body #portfolio-quality .workflow-brief-card.kashinoki-filter-button.is-selected,
+html body #portfolio-quality .workflow-brief-card.kashinoki-filter-button.is-active,
+html body #portfolio-review .portfolio-summary-card.kashinoki-filter-button.is-selected,
+html body #portfolio-review .portfolio-summary-card.kashinoki-filter-button.is-active,
+html body #portfolio-current .workflow-filter-brief .workflow-brief-card.kashinoki-filter-button.is-selected,
+html body #portfolio-current .workflow-filter-brief .workflow-brief-card.kashinoki-filter-button.is-active,
+html body #portfolio-purpose .workflow-filter-brief .workflow-brief-card.kashinoki-filter-button.is-selected,
+html body #portfolio-purpose .workflow-filter-brief .workflow-brief-card.kashinoki-filter-button.is-active {
   background: rgb(240, 240, 237) !important;
   color: var(--tx, #22282b) !important;
   border-color: transparent !important;
@@ -2858,32 +2858,32 @@ html body #portfolio-purpose .portfolio-purpose:not(.selected) {
   box-shadow: rgba(247, 247, 246, .843) -5.6px -5.6px 6px 0px, rgba(153, 153, 151, .43) 5.6px 5.6px 6px 0px !important;
 }
 
-/* JARVIS common UI contract: selected state for filter/summary button emphasis. */
-html body #portfolio-quality .workflow-brief-card.jarvis-filter-button span,
-html body #portfolio-review .portfolio-summary-card.jarvis-filter-button span,
-html body #portfolio-current .workflow-filter-brief .workflow-brief-card.jarvis-filter-button span,
-html body #portfolio-purpose .workflow-filter-brief .workflow-brief-card.jarvis-filter-button span {
+/* KASHINOKI common UI contract: selected state for filter/summary button emphasis. */
+html body #portfolio-quality .workflow-brief-card.kashinoki-filter-button span,
+html body #portfolio-review .portfolio-summary-card.kashinoki-filter-button span,
+html body #portfolio-current .workflow-filter-brief .workflow-brief-card.kashinoki-filter-button span,
+html body #portfolio-purpose .workflow-filter-brief .workflow-brief-card.kashinoki-filter-button span {
   color: #7b8783 !important;
 }
 
-html body #portfolio-quality .workflow-brief-card.jarvis-filter-button b,
-html body #portfolio-review .portfolio-summary-card.jarvis-filter-button b,
-html body #portfolio-current .workflow-filter-brief .workflow-brief-card.jarvis-filter-button b,
-html body #portfolio-purpose .workflow-filter-brief .workflow-brief-card.jarvis-filter-button b {
+html body #portfolio-quality .workflow-brief-card.kashinoki-filter-button b,
+html body #portfolio-review .portfolio-summary-card.kashinoki-filter-button b,
+html body #portfolio-current .workflow-filter-brief .workflow-brief-card.kashinoki-filter-button b,
+html body #portfolio-purpose .workflow-filter-brief .workflow-brief-card.kashinoki-filter-button b {
   color: #43504d !important;
 }
 
-/* JARVIS common UI contract: visible shell + staged inner reveal for 03/05 panels. */
-html body #portfolio-quality .workflow-fulltext-card.jarvis-neumo-panel,
-html body #portfolio-quality .workflow-range-panel.jarvis-neumo-panel,
-html body #portfolio-review .workflow-fulltext-card.jarvis-neumo-panel,
-html body #portfolio-review .workflow-review-carousel-card.jarvis-neumo-panel,
-html body #portfolio-review .workflow-side-card.jarvis-neumo-panel,
-html body #portfolio-current .compare-selected-card.jarvis-neumo-panel,
-html body #portfolio-current .workflow-side-card.jarvis-neumo-panel,
-html body #portfolio-purpose .portfolio-purpose-list-card.jarvis-neumo-panel,
-html body #portfolio-purpose .portfolio-deliverable-preview.jarvis-neumo-panel,
-html body #portfolio-purpose .workflow-side-card.jarvis-neumo-panel {
+/* KASHINOKI common UI contract: visible shell + staged inner reveal for 03/05 panels. */
+html body #portfolio-quality .workflow-fulltext-card.kashinoki-neumo-panel,
+html body #portfolio-quality .workflow-range-panel.kashinoki-neumo-panel,
+html body #portfolio-review .workflow-fulltext-card.kashinoki-neumo-panel,
+html body #portfolio-review .workflow-review-carousel-card.kashinoki-neumo-panel,
+html body #portfolio-review .workflow-side-card.kashinoki-neumo-panel,
+html body #portfolio-current .compare-selected-card.kashinoki-neumo-panel,
+html body #portfolio-current .workflow-side-card.kashinoki-neumo-panel,
+html body #portfolio-purpose .portfolio-purpose-list-card.kashinoki-neumo-panel,
+html body #portfolio-purpose .portfolio-deliverable-preview.kashinoki-neumo-panel,
+html body #portfolio-purpose .workflow-side-card.kashinoki-neumo-panel {
   background: rgb(240, 240, 237) !important;
   border: 1px solid rgba(104, 127, 123, .10) !important;
   border-radius: 19px !important;
@@ -2892,17 +2892,17 @@ html body #portfolio-purpose .workflow-side-card.jarvis-neumo-panel {
   padding: 18px !important;
 }
 
-/* JARVIS common UI contract: staged item reveal used inside the shared shells. */
-html body #portfolio-quality .workflow-fulltext-card.jarvis-reveal-shell,
-html body #portfolio-quality .workflow-range-panel.jarvis-reveal-shell,
-html body #portfolio-review .workflow-fulltext-card.jarvis-reveal-shell,
-html body #portfolio-review .workflow-review-carousel-card.jarvis-reveal-shell,
-html body #portfolio-review .workflow-side-card.jarvis-reveal-shell,
-html body #portfolio-current .compare-selected-card.jarvis-reveal-shell,
-html body #portfolio-current .workflow-side-card.jarvis-reveal-shell,
-html body #portfolio-purpose .portfolio-purpose-list-card.jarvis-reveal-shell,
-html body #portfolio-purpose .portfolio-deliverable-preview.jarvis-reveal-shell,
-html body #portfolio-purpose .workflow-side-card.jarvis-reveal-shell {
+/* KASHINOKI common UI contract: staged item reveal used inside the shared shells. */
+html body #portfolio-quality .workflow-fulltext-card.kashinoki-reveal-shell,
+html body #portfolio-quality .workflow-range-panel.kashinoki-reveal-shell,
+html body #portfolio-review .workflow-fulltext-card.kashinoki-reveal-shell,
+html body #portfolio-review .workflow-review-carousel-card.kashinoki-reveal-shell,
+html body #portfolio-review .workflow-side-card.kashinoki-reveal-shell,
+html body #portfolio-current .compare-selected-card.kashinoki-reveal-shell,
+html body #portfolio-current .workflow-side-card.kashinoki-reveal-shell,
+html body #portfolio-purpose .portfolio-purpose-list-card.kashinoki-reveal-shell,
+html body #portfolio-purpose .portfolio-deliverable-preview.kashinoki-reveal-shell,
+html body #portfolio-purpose .workflow-side-card.kashinoki-reveal-shell {
   opacity: 1 !important;
   transform: none !important;
   visibility: visible !important;
@@ -2910,22 +2910,22 @@ html body #portfolio-purpose .workflow-side-card.jarvis-reveal-shell {
   animation: none !important;
 }
 
-html body .jarvis-reveal-item {
+html body .kashinoki-reveal-item {
   will-change: opacity, transform, filter;
   transition: opacity .48s cubic-bezier(.22, .61, .28, 1), transform .48s cubic-bezier(.22, .61, .28, 1), filter .48s cubic-bezier(.22, .61, .28, 1);
 }
 
-/* JARVIS common UI contract: inline guide controls aligned to the 05 action band. */
-html body #portfolio-purpose .guided-action-slot.jarvis-guide-controls--inline {
+/* KASHINOKI common UI contract: inline guide controls aligned to the 05 action band. */
+html body #portfolio-purpose .guided-action-slot.kashinoki-guide-controls--inline {
   padding-bottom: 0 !important;
 }
 
-html body #portfolio-purpose .guided-action-slot.jarvis-guide-controls--inline > .floating-guide-controls.is-workflow-docked {
+html body #portfolio-purpose .guided-action-slot.kashinoki-guide-controls--inline > .floating-guide-controls.is-workflow-docked {
   bottom: 23px !important;
   top: auto !important;
 }
 
-html body #portfolio-purpose .floating-guide-controls.is-workflow-docked.jarvis-guide-controls--inline {
+html body #portfolio-purpose .floating-guide-controls.is-workflow-docked.kashinoki-guide-controls--inline {
   bottom: 23px !important;
   top: auto !important;
 }
@@ -2995,4 +2995,34 @@ html body #portfolio-purpose .floating-guide-controls.is-workflow-docked.jarvis-
   line-height: 1 !important;
   padding-top: 0 !important;
   padding-bottom: 0 !important;
+}
+
+/* v682: STEP 1 回収済みの対話 数値カードのラベル/数値位置調整 */
+#portfolio-collect #portfolioMetrics.portfolio-metrics-number-only .portfolio-metric {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 10px;
+  min-height: 74px;
+  padding: 12px 14px;
+}
+
+#portfolio-collect #portfolioMetrics.portfolio-metrics-number-only .portfolio-metric span {
+  display: block;
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.2;
+  font-weight: 500;
+  color: var(--mut);
+  white-space: nowrap;
+}
+
+#portfolio-collect #portfolioMetrics.portfolio-metrics-number-only .portfolio-metric b {
+  display: block;
+  margin-left: auto;
+  text-align: right;
+  min-width: 48px;
+  font-size: 22px;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
 }

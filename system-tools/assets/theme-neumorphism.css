@@ -1623,21 +1623,21 @@
 
     .setting-row input[type="range"]::-webkit-slider-thumb {
       appearance: none;
-      width: 18px;
-      height: 18px;
+      width: 14px;
+      height: 14px;
       border-radius: 50%;
-      background: hsl(205 18% 97%);
-      box-shadow: 0 -2px 7px rgba(235, 247, 255, .70), 0 4px 9px rgba(115, 146, 173, .26);
-      border: 0
+      background: hsl(205 10% 84%);
+      box-shadow: 0 -1px 4px rgba(255, 255, 255, .52), 0 3px 6px rgba(95, 112, 120, .28);
+      border: 1px solid rgba(80, 90, 92, .16)
     }
 
     .setting-row input[type="range"]::-moz-range-thumb {
-      width: 18px;
-      height: 18px;
-      border: 0;
+      width: 14px;
+      height: 14px;
+      border: 1px solid rgba(80, 90, 92, .16);
       border-radius: 50%;
-      background: hsl(205 18% 97%);
-      box-shadow: 0 -2px 7px rgba(235, 247, 255, .70), 0 4px 9px rgba(115, 146, 173, .26)
+      background: hsl(205 10% 84%);
+      box-shadow: 0 -1px 4px rgba(255, 255, 255, .52), 0 3px 6px rgba(95, 112, 120, .28)
     }
 
     .color-inputs {
@@ -2167,12 +2167,14 @@
 
     .theme-neumorphism .setting-row input[type="range"]::-webkit-slider-thumb {
       background: var(--nm-slider-thumb-fill);
-      box-shadow: 0 -2px 7px var(--nm-light-color), 0 4px 9px var(--nm-shadow-color)
+      box-shadow: 0 -1px 4px var(--nm-light-color), 0 3px 6px var(--nm-shadow-color);
+      border: 1px solid rgba(80, 90, 92, .18)
     }
 
     .theme-neumorphism .setting-row input[type="range"]::-moz-range-thumb {
       background: var(--nm-slider-thumb-fill);
-      box-shadow: 0 -2px 7px var(--nm-light-color), 0 4px 9px var(--nm-shadow-color)
+      box-shadow: 0 -1px 4px var(--nm-light-color), 0 3px 6px var(--nm-shadow-color);
+      border: 1px solid rgba(80, 90, 92, .18)
     }
 
     .theme-neumorphism .nav-parent::after,
@@ -2859,11 +2861,11 @@
 
     body {
       --guide-yellow: var(--nm-accent);
-      --guide-yellow-strong: var(--jarvis-accent-92, var(--nm-accent));
-      --guide-yellow-soft: var(--jarvis-accent-16);
-      --guide-yellow-faint: var(--jarvis-accent-08);
-      --guide-yellow-line: var(--jarvis-accent-68);
-      --guide-yellow-outline: var(--jarvis-accent-54);
+      --guide-yellow-strong: var(--kashinoki-accent-92, var(--nm-accent));
+      --guide-yellow-soft: var(--kashinoki-accent-16);
+      --guide-yellow-faint: var(--kashinoki-accent-08);
+      --guide-yellow-line: var(--kashinoki-accent-68);
+      --guide-yellow-outline: var(--kashinoki-accent-54);
     }
 
     .heading h2 span::after,
@@ -2903,49 +2905,49 @@
     .workflow-review-single,
     .portfolio-output-shelf-card.is-selected,
     #portfolio-review .portfolio-summary-card.is-active {
-      background: var(--jarvis-accent-12) !important;
-      border-color: var(--jarvis-accent-54) !important;
+      background: var(--kashinoki-accent-12) !important;
+      border-color: var(--kashinoki-accent-54) !important;
     }
 
     .workflow-brief-card.is-active,
     #captureQualitySummary .workflow-brief-card.is-active {
-      box-shadow: inset 0 0 0 1px var(--jarvis-accent-25), var(--sh) !important;
+      box-shadow: inset 0 0 0 1px var(--kashinoki-accent-25), var(--sh) !important;
     }
 
     .workflow-fulltext-mark {
-      background: var(--jarvis-accent-46) !important;
-      box-shadow: 0 0 0 1px var(--jarvis-accent-22) !important;
+      background: var(--kashinoki-accent-46) !important;
+      box-shadow: 0 0 0 1px var(--kashinoki-accent-22) !important;
     }
 
     .demo-sample-pill,
     .settings-preview .settings-preview-pill:first-child {
-      background: var(--jarvis-accent-32) !important;
+      background: var(--kashinoki-accent-32) !important;
     }
 
     .start-demo-points li::before,
     .portfolio-connection-panel .connection-kicker::before {
       background: var(--nm-accent) !important;
-      box-shadow: 0 0 0 3px var(--jarvis-accent-14) !important;
+      box-shadow: 0 0 0 3px var(--kashinoki-accent-14) !important;
     }
 
     .floating-guide-controls .guide-control-button {
-      background: var(--jarvis-accent-72) !important;
-      box-shadow: calc(-.25 * var(--nm-offset)) calc(-.25 * var(--nm-offset)) calc(.55 * var(--nm-blur)) rgba(255, 255, 255, .40), calc(.26 * var(--nm-offset)) calc(.26 * var(--nm-offset)) calc(.58 * var(--nm-blur)) var(--jarvis-accent-14) !important;
+      background: var(--kashinoki-accent-72) !important;
+      box-shadow: calc(-.25 * var(--nm-offset)) calc(-.25 * var(--nm-offset)) calc(.55 * var(--nm-blur)) rgba(255, 255, 255, .40), calc(.26 * var(--nm-offset)) calc(.26 * var(--nm-offset)) calc(.58 * var(--nm-blur)) var(--kashinoki-accent-14) !important;
     }
 
     .target-upload-drop.is-dragover {
-      background: var(--jarvis-accent-12) !important;
-      border-color: var(--jarvis-accent-72) !important;
+      background: var(--kashinoki-accent-12) !important;
+      border-color: var(--kashinoki-accent-72) !important;
     }
 
     .intake-step-track .active {
-      background: var(--jarvis-accent-14) !important;
-      box-shadow: inset 0 0 0 1px var(--jarvis-accent-46) !important;
+      background: var(--kashinoki-accent-14) !important;
+      box-shadow: inset 0 0 0 1px var(--kashinoki-accent-46) !important;
     }
 
     .plus,
     .target-upload-drop.is-dragover .plus {
-      background: var(--jarvis-accent-16) !important;
+      background: var(--kashinoki-accent-16) !important;
     }
 
 
@@ -2962,4 +2964,50 @@
 #display-settings .settings-preview-panel {
   height: auto !important;
   min-height: 150px !important;
+}
+
+
+/* v537: restore darker Neumorphism slider thumb and keep STEP 2 breakpoint aligned with other pages. */
+.setting-row input[type="range"]::-webkit-slider-thumb,
+.theme-neumorphism .setting-row input[type="range"]::-webkit-slider-thumb{
+  background: linear-gradient(145deg, #d5d9d8, #aeb4b2) !important;
+  border: 1px solid rgba(80, 90, 92, .32) !important;
+  box-shadow:
+    0 -1px 3px rgba(255,255,255,.55),
+    0 2px 6px rgba(74,84,88,.34),
+    inset 0 1px 2px rgba(255,255,255,.38),
+    inset 0 -1px 2px rgba(72,82,86,.18) !important;
+}
+.setting-row input[type="range"]::-moz-range-thumb,
+.theme-neumorphism .setting-row input[type="range"]::-moz-range-thumb{
+  background: linear-gradient(145deg, #d5d9d8, #aeb4b2) !important;
+  border: 1px solid rgba(80, 90, 92, .32) !important;
+  box-shadow:
+    0 -1px 3px rgba(255,255,255,.55),
+    0 2px 6px rgba(74,84,88,.34),
+    inset 0 1px 2px rgba(255,255,255,.38),
+    inset 0 -1px 2px rgba(72,82,86,.18) !important;
+}
+
+
+/* v538: FINAL darker slider thumb override. */
+.setting-row input[type="range"]::-webkit-slider-thumb,
+.theme-neumorphism .setting-row input[type="range"]::-webkit-slider-thumb{
+  background: linear-gradient(145deg, #c4cac8, #969f9c) !important;
+  border: 1px solid rgba(64, 72, 74, .42) !important;
+  box-shadow:
+    0 -1px 2px rgba(255,255,255,.50),
+    0 2px 6px rgba(56,64,68,.42),
+    inset 0 1px 2px rgba(255,255,255,.32),
+    inset 0 -1px 2px rgba(50,58,60,.24) !important;
+}
+.setting-row input[type="range"]::-moz-range-thumb,
+.theme-neumorphism .setting-row input[type="range"]::-moz-range-thumb{
+  background: linear-gradient(145deg, #c4cac8, #969f9c) !important;
+  border: 1px solid rgba(64, 72, 74, .42) !important;
+  box-shadow:
+    0 -1px 2px rgba(255,255,255,.50),
+    0 2px 6px rgba(56,64,68,.42),
+    inset 0 1px 2px rgba(255,255,255,.32),
+    inset 0 -1px 2px rgba(50,58,60,.24) !important;
 }

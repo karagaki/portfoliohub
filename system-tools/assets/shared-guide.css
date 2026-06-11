@@ -42,8 +42,8 @@
   display: grid !important;
   place-items: center !important;
   border-radius: 13px !important;
-  border: 1px solid var(--jarvis-accent-54, var(--nm-accent)) !important;
-  background: var(--jarvis-accent-16, rgba(236, 255, 92, .16)) !important;
+  border: 1px solid var(--kashinoki-accent-54, var(--nm-accent)) !important;
+  background: var(--kashinoki-accent-16, rgba(236, 255, 92, .16)) !important;
   color: var(--tx) !important;
   box-shadow: calc(-.22 * var(--nm-offset)) calc(-.22 * var(--nm-offset)) calc(.5 * var(--nm-blur)) rgba(255, 255, 255, .46),
     calc(.24 * var(--nm-offset)) calc(.24 * var(--nm-offset)) calc(.52 * var(--nm-blur)) rgba(112, 122, 126, .12) !important;
@@ -53,11 +53,11 @@
 
 .floating-guide-controls.is-workflow-docked .guide-control-button.show-all,
 .floating-guide-controls.is-workflow-docked .guide-control-button.replay {
-  background: var(--jarvis-accent-16, rgba(236, 255, 92, .16)) !important;
+  background: var(--kashinoki-accent-16, rgba(236, 255, 92, .16)) !important;
 }
 
 .floating-guide-controls.is-workflow-docked .guide-control-button:hover {
-  background: var(--jarvis-accent-24, var(--jarvis-accent-16, rgba(236, 255, 92, .22))) !important;
+  background: var(--kashinoki-accent-24, var(--kashinoki-accent-16, rgba(236, 255, 92, .22))) !important;
   transform: translateY(-1px);
 }
 
@@ -206,7 +206,7 @@
   box-shadow: var(--sh-sm) !important;
 }
 
-.jarvis-wf-status-note {
+.kashinoki-wf-status-note {
   margin: 10px 0 0;
   padding: 9px 11px;
   border-radius: 12px;
@@ -217,7 +217,7 @@
   letter-spacing: .02em;
 }
 
-.jarvis-wf-debug-chip {
+.kashinoki-wf-debug-chip {
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -242,7 +242,7 @@
   font-weight: 800;
 }
 
-/* source: index.html#jarvis-v260-restored-inline-scope (22171-22264) */
+/* source: index.html#kashinoki-v260-restored-inline-scope (22171-22264) */
 #portfolio-current .workflow-brief,
 #portfolio-purpose .workflow-brief,
 #portfolio-next .workflow-brief {
@@ -313,12 +313,12 @@
   }
 }
 
-/* source: index.html#jarvis-v194-right-panel-system-and-04-animation (23132-23234) */
+/* source: index.html#kashinoki-v194-right-panel-system-and-04-animation (23132-23234) */
 :root {
-  --jarvis-rail-w: 330px;
-  --jarvis-rail-bg: rgba(255, 255, 255, .46);
-  --jarvis-rail-border: rgba(104, 127, 123, .14);
-  --jarvis-rail-soft: rgba(244, 247, 245, .72);
+  --kashinoki-rail-w: 330px;
+  --kashinoki-rail-bg: rgba(255, 255, 255, .46);
+  --kashinoki-rail-border: rgba(104, 127, 123, .14);
+  --kashinoki-rail-soft: rgba(244, 247, 245, .72);
 }
 
 #portfolio-quality .workflow-fulltext-layout,
@@ -328,20 +328,20 @@
 }
 
 #portfolio-quality .workflow-fulltext-layout {
-  grid-template-columns: minmax(0, 1fr) minmax(300px, var(--jarvis-rail-w)) !important;
+  grid-template-columns: minmax(0, 1fr) minmax(300px, var(--kashinoki-rail-w)) !important;
 }
 
 #portfolio-review .workflow-review-layout {
-  grid-template-columns: minmax(250px, .62fr) minmax(0, 1fr) minmax(280px, var(--jarvis-rail-w)) !important;
+  grid-template-columns: minmax(250px, .62fr) minmax(0, 1fr) minmax(280px, var(--kashinoki-rail-w)) !important;
   gap: 16px !important;
 }
 
 #portfolio-current .workflow-stage-layout.three {
-  grid-template-columns: 280px minmax(0, 1fr) minmax(280px, var(--jarvis-rail-w)) !important;
+  grid-template-columns: 280px minmax(0, 1fr) minmax(280px, var(--kashinoki-rail-w)) !important;
 }
 
 #portfolio-purpose .workflow-stage-layout.three {
-  grid-template-columns: 280px minmax(0, 1fr) minmax(280px, var(--jarvis-rail-w)) !important;
+  grid-template-columns: 280px minmax(0, 1fr) minmax(280px, var(--kashinoki-rail-w)) !important;
 }
 
 #portfolio-next .portfolio-final-layout {
@@ -354,8 +354,8 @@
 #portfolio-purpose .workflow-stage-layout.three > .workflow-side-card,
 #portfolio-next .portfolio-output-shelf,
 #portfolio-next .portfolio-improve-card {
-  background: var(--jarvis-rail-bg) !important;
-  border: 1px solid var(--jarvis-rail-border) !important;
+  background: var(--kashinoki-rail-bg) !important;
+  border: 1px solid var(--kashinoki-rail-border) !important;
   border-radius: 18px !important;
   box-shadow: var(--sh) !important;
   padding: 15px 16px !important;
@@ -393,7 +393,7 @@
 #portfolio-current .workflow-side-row,
 #portfolio-purpose .workflow-side-row,
 #portfolio-next .workflow-side-row {
-  background: var(--jarvis-rail-soft) !important;
+  background: var(--kashinoki-rail-soft) !important;
   border: 1px solid rgba(104, 127, 123, .08) !important;
   border-radius: 12px !important;
   padding: 8px 10px !important;
@@ -417,7 +417,7 @@
   color: var(--mut) !important;
 }
 
-/* source: index.html#jarvis-v199-purpose-exact-height-sync (23699-23834) */
+/* source: index.html#kashinoki-v199-purpose-exact-height-sync (23699-23834) */
 .page-assist-fab {
   position: fixed;
   right: 18px;
@@ -553,3 +553,65 @@
   line-height: 1.65
 }
 
+
+/* v683: 01-03 return / skip controls use neutral gray neumorphism, not accent color. */
+#portfolio-collect .floating-guide-controls.is-workflow-docked .guide-control-button,
+#portfolio-quality .floating-guide-controls.is-workflow-docked .guide-control-button,
+#portfolio-review .floating-guide-controls.is-workflow-docked .guide-control-button,
+#portfolio-collect .floating-guide-controls .guide-control-button,
+#portfolio-quality .floating-guide-controls .guide-control-button,
+#portfolio-review .floating-guide-controls .guide-control-button {
+  border: 0 !important;
+  outline: 0 !important;
+  background: color-mix(in srgb, var(--neumo-raised, var(--panel-bg, #f2f2ee)) 88%, #d5d8d4 12%) !important;
+  color: var(--tx, #29312c) !important;
+  box-shadow:
+    calc(-.28 * var(--nm-offset, 10px)) calc(-.28 * var(--nm-offset, 10px)) calc(.55 * var(--nm-blur, 24px)) rgba(255,255,255,.58),
+    calc(.32 * var(--nm-offset, 10px)) calc(.32 * var(--nm-offset, 10px)) calc(.62 * var(--nm-blur, 24px)) rgba(115,122,120,.18) !important;
+  filter: none !important;
+}
+#portfolio-collect .floating-guide-controls.is-workflow-docked .guide-control-button.show-all,
+#portfolio-quality .floating-guide-controls.is-workflow-docked .guide-control-button.show-all,
+#portfolio-review .floating-guide-controls.is-workflow-docked .guide-control-button.show-all,
+#portfolio-collect .floating-guide-controls.is-workflow-docked .guide-control-button.replay,
+#portfolio-quality .floating-guide-controls.is-workflow-docked .guide-control-button.replay,
+#portfolio-review .floating-guide-controls.is-workflow-docked .guide-control-button.replay,
+#portfolio-collect .floating-guide-controls .guide-control-button.show-all,
+#portfolio-quality .floating-guide-controls .guide-control-button.show-all,
+#portfolio-review .floating-guide-controls .guide-control-button.show-all,
+#portfolio-collect .floating-guide-controls .guide-control-button.replay,
+#portfolio-quality .floating-guide-controls .guide-control-button.replay,
+#portfolio-review .floating-guide-controls .guide-control-button.replay {
+  background: color-mix(in srgb, var(--neumo-raised, var(--panel-bg, #f2f2ee)) 88%, #d5d8d4 12%) !important;
+  border: 0 !important;
+  outline: 0 !important;
+}
+#portfolio-collect .floating-guide-controls.is-workflow-docked .guide-control-button:hover,
+#portfolio-quality .floating-guide-controls.is-workflow-docked .guide-control-button:hover,
+#portfolio-review .floating-guide-controls.is-workflow-docked .guide-control-button:hover,
+#portfolio-collect .floating-guide-controls .guide-control-button:hover,
+#portfolio-quality .floating-guide-controls .guide-control-button:hover,
+#portfolio-review .floating-guide-controls .guide-control-button:hover {
+  background: color-mix(in srgb, var(--neumo-raised, var(--panel-bg, #f2f2ee)) 78%, #caced0 22%) !important;
+  filter: none !important;
+}
+#portfolio-collect .floating-guide-controls.is-workflow-docked .guide-control-button:active,
+#portfolio-quality .floating-guide-controls.is-workflow-docked .guide-control-button:active,
+#portfolio-review .floating-guide-controls.is-workflow-docked .guide-control-button:active,
+#portfolio-collect .floating-guide-controls .guide-control-button:active,
+#portfolio-quality .floating-guide-controls .guide-control-button:active,
+#portfolio-review .floating-guide-controls .guide-control-button:active {
+  background: color-mix(in srgb, var(--neumo-pressed, var(--panel-bg, #ececea)) 88%, #caced0 12%) !important;
+  box-shadow:
+    inset calc(.28 * var(--nm-offset, 10px)) calc(.28 * var(--nm-offset, 10px)) calc(.55 * var(--nm-blur, 24px)) rgba(115,122,120,.18),
+    inset calc(-.22 * var(--nm-offset, 10px)) calc(-.22 * var(--nm-offset, 10px)) calc(.5 * var(--nm-blur, 24px)) rgba(255,255,255,.56) !important;
+}
+#portfolio-collect .floating-guide-controls.is-workflow-docked .guide-control-button img,
+#portfolio-quality .floating-guide-controls.is-workflow-docked .guide-control-button img,
+#portfolio-review .floating-guide-controls.is-workflow-docked .guide-control-button img,
+#portfolio-collect .floating-guide-controls .guide-control-button img,
+#portfolio-quality .floating-guide-controls .guide-control-button img,
+#portfolio-review .floating-guide-controls .guide-control-button img {
+  opacity: .72 !important;
+  filter: grayscale(1) saturate(0) contrast(1.05) !important;
+}

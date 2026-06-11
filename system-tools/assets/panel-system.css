@@ -1,295 +1,295 @@
 /* System Tools panel foundation.
    These classes are opt-in and do not alter the existing DOM. */
 
-.jarvis-panel {
-  --jarvis-panel-accent: var(--jarvis-status-color-muted);
-  --jarvis-panel-min-height: auto;
-  --jarvis-panel-padding: var(--jarvis-panel-padding-md);
-  --jarvis-panel-gap: var(--jarvis-panel-gap-md);
-  --jarvis-panel-radius: var(--jarvis-panel-radius-md);
-  --jarvis-panel-shadow-current: var(--jarvis-panel-shadow-soft);
-  --jarvis-panel-surface: var(--p, #f7faf5);
-  --jarvis-panel-text: var(--tx, #22302d);
+.kashinoki-panel {
+  --kashinoki-panel-accent: var(--kashinoki-status-color-muted);
+  --kashinoki-panel-min-height: auto;
+  --kashinoki-panel-padding: var(--kashinoki-panel-padding-md);
+  --kashinoki-panel-gap: var(--kashinoki-panel-gap-md);
+  --kashinoki-panel-radius: var(--kashinoki-panel-radius-md);
+  --kashinoki-panel-shadow-current: var(--kashinoki-panel-shadow-soft);
+  --kashinoki-panel-surface: var(--p, #f7faf5);
+  --kashinoki-panel-text: var(--tx, #22302d);
   display: flex;
   flex-direction: column;
-  gap: var(--jarvis-panel-gap);
-  min-height: var(--jarvis-panel-min-height);
-  padding: var(--jarvis-panel-padding);
+  gap: var(--kashinoki-panel-gap);
+  min-height: var(--kashinoki-panel-min-height);
+  padding: var(--kashinoki-panel-padding);
   border: 1px solid rgba(120, 136, 133, 0.16);
-  border-radius: var(--jarvis-panel-radius);
-  background: var(--jarvis-panel-surface);
-  color: var(--jarvis-panel-text);
-  box-shadow: var(--jarvis-panel-shadow-current);
+  border-radius: var(--kashinoki-panel-radius);
+  background: var(--kashinoki-panel-surface);
+  color: var(--kashinoki-panel-text);
+  box-shadow: var(--kashinoki-panel-shadow-current);
   transition:
-    transform var(--jarvis-interaction-response-duration) cubic-bezier(0.2, 0.8, 0.2, 1),
-    box-shadow var(--jarvis-interaction-response-duration) cubic-bezier(0.2, 0.8, 0.2, 1),
-    border-color var(--jarvis-interaction-response-duration) linear,
-    background-color var(--jarvis-fade-timing) ease;
+    transform var(--kashinoki-interaction-response-duration) cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow var(--kashinoki-interaction-response-duration) cubic-bezier(0.2, 0.8, 0.2, 1),
+    border-color var(--kashinoki-interaction-response-duration) linear,
+    background-color var(--kashinoki-fade-timing) ease;
   position: relative;
 }
 
-.jarvis-panel--summary {
-  --jarvis-panel-min-height: var(--jarvis-panel-height-sm);
-  --jarvis-panel-accent: var(--jarvis-emphasis-color);
+.kashinoki-panel--summary {
+  --kashinoki-panel-min-height: var(--kashinoki-panel-height-sm);
+  --kashinoki-panel-accent: var(--kashinoki-emphasis-color);
 }
 
-.jarvis-panel--metric {
-  --jarvis-panel-min-height: var(--jarvis-panel-height-xs);
-  --jarvis-panel-padding: var(--jarvis-panel-padding-sm);
-  --jarvis-panel-gap: var(--jarvis-panel-gap-sm);
+.kashinoki-panel--metric {
+  --kashinoki-panel-min-height: var(--kashinoki-panel-height-xs);
+  --kashinoki-panel-padding: var(--kashinoki-panel-padding-sm);
+  --kashinoki-panel-gap: var(--kashinoki-panel-gap-sm);
 }
 
-.jarvis-panel--status {
-  --jarvis-panel-min-height: var(--jarvis-panel-height-xs);
-  --jarvis-panel-accent: var(--jarvis-status-color-active);
+.kashinoki-panel--status {
+  --kashinoki-panel-min-height: var(--kashinoki-panel-height-xs);
+  --kashinoki-panel-accent: var(--kashinoki-status-color-active);
 }
 
-.jarvis-panel--action {
-  --jarvis-panel-min-height: var(--jarvis-panel-height-sm);
-  --jarvis-panel-accent: var(--jarvis-status-color-ready);
+.kashinoki-panel--action {
+  --kashinoki-panel-min-height: var(--kashinoki-panel-height-sm);
+  --kashinoki-panel-accent: var(--kashinoki-status-color-ready);
 }
 
-.jarvis-panel--preview {
-  --jarvis-panel-min-height: var(--jarvis-panel-height-md);
+.kashinoki-panel--preview {
+  --kashinoki-panel-min-height: var(--kashinoki-panel-height-md);
 }
 
-.jarvis-panel--visual-soft-preview {
-  --jarvis-panel-surface: linear-gradient(180deg, rgba(255, 255, 255, 0.82), rgba(244, 249, 246, 0.96));
-  --jarvis-panel-shadow-current: 0 10px 26px rgba(34, 48, 45, 0.06);
+.kashinoki-panel--visual-soft-preview {
+  --kashinoki-panel-surface: linear-gradient(180deg, rgba(255, 255, 255, 0.82), rgba(244, 249, 246, 0.96));
+  --kashinoki-panel-shadow-current: 0 10px 26px rgba(34, 48, 45, 0.06);
   border-color: rgba(120, 136, 133, 0.22);
   transition:
-    transform var(--jarvis-interaction-response-duration) cubic-bezier(0.2, 0.8, 0.2, 1),
-    box-shadow var(--jarvis-interaction-response-duration) cubic-bezier(0.2, 0.8, 0.2, 1),
-    border-color var(--jarvis-interaction-response-duration) linear,
-    background-color var(--jarvis-fade-timing) ease,
-    background var(--jarvis-fade-timing) ease;
+    transform var(--kashinoki-interaction-response-duration) cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow var(--kashinoki-interaction-response-duration) cubic-bezier(0.2, 0.8, 0.2, 1),
+    border-color var(--kashinoki-interaction-response-duration) linear,
+    background-color var(--kashinoki-fade-timing) ease,
+    background var(--kashinoki-fade-timing) ease;
 }
 
-.jarvis-panel--visual-soft-action {
-  --jarvis-panel-surface: linear-gradient(180deg, rgba(252, 253, 251, 0.96), rgba(240, 246, 242, 0.98));
-  --jarvis-panel-shadow-current: 0 12px 28px rgba(34, 48, 45, 0.08);
+.kashinoki-panel--visual-soft-action {
+  --kashinoki-panel-surface: linear-gradient(180deg, rgba(252, 253, 251, 0.96), rgba(240, 246, 242, 0.98));
+  --kashinoki-panel-shadow-current: 0 12px 28px rgba(34, 48, 45, 0.08);
   border-color: rgba(96, 120, 112, 0.26);
   background-image:
     linear-gradient(180deg, rgba(255, 255, 255, 0.20), rgba(255, 255, 255, 0)),
-    var(--jarvis-panel-surface);
+    var(--kashinoki-panel-surface);
   transition:
-    transform var(--jarvis-interaction-response-duration) cubic-bezier(0.2, 0.8, 0.2, 1),
-    box-shadow var(--jarvis-interaction-response-duration) cubic-bezier(0.2, 0.8, 0.2, 1),
-    border-color var(--jarvis-interaction-response-duration) linear,
-    background-color var(--jarvis-fade-timing) ease,
-    background-image var(--jarvis-fade-timing) ease;
+    transform var(--kashinoki-interaction-response-duration) cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow var(--kashinoki-interaction-response-duration) cubic-bezier(0.2, 0.8, 0.2, 1),
+    border-color var(--kashinoki-interaction-response-duration) linear,
+    background-color var(--kashinoki-fade-timing) ease,
+    background-image var(--kashinoki-fade-timing) ease;
 }
 
-.jarvis-panel--visual-soft-summary {
-  --jarvis-panel-surface: linear-gradient(180deg, rgba(250, 252, 249, 0.98), rgba(242, 248, 244, 0.98));
-  --jarvis-panel-shadow-current: 0 8px 22px rgba(34, 48, 45, 0.05);
+.kashinoki-panel--visual-soft-summary {
+  --kashinoki-panel-surface: linear-gradient(180deg, rgba(250, 252, 249, 0.98), rgba(242, 248, 244, 0.98));
+  --kashinoki-panel-shadow-current: 0 8px 22px rgba(34, 48, 45, 0.05);
   border-color: rgba(116, 130, 126, 0.2);
   background-image:
     linear-gradient(180deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0)),
-    var(--jarvis-panel-surface);
+    var(--kashinoki-panel-surface);
   transition:
-    transform var(--jarvis-interaction-response-duration) cubic-bezier(0.2, 0.8, 0.2, 1),
-    box-shadow var(--jarvis-interaction-response-duration) cubic-bezier(0.2, 0.8, 0.2, 1),
-    border-color var(--jarvis-interaction-response-duration) linear,
-    background-color var(--jarvis-fade-timing) ease,
-    background-image var(--jarvis-fade-timing) ease;
+    transform var(--kashinoki-interaction-response-duration) cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow var(--kashinoki-interaction-response-duration) cubic-bezier(0.2, 0.8, 0.2, 1),
+    border-color var(--kashinoki-interaction-response-duration) linear,
+    background-color var(--kashinoki-fade-timing) ease,
+    background-image var(--kashinoki-fade-timing) ease;
 }
 
-.jarvis-panel--visual-soft-review-summary {
-  --jarvis-panel-surface: linear-gradient(180deg, rgba(251, 252, 250, 0.985), rgba(244, 248, 245, 0.992));
-  --jarvis-panel-shadow-current: 0 7px 18px rgba(34, 48, 45, 0.04);
+.kashinoki-panel--visual-soft-review-summary {
+  --kashinoki-panel-surface: linear-gradient(180deg, rgba(251, 252, 250, 0.985), rgba(244, 248, 245, 0.992));
+  --kashinoki-panel-shadow-current: 0 7px 18px rgba(34, 48, 45, 0.04);
   border-color: rgba(120, 132, 128, 0.16);
   background-image:
     linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0)),
-    var(--jarvis-panel-surface);
+    var(--kashinoki-panel-surface);
   transition:
-    transform var(--jarvis-interaction-response-duration) cubic-bezier(0.2, 0.8, 0.2, 1),
-    box-shadow var(--jarvis-interaction-response-duration) cubic-bezier(0.2, 0.8, 0.2, 1),
-    border-color var(--jarvis-interaction-response-duration) linear,
-    background-color var(--jarvis-fade-timing) ease,
-    background-image var(--jarvis-fade-timing) ease;
+    transform var(--kashinoki-interaction-response-duration) cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow var(--kashinoki-interaction-response-duration) cubic-bezier(0.2, 0.8, 0.2, 1),
+    border-color var(--kashinoki-interaction-response-duration) linear,
+    background-color var(--kashinoki-fade-timing) ease,
+    background-image var(--kashinoki-fade-timing) ease;
 }
 
-.jarvis-panel--visual-soft-quality-summary {
+.kashinoki-panel--visual-soft-quality-summary {
   background: linear-gradient(180deg, rgba(250, 252, 249, 0.985), rgba(243, 248, 244, 0.995));
   box-shadow:
     0 0 0 1px rgba(114, 129, 125, 0.16),
     0 8px 20px rgba(34, 48, 45, 0.045);
   transition:
-    box-shadow var(--jarvis-interaction-response-duration) cubic-bezier(0.2, 0.8, 0.2, 1),
-    background-color var(--jarvis-fade-timing) ease,
-    background var(--jarvis-fade-timing) ease;
+    box-shadow var(--kashinoki-interaction-response-duration) cubic-bezier(0.2, 0.8, 0.2, 1),
+    background-color var(--kashinoki-fade-timing) ease,
+    background var(--kashinoki-fade-timing) ease;
 }
 
-.jarvis-panel--visual-soft-quality-list {
+.kashinoki-panel--visual-soft-quality-list {
   background: linear-gradient(180deg, rgba(248, 251, 248, 0.985), rgba(241, 246, 243, 0.995));
   box-shadow:
     0 0 0 1px rgba(116, 130, 126, 0.14),
     0 7px 18px rgba(34, 48, 45, 0.04);
   transition:
-    box-shadow var(--jarvis-interaction-response-duration) cubic-bezier(0.2, 0.8, 0.2, 1),
-    background-color var(--jarvis-fade-timing) ease,
-    background var(--jarvis-fade-timing) ease;
+    box-shadow var(--kashinoki-interaction-response-duration) cubic-bezier(0.2, 0.8, 0.2, 1),
+    background-color var(--kashinoki-fade-timing) ease,
+    background var(--kashinoki-fade-timing) ease;
 }
 
-.jarvis-panel--visual-soft-current-list {
-  --jarvis-panel-surface: linear-gradient(180deg, rgba(251, 252, 250, 0.99), rgba(244, 248, 245, 0.99));
-  --jarvis-panel-shadow-current: 0 8px 20px rgba(34, 48, 45, 0.045);
+.kashinoki-panel--visual-soft-current-list {
+  --kashinoki-panel-surface: linear-gradient(180deg, rgba(251, 252, 250, 0.99), rgba(244, 248, 245, 0.99));
+  --kashinoki-panel-shadow-current: 0 8px 20px rgba(34, 48, 45, 0.045);
   border-color: rgba(114, 129, 125, 0.18);
   background-image:
     linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0)),
-    var(--jarvis-panel-surface);
+    var(--kashinoki-panel-surface);
   transition:
-    transform var(--jarvis-interaction-response-duration) cubic-bezier(0.2, 0.8, 0.2, 1),
-    box-shadow var(--jarvis-interaction-response-duration) cubic-bezier(0.2, 0.8, 0.2, 1),
-    border-color var(--jarvis-interaction-response-duration) linear,
-    background-color var(--jarvis-fade-timing) ease,
-    background-image var(--jarvis-fade-timing) ease;
+    transform var(--kashinoki-interaction-response-duration) cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow var(--kashinoki-interaction-response-duration) cubic-bezier(0.2, 0.8, 0.2, 1),
+    border-color var(--kashinoki-interaction-response-duration) linear,
+    background-color var(--kashinoki-fade-timing) ease,
+    background-image var(--kashinoki-fade-timing) ease;
 }
 
-.jarvis-panel--visual-soft-current-preview {
-  --jarvis-panel-surface: linear-gradient(180deg, rgba(252, 253, 251, 0.985), rgba(245, 249, 246, 0.995));
-  --jarvis-panel-shadow-current: 0 9px 22px rgba(34, 48, 45, 0.05);
+.kashinoki-panel--visual-soft-current-preview {
+  --kashinoki-panel-surface: linear-gradient(180deg, rgba(252, 253, 251, 0.985), rgba(245, 249, 246, 0.995));
+  --kashinoki-panel-shadow-current: 0 9px 22px rgba(34, 48, 45, 0.05);
   border-color: rgba(116, 130, 126, 0.19);
   background-image:
     linear-gradient(180deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0)),
-    var(--jarvis-panel-surface);
+    var(--kashinoki-panel-surface);
   transition:
-    transform var(--jarvis-interaction-response-duration) cubic-bezier(0.2, 0.8, 0.2, 1),
-    box-shadow var(--jarvis-interaction-response-duration) cubic-bezier(0.2, 0.8, 0.2, 1),
-    border-color var(--jarvis-interaction-response-duration) linear,
-    background-color var(--jarvis-fade-timing) ease,
-    background-image var(--jarvis-fade-timing) ease;
+    transform var(--kashinoki-interaction-response-duration) cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow var(--kashinoki-interaction-response-duration) cubic-bezier(0.2, 0.8, 0.2, 1),
+    border-color var(--kashinoki-interaction-response-duration) linear,
+    background-color var(--kashinoki-fade-timing) ease,
+    background-image var(--kashinoki-fade-timing) ease;
 }
 
-.jarvis-panel--visual-soft-current-detail {
-  --jarvis-panel-surface: linear-gradient(180deg, rgba(251, 253, 251, 0.98), rgba(243, 248, 244, 0.995));
-  --jarvis-panel-shadow-current: 0 8px 20px rgba(34, 48, 45, 0.045);
+.kashinoki-panel--visual-soft-current-detail {
+  --kashinoki-panel-surface: linear-gradient(180deg, rgba(251, 253, 251, 0.98), rgba(243, 248, 244, 0.995));
+  --kashinoki-panel-shadow-current: 0 8px 20px rgba(34, 48, 45, 0.045);
   border-color: rgba(112, 127, 123, 0.2);
   background-image:
     linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0)),
-    var(--jarvis-panel-surface);
+    var(--kashinoki-panel-surface);
   transition:
-    transform var(--jarvis-interaction-response-duration) cubic-bezier(0.2, 0.8, 0.2, 1),
-    box-shadow var(--jarvis-interaction-response-duration) cubic-bezier(0.2, 0.8, 0.2, 1),
-    border-color var(--jarvis-interaction-response-duration) linear,
-    background-color var(--jarvis-fade-timing) ease,
-    background-image var(--jarvis-fade-timing) ease;
+    transform var(--kashinoki-interaction-response-duration) cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow var(--kashinoki-interaction-response-duration) cubic-bezier(0.2, 0.8, 0.2, 1),
+    border-color var(--kashinoki-interaction-response-duration) linear,
+    background-color var(--kashinoki-fade-timing) ease,
+    background-image var(--kashinoki-fade-timing) ease;
 }
 
-.jarvis-panel--visual-soft-output {
-  --jarvis-panel-surface: linear-gradient(180deg, rgba(250, 251, 249, 0.98), rgba(241, 246, 243, 0.99));
-  --jarvis-panel-shadow-current: 0 10px 24px rgba(34, 48, 45, 0.06);
+.kashinoki-panel--visual-soft-output {
+  --kashinoki-panel-surface: linear-gradient(180deg, rgba(250, 251, 249, 0.98), rgba(241, 246, 243, 0.99));
+  --kashinoki-panel-shadow-current: 0 10px 24px rgba(34, 48, 45, 0.06);
   border-color: rgba(108, 126, 121, 0.2);
   background-image:
     linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0)),
-    var(--jarvis-panel-surface);
+    var(--kashinoki-panel-surface);
   transition:
-    transform var(--jarvis-interaction-response-duration) cubic-bezier(0.2, 0.8, 0.2, 1),
-    box-shadow var(--jarvis-interaction-response-duration) cubic-bezier(0.2, 0.8, 0.2, 1),
-    border-color var(--jarvis-interaction-response-duration) linear,
-    background-color var(--jarvis-fade-timing) ease,
-    background-image var(--jarvis-fade-timing) ease;
+    transform var(--kashinoki-interaction-response-duration) cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow var(--kashinoki-interaction-response-duration) cubic-bezier(0.2, 0.8, 0.2, 1),
+    border-color var(--kashinoki-interaction-response-duration) linear,
+    background-color var(--kashinoki-fade-timing) ease,
+    background-image var(--kashinoki-fade-timing) ease;
 }
 
-.jarvis-panel--visual-soft-next-preview {
-  --jarvis-panel-surface: linear-gradient(180deg, rgba(252, 253, 251, 0.97), rgba(245, 249, 246, 0.99));
-  --jarvis-panel-shadow-current: 0 9px 22px rgba(34, 48, 45, 0.05);
+.kashinoki-panel--visual-soft-next-preview {
+  --kashinoki-panel-surface: linear-gradient(180deg, rgba(252, 253, 251, 0.97), rgba(245, 249, 246, 0.99));
+  --kashinoki-panel-shadow-current: 0 9px 22px rgba(34, 48, 45, 0.05);
   border-color: rgba(114, 129, 125, 0.18);
   background-image:
     linear-gradient(180deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0)),
-    var(--jarvis-panel-surface);
+    var(--kashinoki-panel-surface);
   transition:
-    transform var(--jarvis-interaction-response-duration) cubic-bezier(0.2, 0.8, 0.2, 1),
-    box-shadow var(--jarvis-interaction-response-duration) cubic-bezier(0.2, 0.8, 0.2, 1),
-    border-color var(--jarvis-interaction-response-duration) linear,
-    background-color var(--jarvis-fade-timing) ease,
-    background-image var(--jarvis-fade-timing) ease;
+    transform var(--kashinoki-interaction-response-duration) cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow var(--kashinoki-interaction-response-duration) cubic-bezier(0.2, 0.8, 0.2, 1),
+    border-color var(--kashinoki-interaction-response-duration) linear,
+    background-color var(--kashinoki-fade-timing) ease,
+    background-image var(--kashinoki-fade-timing) ease;
 }
 
-.jarvis-panel--visual-soft-next-summary {
-  --jarvis-panel-surface: linear-gradient(180deg, rgba(251, 252, 249, 0.97), rgba(244, 248, 244, 0.99));
-  --jarvis-panel-shadow-current: 0 10px 24px rgba(34, 48, 45, 0.06);
+.kashinoki-panel--visual-soft-next-summary {
+  --kashinoki-panel-surface: linear-gradient(180deg, rgba(251, 252, 249, 0.97), rgba(244, 248, 244, 0.99));
+  --kashinoki-panel-shadow-current: 0 10px 24px rgba(34, 48, 45, 0.06);
   border-color: rgba(109, 125, 121, 0.19);
   background-image:
     linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0)),
-    var(--jarvis-panel-surface);
+    var(--kashinoki-panel-surface);
   transition:
-    transform var(--jarvis-interaction-response-duration) cubic-bezier(0.2, 0.8, 0.2, 1),
-    box-shadow var(--jarvis-interaction-response-duration) cubic-bezier(0.2, 0.8, 0.2, 1),
-    border-color var(--jarvis-interaction-response-duration) linear,
-    background-color var(--jarvis-fade-timing) ease,
-    background-image var(--jarvis-fade-timing) ease;
+    transform var(--kashinoki-interaction-response-duration) cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow var(--kashinoki-interaction-response-duration) cubic-bezier(0.2, 0.8, 0.2, 1),
+    border-color var(--kashinoki-interaction-response-duration) linear,
+    background-color var(--kashinoki-fade-timing) ease,
+    background-image var(--kashinoki-fade-timing) ease;
 }
 
-.jarvis-panel--output {
-  --jarvis-panel-min-height: var(--jarvis-panel-height-lg);
+.kashinoki-panel--output {
+  --kashinoki-panel-min-height: var(--kashinoki-panel-height-lg);
 }
 
-.jarvis-panel--evidence {
-  --jarvis-panel-min-height: var(--jarvis-panel-height-lg);
-  --jarvis-panel-accent: var(--jarvis-status-color-warning);
+.kashinoki-panel--evidence {
+  --kashinoki-panel-min-height: var(--kashinoki-panel-height-lg);
+  --kashinoki-panel-accent: var(--kashinoki-status-color-warning);
 }
 
-.jarvis-panel--guide {
-  --jarvis-panel-min-height: var(--jarvis-panel-height-md);
-  --jarvis-panel-accent: var(--jarvis-status-color-active);
-  border-left: 3px solid var(--jarvis-panel-accent);
+.kashinoki-panel--guide {
+  --kashinoki-panel-min-height: var(--kashinoki-panel-height-md);
+  --kashinoki-panel-accent: var(--kashinoki-status-color-active);
+  border-left: 3px solid var(--kashinoki-panel-accent);
 }
 
-.jarvis-panel--compact {
-  --jarvis-panel-gap: var(--jarvis-panel-gap-sm);
-  --jarvis-panel-padding: var(--jarvis-panel-padding-sm);
-  --jarvis-panel-radius: var(--jarvis-panel-radius-sm);
+.kashinoki-panel--compact {
+  --kashinoki-panel-gap: var(--kashinoki-panel-gap-sm);
+  --kashinoki-panel-padding: var(--kashinoki-panel-padding-sm);
+  --kashinoki-panel-radius: var(--kashinoki-panel-radius-sm);
 }
 
-.jarvis-panel--comfortable {
-  --jarvis-panel-gap: var(--jarvis-panel-gap-md);
-  --jarvis-panel-padding: var(--jarvis-panel-padding-md);
-  --jarvis-panel-radius: var(--jarvis-panel-radius-md);
+.kashinoki-panel--comfortable {
+  --kashinoki-panel-gap: var(--kashinoki-panel-gap-md);
+  --kashinoki-panel-padding: var(--kashinoki-panel-padding-md);
+  --kashinoki-panel-radius: var(--kashinoki-panel-radius-md);
 }
 
 /* probe-safe: registry 接続確認専用の安全 modifier.
    既存UIの寸法・見た目を変えず、将来の本番見た目presetとは分離する。 */
-.jarvis-panel--probe-safe {
-  --jarvis-panel-gap: 0;
-  --jarvis-panel-padding: 0;
-  --jarvis-panel-min-height: auto;
+.kashinoki-panel--probe-safe {
+  --kashinoki-panel-gap: 0;
+  --kashinoki-panel-padding: 0;
+  --kashinoki-panel-min-height: auto;
   box-sizing: border-box;
 }
 
-.jarvis-panel--dense {
-  --jarvis-panel-gap: var(--jarvis-panel-gap-xs);
-  --jarvis-panel-padding: var(--jarvis-panel-padding-xs);
-  --jarvis-panel-radius: var(--jarvis-panel-radius-sm);
+.kashinoki-panel--dense {
+  --kashinoki-panel-gap: var(--kashinoki-panel-gap-xs);
+  --kashinoki-panel-padding: var(--kashinoki-panel-padding-xs);
+  --kashinoki-panel-radius: var(--kashinoki-panel-radius-sm);
 }
 
-.jarvis-panel.is-emphasis {
-  --jarvis-panel-shadow-current: var(--jarvis-panel-shadow-medium);
-  border-color: var(--jarvis-panel-accent);
+.kashinoki-panel.is-emphasis {
+  --kashinoki-panel-shadow-current: var(--kashinoki-panel-shadow-medium);
+  border-color: var(--kashinoki-panel-accent);
 }
 
-.jarvis-panel.is-muted {
+.kashinoki-panel.is-muted {
   opacity: 0.88;
-  --jarvis-panel-shadow-current: var(--jarvis-panel-shadow-soft);
+  --kashinoki-panel-shadow-current: var(--kashinoki-panel-shadow-soft);
 }
 
-.jarvis-panel.is-active {
-  border-color: var(--jarvis-status-color-active);
-  box-shadow: var(--jarvis-panel-shadow-strong);
+.kashinoki-panel.is-active {
+  border-color: var(--kashinoki-status-color-active);
+  box-shadow: var(--kashinoki-panel-shadow-strong);
   transform: translateY(-1px);
 }
 
-.jarvis-panel.is-complete {
-  border-color: var(--jarvis-status-color-complete);
+.kashinoki-panel.is-complete {
+  border-color: var(--kashinoki-status-color-complete);
 }
 
-.jarvis-panel.is-warning {
-  border-color: var(--jarvis-status-color-warning);
+.kashinoki-panel.is-warning {
+  border-color: var(--kashinoki-status-color-warning);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .jarvis-panel {
+  .kashinoki-panel {
     transition-duration: 1ms;
   }
 }

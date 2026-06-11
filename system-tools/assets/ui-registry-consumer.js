@@ -1,10 +1,10 @@
 (function () {
   "use strict";
 
-  if (window.JARVIS_UI_REGISTRY_CONSUMER) return;
+  if (window.KASHINOKI_UI_REGISTRY_CONSUMER) return;
 
   const REQUIRED_PAGES = [
-    "jarvis-start",
+    "kashinoki-start",
     "system-map",
     "portfolio-collect",
     "portfolio-quality",
@@ -32,7 +32,7 @@
   ];
 
   function registry() {
-    return window.JARVIS_UI_REGISTRY || null;
+    return window.KASHINOKI_UI_REGISTRY || null;
   }
 
   function getPage(pageId) {
@@ -88,9 +88,9 @@
       pages: Array.isArray(reg?.pages) || !!reg?.pages,
       roles: Array.isArray(reg?.roles) || !!reg?.roles,
       namespaces: {
-        animation: typeof window.JARVIS_ANIMATION_PRESETS === "object" && !!window.JARVIS_ANIMATION_PRESETS,
-        interaction: typeof window.JARVIS_INTERACTION_PRESETS === "object" && !!window.JARVIS_INTERACTION_PRESETS,
-        dataBindings: typeof window.JARVIS_DATA_BINDINGS === "object" && !!window.JARVIS_DATA_BINDINGS
+        animation: typeof window.KASHINOKI_ANIMATION_PRESETS === "object" && !!window.KASHINOKI_ANIMATION_PRESETS,
+        interaction: typeof window.KASHINOKI_INTERACTION_PRESETS === "object" && !!window.KASHINOKI_INTERACTION_PRESETS,
+        dataBindings: typeof window.KASHINOKI_DATA_BINDINGS === "object" && !!window.KASHINOKI_DATA_BINDINGS
       },
       missingPages: [],
       missingRoles: [],
@@ -136,5 +136,5 @@
     validateRegistry
   });
 
-  window.JARVIS_UI_REGISTRY_CONSUMER = consumer;
+  window.KASHINOKI_UI_REGISTRY_CONSUMER = consumer;
 })();

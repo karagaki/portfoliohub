@@ -19,8 +19,8 @@
   visibility:visible !important;
   pointer-events:auto !important;
   animation:none !important;
-  background:var(--jarvis-accent-12,var(--acb)) !important;
-  border:1px solid var(--jarvis-accent-54,var(--ac)) !important;
+  background:var(--kashinoki-accent-12,var(--acb)) !important;
+  border:1px solid var(--kashinoki-accent-54,var(--ac)) !important;
   box-shadow:none !important;
   backdrop-filter:none !important;
   -webkit-backdrop-filter:none !important;
@@ -139,7 +139,7 @@
   min-height: 22px !important;
   padding: 0 10px !important;
   border-radius: 999px !important;
-  background: var(--jarvis-accent-soft, rgba(236, 255, 92, .18)) !important;
+  background: var(--kashinoki-accent-soft, rgba(236, 255, 92, .18)) !important;
   color: #64736f !important;
   font-size: 9px !important;
   letter-spacing: .12em !important;
@@ -692,7 +692,7 @@
   opacity: 0;
   transform: translateY(10px);
   filter: blur(.8px);
-  animation: jarvisV207GuideRise .58s cubic-bezier(.22, .61, .28, 1) forwards;
+  animation: kashinokiV207GuideRise .58s cubic-bezier(.22, .61, .28, 1) forwards;
 }
 
 #portfolio-next.workflow-animate:not(.guide-show-all) .workflow-step-guide {
@@ -780,14 +780,14 @@
 }
 
 #portfolio-next.workflow-animate:not(.guide-show-all) .portfolio-final-card {
-  animation-name: jarvisV207GuideRise, jarvisV207GuideGlow;
+  animation-name: kashinokiV207GuideRise, kashinokiV207GuideGlow;
   animation-duration: .58s, 1.18s;
   animation-delay: 1.76s, 2.82s;
   animation-fill-mode: forwards, none;
 }
 
 #portfolio-next.workflow-animate:not(.guide-show-all) #portfolioOutputShelf {
-  animation-name: jarvisV207GuideRise, jarvisV207GuideGlow;
+  animation-name: kashinokiV207GuideRise, kashinokiV207GuideGlow;
   animation-duration: .58s, 1.08s;
   animation-delay: 3.06s, 4.02s;
   animation-fill-mode: forwards, none;
@@ -832,7 +832,7 @@
   }
 }
 
-/* source: index.html#jarvis-v260-restored-inline-scope (22362-22492) */
+/* source: index.html#kashinoki-v260-restored-inline-scope (22362-22492) */
 #portfolio-next .portfolio-next-summary label,
 #portfolio-next .portfolio-final-card .portfolio-label {
   font-size: 9px !important;
@@ -1469,7 +1469,7 @@
   max-width: 100% !important;
   padding: 5px 9px !important;
   border-radius: 999px !important;
-  background: color-mix(in srgb, var(--jarvis-accent, #ecff5c) 18%, rgba(255,255,255,.72) 82%) !important;
+  background: color-mix(in srgb, var(--kashinoki-accent, #ecff5c) 18%, rgba(255,255,255,.72) 82%) !important;
   color: #62736e !important;
   box-shadow: none !important;
 }
@@ -1478,8 +1478,46 @@
 /* v383: STEP 6「次AI作業へ渡す前提」は黄色ベタではなく、現在の強調色の薄いチップに固定。 */
 #portfolio-next.page.active .portfolio-final-card .portfolio-label,
 #portfolio-next .portfolio-final-card .portfolio-label{
-  background: var(--jarvis-accent-12, rgba(236,255,92,.12)) !important;
-  border: 1px solid var(--jarvis-accent-32, rgba(236,255,92,.32)) !important;
+  background: var(--kashinoki-accent-12, rgba(236,255,92,.12)) !important;
+  border: 1px solid var(--kashinoki-accent-32, rgba(236,255,92,.32)) !important;
   color: #5f706c !important;
   box-shadow: none !important;
+}
+
+/* v404: align STEP 6 page width with other 01-06 pages. */
+#portfolio-next.page.active,
+#portfolio-next.workflow-guide-page,
+#portfolio-next.page.active.workflow-guide-page{
+  max-width:1030px !important;
+  width:min(100%, 1030px) !important;
+  margin-left:auto !important;
+  margin-right:auto !important;
+  box-sizing:border-box !important;
+}
+#portfolio-next .heading,
+#portfolio-next .workflow-step-guide,
+#portfolio-next .portfolio-final-layout,
+#portfolio-next .portfolio-final-action{
+  max-width:100% !important;
+  box-sizing:border-box !important;
+}
+#portfolio-next .portfolio-final-layout{
+  grid-template-columns:minmax(0,1fr) minmax(250px,300px) !important;
+  gap:14px !important;
+  width:100% !important;
+  min-width:0 !important;
+}
+#portfolio-next #portfolioOutputShelf,
+#portfolio-next .portfolio-improve-card,
+#portfolio-next .portfolio-final-card{
+  min-width:0 !important;
+  max-width:100% !important;
+}
+@media(max-width:1120px){
+  #portfolio-next.page.active,
+  #portfolio-next.workflow-guide-page,
+  #portfolio-next.page.active.workflow-guide-page{
+    width:100% !important;
+    max-width:100% !important;
+  }
 }

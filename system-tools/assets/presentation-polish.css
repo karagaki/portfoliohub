@@ -459,58 +459,58 @@
 
 
 /* v351: start page wording and spacing for kashinoki */
-.jarvis-start-page .start-title-block{
+.kashinoki-start-page .start-title-block{
   padding-top: 22px;
   padding-bottom: 52px;
 }
-.jarvis-start-page .start-overline{
+.kashinoki-start-page .start-overline{
   margin-bottom: 18px;
   font-size: 11px;
   letter-spacing: .20em;
   text-transform: lowercase;
   color: rgba(92, 102, 98, .62);
 }
-.jarvis-start-page .start-title-block h2{
+.kashinoki-start-page .start-title-block h2{
   max-width: 1040px;
   margin-bottom: 0;
 }
-.jarvis-start-page .start-title-block h2::after{
+.kashinoki-start-page .start-title-block h2::after{
   bottom: -22px;
   width: min(430px, 42%);
   height: 6px;
   opacity: .82;
 }
-.jarvis-start-page .start-title-keep{
+.kashinoki-start-page .start-title-keep{
   letter-spacing: -.072em;
 }
-.jarvis-start-page .start-value-grid{
+.kashinoki-start-page .start-value-grid{
   margin-top: 10px;
   margin-bottom: 42px;
   gap: 46px;
 }
-.jarvis-start-page .start-value-grid::before{
+.kashinoki-start-page .start-value-grid::before{
   top: 50%;
   left: 20%;
   right: 20%;
   background: linear-gradient(90deg, transparent 0 6%, rgba(91, 105, 101, .20) 6% 38%, transparent 38% 44%, rgba(91, 105, 101, .20) 44% 76%, transparent 76%);
 }
-.jarvis-start-page .mroak-flow-title{
+.kashinoki-start-page .mroak-flow-title{
   left: 34px !important;
   top: 18px !important;
   width: auto !important;
 }
-.jarvis-start-page .mroak-flow-kanji{
+.kashinoki-start-page .mroak-flow-kanji{
   font-size: 58px !important;
   line-height: .92 !important;
   letter-spacing: 0 !important;
 }
-.jarvis-start-page .mroak-flow-kana{
+.kashinoki-start-page .mroak-flow-kana{
   display: none !important;
 }
-.jarvis-start-page .mroak-flow-number{
+.kashinoki-start-page .mroak-flow-number{
   display: none !important;
 }
-.jarvis-start-page .mroak-flow-card p{
+.kashinoki-start-page .mroak-flow-card p{
   left: 104px !important;
   right: 34px !important;
   bottom: 25px !important;
@@ -518,69 +518,69 @@
   line-height: 1.76 !important;
   font-weight: 720 !important;
 }
-.jarvis-start-page .start-demo-panel{
+.kashinoki-start-page .start-demo-panel{
   min-height: 182px;
   margin-top: 0;
   padding: 34px 46px;
   grid-template-columns: minmax(0, 1fr) minmax(230px, 300px);
   row-gap: 10px;
 }
-.jarvis-start-page .start-demo-kicker{
+.kashinoki-start-page .start-demo-kicker{
   font-size: 22px;
   line-height: 1.25;
   letter-spacing: -.04em;
   font-weight: 760;
   color: rgba(44, 52, 50, .78);
 }
-.jarvis-start-page .start-demo-copy{
+.kashinoki-start-page .start-demo-copy{
   gap: 0;
   max-width: 700px;
 }
-.jarvis-start-page .start-demo-copy p,
-.jarvis-start-page .start-demo-copy p:first-child{
+.kashinoki-start-page .start-demo-copy p,
+.kashinoki-start-page .start-demo-copy p:first-child{
   font-size: 16.2px;
   line-height: 1.86;
   font-weight: 660;
   letter-spacing: .015em;
   color: rgba(82, 92, 88, .78);
 }
-.jarvis-start-page .start-demo-button{
+.kashinoki-start-page .start-demo-button{
   height: 50px;
 }
 @media (max-width: 1280px){
-  .jarvis-start-page .start-value-grid{ gap: 30px; }
-  .jarvis-start-page .mroak-flow-card p{ left: 96px !important; right: 26px !important; font-size: 11.2px !important; }
-  .jarvis-start-page .mroak-flow-kanji{ font-size: 54px !important; }
+  .kashinoki-start-page .start-value-grid{ gap: 30px; }
+  .kashinoki-start-page .mroak-flow-card p{ left: 96px !important; right: 26px !important; font-size: 11.2px !important; }
+  .kashinoki-start-page .mroak-flow-kanji{ font-size: 54px !important; }
 }
 @media (max-width: 860px){
-  .jarvis-start-page .start-title-block{ padding-bottom: 38px; }
-  .jarvis-start-page .start-title-keep{ white-space: normal; }
-  .jarvis-start-page .start-value-grid{ gap: 14px; margin-bottom: 26px; }
-  .jarvis-start-page .mroak-flow-card p{ left: 104px !important; right: 24px !important; bottom: 24px !important; }
-  .jarvis-start-page .start-demo-panel{ grid-template-columns: 1fr; grid-template-areas: "kicker" "copy" "action"; padding: 28px 24px; }
-  .jarvis-start-page .start-demo-kicker{ font-size: 19px; }
-  .jarvis-start-page .start-demo-copy p,
-  .jarvis-start-page .start-demo-copy p:first-child{ font-size: 14.5px; }
+  .kashinoki-start-page .start-title-block{ padding-bottom: 38px; }
+  .kashinoki-start-page .start-title-keep{ white-space: normal; }
+  .kashinoki-start-page .start-value-grid{ gap: 14px; margin-bottom: 26px; }
+  .kashinoki-start-page .mroak-flow-card p{ left: 104px !important; right: 24px !important; bottom: 24px !important; }
+  .kashinoki-start-page .start-demo-panel{ grid-template-columns: 1fr; grid-template-areas: "kicker" "copy" "action"; padding: 28px 24px; }
+  .kashinoki-start-page .start-demo-kicker{ font-size: 19px; }
+  .kashinoki-start-page .start-demo-copy p,
+  .kashinoki-start-page .start-demo-copy p:first-child{ font-size: 14.5px; }
 }
 
 
 /* v356: restore Start flow cards to three full cards: 集める / 分ける / 活かす */
-.jarvis-start-page .start-value-grid{
+.kashinoki-start-page .start-value-grid{
   margin-top: 18px !important;
   margin-bottom: 42px !important;
   gap: 40px !important;
 }
-.jarvis-start-page .start-value-grid::before{
+.kashinoki-start-page .start-value-grid::before{
   top: 50% !important;
   left: 18% !important;
   right: 18% !important;
   background: linear-gradient(90deg, transparent 0 5%, rgba(91,105,101,.18) 5% 39%, transparent 39% 45%, rgba(91,105,101,.18) 45% 79%, transparent 79%) !important;
 }
-.jarvis-start-page .mroak-flow-card{
+.kashinoki-start-page .mroak-flow-card{
   min-height: 128px !important;
   height: 128px !important;
 }
-.jarvis-start-page .mroak-flow-title{
+.kashinoki-start-page .mroak-flow-title{
   left: 34px !important;
   top: 22px !important;
   width: 170px !important;
@@ -588,19 +588,19 @@
   align-items: baseline !important;
   gap: 4px !important;
 }
-.jarvis-start-page .mroak-flow-kanji{
+.kashinoki-start-page .mroak-flow-kanji{
   font-size: 58px !important;
   line-height: .9 !important;
   letter-spacing: -.06em !important;
 }
-.jarvis-start-page .mroak-flow-kana{
+.kashinoki-start-page .mroak-flow-kana{
   display: inline !important;
   font-size: 31px !important;
   line-height: 1 !important;
   letter-spacing: -.08em !important;
   font-weight: 780 !important;
 }
-.jarvis-start-page .mroak-flow-number{
+.kashinoki-start-page .mroak-flow-number{
   display: block !important;
   position: absolute !important;
   top: 24px !important;
@@ -609,7 +609,7 @@
   letter-spacing: .08em !important;
   color: rgba(75,82,80,.34) !important;
 }
-.jarvis-start-page .mroak-flow-card p{
+.kashinoki-start-page .mroak-flow-card p{
   left: 158px !important;
   right: 34px !important;
   bottom: 28px !important;
@@ -619,23 +619,23 @@
   font-weight: 720 !important;
   text-align: left !important;
 }
-.jarvis-start-page .mroak-flow-card.value-2 p,
-.jarvis-start-page .mroak-flow-card.value-3 p{
+.kashinoki-start-page .mroak-flow-card.value-2 p,
+.kashinoki-start-page .mroak-flow-card.value-3 p{
   left: 158px !important;
 }
-.jarvis-start-page .mroak-flow-card.value-2 .mroak-flow-title,
-.jarvis-start-page .mroak-flow-card.value-3 .mroak-flow-title{
+.kashinoki-start-page .mroak-flow-card.value-2 .mroak-flow-title,
+.kashinoki-start-page .mroak-flow-card.value-3 .mroak-flow-title{
   left: 34px !important;
 }
 @media (max-width: 1280px){
-  .jarvis-start-page .start-value-grid{gap: 28px !important;}
-  .jarvis-start-page .mroak-flow-title{left: 26px !important; width: 144px !important;}
-  .jarvis-start-page .mroak-flow-kanji{font-size: 52px !important;}
-  .jarvis-start-page .mroak-flow-kana{font-size: 27px !important;}
-  .jarvis-start-page .mroak-flow-number{right: 26px !important;}
-  .jarvis-start-page .mroak-flow-card p{left: 136px !important; right: 26px !important; max-width: calc(100% - 162px) !important; font-size: 11.6px !important;}
-  .jarvis-start-page .mroak-flow-card.value-2 p,
-  .jarvis-start-page .mroak-flow-card.value-3 p{left: 136px !important;}
+  .kashinoki-start-page .start-value-grid{gap: 28px !important;}
+  .kashinoki-start-page .mroak-flow-title{left: 26px !important; width: 144px !important;}
+  .kashinoki-start-page .mroak-flow-kanji{font-size: 52px !important;}
+  .kashinoki-start-page .mroak-flow-kana{font-size: 27px !important;}
+  .kashinoki-start-page .mroak-flow-number{right: 26px !important;}
+  .kashinoki-start-page .mroak-flow-card p{left: 136px !important; right: 26px !important; max-width: calc(100% - 162px) !important; font-size: 11.6px !important;}
+  .kashinoki-start-page .mroak-flow-card.value-2 p,
+  .kashinoki-start-page .mroak-flow-card.value-3 p{left: 136px !important;}
 }
 
 
@@ -652,21 +652,21 @@
 
 /* v370: START 3工程カードの文字欠け防止。
    カード幅が縮んでも説明文をタイトル横に押し込まず、下段へ逃がして必ず読める構造にする。 */
-.jarvis-start-page .start-value-grid.mroak-three-flow{
+.kashinoki-start-page .start-value-grid.mroak-three-flow{
   grid-template-columns: repeat(3, minmax(220px, 1fr)) !important;
   gap: clamp(20px, 3vw, 40px) !important;
   align-items: stretch !important;
 }
-.jarvis-start-page .mroak-flow-card{
+.kashinoki-start-page .mroak-flow-card{
   position: relative !important;
   min-height: clamp(132px, 11vw, 150px) !important;
   height: auto !important;
   padding: 0 !important;
   overflow: visible !important;
 }
-.jarvis-start-page .mroak-flow-title,
-.jarvis-start-page .mroak-flow-card.value-2 .mroak-flow-title,
-.jarvis-start-page .mroak-flow-card.value-3 .mroak-flow-title{
+.kashinoki-start-page .mroak-flow-title,
+.kashinoki-start-page .mroak-flow-card.value-2 .mroak-flow-title,
+.kashinoki-start-page .mroak-flow-card.value-3 .mroak-flow-title{
   position: absolute !important;
   left: clamp(22px, 2.4vw, 34px) !important;
   top: clamp(18px, 2vw, 24px) !important;
@@ -677,22 +677,22 @@
   gap: 4px !important;
   white-space: nowrap !important;
 }
-.jarvis-start-page .mroak-flow-kanji{
+.kashinoki-start-page .mroak-flow-kanji{
   font-size: clamp(48px, 5.1vw, 64px) !important;
   line-height: .9 !important;
 }
-.jarvis-start-page .mroak-flow-kana{
+.kashinoki-start-page .mroak-flow-kana{
   font-size: clamp(24px, 2.6vw, 32px) !important;
   line-height: 1 !important;
 }
-.jarvis-start-page .mroak-flow-number{
+.kashinoki-start-page .mroak-flow-number{
   top: clamp(20px, 2.2vw, 27px) !important;
   right: clamp(22px, 2.4vw, 34px) !important;
   font-size: clamp(14px, 1.35vw, 17px) !important;
 }
-.jarvis-start-page .mroak-flow-card p,
-.jarvis-start-page .mroak-flow-card.value-2 p,
-.jarvis-start-page .mroak-flow-card.value-3 p{
+.kashinoki-start-page .mroak-flow-card p,
+.kashinoki-start-page .mroak-flow-card.value-2 p,
+.kashinoki-start-page .mroak-flow-card.value-3 p{
   position: absolute !important;
   left: clamp(22px, 2.4vw, 34px) !important;
   right: clamp(22px, 2.4vw, 34px) !important;
@@ -705,19 +705,19 @@
   text-align: left !important;
   overflow: visible !important;
 }
-.jarvis-start-page .mroak-flow-card p span{
+.kashinoki-start-page .mroak-flow-card p span{
   display: block !important;
   white-space: nowrap !important;
 }
 
 @media (max-width: 860px){
-  .jarvis-start-page .start-value-grid.mroak-three-flow{
+  .kashinoki-start-page .start-value-grid.mroak-three-flow{
     grid-template-columns: 1fr !important;
   }
-  .jarvis-start-page .mroak-flow-card{
+  .kashinoki-start-page .mroak-flow-card{
     min-height: 136px !important;
   }
-  .jarvis-start-page .mroak-flow-card p span{
+  .kashinoki-start-page .mroak-flow-card p span{
     white-space: normal !important;
   }
 }
@@ -803,11 +803,11 @@
    - 説明文のカプセル枠を廃止
    - 大見出しと説明文の縦領域を分離
    - クリック時のインク演出がカード外へはみ出さないよう強制クリップ */
-.jarvis-start-page .start-value-grid.mroak-three-flow{
+.kashinoki-start-page .start-value-grid.mroak-three-flow{
   grid-template-columns: repeat(3, minmax(260px, 1fr)) !important;
   gap: clamp(28px, 3vw, 44px) !important;
 }
-.jarvis-start-page .mroak-flow-card{
+.kashinoki-start-page .mroak-flow-card{
   position: relative !important;
   height: clamp(152px, 11.5vw, 166px) !important;
   min-height: clamp(152px, 11.5vw, 166px) !important;
@@ -815,9 +815,9 @@
   contain: paint !important;
   padding: 0 !important;
 }
-.jarvis-start-page .mroak-flow-title,
-.jarvis-start-page .mroak-flow-card.value-2 .mroak-flow-title,
-.jarvis-start-page .mroak-flow-card.value-3 .mroak-flow-title{
+.kashinoki-start-page .mroak-flow-title,
+.kashinoki-start-page .mroak-flow-card.value-2 .mroak-flow-title,
+.kashinoki-start-page .mroak-flow-card.value-3 .mroak-flow-title{
   position: absolute !important;
   left: clamp(28px, 2.6vw, 38px) !important;
   top: clamp(22px, 2vw, 28px) !important;
@@ -829,22 +829,22 @@
   white-space: nowrap !important;
   pointer-events: none !important;
 }
-.jarvis-start-page .mroak-flow-kanji{
+.kashinoki-start-page .mroak-flow-kanji{
   font-size: clamp(54px, 4.55vw, 68px) !important;
   line-height: .88 !important;
 }
-.jarvis-start-page .mroak-flow-kana{
+.kashinoki-start-page .mroak-flow-kana{
   font-size: clamp(28px, 2.4vw, 36px) !important;
   line-height: 1 !important;
 }
-.jarvis-start-page .mroak-flow-number{
+.kashinoki-start-page .mroak-flow-number{
   top: clamp(25px, 2.2vw, 32px) !important;
   right: clamp(28px, 2.6vw, 38px) !important;
   z-index: 3 !important;
 }
-.jarvis-start-page .mroak-flow-card p,
-.jarvis-start-page .mroak-flow-card.value-2 p,
-.jarvis-start-page .mroak-flow-card.value-3 p{
+.kashinoki-start-page .mroak-flow-card p,
+.kashinoki-start-page .mroak-flow-card.value-2 p,
+.kashinoki-start-page .mroak-flow-card.value-3 p{
   position: absolute !important;
   left: clamp(34px, 3vw, 46px) !important;
   right: clamp(30px, 2.8vw, 42px) !important;
@@ -866,7 +866,7 @@
   font-weight: 760 !important;
   letter-spacing: .005em !important;
 }
-.jarvis-start-page .mroak-flow-card p span{
+.kashinoki-start-page .mroak-flow-card p span{
   display: block !important;
   max-width: 100% !important;
   min-height: 0 !important;
@@ -877,28 +877,28 @@
   box-shadow: none !important;
   white-space: nowrap !important;
 }
-.jarvis-start-page .mroak-flow-card .start-ink-drop,
-.jarvis-start-page .start-value .start-ink-drop{
+.kashinoki-start-page .mroak-flow-card .start-ink-drop,
+.kashinoki-start-page .start-value .start-ink-drop{
   z-index: 1 !important;
   max-width: none !important;
   max-height: none !important;
 }
-.jarvis-start-page .mroak-flow-card > *:not(.start-ink-drop){
+.kashinoki-start-page .mroak-flow-card > *:not(.start-ink-drop){
   position: relative;
   z-index: 3;
 }
 @media (max-width: 1280px){
-  .jarvis-start-page .start-value-grid.mroak-three-flow{
+  .kashinoki-start-page .start-value-grid.mroak-three-flow{
     grid-template-columns: repeat(3, minmax(230px, 1fr)) !important;
     gap: clamp(20px, 2.5vw, 32px) !important;
   }
-  .jarvis-start-page .mroak-flow-card{
+  .kashinoki-start-page .mroak-flow-card{
     height: 150px !important;
     min-height: 150px !important;
   }
-  .jarvis-start-page .mroak-flow-card p,
-  .jarvis-start-page .mroak-flow-card.value-2 p,
-  .jarvis-start-page .mroak-flow-card.value-3 p{
+  .kashinoki-start-page .mroak-flow-card p,
+  .kashinoki-start-page .mroak-flow-card.value-2 p,
+  .kashinoki-start-page .mroak-flow-card.value-3 p{
     left: 24px !important;
     right: 24px !important;
     bottom: 20px !important;
@@ -906,14 +906,14 @@
   }
 }
 @media (max-width: 860px){
-  .jarvis-start-page .start-value-grid.mroak-three-flow{
+  .kashinoki-start-page .start-value-grid.mroak-three-flow{
     grid-template-columns: 1fr !important;
   }
-  .jarvis-start-page .mroak-flow-card{
+  .kashinoki-start-page .mroak-flow-card{
     height: 154px !important;
     min-height: 154px !important;
   }
-  .jarvis-start-page .mroak-flow-card p span{
+  .kashinoki-start-page .mroak-flow-card p span{
     white-space: normal !important;
   }
 }

@@ -2,7 +2,7 @@
 (function(){
   'use strict';
   const PAGE_ID='portfolio-current';
-  const VERSION='v328 / 04入場時初期表示・styleリセット修正';
+  const VERSION = 'v1.0749';
   const labels={unmatched:'未照合',new:'新規',update:'更新候補',same:'同等',issue:'矛盾・保留'};
   const countMap=[['workflowUnmatchedCount','unmatched'],['workflowNewCount','new'],['workflowUpdateCount','update'],['workflowSameCount','same'],['workflowIssueCount','issue']];
   let currentFilter='unmatched';
@@ -30,8 +30,8 @@
   function setFinals(g){countMap.forEach(([id,key])=>{const el=document.getElementById(id);if(el)el.dataset.jv267Final=String(g[key]?.length||0);});}
   function countsZero(){countMap.forEach(([id])=>{const el=document.getElementById(id);if(el){el.textContent='0';el.classList.add('is-current-counting');}});}
   function countsFinal(){countMap.forEach(([id])=>{const el=document.getElementById(id);if(el){el.textContent=String(Number(el.dataset.jv267Final||0));el.classList.remove('is-current-counting');}});}
-  function renderCompare(filter=currentFilter){const p=pageEl();if(!p)return;currentFilter=filter||'unmatched';const g=groups();setFinals(g);$$('[data-workflow-brief="compare"] .workflow-brief-card').forEach(btn=>{const active=btn.getAttribute('data-compare-filter')===currentFilter;btn.classList.toggle('is-active',active);btn.classList.toggle('is-selected',active)});const items=g[currentFilter]||[];const list=$('#workflowCompareItems',p);if(list){list.innerHTML=items.length?items.map((item,i)=>`<div class="workflow-side-row jv267-compare-row jv267-target jarvis-reveal-item" data-relation="${esc(currentFilter)}"><b>${i+1}.</b><span><b class="jv267-cat">${esc(itemCat(item))}</b><span class="jv267-body">${esc(itemText(item))}</span></span></div>`).join(''):`<div class="workflow-side-row jv267-compare-row jv267-target jarvis-reveal-item is-empty" data-relation="${esc(currentFilter)}"><b>-</b><span><b>${esc(labels[currentFilter]||'候補')}はありません</b><span>このボタンは表示対象だけを絞り込みます。</span></span></div>`;}
-    const cur=$('#workflowCompareCurrent',p);if(cur){const c=items[0]||sourceItems()[0]||{};cur.innerHTML=`<div class="compare-selected-card jv267-target jarvis-neumo-panel jarvis-reveal-shell"><h4>選択中の候補 / ${esc(labels[currentFilter]||'未照合')}</h4><b>${esc(itemCat(c))}</b><p>${esc(itemText(c))}</p><div class="workflow-chip-row"><span>${esc(labels[currentFilter]||'未照合')}</span><span>表示対象のみ絞り込み</span><span>06確定前</span></div></div>`;}
+  function renderCompare(filter=currentFilter){const p=pageEl();if(!p)return;currentFilter=filter||'unmatched';const g=groups();setFinals(g);$$('[data-workflow-brief="compare"] .workflow-brief-card').forEach(btn=>{const active=btn.getAttribute('data-compare-filter')===currentFilter;btn.classList.toggle('is-active',active);btn.classList.toggle('is-selected',active)});const items=g[currentFilter]||[];const list=$('#workflowCompareItems',p);if(list){list.innerHTML=items.length?items.map((item,i)=>`<div class="workflow-side-row jv267-compare-row jv267-target kashinoki-reveal-item" data-relation="${esc(currentFilter)}"><b>${i+1}.</b><span><b class="jv267-cat">${esc(itemCat(item))}</b><span class="jv267-body">${esc(itemText(item))}</span></span></div>`).join(''):`<div class="workflow-side-row jv267-compare-row jv267-target kashinoki-reveal-item is-empty" data-relation="${esc(currentFilter)}"><b>-</b><span><b>${esc(labels[currentFilter]||'候補')}はありません</b><span>このボタンは表示対象だけを絞り込みます。</span></span></div>`;}
+    const cur=$('#workflowCompareCurrent',p);if(cur){const c=items[0]||sourceItems()[0]||{};cur.innerHTML=`<div class="compare-selected-card jv267-target kashinoki-neumo-panel kashinoki-reveal-shell"><h4>選択中の候補 / ${esc(labels[currentFilter]||'未照合')}</h4><b>${esc(itemCat(c))}</b><p>${esc(itemText(c))}</p><div class="workflow-chip-row"><span>${esc(labels[currentFilter]||'未照合')}</span><span>表示対象のみ絞り込み</span><span>06確定前</span></div></div>`;}
   }
   function ensureStepGuide(){try{if(typeof window.ensureWorkflowGuidePages==='function')window.ensureWorkflowGuidePages();}catch(e){}const p=pageEl();if(!p)return;const heading=p.querySelector('.heading');if(heading&&!p.querySelector('.workflow-step-guide')){const step=document.createElement('div');step.className='workflow-step-guide';step.innerHTML='<span class="workflow-step-number">分ける</span><span class="workflow-step-copy"><b>採用済み判断を現在地として確認します</b><small>利用できることと未接続を分けて示します。</small></span>';heading.insertAdjacentElement('afterend',step);}}
   function targets(){const p=pageEl();if(!p)return[];return [
@@ -180,11 +180,11 @@
   document.addEventListener('click',ev=>{const btn=ev.target.closest?.('#portfolio-current [data-compare-filter]');if(btn){ev.preventDefault();ev.stopImmediatePropagation();window.setWorkflowCompareFilter(btn.getAttribute('data-compare-filter')||'unmatched');}},true);
   document.addEventListener('click',ev=>{const btn=ev.target.closest?.('.guide-control-button');if(!btn||!active())return;if(btn.classList.contains('show-all'))setTimeout(showAll,0);if(btn.classList.contains('replay'))setTimeout(()=>play(true),0);},true);
   const oldStart=window.startWorkflowPageGuide;
-  if(typeof oldStart==='function'&&!oldStart.__jarvisV267){window.startWorkflowPageGuide=function(id){const r=oldStart.apply(this,arguments);if(id===PAGE_ID)schedulePlay(false);return r};window.startWorkflowPageGuide.__jarvisV267=true;}
+  if(typeof oldStart==='function'&&!oldStart.__kashinokiV267){window.startWorkflowPageGuide=function(id){const r=oldStart.apply(this,arguments);if(id===PAGE_ID)schedulePlay(false);return r};window.startWorkflowPageGuide.__kashinokiV267=true;}
   const oldFinish=window.finishPageGuide;
-  if(typeof oldFinish==='function'&&!oldFinish.__jarvisV267){window.finishPageGuide=function(id){const r=oldFinish.apply(this,arguments);if(id===PAGE_ID)showAll();return r};window.finishPageGuide.__jarvisV267=true;}
+  if(typeof oldFinish==='function'&&!oldFinish.__kashinokiV267){window.finishPageGuide=function(id){const r=oldFinish.apply(this,arguments);if(id===PAGE_ID)showAll();return r};window.finishPageGuide.__kashinokiV267=true;}
   const oldPage=window.page;
-  if(typeof oldPage==='function'&&!oldPage.__jarvisV267){window.page=function(id){
+  if(typeof oldPage==='function'&&!oldPage.__kashinokiV267){window.page=function(id){
     const wasActive=active();
     if(id===PAGE_ID){
       primeEntryState();
@@ -203,7 +203,7 @@
       resetSequenceOnExit();
     }
     return r;
-  };window.page.__jarvisV267=true;}
+  };window.page.__kashinokiV267=true;}
   document.addEventListener('DOMContentLoaded',()=>{setVersion();ensureStepGuide();renderCompare(currentFilter);if(active())schedulePlay(false);});
   window.addEventListener('load',()=>{setVersion();if(active())schedulePlay(false);});
 })();

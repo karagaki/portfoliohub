@@ -980,19 +980,19 @@
     }
 /* Source: index.html lines 19965-20102 (<style>) */
     /* v171: 04は旧描画を見せず、確定描画が終わるまで動的領域を隠す。06は画面内に収める。 */
-    #portfolio-current.page:not(.jarvis-compare-ready) .workflow-brief,
-    #portfolio-current.page:not(.jarvis-compare-ready) .workflow-filter-note,
-    #portfolio-current.page:not(.jarvis-compare-ready) .workflow-brief-meaning,
-    #portfolio-current.page:not(.jarvis-compare-ready) .workflow-stage-layout,
-    #portfolio-current.page:not(.jarvis-compare-ready) .portfolio-action {
+    #portfolio-current.page:not(.kashinoki-compare-ready) .workflow-brief,
+    #portfolio-current.page:not(.kashinoki-compare-ready) .workflow-filter-note,
+    #portfolio-current.page:not(.kashinoki-compare-ready) .workflow-brief-meaning,
+    #portfolio-current.page:not(.kashinoki-compare-ready) .workflow-stage-layout,
+    #portfolio-current.page:not(.kashinoki-compare-ready) .portfolio-action {
       visibility: hidden !important;
     }
 
-    #portfolio-current.page.jarvis-compare-ready .workflow-brief,
-    #portfolio-current.page.jarvis-compare-ready .workflow-filter-note,
-    #portfolio-current.page.jarvis-compare-ready .workflow-brief-meaning,
-    #portfolio-current.page.jarvis-compare-ready .workflow-stage-layout,
-    #portfolio-current.page.jarvis-compare-ready .portfolio-action {
+    #portfolio-current.page.kashinoki-compare-ready .workflow-brief,
+    #portfolio-current.page.kashinoki-compare-ready .workflow-filter-note,
+    #portfolio-current.page.kashinoki-compare-ready .workflow-brief-meaning,
+    #portfolio-current.page.kashinoki-compare-ready .workflow-stage-layout,
+    #portfolio-current.page.kashinoki-compare-ready .portfolio-action {
       visibility: visible !important;
     }
 
@@ -1114,21 +1114,21 @@
     #portfolio-next .portfolio-improve-card .workflow-side-list {
       max-height: calc(100vh - 525px) !important;
     }
-/* Source: index.html lines 20108-20271 (<style id="jarvis-v172-current-next-fix">) */
+/* Source: index.html lines 20108-20271 (<style id="kashinoki-v172-current-next-fix">) */
     /* v172: 04は正本描画が完了するまで旧DOM/旧集計を見せない。 */
-    body.jarvis-v172-current-pending #portfolio-current.page.active .workflow-brief,
-    body.jarvis-v172-current-pending #portfolio-current.page.active .workflow-filter-note,
-    body.jarvis-v172-current-pending #portfolio-current.page.active .workflow-brief-meaning,
-    body.jarvis-v172-current-pending #portfolio-current.page.active .workflow-stage-layout,
-    body.jarvis-v172-current-pending #portfolio-current.page.active .portfolio-action {
+    body.kashinoki-v172-current-pending #portfolio-current.page.active .workflow-brief,
+    body.kashinoki-v172-current-pending #portfolio-current.page.active .workflow-filter-note,
+    body.kashinoki-v172-current-pending #portfolio-current.page.active .workflow-brief-meaning,
+    body.kashinoki-v172-current-pending #portfolio-current.page.active .workflow-stage-layout,
+    body.kashinoki-v172-current-pending #portfolio-current.page.active .portfolio-action {
       visibility: hidden !important;
     }
 
-    #portfolio-current.page.active.jarvis-v172-ready .workflow-brief,
-    #portfolio-current.page.active.jarvis-v172-ready .workflow-filter-note,
-    #portfolio-current.page.active.jarvis-v172-ready .workflow-brief-meaning,
-    #portfolio-current.page.active.jarvis-v172-ready .workflow-stage-layout,
-    #portfolio-current.page.active.jarvis-v172-ready .portfolio-action {
+    #portfolio-current.page.active.kashinoki-v172-ready .workflow-brief,
+    #portfolio-current.page.active.kashinoki-v172-ready .workflow-filter-note,
+    #portfolio-current.page.active.kashinoki-v172-ready .workflow-brief-meaning,
+    #portfolio-current.page.active.kashinoki-v172-ready .workflow-stage-layout,
+    #portfolio-current.page.active.kashinoki-v172-ready .portfolio-action {
       visibility: visible !important;
     }
 
@@ -1276,21 +1276,21 @@
     #portfolio-next .portfolio-improve-card .workflow-side-list {
       max-height: calc(100vh - 525px) !important;
     }
-/* Source: index.html lines 20277-20529 (<style id="jarvis-v173-current-next-finalfix">) */
+/* Source: index.html lines 20277-20529 (<style id="kashinoki-v173-current-next-finalfix">) */
     /* v173: 04は単一描画。旧スクリプト由来の多重再描画・一瞬切替を止める。 */
-    #portfolio-current.page:not(.jarvis-compare-ready) .workflow-brief,
-    #portfolio-current.page:not(.jarvis-compare-ready) .workflow-filter-note,
-    #portfolio-current.page:not(.jarvis-compare-ready) .workflow-brief-meaning,
-    #portfolio-current.page:not(.jarvis-compare-ready) .workflow-stage-layout,
-    #portfolio-current.page:not(.jarvis-compare-ready) .portfolio-action {
+    #portfolio-current.page:not(.kashinoki-compare-ready) .workflow-brief,
+    #portfolio-current.page:not(.kashinoki-compare-ready) .workflow-filter-note,
+    #portfolio-current.page:not(.kashinoki-compare-ready) .workflow-brief-meaning,
+    #portfolio-current.page:not(.kashinoki-compare-ready) .workflow-stage-layout,
+    #portfolio-current.page:not(.kashinoki-compare-ready) .portfolio-action {
       visibility: hidden !important
     }
 
-    #portfolio-current.page.jarvis-compare-ready .workflow-brief,
-    #portfolio-current.page.jarvis-compare-ready .workflow-filter-note,
-    #portfolio-current.page.jarvis-compare-ready .workflow-brief-meaning,
-    #portfolio-current.page.jarvis-compare-ready .workflow-stage-layout,
-    #portfolio-current.page.jarvis-compare-ready .portfolio-action {
+    #portfolio-current.page.kashinoki-compare-ready .workflow-brief,
+    #portfolio-current.page.kashinoki-compare-ready .workflow-filter-note,
+    #portfolio-current.page.kashinoki-compare-ready .workflow-brief-meaning,
+    #portfolio-current.page.kashinoki-compare-ready .workflow-stage-layout,
+    #portfolio-current.page.kashinoki-compare-ready .portfolio-action {
       visibility: visible !important
     }
 
@@ -1527,22 +1527,22 @@
     #portfolio-next .portfolio-improve-card .workflow-side-list {
       max-height: calc(100vh - 525px) !important;
     }
-/* Source: index.html lines 20704-20793 (<style id="jarvis-v174-current-route-lock">) */
+/* Source: index.html lines 20704-20793 (<style id="kashinoki-v174-current-route-lock">) */
     /* v174: 04 is rendered only after the v174 renderer completes. Old route wrappers are bypassed for portfolio-current. */
     /* v175: 06 output shelf text is rendered with the final copy at source, not corrected after display. */
-    #portfolio-current.page:not(.jarvis-v174-ready) .workflow-brief,
-    #portfolio-current.page:not(.jarvis-v174-ready) .workflow-filter-note,
-    #portfolio-current.page:not(.jarvis-v174-ready) .workflow-brief-meaning,
-    #portfolio-current.page:not(.jarvis-v174-ready) .workflow-stage-layout,
-    #portfolio-current.page:not(.jarvis-v174-ready) .portfolio-action {
+    #portfolio-current.page:not(.kashinoki-v174-ready) .workflow-brief,
+    #portfolio-current.page:not(.kashinoki-v174-ready) .workflow-filter-note,
+    #portfolio-current.page:not(.kashinoki-v174-ready) .workflow-brief-meaning,
+    #portfolio-current.page:not(.kashinoki-v174-ready) .workflow-stage-layout,
+    #portfolio-current.page:not(.kashinoki-v174-ready) .portfolio-action {
       visibility: hidden !important
     }
 
-    #portfolio-current.page.jarvis-v174-ready .workflow-brief,
-    #portfolio-current.page.jarvis-v174-ready .workflow-filter-note,
-    #portfolio-current.page.jarvis-v174-ready .workflow-brief-meaning,
-    #portfolio-current.page.jarvis-v174-ready .workflow-stage-layout,
-    #portfolio-current.page.jarvis-v174-ready .portfolio-action {
+    #portfolio-current.page.kashinoki-v174-ready .workflow-brief,
+    #portfolio-current.page.kashinoki-v174-ready .workflow-filter-note,
+    #portfolio-current.page.kashinoki-v174-ready .workflow-brief-meaning,
+    #portfolio-current.page.kashinoki-v174-ready .workflow-stage-layout,
+    #portfolio-current.page.kashinoki-v174-ready .portfolio-action {
       visibility: visible !important
     }
 
@@ -1802,4 +1802,252 @@ html body #portfolio-current #workflowCompareCurrent .compare-selected-card {
   filter:blur(.35px)!important;
   visibility:visible!important;
   pointer-events:none!important;
+}
+
+/* v415: 02 right-column containment fix loaded after workflow-02.
+   Cause: workflow-04.css is loaded after workflow-02.css and its legacy #portfolio-quality .workflow-range-panel.workflow-side-card height:auto rule overrode the 02 handoff panel height. That made the lower right panel grow downward and overlap the main action panel. */
+#portfolio-quality.active > #captureQualitySummary.presentation-quality-brief,
+#portfolio-quality.active > #captureQualitySummary.workflow-brief{
+  margin-top:18px !important;
+  margin-bottom:18px !important;
+}
+#portfolio-quality.active > #captureQualityList.presentation-chat-extract-view{
+  margin:0 0 18px !important;
+  padding:0 !important;
+  height:550px !important;
+  min-height:550px !important;
+  max-height:550px !important;
+  overflow:visible !important;
+  position:relative !important;
+  z-index:1 !important;
+}
+#portfolio-quality.active .presentation-chat-layout{
+  display:grid !important;
+  grid-template-columns:minmax(0,1.46fr) minmax(300px,.88fr) !important;
+  grid-template-rows:214px 320px !important;
+  grid-template-areas:"main extract" "main handoff" !important;
+  column-gap:14px !important;
+  row-gap:16px !important;
+  align-items:start !important;
+  align-content:start !important;
+  height:550px !important;
+  min-height:550px !important;
+  max-height:550px !important;
+  overflow:visible !important;
+  margin:0 !important;
+  box-sizing:border-box !important;
+}
+#portfolio-quality.active .presentation-chat-card{
+  grid-area:main !important;
+  height:550px !important;
+  min-height:550px !important;
+  max-height:550px !important;
+  overflow:hidden !important;
+}
+#portfolio-quality.active .presentation-extract-card{
+  grid-area:extract !important;
+  height:214px !important;
+  min-height:214px !important;
+  max-height:214px !important;
+  overflow:hidden !important;
+}
+#portfolio-quality.active .presentation-handoff-card.workflow-range-panel.workflow-side-card,
+#portfolio-quality.active .presentation-handoff-card{
+  grid-area:handoff !important;
+  height:320px !important;
+  min-height:320px !important;
+  max-height:320px !important;
+  overflow:hidden !important;
+  align-self:start !important;
+}
+#portfolio-quality.active .presentation-chat-card,
+#portfolio-quality.active .presentation-extract-card,
+#portfolio-quality.active .presentation-handoff-card{
+  display:flex !important;
+  flex-direction:column !important;
+  box-sizing:border-box !important;
+  padding:18px !important;
+}
+#portfolio-quality.active .presentation-card-heading{
+  flex:0 0 auto !important;
+  min-height:0 !important;
+  margin:0 0 10px !important;
+}
+#portfolio-quality.active .presentation-chat-thread,
+#portfolio-quality.active .presentation-extract-list,
+#portfolio-quality.active .presentation-handoff-stack,
+#portfolio-quality.active .workflow-range-scroll{
+  flex:1 1 auto !important;
+  min-height:0 !important;
+  height:auto !important;
+  max-height:none !important;
+  overflow-y:auto !important;
+  overflow-x:hidden !important;
+  padding:0 8px 8px 0 !important;
+  margin:0 !important;
+  -webkit-mask-image:none !important;
+  mask-image:none !important;
+  scrollbar-width:thin !important;
+  scrollbar-color:rgba(72,84,78,.42) transparent !important;
+}
+#portfolio-quality.active .presentation-chat-thread::-webkit-scrollbar,
+#portfolio-quality.active .presentation-extract-list::-webkit-scrollbar,
+#portfolio-quality.active .presentation-handoff-stack::-webkit-scrollbar,
+#portfolio-quality.active .workflow-range-scroll::-webkit-scrollbar{
+  width:5px !important;
+  height:5px !important;
+}
+#portfolio-quality.active .presentation-chat-thread::-webkit-scrollbar-track,
+#portfolio-quality.active .presentation-extract-list::-webkit-scrollbar-track,
+#portfolio-quality.active .presentation-handoff-stack::-webkit-scrollbar-track,
+#portfolio-quality.active .workflow-range-scroll::-webkit-scrollbar-track{
+  background:transparent !important;
+}
+#portfolio-quality.active .presentation-chat-thread::-webkit-scrollbar-thumb,
+#portfolio-quality.active .presentation-extract-list::-webkit-scrollbar-thumb,
+#portfolio-quality.active .presentation-handoff-stack::-webkit-scrollbar-thumb,
+#portfolio-quality.active .workflow-range-scroll::-webkit-scrollbar-thumb{
+  background:rgba(72,84,78,.42) !important;
+  border-radius:999px !important;
+}
+#portfolio-quality.active .presentation-extract-list,
+#portfolio-quality.active .presentation-handoff-stack{
+  display:grid !important;
+  align-content:start !important;
+  gap:7px !important;
+}
+#portfolio-quality.active > .guided-action-slot.portfolio-action{
+  margin-top:18px !important;
+  position:relative !important;
+  z-index:2 !important;
+  clear:both !important;
+}
+@media(max-width:1100px){
+  #portfolio-quality.active > #captureQualityList.presentation-chat-extract-view{
+    height:auto !important;
+    min-height:0 !important;
+    max-height:none !important;
+  }
+  #portfolio-quality.active .presentation-chat-layout{
+    grid-template-columns:1fr !important;
+    grid-template-rows:550px 214px 320px !important;
+    grid-template-areas:"main" "extract" "handoff" !important;
+    height:auto !important;
+    min-height:0 !important;
+    max-height:none !important;
+  }
+}
+
+
+/* v417: 02 canonical layout. Prevent 03-style fulltext/candidate-range UI from appearing on STEP 2, keep the 3-panel conversation/extract/handoff layout contained above the main action panel. */
+#portfolio-quality.active.quality-canonical-v417 > #captureQualitySummary.presentation-quality-brief,
+#portfolio-quality.active.quality-canonical-v417 > #captureQualitySummary.workflow-brief{
+  margin-top:18px !important;
+  margin-bottom:18px !important;
+}
+#portfolio-quality.active.quality-canonical-v417 > #captureQualityList.presentation-chat-extract-view{
+  height:550px !important;
+  min-height:550px !important;
+  max-height:550px !important;
+  margin:0 0 18px !important;
+  padding:0 !important;
+  overflow:visible !important;
+  position:relative !important;
+  z-index:1 !important;
+}
+#portfolio-quality.active.quality-canonical-v417 .presentation-chat-layout.canonical-quality-layout{
+  display:grid !important;
+  grid-template-columns:minmax(0,1.46fr) minmax(300px,.88fr) !important;
+  grid-template-rows:214px 320px !important;
+  grid-template-areas:"main extract" "main handoff" !important;
+  column-gap:14px !important;
+  row-gap:16px !important;
+  align-items:start !important;
+  align-content:start !important;
+  height:550px !important;
+  min-height:550px !important;
+  max-height:550px !important;
+  overflow:visible !important;
+  margin:0 !important;
+  box-sizing:border-box !important;
+}
+#portfolio-quality.active.quality-canonical-v417 .presentation-chat-card.canonical-quality-card{
+  grid-area:main !important;
+  height:550px !important;
+  min-height:550px !important;
+  max-height:550px !important;
+}
+#portfolio-quality.active.quality-canonical-v417 .presentation-extract-card.canonical-quality-card{
+  grid-area:extract !important;
+  height:214px !important;
+  min-height:214px !important;
+  max-height:214px !important;
+}
+#portfolio-quality.active.quality-canonical-v417 .presentation-handoff-card.canonical-quality-card{
+  grid-area:handoff !important;
+  height:320px !important;
+  min-height:320px !important;
+  max-height:320px !important;
+}
+#portfolio-quality.active.quality-canonical-v417 .canonical-quality-card{
+  display:flex !important;
+  flex-direction:column !important;
+  box-sizing:border-box !important;
+  overflow:hidden !important;
+  padding:18px !important;
+}
+#portfolio-quality.active.quality-canonical-v417 .presentation-card-heading{
+  flex:0 0 auto !important;
+  margin:0 0 10px !important;
+  min-height:0 !important;
+}
+#portfolio-quality.active.quality-canonical-v417 .canonical-quality-scroll{
+  flex:1 1 auto !important;
+  min-height:0 !important;
+  overflow-y:auto !important;
+  overflow-x:hidden !important;
+  padding:0 8px 8px 0 !important;
+  margin:0 !important;
+  -webkit-mask-image:none !important;
+  mask-image:none !important;
+  scrollbar-width:thin !important;
+  scrollbar-color:rgba(72,84,78,.42) transparent !important;
+}
+#portfolio-quality.active.quality-canonical-v417 .canonical-quality-scroll::-webkit-scrollbar{
+  width:5px !important;
+  height:5px !important;
+}
+#portfolio-quality.active.quality-canonical-v417 .canonical-quality-scroll::-webkit-scrollbar-track{
+  background:transparent !important;
+}
+#portfolio-quality.active.quality-canonical-v417 .canonical-quality-scroll::-webkit-scrollbar-thumb{
+  background:rgba(72,84,78,.42) !important;
+  border-radius:999px !important;
+}
+#portfolio-quality.active.quality-canonical-v417 .presentation-extract-list,
+#portfolio-quality.active.quality-canonical-v417 .presentation-handoff-stack{
+  display:grid !important;
+  align-content:start !important;
+  gap:7px !important;
+}
+#portfolio-quality.active.quality-canonical-v417 > .guided-action-slot.portfolio-action{
+  margin-top:18px !important;
+  position:relative !important;
+  z-index:2 !important;
+  clear:both !important;
+}
+@media(max-width:1100px){
+  #portfolio-quality.active.quality-canonical-v417 > #captureQualityList.presentation-chat-extract-view{
+    height:auto !important;
+    min-height:0 !important;
+    max-height:none !important;
+  }
+  #portfolio-quality.active.quality-canonical-v417 .presentation-chat-layout.canonical-quality-layout{
+    grid-template-columns:1fr !important;
+    grid-template-rows:550px 214px 320px !important;
+    grid-template-areas:"main" "extract" "handoff" !important;
+    height:auto !important;
+    min-height:0 !important;
+    max-height:none !important;
+  }
 }

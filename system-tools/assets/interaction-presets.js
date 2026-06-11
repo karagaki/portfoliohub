@@ -1,10 +1,10 @@
 (function () {
   "use strict";
 
-  if (window.JARVIS_INTERACTION_PRESETS) return;
+  if (window.KASHINOKI_INTERACTION_PRESETS) return;
 
   function motion(groupName, presetName) {
-    return window.JARVIS_ANIMATION_PRESETS?.groups?.[groupName]?.[presetName] ? { group: groupName, preset: presetName } : null;
+    return window.KASHINOKI_ANIMATION_PRESETS?.groups?.[groupName]?.[presetName] ? { group: groupName, preset: presetName } : null;
   }
 
   const presets = {
@@ -435,5 +435,5 @@
     }
   });
 
-  window.JARVIS_INTERACTION_PRESETS = frozen;
+  window.KASHINOKI_INTERACTION_PRESETS = frozen;
 })();

@@ -1,7 +1,7 @@
 (function(){
   'use strict';
   const PAGE_ID='portfolio-current';
-  const VERSION='v267 / 04演出制御分離・STEP冒頭表示';
+  const VERSION = 'v1.0749';
   const labels={unmatched:'未照合',new:'新規',update:'更新候補',same:'同等',issue:'矛盾・保留'};
   const countMap=[['workflowUnmatchedCount','unmatched'],['workflowNewCount','new'],['workflowUpdateCount','update'],['workflowSameCount','same'],['workflowIssueCount','issue']];
   let currentFilter='unmatched';
@@ -82,11 +82,11 @@
   document.addEventListener('click',ev=>{const btn=ev.target.closest?.('#portfolio-current [data-compare-filter]');if(btn){ev.preventDefault();ev.stopImmediatePropagation();window.setWorkflowCompareFilter(btn.getAttribute('data-compare-filter')||'unmatched');}},true);
   document.addEventListener('click',ev=>{const btn=ev.target.closest?.('.guide-control-button');if(!btn||!active())return;if(btn.classList.contains('show-all'))setTimeout(showAll,0);if(btn.classList.contains('replay'))setTimeout(play,0);},true);
   const oldStart=window.startWorkflowPageGuide;
-  if(typeof oldStart==='function'&&!oldStart.__jarvisV267){window.startWorkflowPageGuide=function(id){const r=oldStart.apply(this,arguments);if(id===PAGE_ID)setTimeout(play,30);return r};window.startWorkflowPageGuide.__jarvisV267=true;}
+  if(typeof oldStart==='function'&&!oldStart.__kashinokiV267){window.startWorkflowPageGuide=function(id){const r=oldStart.apply(this,arguments);if(id===PAGE_ID)setTimeout(play,30);return r};window.startWorkflowPageGuide.__kashinokiV267=true;}
   const oldFinish=window.finishPageGuide;
-  if(typeof oldFinish==='function'&&!oldFinish.__jarvisV267){window.finishPageGuide=function(id){const r=oldFinish.apply(this,arguments);if(id===PAGE_ID)showAll();return r};window.finishPageGuide.__jarvisV267=true;}
+  if(typeof oldFinish==='function'&&!oldFinish.__kashinokiV267){window.finishPageGuide=function(id){const r=oldFinish.apply(this,arguments);if(id===PAGE_ID)showAll();return r};window.finishPageGuide.__kashinokiV267=true;}
   const oldPage=window.page;
-  if(typeof oldPage==='function'&&!oldPage.__jarvisV267){window.page=function(id){const r=oldPage.apply(this,arguments);if(id===PAGE_ID)setTimeout(play,30);return r};window.page.__jarvisV267=true;}
+  if(typeof oldPage==='function'&&!oldPage.__kashinokiV267){window.page=function(id){const r=oldPage.apply(this,arguments);if(id===PAGE_ID)setTimeout(play,30);return r};window.page.__kashinokiV267=true;}
   document.addEventListener('DOMContentLoaded',()=>{setVersion();ensureStepGuide();renderCompare(currentFilter);if(active())play();});
   window.addEventListener('load',()=>{setVersion();if(active())play();});
 })();

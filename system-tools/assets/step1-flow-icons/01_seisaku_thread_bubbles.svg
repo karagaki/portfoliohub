@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="_レイヤー_1" data-name="レイヤー_1" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 175 164.9">
+  <!-- Generator: Adobe Illustrator 30.5.1, SVG Export Plug-In . SVG Version: 2.1.4 Build 3)  -->
+  <defs>
+    <style>
+      .st0 {
+        fill: none;
+        stroke: #000;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: 6px;
+      }
+    </style>
+  </defs>
+  <path class="st0" d="M158.8,3H53.1c-7.3,0-13.2,5.9-13.2,13.2v45.1c0,7.3,5.9,13.2,13.2,13.2h84.4c4.1,12.5,13.4,16.7,26.5,16.7-5.4-5.2-7.6-10-6.1-16.7h.8c7.3,0,13.2-5.9,13.2-13.2V16.2c0-7.3-5.9-13.2-13.2-13.2Z"/>
+  <path class="st0" d="M116.9,88H16.2c-7.3,0-13.2,5.9-13.2,13.2v31.1c0,7.3,5.9,13.2,13.2,13.2h1.4c1.3,6.5-1,11.1-6.2,16.2,12.9,0,22.2-4.1,26.3-16.2h79.1c7.3,0,13.2-5.9,13.2-13.2v-31.1c0-7.3-5.9-13.2-13.2-13.2Z"/>
+  <g>
+    <circle cx="34.4" cy="116.2" r="5.1"/>
+    <circle cx="56.9" cy="116.2" r="5.1"/>
+    <circle cx="79.4" cy="116.2" r="5.1"/>
+    <circle cx="101.9" cy="116.2" r="5.1"/>
+  </g>
+  <g>
+    <circle cx="78.9" cy="50.6" r="5.1"/>
+    <circle cx="101.4" cy="50.6" r="5.1"/>
+    <circle cx="123.9" cy="50.6" r="5.1"/>
+    <circle cx="146.4" cy="50.6" r="5.1"/>
+  </g>
+  <g>
+    <circle cx="67.9" cy="27.6" r="5.1"/>
+    <circle cx="90.4" cy="27.6" r="5.1"/>
+    <circle cx="112.9" cy="27.6" r="5.1"/>
+    <circle cx="135.4" cy="27.6" r="5.1"/>
+  </g>
+</svg>

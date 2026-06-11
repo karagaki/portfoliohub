@@ -1,7 +1,7 @@
 (function () {
   "use strict";
 
-  if (window.JARVIS_ANIMATION_PRESETS) return;
+  if (window.KASHINOKI_ANIMATION_PRESETS) return;
 
   const presets = {
     visibility: {
@@ -364,5 +364,5 @@
     }
   });
 
-  window.JARVIS_ANIMATION_PRESETS = frozen;
+  window.KASHINOKI_ANIMATION_PRESETS = frozen;
 })();

@@ -330,7 +330,7 @@
 #portfolio-purpose.workflow-animate:not(.guide-show-all) #floatingGuideControls {
   opacity: 0;
   transform: translateY(10px);
-  animation: jarvisV207GuideRise .58s cubic-bezier(.22, .61, .28, 1) forwards;
+  animation: kashinokiV207GuideRise .58s cubic-bezier(.22, .61, .28, 1) forwards;
 }
 
 #portfolio-purpose.workflow-animate:not(.guide-show-all) .workflow-step-guide {
@@ -436,7 +436,7 @@
 #portfolio-purpose.workflow-animate:not(.guide-show-all) #portfolioPurposes .portfolio-purpose.selected,
 #portfolio-purpose.workflow-animate:not(.guide-show-all) #portfolioPurposes .portfolio-purpose.is-selected,
 #portfolio-purpose.workflow-animate:not(.guide-show-all) #portfolioPurposes .portfolio-purpose:first-child {
-  animation-name: jarvisV207GuideRise, jarvisV207GuideGlow;
+  animation-name: kashinokiV207GuideRise, kashinokiV207GuideGlow;
   animation-duration: .58s, 1.25s;
   animation-delay: 2.08s, 2.76s;
   animation-fill-mode: forwards, none;
@@ -566,7 +566,7 @@
   overflow: visible !important;
 }
 
-@media(max-width:1320px) {
+@media(max-width:1120px) {
   #portfolio-purpose .portfolio-purpose-list-card,
   #portfolio-purpose .portfolio-deliverable-preview {
     height: auto !important;
@@ -581,13 +581,13 @@
 
 /* v300-redone: 05 uses shared guide-control placement from workflow-common.css. */
 html body #portfolio-purpose .guide-icon-dock-anchor,
-html body #portfolio-purpose .jarvis-action-panel-slot {
+html body #portfolio-purpose .kashinoki-action-panel-slot {
   position: relative !important;
   overflow: visible !important;
   padding-bottom: 58px !important;
 }
-html body #portfolio-purpose .guided-action-slot.jarvis-guide-controls--inline > .floating-guide-controls.is-workflow-docked,
-html body #portfolio-purpose .floating-guide-controls.is-workflow-docked.jarvis-guide-controls--inline {
+html body #portfolio-purpose .guided-action-slot.kashinoki-guide-controls--inline > .floating-guide-controls.is-workflow-docked,
+html body #portfolio-purpose .floating-guide-controls.is-workflow-docked.kashinoki-guide-controls--inline {
   top: calc(100% + 8px) !important;
   right: 0 !important;
   bottom: auto !important;
@@ -596,7 +596,7 @@ html body #portfolio-purpose .floating-guide-controls.is-workflow-docked.jarvis-
 
 /* v332: 05 responsive contract.
    Narrow windows should stack the three outcome panels instead of squeezing the center preview column. */
-@media(max-width:1320px) {
+@media(max-width:1120px) {
   #portfolio-purpose .workflow-stage-layout.three {
     grid-template-columns: 1fr !important;
   }
@@ -698,4 +698,47 @@ html body #portfolio-purpose #portfolioPurposeAction .guided-action-copy .guided
   vertical-align:baseline !important;
   margin-left:6px !important;
   white-space:nowrap !important;
+}
+
+/* v404: prevent STEP 5 lower edge from being visually cut by mask/clip while keeping internal scrolling. */
+#portfolio-purpose.page.active,
+#portfolio-purpose.workflow-guide-page,
+#portfolio-purpose .workflow-stage-layout.three,
+#portfolio-purpose .guided-action-slot,
+#portfolio-purpose .kashinoki-action-panel-slot{
+  overflow:visible !important;
+  -webkit-mask-image:none !important;
+  mask-image:none !important;
+  clip-path:none !important;
+}
+#portfolio-purpose.page.active{
+  padding-bottom:86px !important;
+}
+#portfolio-purpose .workflow-stage-layout.three{
+  padding-bottom:8px !important;
+}
+#portfolio-purpose .portfolio-purpose-list-card,
+#portfolio-purpose .portfolio-deliverable-preview,
+#portfolio-purpose .outcome-check{
+  -webkit-mask-image:none !important;
+  mask-image:none !important;
+  clip-path:none !important;
+}
+#portfolio-purpose #portfolioPurposes.portfolio-purposes,
+#portfolio-purpose #portfolioEvidence.portfolio-deliverable-body,
+#portfolio-purpose .outcome-check .workflow-side-list{
+  -webkit-mask-image:none !important;
+  mask-image:none !important;
+  clip-path:none !important;
+  padding-bottom:18px !important;
+  scroll-padding-bottom:18px !important;
+}
+#portfolio-purpose .portfolio-purpose-list-card,
+#portfolio-purpose .portfolio-deliverable-preview{
+  height:clamp(340px, calc(100vh - 320px), 520px) !important;
+  max-height:clamp(340px, calc(100vh - 320px), 520px) !important;
+}
+#portfolio-purpose .outcome-check{
+  min-height:0 !important;
+  align-self:stretch !important;
 }

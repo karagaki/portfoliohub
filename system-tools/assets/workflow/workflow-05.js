@@ -1,10 +1,10 @@
 (() => {
   "use strict";
-  if (window.__jarvisWorkflow05Installed) return;
-  window.__jarvisWorkflow05Installed = true;
+  if (window.__kashinokiWorkflow05Installed) return;
+  window.__kashinokiWorkflow05Installed = true;
   const PAGE_ID = "portfolio-purpose";
-  const VERSION = "v388 / STEP5 file直開き遷移保証";
-  const sequenceEngine = window.JARVIS_WORKFLOW_SEQUENCE_ENGINE || null;
+  const VERSION = 'v1.0749';
+  const sequenceEngine = window.KASHINOKI_WORKFLOW_SEQUENCE_ENGINE || null;
   const timerStore = sequenceEngine ? sequenceEngine.createTimerStore() : null;
   let timers = [];
   let guardTimer = null;
@@ -210,7 +210,7 @@
     if (typeof window.syncFloatingGuideControls === "function") {
       try { window.syncFloatingGuideControls("portfolio-next"); } catch (_) { }
     }
-    try { next.scrollIntoView({ block: "start", behavior: "auto" }); } catch (_) { }
+    // v408: 05→06遷移時もSTEPチップ位置へ自動スクロールさせない。
     return true;
   }
 
@@ -617,7 +617,7 @@
   }
 
   const previousPageFn = window.page;
-  if (typeof previousPageFn === "function" && !previousPageFn.__jarvisWorkflow05Wrapped) {
+  if (typeof previousPageFn === "function" && !previousPageFn.__kashinokiWorkflow05Wrapped) {
     const wrappedPage = function(...args) {
       const result = previousPageFn.apply(this, args);
       const target = args && args.length ? String(args[0] || "") : "";
@@ -626,19 +626,19 @@
       }
       return result;
     };
-    wrappedPage.__jarvisWorkflow05Wrapped = true;
+    wrappedPage.__kashinokiWorkflow05Wrapped = true;
     window.page = wrappedPage;
   }
 
   document.addEventListener("DOMContentLoaded", () => { scheduleRun(); watchActiveState(); });
   window.addEventListener("load", () => { scheduleRun(); watchActiveState(); });
-  document.addEventListener("jarvis:pagechange", scheduleRunAfterNavigation);
-  document.addEventListener("jarvis:workflow-rendered", scheduleRunAfterNavigation);
+  document.addEventListener("kashinoki:pagechange", scheduleRunAfterNavigation);
+  document.addEventListener("kashinoki:workflow-rendered", scheduleRunAfterNavigation);
   setInterval(watchActiveState, 180);
   document.addEventListener("click", (event) => {
     const target = event.target && event.target.closest ? event.target.closest("[data-page],button,[onclick]") : null;
     if (!target) return;
-    if (target.closest("[data-outcome-filter], .jarvis-filter-button, #portfolioPurposes .portfolio-purpose")) {
+    if (target.closest("[data-outcome-filter], .kashinoki-filter-button, #portfolioPurposes .portfolio-purpose")) {
       afterPurposeFilterUpdate();
       return;
     }
@@ -671,8 +671,8 @@
     }
   }, true);
 
-  window.JARVIS_WORKFLOW_PAGES = window.JARVIS_WORKFLOW_PAGES || {};
-  window.JARVIS_WORKFLOW_PAGES["05"] = {
+  window.KASHINOKI_WORKFLOW_PAGES = window.KASHINOKI_WORKFLOW_PAGES || {};
+  window.KASHINOKI_WORKFLOW_PAGES["05"] = {
     id: PAGE_ID,
     title: "AIへ渡す前提を確認する",
     sequenceOwner: "assets/workflow/workflow-05.js",

@@ -954,3 +954,27 @@
 .portfolio-page .heading {
   align-items: flex-start;
 }
+
+
+/* v410: settings FAB is outside the scaled .app, so it is never clipped by sidebar/app overflow or transform. */
+body > #settingsFab.side-settings-fab{
+  position:fixed !important;
+  top:26px !important;
+  right:26px !important;
+  left:auto !important;
+  width:44px !important;
+  height:44px !important;
+  min-width:44px !important;
+  min-height:44px !important;
+  display:grid !important;
+  place-items:center !important;
+  visibility:visible !important;
+  opacity:1 !important;
+  pointer-events:auto !important;
+  z-index:2147483647 !important;
+  transform:none !important;
+  clip-path:none !important;
+  mask-image:none !important;
+  -webkit-mask-image:none !important;
+  overflow:visible !important;
+}

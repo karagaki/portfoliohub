@@ -1,8 +1,8 @@
 (() => {
   "use strict";
   const PAGE_ID = "portfolio-next";
-  const VERSION = "v286 / 06STEP強調色・テキスト順表示";
-  const sequenceEngine = window.JARVIS_WORKFLOW_SEQUENCE_ENGINE || null;
+  const VERSION = 'v1.0749';
+  const sequenceEngine = window.KASHINOKI_WORKFLOW_SEQUENCE_ENGINE || null;
   const timerStore = sequenceEngine ? sequenceEngine.createTimerStore() : null;
   let timers = [];
   let lastActive = false;
@@ -170,7 +170,7 @@
   }
 
   const previousPageFn = window.page;
-  if (typeof previousPageFn === "function" && !previousPageFn.__jarvisWorkflow06Wrapped) {
+  if (typeof previousPageFn === "function" && !previousPageFn.__kashinokiWorkflow06Wrapped) {
     const wrappedPage = function(...args) {
       const result = previousPageFn.apply(this, args);
       const target = args && args.length ? String(args[0] || "") : "";
@@ -179,13 +179,13 @@
       }
       return result;
     };
-    wrappedPage.__jarvisWorkflow06Wrapped = true;
+    wrappedPage.__kashinokiWorkflow06Wrapped = true;
     window.page = wrappedPage;
   }
 
   document.addEventListener("DOMContentLoaded", () => { prepare(); watchActiveState(); });
   window.addEventListener("load", () => { prepare(); watchActiveState(); });
-  document.addEventListener("jarvis:pagechange", () => setTimeout(watchActiveState, 80));
+  document.addEventListener("kashinoki:pagechange", () => setTimeout(watchActiveState, 80));
   document.addEventListener("click", (event) => {
     const button = event.target && event.target.closest ? event.target.closest(".guide-control-button") : null;
     if (!button || !qs(`#${PAGE_ID}.active`)) return;
@@ -197,8 +197,8 @@
   }, true);
   setInterval(watchActiveState, 220);
 
-  window.JARVIS_WORKFLOW_PAGES = window.JARVIS_WORKFLOW_PAGES || {};
-  window.JARVIS_WORKFLOW_PAGES["06"] = {
+  window.KASHINOKI_WORKFLOW_PAGES = window.KASHINOKI_WORKFLOW_PAGES || {};
+  window.KASHINOKI_WORKFLOW_PAGES["06"] = {
     id: PAGE_ID,
     title: "取り出して活かす",
     sequenceOwner: "assets/workflow/workflow-06.js",
@@ -208,7 +208,7 @@
   };
 
   (function () {
-    const VERSION = 'v275 / 05STEP実DOM追加・冒頭表示復旧';
+    const VERSION = 'v1.0749';
     const install = () => {
       function setText(sel, text) { const el = document.querySelector(sel); if (el) el.textContent = text; }
       function dedupeFinalPanels() {
@@ -250,7 +250,7 @@
   })();
 
   (function () {
-    const VERSION = 'v275 / 05STEP実DOM追加・冒頭表示復旧';
+    const VERSION = 'v1.0749';
     const install = () => {
       const IDS = ['portfolio-collect', 'portfolio-quality', 'portfolio-review', 'portfolio-current', 'portfolio-purpose', 'portfolio-next'];
       function escId(id) { return (window.CSS && CSS.escape) ? CSS.escape(id) : id.replace(/[^a-zA-Z0-9_-]/g, '\\$&'); }
@@ -290,14 +290,14 @@
         }
       }
       const prevPage = window.page;
-      if (typeof prevPage === 'function' && !prevPage.__jarvisV204GuideWrapped)
+      if (typeof prevPage === 'function' && !prevPage.__kashinokiV204GuideWrapped)
       {
         const wrapped = function () {
           const result = prevPage.apply(this, arguments);
           [0, 60, 160, 320].forEach(ms => setTimeout(run, ms));
           return result;
         };
-        wrapped.__jarvisV204GuideWrapped = true;
+        wrapped.__kashinokiV204GuideWrapped = true;
         window.page = wrapped;
       }
       document.addEventListener('click', (ev) => {
@@ -322,7 +322,7 @@
   })();
 
   (function () {
-    const VERSION = 'v275 / 05STEP実DOM追加・冒頭表示復旧';
+    const VERSION = 'v1.0749';
     const install = () => {
       const IDS = ['portfolio-collect', 'portfolio-quality', 'portfolio-review', 'portfolio-current', 'portfolio-purpose', 'portfolio-next'];
       function escId(id) { return (window.CSS && CSS.escape) ? CSS.escape(id) : id.replace(/[^a-zA-Z0-9_-]/g, '\\$&'); }
@@ -362,14 +362,14 @@
         }
       }
       const prevPage = window.page;
-      if (typeof prevPage === 'function' && !prevPage.__jarvisV204GuideWrapped)
+      if (typeof prevPage === 'function' && !prevPage.__kashinokiV204GuideWrapped)
       {
         const wrapped = function () {
           const result = prevPage.apply(this, arguments);
           [0, 60, 160, 320].forEach(ms => setTimeout(run, ms));
           return result;
         };
-        wrapped.__jarvisV204GuideWrapped = true;
+        wrapped.__kashinokiV204GuideWrapped = true;
         window.page = wrapped;
       }
       document.addEventListener('click', (ev) => {
@@ -394,13 +394,13 @@
   })();
 
   (function () {
-    const VERSION = 'v275 / 05STEP実DOM追加・冒頭表示復旧';
+    const VERSION = 'v1.0749';
     const install = () => {
       function setVersion() { const v = document.querySelector('#versionText'); if (v) v.textContent = VERSION; }
       function normalizeNext() {
         const page = document.querySelector('#portfolio-next');
         if (!page) return;
-        page.classList.add('jarvis-next-compact-structure');
+        page.classList.add('kashinoki-next-compact-structure');
         const finalTitle = document.querySelector('#portfolioPreviewTitle');
         if (finalTitle && finalTitle.textContent.trim() === '確定予定の内容') finalTitle.textContent = '次AI作業へ渡す内容';
         const shelf = document.querySelector('#portfolioOutputShelf');
@@ -431,7 +431,7 @@
   })();
 
   (function () {
-    const VERSION = 'v275 / 05STEP実DOM追加・冒頭表示復旧';
+    const VERSION = 'v1.0749';
     const install = () => {
       function setVersion() { const v = document.querySelector('#versionText'); if (v) v.textContent = VERSION; }
       function normalizeNextV186() {
@@ -485,7 +485,7 @@
   })();
 
   (function () {
-    const VERSION = 'v275 / 05STEP実DOM追加・冒頭表示復旧';
+    const VERSION = 'v1.0749';
     const install = () => {
       function setVersion() {
         const side = document.querySelector('.side-version');
@@ -496,14 +496,14 @@
       function runCommonCurrentGuide() {
         const section = document.getElementById('portfolio-current');
         if (!section || !section.classList.contains('active')) return;
-        section.classList.remove('jarvis-v194-animate');
+        section.classList.remove('kashinoki-v194-animate');
         if (typeof window.startWorkflowPageGuide === 'function')
         {
           requestAnimationFrame(() => requestAnimationFrame(() => window.startWorkflowPageGuide('portfolio-current')));
         }
       }
       const originalPage = window.page;
-      if (typeof originalPage === 'function' && !originalPage.__jarvisV195CurrentGuideWrapped)
+      if (typeof originalPage === 'function' && !originalPage.__kashinokiV195CurrentGuideWrapped)
       {
         const wrapped = function (id) {
           const result = originalPage.apply(this, arguments);
@@ -511,7 +511,7 @@
           if (id === 'portfolio-current') runCommonCurrentGuide();
           return result;
         };
-        wrapped.__jarvisV195CurrentGuideWrapped = true;
+        wrapped.__kashinokiV195CurrentGuideWrapped = true;
         window.page = wrapped;
       }
       document.addEventListener('click', function (ev) {

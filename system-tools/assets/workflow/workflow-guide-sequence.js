@@ -1,7 +1,7 @@
 (() => {
   "use strict";
 
-  if (window.JARVIS_WORKFLOW_SEQUENCE_ENGINE) return;
+  if (window.KASHINOKI_WORKFLOW_SEQUENCE_ENGINE) return;
 
   function qs(sel, root = document) {
     return root.querySelector(sel);
@@ -117,7 +117,7 @@
     });
   }
 
-  window.JARVIS_WORKFLOW_SEQUENCE_ENGINE = {
+  window.KASHINOKI_WORKFLOW_SEQUENCE_ENGINE = {
     qs,
     qsa,
     pageEl,

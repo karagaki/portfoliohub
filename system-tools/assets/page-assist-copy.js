@@ -1,5 +1,5 @@
-window.JARVIS_PAGE_ASSIST_COPY = {
-  'jarvis-start': {
+window.KASHINOKI_PAGE_ASSIST_COPY = {
+  'kashinoki-start': {
     title: 'STARTの見方',
     body: 'まずSampleで流れを確認し、仕組みを把握してから本線へ進みます。実データへ反映される場所ではありません。'
   },

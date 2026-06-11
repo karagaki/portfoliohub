@@ -1,59 +1,59 @@
 /* Source: design-tokens.css and panel-system.css provide the gap, padding,
    and density tokens used here. This file only defines opt-in layout presets. */
 
-.jarvis-layout {
-  --jarvis-layout-gap: var(--jarvis-panel-gap-md);
-  --jarvis-layout-padding: var(--jarvis-panel-padding-md);
-  --jarvis-layout-density: var(--jarvis-panel-density-comfortable);
-  --jarvis-layout-item-min-width: 240px;
-  --jarvis-layout-rail-width: clamp(220px, 24vw, 280px);
-  --jarvis-layout-side-width: clamp(280px, 28vw, 360px);
+.kashinoki-layout {
+  --kashinoki-layout-gap: var(--kashinoki-panel-gap-md);
+  --kashinoki-layout-padding: var(--kashinoki-panel-padding-md);
+  --kashinoki-layout-density: var(--kashinoki-panel-density-comfortable);
+  --kashinoki-layout-item-min-width: 240px;
+  --kashinoki-layout-rail-width: clamp(220px, 24vw, 280px);
+  --kashinoki-layout-side-width: clamp(280px, 28vw, 360px);
   display: grid;
   width: 100%;
   min-width: 0;
   box-sizing: border-box;
-  gap: var(--jarvis-layout-gap);
-  padding: var(--jarvis-layout-padding);
+  gap: var(--kashinoki-layout-gap);
+  padding: var(--kashinoki-layout-padding);
   align-items: start;
   grid-auto-flow: row;
   grid-template-columns: minmax(0, 1fr);
 }
 
-.jarvis-layout--stack {
+.kashinoki-layout--stack {
   grid-template-columns: minmax(0, 1fr);
 }
 
-.jarvis-layout--two-column {
-  grid-template-columns: minmax(0, 1.35fr) minmax(0, var(--jarvis-layout-side-width));
+.kashinoki-layout--two-column {
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, var(--kashinoki-layout-side-width));
 }
 
-.jarvis-layout--three-column {
+.kashinoki-layout--three-column {
   grid-template-columns:
     minmax(0, 1.15fr)
-    minmax(0, var(--jarvis-layout-side-width))
-    minmax(0, var(--jarvis-layout-rail-width));
+    minmax(0, var(--kashinoki-layout-side-width))
+    minmax(0, var(--kashinoki-layout-rail-width));
 }
 
-.jarvis-layout--split {
+.kashinoki-layout--split {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
-.jarvis-layout--rail {
-  grid-template-columns: minmax(0, var(--jarvis-layout-rail-width)) minmax(0, 1fr);
+.kashinoki-layout--rail {
+  grid-template-columns: minmax(0, var(--kashinoki-layout-rail-width)) minmax(0, 1fr);
 }
 
-.jarvis-layout--shelf {
+.kashinoki-layout--shelf {
   grid-template-columns: none;
   grid-auto-flow: column;
-  grid-auto-columns: minmax(min(100%, var(--jarvis-layout-item-min-width)), 1fr);
+  grid-auto-columns: minmax(min(100%, var(--kashinoki-layout-item-min-width)), 1fr);
   overflow-x: auto;
   overflow-y: hidden;
   overscroll-behavior-x: contain;
   scroll-snap-type: x proximity;
-  scroll-padding-inline: var(--jarvis-layout-gap);
+  scroll-padding-inline: var(--kashinoki-layout-gap);
 }
 
-.jarvis-layout--carousel {
+.kashinoki-layout--carousel {
   grid-template-columns: none;
   grid-auto-flow: column;
   grid-auto-columns: minmax(min(100%, clamp(280px, 72vw, 440px)), 1fr);
@@ -61,78 +61,78 @@
   overflow-y: hidden;
   overscroll-behavior-x: contain;
   scroll-snap-type: x mandatory;
-  scroll-padding-inline: var(--jarvis-layout-gap);
+  scroll-padding-inline: var(--kashinoki-layout-gap);
 }
 
-.jarvis-layout--grid {
+.kashinoki-layout--grid {
   grid-template-columns:
-    repeat(auto-fit, minmax(min(100%, var(--jarvis-layout-item-min-width)), 1fr));
+    repeat(auto-fit, minmax(min(100%, var(--kashinoki-layout-item-min-width)), 1fr));
 }
 
-.jarvis-layout--detail {
-  grid-template-columns: minmax(0, 1.45fr) minmax(0, var(--jarvis-layout-side-width));
+.kashinoki-layout--detail {
+  grid-template-columns: minmax(0, 1.45fr) minmax(0, var(--kashinoki-layout-side-width));
 }
 
-.jarvis-layout--compact {
-  --jarvis-layout-gap: var(--jarvis-panel-gap-sm);
-  --jarvis-layout-padding: var(--jarvis-panel-padding-sm);
-  --jarvis-layout-density: var(--jarvis-panel-density-dense);
-  --jarvis-layout-item-min-width: 220px;
+.kashinoki-layout--compact {
+  --kashinoki-layout-gap: var(--kashinoki-panel-gap-sm);
+  --kashinoki-layout-padding: var(--kashinoki-panel-padding-sm);
+  --kashinoki-layout-density: var(--kashinoki-panel-density-dense);
+  --kashinoki-layout-item-min-width: 220px;
 }
 
-.jarvis-layout--comfortable {
-  --jarvis-layout-gap: var(--jarvis-panel-gap-md);
-  --jarvis-layout-padding: var(--jarvis-panel-padding-md);
-  --jarvis-layout-density: var(--jarvis-panel-density-comfortable);
-  --jarvis-layout-item-min-width: 240px;
+.kashinoki-layout--comfortable {
+  --kashinoki-layout-gap: var(--kashinoki-panel-gap-md);
+  --kashinoki-layout-padding: var(--kashinoki-panel-padding-md);
+  --kashinoki-layout-density: var(--kashinoki-panel-density-comfortable);
+  --kashinoki-layout-item-min-width: 240px;
 }
 
 /* probe-safe: registry 接続確認専用の安全 modifier.
    display / grid / gap / width を変えず、既存レイアウトを保つ。
    見た目変更や構成変更は別 modifier で行う。 */
-.jarvis-layout--probe-safe {
-  --jarvis-layout-gap: 0;
-  --jarvis-layout-padding: 0;
-  --jarvis-layout-density: var(--jarvis-panel-density-comfortable);
-  --jarvis-layout-item-min-width: 0;
+.kashinoki-layout--probe-safe {
+  --kashinoki-layout-gap: 0;
+  --kashinoki-layout-padding: 0;
+  --kashinoki-layout-density: var(--kashinoki-panel-density-comfortable);
+  --kashinoki-layout-item-min-width: 0;
   box-sizing: border-box;
 }
 
-.jarvis-layout--dense {
-  --jarvis-layout-gap: var(--jarvis-panel-gap-xs);
-  --jarvis-layout-padding: var(--jarvis-panel-padding-xs);
-  --jarvis-layout-density: var(--jarvis-panel-density-dense);
-  --jarvis-layout-item-min-width: 200px;
+.kashinoki-layout--dense {
+  --kashinoki-layout-gap: var(--kashinoki-panel-gap-xs);
+  --kashinoki-layout-padding: var(--kashinoki-panel-padding-xs);
+  --kashinoki-layout-density: var(--kashinoki-panel-density-dense);
+  --kashinoki-layout-item-min-width: 200px;
 }
 
-.jarvis-layout__header,
-.jarvis-layout__footer {
+.kashinoki-layout__header,
+.kashinoki-layout__footer {
   grid-column: 1 / -1;
 }
 
-.jarvis-layout__main,
-.jarvis-layout__side,
-.jarvis-layout__rail,
-.jarvis-layout__item {
+.kashinoki-layout__main,
+.kashinoki-layout__side,
+.kashinoki-layout__rail,
+.kashinoki-layout__item {
   min-width: 0;
   min-height: 0;
   align-self: start;
 }
 
-.jarvis-layout--shelf .jarvis-layout__item {
+.kashinoki-layout--shelf .kashinoki-layout__item {
   scroll-snap-align: start;
 }
 
-.jarvis-layout--carousel .jarvis-layout__item {
+.kashinoki-layout--carousel .kashinoki-layout__item {
   scroll-snap-align: center;
 }
 
 @media (max-width: 900px) {
-  .jarvis-layout--two-column,
-  .jarvis-layout--three-column,
-  .jarvis-layout--split,
-  .jarvis-layout--rail,
-  .jarvis-layout--detail {
+  .kashinoki-layout--two-column,
+  .kashinoki-layout--three-column,
+  .kashinoki-layout--split,
+  .kashinoki-layout--rail,
+  .kashinoki-layout--detail {
     grid-template-columns: minmax(0, 1fr);
   }
 }

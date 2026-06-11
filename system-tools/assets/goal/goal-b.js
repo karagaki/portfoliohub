@@ -1,7 +1,7 @@
 (() => {
   "use strict";
-  window.JARVIS_GOAL_PAGES = window.JARVIS_GOAL_PAGES || {};
-  window.JARVIS_GOAL_PAGES["B"] = {
+  window.KASHINOKI_GOAL_PAGES = window.KASHINOKI_GOAL_PAGES || {};
+  window.KASHINOKI_GOAL_PAGES["B"] = {
     id: "flow-document",
     title: "仕様・再開前提から採用へ",
     sequenceOwner: "assets/goal/goal-b.js",

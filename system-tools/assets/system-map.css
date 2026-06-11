@@ -584,10 +584,10 @@
       opacity: 0;
       transform: scaleX(0) skewX(-1.5deg);
       transform-origin: left center;
-      animation: jarvisTitleHighlighter 6s cubic-bezier(.22, .61, .28, 1) .45s forwards !important;
+      animation: kashinokiTitleHighlighter 6s cubic-bezier(.22, .61, .28, 1) .45s forwards !important;
     }
 
-    @keyframes jarvisTitleHighlighter {
+    @keyframes kashinokiTitleHighlighter {
       0% {
         transform: scaleX(0) skewX(-1.5deg);
         opacity: .10
@@ -608,7 +608,7 @@
       transform: translateY(7px);
       background: var(--nm-shared-surface);
       border: 1px solid transparent;
-      animation: jarvisPromptReveal 5s cubic-bezier(.2, .65, .25, 1) 6.75s forwards !important;
+      animation: kashinokiPromptReveal 5s cubic-bezier(.2, .65, .25, 1) 6.75s forwards !important;
     }
 
     #system-map .overview-selection-prompt .prompt-order {
@@ -616,7 +616,7 @@
       color: var(--guide-ink);
     }
 
-    @keyframes jarvisPromptReveal {
+    @keyframes kashinokiPromptReveal {
       0% {
         opacity: 0;
         transform: translateY(7px);
@@ -648,7 +648,7 @@
     #system-map .purpose-selection-table .trace-head {
       opacity: 0;
       transform: translateY(4px);
-      animation: jarvisChoiceReveal 1.1s ease 12.85s forwards;
+      animation: kashinokiChoiceReveal 1.1s ease 12.85s forwards;
     }
 
     #system-map .purpose-selection-table .purpose-choice-row {
@@ -658,26 +658,26 @@
     }
 
     #system-map .purpose-selection-table .purpose-choice-row:nth-child(2) {
-      animation: jarvisChoiceReveal 1s ease 13.25s forwards
+      animation: kashinokiChoiceReveal 1s ease 13.25s forwards
     }
 
     #system-map .purpose-selection-table .purpose-choice-row:nth-child(3) {
-      animation: jarvisChoiceReveal 1s ease 14.25s forwards
+      animation: kashinokiChoiceReveal 1s ease 14.25s forwards
     }
 
     #system-map .purpose-selection-table .purpose-choice-row:nth-child(4) {
-      animation: jarvisChoiceReveal 1s ease 15.25s forwards
+      animation: kashinokiChoiceReveal 1s ease 15.25s forwards
     }
 
     #system-map .purpose-selection-table .purpose-choice-row:nth-child(5) {
-      animation: jarvisChoiceReveal 1s ease 16.25s forwards
+      animation: kashinokiChoiceReveal 1s ease 16.25s forwards
     }
 
     #system-map .purpose-selection-table .purpose-choice-row:nth-child(6) {
-      animation: jarvisChoiceReveal 1s ease 17.25s forwards
+      animation: kashinokiChoiceReveal 1s ease 17.25s forwards
     }
 
-    @keyframes jarvisChoiceReveal {
+    @keyframes kashinokiChoiceReveal {
       0% {
         opacity: 0;
         transform: translateY(7px);
@@ -722,26 +722,26 @@
     }
 
     #system-map .purpose-selection-table .purpose-choice-row:nth-child(2) .route-mark::before {
-      animation: jarvisCircleDraw .9s ease 13.45s forwards, jarvisCirclePulse 5s ease-in-out 14.7s infinite
+      animation: kashinokiCircleDraw .9s ease 13.45s forwards, kashinokiCirclePulse 5s ease-in-out 14.7s infinite
     }
 
     #system-map .purpose-selection-table .purpose-choice-row:nth-child(3) .route-mark::before {
-      animation: jarvisCircleDraw .9s ease 14.45s forwards, jarvisCirclePulse 5s ease-in-out 15.7s infinite
+      animation: kashinokiCircleDraw .9s ease 14.45s forwards, kashinokiCirclePulse 5s ease-in-out 15.7s infinite
     }
 
     #system-map .purpose-selection-table .purpose-choice-row:nth-child(4) .route-mark::before {
-      animation: jarvisCircleDraw .9s ease 15.45s forwards, jarvisCirclePulse 5s ease-in-out 16.7s infinite
+      animation: kashinokiCircleDraw .9s ease 15.45s forwards, kashinokiCirclePulse 5s ease-in-out 16.7s infinite
     }
 
     #system-map .purpose-selection-table .purpose-choice-row:nth-child(5) .route-mark::before {
-      animation: jarvisCircleDraw .9s ease 16.45s forwards, jarvisCirclePulse 5s ease-in-out 17.7s infinite
+      animation: kashinokiCircleDraw .9s ease 16.45s forwards, kashinokiCirclePulse 5s ease-in-out 17.7s infinite
     }
 
     #system-map .purpose-selection-table .purpose-choice-row:nth-child(6) .route-mark::before {
-      animation: jarvisCircleDraw .9s ease 17.45s forwards, jarvisCirclePulse 5s ease-in-out 18.7s infinite
+      animation: kashinokiCircleDraw .9s ease 17.45s forwards, kashinokiCirclePulse 5s ease-in-out 18.7s infinite
     }
 
-    @keyframes jarvisCircleDraw {
+    @keyframes kashinokiCircleDraw {
       0% {
         opacity: 0;
         transform: scale(.15)
@@ -753,7 +753,7 @@
       }
     }
 
-    @keyframes jarvisCirclePulse {
+    @keyframes kashinokiCirclePulse {
 
       0%,
       100% {
@@ -781,10 +781,10 @@
     }
 
     #system-map .purpose-selection-table .purpose-choice-row.is-selected .route-mark::before {
-      animation: jarvisCircleSelected .85s ease forwards !important;
+      animation: kashinokiCircleSelected .85s ease forwards !important;
     }
 
-    @keyframes jarvisCircleSelected {
+    @keyframes kashinokiCircleSelected {
       from {
         opacity: .60;
         transform: scale(.96)
@@ -802,18 +802,18 @@
     }
 
     #system-map .overview-purpose-next.animate-guided-action .overview-guided-action {
-      animation: jarvisPrimaryActionReveal 1.2s cubic-bezier(.22, .61, .28, 1) forwards !important;
+      animation: kashinokiPrimaryActionReveal 1.2s cubic-bezier(.22, .61, .28, 1) forwards !important;
       background: var(--guide-yellow-faint);
       border: 1px solid var(--guide-yellow-outline);
     }
 
     #system-map .overview-purpose-next.animate-guided-action .guide-yellow-button {
-      animation: jarvisPrimaryButtonReveal 1.2s ease .25s both !important;
+      animation: kashinokiPrimaryButtonReveal 1.2s ease .25s both !important;
       background: var(--guide-yellow-strong) !important;
       color: var(--guide-ink) !important;
     }
 
-    @keyframes jarvisPrimaryActionReveal {
+    @keyframes kashinokiPrimaryActionReveal {
       from {
         opacity: 0;
         transform: translateY(9px)
@@ -825,7 +825,7 @@
       }
     }
 
-    @keyframes jarvisPrimaryButtonReveal {
+    @keyframes kashinokiPrimaryButtonReveal {
       from {
         opacity: .08;
         transform: translateY(6px)
@@ -2385,17 +2385,25 @@
       padding-bottom: 84px
     }
 
-    @media(max-width:1120px) {
 
-      .portfolio-flow,
-      .portfolio-grid.two,
-      .portfolio-grid.three,
-      .portfolio-grid.next {
+
+    @media(max-width:900px) {
+
+      .portfolio-flow {
         grid-template-columns: 1fr
       }
 
       .portfolio-flow i {
         display: none
+      }
+    }
+
+    @media(max-width:1120px) {
+
+      .portfolio-grid.two,
+      .portfolio-grid.three,
+      .portfolio-grid.next {
+        grid-template-columns: 1fr
       }
 
       .portfolio-summary {

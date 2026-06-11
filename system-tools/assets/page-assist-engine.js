@@ -1,8 +1,9 @@
-window.JARVIS_PAGE_ASSIST_ENGINE = (function () {
-  const VERSION = 'v275 / 05STEP実DOM追加・冒頭表示復旧';
-  const WRAP_FLAG = '__jarvisV201AssistWrapped';
-  const LIFECYCLE_FLAG = '__jarvisPageAssistLifecycleBound';
-  const CLICK_FLAG = '__jarvisPageAssistClickBound';
+window.KASHINOKI_PAGE_ASSIST_ENGINE = (function () {
+  const VERSION = 'v1.0749';
+  const WRAP_FLAG = '__kashinokiV201AssistWrapped';
+  const LIFECYCLE_FLAG = '__kashinokiPageAssistLifecycleBound';
+  const CLICK_FLAG = '__kashinokiPageAssistClickBound';
+  const HIDDEN_ASSIST_PAGE_IDS = new Set(['artifact-intent','artifact-handoff','artifact-spec','artifact-countermeasure','artifact-design','artifact-ideas']);
 
   function escapeText(value) {
     if (typeof window.esc === 'function') return window.esc(value);
@@ -16,11 +17,11 @@ window.JARVIS_PAGE_ASSIST_ENGINE = (function () {
   }
 
   function currentPageId() {
-    return document.querySelector('.page.active')?.id || 'jarvis-start';
+    return document.querySelector('.page.active')?.id || 'kashinoki-start';
   }
 
   function currentCopy() {
-    return window.JARVIS_PAGE_ASSIST_COPY || {};
+    return window.KASHINOKI_PAGE_ASSIST_COPY || {};
   }
 
   function bindClickToClose() {
@@ -72,6 +73,19 @@ window.JARVIS_PAGE_ASSIST_ENGINE = (function () {
     const pop = document.getElementById('pageAssistPopover');
     const fab = document.getElementById('pageAssistFab');
     if (!pop || !fab) return;
+    if (HIDDEN_ASSIST_PAGE_IDS.has(id)) {
+      pop.classList.remove('is-open');
+      fab.classList.remove('is-active');
+      pop.hidden = true;
+      fab.hidden = true;
+      fab.style.display = 'none';
+      pop.style.display = 'none';
+      return;
+    }
+    pop.hidden = false;
+    fab.hidden = false;
+    fab.style.removeProperty('display');
+    pop.style.removeProperty('display');
     pop.innerHTML = `<b>${escapeText(data.title)}</b><p>${escapeText(data.body)}</p>`;
     if (toggle) {
       const next = !pop.classList.contains('is-open');

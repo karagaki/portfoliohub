@@ -1,16 +1,16 @@
 (function () {
   "use strict";
 
-  if (window.JARVIS_UI_REGISTRY) return;
+  if (window.KASHINOKI_UI_REGISTRY) return;
 
   function ref(kind, group, preset) {
     const source =
       kind === "animation"
-        ? window.JARVIS_ANIMATION_PRESETS
+        ? window.KASHINOKI_ANIMATION_PRESETS
         : kind === "interaction"
-          ? window.JARVIS_INTERACTION_PRESETS
+          ? window.KASHINOKI_INTERACTION_PRESETS
           : kind === "binding"
-            ? window.JARVIS_DATA_BINDINGS
+            ? window.KASHINOKI_DATA_BINDINGS
             : null;
     return source?.groups?.[group]?.[preset] ? { kind, group, preset } : null;
   }
@@ -139,8 +139,8 @@
   };
 
   const pages = {
-    "jarvis-start": {
-      pageId: "jarvis-start",
+    "kashinoki-start": {
+      pageId: "kashinoki-start",
       pageType: "landing",
       primaryLayout: "start-hero",
       mainRoles: ["summary", "guide", "action"],
@@ -320,5 +320,5 @@
     }
   });
 
-  window.JARVIS_UI_REGISTRY = registry;
+  window.KASHINOKI_UI_REGISTRY = registry;
 })();

@@ -1,4 +1,4 @@
-window.JARVIS_PAGE_DEFINITIONS = {
+window.KASHINOKI_PAGE_DEFINITIONS = {
   FLOW_ALIASES: { 'flow-conversation': 'stage-collect', 'flow-document': 'stage-curate', 'flow-update': 'stage-curate', 'flow-evidence': 'stage-improve' },
   ROUTE_CONFIG: {
     'stage-collect': {
@@ -49,14 +49,14 @@ window.JARVIS_PAGE_DEFINITIONS = {
     'stage-govern': 'stage-govern', 'flow-status': 'stage-govern', 'overview': 'stage-govern', 'boundary': 'stage-govern'
   },
   PAGE_TITLE: {
-    'jarvis-start': 'START', 'unified-backup': 'バックアップ管理（内部）', 'capture-import-queue': 'JSON取込（内部）', 'project-spec': 'プロジェクト仕様正本', 'core-knowledge': '制作知識化と不足検知', 'portfolio-dialogue-sets': '対話セットで見返す', 'portfolio-collect': '会話を集める', 'portfolio-quality': '中身を確かめる', 'portfolio-review': '用途別に分ける', 'portfolio-current': '今の正解と比べる', 'portfolio-purpose': '使う前提を作る', 'portfolio-next': '取り出して活かす', 'system-map': '全体の流れ', 'display-settings': '設定', 'collection-sources': '回収元を登録・管理', 'meaning-classification': '取り込んだ内容を分類', 'target-premise': 'AI作業へ渡す前提を作る', 'ai-work-return': 'AI作業結果を戻す', 'target-chronology': '対象の流れを追う', 'target-link-candidates': '対象候補を確認', 'improvement-actions': '改善候補・次行動を確認', 'accumulation': '回収後のまとまり', 'target-history': '対象別の経緯', 'target-flow': '対象別の経緯を見る', 'target-link': '対象へ情報を紐付ける', 'target-manage': '対象を登録・管理', 'target-inbox': '情報を取り込む', 'accum-conversations': '保存した会話', 'accum-documents': '保存した仕様・再開正本', 'accum-candidates': '採用した要点', 'accum-outputs': 'AI利用用の出力', 'accum-evidence': '作業結果・課題証跡', 'artifact-handoff': '引き継ぎ書', 'artifact-spec': '仕様書', 'artifact-countermeasure': '対策書', 'artifact-design': 'デザイン知', 'artifact-ideas': 'アイデア', 'stage-collect': 'AIに意図を正しく理解させる', 'stage-curate': '仕様を積み上げて正本化する', 'stage-improve': '同じ課題を繰り返さない', 'stage-use': '採用情報をAI・制作へ', 'stage-evaluate': '制作ノウハウを育てる', 'stage-outcome': '成果物を次の展開へつなげる', 'stage-govern': '保存領域と保護',
+    'kashinoki-start': 'START', 'unified-backup': 'バックアップ管理（内部）', 'capture-import-queue': 'JSON取込（内部）', 'project-spec': 'プロジェクト仕様正本', 'core-knowledge': '制作知識化と不足検知', 'portfolio-dialogue-sets': '対話セットで見返す', 'portfolio-collect': '会話を集める', 'portfolio-quality': '中身を確かめる', 'portfolio-review': '分類して登録', 'portfolio-current': '今の正解と比べる', 'portfolio-purpose': '使う前提を作る', 'portfolio-next': '取り出して活かす', 'system-map': '全体の流れ', 'display-settings': '設定', 'collection-sources': '回収元を登録・管理', 'meaning-classification': '取り込んだ内容を分類', 'target-premise': 'AI作業へ渡す前提を作る', 'ai-work-return': 'AI作業結果を戻す', 'target-chronology': '対象の流れを追う', 'target-link-candidates': '対象候補を確認', 'improvement-actions': '改善候補・次行動を確認', 'accumulation': '回収後のまとまり', 'target-history': '対象別の経緯', 'target-flow': '対象別の経緯を見る', 'target-link': '対象へ情報を紐付ける', 'target-manage': '対象を登録・管理', 'target-inbox': '情報を取り込む', 'accum-conversations': '保存した会話', 'accum-documents': '保存した仕様・再開正本', 'accum-candidates': '採用した要点', 'accum-outputs': 'AI利用用の出力', 'accum-evidence': '作業結果・課題証跡', 'artifact-intent': 'AI理解前提', 'artifact-handoff': '引き継ぎ書', 'artifact-spec': '仕様正本', 'artifact-countermeasure': '再発防止', 'artifact-design': 'デザイン判断', 'artifact-ideas': '発展・自動化', 'stage-collect': 'AIに意図を正しく理解させる', 'stage-curate': '仕様を積み上げて正本化する', 'stage-improve': '同じ課題を繰り返さない', 'stage-use': '採用情報をAI・制作へ', 'stage-evaluate': '制作ノウハウを育てる', 'stage-outcome': '成果物を次の展開へつなげる', 'stage-govern': '保存領域と保護',
     'flow-conversation': '会話の判断・訂正から採用へ', 'intake': '回収元ファイルを追加', 'canonical': '保存した会話',
     'flow-document': '仕様・引き継ぎ正本から採用へ', 'documents': '保存した仕様・正本', 'flow-update': '保存正本を最新版へ', 'reviews': '追加・更新内容を確認', 'candidates': '抽出した要点', 'queue': '採用する要点を確認', 'approved': '採用した要点・履歴',
     'flow-use': '採用情報をAI活用へ', 'contract': '現在の方針・守ること', 'pack': 'AIへ前提を渡す', 'handoff': '次のチャットへ引き継ぐ', 'application': '次の制作・修正に使う',
     'flow-evidence': 'AI結果・課題証跡を保存', 'flow-status': '現在地から次行動へ', 'overview': '現在の保存状況', 'boundary': '保存先と保護条件'
   },
   PAGE_META: {
-    'jarvis-start': { id: 'START', role: 'AI制作の仕様混乱・再説明・失敗再発を防ぐ導入' }, 'unified-backup': { id: 'BACKUP', role: '本体側の統合バックアップ管理' }, 'capture-import-queue': { id: 'IMPORT', role: '原本版保持と差分補充' }, 'project-spec': { id: 'PROJECT', role: '現在有効な仕様正本' }, 'core-knowledge': { id: 'CORE', role: '原本から知識と不足へ' }, 'portfolio-dialogue-sets': { id: 'DEMO', role: '対話セットの確認' }, 'portfolio-collect': { id: '集', role: '会話・経験・作業結果を集める' }, 'portfolio-quality': { id: '集', role: '集めた内容が伝わる素材か確認' }, 'portfolio-review': { id: '分', role: '用途別に分ける' }, 'portfolio-current': { id: '分', role: '今の正解と比べる' }, 'portfolio-purpose': { id: '活', role: '使う前提を作る' }, 'portfolio-next': { id: '活', role: '取り出して活かす' }, 'system-map': { id: 'MAP', role: '全体の流れ' }, 'artifact-handoff': { id: 'A1', role: '引き継ぎ書' }, 'artifact-spec': { id: 'A2', role: '仕様書' }, 'artifact-countermeasure': { id: 'A3', role: '対策書' }, 'artifact-design': { id: 'A4', role: 'デザイン知' }, 'artifact-ideas': { id: 'A5', role: 'アイデア' },
+    'kashinoki-start': { id: 'START', role: 'AI制作の仕様混乱・再説明・失敗再発を防ぐ導入' }, 'unified-backup': { id: 'BACKUP', role: '本体側の統合バックアップ管理' }, 'capture-import-queue': { id: 'IMPORT', role: '原本版保持と差分補充' }, 'project-spec': { id: 'PROJECT', role: '現在有効な仕様正本' }, 'core-knowledge': { id: 'CORE', role: '原本から知識と不足へ' }, 'portfolio-dialogue-sets': { id: 'DEMO', role: '対話セットの確認' }, 'portfolio-collect': { id: '集', role: '会話・経験・作業結果を集める' }, 'portfolio-quality': { id: '集', role: '集めた内容が伝わる素材か確認' }, 'portfolio-review': { id: '蓄', role: '分類チップを分類して登録' }, 'portfolio-current': { id: '分', role: '今の正解と比べる' }, 'portfolio-purpose': { id: '活', role: '使う前提を作る' }, 'portfolio-next': { id: '活', role: '取り出して活かす' }, 'system-map': { id: 'MAP', role: '全体の流れ' }, 'artifact-intent': { id: 'A', role: 'AI理解前提' }, 'artifact-handoff': { id: 'B', role: '引き継ぎ書' }, 'artifact-spec': { id: 'C', role: '仕様正本' }, 'artifact-countermeasure': { id: 'D', role: '再発防止' }, 'artifact-design': { id: 'E', role: 'デザイン判断' }, 'artifact-ideas': { id: 'F', role: '発展・自動化' },
     'display-settings': { id: 'P40', role: '表示設定' },
     'target-premise': { id: 'P41', role: '分類済み情報をAI作業へ渡す' },
     'ai-work-return': { id: 'P42', role: 'AI作業結果を対象へ戻す' },
@@ -130,7 +130,7 @@ window.JARVIS_PAGE_DEFINITIONS = {
     }
   },
   PORTFOLIO_DEFAULT: {
-    source_name: 'JARVIS_Capture_Backup_2026-05-28_21-19.json',
+    source_name: 'KASHINOKI_Capture_Backup_2026-05-28_21-19.json',
     source_type: 'Conversation Capture 書出しJSON',
     conversation_count: 1,
     message_count: 62,
@@ -207,7 +207,7 @@ window.JARVIS_PAGE_DEFINITIONS = {
     'stage-outcome': { title: '成果物を次の展開へつなげる', desc: '提出・公開・共有・次AI作業へ渡せる状態に整理します。', button: '接続準備を見る', page: 'stage-outcome', state: '未接続' }
   },
   WORKFLOW_GUIDE_PAGES: {
-    'portfolio-collect': { step: '集める', title: '会話・経験を集めます', detail: 'ChatGPT / User の会話、作業結果、失敗のきっかけを回収します。' }, 'portfolio-quality': { step: '集める', title: '集めた中身を確かめます', detail: '内部JSONではなく、会話から何を拾ったかが伝わる状態にします。' }, 'portfolio-review': { step: '分ける', title: '用途別に分けます', detail: '仕様・判断・失敗・禁止条件・次行動へ分け、何に使う情報かを決めます。' }, 'portfolio-current': { step: '分ける', title: '今の正解と比べます', detail: '古い情報や矛盾をそのまま活用しないよう、現在有効な内容と照合します。' }, 'portfolio-purpose': { step: '活かす', title: '使う前提を作ります', detail: '必要な時に取り出せる前提・指示・再発防止条件として整えます。' }, 'portfolio-next': { step: '活かす', title: '取り出して活かします', detail: '人間にもAIにも渡せる形で確認し、次の制作へ再利用します。' },
+    'portfolio-collect': { step: '集める', title: '会話・経験を集めます', detail: 'ChatGPT / User の会話、作業結果、失敗のきっかけを回収します。' }, 'portfolio-quality': { step: '分ける', title: '集めた中身を確かめます', detail: '内部JSONではなく、会話から何を拾ったかが伝わる状態にします。' }, 'portfolio-review': { step: '分ける', title: '用途別に分けます', detail: '仕様・判断・失敗・禁止条件・次行動へ分け、何に使う情報かを決めます。' }, 'portfolio-current': { step: '分ける', title: '今の正解と比べます', detail: '古い情報や矛盾をそのまま活用しないよう、現在有効な内容と照合します。' }, 'portfolio-purpose': { step: '活かす', title: '使う前提を作ります', detail: '必要な時に取り出せる前提・指示・再発防止条件として整えます。' }, 'portfolio-next': { step: '活かす', title: '取り出して活かします', detail: '人間にもAIにも渡せる形で確認し、次の制作へ再利用します。' },
     'stage-collect': { step: 'STEP 2', title: '会話・訂正・判断を回収します', detail: '現在必要な入力・確認・採用操作を黄色で案内します。' },
     'stage-curate': { step: 'STEP 2', title: '確定仕様と再開前提を整理します', detail: '不足や差分があれば、先へ進む前に確認操作を案内します。' },
     'stage-improve': { step: 'STEP 2', title: '結果・失敗を改善条件へつなげます', detail: '警告そのものではなく、解決する操作を黄色で案内します。' },
@@ -229,42 +229,42 @@ window.JARVIS_PAGE_DEFINITIONS = {
     'flow-evidence': { step: '入力', title: '結果・失敗の証跡を追加します', detail: '追加した証跡は改善確認へ接続します。' }
   },
   PORTFOLIO_DEMO_SAMPLE: {
-    "filename": "星空科学館_来館案内ページ改善_分別デモサンプル_20260605.json",
-    "title": "星空科学館の来館案内ページ改善を題材に、分別後に残る結果を確認する架空デモ",
+    "filename": "星空科学館_来館体験と案内ページ設計_v1.4_raw_20260609.json",
+    "title": "星空科学館デモ：最新ChatGPT抽出JSONからA〜Fへ回収するサンプル",
     "message_count": 54,
     "user_count": 27,
     "assistant_count": 27,
     "candidates": [
         {
-            "capture_candidate_id": "demo_01",
-            "suggested_category": "mission",
-            "adopted_category": "mission",
-            "suggested_statement": "星空科学館の来館案内ページは、初めて訪れる家族が30秒以内に来館判断できる入口にする。",
-            "adopted_statement": "星空科学館の来館案内ページは、初めて訪れる家族が30秒以内に来館判断できる入口にする。",
-            "source_label": "引き継ぎ書候補",
-            "review_state": "edited_approved",
+            "capture_candidate_id": "demo_001",
+            "suggested_category": "AI理解前提",
+            "adopted_category": "AI理解前提",
+            "suggested_statement": "施策案ではなく、手元資料から見えることに絞りたいです。",
+            "adopted_statement": "施策案ではなく、手元資料から見えることに絞りたいです。",
+            "source_label": "A AI理解前提",
+            "review_state": "raw_original",
             "usable_for_current_state": true,
-            "relation": "unmatched",
-            "compare_relation": "unmatched",
-            "current_relation": "unmatched",
+            "relation": "new",
+            "compare_relation": "new",
+            "current_relation": "new",
             "evidence": [
                 {
                     "role": "USER",
                     "order": 1,
-                    "text": "親子連れが見ても、行く価値と予約方法がすぐ分かるページにしたいです。"
+                    "text": "施策案ではなく、手元資料から見えることに絞りたいです。"
                 }
             ],
-            "demo_output_group": "handoff"
+            "demo_output_group": "A"
         },
         {
-            "capture_candidate_id": "demo_02",
-            "suggested_category": "context",
-            "adopted_category": "context",
-            "suggested_statement": "主な利用者は小学生の子どもを連れた保護者、休日に行き先を探している家族、学校行事の下見担当とする。",
-            "adopted_statement": "主な利用者は小学生の子どもを連れた保護者、休日に行き先を探している家族、学校行事の下見担当とする。",
-            "source_label": "引き継ぎ書候補",
-            "review_state": "pending",
-            "usable_for_current_state": false,
+            "capture_candidate_id": "demo_002",
+            "suggested_category": "AI理解前提",
+            "adopted_category": "AI理解前提",
+            "suggested_statement": "最初からSNSや広告施策へ行くと、原因確認と対策案が混ざりやすいです。",
+            "adopted_statement": "最初からSNSや広告施策へ行くと、原因確認と対策案が混ざりやすいです。",
+            "source_label": "A AI理解前提",
+            "review_state": "raw_original",
+            "usable_for_current_state": true,
             "relation": "new",
             "compare_relation": "new",
             "current_relation": "new",
@@ -272,104 +272,104 @@ window.JARVIS_PAGE_DEFINITIONS = {
                 {
                     "role": "ASSISTANT",
                     "order": 2,
-                    "text": "誰向けの案内なのかを最初に固定した方が迷いません。"
+                    "text": "最初からSNSや広告施策へ行くと、原因確認と対策案が混ざりやすいです。"
                 }
             ],
-            "demo_output_group": "handoff"
+            "demo_output_group": "A"
         },
         {
-            "capture_candidate_id": "demo_03",
-            "suggested_category": "next_action",
-            "adopted_category": "next_action",
-            "suggested_statement": "再開時は「対象利用者」「今日見せる主情報」「予約導線」「未確認情報」の順に確認する。",
-            "adopted_statement": "再開時は「対象利用者」「今日見せる主情報」「予約導線」「未確認情報」の順に確認する。",
-            "source_label": "引き継ぎ書候補",
-            "review_state": "insufficient_evidence",
-            "usable_for_current_state": false,
-            "relation": "update",
-            "compare_relation": "update",
-            "current_relation": "update",
+            "capture_candidate_id": "demo_003",
+            "suggested_category": "AI理解前提",
+            "adopted_category": "AI理解前提",
+            "suggested_statement": "Webを綺麗にするためではなく、来館前の不安を減らす入口として作る、という位置づけです。",
+            "adopted_statement": "Webを綺麗にするためではなく、来館前の不安を減らす入口として作る、という位置づけです。",
+            "source_label": "A AI理解前提",
+            "review_state": "raw_original",
+            "usable_for_current_state": true,
+            "relation": "new",
+            "compare_relation": "new",
+            "current_relation": "new",
             "evidence": [
                 {
-                    "role": "USER",
+                    "role": "ASSISTANT",
                     "order": 3,
-                    "text": "次回作業者が迷わないよう、見る順番を決めて残します。"
+                    "text": "Webを綺麗にするためではなく、来館前の不安を減らす入口として作る、という位置づけです。"
                 }
             ],
-            "demo_output_group": "handoff"
+            "demo_output_group": "A"
         },
         {
-            "capture_candidate_id": "demo_04",
-            "suggested_category": "decision",
-            "adopted_category": "decision",
-            "suggested_statement": "入口では施設の詳しい歴史より、所要時間・対象年齢・予約要否を優先する判断を採用する。",
-            "adopted_statement": "入口では施設の詳しい歴史より、所要時間・対象年齢・予約要否を優先する判断を採用する。",
-            "source_label": "引き継ぎ書候補",
-            "review_state": "edited_approved",
+            "capture_candidate_id": "demo_004",
+            "suggested_category": "AI理解前提",
+            "adopted_category": "AI理解前提",
+            "suggested_statement": "星空感が悪いのではなく、順番が違う。\nここを間違えると、また施設紹介と雰囲気だけのページに戻ってしまいます。",
+            "adopted_statement": "星空感が悪いのではなく、順番が違う。\nここを間違えると、また施設紹介と雰囲気だけのページに戻ってしまいます。",
+            "source_label": "A AI理解前提",
+            "review_state": "raw_original",
             "usable_for_current_state": true,
-            "relation": "same",
-            "compare_relation": "same",
-            "current_relation": "same",
-            "evidence": [
-                {
-                    "role": "ASSISTANT",
-                    "order": 4,
-                    "text": "詳しい説明より先に、来館判断に必要なものを出す方がよいです。"
-                }
-            ],
-            "demo_output_group": "handoff"
-        },
-        {
-            "capture_candidate_id": "demo_05",
-            "suggested_category": "decision",
-            "adopted_category": "decision",
-            "suggested_statement": "料金・開館時間・休館日は公式確認が必要な前提として扱い、仮文面のまま公開しない。",
-            "adopted_statement": "料金・開館時間・休館日は公式確認が必要な前提として扱い、仮文面のまま公開しない。",
-            "source_label": "引き継ぎ書候補",
-            "review_state": "pending",
-            "usable_for_current_state": false,
-            "relation": "issue",
-            "compare_relation": "issue",
-            "current_relation": "issue",
+            "relation": "new",
+            "compare_relation": "new",
+            "current_relation": "new",
             "evidence": [
                 {
                     "role": "USER",
-                    "order": 5,
-                    "text": "数字や営業情報はデモ文面のまま使わず、必ず確認対象にします。"
+                    "order": 4,
+                    "text": "星空感が悪いのではなく、順番が違う。\nここを間違えると、また施設紹介と雰囲気だけのページに戻ってしまいます。"
                 }
             ],
-            "demo_output_group": "handoff"
+            "demo_output_group": "A"
         },
         {
-            "capture_candidate_id": "demo_06",
-            "suggested_category": "next_action",
-            "adopted_category": "next_action",
-            "suggested_statement": "次回の修正依頼では、トップ、料金、予約、よくある質問の4ブロックだけを対象にする。",
-            "adopted_statement": "次回の修正依頼では、トップ、料金、予約、よくある質問の4ブロックだけを対象にする。",
-            "source_label": "引き継ぎ書候補",
-            "review_state": "edited_approved",
+            "capture_candidate_id": "demo_005",
+            "suggested_category": "AI理解前提",
+            "adopted_category": "AI理解前提",
+            "suggested_statement": "星空感は、余白、小さな星点、見出し周辺の淡い光、カード角の弱い演出で補助する程度が合います。",
+            "adopted_statement": "星空感は、余白、小さな星点、見出し周辺の淡い光、カード角の弱い演出で補助する程度が合います。",
+            "source_label": "A AI理解前提",
+            "review_state": "raw_original",
             "usable_for_current_state": true,
-            "relation": "unmatched",
-            "compare_relation": "unmatched",
-            "current_relation": "unmatched",
+            "relation": "new",
+            "compare_relation": "new",
+            "current_relation": "new",
             "evidence": [
                 {
                     "role": "ASSISTANT",
-                    "order": 6,
-                    "text": "修正範囲を絞ることで、余計な全体改変を防ぎます。"
+                    "order": 5,
+                    "text": "星空感は、余白、小さな星点、見出し周辺の淡い光、カード角の弱い演出で補助する程度が合います。"
                 }
             ],
-            "demo_output_group": "handoff"
+            "demo_output_group": "A"
         },
         {
-            "capture_candidate_id": "demo_07",
-            "suggested_category": "requirement",
-            "adopted_category": "requirement",
-            "suggested_statement": "トップには「プラネタリウム」「体験展示」「週末イベント」の3つを並べ、各項目から詳細へ進める。",
-            "adopted_statement": "トップには「プラネタリウム」「体験展示」「週末イベント」の3つを並べ、各項目から詳細へ進める。",
-            "source_label": "仕様書候補",
-            "review_state": "pending",
-            "usable_for_current_state": false,
+            "capture_candidate_id": "demo_006",
+            "suggested_category": "AI理解前提",
+            "adopted_category": "AI理解前提",
+            "suggested_statement": "人間側がAIの案をそのまま採用するのではなく、資料と照らして違和感の正体を見つける。",
+            "adopted_statement": "人間側がAIの案をそのまま採用するのではなく、資料と照らして違和感の正体を見つける。",
+            "source_label": "A AI理解前提",
+            "review_state": "raw_original",
+            "usable_for_current_state": true,
+            "relation": "new",
+            "compare_relation": "new",
+            "current_relation": "new",
+            "evidence": [
+                {
+                    "role": "USER",
+                    "order": 6,
+                    "text": "人間側がAIの案をそのまま採用するのではなく、資料と照らして違和感の正体を見つける。"
+                }
+            ],
+            "demo_output_group": "A"
+        },
+        {
+            "capture_candidate_id": "demo_007",
+            "suggested_category": "引き継ぎ",
+            "adopted_category": "引き継ぎ",
+            "suggested_statement": "パンフは展示名と設備説明が多いです。\n見出しも「宇宙展示室」「太陽系模型」「プラネタリウム設備」みたいな感じです。",
+            "adopted_statement": "パンフは展示名と設備説明が多いです。\n見出しも「宇宙展示室」「太陽系模型」「プラネタリウム設備」みたいな感じです。",
+            "source_label": "B 引き継ぎ書",
+            "review_state": "raw_original",
+            "usable_for_current_state": true,
             "relation": "new",
             "compare_relation": "new",
             "current_relation": "new",
@@ -377,104 +377,104 @@ window.JARVIS_PAGE_DEFINITIONS = {
                 {
                     "role": "USER",
                     "order": 7,
-                    "text": "最初に何ができる施設なのかを3つに絞って見せます。"
+                    "text": "パンフは展示名と設備説明が多いです。\n見出しも「宇宙展示室」「太陽系模型」「プラネタリウム設備」みたいな感じです。"
                 }
             ],
-            "demo_output_group": "spec"
+            "demo_output_group": "B"
         },
         {
-            "capture_candidate_id": "demo_08",
-            "suggested_category": "requirement",
-            "adopted_category": "requirement",
-            "suggested_statement": "予約ボタンはファーストビュー内とイベント詳細下の2箇所に置く。",
-            "adopted_statement": "予約ボタンはファーストビュー内とイベント詳細下の2箇所に置く。",
-            "source_label": "仕様書候補",
-            "review_state": "insufficient_evidence",
-            "usable_for_current_state": false,
-            "relation": "update",
-            "compare_relation": "update",
-            "current_relation": "update",
+            "capture_candidate_id": "demo_008",
+            "suggested_category": "引き継ぎ",
+            "adopted_category": "引き継ぎ",
+            "suggested_statement": "アンケートには「屋上で本物の星を見たのを子どもが帰ってから話していた」「星座カードを家で見返していた」みたいな回答があります。\n設備名より、体験の方が残っている感じがします。",
+            "adopted_statement": "アンケートには「屋上で本物の星を見たのを子どもが帰ってから話していた」「星座カードを家で見返していた」みたいな回答があります。\n設備名より、体験の方が残っている感じがします。",
+            "source_label": "B 引き継ぎ書",
+            "review_state": "raw_original",
+            "usable_for_current_state": true,
+            "relation": "new",
+            "compare_relation": "new",
+            "current_relation": "new",
             "evidence": [
                 {
-                    "role": "ASSISTANT",
+                    "role": "USER",
                     "order": 8,
-                    "text": "予約導線が埋もれないよう、入口と詳細後の両方に置きます。"
+                    "text": "アンケートには「屋上で本物の星を見たのを子どもが帰ってから話していた」「星座カードを家で見返していた」みたいな回答があります。\n設備名より、体験の方が残っている感じがします。"
                 }
             ],
-            "demo_output_group": "spec"
+            "demo_output_group": "B"
         },
         {
-            "capture_candidate_id": "demo_09",
-            "suggested_category": "requirement",
-            "adopted_category": "requirement",
-            "suggested_statement": "料金表は大人・小学生・未就学児の3区分を基本にし、団体料金は折りたたみ補足にする。",
-            "adopted_statement": "料金表は大人・小学生・未就学児の3区分を基本にし、団体料金は折りたたみ補足にする。",
-            "source_label": "仕様書候補",
-            "review_state": "edited_approved",
+            "capture_candidate_id": "demo_009",
+            "suggested_category": "引き継ぎ",
+            "adopted_category": "引き継ぎ",
+            "suggested_statement": "既存ページのスクショもあります。\nトップに星空写真と施設紹介があり、その下に展示一覧があります。",
+            "adopted_statement": "既存ページのスクショもあります。\nトップに星空写真と施設紹介があり、その下に展示一覧があります。",
+            "source_label": "B 引き継ぎ書",
+            "review_state": "raw_original",
             "usable_for_current_state": true,
-            "relation": "same",
-            "compare_relation": "same",
-            "current_relation": "same",
+            "relation": "new",
+            "compare_relation": "new",
+            "current_relation": "new",
             "evidence": [
                 {
                     "role": "USER",
                     "order": 9,
-                    "text": "家族がまず見る料金だけを上に出します。"
+                    "text": "既存ページのスクショもあります。\nトップに星空写真と施設紹介があり、その下に展示一覧があります。"
                 }
             ],
-            "demo_output_group": "spec"
+            "demo_output_group": "B"
         },
         {
-            "capture_candidate_id": "demo_10",
-            "suggested_category": "requirement",
-            "adopted_category": "requirement",
-            "suggested_statement": "イベントカードには対象年齢、所要時間、予約要否、雨天時の扱いを必ず表示する。",
-            "adopted_statement": "イベントカードには対象年齢、所要時間、予約要否、雨天時の扱いを必ず表示する。",
-            "source_label": "仕様書候補",
-            "review_state": "pending",
-            "usable_for_current_state": false,
-            "relation": "issue",
-            "compare_relation": "issue",
-            "current_relation": "issue",
+            "capture_candidate_id": "demo_010",
+            "suggested_category": "引き継ぎ",
+            "adopted_category": "引き継ぎ",
+            "suggested_statement": "ここでやっと、この科学館の見え方が変わった気がします。\n\n最初は「来館者が減っている施設をどう改善するか」くらいの話でした。\nでも今は、来館前の不安を減らして、館内の体験につなげて、帰った後に空を見るところまで残す話に見えてきています。",
+            "adopted_statement": "ここでやっと、この科学館の見え方が変わった気がします。\n\n最初は「来館者が減っている施設をどう改善するか」くらいの話でした。\nでも今は、来館前の不安を減らして、館内の体験につなげて、帰った後に空を見るところまで残す話に見えてきています。",
+            "source_label": "B 引き継ぎ書",
+            "review_state": "raw_original",
+            "usable_for_current_state": true,
+            "relation": "new",
+            "compare_relation": "new",
+            "current_relation": "new",
             "evidence": [
                 {
-                    "role": "ASSISTANT",
+                    "role": "USER",
                     "order": 10,
-                    "text": "参加判断に必要な要素をカード内に固定します。"
+                    "text": "ここでやっと、この科学館の見え方が変わった気がします。\n\n最初は「来館者が減っている施設をどう改善するか」くらいの話でした。\nでも今は、来館前の不安を減らして、館内の体験につなげて、帰った後に空を見るところまで残す話に見えてきています。"
                 }
             ],
-            "demo_output_group": "spec"
+            "demo_output_group": "B"
         },
         {
-            "capture_candidate_id": "demo_11",
-            "suggested_category": "invariant",
-            "adopted_category": "invariant",
-            "suggested_statement": "主操作ボタンの文言を途中で「申込」「予約」「参加する」に混在させない。",
-            "adopted_statement": "主操作ボタンの文言を途中で「申込」「予約」「参加する」に混在させない。",
-            "source_label": "仕様書候補",
-            "review_state": "edited_approved",
+            "capture_candidate_id": "demo_011",
+            "suggested_category": "引き継ぎ",
+            "adopted_category": "引き継ぎ",
+            "suggested_statement": "最後に、次のAIへ渡すなら最初に何を読ませるべきかも短く残してください。\n次回はファーストビュー案、3カード文面、星座カードの見せ方から再開したいです。",
+            "adopted_statement": "最後に、次のAIへ渡すなら最初に何を読ませるべきかも短く残してください。\n次回はファーストビュー案、3カード文面、星座カードの見せ方から再開したいです。",
+            "source_label": "B 引き継ぎ書",
+            "review_state": "raw_original",
             "usable_for_current_state": true,
-            "relation": "unmatched",
-            "compare_relation": "unmatched",
-            "current_relation": "unmatched",
+            "relation": "new",
+            "compare_relation": "new",
+            "current_relation": "new",
             "evidence": [
                 {
                     "role": "USER",
                     "order": 11,
-                    "text": "同じ操作に別の言葉を使うと迷うため統一します。"
+                    "text": "最後に、次のAIへ渡すなら最初に何を読ませるべきかも短く残してください。\n次回はファーストビュー案、3カード文面、星座カードの見せ方から再開したいです。"
                 }
             ],
-            "demo_output_group": "spec"
+            "demo_output_group": "B"
         },
         {
-            "capture_candidate_id": "demo_12",
-            "suggested_category": "invariant",
-            "adopted_category": "invariant",
-            "suggested_statement": "未確認の金額・日付・定員を確定情報として表示しない。",
-            "adopted_statement": "未確認の金額・日付・定員を確定情報として表示しない。",
-            "source_label": "仕様書候補",
-            "review_state": "pending",
-            "usable_for_current_state": false,
+            "capture_candidate_id": "demo_012",
+            "suggested_category": "仕様",
+            "adopted_category": "仕様",
+            "suggested_statement": "目的は、親子連れ・初回来館者が30秒以内に行けるか判断できること。\n最初に出す情報は、今日行けるか、何歳から楽しめるか、所要時間、予約要否、雨天時対応、アクセスの安心感です。",
+            "adopted_statement": "目的は、親子連れ・初回来館者が30秒以内に行けるか判断できること。\n最初に出す情報は、今日行けるか、何歳から楽しめるか、所要時間、予約要否、雨天時対応、アクセスの安心感です。",
+            "source_label": "C 仕様正本",
+            "review_state": "raw_original",
+            "usable_for_current_state": true,
             "relation": "new",
             "compare_relation": "new",
             "current_relation": "new",
@@ -482,419 +482,419 @@ window.JARVIS_PAGE_DEFINITIONS = {
                 {
                     "role": "ASSISTANT",
                     "order": 12,
-                    "text": "事実確認前の情報を断定表示しないルールにします。"
+                    "text": "目的は、親子連れ・初回来館者が30秒以内に行けるか判断できること。\n最初に出す情報は、今日行けるか、何歳から楽しめるか、所要時間、予約要否、雨天時対応、アクセスの安心感です。"
                 }
             ],
-            "demo_output_group": "spec"
+            "demo_output_group": "C"
         },
         {
-            "capture_candidate_id": "demo_13",
-            "suggested_category": "failure_evidence",
-            "adopted_category": "failure_evidence",
-            "suggested_statement": "展示説明を増やしすぎると予約ボタンが下へ流れ、主操作が見つけにくくなる。",
-            "adopted_statement": "展示説明を増やしすぎると予約ボタンが下へ流れ、主操作が見つけにくくなる。",
-            "source_label": "対策書候補",
-            "review_state": "insufficient_evidence",
-            "usable_for_current_state": false,
-            "relation": "update",
-            "compare_relation": "update",
-            "current_relation": "update",
+            "capture_candidate_id": "demo_013",
+            "suggested_category": "仕様",
+            "adopted_category": "仕様",
+            "suggested_statement": "では、来館案内ページの最初は、見出し、確認チップ、3カードの順が良さそうです。",
+            "adopted_statement": "では、来館案内ページの最初は、見出し、確認チップ、3カードの順が良さそうです。",
+            "source_label": "C 仕様正本",
+            "review_state": "raw_original",
+            "usable_for_current_state": true,
+            "relation": "new",
+            "compare_relation": "new",
+            "current_relation": "new",
             "evidence": [
                 {
                     "role": "USER",
                     "order": 13,
-                    "text": "説明追加で予約導線が埋もれた過去案を対策対象にします。"
+                    "text": "では、来館案内ページの最初は、見出し、確認チップ、3カードの順が良さそうです。"
                 }
             ],
-            "demo_output_group": "countermeasure"
+            "demo_output_group": "C"
         },
         {
-            "capture_candidate_id": "demo_14",
-            "suggested_category": "failure_evidence",
-            "adopted_category": "failure_evidence",
-            "suggested_statement": "専門用語を見出しに置くと、初見の保護者が内容を判断しづらくなる。",
-            "adopted_statement": "専門用語を見出しに置くと、初見の保護者が内容を判断しづらくなる。",
-            "source_label": "対策書候補",
-            "review_state": "edited_approved",
+            "capture_candidate_id": "demo_014",
+            "suggested_category": "仕様",
+            "adopted_category": "仕様",
+            "suggested_statement": "確認チップは「対象年齢」「所要時間」「予約」「雨天時」程度に絞ります。\n3カードは「今日行ける？」「何歳から楽しめる？」「どれくらい時間がかかる？」を候補にできます。",
+            "adopted_statement": "確認チップは「対象年齢」「所要時間」「予約」「雨天時」程度に絞ります。\n3カードは「今日行ける？」「何歳から楽しめる？」「どれくらい時間がかかる？」を候補にできます。",
+            "source_label": "C 仕様正本",
+            "review_state": "raw_original",
             "usable_for_current_state": true,
-            "relation": "same",
-            "compare_relation": "same",
-            "current_relation": "same",
+            "relation": "new",
+            "compare_relation": "new",
+            "current_relation": "new",
             "evidence": [
                 {
                     "role": "ASSISTANT",
                     "order": 14,
-                    "text": "天文用語は補足へ回し、入口は平易にします。"
+                    "text": "確認チップは「対象年齢」「所要時間」「予約」「雨天時」程度に絞ります。\n3カードは「今日行ける？」「何歳から楽しめる？」「どれくらい時間がかかる？」を候補にできます。"
                 }
             ],
-            "demo_output_group": "countermeasure"
+            "demo_output_group": "C"
         },
         {
-            "capture_candidate_id": "demo_15",
-            "suggested_category": "failure_evidence",
-            "adopted_category": "failure_evidence",
-            "suggested_statement": "料金表の注釈が長いと、基本料金と例外条件の区別が崩れる。",
-            "adopted_statement": "料金表の注釈が長いと、基本料金と例外条件の区別が崩れる。",
-            "source_label": "対策書候補",
-            "review_state": "pending",
-            "usable_for_current_state": false,
-            "relation": "issue",
-            "compare_relation": "issue",
-            "current_relation": "issue",
+            "capture_candidate_id": "demo_015",
+            "suggested_category": "仕様",
+            "adopted_category": "仕様",
+            "suggested_statement": "PCでは3カード横並び、スマホでは1列。\n本文は15px未満にせず、カード説明は2行以内、詳細リンクは各カード1つまでに抑えると見やすいです。",
+            "adopted_statement": "PCでは3カード横並び、スマホでは1列。\n本文は15px未満にせず、カード説明は2行以内、詳細リンクは各カード1つまでに抑えると見やすいです。",
+            "source_label": "C 仕様正本",
+            "review_state": "raw_original",
+            "usable_for_current_state": true,
+            "relation": "new",
+            "compare_relation": "new",
+            "current_relation": "new",
             "evidence": [
                 {
-                    "role": "USER",
+                    "role": "ASSISTANT",
                     "order": 15,
-                    "text": "基本料金と例外は別表示にします。"
+                    "text": "PCでは3カード横並び、スマホでは1列。\n本文は15px未満にせず、カード説明は2行以内、詳細リンクは各カード1つまでに抑えると見やすいです。"
                 }
             ],
-            "demo_output_group": "countermeasure"
+            "demo_output_group": "C"
         },
         {
-            "capture_candidate_id": "demo_16",
-            "suggested_category": "failure_evidence",
-            "adopted_category": "failure_evidence",
-            "suggested_statement": "写真を大きくしすぎると、スマホで予約・料金への到達が遅くなる。",
-            "adopted_statement": "写真を大きくしすぎると、スマホで予約・料金への到達が遅くなる。",
-            "source_label": "対策書候補",
-            "review_state": "edited_approved",
+            "capture_candidate_id": "demo_016",
+            "suggested_category": "仕様",
+            "adopted_category": "仕様",
+            "suggested_statement": "1枚目は「今日行ける？」として、開館日、予約要否、雨天時の確認へつなげます。\n2枚目は「何歳から楽しめる？」として、対象年齢や体験の難しさを扱います。\n3枚目は「どれくらい時間がかかる？」として、滞在目安と観測会の有無を扱います。",
+            "adopted_statement": "1枚目は「今日行ける？」として、開館日、予約要否、雨天時の確認へつなげます。\n2枚目は「何歳から楽しめる？」として、対象年齢や体験の難しさを扱います。\n3枚目は「どれくらい時間がかかる？」として、滞在目安と観測会の有無を扱います。",
+            "source_label": "C 仕様正本",
+            "review_state": "raw_original",
             "usable_for_current_state": true,
-            "relation": "unmatched",
-            "compare_relation": "unmatched",
-            "current_relation": "unmatched",
+            "relation": "new",
+            "compare_relation": "new",
+            "current_relation": "new",
             "evidence": [
                 {
                     "role": "ASSISTANT",
                     "order": 16,
-                    "text": "写真優先で操作が沈まないよう確認します。"
+                    "text": "1枚目は「今日行ける？」として、開館日、予約要否、雨天時の確認へつなげます。\n2枚目は「何歳から楽しめる？」として、対象年齢や体験の難しさを扱います。\n3枚目は「どれくらい時間がかかる？」として、滞在目安と観測会の有無を扱います。"
                 }
             ],
-            "demo_output_group": "countermeasure"
+            "demo_output_group": "C"
         },
         {
-            "capture_candidate_id": "demo_17",
-            "suggested_category": "failure_evidence",
-            "adopted_category": "failure_evidence",
-            "suggested_statement": "イベント一覧に対象年齢がないと、家族向けか大人向けか判断できない。",
-            "adopted_statement": "イベント一覧に対象年齢がないと、家族向けか大人向けか判断できない。",
-            "source_label": "対策書候補",
-            "review_state": "pending",
-            "usable_for_current_state": false,
+            "capture_candidate_id": "demo_017",
+            "suggested_category": "仕様",
+            "adopted_category": "仕様",
+            "suggested_statement": "上部の3カードは「行けるかどうかの判断」。\nその下の体験カードは「行ったら何が残るか」。",
+            "adopted_statement": "上部の3カードは「行けるかどうかの判断」。\nその下の体験カードは「行ったら何が残るか」。",
+            "source_label": "C 仕様正本",
+            "review_state": "raw_original",
+            "usable_for_current_state": true,
+            "relation": "new",
+            "compare_relation": "new",
+            "current_relation": "new",
+            "evidence": [
+                {
+                    "role": "ASSISTANT",
+                    "order": 17,
+                    "text": "上部の3カードは「行けるかどうかの判断」。\nその下の体験カードは「行ったら何が残るか」。"
+                }
+            ],
+            "demo_output_group": "C"
+        },
+        {
+            "capture_candidate_id": "demo_018",
+            "suggested_category": "再発防止",
+            "adopted_category": "再発防止",
+            "suggested_statement": "料金・営業時間・予約方式も未確認です。\n\nここをAIがそれっぽく埋めると、本番文言と混ざって危ないです。",
+            "adopted_statement": "料金・営業時間・予約方式も未確認です。\n\nここをAIがそれっぽく埋めると、本番文言と混ざって危ないです。",
+            "source_label": "D 再発防止",
+            "review_state": "raw_original",
+            "usable_for_current_state": true,
             "relation": "new",
             "compare_relation": "new",
             "current_relation": "new",
             "evidence": [
                 {
                     "role": "USER",
-                    "order": 17,
-                    "text": "対象年齢の欠落は確認ゲートにします。"
-                }
-            ],
-            "demo_output_group": "countermeasure"
-        },
-        {
-            "capture_candidate_id": "demo_18",
-            "suggested_category": "failure_evidence",
-            "adopted_category": "failure_evidence",
-            "suggested_statement": "休館日とイベント開催日が別ページに分かれると、来館可否の確認が二度手間になる。",
-            "adopted_statement": "休館日とイベント開催日が別ページに分かれると、来館可否の確認が二度手間になる。",
-            "source_label": "対策書候補",
-            "review_state": "insufficient_evidence",
-            "usable_for_current_state": false,
-            "relation": "update",
-            "compare_relation": "update",
-            "current_relation": "update",
-            "evidence": [
-                {
-                    "role": "ASSISTANT",
                     "order": 18,
-                    "text": "開館情報とイベント日を同時に見られる構造にします。"
+                    "text": "料金・営業時間・予約方式も未確認です。\n\nここをAIがそれっぽく埋めると、本番文言と混ざって危ないです。"
                 }
             ],
-            "demo_output_group": "countermeasure"
+            "demo_output_group": "D"
         },
         {
-            "capture_candidate_id": "demo_19",
-            "suggested_category": "failure_evidence",
-            "adopted_category": "failure_evidence",
-            "suggested_statement": "予約不要イベントと要予約イベントを同じ見た目で並べると、行動の違いが伝わらない。",
-            "adopted_statement": "予約不要イベントと要予約イベントを同じ見た目で並べると、行動の違いが伝わらない。",
-            "source_label": "対策書候補",
-            "review_state": "edited_approved",
+            "capture_candidate_id": "demo_019",
+            "suggested_category": "再発防止",
+            "adopted_category": "再発防止",
+            "suggested_statement": "仮の画面を作っているだけなのに、自然な文章として入ると、数日後に見返した時に「これは確認済みなのか」「AIが埋めただけなのか」が分からなくなる。",
+            "adopted_statement": "仮の画面を作っているだけなのに、自然な文章として入ると、数日後に見返した時に「これは確認済みなのか」「AIが埋めただけなのか」が分からなくなる。",
+            "source_label": "D 再発防止",
+            "review_state": "raw_original",
             "usable_for_current_state": true,
-            "relation": "same",
-            "compare_relation": "same",
-            "current_relation": "same",
+            "relation": "new",
+            "compare_relation": "new",
+            "current_relation": "new",
             "evidence": [
                 {
                     "role": "USER",
                     "order": 19,
-                    "text": "予約要否の表示差を必須にします。"
+                    "text": "仮の画面を作っているだけなのに、自然な文章として入ると、数日後に見返した時に「これは確認済みなのか」「AIが埋めただけなのか」が分からなくなる。"
                 }
             ],
-            "demo_output_group": "countermeasure"
+            "demo_output_group": "D"
         },
         {
-            "capture_candidate_id": "demo_20",
-            "suggested_category": "failure_evidence",
-            "adopted_category": "failure_evidence",
-            "suggested_statement": "「詳しくはこちら」だけのリンクでは、何が見られるか分からない。",
-            "adopted_statement": "「詳しくはこちら」だけのリンクでは、何が見られるか分からない。",
-            "source_label": "対策書候補",
-            "review_state": "pending",
-            "usable_for_current_state": false,
-            "relation": "issue",
-            "compare_relation": "issue",
-            "current_relation": "issue",
-            "evidence": [
-                {
-                    "role": "ASSISTANT",
-                    "order": 20,
-                    "text": "リンク文言は遷移先の内容が分かる表記にします。"
-                }
-            ],
-            "demo_output_group": "countermeasure"
-        },
-        {
-            "capture_candidate_id": "demo_21",
-            "suggested_category": "unresolved",
-            "adopted_category": "unresolved",
-            "suggested_statement": "未確認の料金改定情報が混ざっており、公開前に公式確認が必要。",
-            "adopted_statement": "未確認の料金改定情報が混ざっており、公開前に公式確認が必要。",
-            "source_label": "対策書候補",
-            "review_state": "edited_approved",
+            "capture_candidate_id": "demo_020",
+            "suggested_category": "再発防止",
+            "adopted_category": "再発防止",
+            "suggested_statement": "この混ざり方が一番怖いです。\nなので、見た目の仮案でも、未確認は未確認として表示したいです。\nここはデザインの都合より優先したいです。",
+            "adopted_statement": "この混ざり方が一番怖いです。\nなので、見た目の仮案でも、未確認は未確認として表示したいです。\nここはデザインの都合より優先したいです。",
+            "source_label": "D 再発防止",
+            "review_state": "raw_original",
             "usable_for_current_state": true,
-            "relation": "unmatched",
-            "compare_relation": "unmatched",
-            "current_relation": "unmatched",
+            "relation": "new",
+            "compare_relation": "new",
+            "current_relation": "new",
             "evidence": [
                 {
                     "role": "USER",
-                    "order": 21,
-                    "text": "料金改定の可能性を未解決として残します。"
+                    "order": 20,
+                    "text": "この混ざり方が一番怖いです。\nなので、見た目の仮案でも、未確認は未確認として表示したいです。\nここはデザインの都合より優先したいです。"
                 }
             ],
-            "demo_output_group": "countermeasure"
+            "demo_output_group": "D"
         },
         {
-            "capture_candidate_id": "demo_22",
-            "suggested_category": "unresolved",
-            "adopted_category": "unresolved",
-            "suggested_statement": "雨天時の屋外観察会の扱いが未確認。中止・屋内代替・延期のどれかを確認する。",
-            "adopted_statement": "雨天時の屋外観察会の扱いが未確認。中止・屋内代替・延期のどれかを確認する。",
-            "source_label": "対策書候補",
-            "review_state": "pending",
-            "usable_for_current_state": false,
+            "capture_candidate_id": "demo_021",
+            "suggested_category": "再発防止",
+            "adopted_category": "再発防止",
+            "suggested_statement": "チップ内でも「予約：要確認」「所要時間：目安掲載予定」のように、未確定であることを残します。\nこれにより、仮文言と公開文面が混ざる事故を防げます。",
+            "adopted_statement": "チップ内でも「予約：要確認」「所要時間：目安掲載予定」のように、未確定であることを残します。\nこれにより、仮文言と公開文面が混ざる事故を防げます。",
+            "source_label": "D 再発防止",
+            "review_state": "raw_original",
+            "usable_for_current_state": true,
             "relation": "new",
             "compare_relation": "new",
             "current_relation": "new",
             "evidence": [
                 {
                     "role": "ASSISTANT",
-                    "order": 22,
-                    "text": "雨天時の扱いが不足しています。"
+                    "order": 21,
+                    "text": "チップ内でも「予約：要確認」「所要時間：目安掲載予定」のように、未確定であることを残します。\nこれにより、仮文言と公開文面が混ざる事故を防げます。"
                 }
             ],
-            "demo_output_group": "countermeasure"
+            "demo_output_group": "D"
         },
         {
-            "capture_candidate_id": "demo_23",
-            "suggested_category": "unresolved",
-            "adopted_category": "unresolved",
-            "suggested_statement": "団体予約と一般予約の入口を分ける必要があるか未確認。",
-            "adopted_statement": "団体予約と一般予約の入口を分ける必要があるか未確認。",
-            "source_label": "対策書候補",
-            "review_state": "insufficient_evidence",
-            "usable_for_current_state": false,
-            "relation": "update",
-            "compare_relation": "update",
-            "current_relation": "update",
+            "capture_candidate_id": "demo_022",
+            "suggested_category": "再発防止",
+            "adopted_category": "再発防止",
+            "suggested_statement": "屋上観測会も主役にしたい気持ちはありますが、開催日が限られるなら最初に大きく出しすぎるのは危ないですね。",
+            "adopted_statement": "屋上観測会も主役にしたい気持ちはありますが、開催日が限られるなら最初に大きく出しすぎるのは危ないですね。",
+            "source_label": "D 再発防止",
+            "review_state": "raw_original",
+            "usable_for_current_state": true,
+            "relation": "new",
+            "compare_relation": "new",
+            "current_relation": "new",
             "evidence": [
                 {
                     "role": "USER",
-                    "order": 23,
-                    "text": "予約種別の分岐を確認項目にします。"
+                    "order": 22,
+                    "text": "屋上観測会も主役にしたい気持ちはありますが、開催日が限られるなら最初に大きく出しすぎるのは危ないですね。"
                 }
             ],
-            "demo_output_group": "countermeasure"
+            "demo_output_group": "D"
         },
         {
-            "capture_candidate_id": "demo_24",
-            "suggested_category": "unresolved",
-            "adopted_category": "unresolved",
-            "suggested_statement": "ベビーカー置き場、授乳室、再入場可否の案内有無が未確認。",
-            "adopted_statement": "ベビーカー置き場、授乳室、再入場可否の案内有無が未確認。",
-            "source_label": "対策書候補",
-            "review_state": "edited_approved",
+            "capture_candidate_id": "demo_023",
+            "suggested_category": "再発防止",
+            "adopted_category": "再発防止",
+            "suggested_statement": "屋上観測会は魅力として強いですが、開催日が月数回なら、常時体験できるように見せるのは避けたいです。",
+            "adopted_statement": "屋上観測会は魅力として強いですが、開催日が月数回なら、常時体験できるように見せるのは避けたいです。",
+            "source_label": "D 再発防止",
+            "review_state": "raw_original",
             "usable_for_current_state": true,
-            "relation": "same",
-            "compare_relation": "same",
-            "current_relation": "same",
+            "relation": "new",
+            "compare_relation": "new",
+            "current_relation": "new",
             "evidence": [
                 {
                     "role": "ASSISTANT",
-                    "order": 24,
-                    "text": "家族向け案内として必要な施設情報を確認します。"
+                    "order": 23,
+                    "text": "屋上観測会は魅力として強いですが、開催日が月数回なら、常時体験できるように見せるのは避けたいです。"
                 }
             ],
-            "demo_output_group": "countermeasure"
+            "demo_output_group": "D"
         },
         {
-            "capture_candidate_id": "demo_25",
-            "suggested_category": "unresolved",
-            "adopted_category": "unresolved",
-            "suggested_statement": "写真素材の権利状態が未確認。公開サンプルでは差し替え前提にする。",
-            "adopted_statement": "写真素材の権利状態が未確認。公開サンプルでは差し替え前提にする。",
-            "source_label": "対策書候補",
-            "review_state": "pending",
-            "usable_for_current_state": false,
-            "relation": "issue",
-            "compare_relation": "issue",
-            "current_relation": "issue",
+            "capture_candidate_id": "demo_024",
+            "suggested_category": "デザイン",
+            "adopted_category": "デザイン",
+            "suggested_statement": "ここで少し見え方が変わりますね。\n\n展示物を説明する施設だと思っていましたが、来館者の記憶はそこではない気がします。",
+            "adopted_statement": "ここで少し見え方が変わりますね。\n\n展示物を説明する施設だと思っていましたが、来館者の記憶はそこではない気がします。",
+            "source_label": "E デザイン判断",
+            "review_state": "raw_original",
+            "usable_for_current_state": true,
+            "relation": "new",
+            "compare_relation": "new",
+            "current_relation": "new",
+            "evidence": [
+                {
+                    "role": "USER",
+                    "order": 24,
+                    "text": "ここで少し見え方が変わりますね。\n\n展示物を説明する施設だと思っていましたが、来館者の記憶はそこではない気がします。"
+                }
+            ],
+            "demo_output_group": "E"
+        },
+        {
+            "capture_candidate_id": "demo_025",
+            "suggested_category": "デザイン",
+            "adopted_category": "デザイン",
+            "suggested_statement": "たぶんAIに任せると、最初にこういう絵として綺麗な方向へ行きやすいんですよね。",
+            "adopted_statement": "たぶんAIに任せると、最初にこういう絵として綺麗な方向へ行きやすいんですよね。",
+            "source_label": "E デザイン判断",
+            "review_state": "raw_original",
+            "usable_for_current_state": true,
+            "relation": "new",
+            "compare_relation": "new",
+            "current_relation": "new",
             "evidence": [
                 {
                     "role": "USER",
                     "order": 25,
-                    "text": "素材権利を確認しないまま使わない条件です。"
+                    "text": "たぶんAIに任せると、最初にこういう絵として綺麗な方向へ行きやすいんですよね。"
                 }
             ],
-            "demo_output_group": "countermeasure"
+            "demo_output_group": "E"
         },
         {
-            "capture_candidate_id": "demo_26",
-            "suggested_category": "unresolved",
-            "adopted_category": "unresolved",
-            "suggested_statement": "イベント定員の表記が年度ごとに変わる可能性がある。固定文面化せず管理項目にする。",
-            "adopted_statement": "イベント定員の表記が年度ごとに変わる可能性がある。固定文面化せず管理項目にする。",
-            "source_label": "対策書候補",
-            "review_state": "edited_approved",
+            "capture_candidate_id": "demo_026",
+            "suggested_category": "デザイン",
+            "adopted_category": "デザイン",
+            "suggested_statement": "綺麗な星空サイトを作る話ではなく、親が「今日行って大丈夫か」と判断できて、その先に子どもの記憶が残る流れを作る話なんだと思います。",
+            "adopted_statement": "綺麗な星空サイトを作る話ではなく、親が「今日行って大丈夫か」と判断できて、その先に子どもの記憶が残る流れを作る話なんだと思います。",
+            "source_label": "E デザイン判断",
+            "review_state": "raw_original",
             "usable_for_current_state": true,
-            "relation": "unmatched",
-            "compare_relation": "unmatched",
-            "current_relation": "unmatched",
-            "evidence": [
-                {
-                    "role": "ASSISTANT",
-                    "order": 26,
-                    "text": "定員情報を固定文面にしないようにします。"
-                }
-            ],
-            "demo_output_group": "countermeasure"
-        },
-        {
-            "capture_candidate_id": "demo_27",
-            "suggested_category": "unresolved",
-            "adopted_category": "unresolved",
-            "suggested_statement": "展示リニューアル予定の有無が未確認。古い展示名を正本化しない。",
-            "adopted_statement": "展示リニューアル予定の有無が未確認。古い展示名を正本化しない。",
-            "source_label": "対策書候補",
-            "review_state": "pending",
-            "usable_for_current_state": false,
             "relation": "new",
             "compare_relation": "new",
             "current_relation": "new",
             "evidence": [
                 {
                     "role": "USER",
-                    "order": 27,
-                    "text": "古い名称の混入を防ぎます。"
+                    "order": 26,
+                    "text": "綺麗な星空サイトを作る話ではなく、親が「今日行って大丈夫か」と判断できて、その先に子どもの記憶が残る流れを作る話なんだと思います。"
                 }
             ],
-            "demo_output_group": "countermeasure"
+            "demo_output_group": "E"
         },
         {
-            "capture_candidate_id": "demo_28",
-            "suggested_category": "unresolved",
-            "adopted_category": "unresolved",
-            "suggested_statement": "交通アクセスの駐車場台数が未確認。断定表示を避ける。",
-            "adopted_statement": "交通アクセスの駐車場台数が未確認。断定表示を避ける。",
-            "source_label": "対策書候補",
-            "review_state": "insufficient_evidence",
-            "usable_for_current_state": false,
-            "relation": "update",
-            "compare_relation": "update",
-            "current_relation": "update",
+            "capture_candidate_id": "demo_027",
+            "suggested_category": "デザイン",
+            "adopted_category": "デザイン",
+            "suggested_statement": "アニメーションも常時流れる星ではなく、見出し、判断カード、予約導線が順に出る程度で十分です。",
+            "adopted_statement": "アニメーションも常時流れる星ではなく、見出し、判断カード、予約導線が順に出る程度で十分です。",
+            "source_label": "E デザイン判断",
+            "review_state": "raw_original",
+            "usable_for_current_state": true,
+            "relation": "new",
+            "compare_relation": "new",
+            "current_relation": "new",
             "evidence": [
                 {
                     "role": "ASSISTANT",
-                    "order": 28,
-                    "text": "駐車場情報は確認対象です。"
+                    "order": 27,
+                    "text": "アニメーションも常時流れる星ではなく、見出し、判断カード、予約導線が順に出る程度で十分です。"
                 }
             ],
-            "demo_output_group": "countermeasure"
+            "demo_output_group": "E"
         },
         {
-            "capture_candidate_id": "demo_29",
-            "suggested_category": "next_action",
-            "adopted_category": "next_action",
-            "suggested_statement": "次回はトップの主操作、料金表、イベントカード、FAQの順に確認する。",
-            "adopted_statement": "次回はトップの主操作、料金表、イベントカード、FAQの順に確認する。",
-            "source_label": "対策書候補",
-            "review_state": "edited_approved",
+            "capture_candidate_id": "demo_028",
+            "suggested_category": "デザイン",
+            "adopted_category": "デザイン",
+            "suggested_statement": "「今日行ける？」は分かりやすいですが、少し軽く見えます。\n\n親がスマホで移動中に見ても迷わないことが大事なので、予約や雨天時も含めて判断できるカードにしたいです。",
+            "adopted_statement": "「今日行ける？」は分かりやすいですが、少し軽く見えます。\n\n親がスマホで移動中に見ても迷わないことが大事なので、予約や雨天時も含めて判断できるカードにしたいです。",
+            "source_label": "E デザイン判断",
+            "review_state": "raw_original",
             "usable_for_current_state": true,
-            "relation": "same",
-            "compare_relation": "same",
-            "current_relation": "same",
+            "relation": "new",
+            "compare_relation": "new",
+            "current_relation": "new",
+            "evidence": [
+                {
+                    "role": "USER",
+                    "order": 28,
+                    "text": "「今日行ける？」は分かりやすいですが、少し軽く見えます。\n\n親がスマホで移動中に見ても迷わないことが大事なので、予約や雨天時も含めて判断できるカードにしたいです。"
+                }
+            ],
+            "demo_output_group": "E"
+        },
+        {
+            "capture_candidate_id": "demo_029",
+            "suggested_category": "デザイン",
+            "adopted_category": "デザイン",
+            "suggested_statement": "星座カードはかなり気になります。\n\nこれは単なる配布物ではなくて、家に帰ったあとに親子で空を見るきっかけになっている可能性があります。",
+            "adopted_statement": "星座カードはかなり気になります。\n\nこれは単なる配布物ではなくて、家に帰ったあとに親子で空を見るきっかけになっている可能性があります。",
+            "source_label": "E デザイン判断",
+            "review_state": "raw_original",
+            "usable_for_current_state": true,
+            "relation": "new",
+            "compare_relation": "new",
+            "current_relation": "new",
             "evidence": [
                 {
                     "role": "USER",
                     "order": 29,
-                    "text": "確認順を固定して再発を防ぎます。"
+                    "text": "星座カードはかなり気になります。\n\nこれは単なる配布物ではなくて、家に帰ったあとに親子で空を見るきっかけになっている可能性があります。"
                 }
             ],
-            "demo_output_group": "countermeasure"
+            "demo_output_group": "E"
         },
         {
-            "capture_candidate_id": "demo_30",
-            "suggested_category": "next_action",
-            "adopted_category": "next_action",
-            "suggested_statement": "公開前チェックでは、金額・日付・予約要否・対象年齢の4項目を必ず照合する。",
-            "adopted_statement": "公開前チェックでは、金額・日付・予約要否・対象年齢の4項目を必ず照合する。",
-            "source_label": "対策書候補",
-            "review_state": "pending",
-            "usable_for_current_state": false,
-            "relation": "issue",
-            "compare_relation": "issue",
-            "current_relation": "issue",
+            "capture_candidate_id": "demo_030",
+            "suggested_category": "デザイン",
+            "adopted_category": "デザイン",
+            "suggested_statement": "展示がすごい、設備がすごい、という方向では大きい施設に勝てないかもしれません。\nでも、帰り道や家で子どもが空を見上げるなら、この科学館に行く意味がちゃんとある。",
+            "adopted_statement": "展示がすごい、設備がすごい、という方向では大きい施設に勝てないかもしれません。\nでも、帰り道や家で子どもが空を見上げるなら、この科学館に行く意味がちゃんとある。",
+            "source_label": "E デザイン判断",
+            "review_state": "raw_original",
+            "usable_for_current_state": true,
+            "relation": "new",
+            "compare_relation": "new",
+            "current_relation": "new",
             "evidence": [
                 {
-                    "role": "ASSISTANT",
+                    "role": "USER",
                     "order": 30,
-                    "text": "確認ゲートとして使います。"
+                    "text": "展示がすごい、設備がすごい、という方向では大きい施設に勝てないかもしれません。\nでも、帰り道や家で子どもが空を見上げるなら、この科学館に行く意味がちゃんとある。"
                 }
             ],
-            "demo_output_group": "countermeasure"
+            "demo_output_group": "E"
         },
         {
-            "capture_candidate_id": "demo_31",
-            "suggested_category": "next_action",
-            "adopted_category": "next_action",
-            "suggested_statement": "スマホ幅で予約ボタンがファーストビュー内に残るか確認する。",
-            "adopted_statement": "スマホ幅で予約ボタンがファーストビュー内に残るか確認する。",
-            "source_label": "対策書候補",
-            "review_state": "edited_approved",
+            "capture_candidate_id": "demo_031",
+            "suggested_category": "発展タスク",
+            "adopted_category": "発展タスク",
+            "suggested_statement": "ただ、これを初期の来館案内ページに全部入れると重くなるので、今回は入口に少しだけ見せたいです。\n詳しい展開は後ろに回して、発展タスクとして残したいです。",
+            "adopted_statement": "ただ、これを初期の来館案内ページに全部入れると重くなるので、今回は入口に少しだけ見せたいです。\n詳しい展開は後ろに回して、発展タスクとして残したいです。",
+            "source_label": "F 発展タスク",
+            "review_state": "raw_original",
             "usable_for_current_state": true,
-            "relation": "unmatched",
-            "compare_relation": "unmatched",
-            "current_relation": "unmatched",
+            "relation": "new",
+            "compare_relation": "new",
+            "current_relation": "new",
             "evidence": [
                 {
                     "role": "USER",
                     "order": 31,
-                    "text": "レスポンシブ確認を次行動にします。"
+                    "text": "ただ、これを初期の来館案内ページに全部入れると重くなるので、今回は入口に少しだけ見せたいです。\n詳しい展開は後ろに回して、発展タスクとして残したいです。"
                 }
             ],
-            "demo_output_group": "countermeasure"
+            "demo_output_group": "F"
         },
         {
-            "capture_candidate_id": "demo_32",
-            "suggested_category": "next_action",
-            "adopted_category": "next_action",
-            "suggested_statement": "専門用語を残す場合は、見出しではなく補足カードへ移動する。",
-            "adopted_statement": "専門用語を残す場合は、見出しではなく補足カードへ移動する。",
-            "source_label": "対策書候補",
-            "review_state": "pending",
-            "usable_for_current_state": false,
+            "capture_candidate_id": "demo_032",
+            "suggested_category": "発展タスク",
+            "adopted_category": "発展タスク",
+            "suggested_statement": "後続では、星座カードの持ち帰り導線、夜に親子で空を見る導線、次の観測会への再来館導線へ広げられます。",
+            "adopted_statement": "後続では、星座カードの持ち帰り導線、夜に親子で空を見る導線、次の観測会への再来館導線へ広げられます。",
+            "source_label": "F 発展タスク",
+            "review_state": "raw_original",
+            "usable_for_current_state": true,
             "relation": "new",
             "compare_relation": "new",
             "current_relation": "new",
@@ -902,472 +902,264 @@ window.JARVIS_PAGE_DEFINITIONS = {
                 {
                     "role": "ASSISTANT",
                     "order": 32,
-                    "text": "分かりやすさの修正行動です。"
+                    "text": "後続では、星座カードの持ち帰り導線、夜に親子で空を見る導線、次の観測会への再来館導線へ広げられます。"
                 }
             ],
-            "demo_output_group": "countermeasure"
+            "demo_output_group": "F"
         },
         {
-            "capture_candidate_id": "demo_33",
-            "suggested_category": "next_action",
-            "adopted_category": "next_action",
-            "suggested_statement": "イベント一覧のカードごとに「誰向けか」を1行で入れる。",
-            "adopted_statement": "イベント一覧のカードごとに「誰向けか」を1行で入れる。",
-            "source_label": "対策書候補",
-            "review_state": "insufficient_evidence",
-            "usable_for_current_state": false,
-            "relation": "update",
-            "compare_relation": "update",
-            "current_relation": "update",
+            "capture_candidate_id": "demo_033",
+            "suggested_category": "発展タスク",
+            "adopted_category": "発展タスク",
+            "suggested_statement": "次回は、ファーストビューと3カード文面だけでなく、星座カードをどの程度見せるかも続きで見たいです。",
+            "adopted_statement": "次回は、ファーストビューと3カード文面だけでなく、星座カードをどの程度見せるかも続きで見たいです。",
+            "source_label": "F 発展タスク",
+            "review_state": "raw_original",
+            "usable_for_current_state": true,
+            "relation": "new",
+            "compare_relation": "new",
+            "current_relation": "new",
             "evidence": [
                 {
                     "role": "USER",
                     "order": 33,
-                    "text": "参加判断の欠落対策です。"
+                    "text": "次回は、ファーストビューと3カード文面だけでなく、星座カードをどの程度見せるかも続きで見たいです。"
                 }
             ],
-            "demo_output_group": "countermeasure"
+            "demo_output_group": "F"
         },
         {
-            "capture_candidate_id": "demo_34",
-            "suggested_category": "next_action",
-            "adopted_category": "next_action",
-            "suggested_statement": "FAQへ「何歳から楽しめるか」「予約なしで入れるか」「雨でも行けるか」を追加する。",
-            "adopted_statement": "FAQへ「何歳から楽しめるか」「予約なしで入れるか」「雨でも行けるか」を追加する。",
-            "source_label": "対策書候補",
-            "review_state": "edited_approved",
+            "capture_candidate_id": "demo_034",
+            "suggested_category": "発展タスク",
+            "adopted_category": "発展タスク",
+            "suggested_statement": "雨の日シアターは雨でも行く理由になるので使いたいですが、常設かどうかは確認が必要です。\n魅力としては残しつつ、断定しない出し方にしたいです。",
+            "adopted_statement": "雨の日シアターは雨でも行く理由になるので使いたいですが、常設かどうかは確認が必要です。\n魅力としては残しつつ、断定しない出し方にしたいです。",
+            "source_label": "F 発展タスク",
+            "review_state": "raw_original",
             "usable_for_current_state": true,
-            "relation": "same",
-            "compare_relation": "same",
-            "current_relation": "same",
+            "relation": "new",
+            "compare_relation": "new",
+            "current_relation": "new",
             "evidence": [
                 {
-                    "role": "ASSISTANT",
+                    "role": "USER",
                     "order": 34,
-                    "text": "よくある疑問を先回りします。"
+                    "text": "雨の日シアターは雨でも行く理由になるので使いたいですが、常設かどうかは確認が必要です。\n魅力としては残しつつ、断定しない出し方にしたいです。"
                 }
             ],
-            "demo_output_group": "countermeasure"
+            "demo_output_group": "F"
         },
         {
-            "capture_candidate_id": "demo_35",
-            "suggested_category": "next_action",
-            "adopted_category": "next_action",
-            "suggested_statement": "画像差し替え時は、写真の迫力より案内文の可読性を優先して確認する。",
-            "adopted_statement": "画像差し替え時は、写真の迫力より案内文の可読性を優先して確認する。",
-            "source_label": "対策書候補",
-            "review_state": "pending",
-            "usable_for_current_state": false,
-            "relation": "issue",
-            "compare_relation": "issue",
-            "current_relation": "issue",
+            "capture_candidate_id": "demo_035",
+            "suggested_category": "発展タスク",
+            "adopted_category": "発展タスク",
+            "suggested_statement": "発展タスクとしては、星座カードの持ち帰り導線、雨の日コース、観測会詳細ページは残したいです。",
+            "adopted_statement": "発展タスクとしては、星座カードの持ち帰り導線、雨の日コース、観測会詳細ページは残したいです。",
+            "source_label": "F 発展タスク",
+            "review_state": "raw_original",
+            "usable_for_current_state": true,
+            "relation": "new",
+            "compare_relation": "new",
+            "current_relation": "new",
             "evidence": [
                 {
                     "role": "USER",
                     "order": 35,
-                    "text": "見栄えだけで操作性を落とさない確認です。"
+                    "text": "発展タスクとしては、星座カードの持ち帰り導線、雨の日コース、観測会詳細ページは残したいです。"
                 }
             ],
-            "demo_output_group": "countermeasure"
+            "demo_output_group": "F"
         },
         {
-            "capture_candidate_id": "demo_36",
-            "suggested_category": "next_action",
-            "adopted_category": "next_action",
-            "suggested_statement": "古い営業情報を見つけた場合は、本文修正ではなく確認待ちリストへ移す。",
-            "adopted_statement": "古い営業情報を見つけた場合は、本文修正ではなく確認待ちリストへ移す。",
-            "source_label": "対策書候補",
-            "review_state": "edited_approved",
+            "capture_candidate_id": "demo_036",
+            "suggested_category": "発展タスク",
+            "adopted_category": "発展タスク",
+            "suggested_statement": "SNSや学校連携はさらに後でいいです。\n全部を同じ後回しにすると、次に見た時にまた迷うので、体験に近いものを近い発展候補として残したいです。",
+            "adopted_statement": "SNSや学校連携はさらに後でいいです。\n全部を同じ後回しにすると、次に見た時にまた迷うので、体験に近いものを近い発展候補として残したいです。",
+            "source_label": "F 発展タスク",
+            "review_state": "raw_original",
             "usable_for_current_state": true,
-            "relation": "unmatched",
-            "compare_relation": "unmatched",
-            "current_relation": "unmatched",
+            "relation": "new",
+            "compare_relation": "new",
+            "current_relation": "new",
             "evidence": [
                 {
-                    "role": "ASSISTANT",
+                    "role": "USER",
                     "order": 36,
-                    "text": "未確認情報の混入対策です。"
+                    "text": "SNSや学校連携はさらに後でいいです。\n全部を同じ後回しにすると、次に見た時にまた迷うので、体験に近いものを近い発展候補として残したいです。"
                 }
             ],
-            "demo_output_group": "countermeasure"
+            "demo_output_group": "F"
+        }
+    ],
+    "conversation": [
+        {
+            "role": "User",
+            "text": "地方の小さな星空科学館で来館者が減っている場合、まず何を見れば原因が分かりますか。"
         },
         {
-            "capture_candidate_id": "demo_37",
-            "suggested_category": "design_direction",
-            "adopted_category": "design_direction",
-            "suggested_statement": "トップの見出しは「宇宙を学ぶ」より「今日、子どもと何を体験できるか」が伝わる表現にする。",
-            "adopted_statement": "トップの見出しは「宇宙を学ぶ」より「今日、子どもと何を体験できるか」が伝わる表現にする。",
-            "source_label": "デザイン知候補",
-            "review_state": "pending",
-            "usable_for_current_state": false,
-            "relation": "new",
-            "compare_relation": "new",
-            "current_relation": "new",
-            "evidence": [
-                {
-                    "role": "USER",
-                    "order": 37,
-                    "text": "抽象的な魅力より、行動が想像できる見出しを優先します。"
-                }
-            ],
-            "demo_output_group": "design"
+            "role": "ChatGPT",
+            "text": "まずは来館者数だけでなく、「来る前に何を見ているか」と「来た後に何が記憶に残っているか」を分けて見るのがよいです。\n手元資料なら、古いパンフレット、来館者アンケート、イベント一覧、既存ページを確認します。\n可能なら問い合わせ内容や、予約前に離脱していそうな箇所も見たいです。\nSNS、学校連携、広告、地域イベントなども候補にはなりますが、最初からそこへ行くと、原因確認と対策案が混ざりやすいです。"
         },
         {
-            "capture_candidate_id": "demo_38",
-            "suggested_category": "design_direction",
-            "adopted_category": "design_direction",
-            "suggested_statement": "カードは写真・体験名・対象年齢・所要時間・予約要否の順に配置する。",
-            "adopted_statement": "カードは写真・体験名・対象年齢・所要時間・予約要否の順に配置する。",
-            "source_label": "デザイン知候補",
-            "review_state": "insufficient_evidence",
-            "usable_for_current_state": false,
-            "relation": "update",
-            "compare_relation": "update",
-            "current_relation": "update",
-            "evidence": [
-                {
-                    "role": "ASSISTANT",
-                    "order": 38,
-                    "text": "視線の順番を揃えます。"
-                }
-            ],
-            "demo_output_group": "design"
+            "role": "User",
+            "text": "施策案ではなく、手元資料から見えることに絞りたいです。"
         },
         {
-            "capture_candidate_id": "demo_39",
-            "suggested_category": "design_direction",
-            "adopted_category": "design_direction",
-            "suggested_statement": "強調色は予約や来館判断の主操作に限定し、説明ラベルには使いすぎない。",
-            "adopted_statement": "強調色は予約や来館判断の主操作に限定し、説明ラベルには使いすぎない。",
-            "source_label": "デザイン知候補",
-            "review_state": "edited_approved",
-            "usable_for_current_state": true,
-            "relation": "same",
-            "compare_relation": "same",
-            "current_relation": "same",
-            "evidence": [
-                {
-                    "role": "USER",
-                    "order": 39,
-                    "text": "色の役割を限定します。"
-                }
-            ],
-            "demo_output_group": "design"
+            "role": "ChatGPT",
+            "text": "では、資料ごとに役割を分けて見ます。\nパンフレットは「施設側が何を伝えようとしているか」。\nアンケートは「来館者に何が残っているか」。\n既存ページは「来館前に判断できるか」。\nこの3つを比べると、単なる情報不足なのか、伝えている内容と残っている体験がズレているのかを分けやすくなります。"
         },
         {
-            "capture_candidate_id": "demo_40",
-            "suggested_category": "design_direction",
-            "adopted_category": "design_direction",
-            "suggested_statement": "小学生向けの説明は、漢字を避けるよりも一文を短くして意味を分ける。",
-            "adopted_statement": "小学生向けの説明は、漢字を避けるよりも一文を短くして意味を分ける。",
-            "source_label": "デザイン知候補",
-            "review_state": "pending",
-            "usable_for_current_state": false,
-            "relation": "issue",
-            "compare_relation": "issue",
-            "current_relation": "issue",
-            "evidence": [
-                {
-                    "role": "ASSISTANT",
-                    "order": 40,
-                    "text": "読みやすさの基準を残します。"
-                }
-            ],
-            "demo_output_group": "design"
+            "role": "User",
+            "text": "パンフは展示名と設備説明が多いです。\n見出しも「宇宙展示室」「太陽系模型」「プラネタリウム設備」みたいな感じです。"
         },
         {
-            "capture_candidate_id": "demo_41",
-            "suggested_category": "design_direction",
-            "adopted_category": "design_direction",
-            "suggested_statement": "料金表は罫線で詰め込まず、家族単位で比較しやすい余白を確保する。",
-            "adopted_statement": "料金表は罫線で詰め込まず、家族単位で比較しやすい余白を確保する。",
-            "source_label": "デザイン知候補",
-            "review_state": "edited_approved",
-            "usable_for_current_state": true,
-            "relation": "unmatched",
-            "compare_relation": "unmatched",
-            "current_relation": "unmatched",
-            "evidence": [
-                {
-                    "role": "USER",
-                    "order": 41,
-                    "text": "表の見やすさを判断基準にします。"
-                }
-            ],
-            "demo_output_group": "design"
+            "role": "ChatGPT",
+            "text": "それだと、施設側の言葉はかなり設備寄りです。\n悪いわけではありませんが、初めて行く親子にとっては「結局、うちの子は楽しめるのか」「どのくらい時間がかかるのか」が見えにくい可能性があります。\nパンフレットの情報は施設説明としては使えます。\nただし来館前の入口では、展示名よりも、親が判断する材料へ翻訳する必要がありそうです。"
         },
         {
-            "capture_candidate_id": "demo_42",
-            "suggested_category": "design_direction",
-            "adopted_category": "design_direction",
-            "suggested_statement": "スマホでは写真を縦に重ねすぎず、主操作までのスクロール距離を短くする。",
-            "adopted_statement": "スマホでは写真を縦に重ねすぎず、主操作までのスクロール距離を短くする。",
-            "source_label": "デザイン知候補",
-            "review_state": "pending",
-            "usable_for_current_state": false,
-            "relation": "new",
-            "compare_relation": "new",
-            "current_relation": "new",
-            "evidence": [
-                {
-                    "role": "ASSISTANT",
-                    "order": 42,
-                    "text": "モバイル導線の基準です。"
-                }
-            ],
-            "demo_output_group": "design"
+            "role": "User",
+            "text": "アンケートには「屋上で本物の星を見たのを子どもが帰ってから話していた」「星座カードを家で見返していた」みたいな回答があります。\n設備名より、体験の方が残っている感じがします。"
         },
         {
-            "capture_candidate_id": "demo_43",
-            "suggested_category": "design_direction",
-            "adopted_category": "design_direction",
-            "suggested_statement": "イベントカードの「予約必要」はラベルではなく、押せる導線として見える位置に置く。",
-            "adopted_statement": "イベントカードの「予約必要」はラベルではなく、押せる導線として見える位置に置く。",
-            "source_label": "デザイン知候補",
-            "review_state": "insufficient_evidence",
-            "usable_for_current_state": false,
-            "relation": "update",
-            "compare_relation": "update",
-            "current_relation": "update",
-            "evidence": [
-                {
-                    "role": "USER",
-                    "order": 43,
-                    "text": "状態表示と操作の区別を明確にします。"
-                }
-            ],
-            "demo_output_group": "design"
+            "role": "ChatGPT",
+            "text": "そこはかなり強い材料です。\n来館者に残っているのは、展示名そのものではなく、親子の会話や帰宅後の行動です。\n屋上観測会はその場の体験、星座カードは持ち帰り、雨の日シアターは不安を覆した体験です。\nつまり、この科学館の価値は「展示を見る」だけではなく、家に帰ってから星を見たくなる体験にあるかもしれません。"
         },
         {
-            "capture_candidate_id": "demo_44",
-            "suggested_category": "design_direction",
-            "adopted_category": "design_direction",
-            "suggested_statement": "FAQは長文回答にせず、先頭1行で結論を出してから補足する。",
-            "adopted_statement": "FAQは長文回答にせず、先頭1行で結論を出してから補足する。",
-            "source_label": "デザイン知候補",
-            "review_state": "edited_approved",
-            "usable_for_current_state": true,
-            "relation": "same",
-            "compare_relation": "same",
-            "current_relation": "same",
-            "evidence": [
-                {
-                    "role": "ASSISTANT",
-                    "order": 44,
-                    "text": "読まれやすい回答構造です。"
-                }
-            ],
-            "demo_output_group": "design"
+            "role": "User",
+            "text": "ここで少し見え方が変わりますね。\n\n展示物を説明する施設だと思っていましたが、来館者の記憶はそこではない気がします。\n屋上で星を見たことや、家でカードを見返したことが残っているなら、施設の価値は「展示物そのもの」より後に続く体験なのかもしれません。\n\nそうなると、ページで最初に見せるものも変わりそうです。"
         },
         {
-            "capture_candidate_id": "demo_45",
-            "suggested_category": "design_direction",
-            "adopted_category": "design_direction",
-            "suggested_statement": "未確認情報は薄い警告色で区別し、確定情報と同じ見た目にしない。",
-            "adopted_statement": "未確認情報は薄い警告色で区別し、確定情報と同じ見た目にしない。",
-            "source_label": "デザイン知候補",
-            "review_state": "pending",
-            "usable_for_current_state": false,
-            "relation": "issue",
-            "compare_relation": "issue",
-            "current_relation": "issue",
-            "evidence": [
-                {
-                    "role": "USER",
-                    "order": 45,
-                    "text": "確認状態を見た目で判断できるようにします。"
-                }
-            ],
-            "demo_output_group": "design"
+            "role": "ChatGPT",
+            "text": "はい。そこがこの資料から見える一番大きな変化です。\n施設側は設備を説明している。\n来館者は体験の余韻を覚えている。\nこのズレをそのまま放置すると、来館前の人には価値が伝わりにくいです。\n来館案内では、「行く前に分かる安心」と「行った後に残る体験」をつなげる必要があります。"
         },
         {
-            "capture_candidate_id": "demo_46",
-            "suggested_category": "design_direction",
-            "adopted_category": "design_direction",
-            "suggested_statement": "写真の雰囲気は暗い宇宙感だけに寄せず、親子の安心感が伝わる明るさも混ぜる。",
-            "adopted_statement": "写真の雰囲気は暗い宇宙感だけに寄せず、親子の安心感が伝わる明るさも混ぜる。",
-            "source_label": "デザイン知候補",
-            "review_state": "edited_approved",
-            "usable_for_current_state": true,
-            "relation": "unmatched",
-            "compare_relation": "unmatched",
-            "current_relation": "unmatched",
-            "evidence": [
-                {
-                    "role": "ASSISTANT",
-                    "order": 46,
-                    "text": "施設の印象づくりの判断基準です。"
-                }
-            ],
-            "demo_output_group": "design"
+            "role": "User",
+            "text": "既存ページのスクショもあります。\nトップに星空写真と施設紹介があり、その下に展示一覧があります。"
         },
         {
-            "capture_candidate_id": "demo_47",
-            "suggested_category": "improvement",
-            "adopted_category": "improvement",
-            "suggested_statement": "次回改善では、来館前チェックリストを小さなカードとして追加する案を検討する。",
-            "adopted_statement": "次回改善では、来館前チェックリストを小さなカードとして追加する案を検討する。",
-            "source_label": "改善課題候補",
-            "review_state": "pending",
-            "usable_for_current_state": false,
-            "relation": "new",
-            "compare_relation": "new",
-            "current_relation": "new",
-            "evidence": [
-                {
-                    "role": "USER",
-                    "order": 47,
-                    "text": "来館判断をさらに早くする改善案です。"
-                }
-            ],
-            "demo_output_group": "improvement"
+            "role": "ChatGPT",
+            "text": "その構成だと、雰囲気と施設説明はありますが、親子連れが最初に判断したい情報が下に埋もれている可能性があります。\nたとえば「今日行けるか」「何歳から楽しめるか」「予約が必要か」「雨の日でも意味があるか」がすぐ見えないと、興味はあっても候補から外れやすいです。\nここで初めて、改善対象として来館案内ページが出てきます。\nWebを綺麗にするためではなく、来館前の不安を減らす入口として作る、という位置づけです。"
         },
         {
-            "capture_candidate_id": "demo_48",
-            "suggested_category": "improvement",
-            "adopted_category": "improvement",
-            "suggested_statement": "予約フォームへの遷移後に、選択中イベント名が引き継がれるかを確認する。",
-            "adopted_statement": "予約フォームへの遷移後に、選択中イベント名が引き継がれるかを確認する。",
-            "source_label": "改善課題候補",
-            "review_state": "insufficient_evidence",
-            "usable_for_current_state": false,
-            "relation": "update",
-            "compare_relation": "update",
-            "current_relation": "update",
-            "evidence": [
-                {
-                    "role": "ASSISTANT",
-                    "order": 48,
-                    "text": "導線の後段改善です。"
-                }
-            ],
-            "demo_output_group": "improvement"
+            "role": "User",
+            "text": "一度、AIが普通に作りそうなファーストビュー案を出すとどうなりますか。\nあえて、よくある綺麗な星空サイト案を見てみたいです。"
         },
         {
-            "capture_candidate_id": "demo_49",
-            "suggested_category": "evolution",
-            "adopted_category": "evolution",
-            "suggested_statement": "季節イベントが増えた場合は、常設展示と期間限定イベントを分ける必要がある。",
-            "adopted_statement": "季節イベントが増えた場合は、常設展示と期間限定イベントを分ける必要がある。",
-            "source_label": "改善課題候補",
-            "review_state": "edited_approved",
-            "usable_for_current_state": true,
-            "relation": "same",
-            "compare_relation": "same",
-            "current_relation": "same",
-            "evidence": [
-                {
-                    "role": "USER",
-                    "order": 49,
-                    "text": "情報量増加に備える改善です。"
-                }
-            ],
-            "demo_output_group": "improvement"
+            "role": "ChatGPT",
+            "text": "よくある案だと、濃紺背景に大きな星空写真を敷き、白文字で「星降る夜に、親子で宇宙と出会う」などのコピーを置く構成です。\nその下に、施設紹介、展示一覧、イベント情報、アクセス、予約ボタンを並べる形になります。\n見た目は星空らしくなりますが、判断材料は後ろに回りがちです。\n特にスマホでは、写真とコピーが大きいほど、予約・所要時間・対象年齢・雨天時案内が見つけにくくなります。"
         },
         {
-            "capture_candidate_id": "demo_50",
-            "suggested_category": "evolution",
-            "adopted_category": "evolution",
-            "suggested_statement": "学校団体向けページを別入口に分けるか、一般来館と共存させるかを検討する。",
-            "adopted_statement": "学校団体向けページを別入口に分けるか、一般来館と共存させるかを検討する。",
-            "source_label": "改善課題候補",
-            "review_state": "pending",
-            "usable_for_current_state": false,
-            "relation": "issue",
-            "compare_relation": "issue",
-            "current_relation": "issue",
-            "evidence": [
-                {
-                    "role": "ASSISTANT",
-                    "order": 50,
-                    "text": "対象者が増えた場合の拡張候補です。"
-                }
-            ],
-            "demo_output_group": "improvement"
+            "role": "User",
+            "text": "ああ、これです。"
         },
         {
-            "capture_candidate_id": "demo_51",
-            "suggested_category": "result",
-            "adopted_category": "result",
-            "suggested_statement": "公開後の問い合わせ内容を集め、FAQの不足を更新候補へ回す。",
-            "adopted_statement": "公開後の問い合わせ内容を集め、FAQの不足を更新候補へ回す。",
-            "source_label": "改善課題候補",
-            "review_state": "edited_approved",
-            "usable_for_current_state": true,
-            "relation": "unmatched",
-            "compare_relation": "unmatched",
-            "current_relation": "unmatched",
-            "evidence": [
-                {
-                    "role": "USER",
-                    "order": 51,
-                    "text": "運用後に改善へつなげます。"
-                }
-            ],
-            "demo_output_group": "improvement"
+            "role": "ChatGPT",
+            "text": "はい。見た目としては分かりやすい星空サイトですが、今回の資料から見えた課題とは少しズレている可能性があります。\n写真やコピーを大きく見せるほど、親が最初に判断したい情報が下へ流れます。\nこの案を比較対象にすると、今回必要なページの方向が逆に見えやすくなります。"
         },
         {
-            "capture_candidate_id": "demo_52",
-            "suggested_category": "improvement",
-            "adopted_category": "improvement",
-            "suggested_statement": "スマホ確認で主操作が下がる場合は、トップ構成を写真優先から情報優先へ切り替える。",
-            "adopted_statement": "スマホ確認で主操作が下がる場合は、トップ構成を写真優先から情報優先へ切り替える。",
-            "source_label": "改善課題候補",
-            "review_state": "pending",
-            "usable_for_current_state": false,
-            "relation": "new",
-            "compare_relation": "new",
-            "current_relation": "new",
-            "evidence": [
-                {
-                    "role": "ASSISTANT",
-                    "order": 52,
-                    "text": "検証結果に応じた改善です。"
-                }
-            ],
-            "demo_output_group": "improvement"
+            "role": "User",
+            "text": "たぶんAIに任せると、最初にこういう絵として綺麗な方向へ行きやすいんですよね。\n\nでも資料を見ると、来館者が覚えているのは「星空っぽい画面」ではなくて、屋上で本物の星を見たことや、子どもが星座カードを家で見返していたことです。\n綺麗な星空サイトを作る話ではなく、親が「今日行って大丈夫か」と判断できて、その先に子どもの記憶が残る流れを作る話なんだと思います。\n\n星空感が悪いのではなく、順番が違う。\nここを間違えると、また施設紹介と雰囲気だけのページに戻ってしまいます。"
         },
         {
-            "capture_candidate_id": "demo_53",
-            "suggested_category": "evolution",
-            "adopted_category": "evolution",
-            "suggested_statement": "イベント枠の増減に合わせ、カード数が多い時の一覧折りたたみを検討する。",
-            "adopted_statement": "イベント枠の増減に合わせ、カード数が多い時の一覧折りたたみを検討する。",
-            "source_label": "改善課題候補",
-            "review_state": "insufficient_evidence",
-            "usable_for_current_state": false,
-            "relation": "update",
-            "compare_relation": "update",
-            "current_relation": "update",
-            "evidence": [
-                {
-                    "role": "USER",
-                    "order": 53,
-                    "text": "将来の情報量増加対策です。"
-                }
-            ],
-            "demo_output_group": "improvement"
+            "role": "ChatGPT",
+            "text": "その整理は、このページの方向を決める軸になります。\n否定すべきなのは星空感ではなく、星空演出を主役にして判断材料を後ろへ回すことです。\n親が最初に必要とするのは、今日行けるか、何歳から楽しめるか、予約が必要か、雨の日でも意味があるかです。\n星空感は、余白、小さな星点、見出し周辺の淡い光、カード角の弱い演出で補助する程度が合います。\nアニメーションも常時流れる星ではなく、見出し、判断カード、予約導線が順に出る程度で十分です。"
         },
         {
-            "capture_candidate_id": "demo_54",
-            "suggested_category": "improvement",
-            "adopted_category": "improvement",
-            "suggested_statement": "デモ確認後、サンプルとして見せる分類名と実運用の分類名を分けて整理する。",
-            "adopted_statement": "デモ確認後、サンプルとして見せる分類名と実運用の分類名を分けて整理する。",
-            "source_label": "改善課題候補",
-            "review_state": "edited_approved",
-            "usable_for_current_state": true,
-            "relation": "same",
-            "compare_relation": "same",
-            "current_relation": "same",
-            "evidence": [
-                {
-                    "role": "ASSISTANT",
-                    "order": 54,
-                    "text": "サンプルの分かりやすさを改善します。"
-                }
-            ],
-            "demo_output_group": "improvement"
+            "role": "User",
+            "text": "この比較はプレゼンで見せたいです。\n\n単にAIが間違えた話ではなく、AIが出した普通の案を見たことで、こちらの判断がはっきりした感じがあります。\n人間側がAIの案をそのまま採用するのではなく、資料と照らして違和感の正体を見つける。\n\nこの判断の瞬間を残せることが大事だと思います。"
+        },
+        {
+            "role": "ChatGPT",
+            "text": "はい。ここは単なるデザイン修正ではなく、判断の転換点です。\nAIの普通案が、結果的に比較対象になり、User側の判断を引き出しています。\nこの会話からは「幻想的な星空演出を主役にしない」「判断材料を先に置く」「資料から見える価値を優先する」という前提を抽出できます。\nつまり、次のAIが同じ方向へ戻らないための判断材料になります。"
+        },
+        {
+            "role": "User",
+            "text": "では、来館案内ページの最初は、見出し、確認チップ、3カードの順が良さそうです。"
+        },
+        {
+            "role": "ChatGPT",
+            "text": "構成として自然です。\n見出しは短くし、確認チップは「対象年齢」「所要時間」「予約」「雨天時」程度に絞ります。\n3カードは「今日行ける？」「何歳から楽しめる？」「どれくらい時間がかかる？」を候補にできます。\nPCでは3カード横並び、スマホでは1列。\n本文は15px未満にせず、カード説明は2行以内、詳細リンクは各カード1つまでに抑えると見やすいです。"
+        },
+        {
+            "role": "User",
+            "text": "「今日行ける？」は分かりやすいですが、少し軽く見えます。\n\n親がスマホで移動中に見ても迷わないことが大事なので、予約や雨天時も含めて判断できるカードにしたいです。\n軽い言葉に見えても、中身は実用に寄せたいです。"
+        },
+        {
+            "role": "ChatGPT",
+            "text": "では、見出しは軽くても、本文で実用情報につなげる形がよいです。\n1枚目は「今日行ける？」として、開館日、予約要否、雨天時の確認へつなげます。\n2枚目は「何歳から楽しめる？」として、対象年齢や体験の難しさを扱います。\n3枚目は「どれくらい時間がかかる？」として、滞在目安と観測会の有無を扱います。\nスマホでは1列にして、見出し、短い説明、確認リンクの順にすると、移動中でも読みやすいです。"
+        },
+        {
+            "role": "User",
+            "text": "イベント一覧を見ると、観測会は毎日ではなく月数回のようです。\n雨の日シアターも常設かは分かりません。"
+        },
+        {
+            "role": "ChatGPT",
+            "text": "それは重要です。\n屋上観測会や雨の日シアターは魅力として使えますが、毎日ある前提で出すと誤解につながります。\nここは「体験として記憶に残っているが、開催条件は要確認」と分けた方がよいです。\nカードやチップでは、確定情報として書かず、「開催日を確認」「雨の日の楽しみ方：要確認」のように扱うのが安全です。"
+        },
+        {
+            "role": "User",
+            "text": "料金・営業時間・予約方式も未確認です。\n\nここをAIがそれっぽく埋めると、本番文言と混ざって危ないです。\n仮の画面を作っているだけなのに、自然な文章として入ると、数日後に見返した時に「これは確認済みなのか」「AIが埋めただけなのか」が分からなくなる。\n\nこの混ざり方が一番怖いです。\nなので、見た目の仮案でも、未確認は未確認として表示したいです。\nここはデザインの都合より優先したいです。"
+        },
+        {
+            "role": "ChatGPT",
+            "text": "そこは強い再発防止ルールとして残すべきです。\n確定できるのは、確認チップを置くこと、3カード構成、スマホ1列、予約導線を上部と体験カード後に置くことです。\n未確認として残すのは、料金、営業時間、休館日、予約方式、アクセス詳細、実際のイベント開催日です。\nチップ内でも「予約：要確認」「所要時間：目安掲載予定」のように、未確定であることを残します。\nこれにより、仮文言と公開文面が混ざる事故を防げます。"
+        },
+        {
+            "role": "User",
+            "text": "屋上観測会・星座カード・雨の日シアターの扱いも少し見たいです。"
+        },
+        {
+            "role": "ChatGPT",
+            "text": "体験カードとして、3カードの下に置くのがよいです。\n上部の3カードは「行けるかどうかの判断」。\nその下の体験カードは「行ったら何が残るか」。\n屋上観測会は「本物の星を見る体験」、星座カードは「帰ってから見返す体験」、雨の日シアターは「天候が悪くても楽しめる可能性」として扱えます。\nただし、それぞれ開催条件や常設かどうかは未確認なので、断定しない見せ方にします。"
+        },
+        {
+            "role": "User",
+            "text": "星座カードはかなり気になります。\n\nこれは単なる配布物ではなくて、家に帰ったあとに親子で空を見るきっかけになっている可能性があります。\n小さい施設でも、そこまで体験が続いているなら、それは大きな価値ですよね。\n\n展示がすごい、設備がすごい、という方向では大きい施設に勝てないかもしれません。\nでも、帰り道や家で子どもが空を見上げるなら、この科学館に行く意味がちゃんとある。\n\nただ、これを初期の来館案内ページに全部入れると重くなるので、今回は入口に少しだけ見せたいです。\n詳しい展開は後ろに回して、発展タスクとして残したいです。"
+        },
+        {
+            "role": "ChatGPT",
+            "text": "その判断はかなり良いです。\n星座カードは、今回のページに少し出す価値がありますが、詳しい導線は後続に回すのが自然です。\n初期ページでは「来館後も楽しめる体験がある」と軽く見せる。\n後続では、星座カードの持ち帰り導線、夜に親子で空を見る導線、次の観測会への再来館導線へ広げられます。\nつまり、今はページを重くせず、価値の芽だけ残す扱いです。"
+        },
+        {
+            "role": "User",
+            "text": "ここでやっと、この科学館の見え方が変わった気がします。\n\n最初は「来館者が減っている施設をどう改善するか」くらいの話でした。\nでも今は、来館前の不安を減らして、館内の体験につなげて、帰った後に空を見るところまで残す話に見えてきています。\n\nこの変化があるから、ただの案内ページではなくなるんだと思います。\n次回は、ファーストビューと3カード文面だけでなく、星座カードをどの程度見せるかも続きで見たいです。"
+        },
+        {
+            "role": "ChatGPT",
+            "text": "それはこのページの中心にしてよい考えです。\n来館前には、安心して行ける判断材料を出す。\n来館中には、屋上観測会やシアターのような体験を見せる。\n帰宅後には、星座カードをきっかけに親子で空を見る可能性を残す。\nこの流れを作ると、施設の規模が小さいことを弱点として扱うのではなく、記憶に残る体験として伝えられます。"
+        },
+        {
+            "role": "User",
+            "text": "屋上観測会も主役にしたい気持ちはありますが、開催日が限られるなら最初に大きく出しすぎるのは危ないですね。\n\n雨の日シアターは雨でも行く理由になるので使いたいですが、常設かどうかは確認が必要です。\n魅力としては残しつつ、断定しない出し方にしたいです。"
+        },
+        {
+            "role": "ChatGPT",
+            "text": "はい。屋上観測会は魅力として強いですが、開催日が月数回なら、常時体験できるように見せるのは避けたいです。\n体験カードでは「開催日を確認」とセットで出すのが安全です。\n雨の日シアターも、常設かどうかが未確認なら「雨の日でも楽しめる体験を確認中」のように仮扱いにします。\n魅力を隠さず、誤解も避ける形です。"
+        },
+        {
+            "role": "User",
+            "text": "このあたりが分けられると、ただの会話要約ではなくなりますね。\n\n今すぐ使うもの、仕様にするもの、後で広げるもの、AIに禁止するものが全部混ざっています。\nそこを分けられるから、次に別のAIへ渡しても同じ説明を繰り返さずに済む。\n\n特に、星空サイト案を一度出してから順番の違いに気づくところと、未確認情報を補完しないところは見せたいです。"
+        },
+        {
+            "role": "ChatGPT",
+            "text": "その2か所は見せ場になります。\n1つ目は、デザインの見た目ではなく、情報の順番を判断している点。\n2つ目は、AIが作業中にやりがちな「それっぽい補完」を防ぐ点。\nこの2つがあると、KashinoKiが単なる要約ツールではなく、次のAI作業で失敗を減らす前提作りのツールだと伝わります。\n会話の中に散らばった判断・禁止・仕様・発展案を、次に使える形へ分けられます。"
+        },
+        {
+            "role": "User",
+            "text": "発展タスクとしては、星座カードの持ち帰り導線、雨の日コース、観測会詳細ページは残したいです。\n\nSNSや学校連携はさらに後でいいです。\n全部を同じ後回しにすると、次に見た時にまた迷うので、体験に近いものを近い発展候補として残したいです。"
+        },
+        {
+            "role": "ChatGPT",
+            "text": "では、発展タスクにも優先度を付けます。\n近い発展タスクは、星座カードの持ち帰り導線、雨の日コース、観測会詳細ページ、FAQ整理。\n後段の発展タスクは、SNS運用、学校連携、動画、地域連携、季節イベント、親子ミッション。\nこう分けると、次に広げる場合も、来館案内ページから自然につながるものを先に扱えます。\n全部を同列で残すより、再開時に判断しやすくなります。"
+        },
+        {
+            "role": "User",
+            "text": "最後に、次のAIへ渡すなら最初に何を読ませるべきかも短く残してください。\n次回はファーストビュー案、3カード文面、星座カードの見せ方から再開したいです。"
+        },
+        {
+            "role": "ChatGPT",
+            "text": "次AIへ渡す前提は、以下です。\nこの案件では、資料から見えることを優先し、いきなりSNS・広告・学校連携へ広げない。\n来館案内ページは、Webを綺麗にするためではなく、親子連れ・初回来館者の来館前不安を減らす入口として扱う。\n星空感は主役にせず、判断材料を先に置く。\n料金・営業時間・予約方式・アクセス詳細・イベント開催日は未確認のため、AIが本番文言のように補完しない。\n次回は、ファーストビュー案、3カード文面、星座カードの見せ方から再開する。"
         }
     ]
 }

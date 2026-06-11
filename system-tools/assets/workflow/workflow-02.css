@@ -118,7 +118,7 @@
 }
 
 /* v207: workflow 02 guide animation. */
-@keyframes jarvisV207GuideRise {
+@keyframes kashinokiV207GuideRise {
   0% {
     opacity: 0;
     transform: translateY(10px);
@@ -137,15 +137,15 @@
   }
 }
 
-@keyframes jarvisV207GuideGlow {
+@keyframes kashinokiV207GuideGlow {
   0% {
     box-shadow: 0 0 0 rgba(0, 0, 0, 0);
     background: rgba(255, 255, 255, .48)
   }
 
   45% {
-    box-shadow: 0 0 0 3px var(--jarvis-accent-soft, rgba(223, 255, 66, .22));
-    background: var(--jarvis-accent-soft, rgba(223, 255, 66, .18))
+    box-shadow: 0 0 0 3px var(--kashinoki-accent-soft, rgba(223, 255, 66, .22));
+    background: var(--kashinoki-accent-soft, rgba(223, 255, 66, .18))
   }
 
   100% {
@@ -163,7 +163,7 @@
 #portfolio-quality.workflow-animate:not(.guide-show-all) #floatingGuideControls {
   opacity: 0;
   transform: translateY(10px);
-  animation: jarvisV207GuideRise .58s cubic-bezier(.22, .61, .28, 1) forwards;
+  animation: kashinokiV207GuideRise .58s cubic-bezier(.22, .61, .28, 1) forwards;
 }
 
 #portfolio-quality.workflow-animate:not(.guide-show-all) .workflow-step-guide {
@@ -226,11 +226,11 @@
 }
 
 #portfolio-quality.workflow-animate:not(.guide-show-all) .workflow-fulltext-card {
-  animation-name: jarvisV207GuideRise;
+  animation-name: kashinokiV207GuideRise;
 }
 
 #portfolio-quality.workflow-animate:not(.guide-show-all) .workflow-range-item:nth-child(1) {
-  animation-name: jarvisV207GuideRise, jarvisV207GuideGlow;
+  animation-name: kashinokiV207GuideRise, kashinokiV207GuideGlow;
   animation-duration: .58s, 1.25s;
   animation-delay: 2.54s, 3.12s;
   animation-fill-mode: forwards, none;
@@ -299,7 +299,7 @@
   opacity: 0;
   transform: translateY(8px);
   filter: blur(1.4px);
-  animation: jarvisV222GuideContentIn .72s cubic-bezier(.22, .61, .28, 1) forwards;
+  animation: kashinokiV222GuideContentIn .72s cubic-bezier(.22, .61, .28, 1) forwards;
 }
 
 #portfolio-quality.workflow-animate:not(.guide-show-all) .workflow-step-guide>* {
@@ -379,6 +379,39 @@
   color: var(--nm-accent-ink) !important;
 }
 
+
+
+/* v757: STEP2 lower primary action underline matched to STEP1 entrance-fade highlight. */
+#portfolio-quality .guided-action-copy b{
+  position:relative;
+  display:inline-block;
+  isolation:isolate;
+}
+#portfolio-quality .guided-action-copy b::after{
+  content:"";
+  position:absolute;
+  z-index:-1;
+  left:-3px;
+  right:-6px;
+  bottom:-.04em;
+  height:.72em;
+  border-radius:3px 9px 8px 3px;
+  background:var(--guide-yellow-strong, rgba(236,239,66,.92));
+  opacity:0;
+  transform:scaleX(0) skewX(-1.2deg);
+  transform-origin:left center;
+  pointer-events:none;
+}
+/* v758: STEP2 underline must not be forced to its final transform when jv02-complete is added.
+   Keep the animation bound to the visible bold text so it continues smoothly after the page phase completes. */
+#portfolio-quality.jv02-page:not(.guide-show-all) .guided-action-copy > b.jv02-visible::after{
+  animation:portfolioStepHighlighter 1.20s cubic-bezier(.22,.61,.28,1) .30s forwards;
+}
+#portfolio-quality.guide-show-all .guided-action-copy > b::after{
+  opacity:.9;
+  transform:scaleX(1) skewX(-1.2deg);
+}
+
 #portfolio-quality.guide-show-all .workflow-step-guide>*,
 #portfolio-quality.guide-show-all #captureQualitySummary .workflow-brief-card>*,
 #portfolio-quality.guide-show-all .workflow-fulltext-card>*,
@@ -396,7 +429,7 @@
   pointer-events: auto !important;
 }
 
-@keyframes jarvisV222GuideContentIn {
+@keyframes kashinokiV222GuideContentIn {
   0% {
     opacity: 0;
     transform: translateY(8px);
@@ -592,6 +625,64 @@
 #portfolio-quality .guided-action { display: grid !important; grid-template-columns: minmax(0, 1fr) auto !important; grid-template-areas: "copy primary" "copy back" !important; }
 #portfolio-quality .guided-action > .workflow-secondary-link { grid-area: back !important; justify-self: end !important; margin: 0 !important; }
 
+
+
+
+/* v753: STEP2入場直後の見出しフラッシュ抑止。
+   workflow-02.js が jv02-page / jv02-target を付ける前に、
+   workflow-step-guide が一瞬そのまま見える経路を止める。 */
+#portfolio-quality.active:not(.guide-show-all):not(.jv02-page) .workflow-step-guide,
+#portfolio-quality.active:not(.guide-show-all):not(.jv02-page) .workflow-step-guide .workflow-step-number,
+#portfolio-quality.active:not(.guide-show-all):not(.jv02-page) .workflow-step-guide .workflow-step-copy > b,
+#portfolio-quality.active:not(.guide-show-all):not(.jv02-page) .workflow-step-guide .workflow-step-copy > small {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  transform: translateY(8px) !important;
+  filter: blur(1.2px) !important;
+  pointer-events: none !important;
+}
+
+/* v636: STEP2 filter buttons flash guard.
+   Hide summary buttons from the first active frame until workflow-02.js owns the reveal sequence.
+   This prevents the visible -> disappear flash when entering STEP 2 from another page. */
+#portfolio-quality.active:not(.guide-show-all):not(.jv02-page) #captureQualitySummary .workflow-brief-card {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  transform: translateY(8px) !important;
+  filter: blur(1.2px) !important;
+  pointer-events: none !important;
+}
+
+
+
+/* v638: STEP2 chat header flash guard.
+   The chat header was visible for one frame before workflow-02.js added jv02-page/jv02-target.
+   Keep only the requested header/thread targets hidden from the first active frame, then let the existing jv02 reveal sequence show them after the filter buttons. */
+#portfolio-quality.active:not(.guide-show-all):not(.jv02-page) #captureQualityList .presentation-chat-card .presentation-card-heading > span,
+#portfolio-quality.active:not(.guide-show-all):not(.jv02-page) #captureQualityList .presentation-chat-card .presentation-card-heading > h3,
+#portfolio-quality.active:not(.guide-show-all):not(.jv02-page) #captureQualityList .presentation-chat-card .presentation-card-heading > p,
+#portfolio-quality.active:not(.guide-show-all):not(.jv02-page) #captureQualityList .presentation-chat-card .presentation-chat-thread {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  transform: translateY(8px) !important;
+  filter: blur(1.2px) !important;
+  pointer-events: none !important;
+}
+
+
+
+/* v654: STEP2 filter buttons stronger flash guard.
+   v653 still allowed a one-frame flash when the page kept jv02-page from a previous visit
+   or when regenerated filter buttons did not yet have jv02-target. Hide every filter button
+   until the entry sequence explicitly marks it as jv02-visible or the page is fully shown. */
+#portfolio-quality.active:not(.guide-show-all):not(.jv02-complete) #captureQualitySummary .workflow-brief-card:not(.jv02-visible) {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  transform: translateY(8px) !important;
+  filter: blur(1.2px) !important;
+  pointer-events: none !important;
+}
+
 /* v327: 02 page-owned reveal sequence. The sequence is controlled by workflow-02.js,
    so filter clicks can update content without restarting or force-finishing the entry animation. */
 #portfolio-quality.jv02-page .jv02-target {
@@ -632,4 +723,1403 @@
 /* v340: count summary buttons use the restored moderate reveal duration. */
 #portfolio-quality.jv02-page .workflow-brief-card.jv02-target {
   transition: opacity 1.3s cubic-bezier(.22, .61, .28, 1), transform 1.3s cubic-bezier(.22, .61, .28, 1), filter 1.3s cubic-bezier(.22, .61, .28, 1);
+}
+
+/* v404: 02 central three-panel layout.
+   Requirement: first panel large; second/third stacked at right; do not increase page height. */
+#portfolio-quality .presentation-chat-layout{
+  display:grid !important;
+  grid-template-columns:minmax(0,1.18fr) minmax(260px,.82fr) !important;
+  grid-template-rows:minmax(0,1fr) minmax(0,1fr) !important;
+  grid-template-areas:
+    "main extract"
+    "main handoff" !important;
+  gap:14px !important;
+  align-items:stretch !important;
+  height:clamp(360px, calc(100vh - 335px), 452px) !important;
+  max-height:clamp(360px, calc(100vh - 335px), 452px) !important;
+  min-height:0 !important;
+  overflow:visible !important;
+}
+#portfolio-quality .presentation-chat-card{
+  grid-area:main !important;
+}
+#portfolio-quality .presentation-extract-card{
+  grid-area:extract !important;
+}
+#portfolio-quality .presentation-handoff-card{
+  grid-area:handoff !important;
+}
+#portfolio-quality .presentation-chat-card,
+#portfolio-quality .presentation-extract-card,
+#portfolio-quality .presentation-handoff-card{
+  min-height:0 !important;
+  height:100% !important;
+  max-height:none !important;
+  overflow:hidden !important;
+  box-sizing:border-box !important;
+}
+#portfolio-quality .presentation-chat-thread,
+#portfolio-quality .presentation-extract-list,
+#portfolio-quality .presentation-handoff-stack{
+  min-height:0 !important;
+  max-height:100% !important;
+  overflow:auto !important;
+  overscroll-behavior:contain !important;
+  padding-right:2px !important;
+  scrollbar-width:thin !important;
+  scrollbar-color:rgba(70,80,72,.14) transparent !important;
+}
+#portfolio-quality .presentation-extract-list,
+#portfolio-quality .presentation-handoff-stack{
+  gap:7px !important;
+}
+#portfolio-quality .presentation-extract-list div,
+#portfolio-quality .presentation-handoff-stack section{
+  padding:9px 10px !important;
+  border-radius:13px !important;
+}
+#portfolio-quality .presentation-card-heading h3{
+  font-size:15px !important;
+  line-height:1.28 !important;
+  margin-bottom:5px !important;
+}
+#portfolio-quality .presentation-card-heading p{
+  font-size:10.5px !important;
+  line-height:1.5 !important;
+  margin-bottom:9px !important;
+}
+#portfolio-quality .chat-bubble{
+  padding:10px 11px !important;
+  border-radius:14px !important;
+}
+#portfolio-quality .chat-bubble p,
+#portfolio-quality .presentation-extract-list span,
+#portfolio-quality .presentation-handoff-stack p{
+  font-size:10.5px !important;
+  line-height:1.48 !important;
+}
+#portfolio-quality .presentation-extract-list b,
+#portfolio-quality .presentation-handoff-stack b{
+  font-size:12px !important;
+  line-height:1.25 !important;
+}
+@media(max-width:1100px){
+  #portfolio-quality .presentation-chat-layout{
+    grid-template-columns:1fr !important;
+    grid-template-rows:auto auto auto !important;
+    grid-template-areas:"main" "extract" "handoff" !important;
+    height:auto !important;
+    max-height:none !important;
+  }
+  #portfolio-quality .presentation-chat-card,
+  #portfolio-quality .presentation-extract-card,
+  #portfolio-quality .presentation-handoff-card{
+    height:auto !important;
+    max-height:420px !important;
+  }
+}
+
+/* v409: 02 layout containment fix.
+   Keep public scale unchanged; prevent center cards from entering lower action panel;
+   remove visual clipping in the conversation card by using real flex scroll areas. */
+#portfolio-quality .presentation-chat-layout{
+  display:grid !important;
+  grid-template-columns:minmax(0,1.26fr) minmax(300px,.88fr) !important;
+  grid-template-rows:minmax(0,1fr) minmax(0,1fr) !important;
+  grid-template-areas:"main extract" "main handoff" !important;
+  gap:16px !important;
+  align-items:stretch !important;
+  height:clamp(390px, calc(100vh - 410px), 430px) !important;
+  min-height:390px !important;
+  max-height:430px !important;
+  margin-top:18px !important;
+  margin-bottom:18px !important;
+  overflow:visible !important;
+}
+#portfolio-quality .presentation-chat-card{
+  grid-area:main !important;
+}
+#portfolio-quality .presentation-extract-card{
+  grid-area:extract !important;
+}
+#portfolio-quality .presentation-handoff-card{
+  grid-area:handoff !important;
+}
+#portfolio-quality .presentation-chat-card,
+#portfolio-quality .presentation-extract-card,
+#portfolio-quality .presentation-handoff-card{
+  display:flex !important;
+  flex-direction:column !important;
+  min-height:0 !important;
+  height:100% !important;
+  max-height:100% !important;
+  box-sizing:border-box !important;
+  overflow:hidden !important;
+}
+#portfolio-quality .presentation-card-heading{
+  flex:0 0 auto !important;
+}
+#portfolio-quality .presentation-chat-thread,
+#portfolio-quality .presentation-extract-list,
+#portfolio-quality .presentation-handoff-stack{
+  flex:1 1 auto !important;
+  min-height:0 !important;
+  max-height:none !important;
+  overflow-y:auto !important;
+  overflow-x:hidden !important;
+  padding-right:4px !important;
+  padding-bottom:8px !important;
+  mask-image:none !important;
+  -webkit-mask-image:none !important;
+  scrollbar-width:thin !important;
+  scrollbar-color:rgba(70,80,72,.14) transparent !important;
+}
+#portfolio-quality .presentation-chat-thread{
+  display:flex !important;
+  flex-direction:column !important;
+  justify-content:flex-start !important;
+  gap:12px !important;
+}
+#portfolio-quality .presentation-extract-list,
+#portfolio-quality .presentation-handoff-stack{
+  display:grid !important;
+  align-content:start !important;
+  gap:8px !important;
+}
+#portfolio-quality .presentation-handoff-stack section,
+#portfolio-quality .presentation-extract-list div{
+  min-height:auto !important;
+  padding:9px 11px !important;
+  box-sizing:border-box !important;
+}
+#portfolio-quality .guided-action-slot.portfolio-action{
+  position:relative !important;
+  z-index:20 !important;
+  margin-top:14px !important;
+}
+@media(max-width:1100px){
+  #portfolio-quality .presentation-chat-layout{
+    grid-template-columns:1fr !important;
+    grid-template-rows:auto auto auto !important;
+    grid-template-areas:"main" "extract" "handoff" !important;
+    height:auto !important;
+    max-height:none !important;
+  }
+  #portfolio-quality .presentation-chat-card,
+  #portfolio-quality .presentation-extract-card,
+  #portfolio-quality .presentation-handoff-card{
+    height:auto !important;
+    max-height:360px !important;
+  }
+}
+
+
+/* v410: cause-fixed 02 layout.
+   Cause: previous fixes used a fixed 390-520px center block while the page also has
+   heading / guide / summary / bottom action rows. The center block therefore competed
+   with the bottom action panel and overflowed visually. This makes the page itself a
+   fixed-height grid and gives the center panel only the remaining row height.
+   Public scale is unchanged. */
+#portfolio-quality.active{
+  --jv410-page-h: calc(125vh - 150px);
+  display:grid !important;
+  grid-template-rows:auto auto auto minmax(0, 1fr) auto !important;
+  row-gap:10px !important;
+  align-content:stretch !important;
+  height:var(--jv410-page-h) !important;
+  min-height:760px !important;
+  max-height:var(--jv410-page-h) !important;
+  overflow:visible !important;
+  padding-bottom:0 !important;
+}
+#portfolio-quality.active > .heading{
+  grid-row:1 !important;
+  margin:0 !important;
+}
+#portfolio-quality.active > .workflow-step-guide{
+  grid-row:2 !important;
+  margin:0 !important;
+}
+#portfolio-quality.active > #captureQualitySummary{
+  grid-row:3 !important;
+  margin:0 !important;
+}
+#portfolio-quality.active > #captureQualityList{
+  grid-row:4 !important;
+  min-height:0 !important;
+  height:100% !important;
+  max-height:100% !important;
+  overflow:visible !important;
+}
+#portfolio-quality.active > .guided-action-slot.portfolio-action{
+  grid-row:5 !important;
+  margin:0 !important;
+  position:relative !important;
+  z-index:30 !important;
+}
+#portfolio-quality.active .presentation-chat-layout{
+  display:grid !important;
+  grid-template-columns:minmax(0, 1.32fr) minmax(292px, .88fr) !important;
+  grid-template-rows:minmax(0, 1fr) minmax(0, 1fr) !important;
+  grid-template-areas:"main extract" "main handoff" !important;
+  gap:14px !important;
+  align-items:stretch !important;
+  height:100% !important;
+  min-height:0 !important;
+  max-height:100% !important;
+  margin:0 !important;
+  overflow:visible !important;
+}
+#portfolio-quality.active .presentation-chat-card{ grid-area:main !important; }
+#portfolio-quality.active .presentation-extract-card{ grid-area:extract !important; }
+#portfolio-quality.active .presentation-handoff-card{ grid-area:handoff !important; }
+#portfolio-quality.active .presentation-chat-card,
+#portfolio-quality.active .presentation-extract-card,
+#portfolio-quality.active .presentation-handoff-card{
+  display:flex !important;
+  flex-direction:column !important;
+  min-height:0 !important;
+  height:100% !important;
+  max-height:100% !important;
+  overflow:hidden !important;
+  box-sizing:border-box !important;
+}
+#portfolio-quality.active .presentation-card-heading{
+  flex:0 0 auto !important;
+}
+#portfolio-quality.active .presentation-chat-thread,
+#portfolio-quality.active .presentation-extract-list,
+#portfolio-quality.active .presentation-handoff-stack{
+  flex:1 1 auto !important;
+  min-height:0 !important;
+  max-height:none !important;
+  overflow-y:auto !important;
+  overflow-x:hidden !important;
+  padding-right:4px !important;
+  padding-bottom:10px !important;
+  mask-image:none !important;
+  -webkit-mask-image:none !important;
+  scrollbar-width:thin !important;
+  scrollbar-color:rgba(70,80,72,.14) transparent !important;
+}
+#portfolio-quality.active .presentation-chat-thread{
+  display:flex !important;
+  flex-direction:column !important;
+  justify-content:flex-start !important;
+  gap:10px !important;
+}
+#portfolio-quality.active .presentation-extract-list,
+#portfolio-quality.active .presentation-handoff-stack{
+  display:grid !important;
+  align-content:start !important;
+  gap:8px !important;
+}
+#portfolio-quality.active .presentation-handoff-stack section,
+#portfolio-quality.active .presentation-extract-list div{
+  min-height:auto !important;
+  padding:8px 10px !important;
+  box-sizing:border-box !important;
+}
+#portfolio-quality.active .chat-bubble{
+  padding:9px 10px !important;
+}
+#portfolio-quality.active .chat-bubble p,
+#portfolio-quality.active .presentation-extract-list span,
+#portfolio-quality.active .presentation-handoff-stack p{
+  font-size:10.2px !important;
+  line-height:1.45 !important;
+}
+#portfolio-quality.active .presentation-card-heading h3{
+  font-size:14px !important;
+  line-height:1.25 !important;
+  margin:0 0 5px !important;
+}
+#portfolio-quality.active .presentation-card-heading p{
+  font-size:10px !important;
+  line-height:1.42 !important;
+  margin:0 0 8px !important;
+}
+@media(max-width:1100px){
+  #portfolio-quality.active{
+    height:auto !important;
+    max-height:none !important;
+  }
+  #portfolio-quality.active .presentation-chat-layout{
+    grid-template-columns:1fr !important;
+    grid-template-rows:auto auto auto !important;
+    grid-template-areas:"main" "extract" "handoff" !important;
+    height:auto !important;
+    max-height:none !important;
+  }
+  #portfolio-quality.active .presentation-chat-card,
+  #portfolio-quality.active .presentation-extract-card,
+  #portfolio-quality.active .presentation-handoff-card{
+    height:auto !important;
+    max-height:360px !important;
+  }
+}
+
+/* v411: 02 scroll-first layout refinement.
+   Cause: right stacked panels were still allowed to consume too much vertical space,
+   while the left conversation had only a short excerpt. Show the sample conversation
+   through an internal thin scrollbar and keep right cards compact with their own scrollbars. */
+#portfolio-quality.active{
+  grid-template-rows:auto auto auto minmax(0, 1fr) auto !important;
+}
+#portfolio-quality.active .presentation-chat-layout{
+  grid-template-columns:minmax(0, 1.36fr) minmax(280px, .82fr) !important;
+  grid-template-rows:minmax(0, 172px) minmax(0, 172px) !important;
+  align-content:start !important;
+  overflow:hidden !important;
+}
+#portfolio-quality.active .presentation-chat-card{
+  min-height:0 !important;
+  height:100% !important;
+  max-height:100% !important;
+}
+#portfolio-quality.active .presentation-extract-card,
+#portfolio-quality.active .presentation-handoff-card{
+  min-height:0 !important;
+  height:172px !important;
+  max-height:172px !important;
+  align-self:start !important;
+}
+#portfolio-quality.active .presentation-chat-thread,
+#portfolio-quality.active .presentation-extract-list,
+#portfolio-quality.active .presentation-handoff-stack{
+  overflow-y:scroll !important;
+  overflow-x:hidden !important;
+  padding-right:8px !important;
+  scrollbar-width:thin !important;
+  scrollbar-color:rgba(72,84,78,.42) rgba(255,255,255,.18) !important;
+}
+#portfolio-quality.active .presentation-chat-thread::-webkit-scrollbar,
+#portfolio-quality.active .presentation-extract-list::-webkit-scrollbar,
+#portfolio-quality.active .presentation-handoff-stack::-webkit-scrollbar{
+  width:5px !important;
+}
+#portfolio-quality.active .presentation-chat-thread::-webkit-scrollbar-track,
+#portfolio-quality.active .presentation-extract-list::-webkit-scrollbar-track,
+#portfolio-quality.active .presentation-handoff-stack::-webkit-scrollbar-track{
+  background:rgba(255,255,255,.18) !important;
+  border-radius:999px !important;
+}
+#portfolio-quality.active .presentation-chat-thread::-webkit-scrollbar-thumb,
+#portfolio-quality.active .presentation-extract-list::-webkit-scrollbar-thumb,
+#portfolio-quality.active .presentation-handoff-stack::-webkit-scrollbar-thumb{
+  background:rgba(72,84,78,.42) !important;
+  border-radius:999px !important;
+}
+#portfolio-quality.active .presentation-chat-thread::-webkit-scrollbar-thumb:hover,
+#portfolio-quality.active .presentation-extract-list::-webkit-scrollbar-thumb:hover,
+#portfolio-quality.active .presentation-handoff-stack::-webkit-scrollbar-thumb:hover{
+  background:rgba(72,84,78,.58) !important;
+}
+#portfolio-quality.active .chat-bubble{
+  flex:0 0 auto !important;
+}
+#portfolio-quality.active .presentation-extract-list div,
+#portfolio-quality.active .presentation-handoff-stack section{
+  flex:0 0 auto !important;
+}
+@media(max-width:1100px){
+  #portfolio-quality.active .presentation-chat-layout{
+    grid-template-rows:auto auto auto !important;
+    overflow:visible !important;
+  }
+  #portfolio-quality.active .presentation-extract-card,
+  #portfolio-quality.active .presentation-handoff-card{
+    height:172px !important;
+    max-height:172px !important;
+  }
+}
+
+/* v412: 02破綻修正 / 原因: v410の active ページ高さ calc(125vh - 150px) と min-height:760px が中央領域を過大化し、v411の右2段固定高と競合して下部主操作との間に大きな空白・右下カード肥大化を起こしていた。 */
+#portfolio-quality.active{
+  --jv410-page-h:auto !important;
+  display:block !important;
+  height:auto !important;
+  min-height:0 !important;
+  max-height:none !important;
+  overflow:visible !important;
+  padding-bottom:0 !important;
+}
+#portfolio-quality.active > .heading,
+#portfolio-quality.active > .workflow-step-guide,
+#portfolio-quality.active > #captureQualitySummary,
+#portfolio-quality.active > #captureQualityList,
+#portfolio-quality.active > .guided-action-slot.portfolio-action{
+  grid-row:auto !important;
+}
+#portfolio-quality.active > #captureQualityList{
+  height:auto !important;
+  min-height:0 !important;
+  max-height:none !important;
+  overflow:visible !important;
+  margin:10px 0 12px !important;
+}
+#portfolio-quality.active .presentation-chat-layout{
+  display:grid !important;
+  grid-template-columns:minmax(0, 1.46fr) minmax(300px, .88fr) !important;
+  grid-template-rows:166px 166px !important;
+  grid-template-areas:"main extract" "main handoff" !important;
+  column-gap:14px !important;
+  row-gap:12px !important;
+  align-items:stretch !important;
+  align-content:start !important;
+  height:344px !important;
+  min-height:344px !important;
+  max-height:344px !important;
+  margin:0 !important;
+  overflow:visible !important;
+}
+#portfolio-quality.active .presentation-chat-card{
+  grid-area:main !important;
+  height:344px !important;
+  min-height:0 !important;
+  max-height:344px !important;
+}
+#portfolio-quality.active .presentation-extract-card,
+#portfolio-quality.active .presentation-handoff-card{
+  height:166px !important;
+  min-height:0 !important;
+  max-height:166px !important;
+  align-self:stretch !important;
+}
+#portfolio-quality.active .presentation-chat-card,
+#portfolio-quality.active .presentation-extract-card,
+#portfolio-quality.active .presentation-handoff-card{
+  display:flex !important;
+  flex-direction:column !important;
+  overflow:hidden !important;
+  box-sizing:border-box !important;
+  padding:18px !important;
+}
+#portfolio-quality.active .presentation-card-heading{
+  flex:0 0 auto !important;
+  margin:0 !important;
+}
+#portfolio-quality.active .presentation-card-heading span{
+  margin-bottom:4px !important;
+}
+#portfolio-quality.active .presentation-card-heading h3{
+  font-size:14px !important;
+  line-height:1.25 !important;
+  margin:0 0 4px !important;
+}
+#portfolio-quality.active .presentation-card-heading p{
+  font-size:10px !important;
+  line-height:1.35 !important;
+  margin:0 0 8px !important;
+}
+#portfolio-quality.active .presentation-chat-thread,
+#portfolio-quality.active .presentation-extract-list,
+#portfolio-quality.active .presentation-handoff-stack{
+  flex:1 1 auto !important;
+  min-height:0 !important;
+  max-height:none !important;
+  overflow-y:auto !important;
+  overflow-x:hidden !important;
+  padding:0 8px 8px 0 !important;
+  mask-image:none !important;
+  -webkit-mask-image:none !important;
+  scrollbar-width:thin !important;
+  scrollbar-color:rgba(72,84,78,.42) transparent !important;
+}
+#portfolio-quality.active .presentation-chat-thread::-webkit-scrollbar,
+#portfolio-quality.active .presentation-extract-list::-webkit-scrollbar,
+#portfolio-quality.active .presentation-handoff-stack::-webkit-scrollbar{
+  width:5px !important;
+}
+#portfolio-quality.active .presentation-chat-thread::-webkit-scrollbar-track,
+#portfolio-quality.active .presentation-extract-list::-webkit-scrollbar-track,
+#portfolio-quality.active .presentation-handoff-stack::-webkit-scrollbar-track{
+  background:transparent !important;
+}
+#portfolio-quality.active .presentation-chat-thread::-webkit-scrollbar-thumb,
+#portfolio-quality.active .presentation-extract-list::-webkit-scrollbar-thumb,
+#portfolio-quality.active .presentation-handoff-stack::-webkit-scrollbar-thumb{
+  background:rgba(72,84,78,.42) !important;
+  border-radius:999px !important;
+}
+#portfolio-quality.active .presentation-chat-thread{
+  display:flex !important;
+  flex-direction:column !important;
+  justify-content:flex-start !important;
+  gap:10px !important;
+}
+#portfolio-quality.active .presentation-extract-list,
+#portfolio-quality.active .presentation-handoff-stack{
+  display:grid !important;
+  align-content:start !important;
+  gap:7px !important;
+}
+#portfolio-quality.active .chat-bubble{
+  flex:0 0 auto !important;
+  padding:8px 10px !important;
+  border-radius:13px !important;
+}
+#portfolio-quality.active .chat-bubble p,
+#portfolio-quality.active .presentation-extract-list span,
+#portfolio-quality.active .presentation-handoff-stack p{
+  font-size:10px !important;
+  line-height:1.42 !important;
+}
+#portfolio-quality.active .presentation-extract-list div,
+#portfolio-quality.active .presentation-handoff-stack section{
+  min-height:auto !important;
+  padding:8px 10px !important;
+  border-radius:12px !important;
+  box-sizing:border-box !important;
+}
+#portfolio-quality.active > .guided-action-slot.portfolio-action{
+  margin-top:12px !important;
+  position:relative !important;
+  z-index:20 !important;
+}
+@media(max-width:1100px){
+  #portfolio-quality.active .presentation-chat-layout{
+    grid-template-columns:1fr !important;
+    grid-template-rows:344px 166px 166px !important;
+    grid-template-areas:"main" "extract" "handoff" !important;
+    height:auto !important;
+    min-height:0 !important;
+    max-height:none !important;
+  }
+  #portfolio-quality.active .presentation-chat-card{height:344px !important;max-height:344px !important;}
+  #portfolio-quality.active .presentation-extract-card,
+  #portfolio-quality.active .presentation-handoff-card{height:166px !important;max-height:166px !important;}
+}
+
+/* v413: 02左会話パネル高さ1.6倍 / 右2段パネルの主操作パネル干渉防止。
+   Cause: v412 center block was 344px; the left conversation panel was too shallow for 54件スクロール確認.
+   The right handoff panel could visually compete with the bottom action panel because the right column used the full row height.
+   Fix: make the center block 550px, keep the left panel at 550px, and cap each right card at 190px with internal scrolling. */
+#portfolio-quality.active > #captureQualityList{
+  margin:10px 0 14px !important;
+  height:auto !important;
+  min-height:0 !important;
+  max-height:none !important;
+  overflow:visible !important;
+}
+#portfolio-quality.active .presentation-chat-layout{
+  display:grid !important;
+  grid-template-columns:minmax(0, 1.46fr) minmax(300px, .88fr) !important;
+  grid-template-rows:269px 269px !important;
+  grid-template-areas:"main extract" "main handoff" !important;
+  column-gap:14px !important;
+  row-gap:12px !important;
+  align-items:start !important;
+  align-content:start !important;
+  height:550px !important;
+  min-height:550px !important;
+  max-height:550px !important;
+  overflow:visible !important;
+}
+#portfolio-quality.active .presentation-chat-card{
+  grid-area:main !important;
+  height:550px !important;
+  min-height:550px !important;
+  max-height:550px !important;
+  overflow:hidden !important;
+}
+#portfolio-quality.active .presentation-extract-card{
+  grid-area:extract !important;
+  height:190px !important;
+  min-height:190px !important;
+  max-height:190px !important;
+  align-self:start !important;
+  overflow:hidden !important;
+}
+#portfolio-quality.active .presentation-handoff-card{
+  grid-area:handoff !important;
+  height:190px !important;
+  min-height:190px !important;
+  max-height:190px !important;
+  align-self:start !important;
+  overflow:hidden !important;
+}
+#portfolio-quality.active .presentation-chat-card,
+#portfolio-quality.active .presentation-extract-card,
+#portfolio-quality.active .presentation-handoff-card{
+  display:flex !important;
+  flex-direction:column !important;
+  box-sizing:border-box !important;
+}
+#portfolio-quality.active .presentation-chat-thread,
+#portfolio-quality.active .presentation-extract-list,
+#portfolio-quality.active .presentation-handoff-stack{
+  flex:1 1 auto !important;
+  min-height:0 !important;
+  overflow-y:auto !important;
+  overflow-x:hidden !important;
+  padding-right:8px !important;
+  mask-image:none !important;
+  -webkit-mask-image:none !important;
+  scrollbar-width:thin !important;
+}
+#portfolio-quality.active > .guided-action-slot.portfolio-action{
+  margin-top:14px !important;
+  position:relative !important;
+  z-index:25 !important;
+  clear:both !important;
+}
+@media(max-width:1100px){
+  #portfolio-quality.active .presentation-chat-layout{
+    grid-template-columns:1fr !important;
+    grid-template-rows:550px 190px 190px !important;
+    grid-template-areas:"main" "extract" "handoff" !important;
+    height:auto !important;
+    min-height:0 !important;
+    max-height:none !important;
+  }
+  #portfolio-quality.active .presentation-chat-card{height:550px !important;min-height:550px !important;max-height:550px !important;}
+  #portfolio-quality.active .presentation-extract-card,
+  #portfolio-quality.active .presentation-handoff-card{height:190px !important;min-height:190px !important;max-height:190px !important;}
+}
+
+/* v414: 02 panel containment / spacing correction.
+   Fixes: summary chips too close to guide area; right stacked cards visually entering the lower action panel.
+   Keep display scale unchanged. */
+#portfolio-quality.active > #captureQualitySummary.presentation-quality-brief,
+#portfolio-quality.active > #captureQualitySummary.workflow-brief{
+  margin-top:14px !important;
+  margin-bottom:16px !important;
+}
+#portfolio-quality.active > #captureQualityList{
+  margin:0 0 16px !important;
+  height:auto !important;
+  min-height:0 !important;
+  max-height:none !important;
+  overflow:visible !important;
+}
+#portfolio-quality.active .presentation-chat-layout{
+  display:grid !important;
+  grid-template-columns:minmax(0, 1.46fr) minmax(300px, .88fr) !important;
+  grid-template-rows:238px 238px !important;
+  grid-template-areas:"main extract" "main handoff" !important;
+  column-gap:14px !important;
+  row-gap:14px !important;
+  align-items:start !important;
+  align-content:start !important;
+  height:550px !important;
+  min-height:550px !important;
+  max-height:550px !important;
+  margin:0 !important;
+  overflow:visible !important;
+}
+#portfolio-quality.active .presentation-chat-card{
+  grid-area:main !important;
+  height:550px !important;
+  min-height:550px !important;
+  max-height:550px !important;
+  overflow:hidden !important;
+}
+#portfolio-quality.active .presentation-extract-card,
+#portfolio-quality.active .presentation-handoff-card{
+  height:238px !important;
+  min-height:0 !important;
+  max-height:238px !important;
+  align-self:start !important;
+  overflow:hidden !important;
+}
+#portfolio-quality.active .presentation-extract-card{ grid-area:extract !important; }
+#portfolio-quality.active .presentation-handoff-card{ grid-area:handoff !important; }
+#portfolio-quality.active .presentation-chat-card,
+#portfolio-quality.active .presentation-extract-card,
+#portfolio-quality.active .presentation-handoff-card{
+  display:flex !important;
+  flex-direction:column !important;
+  box-sizing:border-box !important;
+  padding:18px !important;
+}
+#portfolio-quality.active .presentation-card-heading{
+  flex:0 0 auto !important;
+  min-height:0 !important;
+  margin:0 !important;
+}
+#portfolio-quality.active .presentation-chat-thread,
+#portfolio-quality.active .presentation-extract-list,
+#portfolio-quality.active .presentation-handoff-stack{
+  flex:1 1 auto !important;
+  min-height:0 !important;
+  max-height:none !important;
+  overflow-y:auto !important;
+  overflow-x:hidden !important;
+  padding:0 8px 8px 0 !important;
+  mask-image:none !important;
+  -webkit-mask-image:none !important;
+  scrollbar-width:thin !important;
+  scrollbar-color:rgba(72,84,78,.42) transparent !important;
+}
+#portfolio-quality.active .presentation-chat-thread::-webkit-scrollbar,
+#portfolio-quality.active .presentation-extract-list::-webkit-scrollbar,
+#portfolio-quality.active .presentation-handoff-stack::-webkit-scrollbar{
+  width:5px !important;
+}
+#portfolio-quality.active .presentation-chat-thread::-webkit-scrollbar-track,
+#portfolio-quality.active .presentation-extract-list::-webkit-scrollbar-track,
+#portfolio-quality.active .presentation-handoff-stack::-webkit-scrollbar-track{
+  background:transparent !important;
+}
+#portfolio-quality.active .presentation-chat-thread::-webkit-scrollbar-thumb,
+#portfolio-quality.active .presentation-extract-list::-webkit-scrollbar-thumb,
+#portfolio-quality.active .presentation-handoff-stack::-webkit-scrollbar-thumb{
+  background:rgba(72,84,78,.42) !important;
+  border-radius:999px !important;
+}
+#portfolio-quality.active .presentation-extract-list,
+#portfolio-quality.active .presentation-handoff-stack{
+  display:grid !important;
+  align-content:start !important;
+  gap:7px !important;
+}
+#portfolio-quality.active > .guided-action-slot.portfolio-action{
+  margin-top:0 !important;
+  position:relative !important;
+  z-index:40 !important;
+  clear:both !important;
+}
+@media(max-width:1100px){
+  #portfolio-quality.active .presentation-chat-layout{
+    grid-template-columns:1fr !important;
+    grid-template-rows:550px 238px 238px !important;
+    grid-template-areas:"main" "extract" "handoff" !important;
+    height:auto !important;
+    min-height:0 !important;
+    max-height:none !important;
+  }
+  #portfolio-quality.active .presentation-chat-card{height:550px !important;min-height:550px !important;max-height:550px !important;}
+  #portfolio-quality.active .presentation-extract-card,
+  #portfolio-quality.active .presentation-handoff-card{height:238px !important;max-height:238px !important;}
+}
+
+/* v500: STEP02 width override must live in workflow-02.css because this file is loaded after
+   kashinoki-workflow-03plus-v422-layout.css. Previous width edits in the earlier file were overridden here.
+   Widen only the left conversation panel; keep the right classification panel two-column and only slightly narrower. */
+#portfolio-quality.active > #captureQualityList .presentation-chat-layout.kashinoki-v449-editor-layout,
+#portfolio-quality.active .presentation-chat-layout.kashinoki-v449-editor-layout,
+#portfolio-quality .presentation-chat-layout.kashinoki-v449-editor-layout{
+  grid-template-columns:minmax(0, calc(100% - 286px)) 272px !important;
+  column-gap:14px !important;
+}
+#portfolio-quality.active > #captureQualityList .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-extract-card,
+#portfolio-quality.active .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-extract-card,
+#portfolio-quality .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-extract-card{
+  width:272px !important;
+  min-width:272px !important;
+  max-width:272px !important;
+}
+#portfolio-quality.active > #captureQualityList .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-chat-card,
+#portfolio-quality.active .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-chat-card,
+#portfolio-quality .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-chat-card{
+  min-width:0 !important;
+  width:auto !important;
+  max-width:none !important;
+}
+#portfolio-quality .kashinoki-v449-category-grid,
+#portfolio-quality .kashinoki-v449-category-picks{
+  grid-template-columns:repeat(2, minmax(0, 1fr)) !important;
+}
+@media(max-width:900px){
+  #portfolio-quality.active > #captureQualityList .presentation-chat-layout.kashinoki-v449-editor-layout,
+  #portfolio-quality.active .presentation-chat-layout.kashinoki-v449-editor-layout,
+  #portfolio-quality .presentation-chat-layout.kashinoki-v449-editor-layout{
+    grid-template-columns:1fr !important;
+  }
+  #portfolio-quality.active > #captureQualityList .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-extract-card,
+  #portfolio-quality.active .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-extract-card,
+  #portfolio-quality .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-extract-card{
+    width:auto !important;
+    min-width:0 !important;
+    max-width:none !important;
+  }
+}
+
+/* v516: STEP02 category filter buttons are more compact, and the content below moves upward.
+   Keep the 5-column grid, but reduce each filter row height and vertical gaps. */
+#portfolio-quality.active{
+  row-gap:8px !important;
+}
+#portfolio-quality.active > #captureQualitySummary,
+#portfolio-quality #captureQualitySummary.presentation-quality-brief,
+#portfolio-quality #captureQualitySummary.workflow-brief{
+  gap:5px 9px !important;
+  margin:0 0 8px 0 !important;
+}
+#portfolio-quality #captureQualitySummary.presentation-quality-brief{
+  grid-template-columns:repeat(5, minmax(0, 1fr)) !important;
+  align-items:stretch !important;
+}
+#portfolio-quality #captureQualitySummary .workflow-brief-card.kashinoki-filter-button,
+#portfolio-quality #captureQualitySummary .workflow-brief-card{
+  min-height:26px !important;
+  height:26px !important;
+  padding:4px 11px !important;
+  border-radius:10px !important;
+  gap:8px !important;
+}
+#portfolio-quality #captureQualitySummary .workflow-brief-card span{
+  font-size:8.5px !important;
+  line-height:1 !important;
+}
+#portfolio-quality #captureQualitySummary .workflow-brief-card b{
+  font-size:13.5px !important;
+  line-height:1 !important;
+  min-width:16px !important;
+}
+#portfolio-quality #captureQualitySummary .quality02-filter-spacer{
+  min-height:26px !important;
+  height:26px !important;
+  border-radius:10px !important;
+}
+#portfolio-quality.active > #captureQualityList{
+  margin-top:0 !important;
+}
+
+/* v517: STEP02 left/right panels are shortened from the previous tall 520-550px feel to 460px.
+   Keep the existing two-column width balance; only reduce vertical footprint and let the following route panel move upward. */
+#portfolio-quality{
+  --quality02-panel-height:460px !important;
+}
+#portfolio-quality.active > #captureQualityList{
+  margin-top:0 !important;
+}
+#portfolio-quality.active > #captureQualityList .presentation-chat-layout.kashinoki-v449-editor-layout,
+#portfolio-quality.active .presentation-chat-layout.kashinoki-v449-editor-layout,
+#portfolio-quality .presentation-chat-layout.kashinoki-v449-editor-layout{
+  height:460px !important;
+  min-height:460px !important;
+  max-height:460px !important;
+  align-items:stretch !important;
+}
+#portfolio-quality.active > #captureQualityList .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-chat-card,
+#portfolio-quality.active .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-chat-card,
+#portfolio-quality .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-chat-card,
+#portfolio-quality.active > #captureQualityList .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-extract-card,
+#portfolio-quality.active .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-extract-card,
+#portfolio-quality .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-extract-card{
+  height:460px !important;
+  min-height:460px !important;
+  max-height:460px !important;
+  overflow:hidden !important;
+}
+#portfolio-quality.active > #captureQualityList .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-chat-card .presentation-card-heading,
+#portfolio-quality.active .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-chat-card .presentation-card-heading,
+#portfolio-quality .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-chat-card .presentation-card-heading{
+  margin-bottom:10px !important;
+}
+#portfolio-quality.active > #captureQualityList .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-chat-thread,
+#portfolio-quality.active .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-chat-thread,
+#portfolio-quality .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-chat-thread{
+  max-height:calc(460px - 108px) !important;
+  padding-top:18px !important;
+  padding-bottom:16px !important;
+  overflow-y:auto !important;
+}
+#portfolio-quality.active > #captureQualityList .presentation-chat-layout.kashinoki-v449-editor-layout .kashinoki-v449-editor-panel,
+#portfolio-quality.active .presentation-chat-layout.kashinoki-v449-editor-layout .kashinoki-v449-editor-panel,
+#portfolio-quality .presentation-chat-layout.kashinoki-v449-editor-layout .kashinoki-v449-editor-panel{
+  min-height:0 !important;
+}
+#portfolio-quality.active > #captureQualityList .presentation-chat-layout.kashinoki-v449-editor-layout .kashinoki-v449-category-grid,
+#portfolio-quality.active .presentation-chat-layout.kashinoki-v449-editor-layout .kashinoki-v449-category-grid,
+#portfolio-quality .presentation-chat-layout.kashinoki-v449-editor-layout .kashinoki-v449-category-grid{
+  gap:7px !important;
+}
+#portfolio-quality.active > .guided-action-slot.portfolio-action,
+#portfolio-quality .guided-action-slot.portfolio-action{
+  margin-top:10px !important;
+}
+@media(max-width:900px){
+  #portfolio-quality.active > #captureQualityList .presentation-chat-layout.kashinoki-v449-editor-layout,
+  #portfolio-quality.active .presentation-chat-layout.kashinoki-v449-editor-layout,
+  #portfolio-quality .presentation-chat-layout.kashinoki-v449-editor-layout{
+    height:auto !important;
+    min-height:0 !important;
+    max-height:none !important;
+  }
+  #portfolio-quality.active > #captureQualityList .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-chat-card,
+  #portfolio-quality.active .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-chat-card,
+  #portfolio-quality .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-chat-card,
+  #portfolio-quality.active > #captureQualityList .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-extract-card,
+  #portfolio-quality.active .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-extract-card,
+  #portfolio-quality .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-extract-card{
+    height:460px !important;
+    min-height:460px !important;
+    max-height:460px !important;
+  }
+}
+
+/* v518: STEP02 panel height 480px and vertical compaction inside the left/right panels.
+   Remove the redundant "会話全体を表示しています。" note and give that space back to the chat thread.
+   Lift classification buttons and inline filter controls in the right panel. */
+#portfolio-quality{
+  --quality02-panel-height:480px !important;
+}
+#portfolio-quality .kashinoki-v446-filter-note[data-review02-filter-note]{
+  display:none !important;
+}
+#portfolio-quality.active > #captureQualityList .presentation-chat-layout.kashinoki-v449-editor-layout,
+#portfolio-quality.active .presentation-chat-layout.kashinoki-v449-editor-layout,
+#portfolio-quality .presentation-chat-layout.kashinoki-v449-editor-layout{
+  height:480px !important;
+  min-height:480px !important;
+  max-height:480px !important;
+}
+#portfolio-quality.active > #captureQualityList .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-chat-card,
+#portfolio-quality.active .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-chat-card,
+#portfolio-quality .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-chat-card,
+#portfolio-quality.active > #captureQualityList .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-extract-card,
+#portfolio-quality.active .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-extract-card,
+#portfolio-quality .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-extract-card{
+  height:480px !important;
+  min-height:480px !important;
+  max-height:480px !important;
+}
+#portfolio-quality.active > #captureQualityList .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-card-heading,
+#portfolio-quality.active .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-card-heading,
+#portfolio-quality .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-card-heading{
+  margin-bottom:6px !important;
+}
+#portfolio-quality.active > #captureQualityList .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-chat-thread,
+#portfolio-quality.active .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-chat-thread,
+#portfolio-quality .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-chat-thread{
+  max-height:calc(480px - 82px) !important;
+  padding-top:8px !important;
+  padding-bottom:14px !important;
+}
+#portfolio-quality.active > #captureQualityList .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-extract-card,
+#portfolio-quality.active .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-extract-card,
+#portfolio-quality .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-extract-card{
+  padding-top:20px !important;
+}
+#portfolio-quality.active > #captureQualityList .presentation-chat-layout.kashinoki-v449-editor-layout .kashinoki-v449-category-picks,
+#portfolio-quality.active .presentation-chat-layout.kashinoki-v449-editor-layout .kashinoki-v449-category-picks,
+#portfolio-quality .presentation-chat-layout.kashinoki-v449-editor-layout .kashinoki-v449-category-picks{
+  margin-top:6px !important;
+  gap:7px !important;
+}
+#portfolio-quality.active > #captureQualityList .presentation-chat-layout.kashinoki-v449-editor-layout .kashinoki-v492-inline-filter,
+#portfolio-quality.active .presentation-chat-layout.kashinoki-v449-editor-layout .kashinoki-v492-inline-filter,
+#portfolio-quality .presentation-chat-layout.kashinoki-v449-editor-layout .kashinoki-v492-inline-filter{
+  margin-top:12px !important;
+  padding-top:12px !important;
+  gap:9px !important;
+}
+#portfolio-quality.active > #captureQualityList .presentation-chat-layout.kashinoki-v449-editor-layout .kashinoki-v492-inline-filter .workflow-brief-card.kashinoki-filter-button,
+#portfolio-quality.active .presentation-chat-layout.kashinoki-v449-editor-layout .kashinoki-v492-inline-filter .workflow-brief-card.kashinoki-filter-button,
+#portfolio-quality .presentation-chat-layout.kashinoki-v449-editor-layout .kashinoki-v492-inline-filter .workflow-brief-card.kashinoki-filter-button{
+  min-height:36px !important;
+}
+#portfolio-quality.active > #captureQualityList .presentation-chat-layout.kashinoki-v449-editor-layout .kashinoki-v449-opacity-row,
+#portfolio-quality.active .presentation-chat-layout.kashinoki-v449-editor-layout .kashinoki-v449-opacity-row,
+#portfolio-quality .presentation-chat-layout.kashinoki-v449-editor-layout .kashinoki-v449-opacity-row{
+  margin-top:0 !important;
+}
+@media(max-width:900px){
+  #portfolio-quality.active > #captureQualityList .presentation-chat-layout.kashinoki-v449-editor-layout,
+  #portfolio-quality.active .presentation-chat-layout.kashinoki-v449-editor-layout,
+  #portfolio-quality .presentation-chat-layout.kashinoki-v449-editor-layout{
+    height:auto !important;
+    min-height:0 !important;
+    max-height:none !important;
+  }
+  #portfolio-quality.active > #captureQualityList .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-chat-card,
+  #portfolio-quality.active .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-chat-card,
+  #portfolio-quality .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-chat-card,
+  #portfolio-quality.active > #captureQualityList .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-extract-card,
+  #portfolio-quality.active .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-extract-card,
+  #portfolio-quality .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-extract-card{
+    height:480px !important;
+    min-height:480px !important;
+    max-height:480px !important;
+  }
+}
+
+
+/* v519: STEP02 panel height to 500px and lift the bottom main-action unit.
+   Preserve the v518 removal of the redundant chat status note, and keep the right-panel controls compact. */
+#portfolio-quality{
+  --quality02-panel-height:500px !important;
+}
+#portfolio-quality .kashinoki-v446-filter-note[data-review02-filter-note]{
+  display:none !important;
+}
+#portfolio-quality.active > #captureQualityList .presentation-chat-layout.kashinoki-v449-editor-layout,
+#portfolio-quality.active .presentation-chat-layout.kashinoki-v449-editor-layout,
+#portfolio-quality .presentation-chat-layout.kashinoki-v449-editor-layout{
+  height:500px !important;
+  min-height:500px !important;
+  max-height:500px !important;
+}
+#portfolio-quality.active > #captureQualityList .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-chat-card,
+#portfolio-quality.active .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-chat-card,
+#portfolio-quality .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-chat-card,
+#portfolio-quality.active > #captureQualityList .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-extract-card,
+#portfolio-quality.active .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-extract-card,
+#portfolio-quality .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-extract-card{
+  height:500px !important;
+  min-height:500px !important;
+  max-height:500px !important;
+}
+#portfolio-quality.active > #captureQualityList .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-chat-thread,
+#portfolio-quality.active .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-chat-thread,
+#portfolio-quality .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-chat-thread{
+  max-height:calc(500px - 82px) !important;
+  padding-top:8px !important;
+  padding-bottom:14px !important;
+}
+#portfolio-quality.active > #captureQualityList .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-card-heading,
+#portfolio-quality.active .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-card-heading,
+#portfolio-quality .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-card-heading{
+  margin-bottom:6px !important;
+}
+#portfolio-quality.active > #captureQualityList .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-extract-card,
+#portfolio-quality.active .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-extract-card,
+#portfolio-quality .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-extract-card{
+  padding-top:18px !important;
+}
+#portfolio-quality.active > #captureQualityList .presentation-chat-layout.kashinoki-v449-editor-layout .kashinoki-v449-category-picks,
+#portfolio-quality.active .presentation-chat-layout.kashinoki-v449-editor-layout .kashinoki-v449-category-picks,
+#portfolio-quality .presentation-chat-layout.kashinoki-v449-editor-layout .kashinoki-v449-category-picks{
+  margin-top:4px !important;
+  gap:7px !important;
+}
+#portfolio-quality.active > #captureQualityList .presentation-chat-layout.kashinoki-v449-editor-layout .kashinoki-v492-inline-filter,
+#portfolio-quality.active .presentation-chat-layout.kashinoki-v449-editor-layout .kashinoki-v492-inline-filter,
+#portfolio-quality .presentation-chat-layout.kashinoki-v449-editor-layout .kashinoki-v492-inline-filter{
+  margin-top:10px !important;
+  padding-top:10px !important;
+  gap:8px !important;
+}
+#portfolio-quality.active > .guided-action-slot.portfolio-action.kashinoki-action-panel-slot,
+#portfolio-quality .guided-action-slot.portfolio-action.kashinoki-action-panel-slot{
+  margin-top:8px !important;
+  transform:none !important;
+  position:relative !important;
+  z-index:8 !important;
+}
+#portfolio-quality.active > .guided-action-slot.portfolio-action.kashinoki-action-panel-slot .guided-action,
+#portfolio-quality .guided-action-slot.portfolio-action.kashinoki-action-panel-slot .guided-action{
+  min-height:72px !important;
+  padding-top:12px !important;
+  padding-bottom:12px !important;
+  align-items:center !important;
+}
+#portfolio-quality.active > .guided-action-slot.portfolio-action.kashinoki-action-panel-slot .guided-action-copy,
+#portfolio-quality .guided-action-slot.portfolio-action.kashinoki-action-panel-slot .guided-action-copy{
+  gap:4px !important;
+}
+@media(max-width:900px){
+  #portfolio-quality.active > #captureQualityList .presentation-chat-layout.kashinoki-v449-editor-layout,
+  #portfolio-quality.active .presentation-chat-layout.kashinoki-v449-editor-layout,
+  #portfolio-quality .presentation-chat-layout.kashinoki-v449-editor-layout{
+    height:auto !important;
+    min-height:0 !important;
+    max-height:none !important;
+  }
+  #portfolio-quality.active > #captureQualityList .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-chat-card,
+  #portfolio-quality.active .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-chat-card,
+  #portfolio-quality .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-chat-card,
+  #portfolio-quality.active > #captureQualityList .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-extract-card,
+  #portfolio-quality.active .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-extract-card,
+  #portfolio-quality .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-extract-card{
+    height:500px !important;
+    min-height:500px !important;
+    max-height:500px !important;
+  }
+}
+
+/* v520: STEP02 narrow-window vertical layout fix.
+   When the 02 two-column area no longer fits comfortably, stack the conversation panel,
+   classification panel, then the main action panel in that order. This prevents the
+   right panel from being pushed behind / below the action panel. */
+@media (max-width:900px){
+  #portfolio-quality.active > #captureQualityList,
+  #portfolio-quality > #captureQualityList{
+    display:block !important;
+    height:auto !important;
+    min-height:0 !important;
+    max-height:none !important;
+    overflow:visible !important;
+    margin-bottom:14px !important;
+  }
+  #portfolio-quality.active > #captureQualityList .presentation-chat-layout.kashinoki-v449-editor-layout,
+  #portfolio-quality.active .presentation-chat-layout.kashinoki-v449-editor-layout,
+  #portfolio-quality .presentation-chat-layout.kashinoki-v449-editor-layout{
+    display:grid !important;
+    grid-template-columns:1fr !important;
+    grid-template-rows:auto auto !important;
+    grid-template-areas:"main" "extract" !important;
+    gap:14px !important;
+    height:auto !important;
+    min-height:0 !important;
+    max-height:none !important;
+    overflow:visible !important;
+    align-items:stretch !important;
+    align-content:start !important;
+  }
+  #portfolio-quality.active > #captureQualityList .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-chat-card,
+  #portfolio-quality.active .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-chat-card,
+  #portfolio-quality .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-chat-card{
+    grid-area:main !important;
+    width:100% !important;
+    max-width:none !important;
+    min-width:0 !important;
+    height:500px !important;
+    min-height:500px !important;
+    max-height:500px !important;
+    align-self:stretch !important;
+  }
+  #portfolio-quality.active > #captureQualityList .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-extract-card,
+  #portfolio-quality.active .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-extract-card,
+  #portfolio-quality .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-extract-card{
+    grid-area:extract !important;
+    width:100% !important;
+    max-width:none !important;
+    min-width:0 !important;
+    height:auto !important;
+    min-height:250px !important;
+    max-height:none !important;
+    align-self:stretch !important;
+    position:relative !important;
+    z-index:1 !important;
+  }
+  #portfolio-quality.active > #captureQualityList .presentation-chat-layout.kashinoki-v449-editor-layout .kashinoki-v449-category-picks,
+  #portfolio-quality.active .presentation-chat-layout.kashinoki-v449-editor-layout .kashinoki-v449-category-picks,
+  #portfolio-quality .presentation-chat-layout.kashinoki-v449-editor-layout .kashinoki-v449-category-picks{
+    grid-template-columns:repeat(5, minmax(0, 1fr)) !important;
+    gap:7px !important;
+  }
+  #portfolio-quality.active > #captureQualityList .presentation-chat-layout.kashinoki-v449-editor-layout .kashinoki-v492-inline-filter,
+  #portfolio-quality.active .presentation-chat-layout.kashinoki-v449-editor-layout .kashinoki-v492-inline-filter,
+  #portfolio-quality .presentation-chat-layout.kashinoki-v449-editor-layout .kashinoki-v492-inline-filter{
+    margin-top:12px !important;
+    padding-top:12px !important;
+  }
+  #portfolio-quality.active > .guided-action-slot.portfolio-action.kashinoki-action-panel-slot,
+  #portfolio-quality > .guided-action-slot.portfolio-action.kashinoki-action-panel-slot{
+    display:block !important;
+    position:relative !important;
+    z-index:2 !important;
+    clear:both !important;
+    margin-top:14px !important;
+  }
+}
+@media (max-width:720px){
+  #portfolio-quality.active > #captureQualityList .presentation-chat-layout.kashinoki-v449-editor-layout .kashinoki-v449-category-picks,
+  #portfolio-quality.active .presentation-chat-layout.kashinoki-v449-editor-layout .kashinoki-v449-category-picks,
+  #portfolio-quality .presentation-chat-layout.kashinoki-v449-editor-layout .kashinoki-v449-category-picks{
+    grid-template-columns:repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+/* v521: STEP02 spacing and narrow/transition layout cleanup.
+   Keep the action panel in normal document flow after the 02 panel area.
+   Use the same calm gap as 01/03, and switch to vertical layout earlier so the
+   right classification panel never sits under / behind the main action panel. */
+#portfolio-quality.active > #captureQualityList,
+#portfolio-quality > #captureQualityList{
+  display:block !important;
+  position:relative !important;
+  z-index:1 !important;
+  height:auto !important;
+  min-height:0 !important;
+  max-height:none !important;
+  overflow:visible !important;
+  margin-bottom:18px !important;
+}
+#portfolio-quality.active > .guided-action-slot.portfolio-action.kashinoki-action-panel-slot,
+#portfolio-quality > .guided-action-slot.portfolio-action.kashinoki-action-panel-slot{
+  display:block !important;
+  position:relative !important;
+  top:auto !important;
+  left:auto !important;
+  right:auto !important;
+  bottom:auto !important;
+  transform:none !important;
+  clear:both !important;
+  z-index:5 !important;
+  margin-top:0 !important;
+  margin-bottom:0 !important;
+}
+#portfolio-quality.active > .guided-action-slot.portfolio-action.kashinoki-action-panel-slot .guided-action,
+#portfolio-quality > .guided-action-slot.portfolio-action.kashinoki-action-panel-slot .guided-action{
+  position:relative !important;
+  transform:none !important;
+}
+@media (max-width:900px){
+  #portfolio-quality.active > #captureQualityList .presentation-chat-layout.kashinoki-v449-editor-layout,
+  #portfolio-quality.active .presentation-chat-layout.kashinoki-v449-editor-layout,
+  #portfolio-quality .presentation-chat-layout.kashinoki-v449-editor-layout{
+    display:grid !important;
+    grid-template-columns:1fr !important;
+    grid-template-rows:auto auto !important;
+    grid-template-areas:"main" "extract" !important;
+    gap:16px !important;
+    height:auto !important;
+    min-height:0 !important;
+    max-height:none !important;
+    overflow:visible !important;
+    align-items:stretch !important;
+    align-content:start !important;
+  }
+  #portfolio-quality.active > #captureQualityList .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-chat-card,
+  #portfolio-quality.active .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-chat-card,
+  #portfolio-quality .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-chat-card{
+    grid-area:main !important;
+    width:100% !important;
+    max-width:none !important;
+    min-width:0 !important;
+    height:500px !important;
+    min-height:500px !important;
+    max-height:500px !important;
+    align-self:stretch !important;
+  }
+  #portfolio-quality.active > #captureQualityList .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-extract-card,
+  #portfolio-quality.active .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-extract-card,
+  #portfolio-quality .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-extract-card{
+    grid-area:extract !important;
+    width:100% !important;
+    max-width:none !important;
+    min-width:0 !important;
+    height:auto !important;
+    min-height:250px !important;
+    max-height:none !important;
+    align-self:stretch !important;
+    position:relative !important;
+    z-index:1 !important;
+  }
+  #portfolio-quality.active > #captureQualityList .presentation-chat-layout.kashinoki-v449-editor-layout .kashinoki-v449-category-picks,
+  #portfolio-quality.active .presentation-chat-layout.kashinoki-v449-editor-layout .kashinoki-v449-category-picks,
+  #portfolio-quality .presentation-chat-layout.kashinoki-v449-editor-layout .kashinoki-v449-category-picks{
+    grid-template-columns:repeat(5, minmax(0, 1fr)) !important;
+    gap:7px !important;
+  }
+  #portfolio-quality.active > #captureQualityList .presentation-chat-layout.kashinoki-v449-editor-layout .kashinoki-v492-inline-filter,
+  #portfolio-quality.active .presentation-chat-layout.kashinoki-v449-editor-layout .kashinoki-v492-inline-filter,
+  #portfolio-quality .presentation-chat-layout.kashinoki-v449-editor-layout .kashinoki-v492-inline-filter{
+    margin-top:12px !important;
+    padding-top:12px !important;
+  }
+  #portfolio-quality.active > .guided-action-slot.portfolio-action.kashinoki-action-panel-slot,
+  #portfolio-quality > .guided-action-slot.portfolio-action.kashinoki-action-panel-slot{
+    margin-top:18px !important;
+  }
+}
+@media (max-width:720px){
+  #portfolio-quality.active > #captureQualityList .presentation-chat-layout.kashinoki-v449-editor-layout .kashinoki-v449-category-picks,
+  #portfolio-quality.active .presentation-chat-layout.kashinoki-v449-editor-layout .kashinoki-v449-category-picks,
+  #portfolio-quality .presentation-chat-layout.kashinoki-v449-editor-layout .kashinoki-v449-category-picks{
+    grid-template-columns:repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+/* v539: STEP02 breakpoint fix without changing the existing horizontal geometry.
+   Keep the v500/v531 two-column width balance; only prevent early vertical stacking.
+   Do not narrow the right panel or add extra right-side blank space. */
+@media (min-width:901px){
+  #portfolio-quality.active > #captureQualityList .presentation-chat-layout.kashinoki-v449-editor-layout,
+  #portfolio-quality.active .presentation-chat-layout.kashinoki-v449-editor-layout,
+  #portfolio-quality .presentation-chat-layout.kashinoki-v449-editor-layout{
+    display:grid !important;
+    grid-template-columns:minmax(0, calc(100% - 286px)) 272px !important;
+    grid-template-areas:"main extract" !important;
+    grid-template-rows:1fr !important;
+    column-gap:14px !important;
+    height:500px !important;
+    min-height:500px !important;
+    max-height:500px !important;
+    overflow:visible !important;
+    align-items:stretch !important;
+  }
+  #portfolio-quality.active > #captureQualityList .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-extract-card,
+  #portfolio-quality.active .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-extract-card,
+  #portfolio-quality .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-extract-card{
+    width:272px !important;
+    min-width:272px !important;
+    max-width:272px !important;
+  }
+  #portfolio-quality.active > #captureQualityList .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-chat-card,
+  #portfolio-quality.active .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-chat-card,
+  #portfolio-quality .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-chat-card{
+    min-width:0 !important;
+    width:auto !important;
+    max-width:none !important;
+  }
+}
+@media (max-width:900px){
+  #portfolio-quality.active > #captureQualityList .presentation-chat-layout.kashinoki-v449-editor-layout,
+  #portfolio-quality.active .presentation-chat-layout.kashinoki-v449-editor-layout,
+  #portfolio-quality .presentation-chat-layout.kashinoki-v449-editor-layout{
+    display:grid !important;
+    grid-template-columns:1fr !important;
+    grid-template-rows:auto auto !important;
+    grid-template-areas:"main" "extract" !important;
+    gap:16px !important;
+    height:auto !important;
+    min-height:0 !important;
+    max-height:none !important;
+    overflow:visible !important;
+  }
+  #portfolio-quality.active > #captureQualityList .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-extract-card,
+  #portfolio-quality.active .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-extract-card,
+  #portfolio-quality .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-extract-card{
+    width:auto !important;
+    min-width:0 !important;
+    max-width:none !important;
+  }
+}
+
+/* v591: STEP 2 range action clearance.
+   The floating 保存/取消 row is anchored above the selected chat bubble.
+   Give the scrollable chat thread enough top scroll space so the first bubble
+   can also show that row inside the panel instead of overflowing the frame. */
+#portfolio-quality.active > #captureQualityList .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-chat-thread,
+#portfolio-quality.active .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-chat-thread,
+#portfolio-quality .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-chat-thread{
+  padding-top:52px !important;
+  scroll-padding-top:52px !important;
+}
+
+/* v639: STEP2 classification editor flash guard.
+   The editor panel is generated before workflow-02.js owns the reveal sequence.
+   Hide only the requested editor heading/category/settings targets from the first active frame. */
+#portfolio-quality.active:not(.guide-show-all):not(.jv02-page) #captureQualityList .presentation-extract-card .presentation-card-heading > span,
+#portfolio-quality.active:not(.guide-show-all):not(.jv02-page) #captureQualityList .presentation-extract-card .presentation-card-heading > h3,
+#portfolio-quality.active:not(.guide-show-all):not(.jv02-page) #captureQualityList .presentation-extract-card [data-quality02-category-picks] [data-quality02-pick-category],
+#portfolio-quality.active:not(.guide-show-all):not(.jv02-page) #captureQualityList .presentation-extract-card .kashinoki-v492-inline-filter-title,
+#portfolio-quality.active:not(.guide-show-all):not(.jv02-page) #captureQualityList .presentation-extract-card .kashinoki-v449-mode-row .kashinoki-filter-button,
+#portfolio-quality.active:not(.guide-show-all):not(.jv02-page) #captureQualityList .presentation-extract-card .kashinoki-v449-opacity-row {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  transform: translateY(8px) !important;
+  filter: blur(1.2px) !important;
+  pointer-events: none !important;
+}
+
+
+/* v761: STEP2 top chip flash guard.
+   The step chip could be visible for one frame before workflow-02.js marks it as jv02-target.
+   Hide the guide parts unless the sequence explicitly applies jv02-visible or skip/complete is active. */
+#portfolio-quality.active:not(.guide-show-all):not(.jv02-complete) > .workflow-step-guide .workflow-step-number:not(.jv02-visible),
+#portfolio-quality.active:not(.guide-show-all):not(.jv02-complete) > .workflow-step-guide .workflow-step-copy > b:not(.jv02-visible),
+#portfolio-quality.active:not(.guide-show-all):not(.jv02-complete) > .workflow-step-guide .workflow-step-copy > small:not(.jv02-visible) {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  transform: translateY(8px) !important;
+  filter: blur(1.2px) !important;
+  pointer-events: none !important;
+}
+
+#portfolio-quality.active:not(.guide-show-all):not(.jv02-complete) > .workflow-step-guide .workflow-step-number.jv02-visible,
+#portfolio-quality.active:not(.guide-show-all):not(.jv02-complete) > .workflow-step-guide .workflow-step-copy > b.jv02-visible,
+#portfolio-quality.active:not(.guide-show-all):not(.jv02-complete) > .workflow-step-guide .workflow-step-copy > small.jv02-visible {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: translateY(0) !important;
+  filter: blur(0) !important;
+  pointer-events: auto !important;
 }

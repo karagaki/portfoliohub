@@ -1,16 +1,16 @@
 (function () {
   "use strict";
 
-  if (window.JARVIS_DATA_BINDINGS) return;
+  if (window.KASHINOKI_DATA_BINDINGS) return;
 
   function animation(groupName, presetName) {
-    return window.JARVIS_ANIMATION_PRESETS?.groups?.[groupName]?.[presetName]
+    return window.KASHINOKI_ANIMATION_PRESETS?.groups?.[groupName]?.[presetName]
       ? { group: groupName, preset: presetName }
       : null;
   }
 
   function interaction(groupName, presetName) {
-    return window.JARVIS_INTERACTION_PRESETS?.groups?.[groupName]?.[presetName]
+    return window.KASHINOKI_INTERACTION_PRESETS?.groups?.[groupName]?.[presetName]
       ? { group: groupName, preset: presetName }
       : null;
   }
@@ -476,5 +476,5 @@
     }
   });
 
-  window.JARVIS_DATA_BINDINGS = frozen;
+  window.KASHINOKI_DATA_BINDINGS = frozen;
 })();

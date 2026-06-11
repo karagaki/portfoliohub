@@ -1,4 +1,4 @@
-/* source: index.html#jarvis-v063-artifact-band (7805-8393) */
+/* source: index.html#kashinoki-v063-artifact-band (7805-8393) */
 
     .core-column-grid {
       display: grid;
@@ -960,7 +960,7 @@
       opacity: 0;
       transform: translateY(8px);
       filter: blur(.6px);
-      animation: jarvisV207GuideRise .52s cubic-bezier(.22, .61, .28, 1) forwards;
+      animation: kashinokiV207GuideRise .52s cubic-bezier(.22, .61, .28, 1) forwards;
     }
 
     /* Manual rule: first understand purpose/state, then role, then candidate, then usage/copy, then controls. */
@@ -1047,7 +1047,7 @@
 
     .artifact-page.workflow-animate:not(.guide-show-all) .artifact-candidate-card,
     .artifact-page.workflow-animate:not(.guide-show-all) .artifact-use-card {
-      animation-name: jarvisV207GuideRise, jarvisV207GuideGlow;
+      animation-name: kashinokiV207GuideRise, kashinokiV207GuideGlow;
       animation-duration: .52s, 1.02s;
       animation-fill-mode: forwards, none;
     }
@@ -1129,3 +1129,30 @@
         margin-top: 15px
       }
     }
+
+
+/* v702: artifact editor rows use raw multiline excerpts instead of one-line normalized summaries. */
+.artifact-v702-multiline-row .artifact-v661-line-body p{
+  line-height:1.72;
+  white-space:normal;
+  align-items:flex-start;
+}
+.artifact-v702-row-copy{
+  display:inline-block;
+  max-width:calc(100% - 250px);
+  vertical-align:top;
+  white-space:normal;
+}
+.artifact-v702-raw-text{
+  display:inline;
+  white-space:normal;
+}
+.artifact-v702-raw-detail{
+  display:inline-block;
+  margin-top:4px;
+  opacity:.72;
+  white-space:normal;
+}
+.artifact-v702-multiline-row{
+  min-height:48px;
+}
