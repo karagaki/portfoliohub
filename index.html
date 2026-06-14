@@ -25,7 +25,7 @@
           </div>
         </a>
 
-        <a class="card card-kashinoki" id="system-tools" href="./system-tools/" aria-label="System Tools">
+        <a class="card card-kashinoki" id="system-tools" href="./system-tools/index.html" aria-label="System Tools">
           <div class="card-body">
             <p class="card-year">2026〜</p>
             <h2>System Tools</h2>
@@ -34,7 +34,7 @@
           </div>
         </a>
 
-        <a class="card card-p5" id="uiux-animation-tools" href="./uiux-animation-tools/" aria-label="UI/UX Animation Tools">
+        <a class="card card-p5" id="uiux-animation-tools" href="./uiux-animation-tools/index.html" aria-label="UI/UX Animation Tools">
           <div class="card-body">
             <p class="card-year">2025〜</p>
             <h2>UI/UX Animation Tools</h2>
@@ -43,6 +43,39 @@
           </div>
         </a>
       </section>
+
+      <section class="system-preview" id="portfolio-preview" aria-hidden="true" aria-label="Portfolio introduction">
+        <div class="system-preview__panel" data-preview-panel>
+          <div class="system-preview__content">
+            <div class="system-preview__text">
+              <p class="system-preview__eyebrow" data-preview-title>System Tools</p>
+              <h2 data-preview-heading>AIとの会話を、次の制作へ活かすローカル管理ツール</h2>
+              <p class="system-preview__subcopy" data-preview-subcopy>AIとの会話を、次の制作へ活かすためのローカル管理ツールです。</p>
+              <div class="system-preview__chips" aria-label="Portfolio keywords" data-preview-chips></div>
+              <div class="system-preview__copy" data-preview-copy></div>
+            </div>
+            <div class="system-preview__visual" aria-label="Portfolio preview">
+              <div class="system-preview__window">
+                <div class="system-preview__browserbar" aria-hidden="true">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+                <div class="system-preview__track" data-preview-track></div>
+              </div>
+              <p class="system-preview__caption" data-preview-caption>ローカル管理 / 会話を資産化 / 判断を再利用</p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <div class="system-preview__dock" aria-label="Portfolio introduction controls">
+        <button class="system-preview__nav" type="button" data-preview-prev aria-label="前の紹介">◀</button>
+        <button class="system-preview__return" type="button" data-preview-back aria-label="一覧へ戻る">
+          <img src="./assets/svg/return.svg" alt="" aria-hidden="true" />
+        </button>
+        <a class="system-preview__dock-cta" href="./system-tools/index.html" data-preview-open>ツールを見る</a>
+        <button class="system-preview__nav" type="button" data-preview-next aria-label="次の紹介">▶</button>
+      </div>
 
       <section class="footer-block" id="extensions">
         <h3>Extensions</h3>
@@ -124,6 +157,7 @@
         <label class="hub-control"><span>カード間隔</span><input type="range" min="4" max="28" step="1" data-hub-control="card-gap" /></label>
         <label class="hub-control"><span>pill透明度</span><input type="range" min="0.06" max="0.34" step="0.01" data-hub-control="pill-alpha" /></label>
         <label class="hub-control"><span>pill境界線</span><input type="range" min="0.12" max="0.7" step="0.01" data-hub-control="pill-border-alpha" /></label>
+
       </div>
 
       <div class="hub-settings__footer">

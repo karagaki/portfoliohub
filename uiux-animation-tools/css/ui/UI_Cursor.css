@@ -351,10 +351,16 @@ body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6 .slider {
 #glass-cursor-panel-4.collapsed .ui-content,
 #glass-cursor-panel-5.collapsed .ui-content,
 #glass-cursor-panel-6.collapsed .ui-content {
-    max-height: 0;
-    opacity: 0;
-    padding-top: 0;
-    padding-bottom: 0;
+    display: none !important;
+    height: 0 !important;
+    min-height: 0 !important;
+    max-height: 0 !important;
+    opacity: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: 0 !important;
+    overflow: hidden !important;
+    pointer-events: none !important;
 }
 
 #cursor-container .slider::-webkit-slider-thumb,

@@ -1,10 +1,12 @@
+var UIUX_PUBLIC_DEBUG_LOGS = window.UIUX_PUBLIC_DEBUG_LOGS === true;
+function uiuxPublicDebugLog(...args) { if (UIUX_PUBLIC_DEBUG_LOGS) console.log(...args); }
 window.UI_SVGfile = (function() {
     let previewContainer;
     let selectedPreview = null;
     const MAX_PREVIEWS = 15;
 
     function initializeUI() {
-        console.log('Initializing SVG File UI');
+        uiuxPublicDebugLog('Initializing SVG File UI');
         const fileContainer = document.getElementById('svg-file-container');
         if (!fileContainer) {
             console.error('SVG file container not found');
@@ -29,7 +31,7 @@ window.UI_SVGfile = (function() {
             addPlaceholder();
         }
 
-        console.log('SVG File UI initialized');
+        uiuxPublicDebugLog('SVG File UI initialized');
     }
 
     function createHeader() {

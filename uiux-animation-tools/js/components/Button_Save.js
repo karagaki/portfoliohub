@@ -1,8 +1,10 @@
+var UIUX_PUBLIC_DEBUG_LOGS = window.UIUX_PUBLIC_DEBUG_LOGS === true;
+function uiuxPublicDebugLog(...args) { if (UIUX_PUBLIC_DEBUG_LOGS) console.log(...args); }
 // Button_Save.js
 
 window.SaveButton = (function() {
     function saveSettings() {
-        console.log('Save settings function called');
+        uiuxPublicDebugLog('Save settings function called');
 
         const currentCase = window.currentCase;
         if (!currentCase) {
@@ -11,7 +13,7 @@ window.SaveButton = (function() {
             return;
         }
 
-        console.log('Current case:', currentCase);
+        uiuxPublicDebugLog('Current case:', currentCase);
 
         const caseIndex = window.cases.indexOf(currentCase);
         if (caseIndex === -1) {
@@ -20,7 +22,7 @@ window.SaveButton = (function() {
             return;
         }
 
-        console.log('Saving case index:', caseIndex);
+        uiuxPublicDebugLog('Saving case index:', caseIndex);
 
         // 現在のケースの設定を取得
         const currentConfig = {
@@ -36,13 +38,13 @@ window.SaveButton = (function() {
                 : 8
         };
 
-        console.log('Current config:', currentConfig);
+        uiuxPublicDebugLog('Current config:', currentConfig);
 
         // ローカルストレージから既存の設定を取得
         let allSettings = {};
         try {
             const savedSettings = localStorage.getItem('allCaseSettings');
-            console.log('Saved settings:', savedSettings);
+            uiuxPublicDebugLog('Saved settings:', savedSettings);
             if (savedSettings) {
                 allSettings = JSON.parse(savedSettings);
             }
@@ -72,7 +74,7 @@ window.SaveButton = (function() {
         // 設定をローカルストレージに保存
         try {
             localStorage.setItem('allCaseSettings', JSON.stringify(allSettings));
-            console.log(`Settings saved for case${caseIndex}:`, allSettings[`case${caseIndex}`]);
+            uiuxPublicDebugLog(`Settings saved for case${caseIndex}:`, allSettings[`case${caseIndex}`]);
             alert(`case${caseIndex}の設定が保存されました`);
 
             // テーブルを更新

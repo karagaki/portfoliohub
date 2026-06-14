@@ -1,3 +1,17 @@
+/* v46: collapsed panel must have header-only height with no temporary content gap. */
+.ui-container.collapsed > .ui-content {
+    display: none !important;
+    height: 0 !important;
+    min-height: 0 !important;
+    max-height: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: 0 !important;
+    opacity: 0 !important;
+    overflow: hidden !important;
+    pointer-events: none !important;
+}
+
 
 .ui-container.collapsed .ui-content {
     max-height: 0 !important;

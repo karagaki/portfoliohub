@@ -4223,3 +4223,7 @@ html body.theme-neumorphism .kashinoki-v422-03plus .kashinoki-v422-03plus-btn[ar
   background-position:left center !important;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='2.6' viewBox='0 0 8 2.6'%3E%3Cpath d='M0 1.55 Q2 .45 4 1.55 T8 1.55' fill='none' stroke='currentColor' stroke-width='.82' stroke-linecap='round'/%3E%3C/svg%3E") !important;
 }
+
+
+/* v805: Public demo removes the abandoned A-F text-selection popover. */
+.artifact-v572-selection-popover{ display:none !important; }

@@ -174,15 +174,28 @@ window.CursorUI = (function() {
     }
 
     function updateCursorSliderValue(param, value) {
-        const ids = [param + '-slider', `cursor-test-${param}-slider`];
-        const valueIds = [param + '-value', `cursor-test-${param}-value`];
+        const fixed = Number(value);
+        const displayValue = Number.isFinite(fixed) ? fixed.toFixed(2) : String(value);
+        const ids = [
+            param + '-slider',
+            `cursor-test-${param}-slider`,
+            `cursor-panel-6-${param}-slider`
+        ];
+        const valueIds = [
+            param + '-value',
+            `cursor-test-${param}-value`,
+            `cursor-panel-6-${param}-value`
+        ];
         ids.forEach((id) => {
             const slider = document.getElementById(id);
             if (slider) slider.value = value;
         });
         valueIds.forEach((id) => {
             const valueDisplay = document.getElementById(id);
-            if (valueDisplay) valueDisplay.textContent = value.toFixed(2);
+            if (valueDisplay) valueDisplay.textContent = displayValue;
+        });
+        document.querySelectorAll(`[id$="-${param}-value"].slider-value`).forEach((valueDisplay) => {
+            valueDisplay.textContent = displayValue;
         });
     }
 

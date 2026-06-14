@@ -1,0 +1,60 @@
+/*
+  Runtime UI styles consolidated from former index-level fixes.
+  This file is a stable runtime layer loaded after base UI CSS to preserve final cascade.
+*/
+
+/* Auto-readable text / mini panel runtime fixes. */
+
+/* ===== runtime from index.html: <style id="ui-v86-auto-readable-mini-and-spinner"> ===== */
+
+/* v86: 左上miniパネルと遷移秒▲▼を背景明暗に合わせて白黒自動切替。 */
+        body[data-ui-variant="variant-1-glass"] #ui-variant-panel,
+        body[data-ui-variant="variant-1-glass"] #ui-variant-compact-panel,
+        body[data-ui-variant="variant-1-glass"] .ui-variant-compact-panel,
+        body[data-ui-variant="variant-1-glass"] #ui-variant-panel *,
+        body[data-ui-variant="variant-1-glass"] #ui-variant-compact-panel *,
+        body[data-ui-variant="variant-1-glass"] .ui-variant-compact-panel * {
+            color: var(--ui-auto-readable-icon-color, var(--auto-readable-text-color, #111827)) !important;
+            -webkit-text-fill-color: var(--ui-auto-readable-icon-color, var(--auto-readable-text-color, #111827)) !important;
+            text-shadow: var(--ui-auto-readable-icon-shadow, none) !important;
+        }
+        body[data-ui-variant="variant-1-glass"] #ui-variant-panel select,
+        body[data-ui-variant="variant-1-glass"] #ui-preset-panel select,
+        body[data-ui-variant="variant-1-glass"] #ui-variant-compact-panel select,
+        body[data-ui-variant="variant-1-glass"] .ui-variant-compact-panel select,
+        body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-selected-lock {
+            color: var(--ui-auto-readable-icon-color, var(--auto-readable-text-color, #111827)) !important;
+            -webkit-text-fill-color: var(--ui-auto-readable-icon-color, var(--auto-readable-text-color, #111827)) !important;
+            accent-color: var(--ui-auto-readable-icon-color, var(--auto-readable-text-color, #111827)) !important;
+        }
+        body[data-ui-variant="variant-1-glass"] .color-transition-label,
+        body[data-ui-variant="variant-1-glass"] #color-transition-seconds {
+            color: var(--ui-auto-readable-icon-color, var(--auto-readable-text-color, #111827)) !important;
+            -webkit-text-fill-color: var(--ui-auto-readable-icon-color, var(--auto-readable-text-color, #111827)) !important;
+            text-shadow: var(--ui-auto-readable-icon-shadow, none) !important;
+        }
+        body[data-ui-variant="variant-1-glass"] .color-transition-triangle-up,
+        body[data-ui-variant="variant-1-glass"] .color-transition-triangle-up:hover,
+        body[data-ui-variant="variant-1-glass"] .color-transition-triangle-up:active,
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] .color-transition-triangle-up,
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] .color-transition-triangle-up:hover,
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] .color-transition-triangle-up:active {
+            border-bottom-color: var(--ui-auto-readable-icon-color, var(--auto-readable-text-color, #111827)) !important;
+            border-top-color: transparent !important;
+            filter: none !important;
+            transform: translateX(-50%) !important;
+            transition: none !important;
+        }
+        body[data-ui-variant="variant-1-glass"] .color-transition-triangle-down,
+        body[data-ui-variant="variant-1-glass"] .color-transition-triangle-down:hover,
+        body[data-ui-variant="variant-1-glass"] .color-transition-triangle-down:active,
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] .color-transition-triangle-down,
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] .color-transition-triangle-down:hover,
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] .color-transition-triangle-down:active {
+            border-top-color: var(--ui-auto-readable-icon-color, var(--auto-readable-text-color, #111827)) !important;
+            border-bottom-color: transparent !important;
+            filter: none !important;
+            transform: translateX(-50%) !important;
+            transition: none !important;
+        }
+

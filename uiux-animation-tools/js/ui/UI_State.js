@@ -1,3 +1,5 @@
+var UIUX_PUBLIC_DEBUG_LOGS = window.UIUX_PUBLIC_DEBUG_LOGS === true;
+function uiuxPublicDebugLog(...args) { if (UIUX_PUBLIC_DEBUG_LOGS) console.log(...args); }
 // UI_State.js - 唯一のUI開閉制御
 
 window.UIState = (function() {
@@ -48,14 +50,14 @@ window.UIState = (function() {
             }
         });
         localStorage.setItem('uiState', JSON.stringify(state));
-        console.log('UI state saved:', state);
+        uiuxPublicDebugLog('UI state saved:', state);
     }
 
     function restoreUIState() {
         const stateString = localStorage.getItem('uiState');
         if (stateString && !shouldUseDefaultOpenState()) {
             const state = JSON.parse(stateString);
-            console.log('Restoring UI state:', state);
+            uiuxPublicDebugLog('Restoring UI state:', state);
             getUiContainers().forEach(id => {
                 const container = document.getElementById(id);
                 if (container && state[id] !== undefined) {
@@ -67,7 +69,7 @@ window.UIState = (function() {
                 }
             });
         } else {
-            console.log('No saved UI state found, initializing default state');
+            uiuxPublicDebugLog('No saved UI state found, initializing default state');
             initializeDefaultState();
         }
     }
@@ -138,7 +140,7 @@ window.UIState = (function() {
     }
 
     function init() {
-        console.log('UI_State: Initializing');
+        uiuxPublicDebugLog('UI_State: Initializing');
         document.body.classList.add('ui-initializing');
         restoreUIState();
         addEventListeners();
@@ -155,7 +157,7 @@ window.UIState = (function() {
         getUiContainers().forEach(id => {
             const container = document.getElementById(id);
             if (container) {
-                console.log(`${id}: ${container.classList.contains('collapsed') ? 'collapsed' : 'expanded'}`);
+                uiuxPublicDebugLog(`${id}: ${container.classList.contains('collapsed') ? 'collapsed' : 'expanded'}`);
             }
         });
     }
@@ -174,6 +176,6 @@ window.UIState = (function() {
 
 // DOMContentLoaded は1回のみ
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('DOM loaded: UI_State.js initializing');
+    uiuxPublicDebugLog('DOM loaded: UI_State.js initializing');
     window.UIState.init();
 });

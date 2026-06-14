@@ -1,0 +1,236 @@
+/*
+  Migrated index styles: split in v101.
+  These files preserve the original v100 cascade order while preparing semantic absorption into core CSS.
+*/
+
+/* UI Size Tuner runtime variable links. */
+
+/* ===== migrated from index.html: <style id="ui-size-tuner-runtime-links"> ===== */
+
+/*
+          UI Size Tuner Runtime Link Contract
+          ---------------------------------------------------------
+          このstyleはCSSファイル読込後に置き、UI_Size_TunerのCSS変数を
+          実際の各ウインドウ/各ボタンへ最終接続するためのもの。
+          main.cssを先に読む構成のため、ここより前のCSSだけでは後続UI_*.cssに負ける。
+          body zoom / 全体 transform は使わず、部品単位のfont/height/paddingだけを調整する。
+        */
+        body[data-ui-variant="variant-1-glass"] .ui-container .ui-header,
+        body[data-ui-variant="variant-1-glass"] #glass-settings-panel .ui-header,
+        body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-1 .ui-header,
+        body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-2 .ui-header,
+        body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3 .ui-header,
+        body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-4 .ui-header,
+        body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-5 .ui-header,
+        body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6 .ui-header,
+        body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7 .ui-header {
+            height: var(--ui-panel-common-header-height, 17px) !important;
+            min-height: var(--ui-panel-common-header-height, 17px) !important;
+            font-size: var(--ui-panel-common-header-font-size, 10px) !important;
+            line-height: 1.05 !important;
+        }
+        body[data-ui-variant="variant-1-glass"] .ui-container label,
+        body[data-ui-variant="variant-1-glass"] .ui-container .row-label,
+        body[data-ui-variant="variant-1-glass"] .ui-container .slider-label,
+        body[data-ui-variant="variant-1-glass"] .ui-container .default-label,
+        body[data-ui-variant="variant-1-glass"] #glass-settings-panel label,
+        body[data-ui-variant="variant-1-glass"] #glass-settings-panel .slider-label {
+            font-size: var(--ui-panel-common-label-font-size, 9px) !important;
+            line-height: 1.1 !important;
+        }
+        body[data-ui-variant="variant-1-glass"] .ui-container .row-value,
+        body[data-ui-variant="variant-1-glass"] .ui-container .slider-value,
+        body[data-ui-variant="variant-1-glass"] .ui-container .value-display,
+        body[data-ui-variant="variant-1-glass"] .ui-container .default-value,
+        body[data-ui-variant="variant-1-glass"] #glass-settings-panel .slider-value {
+            font-size: var(--ui-panel-common-value-font-size, 9px) !important;
+            line-height: 1.1 !important;
+        }
+        body[data-ui-variant="variant-1-glass"] .ui-container button,
+        body[data-ui-variant="variant-1-glass"] #glass-settings-panel button {
+            font-size: var(--ui-panel-common-button-font-size, 9px) !important;
+            min-height: var(--ui-panel-common-row-height, 20px) !important;
+        }
+        body[data-ui-variant="variant-1-glass"] .ui-container input,
+        body[data-ui-variant="variant-1-glass"] .ui-container select,
+        body[data-ui-variant="variant-1-glass"] #glass-settings-panel input,
+        body[data-ui-variant="variant-1-glass"] #glass-settings-panel select {
+            font-size: var(--ui-panel-common-input-font-size, 9px) !important;
+        }
+        body[data-ui-variant="variant-1-glass"] .ui-container input[type="range"]::-webkit-slider-thumb,
+        body[data-ui-variant="variant-1-glass"] #glass-settings-panel input[type="range"]::-webkit-slider-thumb {
+            width: var(--ui-panel-common-slider-thumb-size, 11px) !important;
+            height: var(--ui-panel-common-slider-thumb-size, 11px) !important;
+        }
+        body[data-ui-variant="variant-1-glass"] .ui-container input[type="range"]::-moz-range-thumb,
+        body[data-ui-variant="variant-1-glass"] #glass-settings-panel input[type="range"]::-moz-range-thumb {
+            width: var(--ui-panel-common-slider-thumb-size, 11px) !important;
+            height: var(--ui-panel-common-slider-thumb-size, 11px) !important;
+        }
+
+        body[data-ui-variant="variant-1-glass"] #color-container,
+        body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3 { font-size: var(--ui-panel-1-font-size, 9px) !important; }
+        body[data-ui-variant="variant-1-glass"] #slider-container,
+        body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-4 { font-size: var(--ui-panel-2-font-size, 9px) !important; }
+        body[data-ui-variant="variant-1-glass"] #slider-container .slider-value,
+        body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-4 .slider-value { font-size: var(--ui-panel-2-value-font-size, 10px) !important; }
+        body[data-ui-variant="variant-1-glass"] #slider-container button,
+        body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-4 button { font-size: var(--ui-panel-2-button-font-size, 8px) !important; }
+        body[data-ui-variant="variant-1-glass"] #cursor-container,
+        body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6 { font-size: var(--ui-panel-3-font-size, 9px) !important; }
+        body[data-ui-variant="variant-1-glass"] #cursor-container .slider-value,
+        body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6 .slider-value { font-size: var(--ui-panel-3-value-font-size, 10px) !important; }
+        body[data-ui-variant="variant-1-glass"] #cursor-container button,
+        body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6 button { font-size: var(--ui-panel-3-button-font-size, 8px) !important; }
+        body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7 { font-size: var(--ui-panel-4-font-size, 9px) !important; }
+        body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7 .slider-value { font-size: var(--ui-panel-4-value-font-size, 10px) !important; }
+        body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7 button { font-size: var(--ui-panel-4-button-font-size, 8px) !important; }
+        body[data-ui-variant="variant-1-glass"] #glass-control-bar button,
+        body[data-ui-variant="variant-1-glass"] #glass-control-bar .glass-control-pill,
+        body[data-ui-variant="variant-1-glass"] #glass-control-bar .canvas-trail-mode-button,
+        body[data-ui-variant="variant-1-glass"] #glass-control-bar .canvas-bottom-color-button {
+            font-size: var(--ui-bottom-button-font-size, 8px) !important;
+            min-height: var(--ui-bottom-button-height, 21px) !important;
+            height: var(--ui-bottom-button-height, 21px) !important;
+            padding-left: var(--ui-bottom-button-padding-x, 7px) !important;
+            padding-right: var(--ui-bottom-button-padding-x, 7px) !important;
+        }
+
+        body[data-ui-variant="variant-1-glass"] #color-container .color-theme-card,
+        body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3 .color-theme-card {
+            height: var(--ui-color-card-height, 34px) !important;
+            min-height: var(--ui-color-card-height, 34px) !important;
+            padding: var(--ui-color-card-padding-y, 3px) var(--ui-color-card-padding-x, 5px) !important;
+        }
+        body[data-ui-variant="variant-1-glass"] #color-container .color-theme-name,
+        body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3 .color-theme-name {
+            font-size: var(--ui-color-card-name-font-size, 8px) !important;
+            line-height: var(--ui-color-card-name-line-height, 1.4) !important;
+        }
+        body[data-ui-variant="variant-1-glass"] #color-container .color-theme-preview,
+        body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3 .color-theme-preview,
+        body[data-ui-variant="variant-1-glass"] #color-container .color-theme-swatch,
+        body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3 .color-theme-swatch {
+            height: var(--ui-color-swatch-height, 12px) !important;
+            min-height: var(--ui-color-swatch-height, 12px) !important;
+        }
+        body[data-ui-variant="variant-1-glass"] #color-container .color-theme-actions,
+        body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3 .color-theme-actions {
+            gap: var(--ui-color-action-button-gap, 5px) !important;
+        }
+        body[data-ui-variant="variant-1-glass"] #color-container .color-assign-btn,
+        body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3 .color-assign-btn {
+            font-size: var(--ui-color-assign-button-font-size, 12px) !important;
+            line-height: var(--ui-color-assign-button-line-height, 1.1) !important;
+            height: var(--ui-color-assign-button-height, 15px) !important;
+            min-height: var(--ui-color-assign-button-height, 15px) !important;
+            padding-left: var(--ui-color-assign-button-padding-x, 8px) !important;
+            padding-right: var(--ui-color-assign-button-padding-x, 8px) !important;
+            white-space: nowrap !important;
+        }
+        body[data-ui-variant="variant-1-glass"] #color-container .color-blend-btn,
+        body[data-ui-variant="variant-1-glass"] #color-container .color-theme-recolor-btn,
+        body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3 .color-blend-btn,
+        body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3 .color-theme-recolor-btn {
+            font-size: var(--ui-color-action-button-font-size, 11px) !important;
+            line-height: var(--ui-color-action-button-line-height, 1) !important;
+            height: var(--ui-color-action-button-height, 24px) !important;
+            min-height: var(--ui-color-action-button-height, 24px) !important;
+            padding-left: var(--ui-color-action-button-padding-x, 10px) !important;
+            padding-right: var(--ui-color-action-button-padding-x, 10px) !important;
+            white-space: nowrap !important;
+        }
+        body[data-ui-variant="variant-1-glass"] #color-container .color-transition-row,
+        body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3 .color-transition-row {
+            gap: var(--ui-color-transition-row-gap, 3px) !important;
+        }
+        body[data-ui-variant="variant-1-glass"] #color-container .color-transition-input,
+        body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3 .color-transition-input {
+            font-size: var(--ui-color-transition-input-font-size, 9px) !important;
+            line-height: var(--ui-color-transition-input-line-height, 1) !important;
+            width: var(--ui-color-transition-input-width, 38px) !important;
+            min-width: var(--ui-color-transition-input-width, 38px) !important;
+            max-width: var(--ui-color-transition-input-width, 38px) !important;
+            height: var(--ui-color-transition-input-height, 18px) !important;
+            min-height: var(--ui-color-transition-input-height, 18px) !important;
+            padding-left: var(--ui-color-transition-input-padding-x, 3px) !important;
+            padding-right: var(--ui-color-transition-input-padding-x, 3px) !important;
+        }
+
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #color-container .color-theme-actions,
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-theme-actions {
+            gap: var(--ui-neumo-color-action-button-gap, 2px) !important;
+        }
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #color-container .color-assign-btn,
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-assign-btn {
+            font-size: var(--ui-neumo-color-assign-button-font-size, 6px) !important;
+            line-height: var(--ui-neumo-color-assign-button-line-height, 0.8) !important;
+            height: var(--ui-neumo-color-assign-button-height, 12px) !important;
+            min-height: var(--ui-neumo-color-assign-button-height, 12px) !important;
+            padding-left: var(--ui-neumo-color-assign-button-padding-x, 1px) !important;
+            padding-right: var(--ui-neumo-color-assign-button-padding-x, 1px) !important;
+            white-space: nowrap !important;
+        }
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #color-container .color-blend-btn,
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #color-container .color-theme-recolor-btn,
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-blend-btn,
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-theme-recolor-btn {
+            font-size: var(--ui-neumo-color-action-button-font-size, 6px) !important;
+            line-height: var(--ui-neumo-color-action-button-line-height, 1) !important;
+            height: var(--ui-neumo-color-action-button-height, 16px) !important;
+            min-height: var(--ui-neumo-color-action-button-height, 16px) !important;
+            padding-left: var(--ui-neumo-color-action-button-padding-x, 2px) !important;
+            padding-right: var(--ui-neumo-color-action-button-padding-x, 2px) !important;
+            white-space: nowrap !important;
+        }
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #color-container .color-transition-input,
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-transition-input {
+            font-size: var(--ui-neumo-color-transition-input-font-size, 5.5px) !important;
+            line-height: var(--ui-neumo-color-transition-input-line-height, 1.05) !important;
+            width: var(--ui-neumo-color-transition-input-width, 34px) !important;
+            min-width: var(--ui-neumo-color-transition-input-width, 34px) !important;
+            max-width: var(--ui-neumo-color-transition-input-width, 34px) !important;
+            height: var(--ui-neumo-color-transition-input-height, 15px) !important;
+            min-height: var(--ui-neumo-color-transition-input-height, 15px) !important;
+            padding-left: var(--ui-neumo-color-transition-input-padding-x, 2px) !important;
+            padding-right: var(--ui-neumo-color-transition-input-padding-x, 2px) !important;
+        }
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel [data-neumo-panel-surface-shape],
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel .neumo-surface-button {
+            font-size: var(--ui-neumo-surface-button-font-size, 10.5px) !important;
+            line-height: var(--ui-neumo-surface-button-line-height, 1) !important;
+            height: var(--ui-neumo-surface-button-height, 14px) !important;
+            min-height: var(--ui-neumo-surface-button-height, 14px) !important;
+            min-width: var(--ui-neumo-surface-button-min-width, 34px) !important;
+            padding-left: var(--ui-neumo-surface-button-padding-x, 3px) !important;
+            padding-right: var(--ui-neumo-surface-button-padding-x, 3px) !important;
+            white-space: nowrap !important;
+        }
+
+        /* v46: 閉じた状態はヘッダーだけの高さに固定する。
+           Neumorphism / Glassmorphism 共通で、閉じた直後の余白・移動中の一時的な隙間を出さない。 */
+        body[data-ui-variant="variant-1-glass"] .ui-container.collapsed,
+        body[data-ui-variant="variant-1-glass"] .glass-settings-panel.collapsed {
+            padding-bottom: 0 !important;
+        }
+        body[data-ui-variant="variant-1-glass"] .ui-container.collapsed > .ui-content,
+        body[data-ui-variant="variant-1-glass"] .glass-settings-panel.collapsed > .ui-content,
+        body[data-ui-variant="variant-1-glass"] .ui-container.collapsed > .ui-panel-content,
+        body[data-ui-variant="variant-1-glass"] .glass-settings-panel.collapsed > .ui-panel-content {
+            display: none !important;
+            height: 0 !important;
+            min-height: 0 !important;
+            max-height: 0 !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            border: 0 !important;
+            opacity: 0 !important;
+            overflow: hidden !important;
+            pointer-events: none !important;
+        }
+
+        /* Legacy point panel removed from public workflow. Official point controls use #glass-cursor-panel-4. */
+        #slider-container {
+            display: none !important;
+        }
+

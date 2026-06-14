@@ -1,3 +1,5 @@
+var UIUX_PUBLIC_DEBUG_LOGS = window.UIUX_PUBLIC_DEBUG_LOGS === true;
+function uiuxPublicDebugLog(...args) { if (UIUX_PUBLIC_DEBUG_LOGS) console.log(...args); }
 if (!window.ColorEngine) {
     document.write('<script src="js/ui/UI_ColorEngine.js"><\/script>');
 }
@@ -306,15 +308,117 @@ window.Color = window.Color || {};
         return document.body?.classList.contains('glass-bg-dark') ? 'dark' : 'light';
     }
 
+    function getCanvasBackgroundForReadableColor() {
+        const body = document.body;
+        const candidates = [
+            window.config?.canvasBgColor,
+            body ? body.style.getPropertyValue('--canvas-bg-color') : '',
+            body ? body.style.getPropertyValue('--global-canvas-bg-color') : '',
+            getComputedStyle(document.documentElement).getPropertyValue('--canvas-bg-color'),
+            getComputedStyle(document.documentElement).getPropertyValue('--global-canvas-bg-color'),
+            (() => { try { return localStorage.getItem('globalCanvasBgColor'); } catch (error) { return ''; } })()
+        ];
+        return candidates.find((value) => typeof value === 'string' && value.trim()) || '';
+    }
+
+    function getAutoReadableTextColorFromBackground() {
+        const bg = getCanvasBackgroundForReadableColor();
+        const bgRgb = parseComputedRgb(bg);
+        if (bgRgb) {
+            return chooseReadableTextColorForBackground(bgRgb, { fallback: '#111827' });
+        }
+        if (document.body?.dataset?.canvasBgTone === 'dark' || document.body?.classList.contains('glass-bg-dark')) return '#ffffff';
+        return '#111827';
+    }
+
+    function getReadablePanelStateFromColor(color) {
+        const rgb = parseComputedRgb(color);
+        if (!rgb) return color === '#ffffff' || color === '#f8fafc' ? 'dark' : 'light';
+        const brightness = ((rgb.r * 299) + (rgb.g * 587) + (rgb.b * 114)) / 1000;
+        return brightness > 180 ? 'dark' : 'light';
+    }
+
+    function isFixedLightPanelTextElement(el) {
+        return !!(el && el.closest && el.closest([
+            '#ui-size-tuner-panel',
+            '#ui-preset-panel .glass-preset-details',
+            '#ui-preset-panel .glass-preset-rows',
+            '#ui-preset-panel .glass-preset-actions',
+            '#ui-preset-panel .glass-preset-details-toggle',
+            '.palette-details-section',
+            '.palette-details',
+            '[data-palette-details]',
+            '.palette-detail-group'
+        ].join(',')));
+    }
+
+    function applyAutoReadableIconColor(panelState, forcedColor = '') {
+        const color = forcedColor || getAutoReadableTextColorFromBackground();
+        const isDark = getReadablePanelStateFromColor(color) === 'dark';
+        const shadow = isDark ? '0 1px 2px rgba(0, 0, 0, 0.55)' : 'none';
+        const body = document.body;
+        if (!body) return;
+        body.style.setProperty('--ui-auto-readable-icon-color', color);
+        body.style.setProperty('--ui-auto-readable-icon-shadow', shadow);
+        body.style.setProperty('--auto-readable-text-color', color);
+        body.style.setProperty('--glass-resolved-text-color', color);
+        body.dataset.canvasBgTone = isDark ? 'dark' : 'light';
+
+        document.querySelectorAll('#ui-variant-panel, #ui-preset-panel, #ui-variant-compact-panel, .ui-variant-compact-panel').forEach((panel) => {
+            panel.style.setProperty('--ui-auto-readable-icon-color', color, 'important');
+            panel.style.setProperty('--auto-readable-text-color', color, 'important');
+            panel.style.setProperty('--glass-resolved-text-color', color, 'important');
+            panel.querySelectorAll('select, option, button, .glass-preset-details-toggle, .glass-preset-selected-lock, label, span').forEach((el) => {
+                if (isFixedLightPanelTextElement(el)) {
+                    el.style.setProperty('color', '#111827', 'important');
+                    el.style.setProperty('-webkit-text-fill-color', '#111827', 'important');
+                    el.style.setProperty('text-shadow', 'none', 'important');
+                    return;
+                }
+                el.style.setProperty('color', color, 'important');
+                el.style.setProperty('-webkit-text-fill-color', color, 'important');
+                el.style.setProperty('text-shadow', shadow, 'important');
+            });
+        });
+        document.querySelectorAll('#case-comparison.case-palette-only .case-choice-button, #case-comparison.case-palette-only .case-index-button, #case-comparison.case-palette-only .case-slot-button, #case-comparison.case-palette-only .case-slot-button *, #case-comparison.case-palette-only .case-action-button, #case-comparison.case-palette-only .case-action-glyph, #case-comparison.case-palette-only .case-layout-toggle').forEach((el) => {
+            el.style.setProperty('color', color, 'important');
+            el.style.setProperty('-webkit-text-fill-color', color, 'important');
+            el.style.setProperty('text-shadow', shadow, 'important');
+        });
+        document.querySelectorAll('.color-transition-label, #color-transition-seconds').forEach((el) => {
+            el.style.setProperty('color', color, 'important');
+            el.style.setProperty('-webkit-text-fill-color', color, 'important');
+            el.style.setProperty('text-shadow', shadow, 'important');
+        });
+        document.querySelectorAll('.color-transition-triangle-up').forEach((el) => {
+            el.style.setProperty('border-bottom-color', color, 'important');
+            el.style.setProperty('border-top-color', 'transparent', 'important');
+            el.style.setProperty('filter', 'none', 'important');
+            el.style.setProperty('transition', 'none', 'important');
+            el.style.setProperty('transform', 'translateX(-50%)', 'important');
+        });
+        document.querySelectorAll('.color-transition-triangle-down').forEach((el) => {
+            el.style.setProperty('border-top-color', color, 'important');
+            el.style.setProperty('border-bottom-color', 'transparent', 'important');
+            el.style.setProperty('filter', 'none', 'important');
+            el.style.setProperty('transition', 'none', 'important');
+            el.style.setProperty('transform', 'translateX(-50%)', 'important');
+        });
+    }
+
     function applyReadableTextColors(root = document) {
-        const panelState = (document.body?.dataset?.canvasBgTone === 'dark' || document.body?.classList.contains('glass-bg-dark')) ? 'dark' : 'light';
-        const readableTextColor = panelState === 'dark' ? '#ffffff' : '#111827';
+        const readableTextColor = getAutoReadableTextColorFromBackground();
+        const panelState = getReadablePanelStateFromColor(readableTextColor);
         const body = document.body;
         if (body) {
             body.style.setProperty('--auto-readable-text-color', readableTextColor);
             body.style.setProperty('--glass-resolved-text-color', readableTextColor);
+            body.dataset.canvasBgTone = panelState === 'dark' ? 'dark' : 'light';
         }
-        const readablePanelSelectors = '#color-container, #glass-cursor-panel-3, #glass-cursor-panel-4, #glass-cursor-panel-6, #glass-cursor-panel-7, #ui-variant-panel';
+        applyAutoReadableIconColor(panelState, readableTextColor);
+        applyPaletteDetailsFixedTextColor(root);
+        applySizeTunerFixedTextColor(root);
+        const readablePanelSelectors = '#color-container, #glass-cursor-panel-3, #glass-cursor-panel-4, #glass-cursor-panel-6, #glass-cursor-panel-7, #ui-variant-panel, #ui-preset-panel, #ui-variant-compact-panel, .ui-variant-compact-panel';
         const assignButtons = root.querySelectorAll('.color-assign-btn[data-assign-mode]');
         assignButtons.forEach((button) => {
             const inColorPanel = button.matches(`${readablePanelSelectors} .color-assign-btn[data-assign-mode]`);
@@ -359,9 +463,11 @@ window.Color = window.Color || {};
                 || document.getElementById('glass-cursor-panel-4')
                 || document.getElementById('glass-cursor-panel-6')
                 || document.getElementById('glass-cursor-panel-7')
-                || document.getElementById('ui-variant-panel'))
+                || document.getElementById('ui-variant-panel')
+                || document.getElementById('ui-preset-panel')
+                || document.getElementById('ui-variant-compact-panel'))
             : root.closest?.('#color-container, #glass-cursor-panel-3, #glass-cursor-panel-4, #glass-cursor-panel-6, #glass-cursor-panel-7, #ui-variant-panel')
-                || root.querySelector?.('#color-container, #glass-cursor-panel-3, #glass-cursor-panel-4, #glass-cursor-panel-6, #glass-cursor-panel-7, #ui-variant-panel')
+                || root.querySelector?.('#color-container, #glass-cursor-panel-3, #glass-cursor-panel-4, #glass-cursor-panel-6, #glass-cursor-panel-7, #ui-variant-panel, #ui-preset-panel, #ui-variant-compact-panel, .ui-variant-compact-panel')
                 || null;
         if (!colorContainer || (root !== document && !colorContainer.contains(root))) {
             return;
@@ -438,7 +544,7 @@ window.Color = window.Color || {};
 
         const textPanels = root.querySelectorAll('#glass-cursor-panel-3, #glass-cursor-panel-4, #glass-cursor-panel-6, #glass-cursor-panel-7');
         textPanels.forEach((panel) => {
-            panel.querySelectorAll('.ui-header, .ui-header *, .slider-label, .slider-value, .reset-btn').forEach((el) => {
+            panel.querySelectorAll('.ui-header, .ui-header *, .slider-label, .slider-value, .reset-btn, .spatial-action-button').forEach((el) => {
                 el.style.setProperty('color', readableTextColor, 'important');
                 el.style.setProperty('-webkit-text-fill-color', readableTextColor, 'important');
                 if (el.classList.contains('ui-header')) {
@@ -450,6 +556,54 @@ window.Color = window.Color || {};
             button.style.setProperty('color', readableTextColor, 'important');
             button.style.setProperty('-webkit-text-fill-color', readableTextColor, 'important');
         });
+        applyPaletteDetailsFixedTextColor(root);
+        applySizeTunerFixedTextColor(root);
+    }
+
+
+
+    function applyPaletteDetailsFixedTextColor(root = document) {
+        const fixedColor = '#111827';
+        const fixedSoftColor = 'rgba(17, 24, 39, 0.72)';
+        const detailsRoots = root.querySelectorAll
+            ? root.querySelectorAll('.palette-details-section, .palette-details, [data-palette-details], .palette-detail-group, #ui-preset-panel .glass-preset-details, #ui-preset-panel .glass-preset-rows, #ui-preset-panel .glass-preset-actions')
+            : [];
+        detailsRoots.forEach((details) => {
+            details.style.setProperty('--auto-readable-text-color', fixedColor, 'important');
+            details.style.setProperty('--glass-resolved-text-color', fixedColor, 'important');
+            details.style.setProperty('--ui-auto-readable-icon-color', fixedColor, 'important');
+            details.style.setProperty('color', fixedColor, 'important');
+            details.style.setProperty('-webkit-text-fill-color', fixedColor, 'important');
+            details.style.setProperty('text-shadow', 'none', 'important');
+            details.querySelectorAll('span, label, .row-label, .row-value, .palette-section-title, .palette-system-tab-name, .palette-system-tab-desc, button, select, option, input, textarea, small, strong, em, div').forEach((el) => {
+                const isMuted = el.matches('.row-value, .palette-system-tab-desc, small');
+                el.style.setProperty('color', isMuted ? fixedSoftColor : fixedColor, 'important');
+                el.style.setProperty('-webkit-text-fill-color', isMuted ? fixedSoftColor : fixedColor, 'important');
+                el.style.setProperty('text-shadow', 'none', 'important');
+            });
+        });
+        root.querySelectorAll?.('[data-palette-details-toggle], .palette-details-toggle, #ui-preset-panel .glass-preset-details-toggle').forEach((toggle) => {
+            toggle.style.setProperty('color', fixedColor, 'important');
+            toggle.style.setProperty('-webkit-text-fill-color', fixedColor, 'important');
+            toggle.style.setProperty('text-shadow', 'none', 'important');
+        });
+    }
+
+    function applySizeTunerFixedTextColor(root = document) {
+        const panel = root.getElementById ? root.getElementById('ui-size-tuner-panel') : document.getElementById('ui-size-tuner-panel');
+        if (!panel) return;
+        panel.style.setProperty('--auto-readable-text-color', '#111827', 'important');
+        panel.style.setProperty('--ui-auto-readable-icon-color', '#111827', 'important');
+        panel.style.setProperty('color', '#111827', 'important');
+        panel.style.setProperty('-webkit-text-fill-color', '#111827', 'important');
+        panel.style.setProperty('text-shadow', 'none', 'important');
+        panel.querySelectorAll('h2, h3, p, span, label, button, select, option, input, textarea, small, strong, em, div, pre').forEach((el) => {
+            const soft = el.matches('.ui-size-tuner-head p, .ui-size-tuner-status, .ui-size-tuner-computed, .ui-size-tuner-engine-note, .ui-size-tuner-value');
+            const c = soft ? 'rgba(31, 42, 61, 0.78)' : '#111827';
+            el.style.setProperty('color', c, 'important');
+            el.style.setProperty('-webkit-text-fill-color', c, 'important');
+            el.style.setProperty('text-shadow', 'none', 'important');
+        });
     }
 
     function installReadableTextColorObserver() {
@@ -457,12 +611,42 @@ window.Color = window.Color || {};
         window.__colorReadableTextObserverInstalled = true;
         const body = document.body;
         if (!body || typeof MutationObserver === 'undefined') return;
+        let scheduled = false;
+        const schedule = () => {
+            if (scheduled) return;
+            scheduled = true;
+            const run = () => {
+                applyReadableTextColors();
+            };
+            window.requestAnimationFrame(() => {
+                scheduled = false;
+                run();
+                /* v88: 左上miniパネルはGlass/Neumorphism適用処理が
+                 * 後からinline colorを書き戻す場合がある。右上設定UIと同じ
+                 * 最終可読色を維持するため、テーマ切替直後だけ数回再適用する。 */
+                setTimeout(run, 0);
+                setTimeout(run, 80);
+                setTimeout(run, 220);
+            });
+        };
         const observer = new MutationObserver((mutations) => {
-            if (!mutations.some((mutation) => mutation.type === 'attributes' && mutation.attributeName === 'class')) return;
-            window.requestAnimationFrame(() => applyReadableTextColors());
+            const shouldRun = mutations.some((mutation) => {
+                if (mutation.type === 'childList') return true;
+                return mutation.type === 'attributes' && ['class', 'style', 'data-canvas-bg-tone', 'data-ui-theme', 'data-ui-variant'].includes(mutation.attributeName);
+            });
+            if (shouldRun) schedule();
         });
-        observer.observe(body, { attributes: true, attributeFilter: ['class', 'data-canvas-bg-tone', 'data-ui-theme'] });
+        observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class', 'style', 'data-canvas-bg-tone', 'data-ui-theme', 'data-ui-variant'] });
+        observer.observe(body, { attributes: true, childList: true, subtree: true, attributeFilter: ['class', 'style', 'data-canvas-bg-tone', 'data-ui-theme', 'data-ui-variant'] });
         window.__colorReadableTextObserver = observer;
+        window.UIUXApplyReadableTextColors = applyReadableTextColors;
+        window.UIUXRefreshReadableTextColors = schedule;
+        schedule();
+        setTimeout(schedule, 0);
+        setTimeout(schedule, 80);
+        setTimeout(schedule, 240);
+        setTimeout(schedule, 720);
+        window.addEventListener('load', schedule, { once: true });
     }
 
     function lerpColorArray(a, b, amount) {
@@ -920,7 +1104,7 @@ window.Color = window.Color || {};
     
     
 Color.createColorGroup = function(targetId = 'color-container') {
-    console.log('Creating color group');
+    uiuxPublicDebugLog('Creating color group');
     const colorContainer = document.getElementById(targetId);
     if (!colorContainer) {
         console.error('Color container not found');
@@ -956,16 +1140,24 @@ Color.createColorGroup = function(targetId = 'color-container') {
             <div class="color-transition-actions-row">
                 <div class="color-transition-row" role="group" aria-label="遷移秒">
                     <label class="color-transition-label" for="color-transition-seconds">遷移秒</label>
-                    <input
-                        type="number"
-                        id="color-transition-seconds"
-                        class="color-transition-input"
-                        min="0"
-                        max="9.9"
-                        step="0.1"
-                        inputmode="decimal"
-                        aria-label="遷移秒"
-                    >
+                    <span class="color-transition-spin-wrap">
+                        <input
+                            type="number"
+                            id="color-transition-seconds"
+                            class="color-transition-input"
+                            min="0"
+                            max="9.9"
+                            step="0.1"
+                            inputmode="decimal"
+                            aria-label="遷移秒"
+                        >
+                        <span class="color-transition-spinner" aria-hidden="false">
+                            <span class="color-transition-spin-hit color-transition-spin-hit-up" data-color-transition-step="up" role="button" tabindex="0" aria-label="遷移秒を上げる"></span>
+                            <span class="color-transition-spin-hit color-transition-spin-hit-down" data-color-transition-step="down" role="button" tabindex="0" aria-label="遷移秒を下げる"></span>
+                            <span class="color-transition-triangle color-transition-triangle-up" aria-hidden="true"></span>
+                            <span class="color-transition-triangle color-transition-triangle-down" aria-hidden="true"></span>
+                        </span>
+                    </span>
                 </div>
                 <div class="color-utility-actions" role="group" aria-label="配色操作">
                     <button type="button" class="color-blend-btn${colorBlendEnabled ? ' is-active' : ''}" data-theme-blend aria-pressed="${colorBlendEnabled}">馴染</button>
@@ -1244,6 +1436,23 @@ Color.createColorGroup = function(targetId = 'color-container') {
         transitionSecondsInput.addEventListener('change', handleTransitionSecondsChange);
         transitionSecondsInput.value = String(getTransitionSecondsValue());
     }
+    colorContent.querySelectorAll('[data-color-transition-step]').forEach((hit) => {
+        const runTransitionStep = () => {
+            if (!transitionSecondsInput) return;
+            const direction = hit.dataset.colorTransitionStep === 'up' ? 1 : -1;
+            const current = Number(transitionSecondsInput.value);
+            const base = Number.isFinite(current) ? current : getTransitionSecondsValue();
+            const next = Math.max(0, Math.min(9.9, Math.round((base + direction * 0.1) * 10) / 10));
+            transitionSecondsInput.value = String(next);
+            handleTransitionSecondsChange({ target: transitionSecondsInput });
+        };
+        hit.addEventListener('click', runTransitionStep);
+        hit.addEventListener('keydown', (event) => {
+            if (event.key !== 'Enter' && event.key !== ' ') return;
+            event.preventDefault();
+            runTransitionStep();
+        });
+    });
     engineAssignSelect.addEventListener('change', Color.handleColorEngineAssignModeChange);
     engineMixMinInput.addEventListener('change', Color.handleColorEngineMixMinChange);
     engineMixMaxInput.addEventListener('change', Color.handleColorEngineMixMaxChange);
@@ -1270,7 +1479,7 @@ Color.createColorGroup = function(targetId = 'color-container') {
         window.ColorEngine.init();
     }
     Color.updateColorEngineUI();
-    console.log('Color group created');
+    uiuxPublicDebugLog('Color group created');
     Color.updateAllSliders();
     Color.loadSettings();
 };
@@ -1707,7 +1916,7 @@ Color.updatePaletteSystemUI = function() {
 
 
 Color.updateParameter = function(param, value) {
-    console.log(`Updating parameter: ${param} = ${value}`);
+    uiuxPublicDebugLog(`Updating parameter: ${param} = ${value}`);
     if (!window.currentCase) {
         console.error('Current case is undefined');
         return;
@@ -1728,7 +1937,7 @@ Color.updateParameter = function(param, value) {
 };
 
     Color.resetToDefault = function(param) {
-        console.log(`Resetting to default: ${param}`);
+        uiuxPublicDebugLog(`Resetting to default: ${param}`);
         if (!window.currentCase || !window.currentCase.initialConfig) {
             console.error('Current case or initial config is undefined');
             return;
@@ -1742,7 +1951,7 @@ Color.updateParameter = function(param, value) {
     };
 
     Color.updateSliderColor = function(param, value) {
-        console.log(`Updating slider color: ${param} = ${value}`);
+        uiuxPublicDebugLog(`Updating slider color: ${param} = ${value}`);
         const slider = document.getElementById(param + '-slider');
         if (!slider) {
             console.warn(`Slider element not found for ${param}`);
@@ -1844,7 +2053,7 @@ Color.updatePaletteChips = function() {
     
 
 Color.updateSliderValue = function(param, value) {
-    console.log(`Updating slider value: ${param} = ${value}`);
+    uiuxPublicDebugLog(`Updating slider value: ${param} = ${value}`);
     const slider = document.getElementById(param + '-slider');
     const valueDisplay = document.getElementById(param + '-value');
     
@@ -1875,7 +2084,7 @@ Color.updateSliderValue = function(param, value) {
 
 
     Color.onCaseChange = function(event) {
-        console.log('Case changed, updating Color UI');
+        uiuxPublicDebugLog('Case changed, updating Color UI');
         if (event && event.detail && event.detail.currentCase) {
             window.currentCase = event.detail.currentCase;
         }
@@ -1883,14 +2092,14 @@ Color.updateSliderValue = function(param, value) {
     };
 
 Color.updateAllSliders = function() {
-    console.log('Updating all sliders');
+    uiuxPublicDebugLog('Updating all sliders');
     if (!window.currentCase || !window.currentCase.config) {
         console.warn('Current case or its config is undefined. Using default values.');
         return;
     }
 
-    console.log('Current case config:', window.currentCase.config);
-    console.log('Current case initial config:', window.currentCase.initialConfig);
+    uiuxPublicDebugLog('Current case config:', window.currentCase.config);
+    uiuxPublicDebugLog('Current case initial config:', window.currentCase.initialConfig);
 
     ['color-r', 'color-g', 'color-b'].forEach((param, index) => {
         const currentValue = window.currentCase.config.color[index];
@@ -2334,7 +2543,7 @@ document.addEventListener('caseChanged', function(event) {
 });
 
 window.addEventListener('load', function() {
-    console.log('Window loaded: Updating Color UI');
+    uiuxPublicDebugLog('Window loaded: Updating Color UI');
     if (window.currentCase) {
         window.Color.updateAllSliders();
     } else {

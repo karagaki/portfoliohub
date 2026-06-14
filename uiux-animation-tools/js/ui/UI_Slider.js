@@ -4,13 +4,45 @@ window.Slider = window.Slider || {};
     const PARAM_DEFS = [
         { param: 'count', label: '点の数', min: 1, max: 50, step: 1, decimals: 0 },
         { param: 'size', label: '点の大きさ', min: 1, max: 200, step: 0.01, decimals: 2 },
-        { param: 'radius', label: '全体スケール', min: 0, max: 700, step: 0.01, decimals: 2 },
+        { param: 'radius', label: '全体サイズ', min: 0, max: 700, step: 0.01, decimals: 2 },
         { param: 'trailLength', label: '軌跡の幅', min: 2, max: 300, step: 1, decimals: 0 },
         { param: 'morphSpeed', label: '点の速度', min: 0.0001, max: 0.2, step: 0.0001, decimals: 4 },
         { param: 'fadeSpeed', label: '墨の幅', min: 0.0005, max: 0.1, step: 0.0001, decimals: 4 },
         { param: 'pointSequenceSeconds', label: '順次遷移', min: 0, max: 20, step: 0.1, decimals: 1, supportsCycle: false }
     ];
     const CYCLE_MULTIPLIERS = [0.5, 1, 4];
+    const POINT_SEQUENCE_LOCK_PARAM = 'pointSequenceSeconds';
+
+    function isPointSequenceLockEnabled() {
+        return window.__pointSequenceSliderLocked !== false;
+    }
+
+    function setPointSequenceLockEnabled(locked) {
+        window.__pointSequenceSliderLocked = locked !== false;
+        applyPointSequenceLockState();
+    }
+
+    function applyPointSequenceLockState() {
+        const locked = isPointSequenceLockEnabled();
+        document.querySelectorAll(`[id="${POINT_SEQUENCE_LOCK_PARAM}-group"]`).forEach((sliderGroup) => {
+            sliderGroup.classList.toggle('is-point-sequence-locked', locked);
+            sliderGroup.dataset.pointSequenceLocked = locked ? 'true' : 'false';
+            sliderGroup.querySelectorAll(`[id="${POINT_SEQUENCE_LOCK_PARAM}-slider"]`).forEach((slider) => {
+                slider.disabled = locked;
+                slider.setAttribute('aria-disabled', locked ? 'true' : 'false');
+            });
+            sliderGroup.querySelectorAll('[data-point-sequence-lock-button]').forEach((button) => {
+                button.classList.toggle('is-locked', locked);
+                button.setAttribute('aria-pressed', locked ? 'true' : 'false');
+                button.setAttribute('aria-label', locked ? '順次遷移スライダーのロックを解除' : '順次遷移スライダーをロック');
+                button.title = locked ? '順次遷移スライダーのロックを解除' : '順次遷移スライダーをロック';
+            });
+        });
+    }
+
+    if (typeof window.__pointSequenceSliderLocked !== 'boolean') {
+        window.__pointSequenceSliderLocked = true;
+    }
 
     function getCycleMultiplier(state) {
         const value = Number(state && state.cycleMultiplier);
@@ -437,11 +469,19 @@ window.Slider = window.Slider || {};
         }
         ensureCycleStyles();
 
+        if (targetId === 'slider-container') {
+            // Legacy 4.点の設定 panel is intentionally disabled.
+            // Official point controls are rendered into glass-cursor-panel-4.
+            sliderContainer.innerHTML = '';
+            sliderContainer.setAttribute('hidden', '');
+            return;
+        }
+
         sliderContainer.innerHTML = '';
 
         const sliderHeader = document.createElement('div');
         sliderHeader.className = 'ui-header';
-        sliderHeader.textContent = '4.点の設定';
+        sliderHeader.textContent = '2.点';
         sliderContainer.appendChild(sliderHeader);
 
         const sliderContent = document.createElement('div');
@@ -537,6 +577,19 @@ window.Slider = window.Slider || {};
             if (supportsCycle) {
                 defaultContainer.appendChild(cycleBtn);
             }
+            if (param === POINT_SEQUENCE_LOCK_PARAM) {
+                const pointSequenceLockButton = document.createElement('button');
+                pointSequenceLockButton.type = 'button';
+                pointSequenceLockButton.className = 'point-sequence-lock-button';
+                pointSequenceLockButton.dataset.pointSequenceLockButton = 'true';
+                pointSequenceLockButton.textContent = '🔓';
+                pointSequenceLockButton.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    setPointSequenceLockEnabled(!isPointSequenceLockEnabled());
+                });
+                defaultContainer.appendChild(pointSequenceLockButton);
+            }
 
             sliderLayout.appendChild(labelValueContainer);
             sliderLayout.appendChild(sliderContainerInner);
@@ -581,6 +634,9 @@ window.Slider = window.Slider || {};
                     state.maxValue = bounds.max;
                 }
                 refreshSliderRow(param, renderCase);
+            }
+            if (param === POINT_SEQUENCE_LOCK_PARAM) {
+                applyPointSequenceLockState();
             }
         });
 
@@ -744,6 +800,12 @@ window.Slider = window.Slider || {};
 
         const def = getParamDef(param);
         if (!def) return;
+
+        if (param === POINT_SEQUENCE_LOCK_PARAM && isPointSequenceLockEnabled()) {
+            Slider.updateSliderValue(param, Slider.getCaseValue(currentCase, param, def.min), { syncInputs: true });
+            applyPointSequenceLockState();
+            return;
+        }
 
         const state = def.supportsCycle !== false ? getParamState(currentCase, param) : null;
         if (state && state.mode === 'cycle') {
@@ -917,6 +979,8 @@ window.Slider = window.Slider || {};
     };
 
     Slider.applyModeToRow = applyModeToRow;
+    Slider.applyPointSequenceLockState = applyPointSequenceLockState;
+    Slider.setPointSequenceLockEnabled = setPointSequenceLockEnabled;
     Slider.getAnimationCycleFrames = getAnimationCycleFrames;
     Slider.setCycleStateFromStorage = function() {};
 })(window.Slider);

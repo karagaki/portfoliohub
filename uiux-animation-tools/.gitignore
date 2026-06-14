@@ -1,0 +1,18 @@
+# macOS generated files
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+__MACOSX/
+
+# temporary/editor artifacts
+*.bak
+*.tmp
+*.swp
+*~
+
+# packaged archives should be created outside this public app folder
+*.zip
+
+# local/debug data
+analysis/notification_events.jsonl

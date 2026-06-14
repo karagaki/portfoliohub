@@ -218,24 +218,28 @@
 }
 
 .color-transition-input {
-    width: 58px;
-    min-width: 58px;
-    max-width: 58px;
-    padding: 1px 4px;
+    width: var(--ui-color-transition-input-width, 38px);
+    min-width: var(--ui-color-transition-input-width, 38px);
+    max-width: var(--ui-color-transition-input-width, 38px);
+    min-height: var(--ui-color-transition-input-height, 18px);
+    height: var(--ui-color-transition-input-height, 18px);
+    padding: 0 var(--ui-color-transition-input-padding-x, 3px);
     border: 1px solid rgba(40, 90, 180, 0.26);
     border-radius: 5px;
-    font-size: 11px;
-    line-height: 1.2;
+    background: transparent;
+    box-shadow: none;
+    font-size: var(--ui-color-transition-input-font-size, 9px);
+    line-height: var(--ui-color-transition-input-line-height, 1.0);
     color: #24344d;
-    background: rgba(255, 255, 255, 0.9);
-    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.06);
+    background: transparent;
+    box-shadow: none;
 }
 
 .color-theme-actions {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 1px;
+    gap: var(--ui-color-action-button-gap, var(--ui-color-assign-button-gap, 2px));
     justify-content: flex-start;
     width: 100%;
     margin: 0 0 4px;
@@ -247,15 +251,15 @@
 .color-blend-btn,
 .color-theme-recolor-btn {
     border: 1px solid rgba(40, 90, 180, 0.28);
-    border-radius: 6px;
-    padding: 1px 6px;
-    min-height: 19px;
+    border-radius: var(--ui-color-assign-button-radius, 6px);
+    padding: 0 var(--ui-color-assign-button-padding-x, 5px);
+    min-height: var(--ui-color-assign-button-height, 18px);
     background: rgba(245, 248, 252, 0.58);
     color: #24344d;
     cursor: pointer;
-    font-size: 10px;
+    font-size: var(--ui-color-assign-button-font-size, 8px);
     font-weight: 700;
-    line-height: 1.1;
+    line-height: var(--ui-color-assign-button-line-height, 1.0);
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
     opacity: 0.72;
     transition: color 2s ease, -webkit-text-fill-color 2s ease, background 0.14s ease, border-color 0.14s ease, box-shadow 0.14s ease, filter 0.14s ease, opacity 0.14s ease;
@@ -429,11 +433,11 @@
 }
 
 .color-theme-name {
-    font-size: 11px;
+    font-size: var(--ui-color-card-name-font-size, 10px);
     font-weight: 700;
     color: #2f2f2f;
     -webkit-text-fill-color: #2f2f2f;
-    line-height: 1;
+    line-height: var(--ui-color-card-name-line-height, 1.1);
     letter-spacing: 0.01em;
     white-space: normal;
     word-break: keep-all;
@@ -464,11 +468,11 @@
 }
 
 #color-container .color-theme-name {
-    font-size: 11px;
+    font-size: var(--ui-color-card-name-font-size, 10px);
     font-weight: 700;
     color: #2f2f2f;
     -webkit-text-fill-color: #2f2f2f;
-    line-height: 1;
+    line-height: var(--ui-color-card-name-line-height, 1.1);
     letter-spacing: 0.01em;
     white-space: normal;
     word-break: keep-all;
@@ -567,9 +571,9 @@
 #color-container .color-theme-card,
 #glass-cursor-panel-3 .color-theme-card {
     box-sizing: border-box !important;
-    height: 40px !important;
-    min-height: 40px !important;
-    padding: 3px 5px 4px !important;
+    height: var(--ui-color-card-height, 38px) !important;
+    min-height: var(--ui-color-card-height, 38px) !important;
+    padding: var(--ui-color-card-padding-y, 3px) var(--ui-color-card-padding-x, 5px) calc(var(--ui-color-card-padding-y, 3px) + 1px) !important;
     display: flex !important;
     flex-direction: column !important;
     justify-content: space-between !important;
@@ -581,11 +585,11 @@
 #glass-cursor-panel-3 .color-theme-name {
     display: block !important;
     min-height: 0 !important;
-    height: 12px !important;
-    max-height: 12px !important;
+    height: calc(var(--ui-color-card-name-line-height, 1.1) * 1em) !important;
+    max-height: calc(var(--ui-color-card-name-line-height, 1.1) * 1em) !important;
     margin: 0 !important;
     padding: 0 !important;
-    line-height: 12px !important;
+    line-height: var(--ui-color-card-name-line-height, 1.1) !important;
     white-space: nowrap !important;
     overflow: hidden !important;
     text-overflow: ellipsis !important;
@@ -596,30 +600,46 @@
 .color-theme-preview,
 #color-container .color-theme-preview,
 #glass-cursor-panel-3 .color-theme-preview {
-    flex: 0 0 9px !important;
-    height: 9px !important;
+    flex: 0 0 var(--ui-color-swatch-height, 8px) !important;
+    height: var(--ui-color-swatch-height, 8px) !important;
     margin: 0 !important;
 }
 
 
 /* ID_P5JS260525_COLOR_ACTION_BALANCE_01:
  * 配色操作を2段に整理し、遷移秒と馴染/再配色を同一行へ右寄せする。
+ * 基本/上下/左右/斜め/中心の文字サイズは main.css の
+ * --ui-color-assign-button-* / --ui-neumo-color-assign-button-* で調整する。
  */
 .color-theme-actions {
     flex-wrap: nowrap;
-    gap: 5px;
+    gap: var(--ui-color-assign-button-gap, 2px);
     padding: 0;
 }
 .color-theme-actions .color-assign-btn {
-    min-height: 24px;
-    padding: 2px 10px;
-    font-size: 11px;
+    min-height: var(--ui-color-assign-button-height, 18px);
+    padding: 0 var(--ui-color-assign-button-padding-x, 5px);
+    font-size: var(--ui-color-assign-button-font-size, 8px);
+    line-height: var(--ui-color-assign-button-line-height, 1.0);
+    box-sizing: border-box;
+    white-space: nowrap;
+    min-width: 0;
+}
+.color-theme-actions .color-blend-btn,
+.color-theme-actions .color-theme-recolor-btn {
+    min-height: var(--ui-color-action-button-height, 24px);
+    height: var(--ui-color-action-button-height, 24px);
+    padding: 0 var(--ui-color-action-button-padding-x, 10px);
+    font-size: var(--ui-color-action-button-font-size, 11px);
+    line-height: var(--ui-color-action-button-line-height, 1.0);
+    white-space: nowrap;
+    box-sizing: border-box;
 }
 .color-transition-actions-row {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 8px;
+    gap: var(--ui-color-transition-actions-gap, 4px);
     width: 100%;
     margin: 2px 0 5px;
 }
@@ -628,24 +648,361 @@
     width: auto;
     margin: 0;
     padding: 0;
-    gap: 5px;
+    gap: var(--ui-color-transition-row-gap, 3px);
 }
 .color-transition-actions-row .color-transition-input {
-    width: 44px;
-    min-width: 44px;
-    max-width: 44px;
-    font-size: 11px;
+    width: var(--ui-color-transition-input-width, 38px);
+    min-width: var(--ui-color-transition-input-width, 38px);
+    max-width: var(--ui-color-transition-input-width, 38px);
+    min-height: var(--ui-color-transition-input-height, 18px);
+    height: var(--ui-color-transition-input-height, 18px);
+    padding-left: var(--ui-color-transition-input-padding-x, 3px);
+    padding-right: var(--ui-color-transition-input-padding-x, 3px);
+    font-size: var(--ui-color-transition-input-font-size, 9px);
+    line-height: var(--ui-color-transition-input-line-height, 1.0);
 }
 .color-utility-actions {
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    gap: 5px;
+    gap: var(--ui-color-action-button-gap, 5px);
     margin-left: auto;
+    min-width: 0;
 }
 .color-utility-actions .color-blend-btn,
 .color-utility-actions .color-theme-recolor-btn {
-    min-height: 24px;
-    padding: 2px 10px;
-    font-size: 11px;
+    min-height: var(--ui-color-action-button-height, 24px);
+    height: var(--ui-color-action-button-height, 24px);
+    padding: 0 var(--ui-color-action-button-padding-x, 10px);
+    font-size: var(--ui-color-action-button-font-size, 11px);
+    line-height: var(--ui-color-action-button-line-height, 1.0);
+    white-space: nowrap;
+    box-sizing: border-box;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] .color-theme-actions {
+    gap: var(--ui-neumo-color-action-button-gap, var(--ui-neumo-color-assign-button-gap, 2px));
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] .color-transition-actions-row {
+    gap: var(--ui-neumo-color-transition-actions-gap, 2px);
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] .color-transition-actions-row .color-transition-row {
+    gap: var(--ui-neumo-color-transition-row-gap, 2px);
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] .color-transition-input {
+    width: var(--ui-neumo-color-transition-input-width, 30px);
+    min-width: var(--ui-neumo-color-transition-input-width, 30px);
+    max-width: var(--ui-neumo-color-transition-input-width, 30px);
+    min-height: var(--ui-neumo-color-transition-input-height, 15px);
+    height: var(--ui-neumo-color-transition-input-height, 15px);
+    padding-left: var(--ui-neumo-color-transition-input-padding-x, 2px);
+    padding-right: var(--ui-neumo-color-transition-input-padding-x, 2px);
+    font-size: var(--ui-neumo-color-transition-input-font-size, 7px);
+    line-height: var(--ui-neumo-color-transition-input-line-height, 1.0);
+    box-sizing: border-box;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] .color-theme-actions .color-blend-btn,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] .color-theme-actions .color-theme-recolor-btn,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] .color-utility-actions .color-blend-btn,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] .color-utility-actions .color-theme-recolor-btn {
+    min-height: var(--ui-neumo-color-action-button-height, 16px);
+    padding: 0 var(--ui-neumo-color-action-button-padding-x, 2px);
+    font-size: var(--ui-neumo-color-action-button-font-size, 6px);
+    line-height: var(--ui-neumo-color-action-button-line-height, 1.0);
+}
+
+/* v68: Neumorphism active blend button must not become a white filled chip.
+   Keep the ON state readable with outline/contrast only, not a floating white face. */
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-theme-actions button.color-blend-btn.is-active,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-theme-actions button.color-blend-btn[aria-pressed="true"],
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-theme-actions button[data-theme-blend].is-active,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-theme-actions button[data-theme-blend][aria-pressed="true"],
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #color-container .color-theme-actions button.color-blend-btn.is-active,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #color-container .color-theme-actions button.color-blend-btn[aria-pressed="true"],
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #color-container .color-theme-actions button[data-theme-blend].is-active,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #color-container .color-theme-actions button[data-theme-blend][aria-pressed="true"] {
+    background: rgba(186, 184, 181, 0.34) !important;
+    background-color: rgba(186, 184, 181, 0.34) !important;
+    color: rgba(18, 28, 40, 0.90) !important;
+    -webkit-text-fill-color: rgba(18, 28, 40, 0.90) !important;
+    border: 1px solid rgba(255, 255, 255, 0.54) !important;
+    box-shadow:
+        inset 1px 1px 2px rgba(255, 255, 255, 0.38),
+        inset -1px -1px 2px rgba(94, 92, 90, 0.12) !important;
+    filter: none !important;
+    opacity: 0.92 !important;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-theme-actions button.color-blend-btn.is-active:hover,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-theme-actions button.color-blend-btn[aria-pressed="true"]:hover,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #color-container .color-theme-actions button.color-blend-btn.is-active:hover,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #color-container .color-theme-actions button.color-blend-btn[aria-pressed="true"]:hover {
+    background: rgba(186, 184, 181, 0.42) !important;
+    background-color: rgba(186, 184, 181, 0.42) !important;
+    border-color: rgba(255, 255, 255, 0.62) !important;
+    box-shadow:
+        inset 1px 1px 2px rgba(255, 255, 255, 0.42),
+        inset -1px -1px 2px rgba(94, 92, 90, 0.14) !important;
+    filter: none !important;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-theme-actions button.color-blend-btn.is-active *,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-theme-actions button.color-blend-btn[aria-pressed="true"] *,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #color-container .color-theme-actions button.color-blend-btn.is-active *,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #color-container .color-theme-actions button.color-blend-btn[aria-pressed="true"] * {
+    color: rgba(18, 28, 40, 0.90) !important;
+    -webkit-text-fill-color: rgba(18, 28, 40, 0.90) !important;
+}
+
+/* v83: 遷移秒 ▲▼ は「透明クリック領域」と「固定三角表示」を分離する。
+   三角は button 状態に巻き込ませず、hover/active/focus で位置・影・面を変化させない。 */
+.color-transition-spin-wrap {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+}
+
+.color-transition-spinner {
+    position: absolute;
+    top: 50%;
+    right: -2px;
+    width: 14px;
+    height: 17px;
+    transform: translateY(-50%);
+    display: block;
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+    filter: none;
+    pointer-events: auto;
+}
+
+.color-transition-spin-hit,
+.color-transition-spin-hit:hover,
+.color-transition-spin-hit:active,
+.color-transition-spin-hit:focus,
+.color-transition-spin-hit:focus-visible {
+    position: absolute;
+    left: 0;
+    width: 14px;
+    height: 8.5px;
+    min-width: 14px;
+    min-height: 8.5px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    border-radius: 0;
+    appearance: none;
+    -webkit-appearance: none;
+    background: transparent;
+    background-color: transparent;
+    background-image: none;
+    box-shadow: none;
+    filter: none;
+    -webkit-filter: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    text-shadow: none;
+    transform: none;
+    translate: none;
+    transition: none;
+    cursor: pointer;
+}
+
+.color-transition-spin-hit::before,
+.color-transition-spin-hit::after,
+.color-transition-spin-hit:hover::before,
+.color-transition-spin-hit:hover::after,
+.color-transition-spin-hit:active::before,
+.color-transition-spin-hit:active::after,
+.color-transition-spin-hit:focus::before,
+.color-transition-spin-hit:focus::after,
+.color-transition-spin-hit:focus-visible::before,
+.color-transition-spin-hit:focus-visible::after {
+    content: none;
+    display: none;
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+    filter: none;
+    transform: none;
+    transition: none;
+}
+
+.color-transition-spin-hit-up { top: 0; }
+.color-transition-spin-hit-down { bottom: 0; }
+
+.color-transition-triangle,
+.color-transition-triangle:hover,
+.color-transition-triangle:active,
+.color-transition-triangle:focus {
+    position: absolute;
+    left: 50%;
+    width: 0;
+    height: 0;
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    background-color: transparent;
+    background-image: none;
+    border-left: 3.5px solid transparent;
+    border-right: 3.5px solid transparent;
+    box-shadow: none;
+    filter: none;
+    -webkit-filter: none;
+    text-shadow: none;
+    pointer-events: none;
+    transform: translateX(-50%);
+    translate: none;
+    transition: none;
+    opacity: 1;
+}
+
+.color-transition-triangle-up {
+    top: 2px;
+    border-bottom: 4.5px solid var(--ui-auto-readable-icon-color, #111827);
+    border-top: 0;
+}
+
+.color-transition-triangle-down {
+    bottom: 2px;
+    border-top: 4.5px solid var(--ui-auto-readable-icon-color, #111827);
+    border-bottom: 0;
+}
+
+body[data-ui-variant="variant-1-glass"] .color-transition-spin-hit,
+body[data-ui-variant="variant-1-glass"] .color-transition-spin-hit:hover,
+body[data-ui-variant="variant-1-glass"] .color-transition-spin-hit:active,
+body[data-ui-variant="variant-1-glass"] .color-transition-spin-hit:focus,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] .color-transition-spin-hit,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] .color-transition-spin-hit:hover,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] .color-transition-spin-hit:active,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] .color-transition-spin-hit:focus {
+    background: transparent;
+    background-color: transparent;
+    background-image: none;
+    border: 0;
+    box-shadow: none;
+    filter: none;
+    -webkit-filter: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    transform: none;
+    translate: none;
+    transition: none;
+}
+
+
+/* v84: 遷移秒 ▲▼ Neumorphism再巻き込み防止。
+   見える三角はspan、クリック判定もbuttonではないspanに変更済み。
+   ここでは面・影・hover移動を完全に持たせない。 */
+body[data-ui-variant="variant-1-glass"] .color-transition-spinner,
+body[data-ui-variant="variant-1-glass"] .color-transition-spinner:hover,
+body[data-ui-variant="variant-1-glass"] .color-transition-spinner:active,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] .color-transition-spinner,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] .color-transition-spinner:hover,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] .color-transition-spinner:active {
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    border: 0 !important;
+    outline: 0 !important;
+    box-shadow: none !important;
+    filter: none !important;
+    -webkit-filter: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    transform: translateY(-50%) !important;
+    transition: none !important;
+}
+body[data-ui-variant="variant-1-glass"] .color-transition-spin-hit,
+body[data-ui-variant="variant-1-glass"] .color-transition-spin-hit:hover,
+body[data-ui-variant="variant-1-glass"] .color-transition-spin-hit:active,
+body[data-ui-variant="variant-1-glass"] .color-transition-spin-hit:focus,
+body[data-ui-variant="variant-1-glass"] .color-transition-spin-hit:focus-visible,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] .color-transition-spin-hit,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] .color-transition-spin-hit:hover,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] .color-transition-spin-hit:active,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] .color-transition-spin-hit:focus,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] .color-transition-spin-hit:focus-visible {
+    display: block !important;
+    position: absolute !important;
+    left: 0 !important;
+    width: 14px !important;
+    height: 8.5px !important;
+    min-width: 14px !important;
+    min-height: 8.5px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    outline: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    box-shadow: none !important;
+    filter: none !important;
+    -webkit-filter: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    transform: none !important;
+    translate: none !important;
+    transition: none !important;
+    cursor: pointer !important;
+}
+
+
+/* v86: 遷移秒▲▼の色を背景明暗に合わせて自動切替。 */
+body[data-ui-variant="variant-1-glass"] .color-transition-label,
+body[data-ui-variant="variant-1-glass"] #color-transition-seconds {
+    color: var(--ui-auto-readable-icon-color, var(--auto-readable-text-color, #111827)) !important;
+    -webkit-text-fill-color: var(--ui-auto-readable-icon-color, var(--auto-readable-text-color, #111827)) !important;
+    text-shadow: var(--ui-auto-readable-icon-shadow, none) !important;
+}
+body[data-ui-variant="variant-1-glass"] .color-transition-triangle-up {
+    border-bottom-color: var(--ui-auto-readable-icon-color, var(--auto-readable-text-color, #111827)) !important;
+}
+body[data-ui-variant="variant-1-glass"] .color-transition-triangle-down {
+    border-top-color: var(--ui-auto-readable-icon-color, var(--auto-readable-text-color, #111827)) !important;
+}
+
+
+/* v92: 1.配色の詳細設定は白基調パネルのため、背景明暗連動から外して黒文字固定。 */
+#color-container .palette-details-section,
+#color-container .palette-details,
+#color-container [data-palette-details],
+#color-container .palette-detail-group {
+    --auto-readable-text-color: #111827 !important;
+    --glass-resolved-text-color: #111827 !important;
+    --ui-auto-readable-icon-color: #111827 !important;
+    color: #111827 !important;
+    -webkit-text-fill-color: #111827 !important;
+    text-shadow: none !important;
+}
+
+#color-container .palette-details-section *,
+#color-container .palette-details *,
+#color-container [data-palette-details] *,
+#color-container .palette-detail-group * {
+    color: #111827 !important;
+    -webkit-text-fill-color: #111827 !important;
+    text-shadow: none !important;
+}
+
+#color-container .palette-details .row-value,
+#color-container .palette-details .palette-system-tab-desc {
+    color: rgba(17, 24, 39, 0.72) !important;
+    -webkit-text-fill-color: rgba(17, 24, 39, 0.72) !important;
+}
+
+#color-container .palette-details-toggle,
+#color-container [data-palette-details-toggle] {
+    color: #111827 !important;
+    -webkit-text-fill-color: #111827 !important;
+    text-shadow: none !important;
 }

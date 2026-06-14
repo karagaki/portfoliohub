@@ -1,3 +1,5 @@
+var UIUX_PUBLIC_DEBUG_LOGS = window.UIUX_PUBLIC_DEBUG_LOGS === true;
+function uiuxPublicDebugLog(...args) { if (UIUX_PUBLIC_DEBUG_LOGS) console.log(...args); }
 // Cntl_SVGanime.js
 window.Controller_SVGanime = (function() {
     let state = {
@@ -157,7 +159,7 @@ window.Controller_SVGanime = (function() {
 
     return {
         setPaths: function(paths) {
-            console.log('Setting paths:', paths);
+            uiuxPublicDebugLog('Setting paths:', paths);
             state.paths = paths.map(path => {
                 const normalized = normalizePath(path);
                 return normalized ? {

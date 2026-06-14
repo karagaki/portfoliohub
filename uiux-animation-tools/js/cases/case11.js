@@ -213,7 +213,7 @@
 
     /*
      * case11 parameter smoothing:
-     * UIスライダー値をそのまま描画へ即時反映すると、墨幅・軌跡幅・全体スケール・点サイズが
+     * UIスライダー値をそのまま描画へ即時反映すると、墨幅・軌跡幅・全体サイズ・点サイズが
      * 1フレームで飛び、描画が汚くなる。ここでは見た目に効く値を数十フレームかけて追従させる。
      * count は離散的で破綻しやすいため、点数調整は別工程として現行group数を維持する。
      */
@@ -292,7 +292,7 @@
     const letterWidth = clamp(mapRangeExp(uiWaveSpacing, 2, 300, minLetterWidth, maxLetterWidth, 1.08), minLetterWidth, maxLetterWidth);
 
     /*
-     * 縦幅/深さ: 全体スケール(radius) をU字の縦方向の深さとして独立させる。
+     * 縦幅/深さ: 全体サイズ(radius) をU字の縦方向の深さとして独立させる。
      * 最大値は「画面高さ / 点の数」。最小側はかなり浅い形まで出せるよう、
      * 旧比率より下げ、指数換算で浅い/深いの差を大きくする。
      */
@@ -304,7 +304,7 @@
     const pointsPerPart = SOURCE_CONFIG.pointsPerPartRange[0];
     /*
      * 速度が縦幅を変えると、横幅/縦幅の独立調整が崩れるため、
-     * case11では letterHeight を全体スケールだけで決める。
+     * case11では letterHeight を全体サイズだけで決める。
      */
     const letterHeight = baseLetterHeight;
     const curveLength = estimateCurveLength(letterWidth);
@@ -1498,7 +1498,7 @@
       entryHoldUntilFrame: Number(state.entryHoldUntilFrame || 0),
       entryHoldFrames: Number(state.entryHoldFrames || 0),
       entryFadeDebug: global.getCase11EntryFadeDebug ? global.getCase11EntryFadeDebug() : null,
-      note: 'case11 はパラメータ変更時にリスタートせず、墨幅・軌跡幅・全体スケール・点サイズ・速度を数十フレームで徐々に反映します。'
+      note: 'case11 はパラメータ変更時にリスタートせず、墨幅・軌跡幅・全体サイズ・点サイズ・速度を数十フレームで徐々に反映します。'
     };
   }
 

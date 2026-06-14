@@ -1,3 +1,5 @@
+var UIUX_PUBLIC_DEBUG_LOGS = window.UIUX_PUBLIC_DEBUG_LOGS === true;
+function uiuxPublicDebugLog(...args) { if (UIUX_PUBLIC_DEBUG_LOGS) console.log(...args); }
 // UI_Button.js
 
 window.Button = window.Button || {};
@@ -287,7 +289,7 @@ window.Button = window.Button || {};
     };
 
     Button.initializeButtons = function() {
-        console.log('Initializing buttons');
+        uiuxPublicDebugLog('Initializing buttons');
         const buttonContainer = document.getElementById('button-container');
         if (buttonContainer) {
             buttonContainer.remove();
@@ -334,7 +336,7 @@ window.Button = window.Button || {};
 
 
     Button.setupButtonContainer = function(targetId = 'button-container', headerText = '2.出力の設定') {
-    console.log('Setting up button container');
+    uiuxPublicDebugLog('Setting up button container');
     const buttonContainer = document.getElementById(targetId);
     if (!buttonContainer) {
         console.error('Button container not found');
@@ -382,7 +384,7 @@ window.Button = window.Button || {};
 
 
     Button.handleNextCase = function() {
-        console.log('Next case button clicked');
+        uiuxPublicDebugLog('Next case button clicked');
         if (typeof window.prepareNextCase === 'function' && !window.isTransitioning) {
             if (window.RuntimeIntegratedSlotApplyAdapter
                 && typeof window.RuntimeIntegratedSlotApplyAdapter.leaveRegisteredSlotMode === 'function') {
@@ -394,7 +396,7 @@ window.Button = window.Button || {};
     };
 
     Button.addNewCase = function() {
-        console.log('Add new case button clicked');
+        uiuxPublicDebugLog('Add new case button clicked');
         const newCaseIndex = window.cases.length;
         const newCase = {
             config: {
@@ -431,13 +433,13 @@ window.Button = window.Button || {};
 
 Button.saveSettings = function() {
     if (blockPublicDemoDisabledAction()) return;
-    console.log('Save settings button clicked');
+    uiuxPublicDebugLog('Save settings button clicked');
     window.SaveButton.saveSettings();
 };
 
     Button.exportSettings = function() {
         if (blockPublicDemoDisabledAction()) return;
-        console.log('Export settings button clicked');
+        uiuxPublicDebugLog('Export settings button clicked');
         const allCases = window.cases;
         if (!allCases || allCases.length === 0) return;
 

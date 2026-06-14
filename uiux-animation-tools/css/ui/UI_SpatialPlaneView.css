@@ -110,3 +110,357 @@ body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7.collapsed .ui-cont
     min-height: 0 !important;
     overflow: hidden !important;
 }
+
+
+/* v49: Glass / Neumorphism shared 3.cursor and 4.space layout stabilization.
+   Do not let theme-specific legacy CSS turn these rows back into overlapping fixed pieces.
+   Panel width may be tuned, but the minimum width now follows the chosen column values. */
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7 {
+    box-sizing: border-box !important;
+    overflow: visible !important;
+}
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6 {
+    width: var(--ui-panel-3-width, 220px) !important;
+    min-width: calc(
+        (var(--ui-panel-3-padding, 7px) * 2) +
+        var(--ui-panel-3-label-width, 120px) +
+        var(--ui-panel-3-check-width, 18px) +
+        var(--ui-panel-3-slider-min-width, 70px) +
+        var(--ui-panel-3-value-width, 79px) +
+        (var(--ui-panel-3-column-gap, 0px) * 3)
+    ) !important;
+    max-width: calc(100vw - 24px) !important;
+}
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7 {
+    width: var(--ui-panel-4-width, 220px) !important;
+    min-width: calc(
+        (var(--ui-panel-4-padding, 9px) * 2) +
+        var(--ui-panel-4-label-width, 32px) +
+        var(--ui-panel-4-slider-min-width, 136px) +
+        var(--ui-panel-4-value-width, 58px) +
+        (var(--ui-panel-4-column-gap, 0px) * 2)
+    ) !important;
+    max-width: calc(100vw - 24px) !important;
+}
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6 .ui-content,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7 .ui-content {
+    box-sizing: border-box !important;
+    overflow: visible !important;
+}
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6 .ui-content {
+    padding: var(--ui-panel-3-padding, 7px) !important;
+}
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7 .ui-content {
+    padding: var(--ui-panel-4-padding, 9px) !important;
+}
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6 .slider-layout,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7 .slider-layout {
+    display: grid !important;
+    align-items: center !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+    overflow: visible !important;
+}
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6 .slider-layout {
+    grid-template-columns:
+        var(--ui-panel-3-label-width, 120px)
+        var(--ui-panel-3-check-width, 18px)
+        minmax(var(--ui-panel-3-slider-min-width, 70px), 1fr)
+        var(--ui-panel-3-value-width, 79px) !important;
+    column-gap: var(--ui-panel-3-column-gap, 0px) !important;
+    min-height: var(--ui-panel-3-row-height, 16px) !important;
+}
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7 .slider-layout {
+    grid-template-columns:
+        var(--ui-panel-4-label-width, 32px)
+        minmax(var(--ui-panel-4-slider-min-width, 136px), 1fr)
+        var(--ui-panel-4-value-width, 58px) !important;
+    column-gap: var(--ui-panel-4-column-gap, 0px) !important;
+    min-height: var(--ui-panel-4-row-height, 16px) !important;
+}
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6 .slider-label,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7 .slider-label {
+    min-width: 0 !important;
+    max-width: 100% !important;
+    white-space: nowrap !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
+}
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6 .slider-label {
+    grid-column: 1 !important;
+    width: var(--ui-panel-3-label-width, 120px) !important;
+    font-size: var(--ui-panel-3-label-font-size, 9.5px) !important;
+}
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7 .slider-label {
+    grid-column: 1 !important;
+    width: var(--ui-panel-4-label-width, 32px) !important;
+    font-size: var(--ui-panel-4-label-font-size, 11px) !important;
+}
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6 .cursor-toggle-checkbox {
+    grid-column: 2 !important;
+    position: static !important;
+    justify-self: center !important;
+    align-self: center !important;
+    width: var(--ui-panel-3-check-width, 18px) !important;
+    min-width: var(--ui-panel-3-check-width, 18px) !important;
+    height: var(--ui-panel-3-check-width, 18px) !important;
+    min-height: var(--ui-panel-3-check-width, 18px) !important;
+    margin: 0 !important;
+    transform: none !important;
+}
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6 .slider-container,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7 .slider-container {
+    position: relative !important;
+    display: block !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    overflow: visible !important;
+    z-index: 1 !important;
+}
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6 .slider-container {
+    grid-column: 3 !important;
+    transform: translateX(var(--ui-panel-3-slider-offset-x, -13px)) !important;
+}
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7 .slider-container {
+    grid-column: 2 !important;
+    transform: translateX(var(--ui-panel-4-slider-offset-x, -7px)) !important;
+}
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6 input[type="range"],
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7 input[type="range"],
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6 .slider,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7 .slider {
+    display: block !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+}
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6 .slider-value,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7 .slider-value {
+    display: block !important;
+    position: static !important;
+    box-sizing: border-box !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    justify-self: end !important;
+    align-self: center !important;
+    text-align: right !important;
+    white-space: nowrap !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
+    font-variant-numeric: tabular-nums !important;
+    line-height: 1 !important;
+    z-index: 3 !important;
+}
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6 .slider-value {
+    grid-column: 4 !important;
+    width: var(--ui-panel-3-value-width, 79px) !important;
+    min-width: var(--ui-panel-3-value-width, 79px) !important;
+    font-size: var(--ui-panel-3-value-font-size, 13px) !important;
+    transform: translateX(var(--ui-panel-3-value-offset-x, 2px)) !important;
+}
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7 .slider-value {
+    grid-column: 3 !important;
+    width: var(--ui-panel-4-value-width, 58px) !important;
+    min-width: var(--ui-panel-4-value-width, 58px) !important;
+    font-size: var(--ui-panel-4-value-font-size, 14px) !important;
+    transform: translateX(var(--ui-panel-4-value-offset-x, 38px)) !important;
+}
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7 .spatial-panel-actions {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: var(--ui-panel-4-action-gap, 3px) !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+}
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7 .spatial-action-button {
+    min-width: 0 !important;
+    width: 100% !important;
+    height: var(--ui-panel-4-action-height, 16px) !important;
+    min-height: var(--ui-panel-4-action-height, 16px) !important;
+    font-size: var(--ui-panel-4-button-font-size, 8.5px) !important;
+    box-sizing: border-box !important;
+}
+/* Collapsed dock measurement must keep the full header body, but no content gap. */
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3.collapsed .ui-header,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-4.collapsed .ui-header,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6.collapsed .ui-header,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7.collapsed .ui-header {
+    height: auto !important;
+    min-height: 28px !important;
+    box-sizing: border-box !important;
+    overflow: visible !important;
+}
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3.collapsed,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-4.collapsed,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6.collapsed,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7.collapsed {
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    overflow: visible !important;
+}
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3.collapsed > .ui-content,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-4.collapsed > .ui-content,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6.collapsed > .ui-content,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7.collapsed > .ui-content {
+    display: none !important;
+    height: 0 !important;
+    min-height: 0 !important;
+    max-height: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: 0 !important;
+    overflow: hidden !important;
+    opacity: 0 !important;
+}
+
+/* v54: Neumorphism 3.カーソル checkbox mark alignment fix.
+   Keep the current v49 panel layout, but make the check mark belong to the box.
+   The mark must not be visible on unchecked rows and must not drift outside the square. */
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-6 .cursor-toggle-checkbox {
+    -webkit-appearance: none !important;
+    appearance: none !important;
+    position: relative !important;
+    display: block !important;
+    grid-column: 2 !important;
+    justify-self: center !important;
+    align-self: center !important;
+    width: var(--ui-panel-3-check-width, 18px) !important;
+    min-width: var(--ui-panel-3-check-width, 18px) !important;
+    max-width: var(--ui-panel-3-check-width, 18px) !important;
+    height: var(--ui-panel-3-check-width, 18px) !important;
+    min-height: var(--ui-panel-3-check-width, 18px) !important;
+    max-height: var(--ui-panel-3-check-width, 18px) !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+    line-height: 0 !important;
+    vertical-align: middle !important;
+    transform: none !important;
+    overflow: hidden !important;
+}
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-6 .cursor-toggle-checkbox::before,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-6 .cursor-toggle-checkbox::after {
+    content: "" !important;
+    position: absolute !important;
+    display: block !important;
+    pointer-events: none !important;
+    opacity: 0 !important;
+    background-color: var(--neumo-text) !important;
+    border-radius: 999px !important;
+    transform-origin: center center !important;
+}
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-6 .cursor-toggle-checkbox:checked::before {
+    width: 6px !important;
+    height: 2px !important;
+    left: 4px !important;
+    top: 9px !important;
+    transform: rotate(45deg) !important;
+    opacity: 1 !important;
+}
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-6 .cursor-toggle-checkbox:checked::after {
+    width: 10px !important;
+    height: 2px !important;
+    left: 7px !important;
+    top: 8px !important;
+    transform: rotate(-45deg) !important;
+    opacity: 1 !important;
+}
+
+/* v93: 空間パネル操作ボタンは文字色差ではなく凹凸差でON/OFFを示す。
+   背景の明暗に応じた文字色は --auto-readable-text-color / --ui-auto-readable-icon-color に統一する。 */
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7 .spatial-action-button {
+    color: var(--ui-auto-readable-icon-color, var(--auto-readable-text-color, #111827)) !important;
+    -webkit-text-fill-color: var(--ui-auto-readable-icon-color, var(--auto-readable-text-color, #111827)) !important;
+    text-shadow: var(--ui-auto-readable-icon-shadow, none) !important;
+    border-color: color-mix(in srgb, var(--ui-auto-readable-icon-color, var(--auto-readable-text-color, #111827)) 22%, transparent) !important;
+    background-color: color-mix(in srgb, var(--auto-readable-panel-color, rgba(255,255,255,0.42)) 54%, transparent) !important;
+    background-image: none !important;
+    opacity: 1 !important;
+    filter: none !important;
+    box-shadow:
+        0 2px 5px rgba(0, 0, 0, 0.12),
+        inset 0 1px 0 rgba(255, 255, 255, 0.18) !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7 .spatial-action-button.is-active {
+    color: var(--ui-auto-readable-icon-color, var(--auto-readable-text-color, #111827)) !important;
+    -webkit-text-fill-color: var(--ui-auto-readable-icon-color, var(--auto-readable-text-color, #111827)) !important;
+    background-color: color-mix(in srgb, var(--auto-readable-panel-color, rgba(255,255,255,0.42)) 42%, var(--ui-auto-readable-icon-color, #111827) 7%) !important;
+    border-color: color-mix(in srgb, var(--ui-auto-readable-icon-color, var(--auto-readable-text-color, #111827)) 34%, transparent) !important;
+    box-shadow:
+        inset 0 2px 4px rgba(0, 0, 0, 0.20),
+        inset 0 -1px 2px rgba(255, 255, 255, 0.16) !important;
+}
+
+/* OFF専用の白文字固定を解除。OFFも背景明暗による可読色のまま、押し込み/浮きの差で判別する。 */
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7 .spatial-enable-button:not(.is-active) {
+    color: var(--ui-auto-readable-icon-color, var(--auto-readable-text-color, #111827)) !important;
+    -webkit-text-fill-color: var(--ui-auto-readable-icon-color, var(--auto-readable-text-color, #111827)) !important;
+    opacity: 1 !important;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-7 .spatial-action-button {
+    color: var(--ui-auto-readable-icon-color, var(--auto-readable-text-color, var(--neumo-text, #111827))) !important;
+    -webkit-text-fill-color: var(--ui-auto-readable-icon-color, var(--auto-readable-text-color, var(--neumo-text, #111827))) !important;
+    text-shadow: var(--ui-auto-readable-icon-shadow, none) !important;
+    background-color: var(--neumo-base, rgba(235,238,242,0.78)) !important;
+    background-image: none !important;
+    border-color: var(--neumo-border, rgba(120, 130, 145, 0.20)) !important;
+    box-shadow:
+        calc(var(--neumo-control-shadow-x, 1) * 2px) calc(var(--neumo-control-shadow-y, 1) * 2px) 5px var(--neumo-shadow, rgba(0,0,0,0.18)),
+        calc(var(--neumo-control-light-x, -1) * 2px) calc(var(--neumo-control-light-y, -1) * 2px) 5px var(--neumo-highlight-soft, rgba(255,255,255,0.72)) !important;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-7 .spatial-action-button.is-active {
+    color: var(--ui-auto-readable-icon-color, var(--auto-readable-text-color, var(--neumo-text, #111827))) !important;
+    -webkit-text-fill-color: var(--ui-auto-readable-icon-color, var(--auto-readable-text-color, var(--neumo-text, #111827))) !important;
+    background-color: var(--neumo-base-pressed, rgba(218,222,228,0.82)) !important;
+    box-shadow:
+        inset calc(var(--neumo-control-shadow-x, 1) * 2px) calc(var(--neumo-control-shadow-y, 1) * 2px) 5px var(--neumo-shadow, rgba(0,0,0,0.20)),
+        inset calc(var(--neumo-control-light-x, -1) * 2px) calc(var(--neumo-control-light-y, -1) * 2px) 4px var(--neumo-highlight-soft, rgba(255,255,255,0.70)) !important;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-7 .spatial-enable-button:not(.is-active) {
+    color: var(--ui-auto-readable-icon-color, var(--auto-readable-text-color, var(--neumo-text, #111827))) !important;
+    -webkit-text-fill-color: var(--ui-auto-readable-icon-color, var(--auto-readable-text-color, var(--neumo-text, #111827))) !important;
+    background-color: var(--neumo-base, rgba(235,238,242,0.78)) !important;
+    opacity: 1 !important;
+}
+
+/* v94: 4.空間 詳細設定 - ボタン群 / スライダー行 / 文字 / スライダー / 数値の縦位置調整。
+   X方向の既存調整を壊さないため、slider/value は translate(x, y) で合成する。 */
+:root {
+    --ui-panel-4-actions-offset-y: 0px;
+    --ui-panel-4-slider-group-offset-y: 0px;
+    --ui-panel-4-label-offset-y: 0px;
+    --ui-panel-4-slider-offset-y: 0px;
+    --ui-panel-4-value-offset-y: 0px;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7 .spatial-panel-actions {
+    transform: translateY(var(--ui-panel-4-actions-offset-y, 0px)) !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7 .slider-group {
+    transform: translateY(var(--ui-panel-4-slider-group-offset-y, 0px)) !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7 .slider-label {
+    transform: translateY(var(--ui-panel-4-label-offset-y, 0px)) !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7 .slider-container {
+    transform: translate(var(--ui-panel-4-slider-offset-x, -7px), var(--ui-panel-4-slider-offset-y, 0px)) !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7 .slider-value {
+    transform: translate(var(--ui-panel-4-value-offset-x, 38px), var(--ui-panel-4-value-offset-y, 0px)) !important;
+}

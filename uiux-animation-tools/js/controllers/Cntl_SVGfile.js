@@ -1,3 +1,5 @@
+var UIUX_PUBLIC_DEBUG_LOGS = window.UIUX_PUBLIC_DEBUG_LOGS === true;
+function uiuxPublicDebugLog(...args) { if (UIUX_PUBLIC_DEBUG_LOGS) console.log(...args); }
 // Cntl_SVGfile.js の修正
 window.Controller_SVGfile = (function() {
     let loadedPaths = [];
@@ -16,12 +18,12 @@ window.Controller_SVGfile = (function() {
         if (!file) return;
 
         try {
-            console.log('Reading SVG file:', file.name);
+            uiuxPublicDebugLog('Reading SVG file:', file.name);
             const content = await readFile(file);
             const paths = parseSVG(content);
             
             if (paths.length > 0) {
-                console.log('Parsed paths:', paths);
+                uiuxPublicDebugLog('Parsed paths:', paths);
                 loadedPaths = paths;
                 activePathIndex = 0;
                 UI_SVGfile.updateFileList([file.name]);
@@ -55,7 +57,7 @@ window.Controller_SVGfile = (function() {
         }
 
         const pathElements = doc.querySelectorAll('path');
-        console.log('Found path elements:', pathElements.length);
+        uiuxPublicDebugLog('Found path elements:', pathElements.length);
         
         const paths = Array.from(pathElements).map(path => ({
             id: generatePathId(),

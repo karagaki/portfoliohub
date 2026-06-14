@@ -1,3 +1,5 @@
+var UIUX_PUBLIC_DEBUG_LOGS = window.UIUX_PUBLIC_DEBUG_LOGS === true;
+function uiuxPublicDebugLog(...args) { if (UIUX_PUBLIC_DEBUG_LOGS) console.log(...args); }
 (function() {
     let settings = {
         useImageForce: false,
@@ -13,12 +15,12 @@
 
     function setSettings(newSettings) {
         settings = { ...settings, ...newSettings };
-        console.log('Vector settings updated:', settings);
+        uiuxPublicDebugLog('Vector settings updated:', settings);
     }
 
     function setImageData(imgData) {
         imageData = imgData;
-        console.log('Image data set:', imgData.width, 'x', imgData.height);
+        uiuxPublicDebugLog('Image data set:', imgData.width, 'x', imgData.height);
     }
 
 function calculateVectorEffect(x, y) {
@@ -59,5 +61,5 @@ function calculateVectorEffect(x, y) {
     window.Vector.setImageData = setImageData;
     window.Vector.calculateVectorEffect = calculateVectorEffect;
 
-    console.log('Vector.js initialized');
+    uiuxPublicDebugLog('Vector.js initialized');
 })();

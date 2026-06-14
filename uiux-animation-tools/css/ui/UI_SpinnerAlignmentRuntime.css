@@ -1,0 +1,576 @@
+/*
+  Runtime UI styles consolidated from former index-level fixes.
+  This file is a stable runtime layer loaded after base UI CSS to preserve final cascade.
+*/
+
+/* Spinner / alignment / active outline runtime fixes. */
+
+/* ===== runtime from index.html: <style id="ui-v79-requested-visual-alignment-fixes"> ===== */
+
+/* v79: 遷移秒スピナー面の完全透明化、調整ボタン透明度、左下小ボタン縦位置、馴染ON色/角丸リンクの最終反映。 */
+        :root {
+            --ui-color-blend-on-color: #dedede;
+            --ui-size-tuner-toggle-bg-alpha: 0.02;
+            --ui-panel-common-slider-thumb-size: 7px;
+            --ui-color-card-gap: 3px;
+            --ui-color-card-name-line-height: 1.1;
+            --ui-color-card-name-font-size: 10px;
+            --ui-color-assign-button-font-size: 10.5px;
+            --ui-color-assign-button-height: 20px;
+            --ui-color-assign-button-min-width: 38px;
+            --ui-color-assign-button-radius: 8px;
+            --ui-color-assign-button-gap: 2px;
+            --ui-color-action-button-font-size: 10px;
+            --ui-color-action-button-height: 21px;
+            --ui-color-action-button-padding-x: 7px;
+            --ui-color-action-button-radius: 7px;
+            --ui-panel-4-slider-min-width: 126px;
+            --ui-panel-4-slider-offset-x: -8px;
+            --ui-panel-4-actions-offset-y: 0px;
+            --ui-panel-4-slider-group-offset-y: 0px;
+            --ui-panel-4-label-offset-y: 0px;
+            --ui-panel-4-slider-offset-y: 0px;
+            --ui-panel-4-value-offset-y: 0px;
+            --ui-size-tuner-row-computed-width: 90px;
+            --ui-glass-left-current-case-outline-color: #707070;
+            --ui-glass-bottom-active-outline-color: #707070;
+            --ui-top-left-small-button-shadow-on: 0;
+            --ui-auto-readable-icon-color: #111827;
+            --ui-auto-readable-icon-shadow: none;
+        }
+
+        body[data-ui-variant="variant-1-glass"] .color-transition-spin-wrap {
+            position: relative !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            width: var(--ui-color-transition-input-width, 38px) !important;
+            min-width: var(--ui-color-transition-input-width, 38px) !important;
+            height: var(--ui-color-transition-input-height, 18px) !important;
+            min-height: var(--ui-color-transition-input-height, 18px) !important;
+            background: transparent !important;
+            background-color: transparent !important;
+            background-image: none !important;
+            border: 0 !important;
+            box-shadow: none !important;
+            filter: none !important;
+            text-shadow: none !important;
+            overflow: visible !important;
+        }
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] .color-transition-spin-wrap {
+            width: var(--ui-neumo-color-transition-input-width, var(--ui-color-transition-input-width, 34px)) !important;
+            min-width: var(--ui-neumo-color-transition-input-width, var(--ui-color-transition-input-width, 34px)) !important;
+            height: var(--ui-neumo-color-transition-input-height, var(--ui-color-transition-input-height, 15px)) !important;
+            min-height: var(--ui-neumo-color-transition-input-height, var(--ui-color-transition-input-height, 15px)) !important;
+        }
+        body[data-ui-variant="variant-1-glass"] #color-transition-seconds.color-transition-input {
+            -webkit-appearance: none !important;
+            appearance: textfield !important;
+            background: transparent !important;
+            background-color: transparent !important;
+            background-image: none !important;
+            border-color: transparent !important;
+            box-shadow: none !important;
+            padding-right: 14px !important;
+        }
+        body[data-ui-variant="variant-1-glass"] #color-transition-seconds.color-transition-input::-webkit-inner-spin-button,
+        body[data-ui-variant="variant-1-glass"] #color-transition-seconds.color-transition-input::-webkit-outer-spin-button {
+            -webkit-appearance: none !important;
+            appearance: none !important;
+            opacity: 0 !important;
+            width: 0 !important;
+            height: 0 !important;
+            margin: 0 !important;
+            background: transparent !important;
+            background-color: transparent !important;
+            border: 0 !important;
+            box-shadow: none !important;
+        }
+        body[data-ui-variant="variant-1-glass"] .color-transition-spinner {
+            position: absolute !important;
+            top: 50% !important;
+            right: -2px !important;
+            width: 14px !important;
+            height: 17px !important;
+            transform: translateY(-50%) !important;
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: center !important;
+            align-items: center !important;
+            gap: 2px !important;
+            background: transparent !important;
+            background-color: transparent !important;
+            background-image: none !important;
+            border: 0 !important;
+            outline: 0 !important;
+            box-shadow: none !important;
+            filter: none !important;
+            text-shadow: none !important;
+            pointer-events: auto !important;
+        }
+        body[data-ui-variant="variant-1-glass"] .color-transition-spinner,
+        body[data-ui-variant="variant-1-glass"] .color-transition-spin-button,
+        body[data-ui-variant="variant-1-glass"] .color-transition-spin-button::before,
+        body[data-ui-variant="variant-1-glass"] .color-transition-spin-button::after {
+            background: transparent !important;
+            background-color: transparent !important;
+            background-image: none !important;
+            border-color: transparent !important;
+            box-shadow: none !important;
+            filter: none !important;
+            text-shadow: none !important;
+        }
+        body[data-ui-variant="variant-1-glass"] .color-transition-spin-button {
+            -webkit-appearance: none !important;
+            appearance: none !important;
+            width: 14px !important;
+            height: 7px !important;
+            min-width: 14px !important;
+            min-height: 7px !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            border: 0 !important;
+            outline: 0 !important;
+            border-radius: 0 !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            cursor: pointer !important;
+        }
+        body[data-ui-variant="variant-1-glass"] .color-transition-spin-button span {
+            display: block !important;
+            width: 0 !important;
+            height: 0 !important;
+            background: transparent !important;
+            background-color: transparent !important;
+            background-image: none !important;
+            border-color: transparent !important;
+            box-shadow: none !important;
+            filter: none !important;
+            pointer-events: none !important;
+        }
+        body[data-ui-variant="variant-1-glass"] .color-transition-spin-up span {
+            border-left: 5px solid transparent !important;
+            border-right: 5px solid transparent !important;
+            border-bottom: 6px solid rgba(17, 24, 39, 0.82) !important;
+        }
+        body[data-ui-variant="variant-1-glass"] .color-transition-spin-down span {
+            border-left: 5px solid transparent !important;
+            border-right: 5px solid transparent !important;
+            border-top: 6px solid rgba(17, 24, 39, 0.82) !important;
+        }
+
+        #ui-size-tuner-toggle {
+            background: color-mix(in srgb, #ffffff calc(var(--ui-size-tuner-toggle-bg-alpha, 0.08) * 100%), transparent) !important;
+            background-color: color-mix(in srgb, #ffffff calc(var(--ui-size-tuner-toggle-bg-alpha, 0.08) * 100%), transparent) !important;
+            box-shadow: 0 10px 24px rgba(20, 24, 31, calc(var(--ui-size-tuner-toggle-bg-alpha, 0.08) * 0.35)) !important;
+        }
+
+        /* v81: 左下 追加・更新・削除の縦位置指定は css/ui/UI_Table.css へ移動。 */
+
+        body[data-ui-variant="variant-1-glass"] #color-container .color-blend-btn,
+        body[data-ui-variant="variant-1-glass"] #color-container .color-theme-recolor-btn,
+        body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3 .color-blend-btn,
+        body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3 .color-theme-recolor-btn {
+            border-radius: var(--ui-color-action-button-radius, 6px) !important;
+        }
+        body[data-ui-theme="neumorphism"] #color-container .color-theme-actions button.color-blend-btn.is-active,
+        body[data-ui-theme="neumorphism"] #color-container .color-theme-actions button.color-blend-btn[aria-pressed="true"],
+        body[data-ui-theme="neumorphism"] #color-container .color-theme-actions button[data-theme-blend].is-active,
+        body[data-ui-theme="neumorphism"] #color-container .color-theme-actions button[data-theme-blend][aria-pressed="true"],
+        body[data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-theme-actions button.color-blend-btn.is-active,
+        body[data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-theme-actions button.color-blend-btn[aria-pressed="true"],
+        body[data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-theme-actions button[data-theme-blend].is-active,
+        body[data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-theme-actions button[data-theme-blend][aria-pressed="true"] {
+            background: color-mix(in srgb, var(--ui-color-blend-on-color, #aeb6c0) calc(var(--ui-color-blend-on-fill-alpha, 0.68) * 100%), transparent) !important;
+            background-color: color-mix(in srgb, var(--ui-color-blend-on-color, #aeb6c0) calc(var(--ui-color-blend-on-fill-alpha, 0.68) * 100%), transparent) !important;
+            border-color: color-mix(in srgb, var(--ui-color-blend-on-color, #aeb6c0) 70%, transparent) !important;
+        }
+
+/* ===== runtime from index.html: <style id="ui-v81-spinner-zero-surface-and-blend-direct-fix"> ===== */
+
+/* v81: 遷移秒 ▲▼ は三角だけを表示する。button自身の背景・影・filter・疑似面を完全に消す。 */
+        body[data-ui-variant="variant-1-glass"] .color-transition-spin-wrap,
+        body[data-ui-variant="variant-1-glass"] .color-transition-spin-wrap::before,
+        body[data-ui-variant="variant-1-glass"] .color-transition-spin-wrap::after,
+        body[data-ui-variant="variant-1-glass"] .color-transition-spinner,
+        body[data-ui-variant="variant-1-glass"] .color-transition-spinner::before,
+        body[data-ui-variant="variant-1-glass"] .color-transition-spinner::after {
+            background: transparent !important;
+            background-color: transparent !important;
+            background-image: none !important;
+            border: 0 !important;
+            outline: 0 !important;
+            box-shadow: none !important;
+            filter: none !important;
+            -webkit-filter: none !important;
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+            text-shadow: none !important;
+        }
+        body[data-ui-variant="variant-1-glass"] .color-transition-spinner {
+            position: absolute !important;
+            top: 50% !important;
+            right: -2px !important;
+            width: 14px !important;
+            height: 17px !important;
+            transform: translateY(-50%) !important;
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: center !important;
+            align-items: center !important;
+            gap: 2px !important;
+            pointer-events: auto !important;
+            opacity: 1 !important;
+        }
+        body[data-ui-variant="variant-1-glass"] .color-transition-spin-button,
+        body[data-ui-variant="variant-1-glass"] .color-transition-spin-button:hover,
+        body[data-ui-variant="variant-1-glass"] .color-transition-spin-button:active,
+        body[data-ui-variant="variant-1-glass"] .color-transition-spin-button:focus,
+        body[data-ui-variant="variant-1-glass"] .color-transition-spin-button::before,
+        body[data-ui-variant="variant-1-glass"] .color-transition-spin-button::after {
+            all: unset !important;
+            box-sizing: border-box !important;
+            width: 14px !important;
+            height: 7px !important;
+            min-width: 14px !important;
+            min-height: 7px !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            cursor: pointer !important;
+            background: transparent !important;
+            background-color: transparent !important;
+            background-image: none !important;
+            border: 0 !important;
+            outline: 0 !important;
+            box-shadow: none !important;
+            filter: none !important;
+            -webkit-filter: none !important;
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+            text-shadow: none !important;
+            opacity: 1 !important;
+        }
+        body[data-ui-variant="variant-1-glass"] .color-transition-spin-button span,
+        body[data-ui-variant="variant-1-glass"] .color-transition-spin-button span::before,
+        body[data-ui-variant="variant-1-glass"] .color-transition-spin-button span::after {
+            background: transparent !important;
+            background-color: transparent !important;
+            background-image: none !important;
+            border-color: transparent !important;
+            box-shadow: none !important;
+            filter: none !important;
+            -webkit-filter: none !important;
+            text-shadow: none !important;
+        }
+        body[data-ui-variant="variant-1-glass"] .color-transition-spin-up span {
+            width: 0 !important;
+            height: 0 !important;
+            border-left: 5px solid transparent !important;
+            border-right: 5px solid transparent !important;
+            border-bottom: 6px solid rgba(17, 24, 39, 0.86) !important;
+        }
+        body[data-ui-variant="variant-1-glass"] .color-transition-spin-down span {
+            width: 0 !important;
+            height: 0 !important;
+            border-left: 5px solid transparent !important;
+            border-right: 5px solid transparent !important;
+            border-top: 6px solid rgba(17, 24, 39, 0.86) !important;
+        }
+
+        /* v81: 馴染ON 色指定を実ボタンへ直結。テーマ属性・配置差で外れないように対象を広げる。 */
+        #color-container .color-theme-actions button.color-blend-btn.is-active,
+        #color-container .color-theme-actions button.color-blend-btn[aria-pressed="true"],
+        #color-container .color-utility-actions button.color-blend-btn.is-active,
+        #color-container .color-utility-actions button.color-blend-btn[aria-pressed="true"],
+        #glass-cursor-panel-3 .color-theme-actions button.color-blend-btn.is-active,
+        #glass-cursor-panel-3 .color-theme-actions button.color-blend-btn[aria-pressed="true"],
+        #glass-cursor-panel-3 .color-utility-actions button.color-blend-btn.is-active,
+        #glass-cursor-panel-3 .color-utility-actions button.color-blend-btn[aria-pressed="true"],
+        button.color-blend-btn.is-active[data-theme-blend],
+        button.color-blend-btn[aria-pressed="true"][data-theme-blend] {
+            background: color-mix(in srgb, var(--ui-color-blend-on-color, #aeb6c0) calc(var(--ui-color-blend-on-fill-alpha, 0.68) * 100%), transparent) !important;
+            background-color: color-mix(in srgb, var(--ui-color-blend-on-color, #aeb6c0) calc(var(--ui-color-blend-on-fill-alpha, 0.68) * 100%), transparent) !important;
+            border-color: color-mix(in srgb, var(--ui-color-blend-on-color, #aeb6c0) 70%, transparent) !important;
+        }
+
+/* ===== runtime from index.html: <style id="ui-v82-spinner-active-outline-and-small-shadow-settings"> ===== */
+
+/* v82: 遷移秒 ▲▼ は Neumorphism でも面・影・hoverズレを出さない。 */
+        body[data-ui-variant="variant-1-glass"] .color-transition-spin-wrap,
+        body[data-ui-variant="variant-1-glass"] .color-transition-spin-wrap:hover,
+        body[data-ui-variant="variant-1-glass"] .color-transition-spinner,
+        body[data-ui-variant="variant-1-glass"] .color-transition-spinner:hover,
+        body[data-ui-variant="variant-1-glass"] .color-transition-spin-button,
+        body[data-ui-variant="variant-1-glass"] .color-transition-spin-button:hover,
+        body[data-ui-variant="variant-1-glass"] .color-transition-spin-button:active,
+        body[data-ui-variant="variant-1-glass"] .color-transition-spin-button:focus,
+        body[data-ui-variant="variant-1-glass"] .color-transition-spin-button:focus-visible,
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] .color-transition-spin-wrap,
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] .color-transition-spin-wrap:hover,
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] .color-transition-spinner,
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] .color-transition-spinner:hover,
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] .color-transition-spin-button,
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] .color-transition-spin-button:hover,
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] .color-transition-spin-button:active,
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] .color-transition-spin-button:focus,
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] .color-transition-spin-button:focus-visible,
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #color-container .color-transition-spin-button,
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #color-container .color-transition-spin-button:hover,
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-transition-spin-button,
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-transition-spin-button:hover {
+            background: transparent !important;
+            background-color: transparent !important;
+            background-image: none !important;
+            border: 0 !important;
+            outline: 0 !important;
+            box-shadow: none !important;
+            filter: none !important;
+            -webkit-filter: none !important;
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+            text-shadow: none !important;
+        }
+        body[data-ui-variant="variant-1-glass"] .color-transition-spinner,
+        body[data-ui-variant="variant-1-glass"] .color-transition-spinner:hover,
+        body[data-ui-variant="variant-1-glass"] .color-transition-spinner:active,
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] .color-transition-spinner,
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] .color-transition-spinner:hover,
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] .color-transition-spinner:active {
+            transform: translateY(-50%) !important;
+            top: 50% !important;
+            right: -2px !important;
+        }
+        body[data-ui-variant="variant-1-glass"] .color-transition-spin-button,
+        body[data-ui-variant="variant-1-glass"] .color-transition-spin-button:hover,
+        body[data-ui-variant="variant-1-glass"] .color-transition-spin-button:active,
+        body[data-ui-variant="variant-1-glass"] .color-transition-spin-button:focus,
+        body[data-ui-variant="variant-1-glass"] .color-transition-spin-button:focus-visible,
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] .color-transition-spin-button,
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] .color-transition-spin-button:hover,
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] .color-transition-spin-button:active,
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] .color-transition-spin-button:focus,
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] .color-transition-spin-button:focus-visible {
+            transform: none !important;
+            translate: none !important;
+        }
+
+
+        /* v83: 新スピナー構造用の最終固定。表示三角はbutton状態から分離する。 */
+        body[data-ui-variant="variant-1-glass"] .color-transition-spin-hit,
+        body[data-ui-variant="variant-1-glass"] .color-transition-spin-hit:hover,
+        body[data-ui-variant="variant-1-glass"] .color-transition-spin-hit:active,
+        body[data-ui-variant="variant-1-glass"] .color-transition-spin-hit:focus,
+        body[data-ui-variant="variant-1-glass"] .color-transition-spin-hit:focus-visible,
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] .color-transition-spin-hit,
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] .color-transition-spin-hit:hover,
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] .color-transition-spin-hit:active,
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] .color-transition-spin-hit:focus,
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] .color-transition-spin-hit:focus-visible {
+            position: absolute !important;
+            width: 14px !important;
+            height: 8.5px !important;
+            min-width: 14px !important;
+            min-height: 8.5px !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            border: 0 !important;
+            outline: 0 !important;
+            border-radius: 0 !important;
+            appearance: none !important;
+            -webkit-appearance: none !important;
+            background: transparent !important;
+            background-color: transparent !important;
+            background-image: none !important;
+            box-shadow: none !important;
+            filter: none !important;
+            -webkit-filter: none !important;
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+            transform: none !important;
+            translate: none !important;
+            transition: none !important;
+            cursor: pointer !important;
+        }
+        body[data-ui-variant="variant-1-glass"] .color-transition-spin-hit-up,
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] .color-transition-spin-hit-up { top: 0 !important; left: 0 !important; }
+        body[data-ui-variant="variant-1-glass"] .color-transition-spin-hit-down,
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] .color-transition-spin-hit-down { bottom: 0 !important; left: 0 !important; }
+        body[data-ui-variant="variant-1-glass"] .color-transition-triangle,
+        body[data-ui-variant="variant-1-glass"] .color-transition-triangle:hover,
+        body[data-ui-variant="variant-1-glass"] .color-transition-triangle:active,
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] .color-transition-triangle,
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] .color-transition-triangle:hover,
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] .color-transition-triangle:active {
+            position: absolute !important;
+            left: 50% !important;
+            width: 0 !important;
+            height: 0 !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            background: transparent !important;
+            background-color: transparent !important;
+            background-image: none !important;
+            border-left: 3.5px solid transparent !important;
+            border-right: 3.5px solid transparent !important;
+            box-shadow: none !important;
+            filter: none !important;
+            -webkit-filter: none !important;
+            text-shadow: none !important;
+            pointer-events: none !important;
+            transform: translateX(-50%) !important;
+            translate: none !important;
+            transition: none !important;
+        }
+        body[data-ui-variant="variant-1-glass"] .color-transition-triangle-up,
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] .color-transition-triangle-up {
+            top: 2px !important;
+            border-top: 0 !important;
+            border-bottom: 4.5px solid #111 !important;
+        }
+        body[data-ui-variant="variant-1-glass"] .color-transition-triangle-down,
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] .color-transition-triangle-down {
+            bottom: 2px !important;
+            border-bottom: 0 !important;
+            border-top: 4.5px solid #111 !important;
+        }
+
+        /* v82: Glassmorphism時の選択輪郭色を個別指定。 */
+        body[data-ui-variant="variant-1-glass"]:not([data-ui-theme="neumorphism"]) #case-comparison.case-palette-only .case-choice-button.current-case,
+        body[data-ui-variant="variant-1-glass"]:not([data-ui-theme="neumorphism"]) #case-comparison.case-palette-only .case-index-button.current-case,
+        body[data-ui-variant="variant-1-glass"]:not([data-ui-theme="neumorphism"]) #case-comparison.case-palette-only .case-button.current-case {
+            border-color: var(--ui-glass-left-current-case-outline-color, #ff6aa6) !important;
+            box-shadow: 0 0 0 1.5px color-mix(in srgb, var(--ui-glass-left-current-case-outline-color, #ff6aa6) 82%, transparent) !important;
+        }
+        body[data-ui-variant="variant-1-glass"]:not([data-ui-theme="neumorphism"]) #glass-control-bar .glass-panel-quick-toggle-button.is-active,
+        body[data-ui-variant="variant-1-glass"]:not([data-ui-theme="neumorphism"]) #glass-control-bar .glass-panel-quick-toggle-button.is-visible,
+        body[data-ui-variant="variant-1-glass"]:not([data-ui-theme="neumorphism"]) #glass-control-bar .canvas-trail-mode-button.is-active,
+        body[data-ui-variant="variant-1-glass"]:not([data-ui-theme="neumorphism"]) #glass-control-bar .canvas-trail-mode-button.is-visible,
+        body[data-ui-variant="variant-1-glass"]:not([data-ui-theme="neumorphism"]) #glass-control-bar .canvas-bottom-color-button.selected,
+        body[data-ui-variant="variant-1-glass"]:not([data-ui-theme="neumorphism"]) #glass-control-bar .canvas-bottom-color-button.is-selected,
+        body[data-ui-variant="variant-1-glass"]:not([data-ui-theme="neumorphism"]) #glass-control-bar #glass-panel-code-explain.is-active,
+        body[data-ui-variant="variant-1-glass"]:not([data-ui-theme="neumorphism"]) #glass-control-bar #glass-panel-code-explain.is-visible {
+            border-color: var(--ui-glass-bottom-active-outline-color, #ff6aa6) !important;
+            box-shadow: 0 0 0 1.5px color-mix(in srgb, var(--ui-glass-bottom-active-outline-color, #ff6aa6) 78%, transparent) !important;
+        }
+
+        /* v82: 左上UI切替の小サイズボタン影 ON/OFF。0で影なし、1で影あり。 */
+        /* v86: 初期値はv79指定を維持。ここでは再定義しない。 */
+        body[data-ui-variant="variant-1-glass"] #ui-variant-panel select,
+        body[data-ui-variant="variant-1-glass"] #ui-preset-panel select,
+        body[data-ui-variant="variant-1-glass"] #ui-variant-compact-panel select,
+        body[data-ui-variant="variant-1-glass"] .ui-variant-compact-panel select,
+        body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-selected-lock {
+            box-shadow:
+                0 7px 16px rgba(15, 23, 42, calc(var(--ui-top-left-small-button-shadow-on, 1) * 0.10)),
+                inset 0 1px 0 rgba(255, 255, 255, calc(var(--ui-top-left-small-button-shadow-on, 1) * 0.28)) !important;
+        }
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-variant-panel select,
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel select,
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel .glass-preset-details-toggle,
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel .glass-preset-actions > button {
+            box-shadow:
+                calc(var(--neumo-control-light-x, -1) * 2px) calc(var(--neumo-control-light-y, -1) * 2px) 5px rgba(255, 255, 255, calc(var(--ui-top-left-small-button-shadow-on, 1) * 0.38)),
+                calc(var(--neumo-control-shadow-x, 1) * 2px) calc(var(--neumo-control-shadow-y, 1) * 2px) 6px rgba(76, 70, 68, calc(var(--ui-top-left-small-button-shadow-on, 1) * 0.18)) !important;
+        }
+
+/* ===== runtime from index.html: <style id="ui-v84-spinner-neumo-and-small-shadow-final"> ===== */
+
+/* v84: 遷移秒 ▲▼ はbuttonを廃止し、spanの透明hit領域に変更。Neumorphismのbutton面・影から完全に外す。 */
+        body[data-ui-variant="variant-1-glass"] .color-transition-spinner,
+        body[data-ui-variant="variant-1-glass"] .color-transition-spinner:hover,
+        body[data-ui-variant="variant-1-glass"] .color-transition-spinner:active,
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] .color-transition-spinner,
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] .color-transition-spinner:hover,
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] .color-transition-spinner:active {
+            background: transparent !important;
+            background-color: transparent !important;
+            background-image: none !important;
+            border: 0 !important;
+            outline: 0 !important;
+            box-shadow: none !important;
+            filter: none !important;
+            -webkit-filter: none !important;
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+            transform: translateY(-50%) !important;
+            transition: none !important;
+        }
+        body[data-ui-variant="variant-1-glass"] .color-transition-spin-hit,
+        body[data-ui-variant="variant-1-glass"] .color-transition-spin-hit:hover,
+        body[data-ui-variant="variant-1-glass"] .color-transition-spin-hit:active,
+        body[data-ui-variant="variant-1-glass"] .color-transition-spin-hit:focus,
+        body[data-ui-variant="variant-1-glass"] .color-transition-spin-hit:focus-visible,
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] .color-transition-spin-hit,
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] .color-transition-spin-hit:hover,
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] .color-transition-spin-hit:active,
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] .color-transition-spin-hit:focus,
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] .color-transition-spin-hit:focus-visible {
+            display: block !important;
+            position: absolute !important;
+            left: 0 !important;
+            width: 14px !important;
+            height: 8.5px !important;
+            min-width: 14px !important;
+            min-height: 8.5px !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            border: 0 !important;
+            outline: 0 !important;
+            border-radius: 0 !important;
+            background: transparent !important;
+            background-color: transparent !important;
+            background-image: none !important;
+            box-shadow: none !important;
+            filter: none !important;
+            -webkit-filter: none !important;
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+            transform: none !important;
+            translate: none !important;
+            transition: none !important;
+            cursor: pointer !important;
+        }
+        body[data-ui-variant="variant-1-glass"] .color-transition-spin-hit-up,
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] .color-transition-spin-hit-up { top: 0 !important; bottom: auto !important; }
+        body[data-ui-variant="variant-1-glass"] .color-transition-spin-hit-down,
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] .color-transition-spin-hit-down { bottom: 0 !important; top: auto !important; }
+
+        /* v84: 左上小ボタン影ON/OFFを、select/buttonだけでなく小パネル本体・疑似要素にも反映。 */
+        body[data-ui-variant="variant-1-glass"] #ui-variant-panel,
+        body[data-ui-variant="variant-1-glass"] #ui-variant-panel select,
+        body[data-ui-variant="variant-1-glass"] #ui-preset-panel select,
+        body[data-ui-variant="variant-1-glass"] #ui-variant-compact-panel select,
+        body[data-ui-variant="variant-1-glass"] .ui-variant-compact-panel select,
+        body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-selected-lock {
+            box-shadow:
+                0 7px 16px rgba(15, 23, 42, calc(var(--ui-top-left-small-button-shadow-on, 1) * 0.10)),
+                inset 0 1px 0 rgba(255, 255, 255, calc(var(--ui-top-left-small-button-shadow-on, 1) * 0.28)) !important;
+            filter: drop-shadow(0 6px 12px rgba(15, 23, 42, calc(var(--ui-top-left-small-button-shadow-on, 1) * 0.08))) !important;
+        }
+        body[data-ui-variant="variant-1-glass"] #ui-variant-panel::before,
+        body[data-ui-variant="variant-1-glass"] #ui-variant-panel::after,
+        body[data-ui-variant="variant-1-glass"] #ui-preset-panel::before,
+        body[data-ui-variant="variant-1-glass"] #ui-preset-panel::after {
+            box-shadow: 0 6px 14px rgba(15, 23, 42, calc(var(--ui-top-left-small-button-shadow-on, 1) * 0.08)) !important;
+            filter: none !important;
+        }
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-variant-panel,
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel,
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-variant-panel select,
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel select,
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel .glass-preset-details-toggle,
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel .glass-preset-actions > button {
+            box-shadow:
+                calc(var(--neumo-control-light-x, -1) * 2px) calc(var(--neumo-control-light-y, -1) * 2px) 5px rgba(255, 255, 255, calc(var(--ui-top-left-small-button-shadow-on, 1) * 0.38)),
+                calc(var(--neumo-control-shadow-x, 1) * 2px) calc(var(--neumo-control-shadow-y, 1) * 2px) 6px rgba(76, 70, 68, calc(var(--ui-top-left-small-button-shadow-on, 1) * 0.18)) !important;
+            filter: drop-shadow(0 6px 12px rgba(76, 70, 68, calc(var(--ui-top-left-small-button-shadow-on, 1) * 0.08))) !important;
+        }
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-variant-panel::before,
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-variant-panel::after,
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel::before,
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #ui-preset-panel::after {
+            box-shadow: 0 6px 14px rgba(76, 70, 68, calc(var(--ui-top-left-small-button-shadow-on, 1) * 0.08)) !important;
+            filter: none !important;
+        }
+

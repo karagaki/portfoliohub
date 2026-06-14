@@ -1,3 +1,5 @@
+var UIUX_PUBLIC_DEBUG_LOGS = window.UIUX_PUBLIC_DEBUG_LOGS === true;
+function uiuxPublicDebugLog(...args) { if (UIUX_PUBLIC_DEBUG_LOGS) console.log(...args); }
 // UI_all.js - UIスクロール管理のみ (UI_State.jsから分離)
 
 window.UIScroll = (function() {
@@ -32,6 +34,6 @@ window.UIScroll = (function() {
 })();
 
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('DOM loaded: UI_all.js initializing UIScroll');
+    uiuxPublicDebugLog('DOM loaded: UI_all.js initializing UIScroll');
     window.UIScroll.init();
 });

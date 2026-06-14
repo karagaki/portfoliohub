@@ -1,3 +1,5 @@
+var UIUX_PUBLIC_DEBUG_LOGS = window.UIUX_PUBLIC_DEBUG_LOGS === true;
+function uiuxPublicDebugLog(...args) { if (UIUX_PUBLIC_DEBUG_LOGS) console.log(...args); }
 // UI_Canvas.js
 window.CanvasResizer = (function() {
     let currentScale;
@@ -16,7 +18,7 @@ window.CanvasResizer = (function() {
         setupEventListeners(canvasSizeContainer);
         setInitialState(canvasSizeContainer);
 
-        console.log('Canvas size container initialized and displayed');
+        uiuxPublicDebugLog('Canvas size container initialized and displayed');
     }
 
     function createCanvasUI(container) {
@@ -264,7 +266,7 @@ window.CanvasResizer = (function() {
 
         // クリックイベントはUI_State.jsで一括管理
 
-        console.log('Canvas resizer event listeners set up');
+        uiuxPublicDebugLog('Canvas resizer event listeners set up');
     }
 
     function setInitialState(container) {
@@ -505,7 +507,7 @@ window.CanvasResizer = (function() {
 document.addEventListener('DOMContentLoaded', function() {
     try {
         window.CanvasResizer.initialize();
-        console.log('CanvasResizer initialized');
+        uiuxPublicDebugLog('CanvasResizer initialized');
     } catch (error) {
         console.error('CanvasResizer initialization failed:', error);
     }

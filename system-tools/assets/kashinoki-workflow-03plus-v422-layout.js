@@ -2457,7 +2457,7 @@ function workflowHeading(cfg){
   }
   function artifactEditorRowsHTML(candidates, fallbackText){
     const rows = Array.isArray(candidates) ? candidates : [];
-    if(!rows.length) return artifactEditorHTML(fallbackText || '登録された断片はまだありません。');
+    if(!rows.length) return artifactEditorHTML(fallbackText || '登録された断片はまだありません。\nデモ体験で分類し表示が確認できます。');
     return rows.map((c,i)=>{
       const rawCat = c.cat || c.category || '分類';
       const rawSource = c.source || [c.speaker, c.thread].filter(Boolean).join(' / ');
@@ -2682,14 +2682,14 @@ function workflowHeading(cfg){
     cfg = {...liveCfg, candidates};
     const editorText = candidates.length
       ? candidates.map((c,i)=>artifactFragmentText(c,i)).join('\n\n')
-      : '登録された断片はまだありません。';
-    const catText = candidates.map(c=>c.cat).filter((v,i,a)=>v && a.indexOf(v)===i).join(' / ') || '分類なし';
+      : '登録された断片はまだありません。\nデモ体験で分類し表示が確認できます。';
+    const catText = candidates.length ? candidates.map(c=>c.cat).filter((v,i,a)=>v && a.indexOf(v)===i).join(' / ') : '';
     return `<div class="artifact-v571 is-artifact-category-switch-hidden is-artifact-project-tags-hidden" data-artifact-root="${esc(cfg.step)}" data-artifact-page="${esc(pageId)}">
       <div class="artifact-v571-editor card kashinoki-neumo-panel">
         <div class="artifact-v659-editor-heading">エディター機能</div>
         <div class="artifact-v571-head">
           <div class="artifact-v571-title-block">
-            <h2><span>${esc(cfg.step)} ${esc(cfg.label)}候補</span><small>${esc(catText)} から ${esc(candidates.length)}件</small></h2>
+            <h2><span>${esc(cfg.step)} ${esc(cfg.label)}候補</span><small>${candidates.length ? `${esc(catText)} から ${esc(candidates.length)}件` : '登録された断片はまだありません'}</small></h2>
           </div>
         </div>
         <div class="artifact-v572-editor-wrap artifact-v660-editor-wrap">
@@ -2697,11 +2697,6 @@ function workflowHeading(cfg){
           ${artifactEditorFilterHTML(candidates)}
           <div class="artifact-v572-chip-rail" data-artifact-chip-rail aria-label="登録済みチップタグ"></div>
           <div class="artifact-v571-textarea artifact-v572-editable artifact-v660-editor-sheet" data-artifact-editor contenteditable="true" spellcheck="false" role="textbox" aria-multiline="true">${artifactEditorRowsHTML(candidates, editorText)}</div>
-          <div class="artifact-v572-selection-popover" data-artifact-selection-popover hidden>
-            <span>選択範囲を分別</span>
-            ${['A','B','C','D','E','F'].map(key=>`<button type="button" class="artifact-v571-tag-btn" data-artifact-mark="${key}">${key}</button>`).join('')}
-            <button type="button" class="artifact-v572-plus-chip" data-artifact-mark-current>＋チップタグ</button>
-          </div>
         </div>
         <section class="artifact-v600-export-cta" aria-label="書き出し導線">
           <div class="artifact-v600-export-copy">
@@ -2715,7 +2710,7 @@ function workflowHeading(cfg){
         ${artifactUsePreviewHTML(cfg, candidates)}
         <div class="artifact-v571-toolbar">
           <div class="artifact-v571-tools-left">
-            <span data-artifact-selection-hint>テキスト範囲をドラッグすると、分別ボタンと＋チップタグを表示します。</span>
+            <span data-artifact-selection-hint>登録済み断片を確認し、必要に応じて分類タグを変更できます。</span>
           </div>
 
         </div>
@@ -3781,19 +3776,8 @@ function workflowHeading(cfg){
     const vt=document.getElementById('versionText'); if(vt) vt.textContent = VERSION;
   }
 
-  document.addEventListener('selectionchange', function(){
-    const active = document.activeElement;
-    const root = active && active.closest ? active.closest('.artifact-v571') : null;
-    if(root && active.matches && active.matches('[data-artifact-editor]')) setTimeout(()=>showArtifactSelectionPopover(root), 0);
-  });
-  document.addEventListener('mouseup', function(ev){
-    const root = ev.target && ev.target.closest ? ev.target.closest('.artifact-v571') : null;
-    if(root) setTimeout(()=>showArtifactSelectionPopover(root), 0);
-  });
-  document.addEventListener('keyup', function(ev){
-    const root = ev.target && ev.target.closest ? ev.target.closest('.artifact-v571') : null;
-    if(root) setTimeout(()=>showArtifactSelectionPopover(root), 0);
-  });
+  /* Public demo: the text-selection classification popover was removed.
+     Keep normal browser text selection, but do not open A-F / chip assignment UI. */
   window.addEventListener('kashinoki03:registered-artifacts', refreshKashinoKiArtifacts);
   document.addEventListener('DOMContentLoaded', install);
   window.addEventListener('load', install);
@@ -3840,24 +3824,8 @@ function workflowHeading(cfg){
     if(!editor.contains(range.commonAncestorContainer)) return null;
     return {sel, range, text: sel.toString().trim()};
   }
-  function hideArtifactSelectionPopover(root){
-    const pop = root && root.querySelector('[data-artifact-selection-popover]');
-    if(pop) pop.hidden = true;
-  }
-  function showArtifactSelectionPopover(root){
-    const editor = root && root.querySelector('[data-artifact-editor]');
-    const pop = root && root.querySelector('[data-artifact-selection-popover]');
-    const hit = artifactSelectionInsideEditor(root, editor);
-    if(!root || !editor || !pop || !hit || !hit.text){ hideArtifactSelectionPopover(root); return; }
-    const rect = hit.range.getBoundingClientRect();
-    const wrap = root.querySelector('.artifact-v572-editor-wrap');
-    const base = wrap ? wrap.getBoundingClientRect() : root.getBoundingClientRect();
-    pop.style.left = `${Math.max(12, Math.min(base.width - 360, rect.left - base.left))}px`;
-    pop.style.top = `${Math.max(12, rect.top - base.top - 52)}px`;
-    pop.hidden = false;
-    const status = root.querySelector('[data-artifact-status]');
-    if(status) status.textContent = '選択範囲へ分別ボタンまたは＋チップタグを付けられます。';
-  }
+  function hideArtifactSelectionPopover(root){ return; }
+  function showArtifactSelectionPopover(root){ return; }
   function applyArtifactSelectionMark(root, editor, type, status){
     const hit = artifactSelectionInsideEditor(root, editor);
     if(!hit || !hit.text){ if(status) status.textContent = '分類を付ける範囲を選択してください。'; return; }
@@ -3913,26 +3881,6 @@ function workflowHeading(cfg){
   document.addEventListener('click', function(ev){
     const navPage = ev.target && ev.target.closest ? ev.target.closest('[data-artifact-page-nav]') : null;
     if(navPage){ ev.preventDefault(); if(typeof window.page === 'function') window.page(navPage.getAttribute('data-artifact-page-nav')); return; }
-    const plusChip = ev.target && ev.target.closest ? ev.target.closest('[data-artifact-mark-current]') : null;
-    if(plusChip){
-      ev.preventDefault();
-      const root = plusChip.closest('.artifact-v571');
-      const editor = root && root.querySelector('[data-artifact-editor]');
-      const status = root && root.querySelector('[data-artifact-status]');
-      const type = root && (root.getAttribute('data-artifact-root') || 'A');
-      if(editor) applyArtifactSelectionMark(root, editor, type, status);
-      return;
-    }
-    const markBtn = ev.target && ev.target.closest ? ev.target.closest('[data-artifact-mark]') : null;
-    if(markBtn){
-      ev.preventDefault();
-      const root = markBtn.closest('.artifact-v571');
-      const editor = root && root.querySelector('[data-artifact-editor]');
-      const status = root && root.querySelector('[data-artifact-status]');
-      const key = markBtn.getAttribute('data-artifact-mark');
-      if(editor) applyArtifactSelectionMark(root, editor, key, status);
-      return;
-    }
     const copyBtn = ev.target && ev.target.closest ? ev.target.closest('[data-artifact-editor-copy]') : null;
     if(copyBtn){
       ev.preventDefault();

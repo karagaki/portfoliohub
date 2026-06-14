@@ -35,6 +35,12 @@ window.UIVariant = (function() {
         if (window.UIGlassPanels && typeof window.UIGlassPanels.refresh === 'function') {
             window.UIGlassPanels.refresh();
         }
+        // UI Size Tuner の寸法・配置変数は Glass / Neumorphism 共通基準として扱う。
+        // テーマ切替やプリセット再描画後に、表示テーマ側のCSSが勝って崩れないよう再適用する。
+        if (window.UISizeTunerAPI && typeof window.UISizeTunerAPI.reapply === 'function') {
+            window.UISizeTunerAPI.reapply();
+            requestAnimationFrame(() => window.UISizeTunerAPI.reapply());
+        }
         if (window.UIScroll && typeof window.UIScroll.adjustHeight === 'function') window.UIScroll.adjustHeight();
         if (window.Table && typeof window.Table.adjustTableHeight === 'function') window.Table.adjustTableHeight();
         // マウス操作後の Glass は、更新後の通常表示へ即時戻して不要な選択輪郭を残さない。

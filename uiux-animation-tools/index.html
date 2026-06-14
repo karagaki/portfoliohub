@@ -14,6 +14,10 @@
     <link rel="stylesheet" href="css/ui/UI_SoftUI.css">
     <link rel="stylesheet" href="css/ui/UI_Neumorphism.css">
     <link rel="stylesheet" href="css/ui/UI_SpatialPlaneView.css">
+    <link rel="stylesheet" href="css/ui/UI_SizeTunerRuntimeLinks.css">
+    <link rel="stylesheet" href="css/ui/UI_ColorBottomRuntime.css">
+    <link rel="stylesheet" href="css/ui/UI_SpinnerAlignmentRuntime.css">
+    <link rel="stylesheet" href="css/ui/UI_ReadabilityRuntime.css">
 </head>
 <body>
     <script>
@@ -87,6 +91,14 @@
     <script src="js/ui/UI_GlassPanels.js"></script>
     <script src="js/ui/UI_State.js"></script>
     <script src="js/ui/UI_Variant.js"></script>
+    <script src="js/ui/UI_VariantCompact.js"></script>
+    <script src="js/engine/EngineRegistry.js"></script>
+    <script src="js/engine/EngineStateAdapter.js"></script>
+    <script src="js/engine/P5StableEngine.js"></script>
+    <script src="js/engine/ExperimentalStubEngine.js"></script>
+    <script src="js/engine/EngineBootstrap.js"></script>
+    <script src="js/engine/EngineDiagnostics.js"></script>
+    <script src="js/engine/EngineSwitcher.js"></script>
 
     <!-- UI部品・操作補助 -->
     <script src="js/components/Cursor_A.js"></script>
@@ -129,5 +141,1333 @@
     <script src="js/state/RuntimeVisualLivePreviewAdapter.js"></script>
     <!-- Phase 5: Console操作のみの統合slot実表示切替。流線/残像・登録UIは未接続 -->
     <script src="js/state/RuntimeIntegratedSlotApplyAdapter.js"></script>
+    <!-- v99: GitHub公開用の初期設定/作品データ分離エクスポート基盤 -->
+    <script src="js/state/InitialSettingsStore.js"></script>
+    <script>
+        /*
+          UI Size Tuner v21
+          ---------------------------------------------------------
+          実画面で各パネル・スライダー長・余白・ボタン寸法を調整し、
+          反映済みCSS変数だけをコピーして正式CSSへ移せる開発補助ツール。
+          全体zoom / 全体transform scale は使わない。
+        */
+        (function() {
+            const storageKey = 'uiuxAnimationTools.uiSizeTuner.v26';
+            const positionKey = 'uiuxAnimationTools.uiSizeTuner.position.v21';
+            const root = document.documentElement;
+            const panelIdsByPage = {
+                '1.配色': ['glass-cursor-panel-3'],
+                '2.点': ['glass-cursor-panel-4'],
+                '3.カーソル': ['glass-cursor-panel-6', 'cursor-container'],
+                '4.空間': ['glass-cursor-panel-7'],
+                '下部': ['glass-control-bar'],
+                'Neumo': ['ui-variant-panel', 'glass-cursor-panel-3'],
+                'UIバリエーション': ['ui-variant-panel'],
+                '左下UI': ['case-button-stage'],
+            };
+            const controls = [
+                { page:'共通', group:'表示確認', label:'該当枠表示', name:'guide:共通', type:'guide', defaultValue:true, targets:['.ui-container','.glass-settings-panel'] },
+                { page:'1.配色', group:'表示確認', label:'該当枠表示', name:'guide:1.配色', type:'guide', defaultValue:true, targets:['#glass-cursor-panel-3'] },
+
+                { page:'1.配色', group:'馴染ボタン色', label:'馴染ON 色指定', name:'--ui-color-blend-on-color', type:'color', defaultValue:'#aeb6c0', targets:['#color-container .color-blend-btn.is-active','#color-container .color-blend-btn[aria-pressed="true"]','#glass-cursor-panel-3 .color-blend-btn.is-active','#glass-cursor-panel-3 .color-blend-btn[aria-pressed="true"]','button.color-blend-btn.is-active[data-theme-blend]','button.color-blend-btn[aria-pressed="true"][data-theme-blend]'], computedProperty:'background-color' },
+                { page:'共通', group:'調整ボタン', label:'調整ボタン透明度', name:'--ui-size-tuner-toggle-bg-alpha', min:0, max:0.5, step:0.01, unit:'', defaultValue:0.08, targets:['#ui-size-tuner-toggle'], computedProperty:'background-color' },
+
+                { page:'2.点', group:'表示確認', label:'該当枠表示', name:'guide:2.点', type:'guide', defaultValue:true, targets:['#glass-cursor-panel-4'] },
+                { page:'3.カーソル', group:'表示確認', label:'該当枠表示', name:'guide:3.カーソル', type:'guide', defaultValue:true, targets:['#glass-cursor-panel-6'] },
+                { page:'4.空間', group:'表示確認', label:'該当枠表示', name:'guide:4.空間', type:'guide', defaultValue:true, targets:['#glass-cursor-panel-7'] },
+                { page:'下部', group:'表示確認', label:'該当枠表示', name:'guide:下部', type:'guide', defaultValue:true, targets:['#glass-control-bar'] },
+                { page:'UIバリエーション', group:'表示確認', label:'該当枠表示', name:'guide:UIバリエーション', type:'guide', defaultValue:true, targets:['#ui-variant-panel','#ui-preset-panel'] },
+                { page:'左下UI', group:'表示確認', label:'該当枠表示', name:'guide:左下UI', type:'guide', defaultValue:true, targets:['#case-comparison.case-palette-only'] },
+                { page:'共通', group:'パネル共通', label:'見出し文字', name:'--ui-panel-common-header-font-size', min:6, max:18, step:0.5, unit:'px', defaultValue:12.5, targets:['.ui-header'], computedProperty:'font-size' },
+                { page:'共通', group:'パネル共通', label:'ラベル文字', name:'--ui-panel-common-label-font-size', min:5, max:16, step:0.5, unit:'px', defaultValue:9, targets:['.slider-label','.row-label','label'], computedProperty:'font-size' },
+                { page:'共通', group:'パネル共通', label:'数値文字', name:'--ui-panel-common-value-font-size', min:5, max:18, step:0.5, unit:'px', defaultValue:9, targets:['.slider-value','.row-value','.value-display'], computedProperty:'font-size' },
+                { page:'共通', group:'パネル共通', label:'入力文字', name:'--ui-panel-common-input-font-size', min:5, max:16, step:0.5, unit:'px', defaultValue:9, targets:['input','select'], computedProperty:'font-size' },
+                { page:'共通', group:'パネル共通', label:'見出し高さ', name:'--ui-panel-common-header-height', min:12, max:36, step:1, unit:'px', defaultValue:17, targets:['.ui-header'], computedProperty:'height' },
+                { page:'共通', group:'スライダー共通', label:'つまみ径', name:'--ui-panel-common-slider-thumb-size', min:7, max:24, step:1, unit:'px', defaultValue:12, targets:['input[type="range"]'], computedProperty:'height' },
+                { page:'共通', group:'スライダー共通', label:'線高さ', name:'--ui-panel-common-slider-track-height', min:2, max:8, step:1, unit:'px', defaultValue:8, targets:['input[type="range"]'], computedProperty:'height' },
+
+                { page:'1.配色', group:'配色パネル全体', label:'パネル幅', name:'--ui-panel-1-width', min:220, max:520, step:2, unit:'px', defaultValue:220, targets:['#glass-cursor-panel-3'], computedProperty:'width' },
+                { page:'1.配色', group:'配色パネル全体', label:'内側余白', name:'--ui-panel-1-padding', min:2, max:22, step:1, unit:'px', defaultValue:10, targets:['#glass-cursor-panel-3 .ui-content'], computedProperty:'padding-left' },
+                { page:'1.配色', group:'配色パネル全体', label:'行間隔', name:'--ui-panel-1-row-gap', min:0, max:16, step:1, unit:'px', defaultValue:6, targets:['#glass-cursor-panel-3 .slider-group'], computedProperty:'margin-bottom' },
+                { page:'1.配色', group:'配色パネル全体', label:'縦圧縮', name:'--ui-panel-1-vertical-gap', min:0, max:16, step:1, unit:'px', defaultValue:6, targets:['#glass-cursor-panel-3 .ui-content'], computedProperty:'gap' },
+                { page:'1.配色', group:'配色カード', label:'カード間隔', name:'--ui-color-card-gap', min:0, max:14, step:1, unit:'px', defaultValue:5, targets:['.color-theme-grid'], computedProperty:'gap' },
+                { page:'1.配色', group:'配色カード', label:'カード名行高', name:'--ui-color-card-name-line-height', min:0.8, max:1.8, step:0.05, unit:'', defaultValue:1.15, targets:['.color-theme-name'], computedProperty:'line-height' },
+                { page:'1.配色', group:'配色カード', label:'列数', name:'--ui-color-card-columns', min:2, max:4, step:1, unit:'', defaultValue:3, targets:['.color-theme-grid'], computedProperty:'grid-template-columns' },
+                { page:'1.配色', group:'配色カード', label:'カード高さ', name:'--ui-color-card-height', min:22, max:62, step:1, unit:'px', defaultValue:25, targets:['.color-theme-card'], computedProperty:'height' },
+                { page:'1.配色', group:'配色カード', label:'カード余白X', name:'--ui-color-card-padding-x', min:1, max:14, step:1, unit:'px', defaultValue:1, targets:['.color-theme-card'], computedProperty:'padding-left' },
+                { page:'1.配色', group:'配色カード', label:'カード角丸', name:'--ui-color-card-radius', min:0, max:28, step:1, unit:'px', defaultValue:6, targets:['.color-theme-card'], computedProperty:'border-radius' },
+                { page:'1.配色', group:'配色カード', label:'カード名文字', name:'--ui-color-card-name-font-size', min:4, max:16, step:0.5, unit:'px', defaultValue:11, targets:['.color-theme-name'], computedProperty:'font-size' },
+                { page:'1.配色', group:'配色カード', label:'色バー高さ', name:'--ui-color-swatch-height', min:4, max:24, step:1, unit:'px', defaultValue:6, targets:['.color-theme-preview','.color-theme-swatch'], computedProperty:'height' },
+                { page:'1.配色', group:'割当ボタン', label:'文字', name:'--ui-color-assign-button-font-size', min:4, max:18, step:0.5, unit:'px', defaultValue:12.5, targets:['.color-assign-btn'], computedProperty:'font-size' },
+                { page:'1.配色', group:'割当ボタン', label:'高さ', name:'--ui-color-assign-button-height', min:10, max:36, step:1, unit:'px', defaultValue:15, targets:['.color-assign-btn'], computedProperty:'height' },
+                { page:'1.配色', group:'割当ボタン', label:'ボタン幅', name:'--ui-color-assign-button-min-width', min:24, max:90, step:1, unit:'px', defaultValue:33, targets:['.color-assign-btn'], computedProperty:'min-width' },
+                { page:'1.配色', group:'割当ボタン', label:'左右余白', name:'--ui-color-assign-button-padding-x', min:0, max:16, step:1, unit:'px', defaultValue:0, targets:['.color-assign-btn'], computedProperty:'padding-left' },
+                { page:'1.配色', group:'割当ボタン', label:'角丸', name:'--ui-color-assign-button-radius', min:0, max:28, step:1, unit:'px', defaultValue:6, targets:['.color-assign-btn'], computedProperty:'border-radius' },
+                { page:'1.配色', group:'割当ボタン', label:'横間隔', name:'--ui-color-assign-button-gap', min:0, max:12, step:1, unit:'px', defaultValue:8, targets:['.color-assign-mode-row','.color-theme-actions'], computedProperty:'gap' },
+                { page:'1.配色', group:'馴染/再配色', label:'文字', name:'--ui-color-action-button-font-size', min:4, max:18, step:0.5, unit:'px', defaultValue:13, targets:['.color-blend-btn','.color-theme-recolor-btn'], computedProperty:'font-size' },
+                { page:'1.配色', group:'馴染/再配色', label:'高さ', name:'--ui-color-action-button-height', min:10, max:38, step:1, unit:'px', defaultValue:15, targets:['.color-blend-btn','.color-theme-recolor-btn'], computedProperty:'height' },
+                { page:'1.配色', group:'馴染/再配色', label:'ボタン幅', name:'--ui-color-action-button-min-width', min:24, max:90, step:1, unit:'px', defaultValue:39, targets:['.color-blend-btn','.color-theme-recolor-btn'], computedProperty:'min-width' },
+                { page:'1.配色', group:'馴染/再配色', label:'左右余白', name:'--ui-color-action-button-padding-x', min:0, max:16, step:1, unit:'px', defaultValue:4, targets:['.color-blend-btn','.color-theme-recolor-btn'], computedProperty:'padding-left' },
+                { page:'1.配色', group:'馴染/再配色', label:'角丸', name:'--ui-color-action-button-radius', min:0, max:32, step:1, unit:'px', defaultValue:6, targets:['.color-blend-btn','.color-theme-recolor-btn'], computedProperty:'border-radius' },
+                { page:'1.配色', group:'遷移秒/入力', label:'入力文字', name:'--ui-color-transition-input-font-size', min:4, max:16, step:0.5, unit:'px', defaultValue:9, targets:['#color-transition-seconds'], computedProperty:'font-size' },
+                { page:'1.配色', group:'遷移秒/入力', label:'入力幅', name:'--ui-color-transition-input-width', min:20, max:92, step:1, unit:'px', defaultValue:38, targets:['#color-transition-seconds'], computedProperty:'width' },
+                { page:'1.配色', group:'遷移秒/入力', label:'入力高さ', name:'--ui-color-transition-input-height', min:10, max:34, step:1, unit:'px', defaultValue:18, targets:['#color-transition-seconds'], computedProperty:'height' },
+                { page:'1.配色', group:'遷移秒/入力', label:'操作間隔', name:'--ui-color-transition-actions-gap', min:0, max:16, step:1, unit:'px', defaultValue:4, targets:['.color-transition-actions'], computedProperty:'gap' },
+
+                { page:'2.点', group:'2.点パネル全体', label:'パネル幅', name:'--ui-panel-2-width', min:220, max:560, step:2, unit:'px', defaultValue:220, targets:['#glass-cursor-panel-4','#slider-container'], computedProperty:'width' },
+                { page:'2.点', group:'2.点パネル全体', label:'内側余白', name:'--ui-panel-2-padding', min:2, max:24, step:1, unit:'px', defaultValue:9, targets:['#glass-cursor-panel-4 .ui-content','#slider-container .ui-content'], computedProperty:'padding-left' },
+                { page:'2.点', group:'2.点スライダー行', label:'ラベル幅', name:'--ui-panel-2-label-width', min:36, max:120, step:1, unit:'px', defaultValue:42, targets:['#glass-cursor-panel-4 .slider-label'], computedProperty:'width' },
+                { page:'2.点', group:'2.点スライダー行', label:'スライダー幅', name:'--ui-panel-2-slider-width', min:80, max:340, step:2, unit:'px', defaultValue:80, targets:['#glass-cursor-panel-4 .slider-container'], computedProperty:'width' },
+                { page:'2.点', group:'2.点スライダー行', label:'数値幅', name:'--ui-panel-2-value-width', min:32, max:100, step:1, unit:'px', defaultValue:35, targets:['#glass-cursor-panel-4 .slider-value'], computedProperty:'width' },
+                { page:'2.点', group:'2.点スライダー行', label:'固定幅', name:'--ui-panel-2-fixed-width', min:28, max:90, step:1, unit:'px', defaultValue:35, targets:['#glass-cursor-panel-4 .default-container'], computedProperty:'width' },
+                { page:'2.点', group:'2.点スライダー行', label:'列間隔', name:'--ui-panel-2-column-gap', min:0, max:18, step:1, unit:'px', defaultValue:4, targets:['#glass-cursor-panel-4 .slider-layout'], computedProperty:'column-gap' },
+                { page:'2.点', group:'2.点スライダー行', label:'行間隔', name:'--ui-panel-2-row-gap', min:0, max:18, step:1, unit:'px', defaultValue:0, targets:['#glass-cursor-panel-4 .slider-group'], computedProperty:'margin-bottom' },
+                { page:'2.点', group:'2.点文字', label:'ラベル文字', name:'--ui-panel-2-label-font-size', min:5, max:18, step:0.5, unit:'px', defaultValue:7.5, targets:['#glass-cursor-panel-4 .slider-label'], computedProperty:'font-size' },
+                { page:'2.点', group:'2.点文字', label:'数値文字', name:'--ui-panel-2-value-font-size', min:5, max:20, step:0.5, unit:'px', defaultValue:8, targets:['#glass-cursor-panel-4 .slider-value'], computedProperty:'font-size' },
+
+                { page:'3.カーソル', group:'3.カーソルパネル全体', label:'パネル幅', name:'--ui-panel-3-width', min:220, max:560, step:2, unit:'px', defaultValue:220, targets:['#glass-cursor-panel-6','#cursor-container'], computedProperty:'width' },
+                { page:'3.カーソル', group:'3.カーソルパネル全体', label:'内側余白', name:'--ui-panel-3-padding', min:2, max:24, step:1, unit:'px', defaultValue:7, targets:['#glass-cursor-panel-6 .ui-content'], computedProperty:'padding-left' },
+                { page:'3.カーソル', group:'3.カーソルスライダー行', label:'ラベル幅', name:'--ui-panel-3-label-width', min:36, max:140, step:1, unit:'px', defaultValue:120, targets:['#glass-cursor-panel-6 .slider-label'], computedProperty:'width' },
+                { page:'3.カーソル', group:'3.カーソルスライダー行', label:'チェック幅', name:'--ui-panel-3-check-width', min:10, max:32, step:1, unit:'px', defaultValue:18, targets:['#glass-cursor-panel-6 .cursor-toggle-checkbox'], computedProperty:'width' },
+                { page:'3.カーソル', group:'3.カーソルスライダー行', label:'スライダー最小', name:'--ui-panel-3-slider-min-width', min:24, max:180, step:2, unit:'px', defaultValue:70, targets:['#glass-cursor-panel-6 .slider-container'], computedProperty:'min-width' },
+                { page:'3.カーソル', group:'3.カーソルスライダー行', label:'数値幅', name:'--ui-panel-3-value-width', min:28, max:110, step:1, unit:'px', defaultValue:79, targets:['#glass-cursor-panel-6 .slider-value'], computedProperty:'width' },
+                { page:'3.カーソル', group:'3.カーソルスライダー行', label:'値余白左', name:'--ui-panel-3-value-gap', min:-8, max:18, step:1, unit:'px', defaultValue:-8, targets:['#glass-cursor-panel-6 .slider-value'], computedProperty:'margin-left' },
+                { page:'3.カーソル', group:'3.カーソルスライダー行', label:'列間隔', name:'--ui-panel-3-column-gap', min:0, max:18, step:1, unit:'px', defaultValue:0, targets:['#glass-cursor-panel-6 .slider-layout'], computedProperty:'column-gap' },
+                { page:'3.カーソル', group:'3.カーソルスライダー行', label:'スライダー横位置', name:'--ui-panel-3-slider-offset-x', min:-60, max:60, step:1, unit:'px', defaultValue:-13, targets:['#glass-cursor-panel-6 .slider-container'], computedProperty:'transform', noDirect:true },
+                { page:'3.カーソル', group:'3.カーソルスライダー行', label:'数値横位置', name:'--ui-panel-3-value-offset-x', min:-60, max:60, step:1, unit:'px', defaultValue:2, targets:['#glass-cursor-panel-6 .slider-value'], computedProperty:'transform', noDirect:true },
+                { page:'3.カーソル', group:'3.カーソルスライダー行', label:'行間隔', name:'--ui-panel-3-row-gap', min:0, max:18, step:1, unit:'px', defaultValue:0, targets:['#glass-cursor-panel-6 .slider-group'], computedProperty:'margin-bottom' },
+                { page:'3.カーソル', group:'3.カーソルスライダー行', label:'行高さ', name:'--ui-panel-3-row-height', min:16, max:42, step:1, unit:'px', defaultValue:16, targets:['#glass-cursor-panel-6 .slider-layout'], computedProperty:'min-height' },
+                { page:'3.カーソル', group:'3.カーソル文字', label:'ラベル文字', name:'--ui-panel-3-label-font-size', min:5, max:18, step:0.5, unit:'px', defaultValue:9.5, targets:['#glass-cursor-panel-6 .slider-label'], computedProperty:'font-size' },
+                { page:'3.カーソル', group:'3.カーソル文字', label:'数値文字', name:'--ui-panel-3-value-font-size', min:5, max:20, step:0.5, unit:'px', defaultValue:13, targets:['#glass-cursor-panel-6 .slider-value'], computedProperty:'font-size' },
+
+                { page:'4.空間', group:'4.空間パネル全体', label:'パネル幅', name:'--ui-panel-4-width', min:220, max:620, step:2, unit:'px', defaultValue:220, targets:['#glass-cursor-panel-7'], computedProperty:'width' },
+                { page:'4.空間', group:'4.空間パネル全体', label:'内側余白', name:'--ui-panel-4-padding', min:2, max:26, step:1, unit:'px', defaultValue:9, targets:['#glass-cursor-panel-7 .ui-content'], computedProperty:'padding-left' },
+                { page:'4.空間', group:'4.空間パネル全体', label:'縦間隔', name:'--ui-panel-4-row-gap', min:0, max:18, step:1, unit:'px', defaultValue:0, targets:['#glass-cursor-panel-7 .slider-group'], computedProperty:'margin-bottom' },
+                { page:'4.空間', group:'4.空間ボタン', label:'ボタン文字', name:'--ui-panel-4-button-font-size', min:5, max:18, step:0.5, unit:'px', defaultValue:8.5, targets:['#glass-cursor-panel-7 .spatial-action-button'], computedProperty:'font-size' },
+                { page:'4.空間', group:'4.空間ボタン', label:'ボタン高さ', name:'--ui-panel-4-action-height', min:14, max:40, step:1, unit:'px', defaultValue:16, targets:['#glass-cursor-panel-7 .spatial-action-button'], computedProperty:'height' },
+                { page:'4.空間', group:'4.空間ボタン', label:'ボタン間隔', name:'--ui-panel-4-action-gap', min:0, max:18, step:1, unit:'px', defaultValue:3, targets:['#glass-cursor-panel-7 .spatial-panel-actions'], computedProperty:'gap' },
+                { page:'4.空間', group:'4.空間スライダー行', label:'ラベル幅', name:'--ui-panel-4-label-width', min:32, max:110, step:1, unit:'px', defaultValue:32, targets:['#glass-cursor-panel-7 .slider-label'], computedProperty:'width' },
+                { page:'4.空間', group:'4.空間スライダー行', label:'スライダー最小', name:'--ui-panel-4-slider-min-width', min:24, max:180, step:2, unit:'px', defaultValue:136, targets:['#glass-cursor-panel-7 .slider-container'], computedProperty:'min-width' },
+                { page:'4.空間', group:'4.空間スライダー行', label:'数値幅', name:'--ui-panel-4-value-width', min:24, max:110, step:1, unit:'px', defaultValue:58, targets:['#glass-cursor-panel-7 .slider-value'], computedProperty:'width' },
+                { page:'4.空間', group:'4.空間スライダー行', label:'列間隔', name:'--ui-panel-4-column-gap', min:0, max:18, step:1, unit:'px', defaultValue:0, targets:['#glass-cursor-panel-7 .slider-layout'], computedProperty:'column-gap' },
+                { page:'4.空間', group:'4.空間スライダー行', label:'行高さ', name:'--ui-panel-4-row-height', min:16, max:42, step:1, unit:'px', defaultValue:16, targets:['#glass-cursor-panel-7 .slider-layout'], computedProperty:'min-height' },
+                { page:'4.空間', group:'4.空間スライダー行', label:'値余白左', name:'--ui-panel-4-value-gap', min:-8, max:18, step:1, unit:'px', defaultValue:-8, targets:['#glass-cursor-panel-7 .slider-value'], computedProperty:'margin-left' },
+                { page:'4.空間', group:'4.空間スライダー行', label:'スライダー横位置', name:'--ui-panel-4-slider-offset-x', min:-70, max:70, step:1, unit:'px', defaultValue:-7, targets:['#glass-cursor-panel-7 .slider-container'], computedProperty:'transform', noDirect:true },
+                { page:'4.空間', group:'4.空間スライダー行', label:'数値横位置', name:'--ui-panel-4-value-offset-x', min:-70, max:70, step:1, unit:'px', defaultValue:38, targets:['#glass-cursor-panel-7 .slider-value'], computedProperty:'transform', noDirect:true },
+                { page:'4.空間', group:'4.空間縦位置', label:'ボタン群', name:'--ui-panel-4-actions-offset-y', min:-40, max:40, step:1, unit:'px', defaultValue:0, targets:['#glass-cursor-panel-7 .spatial-panel-actions'], computedProperty:'transform', noDirect:true },
+                { page:'4.空間', group:'4.空間縦位置', label:'スライダー行全体', name:'--ui-panel-4-slider-group-offset-y', min:-40, max:40, step:1, unit:'px', defaultValue:0, targets:['#glass-cursor-panel-7 .slider-group'], computedProperty:'transform', noDirect:true },
+                { page:'4.空間', group:'4.空間縦位置', label:'ラベル文字', name:'--ui-panel-4-label-offset-y', min:-24, max:24, step:1, unit:'px', defaultValue:0, targets:['#glass-cursor-panel-7 .slider-label'], computedProperty:'transform', noDirect:true },
+                { page:'4.空間', group:'4.空間縦位置', label:'スライダー', name:'--ui-panel-4-slider-offset-y', min:-24, max:24, step:1, unit:'px', defaultValue:0, targets:['#glass-cursor-panel-7 .slider-container'], computedProperty:'transform', noDirect:true },
+                { page:'4.空間', group:'4.空間縦位置', label:'数値文字', name:'--ui-panel-4-value-offset-y', min:-24, max:24, step:1, unit:'px', defaultValue:0, targets:['#glass-cursor-panel-7 .slider-value'], computedProperty:'transform', noDirect:true },
+                { page:'4.空間', group:'4.空間文字', label:'ラベル文字', name:'--ui-panel-4-label-font-size', min:5, max:18, step:0.5, unit:'px', defaultValue:11, targets:['#glass-cursor-panel-7 .slider-label'], computedProperty:'font-size' },
+                { page:'4.空間', group:'4.空間文字', label:'数値文字', name:'--ui-panel-4-value-font-size', min:5, max:20, step:0.5, unit:'px', defaultValue:14, targets:['#glass-cursor-panel-7 .slider-value'], computedProperty:'font-size' },
+
+                { page:'下部', group:'下部操作', label:'ボタン文字', name:'--ui-bottom-button-font-size', min:5, max:18, step:0.5, unit:'px', defaultValue:8, targets:['#glass-control-bar button'], computedProperty:'font-size' },
+                { page:'下部', group:'下部操作', label:'ボタン高さ', name:'--ui-bottom-button-height', min:14, max:38, step:1, unit:'px', defaultValue:21, targets:['#glass-control-bar button'], computedProperty:'height' },
+                { page:'下部', group:'下部操作', label:'ボタン幅', name:'--ui-bottom-button-min-width', min:18, max:110, step:1, unit:'px', defaultValue:34, targets:['#glass-control-bar button'], computedProperty:'min-width' },
+                { page:'下部', group:'下部操作', label:'左右余白', name:'--ui-bottom-button-padding-x', min:0, max:18, step:1, unit:'px', defaultValue:7, targets:['#glass-control-bar button'], computedProperty:'padding-left' },
+                { page:'下部', group:'下部操作', label:'操作間隔', name:'--ui-bottom-button-gap', min:0, max:18, step:1, unit:'px', defaultValue:6, targets:['#glass-control-bar .canvas-bottom-control-row'], computedProperty:'gap' },
+                { page:'下部', group:'右下丸ボタン', label:'丸サイズ', name:'--ui-bottom-round-button-size', min:14, max:38, step:1, unit:'px', defaultValue:22, targets:['.glass-panel-quick-toggle-button'], computedProperty:'width' },
+                { page:'下部', group:'左下番号', label:'番号サイズ', name:'--ui-case-button-size', min:14, max:38, step:1, unit:'px', defaultValue:21, targets:['.case-button','.case-index-button'], computedProperty:'width' },
+
+                { page:'Neumo', group:'表面ボタン', label:'文字', name:'--ui-neumo-surface-button-font-size', min:4, max:18, step:0.5, unit:'px', defaultValue:7, targets:['.neumo-surface-shape-button'], computedProperty:'font-size' },
+                { page:'Neumo', group:'表面ボタン', label:'高さ', name:'--ui-neumo-surface-button-height', min:9, max:34, step:1, unit:'px', defaultValue:17, targets:['.neumo-surface-shape-button'], computedProperty:'height' },
+                { page:'Neumo', group:'表面ボタン', label:'最小幅', name:'--ui-neumo-surface-button-min-width', min:18, max:100, step:1, unit:'px', defaultValue:18, targets:['.neumo-surface-shape-button'], computedProperty:'min-width' },
+                { page:'Neumo', group:'表面ボタン', label:'左右余白', name:'--ui-neumo-surface-button-padding-x', min:0, max:16, step:1, unit:'px', defaultValue:1, targets:['.neumo-surface-shape-button'], computedProperty:'padding-left' },
+
+                { page:'チューナー', group:'チューナーパネル', label:'幅', name:'--ui-size-tuner-panel-width', min:280, max:760, step:10, unit:'px', defaultValue:420, targets:['#ui-size-tuner-panel'], computedProperty:'width' },
+                { page:'チューナー', group:'チューナーパネル', label:'高さ', name:'--ui-size-tuner-panel-max-height', min:280, max:820, step:10, unit:'px', defaultValue:620, targets:['#ui-size-tuner-panel'], computedProperty:'max-height' },
+                { page:'チューナー', group:'チューナーパネル', label:'文字', name:'--ui-size-tuner-font-size', min:8, max:16, step:0.5, unit:'px', defaultValue:11, targets:['#ui-size-tuner-panel'], computedProperty:'font-size' },
+                { page:'チューナー', group:'チューナーパネル', label:'透明度', name:'--ui-size-tuner-bg-alpha', min:0.6, max:1, step:0.02, unit:'', defaultValue:0.94, targets:['#ui-size-tuner-panel'], computedProperty:'background-color' },
+                { page:'チューナー', group:'チューナー配置', label:'行間隔', name:'--ui-size-tuner-page-gap', min:2, max:18, step:1, unit:'px', defaultValue:9, targets:['.ui-size-tuner-page'], computedProperty:'gap' },
+                { page:'チューナー', group:'チューナー配置', label:'グループ余白', name:'--ui-size-tuner-group-padding', min:6, max:24, step:1, unit:'px', defaultValue:12, targets:['.ui-size-tuner-group'], computedProperty:'padding-left' },
+                { page:'チューナー', group:'チューナー配置', label:'行ラベル幅', name:'--ui-size-tuner-row-label-width', min:70, max:180, step:2, unit:'px', defaultValue:108, targets:['.ui-size-tuner-row'], computedProperty:'grid-template-columns' },
+                { page:'チューナー', group:'チューナー配置', label:'行値幅', name:'--ui-size-tuner-row-value-width', min:46, max:130, step:2, unit:'px', defaultValue:72, targets:['.ui-size-tuner-row'], computedProperty:'grid-template-columns' },
+                { page:'チューナー', group:'チューナー配置', label:'行computed幅', name:'--ui-size-tuner-row-computed-width', min:64, max:170, step:2, unit:'px', defaultValue:110, targets:['.ui-size-tuner-row'], computedProperty:'grid-template-columns' },
+                { page:'チューナー', group:'チューナー配置', label:'行列間隔', name:'--ui-size-tuner-row-column-gap', min:4, max:22, step:1, unit:'px', defaultValue:10, targets:['.ui-size-tuner-row'], computedProperty:'column-gap' }
+            ];
+
+            controls.push(
+                { page:'UIバリエーション', group:'UIパネル全体', label:'パネル幅', name:'--ui-variant-panel-width', min:220, max:620, step:2, unit:'px', defaultValue:388, targets:['#ui-variant-panel'], computedProperty:'width' },
+                { page:'UIバリエーション', group:'UIパネル全体', label:'内側余白', name:'--ui-variant-panel-padding', min:4, max:32, step:1, unit:'px', defaultValue:12, targets:['#ui-variant-panel'], computedProperty:'padding-left' },
+                { page:'UIバリエーション', group:'UIパネル全体', label:'行間隔', name:'--ui-variant-panel-gap', min:2, max:24, step:1, unit:'px', defaultValue:2, targets:['#ui-variant-panel'], computedProperty:'gap' },
+                { page:'UIバリエーション', group:'UIパネル全体', label:'上下圧縮', name:'--ui-variant-panel-row-gap', min:0, max:18, step:1, unit:'px', defaultValue:6, targets:['#ui-variant-panel .ui-variant-control-row'], computedProperty:'margin-bottom' },
+                { page:'UIバリエーション', group:'UIパネル文字', label:'見出し文字', name:'--ui-variant-label-font-size', min:6, max:18, step:0.5, unit:'px', defaultValue:12.5, targets:['#ui-variant-panel label'], computedProperty:'font-size' },
+                { page:'UIバリエーション', group:'UIパネル文字', label:'select文字', name:'--ui-variant-select-font-size', min:6, max:18, step:0.5, unit:'px', defaultValue:14.5, targets:['#ui-variant-panel select'], computedProperty:'font-size' },
+                { page:'UIバリエーション', group:'UIパネル入力', label:'select高さ', name:'--ui-variant-select-height', min:16, max:44, step:1, unit:'px', defaultValue:35, targets:['#ui-variant-panel select'], computedProperty:'height' },
+                { page:'UIバリエーション', group:'UIパネル入力', label:'select余白X', name:'--ui-variant-select-padding-x', min:4, max:24, step:1, unit:'px', defaultValue:15, targets:['#ui-variant-panel select'], computedProperty:'padding-left' },
+                { page:'UIバリエーション', group:'UIパネル入力', label:'select角丸', name:'--ui-variant-select-radius', min:4, max:28, step:1, unit:'px', defaultValue:28, targets:['#ui-variant-panel select'], computedProperty:'border-radius' },
+                { page:'UIバリエーション', group:'Glass選択色', label:'左下case輪郭色', name:'--ui-glass-left-current-case-outline-color', type:'color', defaultValue:'#707070', targets:['#case-comparison.case-palette-only .case-choice-button.current-case'], noDirect:true },
+                { page:'UIバリエーション', group:'Glass選択色', label:'右下アクティブ輪郭色', name:'--ui-glass-bottom-active-outline-color', type:'color', defaultValue:'#707070', targets:['#glass-control-bar .is-active','#glass-control-bar .is-visible','#glass-control-bar .is-selected','#glass-control-bar .selected'], noDirect:true },
+                { page:'UIバリエーション', group:'左上小ボタン影', label:'影ON/OFF', name:'--ui-top-left-small-button-shadow-on', min:0, max:1, step:1, unit:'', defaultValue:0, targets:['#ui-variant-panel select','#ui-preset-panel select','#ui-preset-panel .glass-preset-details-toggle','#ui-preset-panel .glass-preset-actions > button'], noDirect:true },
+                { page:'UIバリエーション', group:'Glass詳細', label:'詳細内側余白', name:'--ui-variant-details-padding', min:0, max:18, step:1, unit:'px', defaultValue:9, targets:['#ui-preset-panel .glass-preset-details'], computedProperty:'padding-left' },
+                { page:'UIバリエーション', group:'Glass詳細', label:'詳細行間', name:'--ui-variant-details-row-gap', min:0, max:18, step:1, unit:'px', defaultValue:0, targets:['#ui-preset-panel .glass-preset-rows'], computedProperty:'gap' },
+                { page:'UIバリエーション', group:'Glass詳細', label:'詳細列間隔', name:'--ui-variant-details-column-gap', min:0, max:16, step:1, unit:'px', defaultValue:3, targets:['#ui-preset-panel .glass-preset-row'], computedProperty:'column-gap' },
+                { page:'UIバリエーション', group:'Glass詳細', label:'ラベル幅', name:'--ui-variant-details-label-width', min:34, max:120, step:1, unit:'px', defaultValue:48, targets:['#ui-preset-panel .glass-preset-label'], computedProperty:'width' },
+                { page:'UIバリエーション', group:'Glass詳細', label:'スライダー幅', name:'--ui-variant-details-slider-width', min:45, max:220, step:1, unit:'px', defaultValue:80, targets:['#ui-preset-panel input[type="range"][data-glass-param]'], computedProperty:'width' },
+                { page:'UIバリエーション', group:'Glass詳細', label:'値幅', name:'--ui-variant-details-value-width', min:24, max:90, step:1, unit:'px', defaultValue:31, targets:['#ui-preset-panel .glass-preset-value'], computedProperty:'width' },
+                { page:'UIバリエーション', group:'Glass詳細文字', label:'詳細ラベル文字', name:'--ui-variant-details-label-font-size', min:5, max:14, step:0.5, unit:'px', defaultValue:7, targets:['#ui-preset-panel .glass-preset-label'], computedProperty:'font-size' },
+                { page:'UIバリエーション', group:'Glass詳細文字', label:'詳細値文字', name:'--ui-variant-details-value-font-size', min:5, max:14, step:0.5, unit:'px', defaultValue:8, targets:['#ui-preset-panel .glass-preset-value','#ui-preset-panel .glass-preset-status'], computedProperty:'font-size' },
+                { page:'UIバリエーション', group:'Glass詳細ボタン', label:'ボタン文字', name:'--ui-variant-details-button-font-size', min:5, max:16, step:0.5, unit:'px', defaultValue:9.5, targets:['#ui-preset-panel .glass-preset-actions > button','#ui-preset-panel .glass-preset-details-toggle'], computedProperty:'font-size' },
+                { page:'UIバリエーション', group:'Glass詳細ボタン', label:'ボタン高さ', name:'--ui-variant-details-button-height', min:10, max:32, step:1, unit:'px', defaultValue:16, targets:['#ui-preset-panel .glass-preset-actions > button','#ui-preset-panel .glass-preset-details-toggle'], computedProperty:'height' },
+                { page:'UIバリエーション', group:'Glass詳細ボタン', label:'ボタン余白X', name:'--ui-variant-details-button-padding-x', min:0, max:14, step:1, unit:'px', defaultValue:10, targets:['#ui-preset-panel .glass-preset-actions > button','#ui-preset-panel .glass-preset-details-toggle'], computedProperty:'padding-left' },
+                { page:'UIバリエーション', group:'Glass詳細ボタン', label:'ボタン間隔', name:'--ui-variant-details-button-gap', min:0, max:14, step:1, unit:'px', defaultValue:0, targets:['#ui-preset-panel .glass-preset-actions'], computedProperty:'gap' },
+
+                { page:'左下UI', group:'case番号ボタン', label:'番号サイズ', name:'--ui-case-button-size', min:14, max:40, step:1, unit:'px', defaultValue:21, targets:['.case-button','.case-index-button'], computedProperty:'width' },
+                { page:'左下UI', group:'case番号ボタン', label:'番号文字', name:'--ui-case-button-font-size', min:6, max:18, step:0.5, unit:'px', defaultValue:13, targets:['.case-button','.case-index-button'], computedProperty:'font-size' },
+                { page:'左下UI', group:'case番号ボタン', label:'番号間隔', name:'--ui-case-button-gap', min:0, max:14, step:1, unit:'px', defaultValue:2, targets:['#case-button-stage','.case-button-stage'], computedProperty:'gap' },
+                { page:'左下UI', group:'case番号ボタン', label:'左位置', name:'--ui-case-button-left', min:-40, max:120, step:1, unit:'px', defaultValue:7, targets:['#case-comparison.case-palette-only'], computedProperty:'left' },
+                { page:'左下UI', group:'case番号ボタン', label:'下位置', name:'--ui-case-button-bottom', min:-20, max:120, step:1, unit:'px', defaultValue:-12, targets:['#case-comparison.case-palette-only'], computedProperty:'bottom' },
+                { page:'左下UI', group:'左下小ボタン', label:'操作サイズ', name:'--ui-left-mini-button-size', min:14, max:42, step:1, unit:'px', defaultValue:19, targets:['#case-comparison.case-palette-only .case-layout-toggle','#case-comparison.case-palette-only .case-action-button'], computedProperty:'width' },
+                { page:'左下UI', group:'左下小ボタン', label:'操作文字', name:'--ui-left-mini-button-font-size', min:6, max:18, step:0.5, unit:'px', defaultValue:16, targets:['#case-comparison.case-palette-only .case-layout-toggle','#case-comparison.case-palette-only .case-action-button'], computedProperty:'font-size' },
+                { page:'左下UI', group:'左下小ボタン', label:'操作間隔', name:'--ui-left-mini-button-gap', min:0, max:16, step:1, unit:'px', defaultValue:0, targets:['#case-button-stage','.case-button-stage'], computedProperty:'gap' },
+
+                { page:'2.点', group:'2.点スライダー詳細', label:'ラベル→スライダー', name:'--ui-panel-2-label-slider-gap', min:0, max:28, step:1, unit:'px', defaultValue:3, targets:['#glass-cursor-panel-4 .slider-container'], computedProperty:'margin-left' },
+                { page:'2.点', group:'2.点スライダー詳細', label:'スライダー→数値', name:'--ui-panel-2-slider-value-gap', min:0, max:28, step:1, unit:'px', defaultValue:1, targets:['#glass-cursor-panel-4 .slider-value'], computedProperty:'margin-left' },
+                { page:'2.点', group:'2.点スライダー詳細', label:'数値→固定', name:'--ui-panel-2-value-fixed-gap', min:0, max:28, step:1, unit:'px', defaultValue:0, targets:['#glass-cursor-panel-4 .default-container'], computedProperty:'margin-left' },
+                { page:'2.点', group:'2.点スライダー詳細', label:'スライダー位置X', name:'--ui-panel-2-slider-offset-x', min:-40, max:40, step:1, unit:'px', defaultValue:-3, targets:['#glass-cursor-panel-4 .slider-container'], computedProperty:'margin-left' },
+                { page:'2.点', group:'2.点スライダー詳細', label:'固定ボタン文字', name:'--ui-panel-2-fixed-font-size', min:5, max:16, step:0.5, unit:'px', defaultValue:9, targets:['#glass-cursor-panel-4 .default-container button','#glass-cursor-panel-4 .reset-btn'], computedProperty:'font-size' },
+                { page:'2.点', group:'2.点スライダー詳細', label:'固定ボタン高さ', name:'--ui-panel-2-fixed-height', min:12, max:34, step:1, unit:'px', defaultValue:12, targets:['#glass-cursor-panel-4 .default-container button','#glass-cursor-panel-4 .reset-btn'], computedProperty:'height' },
+                { page:'2.点', group:'2.点スライダー詳細', label:'固定ボタン余白X', name:'--ui-panel-2-fixed-padding-x', min:0, max:14, step:1, unit:'px', defaultValue:0, targets:['#glass-cursor-panel-4 .default-container button','#glass-cursor-panel-4 .reset-btn'], computedProperty:'padding-left' }
+            );
+
+            const pages = [...new Set(controls.map((control) => control.page))];
+            if (!pages.includes('UI切替')) pages.push('UI切替');
+            if (!pages.includes('Engine')) pages.push('Engine');
+            const groupKeys = [...new Set(controls.map((control) => `${control.page}::${control.group}`))];
+            const defaults = Object.fromEntries(controls.map((control) => [control.name, control.defaultValue]));
+
+            function ensureRuntimeStyle() {
+                let style = document.getElementById('ui-size-tuner-final-runtime-links');
+                if (style) return;
+                style = document.createElement('style');
+                style.id = 'ui-size-tuner-final-runtime-links';
+                style.textContent = `
+                    :root {
+                        --ui-size-tuner-panel-width: 460px;
+                        --ui-size-tuner-panel-max-height: 620px;
+                        --ui-size-tuner-font-size: 11px;
+                        --ui-size-tuner-bg-alpha: 0.95;
+                        --ui-size-tuner-toggle-bg-alpha: 0.08;
+                        --ui-size-tuner-page-gap: 9px;
+                        --ui-size-tuner-group-padding: 12px;
+                        --ui-size-tuner-row-label-width: 108px;
+                        --ui-size-tuner-row-value-width: 72px;
+                        --ui-size-tuner-row-computed-width: 110px;
+                        --ui-size-tuner-row-column-gap: 10px;
+                        --ui-panel-3-slider-offset-x: -15px;
+                        --ui-panel-3-value-offset-x: -1px;
+                        --ui-panel-4-slider-offset-x: -7px;
+                        --ui-panel-4-value-offset-x: 38px;
+                        --ui-panel-4-actions-offset-y: 0px;
+                        --ui-panel-4-slider-group-offset-y: 0px;
+                        --ui-panel-4-label-offset-y: 0px;
+                        --ui-panel-4-slider-offset-y: 0px;
+                        --ui-panel-4-value-offset-y: 0px;
+                    }
+                    /* v44: v43の未計測な幅基準化を撤回。v41で保存した実機調整値を現状復帰基準として扱う。 */
+                    body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3,
+                    body[data-ui-variant="variant-1-glass"] #color-container { width: var(--ui-panel-1-width, 360px) !important; max-width: calc(100vw - 24px) !important; }
+                    body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-4,
+                    body[data-ui-variant="variant-1-glass"] #slider-container { width: var(--ui-panel-2-width, 360px) !important; max-width: calc(100vw - 24px) !important; }
+                    body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6,
+                    body[data-ui-variant="variant-1-glass"] #cursor-container { width: var(--ui-panel-3-width, 360px) !important; max-width: calc(100vw - 24px) !important; }
+                    body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7 { width: var(--ui-panel-4-width, 360px) !important; max-width: calc(100vw - 24px) !important; overflow: visible !important; }
+                    body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7 .ui-content { padding: var(--ui-panel-4-padding, 12px) !important; overflow: visible !important; }
+                    body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7 .slider-group { margin-bottom: var(--ui-panel-4-row-gap, 8px) !important; }
+                    body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3 .ui-content,
+                    body[data-ui-variant="variant-1-glass"] #color-container .ui-content { padding: var(--ui-panel-1-padding, 10px) !important; }
+                    body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-4 .ui-content,
+                    body[data-ui-variant="variant-1-glass"] #slider-container .ui-content { padding: var(--ui-panel-2-padding, 9px) !important; }
+                    body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-4 .slider-layout { grid-template-columns: var(--ui-panel-2-label-width, 62px) minmax(var(--ui-panel-2-slider-width, 160px), 1fr) var(--ui-panel-2-value-width, 54px) var(--ui-panel-2-fixed-width, 44px) !important; column-gap: var(--ui-panel-2-column-gap, 6px) !important; }
+                    body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-4 .slider-container { min-width: var(--ui-panel-2-slider-width, 160px) !important; }
+                    body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-4 .slider-value { min-width: var(--ui-panel-2-value-width, 54px) !important; width: var(--ui-panel-2-value-width, 54px) !important; font-size: var(--ui-panel-2-value-font-size, 10px) !important; }
+                    body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-4 .slider-label { min-width: var(--ui-panel-2-label-width, 62px) !important; font-size: var(--ui-panel-2-label-font-size, 9px) !important; }
+                    body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-4 .default-container { min-width: var(--ui-panel-2-fixed-width, 44px) !important; width: var(--ui-panel-2-fixed-width, 44px) !important; }
+                    body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-4 .slider-group { margin-bottom: var(--ui-panel-2-row-gap, 5px) !important; }
+                    body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-4 .cycle-container { width: 100% !important; max-width: none !important; }
+                    body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6 .slider-layout { display: grid !important; grid-template-columns: minmax(0, var(--ui-panel-3-label-width, 62px)) minmax(0, var(--ui-panel-3-check-width, 16px)) minmax(var(--ui-panel-3-slider-min-width, 56px), 1fr) minmax(0, var(--ui-panel-3-value-width, 54px)) !important; column-gap: var(--ui-panel-3-column-gap, 6px) !important; align-items: center !important; min-height: var(--ui-panel-3-row-height, 22px) !important; min-width: 0 !important; }
+                    body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6 .slider-container { min-width: var(--ui-panel-3-slider-min-width, 56px) !important; width: 100% !important; margin-left: var(--ui-panel-3-slider-offset-x, 0px) !important; }
+                    body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6 .slider { width: 100% !important; min-width: 0 !important; }
+                    body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6 .slider-value { min-width: 0 !important; width: var(--ui-panel-3-value-width, 54px) !important; margin-left: var(--ui-panel-3-value-offset-x, 0px) !important; font-size: var(--ui-panel-3-value-font-size, 10px) !important; text-align: right !important; white-space: nowrap !important; justify-self: end !important; overflow: visible !important; }
+                    body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6 .slider-label { min-width: var(--ui-panel-3-label-width, 62px) !important; font-size: var(--ui-panel-3-label-font-size, 9px) !important; }
+                    body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6 .cursor-toggle-checkbox { width: var(--ui-panel-3-check-width, 16px) !important; height: var(--ui-panel-3-check-width, 16px) !important; }
+                    body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7 .spatial-panel-actions { gap: var(--ui-panel-4-action-gap, 5px) !important; }
+                    body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7 .spatial-action-button { min-height: var(--ui-panel-4-action-height, 23px) !important; height: var(--ui-panel-4-action-height, 23px) !important; font-size: var(--ui-panel-4-button-font-size, 10px) !important; }
+                    body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7 .slider-layout {
+                        display: grid !important;
+                        grid-template-columns: minmax(0, var(--ui-panel-4-label-width, 51px)) minmax(var(--ui-panel-4-slider-min-width, 64px), 1fr) minmax(0, var(--ui-panel-4-value-width, 48px)) !important;
+                        column-gap: var(--ui-panel-4-column-gap, 6px) !important;
+                        align-items: center !important;
+                        min-height: var(--ui-panel-4-row-height, 24px) !important;
+                        min-width: 0 !important;
+                        overflow: visible !important;
+                    }
+                    body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7 .slider-container { min-width: var(--ui-panel-4-slider-min-width, 64px) !important; width: 100% !important; max-width: 100% !important; margin-left: var(--ui-panel-4-slider-offset-x, 0px) !important; overflow: visible !important; }
+                    body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7 input[type="range"] { width: 100% !important; min-width: 0 !important; }
+                    body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7 .slider-label { min-width: 0 !important; width: var(--ui-panel-4-label-width, 51px) !important; font-size: var(--ui-panel-4-label-font-size, 9px) !important; white-space: nowrap !important; }
+                    body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7 .slider-value { min-width: 0 !important; width: var(--ui-panel-4-value-width, 48px) !important; margin-left: calc(var(--ui-panel-4-value-gap, 0px) + var(--ui-panel-4-value-offset-x, 0px)) !important; font-size: var(--ui-panel-4-value-font-size, 10px) !important; text-align: right !important; overflow: visible !important; white-space: nowrap !important; justify-self: end !important; }
+
+                    body[data-ui-variant="variant-1-glass"] #glass-control-bar .canvas-bottom-control-row { gap: var(--ui-bottom-button-gap, 6px) !important; }
+                    body[data-ui-variant="variant-1-glass"] #glass-control-bar button,
+                    body[data-ui-variant="variant-1-glass"] #glass-control-bar .glass-control-pill,
+                    body[data-ui-variant="variant-1-glass"] #glass-control-bar .canvas-bottom-color-button { font-size: var(--ui-bottom-button-font-size, 8px) !important; min-height: var(--ui-bottom-button-height, 21px) !important; height: var(--ui-bottom-button-height, 21px) !important; min-width: var(--ui-bottom-button-min-width, 34px) !important; padding-left: var(--ui-bottom-button-padding-x, 7px) !important; padding-right: var(--ui-bottom-button-padding-x, 7px) !important; }
+                    body[data-ui-variant="variant-1-glass"] .glass-panel-quick-toggle-button { width: var(--ui-bottom-round-button-size, 22px) !important; min-width: var(--ui-bottom-round-button-size, 22px) !important; height: var(--ui-bottom-round-button-size, 22px) !important; min-height: var(--ui-bottom-round-button-size, 22px) !important; }
+                    body[data-ui-variant="variant-1-glass"] .case-button,
+                    body[data-ui-variant="variant-1-glass"] .case-index-button { width: var(--ui-case-button-size, 21px) !important; min-width: var(--ui-case-button-size, 21px) !important; height: var(--ui-case-button-size, 21px) !important; min-height: var(--ui-case-button-size, 21px) !important; }
+                    body[data-ui-variant="variant-1-glass"] .color-theme-grid { grid-template-columns: repeat(var(--ui-color-card-columns, 3), minmax(0, 1fr)) !important; gap: var(--ui-color-card-gap, 5px) !important; }
+                    body[data-ui-variant="variant-1-glass"] .color-theme-card { height: var(--ui-color-card-height, 34px) !important; min-height: var(--ui-color-card-height, 34px) !important; padding-left: var(--ui-color-card-padding-x, 5px) !important; padding-right: var(--ui-color-card-padding-x, 5px) !important; }
+                    body[data-ui-variant="variant-1-glass"] .color-theme-name { font-size: var(--ui-color-card-name-font-size, 8px) !important; line-height: var(--ui-color-card-name-line-height, 1.4) !important; }
+                    body[data-ui-variant="variant-1-glass"] .color-theme-preview,
+                    body[data-ui-variant="variant-1-glass"] .color-theme-swatch { height: var(--ui-color-swatch-height, 12px) !important; min-height: var(--ui-color-swatch-height, 12px) !important; }
+                    body[data-ui-variant="variant-1-glass"] .color-assign-mode-row,
+                    body[data-ui-variant="variant-1-glass"] .color-theme-actions { gap: var(--ui-color-assign-button-gap, 1px) !important; }
+                    body[data-ui-variant="variant-1-glass"] .color-assign-btn { font-size: var(--ui-color-assign-button-font-size, 12px) !important; height: var(--ui-color-assign-button-height, 15px) !important; min-height: var(--ui-color-assign-button-height, 15px) !important; min-width: var(--ui-color-assign-button-min-width, 40px) !important; padding-left: var(--ui-color-assign-button-padding-x, 8px) !important; padding-right: var(--ui-color-assign-button-padding-x, 8px) !important; line-height: var(--ui-color-assign-button-line-height, 1.1) !important; white-space: nowrap !important; }
+                    body[data-ui-variant="variant-1-glass"] .color-blend-btn,
+                    body[data-ui-variant="variant-1-glass"] .color-theme-recolor-btn { font-size: var(--ui-color-action-button-font-size, 11px) !important; height: var(--ui-color-action-button-height, 24px) !important; min-height: var(--ui-color-action-button-height, 24px) !important; min-width: var(--ui-color-action-button-min-width, 42px) !important; padding-left: var(--ui-color-action-button-padding-x, 10px) !important; padding-right: var(--ui-color-action-button-padding-x, 10px) !important; line-height: var(--ui-color-action-button-line-height, 1) !important; white-space: nowrap !important; }
+                    body[data-ui-variant="variant-1-glass"] #color-transition-seconds { font-size: var(--ui-color-transition-input-font-size, 9px) !important; width: var(--ui-color-transition-input-width, 38px) !important; height: var(--ui-color-transition-input-height, 18px) !important; }
+                    body[data-ui-variant="variant-1-glass"] .color-transition-actions { gap: var(--ui-color-transition-actions-gap, 4px) !important; }
+                    body[data-ui-variant="variant-1-glass"] .neumo-surface-shape-button { font-size: var(--ui-neumo-surface-button-font-size, 10.5px) !important; height: var(--ui-neumo-surface-button-height, 14px) !important; min-height: var(--ui-neumo-surface-button-height, 14px) !important; min-width: var(--ui-neumo-surface-button-min-width, 34px) !important; padding-left: var(--ui-neumo-surface-button-padding-x, 3px) !important; padding-right: var(--ui-neumo-surface-button-padding-x, 3px) !important; white-space: nowrap !important; }
+
+                    /* UI Size Tuner v11: official 2.点 panel spacing and legacy panel removal. */
+                    body[data-ui-variant="variant-1-glass"] #slider-container { display: none !important; }
+                    body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-4 { width: var(--ui-panel-2-width, 360px) !important; max-width: calc(100vw - 24px) !important; }
+                    body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-4 .ui-content { padding: var(--ui-panel-2-padding, 9px) !important; }
+                    body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-4 .slider-layout {
+                        display: grid !important;
+                        grid-template-columns: minmax(0, var(--ui-panel-2-label-width, 62px)) minmax(0, var(--ui-panel-2-slider-width, 160px)) minmax(0, var(--ui-panel-2-value-width, 54px)) minmax(0, var(--ui-panel-2-fixed-width, 44px)) !important;
+                        column-gap: var(--ui-panel-2-column-gap, 6px) !important;
+                        align-items: center !important;
+                    }
+                    body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-4 .slider-container {
+                        min-width: 0 !important;
+                        width: var(--ui-panel-2-slider-width, 160px) !important;
+                        margin-left: calc(var(--ui-panel-2-label-slider-gap, 4px) + var(--ui-panel-2-slider-offset-x, 0px)) !important;
+                    }
+                    body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-4 .slider-value {
+                        min-width: 0 !important;
+                        width: var(--ui-panel-2-value-width, 54px) !important;
+                        margin-left: var(--ui-panel-2-slider-value-gap, 4px) !important;
+                        font-size: var(--ui-panel-2-value-font-size, 10px) !important;
+                    }
+                    body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-4 .default-container {
+                        min-width: 0 !important;
+                        width: var(--ui-panel-2-fixed-width, 44px) !important;
+                        margin-left: var(--ui-panel-2-value-fixed-gap, 4px) !important;
+                    }
+                    body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-4 .default-container button,
+                    body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-4 .reset-btn {
+                        height: var(--ui-panel-2-fixed-height, 21px) !important;
+                        min-height: var(--ui-panel-2-fixed-height, 21px) !important;
+                        font-size: var(--ui-panel-2-fixed-font-size, 8px) !important;
+                        padding-left: var(--ui-panel-2-fixed-padding-x, 4px) !important;
+                        padding-right: var(--ui-panel-2-fixed-padding-x, 4px) !important;
+                        white-space: nowrap !important;
+                    }
+                    body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-4 .slider-label { min-width: 0 !important; width: var(--ui-panel-2-label-width, 62px) !important; }
+
+                    /* UIバリエーション panel tuner hooks. */
+                    body[data-ui-variant="variant-1-glass"] #ui-variant-panel {
+                        width: var(--ui-variant-panel-width, 300px) !important;
+                        padding: var(--ui-variant-panel-padding, 14px) !important;
+                        gap: var(--ui-variant-panel-gap, 8px) !important;
+                    }
+                    body[data-ui-variant="variant-1-glass"] #ui-variant-panel label { font-size: var(--ui-variant-label-font-size, 10px) !important; }
+                    body[data-ui-variant="variant-1-glass"] #ui-variant-panel select {
+                        height: var(--ui-variant-select-height, 24px) !important;
+                        min-height: var(--ui-variant-select-height, 24px) !important;
+                        font-size: var(--ui-variant-select-font-size, 10px) !important;
+                        padding-left: var(--ui-variant-select-padding-x, 10px) !important;
+                        padding-right: var(--ui-variant-select-padding-x, 10px) !important;
+                        border-radius: var(--ui-variant-select-radius, 14px) !important;
+                    }
+
+                    /* UI Size Tuner v21: stronger UI variation / preset details hooks. */
+                    body[data-ui-variant="variant-1-glass"] #ui-variant-panel,
+                    body[data-ui-variant="variant-1-glass"] .ui-variant-panel {
+                        width: var(--ui-variant-panel-width, 300px) !important;
+                        min-width: var(--ui-variant-panel-width, 300px) !important;
+                        max-width: min(var(--ui-variant-panel-width, 300px), calc(100vw - 24px)) !important;
+                        box-sizing: border-box !important;
+                    }
+                    body[data-ui-variant="variant-1-glass"] #ui-preset-panel {
+                        width: 100% !important;
+                        max-width: 100% !important;
+                        min-width: 0 !important;
+                        box-sizing: border-box !important;
+                    }
+                    body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-details {
+                        width: 100% !important;
+                        max-width: 100% !important;
+                        padding: var(--ui-variant-details-padding, 6px) !important;
+                        box-sizing: border-box !important;
+                    }
+                    body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-rows {
+                        gap: var(--ui-variant-details-row-gap, 4px) !important;
+                    }
+                    body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-row-line,
+                    body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-row {
+                        display: grid !important;
+                        grid-template-columns: minmax(0, var(--ui-variant-details-label-width, 58px)) minmax(var(--ui-variant-details-slider-width, 70px), 1fr) minmax(0, var(--ui-variant-details-value-width, 34px)) !important;
+                        column-gap: var(--ui-variant-details-column-gap, 4px) !important;
+                        align-items: center !important;
+                        min-width: 0 !important;
+                        box-sizing: border-box !important;
+                    }
+                    body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-label {
+                        font-size: var(--ui-variant-details-label-font-size, 8px) !important;
+                        min-width: 0 !important;
+                    }
+                    body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-value,
+                    body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-status {
+                        font-size: var(--ui-variant-details-value-font-size, 8px) !important;
+                        min-width: 0 !important;
+                    }
+                    body[data-ui-variant="variant-1-glass"] #ui-preset-panel input[type="range"][data-glass-param] {
+                        width: var(--ui-variant-details-slider-width, 70px) !important;
+                        min-width: 0 !important;
+                    }
+                    body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-actions {
+                        gap: var(--ui-variant-details-button-gap, 4px) !important;
+                        flex-wrap: wrap !important;
+                    }
+                    body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-actions > button,
+                    body[data-ui-variant="variant-1-glass"] #ui-preset-panel .glass-preset-details-toggle {
+                        font-size: var(--ui-variant-details-button-font-size, 8px) !important;
+                        min-height: var(--ui-variant-details-button-height, 16px) !important;
+                        height: var(--ui-variant-details-button-height, 16px) !important;
+                        padding-left: var(--ui-variant-details-button-padding-x, 4px) !important;
+                        padding-right: var(--ui-variant-details-button-padding-x, 4px) !important;
+                    }
+
+                    /* Left-bottom case UI tuner hooks. */
+                    #case-comparison.case-palette-only {
+                        left: var(--ui-case-button-left, 16px) !important;
+                        bottom: var(--ui-case-button-bottom, 36px) !important;
+                    }
+                    #case-button-stage, .case-button-stage {
+                        gap: var(--ui-case-button-gap, 3px) !important;
+                    }
+                    .case-button, .case-index-button {
+                        width: var(--ui-case-button-size, 21px) !important;
+                        min-width: var(--ui-case-button-size, 21px) !important;
+                        height: var(--ui-case-button-size, 21px) !important;
+                        min-height: var(--ui-case-button-size, 21px) !important;
+                        font-size: var(--ui-case-button-font-size, 10px) !important;
+                    }
+                    #case-comparison.case-palette-only .case-layout-toggle, #case-comparison.case-palette-only .case-action-button {
+                        width: var(--ui-left-mini-button-size, 24px) !important;
+                        min-width: var(--ui-left-mini-button-size, 24px) !important;
+                        height: var(--ui-left-mini-button-size, 24px) !important;
+                        min-height: var(--ui-left-mini-button-size, 24px) !important;
+                        font-size: var(--ui-left-mini-button-font-size, 11px) !important;
+                    }
+                    .utility-control-row, .case-utility-row { gap: var(--ui-left-mini-button-gap, 6px) !important; }
+
+                    #ui-size-tuner-panel { width: min(var(--ui-size-tuner-panel-width, 460px), calc(100vw - 24px)) !important; max-height: min(var(--ui-size-tuner-panel-max-height, 620px), calc(100vh - 24px)) !important; font-size: var(--ui-size-tuner-font-size, 11px) !important; background: rgba(250,252,255,var(--ui-size-tuner-bg-alpha, 0.95)) !important; }
+                    #ui-size-tuner-panel .ui-size-tuner-page { gap: var(--ui-size-tuner-page-gap, 9px) !important; }
+                    #ui-size-tuner-panel .ui-size-tuner-group { padding: var(--ui-size-tuner-group-padding, 12px) !important; }
+                    #ui-size-tuner-panel .ui-size-tuner-row { grid-template-columns: minmax(0, var(--ui-size-tuner-row-label-width, 108px)) minmax(120px, 1fr) minmax(0, var(--ui-size-tuner-row-value-width, 72px)) minmax(0, var(--ui-size-tuner-row-computed-width, 110px)) !important; column-gap: var(--ui-size-tuner-row-column-gap, 10px) !important; }
+                    .ui-size-tuner-target-highlight { outline: 2px solid rgba(0, 123, 255, 0.72) !important; outline-offset: 3px !important; }
+                    #ui-size-tuner-panel .ui-size-tuner-row-guide input[type="checkbox"] { justify-self: start; width: 18px; height: 18px; accent-color: #1478ff; }
+                    #ui-size-tuner-panel .ui-size-tuner-row-guide { grid-template-columns: minmax(0, var(--ui-size-tuner-row-label-width, 108px)) 40px minmax(0, var(--ui-size-tuner-row-value-width, 72px)) minmax(0, var(--ui-size-tuner-row-computed-width, 110px)) !important; }
+
+
+/* v49: Glass / Neumorphism shared 3.cursor and 4.space layout stabilization.
+   Do not let theme-specific legacy CSS turn these rows back into overlapping fixed pieces.
+   Panel width may be tuned, but the minimum width now follows the chosen column values. */
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7 {
+    box-sizing: border-box !important;
+    overflow: visible !important;
+}
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6 {
+    width: var(--ui-panel-3-width, 220px) !important;
+    min-width: calc(
+        (var(--ui-panel-3-padding, 7px) * 2) +
+        var(--ui-panel-3-label-width, 120px) +
+        var(--ui-panel-3-check-width, 18px) +
+        var(--ui-panel-3-slider-min-width, 70px) +
+        var(--ui-panel-3-value-width, 79px) +
+        (var(--ui-panel-3-column-gap, 0px) * 3)
+    ) !important;
+    max-width: calc(100vw - 24px) !important;
+}
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7 {
+    width: var(--ui-panel-4-width, 220px) !important;
+    min-width: calc(
+        (var(--ui-panel-4-padding, 9px) * 2) +
+        var(--ui-panel-4-label-width, 32px) +
+        var(--ui-panel-4-slider-min-width, 136px) +
+        var(--ui-panel-4-value-width, 58px) +
+        (var(--ui-panel-4-column-gap, 0px) * 2)
+    ) !important;
+    max-width: calc(100vw - 24px) !important;
+}
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6 .ui-content,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7 .ui-content {
+    box-sizing: border-box !important;
+    overflow: visible !important;
+}
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6 .ui-content {
+    padding: var(--ui-panel-3-padding, 7px) !important;
+}
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7 .ui-content {
+    padding: var(--ui-panel-4-padding, 9px) !important;
+}
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6 .slider-layout,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7 .slider-layout {
+    display: grid !important;
+    align-items: center !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+    overflow: visible !important;
+}
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6 .slider-layout {
+    grid-template-columns:
+        var(--ui-panel-3-label-width, 120px)
+        var(--ui-panel-3-check-width, 18px)
+        minmax(var(--ui-panel-3-slider-min-width, 70px), 1fr)
+        var(--ui-panel-3-value-width, 79px) !important;
+    column-gap: var(--ui-panel-3-column-gap, 0px) !important;
+    min-height: var(--ui-panel-3-row-height, 16px) !important;
+}
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7 .slider-layout {
+    grid-template-columns:
+        var(--ui-panel-4-label-width, 32px)
+        minmax(var(--ui-panel-4-slider-min-width, 136px), 1fr)
+        var(--ui-panel-4-value-width, 58px) !important;
+    column-gap: var(--ui-panel-4-column-gap, 0px) !important;
+    min-height: var(--ui-panel-4-row-height, 16px) !important;
+}
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6 .slider-label,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7 .slider-label {
+    min-width: 0 !important;
+    max-width: 100% !important;
+    white-space: nowrap !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
+}
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6 .slider-label {
+    grid-column: 1 !important;
+    width: var(--ui-panel-3-label-width, 120px) !important;
+    font-size: var(--ui-panel-3-label-font-size, 9.5px) !important;
+}
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7 .slider-label {
+    grid-column: 1 !important;
+    width: var(--ui-panel-4-label-width, 32px) !important;
+    font-size: var(--ui-panel-4-label-font-size, 11px) !important;
+}
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6 .cursor-toggle-checkbox {
+    grid-column: 2 !important;
+    position: static !important;
+    justify-self: center !important;
+    align-self: center !important;
+    width: var(--ui-panel-3-check-width, 18px) !important;
+    min-width: var(--ui-panel-3-check-width, 18px) !important;
+    height: var(--ui-panel-3-check-width, 18px) !important;
+    min-height: var(--ui-panel-3-check-width, 18px) !important;
+    margin: 0 !important;
+    transform: none !important;
+}
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6 .slider-container,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7 .slider-container {
+    position: relative !important;
+    display: block !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    overflow: visible !important;
+    z-index: 1 !important;
+}
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6 .slider-container {
+    grid-column: 3 !important;
+    transform: translateX(var(--ui-panel-3-slider-offset-x, -13px)) !important;
+}
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7 .slider-container {
+    grid-column: 2 !important;
+    transform: translate(var(--ui-panel-4-slider-offset-x, -7px), var(--ui-panel-4-slider-offset-y, 0px)) !important;
+}
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6 input[type="range"],
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7 input[type="range"],
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6 .slider,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7 .slider {
+    display: block !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+}
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6 .slider-value,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7 .slider-value {
+    display: block !important;
+    position: static !important;
+    box-sizing: border-box !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    justify-self: end !important;
+    align-self: center !important;
+    text-align: right !important;
+    white-space: nowrap !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
+    font-variant-numeric: tabular-nums !important;
+    line-height: 1 !important;
+    z-index: 3 !important;
+}
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6 .slider-value {
+    grid-column: 4 !important;
+    width: var(--ui-panel-3-value-width, 79px) !important;
+    min-width: var(--ui-panel-3-value-width, 79px) !important;
+    font-size: var(--ui-panel-3-value-font-size, 13px) !important;
+    transform: translateX(var(--ui-panel-3-value-offset-x, 2px)) !important;
+}
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7 .slider-value {
+    grid-column: 3 !important;
+    width: var(--ui-panel-4-value-width, 58px) !important;
+    min-width: var(--ui-panel-4-value-width, 58px) !important;
+    font-size: var(--ui-panel-4-value-font-size, 14px) !important;
+    transform: translate(var(--ui-panel-4-value-offset-x, 38px), var(--ui-panel-4-value-offset-y, 0px)) !important;
+}
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7 .spatial-panel-actions {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: var(--ui-panel-4-action-gap, 3px) !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    transform: translateY(var(--ui-panel-4-actions-offset-y, 0px)) !important;
+}
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7 .spatial-action-button {
+    min-width: 0 !important;
+    width: 100% !important;
+    height: var(--ui-panel-4-action-height, 16px) !important;
+    min-height: var(--ui-panel-4-action-height, 16px) !important;
+    font-size: var(--ui-panel-4-button-font-size, 8.5px) !important;
+    box-sizing: border-box !important;
+}
+
+
+/* v51: Theme-separated 3.cursor / 4.space layout basis.
+   Neumorphism keeps the shared/root tuner baseline from v45.
+   Glassmorphism has its own panel-scoped values so adjusting Glass no longer rewrites Neumorphism. */
+body[data-ui-variant="variant-1-glass"][data-ui-theme="glass"] #glass-cursor-panel-6 {
+    --ui-panel-3-label-width: 51px;
+    --ui-panel-3-slider-min-width: 38px;
+    --ui-panel-3-value-width: 49px;
+    --ui-panel-3-column-gap: 1px;
+    --ui-panel-3-slider-offset-x: 3px;
+}
+body[data-ui-variant="variant-1-glass"][data-ui-theme="glass"] #glass-cursor-panel-7 {
+    --ui-panel-4-label-width: 52px;
+    --ui-panel-4-slider-min-width: 62px;
+    --ui-panel-4-value-width: 24px;
+    --ui-panel-4-slider-offset-x: -8px;
+    --ui-panel-4-value-offset-x: -1px;
+    --ui-panel-4-actions-offset-y: 0px;
+    --ui-panel-4-slider-group-offset-y: 0px;
+    --ui-panel-4-label-offset-y: 0px;
+    --ui-panel-4-slider-offset-y: 0px;
+    --ui-panel-4-value-offset-y: 0px;
+    --ui-panel-4-label-font-size: 13px;
+}
+body[data-ui-variant="variant-1-glass"][data-ui-theme="glass"] #glass-cursor-panel-6,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="glass"] #glass-cursor-panel-7 {
+    overflow: visible !important;
+}
+
+/* Collapsed dock measurement must keep the full header body, but no content gap. */
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3.collapsed .ui-header,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-4.collapsed .ui-header,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6.collapsed .ui-header,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7.collapsed .ui-header {
+    height: auto !important;
+    min-height: 28px !important;
+    box-sizing: border-box !important;
+    overflow: visible !important;
+}
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3.collapsed,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-4.collapsed,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6.collapsed,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7.collapsed {
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    overflow: visible !important;
+}
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3.collapsed > .ui-content,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-4.collapsed > .ui-content,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6.collapsed > .ui-content,
+body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7.collapsed > .ui-content {
+    display: none !important;
+    height: 0 !important;
+    min-height: 0 !important;
+    max-height: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: 0 !important;
+    overflow: hidden !important;
+    opacity: 0 !important;
+}
+
+                `;
+                document.head.appendChild(style);
+            }
+
+            function parseStored() {
+                try {
+                    const raw = JSON.parse(localStorage.getItem(storageKey) || '{}');
+                    return {
+                        values: raw.values && typeof raw.values === 'object' ? raw.values : {},
+                        enabled: raw.enabled && typeof raw.enabled === 'object' ? raw.enabled : {},
+                        presets: raw.presets && typeof raw.presets === 'object' ? raw.presets : {},
+                        copyMode: raw.copyMode || 'diff'
+                    };
+                } catch (_) {
+                    return { values: {}, enabled: {}, presets: {}, copyMode: 'diff' };
+                }
+            }
+            let state = parseStored();
+            groupKeys.forEach((key) => { if (typeof state.enabled[key] !== 'boolean') state.enabled[key] = true; });
+            function persist() { localStorage.setItem(storageKey, JSON.stringify(state)); }
+            function getPublicSnapshot() {
+                return {
+                    schema: 'uiux-animation-tools.uiSizeTuner',
+                    version: 17,
+                    storageKey,
+                    values: {...state.values},
+                    enabled: {...state.enabled},
+                    presets: {...state.presets},
+                    copyMode: state.copyMode || 'diff'
+                };
+            }
+            function applyPublicSnapshot(snapshot) {
+                if (!snapshot || typeof snapshot !== 'object') return false;
+                const nextValues = {...defaults};
+                const sourceValues = snapshot.values && typeof snapshot.values === 'object' ? snapshot.values : snapshot;
+                Object.entries(sourceValues).forEach(([key, value]) => {
+                    if (!Object.prototype.hasOwnProperty.call(defaults, key)) return;
+                    if (typeof value === 'string') {
+                        nextValues[key] = value;
+                        return;
+                    }
+                    const num = Number(value);
+                    if (Number.isFinite(num)) nextValues[key] = num;
+                });
+                state.values = nextValues;
+                state.enabled = {...Object.fromEntries(groupKeys.map((key) => [key, true]))};
+                if (snapshot.enabled && typeof snapshot.enabled === 'object') {
+                    Object.entries(snapshot.enabled).forEach(([key, value]) => {
+                        if (groupKeys.includes(key)) state.enabled[key] = Boolean(value);
+                    });
+                }
+                if (snapshot.presets && typeof snapshot.presets === 'object') state.presets = {...snapshot.presets};
+                state.copyMode = snapshot.copyMode || state.copyMode || 'diff';
+                persist();
+                applyAllValues();
+                return true;
+            }
+            window.UISizeTunerAPI = {
+                getSnapshot: getPublicSnapshot,
+                applySnapshot: applyPublicSnapshot,
+                getStorageKey: () => storageKey,
+                reapply: applyAllValues
+            };
+            function toCssValue(control, value) { return control.type === 'color' ? String(value || control.defaultValue || '#000000') : `${value}${control.unit || ''}`; }
+            function formatValue(control, value) {
+                if (control.type === 'guide') return value ? 'ON' : 'OFF';
+                if (control.type === 'color') return String(value || control.defaultValue || '');
+                return `${value}${control.unit || ''}`;
+            }
+            function applyDirectRuntimeStyle(control, value) {
+                if (control.noDirect === true) return;
+                const cssValue = toCssValue(control, value);
+                const property = control.computedProperty || '';
+                const safeProperties = new Set([
+                    'width','height','min-width','min-height','max-height','font-size','line-height',
+                    'padding','padding-left','padding-right','border-radius','gap','column-gap',
+                    'margin-left','margin-bottom','left','right','top','bottom','background-color','border-color'
+                ]);
+                if (!safeProperties.has(property)) return;
+                getTargets(control).forEach((target) => {
+                    target.style.setProperty(property, cssValue, 'important');
+                    if (control.name === '--ui-color-blend-on-color') {
+                        target.style.setProperty('background', `color-mix(in srgb, ${cssValue} calc(var(--ui-color-blend-on-fill-alpha, 0.68) * 100%), transparent)`, 'important');
+                        target.style.setProperty('background-color', `color-mix(in srgb, ${cssValue} calc(var(--ui-color-blend-on-fill-alpha, 0.68) * 100%), transparent)`, 'important');
+                        target.style.setProperty('border-color', `color-mix(in srgb, ${cssValue} 70%, transparent)`, 'important');
+                    }
+                    if (property === 'width') target.style.setProperty('min-width', cssValue, 'important');
+                    if (property === 'height') target.style.setProperty('min-height', cssValue, 'important');
+                    if (property === 'padding-left' && /padding-x|余白X|左右余白/.test(control.name + control.label)) {
+                        target.style.setProperty('padding-right', cssValue, 'important');
+                    }
+                });
+            }
+            function removeDirectRuntimeStyle(control) {
+                if (control.noDirect === true) return;
+                const property = control.computedProperty || '';
+                const safeProperties = new Set([
+                    'width','height','min-width','min-height','max-height','font-size','line-height',
+                    'padding','padding-left','padding-right','border-radius','gap','column-gap',
+                    'margin-left','margin-bottom','left','right','top','bottom','background-color','border-color'
+                ]);
+                if (!safeProperties.has(property)) return;
+                getTargets(control).forEach((target) => {
+                    target.style.removeProperty(property);
+                    if (property === 'width') target.style.removeProperty('min-width');
+                    if (property === 'height') target.style.removeProperty('min-height');
+                    if (property === 'padding-left' && /padding-x|余白X|左右余白/.test(control.name + control.label)) {
+                        target.style.removeProperty('padding-right');
+                    }
+                });
+            }
+            function setControlValue(control, value) {
+                root.style.setProperty(control.name, toCssValue(control, value));
+                applyDirectRuntimeStyle(control, value);
+            }
+            function removeControlValue(control) {
+                root.style.removeProperty(control.name);
+                removeDirectRuntimeStyle(control);
+            }
+            function isGroupEnabled(control) { return state.enabled[`${control.page}::${control.group}`] !== false; }
+            function applyAllValues() {
+                controls.forEach((control) => {
+                    if (control.type === 'guide') return;
+                    if (isGroupEnabled(control)) setControlValue(control, state.values[control.name] ?? control.defaultValue);
+                    else removeControlValue(control);
+                });
+            }
+            function isInsideTuner(el) {
+                return !!(el && el.closest && el.closest('#ui-size-tuner-panel'));
+            }
+            function isLegacyColorContainerTarget(el) {
+                return !!(el && el.closest && el.closest('#color-container'));
+            }
+            function getTargets(control) {
+                const selectors = control.targets || [];
+                const allowTunerTargets = selectors.some((selector) => String(selector).includes('#ui-size-tuner-panel'));
+                return selectors
+                    .flatMap((selector) => Array.from(document.querySelectorAll(selector)))
+                    .filter(Boolean)
+                    .filter((target) => allowTunerTargets || !isInsideTuner(target))
+                    .filter((target) => !isLegacyColorContainerTarget(target));
+            }
+            function getComputedText(control) {
+                const target = getTargets(control)[0];
+                if (!target) return '未検出';
+                const value = getComputedStyle(target).getPropertyValue(control.computedProperty || 'font-size').trim();
+                const cssValue = toCssValue(control, state.values[control.name] ?? control.defaultValue);
+                return value ? `computed: ${value}${value === cssValue ? '' : ' / 確認'}` : '未取得';
+            }
+            function isActuallyVisibleElement(target) {
+                if (!target || !target.getBoundingClientRect) return false;
+                if (isInsideTuner(target) || isLegacyColorContainerTarget(target)) return false;
+                const rect = target.getBoundingClientRect();
+                if (rect.width < 4 || rect.height < 4) return false;
+                const style = getComputedStyle(target);
+                return style.display !== 'none' && style.visibility !== 'hidden' && Number(style.opacity || 1) !== 0;
+            }
+            function isGuideEnabledForPage(page) {
+                const key = `guide:${page}`;
+                return state.values[key] !== false;
+            }
+            function highlightTargets(control) {
+                if (!isGuideEnabledForPage(control.page)) return;
+                getTargets(control).forEach((target) => {
+                    if (!isActuallyVisibleElement(target)) return;
+                    target.classList.add('ui-size-tuner-target-highlight');
+                    clearTimeout(target.__uiSizeTunerHighlightTimer);
+                    target.__uiSizeTunerHighlightTimer = setTimeout(() => target.classList.remove('ui-size-tuner-target-highlight'), 650);
+                });
+            }
+            function openPanelById(id) {
+                if (id === 'color-container') return;
+                const panel = document.getElementById(id);
+                if (!panel) return;
+                panel.hidden = false;
+                panel.style.display = '';
+                panel.style.visibility = '';
+                panel.classList.remove('glass-forced-hidden', 'is-hidden');
+                if (panel.classList.contains('collapsed')) {
+                    panel.classList.remove('collapsed');
+                    const header = panel.querySelector('.ui-header');
+                    if (header) {
+                        header.setAttribute('aria-expanded', 'true');
+                        header.setAttribute('data-ui-state', 'open');
+                    }
+                    const content = panel.querySelector('.ui-content');
+                    if (content) {
+                        content.style.maxHeight = '';
+                        content.style.opacity = '';
+                        content.style.paddingTop = '';
+                        content.style.paddingBottom = '';
+                    }
+                }
+                panel.removeAttribute('aria-hidden');
+            }
+            function openTargetsForPage(page) {
+                (panelIdsByPage[page] || []).forEach(openPanelById);
+            }
+            function dockPanel(panel, toggle, dock) {
+                panel.style.left = 'auto'; panel.style.right = 'auto'; panel.style.top = 'auto'; panel.style.bottom = 'auto';
+                if (dock.includes('left')) panel.style.left = '12px'; else panel.style.right = '12px';
+                if (dock.includes('bottom')) panel.style.bottom = '48px'; else panel.style.top = '48px';
+                localStorage.setItem(positionKey, JSON.stringify({ dock }));
+            }
+            function applyPanelPosition(panel, toggle) {
+                try {
+                    const pos = JSON.parse(localStorage.getItem(positionKey) || '{}');
+                    if (pos.dock) { dockPanel(panel, toggle, pos.dock); return; }
+                    if (typeof pos.left === 'number' && typeof pos.top === 'number') {
+                        panel.style.left = `${pos.left}px`; panel.style.top = `${pos.top}px`; panel.style.right = 'auto'; panel.style.bottom = 'auto';
+                    }
+                } catch (_) {}
+            }
+            function makeDraggable(panel, handle) {
+                let active = null;
+                handle.addEventListener('pointerdown', (event) => {
+                    if (event.target.closest('button, input, select')) return;
+                    const rect = panel.getBoundingClientRect();
+                    active = { dx: event.clientX - rect.left, dy: event.clientY - rect.top };
+                    handle.setPointerCapture?.(event.pointerId);
+                });
+                handle.addEventListener('pointermove', (event) => {
+                    if (!active) return;
+                    const left = Math.max(4, Math.min(window.innerWidth - 80, event.clientX - active.dx));
+                    const top = Math.max(4, Math.min(window.innerHeight - 80, event.clientY - active.dy));
+                    panel.style.left = `${left}px`; panel.style.top = `${top}px`; panel.style.right = 'auto'; panel.style.bottom = 'auto';
+                });
+                handle.addEventListener('pointerup', () => {
+                    if (!active) return;
+                    active = null;
+                    localStorage.setItem(positionKey, JSON.stringify({ left: parseFloat(panel.style.left) || 12, top: parseFloat(panel.style.top) || 48 }));
+                });
+            }
+            function buildCss(mode, currentPage) {
+                let list = controls.filter((control) => isGroupEnabled(control));
+                if (mode === 'tab') list = list.filter((control) => control.page === currentPage);
+                if (mode === 'diff') list = list.filter((control) => (state.values[control.name] ?? control.defaultValue) !== control.defaultValue);
+                const lines = list.map((control) => `  ${control.name}: ${toCssValue(control, state.values[control.name] ?? control.defaultValue)};`);
+                return `:root {\n${lines.join('\n')}\n}`;
+            }
+            async function copyText(text) {
+                try { await navigator.clipboard.writeText(text); }
+                catch (_) {
+                    const ta = document.createElement('textarea'); ta.value = text; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove();
+                }
+            }
+            function buildExportPayload() {
+                return JSON.stringify({
+                    ...getPublicSnapshot(),
+                    exportedAt: new Date().toISOString()
+                }, null, 2);
+            }
+            function applyImportedPayload(text) {
+                let data;
+                try { data = JSON.parse(text); }
+                catch (_) { alert('インポートJSONを読み込めませんでした。'); return false; }
+                if (!data || typeof data !== 'object') { alert('インポート形式が不正です。'); return false; }
+                return applyPublicSnapshot(data);
+            }
+            function downloadTextFile(filename, text) {
+                const blob = new Blob([text], { type: 'application/json;charset=utf-8' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = filename;
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+                URL.revokeObjectURL(url);
+            }
+            function init() {
+                ensureRuntimeStyle();
+                applyAllValues();
+                const toggle = document.createElement('button');
+                toggle.id = 'ui-size-tuner-toggle';
+                toggle.type = 'button';
+                toggle.textContent = '調整';
+                toggle.setAttribute('aria-expanded', 'false');
+                const panel = document.createElement('section');
+                panel.id = 'ui-size-tuner-panel';
+                panel.innerHTML = `
+                    <div class="ui-size-tuner-head">
+                        <div><h2>UI Size Tuner</h2><p>対象を選び、実画面で幅・余白・スライダー長・左下UIまで調整します。</p></div>
+                        <div class="ui-size-tuner-head-actions">
+                            <button type="button" data-ui-size-dock="left-top">左上</button><button type="button" data-ui-size-dock="right-top">右上</button><button type="button" data-ui-size-dock="left-bottom">左下</button><button type="button" data-ui-size-dock="right-bottom">右下</button><button type="button" data-ui-size-action="close">閉じる</button>
+                        </div>
+                    </div>
+                    <div class="ui-size-tuner-status"></div>
+                    <div class="ui-size-tuner-tabs"></div>
+                    <div class="ui-size-tuner-body"></div>`;
+                const status = panel.querySelector('.ui-size-tuner-status');
+                const tabs = panel.querySelector('.ui-size-tuner-tabs');
+                const body = panel.querySelector('.ui-size-tuner-body');
+                const pageEls = new Map();
+                let currentPage = pages[0];
+                function getEngineTunerSnapshotText() {
+                    const registry = window.UIUXEngineRegistry;
+                    if (!registry || typeof registry.list !== 'function') {
+                        return 'Engine Registry: 未初期化 / 現在は通常p5.js描画で起動';
+                    }
+                    const active = typeof registry.getActiveId === 'function' ? registry.getActiveId() : 'p5';
+                    const list = registry.list().map((item) => `${item.id}: ${item.label || item.id}`).join(' / ');
+                    return `active: ${active || 'p5'}
+registered: ${list || 'p5: p5.js Stable'}
+用途: 将来のPixiJS/WebGL2比較用。通常操作ではp5安定版を維持します。`;
+                }
+                function getVariantCompactOptions() {
+                    const presetSource = document.querySelector('#ui-preset-panel #ui-preset-select') || document.getElementById('ui-preset-select');
+                    const currentTheme = document.body.getAttribute('data-ui-theme') === 'neumorphism' ? 'neumorphism' : 'glass';
+                    const presets = presetSource ? Array.from(presetSource.options).map((option) => ({
+                        value: option.value,
+                        text: option.textContent || option.value,
+                        selected: option.selected,
+                        disabled: option.disabled
+                    })) : [];
+                    return { currentTheme, presets, currentPreset: presetSource ? presetSource.value : '', position: window.UIVariantCompact?.getPosition?.() || { left:18, top:18, width:112, padding:4, gap:3 } };
+                }
+                function renderVariantCompactTunerPage(pageEl) {
+                    const data = getVariantCompactOptions();
+                    pageEl.innerHTML = `
+                        <div class="ui-size-tuner-group ui-size-tuner-variant-mini-group">
+                            <div class="ui-size-tuner-group-head"><h3>UIバリエーション mini</h3><button type="button" class="ui-size-tuner-group-toggle" data-ui-variant-mini-refresh>更新</button></div>
+                            <p class="ui-size-tuner-engine-note">大型のUIバリエーションパネルを隠した時に使う、2段だけの切替UIです。詳細パネルの表示/非表示はここで切り替えます。</p>
+                            <div class="ui-size-tuner-mini-switch-row">
+                                <button type="button" data-ui-variant-mini-full="hide">詳細パネルを隠す</button>
+                                <button type="button" data-ui-variant-mini-full="show">詳細パネルを表示</button>
+                            </div>
+                            <label class="ui-size-tuner-mini-field">
+                                <span>表示スタイル</span>
+                                <select data-ui-variant-mini-theme>
+                                    <option value="glass" ${data.currentTheme === 'glass' ? 'selected' : ''}>Glass</option>
+                                    <option value="neumorphism" ${data.currentTheme === 'neumorphism' ? 'selected' : ''}>Neumo</option>
+                                </select>
+                            </label>
+                            <label class="ui-size-tuner-mini-field">
+                                <span>登録プリセット</span>
+                                <select data-ui-variant-mini-preset>
+                                    ${data.presets.map((item) => `<option value="${String(item.value).replace(/&/g,'&amp;').replace(/"/g,'&quot;')}" ${item.selected ? 'selected' : ''} ${item.disabled ? 'disabled' : ''}>${String(item.text).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}</option>`).join('')}
+                                </select>
+                            </label>
+                            <div class="ui-size-tuner-group-head"><h3>mini位置</h3><button type="button" class="ui-size-tuner-group-toggle" data-ui-variant-mini-position-reset>初期位置</button></div>
+                            ${[
+                                ['left','左位置',0,480,1],
+                                ['top','上位置',0,360,1],
+                                ['width','幅',64,180,1],
+                                ['padding','内側余白',2,18,1],
+                                ['gap','縦間隔',0,16,1]
+                            ].map(([key,label,min,max,step]) => `
+                                <label class="ui-size-tuner-mini-position-grid">
+                                    <span>${label}</span>
+                                    <input type="range" min="${min}" max="${max}" step="${step}" value="${data.position[key]}" data-ui-variant-mini-position="${key}">
+                                    <span class="ui-size-tuner-mini-position-value" data-ui-variant-mini-position-value="${key}">${data.position[key]}px</span>
+                                </label>
+                            `).join('')}
+                            <div class="ui-size-tuner-mini-status">現在: ${data.currentTheme === 'neumorphism' ? 'Neumo' : 'Glass'} / 詳細パネル: ${window.UIVariantCompact?.isFullHidden?.() ? '非表示' : '表示'} / mini: 左${data.position.left}px 上${data.position.top}px</div>
+                        </div>`;
+                    pageEl.onclick = (event) => {
+                        const action = event.target.closest('[data-ui-variant-mini-full]')?.dataset.uiVariantMiniFull;
+                        if (action === 'hide') window.UIVariantCompact?.hideFull?.();
+                        if (action === 'show') window.UIVariantCompact?.showFull?.();
+                        if (event.target.closest('[data-ui-variant-mini-refresh]')) refreshVariantCompactTunerPage();
+                        if (event.target.closest('[data-ui-variant-mini-position-reset]')) { window.UIVariantCompact?.resetPosition?.(); window.setTimeout(refreshVariantCompactTunerPage, 30); }
+                        if (action) window.setTimeout(refreshVariantCompactTunerPage, 60);
+                    };
+                    pageEl.oninput = (event) => {
+                        const input = event.target.closest('[data-ui-variant-mini-position]');
+                        if (!input) return;
+                        const key = input.dataset.uiVariantMiniPosition;
+                        const value = Number(input.value);
+                        window.UIVariantCompact?.setPosition?.({ [key]: value });
+                        const valueEl = pageEl.querySelector(`[data-ui-variant-mini-position-value="${key}"]`);
+                        if (valueEl) valueEl.textContent = `${value}px`;
+                    };
+                    pageEl.onchange = (event) => {
+                        const input = event.target.closest('[data-ui-variant-mini-position]');
+                        if (input) {
+                            const key = input.dataset.uiVariantMiniPosition;
+                            window.UIVariantCompact?.setPosition?.({ [key]: Number(input.value) });
+                            return;
+                        }
+                        if (event.target.matches('[data-ui-variant-mini-theme]')) {
+                            window.UIVariantCompact?.setTheme?.(event.target.value);
+                            window.setTimeout(refreshVariantCompactTunerPage, 80);
+                        }
+                        if (event.target.matches('[data-ui-variant-mini-preset]')) {
+                            window.UIVariantCompact?.setPreset?.(event.target.value);
+                            window.setTimeout(refreshVariantCompactTunerPage, 80);
+                        }
+                    };
+                }
+                function refreshVariantCompactTunerPage() {
+                    const pageEl = pageEls.get('UI切替');
+                    if (pageEl) renderVariantCompactTunerPage(pageEl);
+                    window.UIVariantCompact?.sync?.();
+                }
+                function renderEngineTunerPage(pageEl) {
+                    pageEl.innerHTML = `
+                        <div class="ui-size-tuner-group ui-size-tuner-engine-group">
+                            <div class="ui-size-tuner-group-head"><h3>Engine 状態</h3><button type="button" class="ui-size-tuner-group-toggle" data-ui-size-engine-refresh>更新</button></div>
+                            <p class="ui-size-tuner-engine-note">Engineは通常操作用ボタンではなく、p5安定版を残したままPixiJS / WebGL2を比較するための内部境界です。画面上に単独ボタンは出さず、この調整UI内で状態だけ確認します。</p>
+                            <pre class="ui-size-tuner-engine-readout"></pre>
+                        </div>`;
+                    pageEl.addEventListener('click', (event) => {
+                        if (event.target.closest('[data-ui-size-engine-refresh]')) refreshEngineTunerPage();
+                    });
+                    refreshEngineTunerPage();
+                }
+                function refreshEngineTunerPage() {
+                    const readout = panel.querySelector('.ui-size-tuner-engine-readout');
+                    if (readout) readout.textContent = getEngineTunerSnapshotText();
+                }
+                function compactTargetText(rawTargets) {
+                    const list = (rawTargets || [])
+                        .filter(Boolean)
+                        .filter((target) => !String(target).includes('#color-container'));
+                    if (!list.length) return '共通';
+                    if (list.length === 1) return list[0];
+                    return `${list[0]} 他${list.length - 1}`;
+                }
+                function updateStatus(extraControl) {
+                    const activeGroups = controls.filter((c) => c.page === currentPage).map((c) => `${c.page}::${c.group}`);
+                    const onCount = new Set(activeGroups.filter((key) => state.enabled[key] !== false)).size;
+                    const allCount = new Set(activeGroups).size;
+                    const rawTargets = extraControl ? (extraControl.targets || []) : (panelIdsByPage[currentPage] || []).map((id) => `#${id}`);
+                    const target = compactTargetText(rawTargets);
+                    const fullTarget = (rawTargets || []).filter((item) => !String(item).includes('#color-container')).join(', ') || '共通';
+                    status.title = `反映先: ${fullTarget}`;
+                    status.innerHTML = `<b>現在:</b> ${currentPage} / <b>ON:</b> ${onCount}/${allCount} / <b>反映先:</b> <span>${target}</span>`;
+                }
+                pages.forEach((page, index) => {
+                    const tab = document.createElement('button');
+                    tab.type = 'button';
+                    tab.className = `ui-size-tuner-tab${index === 0 ? ' is-active' : ''}`;
+                    tab.dataset.uiSizePage = page;
+                    tab.textContent = page;
+                    tabs.appendChild(tab);
+                    const pageEl = document.createElement('div');
+                    pageEl.className = `ui-size-tuner-page${index === 0 ? ' is-active' : ''}`;
+                    pageEl.dataset.uiSizePage = page;
+                    body.appendChild(pageEl);
+                    pageEls.set(page, pageEl);
+                    if (page === 'UI切替') renderVariantCompactTunerPage(pageEl);
+                    if (page === 'Engine') renderEngineTunerPage(pageEl);
+                });
+                tabs.addEventListener('click', (event) => {
+                    const page = event.target.closest('[data-ui-size-page]')?.dataset.uiSizePage;
+                    if (!page) return;
+                    currentPage = page;
+                    tabs.querySelectorAll('.ui-size-tuner-tab').forEach((el) => el.classList.toggle('is-active', el.dataset.uiSizePage === page));
+                    pageEls.forEach((el, key) => el.classList.toggle('is-active', key === page));
+                    if (page === 'Engine') refreshEngineTunerPage();
+                    else if (page === 'UI切替') refreshVariantCompactTunerPage();
+                    else openTargetsForPage(page);
+                    updateStatus();
+                });
+                const groupEls = new Map();
+                controls.forEach((control) => {
+                    const pageEl = pageEls.get(control.page) || pageEls.get('共通');
+                    const groupKey = `${control.page}::${control.group}`;
+                    if (!groupEls.has(groupKey)) {
+                        const group = document.createElement('div');
+                        group.className = `ui-size-tuner-group${state.enabled[groupKey] === false ? ' is-off' : ''}`;
+                        group.dataset.groupKey = groupKey;
+                        group.innerHTML = `<div class="ui-size-tuner-group-head"><h3>${control.group}</h3><button type="button" class="ui-size-tuner-group-toggle" data-ui-size-group="${groupKey}">${state.enabled[groupKey] === false ? 'OFF' : 'ON'}</button></div>`;
+                        groupEls.set(groupKey, group);
+                        pageEl.appendChild(group);
+                    }
+                    if (state.values[control.name] == null) state.values[control.name] = control.defaultValue;
+                    const row = document.createElement('label');
+                    row.className = `ui-size-tuner-row${control.type === 'guide' ? ' ui-size-tuner-row-guide' : ''}${control.type === 'color' ? ' ui-size-tuner-row-color' : ''}`;
+                    row.title = `${control.name}
+${(control.targets || []).join(', ')}`;
+                    if (control.type === 'guide') {
+                        row.innerHTML = `<span class="ui-size-tuner-label">${control.label}</span><input type="checkbox" ${state.values[control.name] !== false ? 'checked' : ''} data-ui-size-var="${control.name}"><span class="ui-size-tuner-value">${formatValue(control, state.values[control.name])}</span><span class="ui-size-tuner-computed">表示ガイド</span>`;
+                    } else if (control.type === 'color') {
+                        row.innerHTML = `<span class="ui-size-tuner-label">${control.label}</span><input type="color" value="${state.values[control.name] || control.defaultValue}" data-ui-size-var="${control.name}"><span class="ui-size-tuner-value">${formatValue(control, state.values[control.name])}</span><span class="ui-size-tuner-computed">${getComputedText(control)}</span>`;
+                    } else {
+                        row.innerHTML = `<span class="ui-size-tuner-label">${control.label}</span><input type="range" min="${control.min}" max="${control.max}" step="${control.step}" value="${state.values[control.name]}" data-ui-size-var="${control.name}"><span class="ui-size-tuner-value">${formatValue(control, state.values[control.name])}</span><span class="ui-size-tuner-computed">${getComputedText(control)}</span>`;
+                    }
+                    const input = row.querySelector('input');
+                    const output = row.querySelector('.ui-size-tuner-value');
+                    const computed = row.querySelector('.ui-size-tuner-computed');
+                    input.disabled = !isGroupEnabled(control);
+                    const updateOne = () => {
+                        const nextValue = control.type === 'guide' ? input.checked : (control.type === 'color' ? input.value : Number(input.value));
+                        state.values[control.name] = nextValue;
+                        if (control.type !== 'guide' && isGroupEnabled(control)) setControlValue(control, nextValue);
+                        output.textContent = formatValue(control, nextValue);
+                        if (computed) computed.textContent = control.type === 'guide' ? '表示ガイド' : getComputedText(control);
+                        highlightTargets(control);
+                        updateStatus(control);
+                        persist();
+                    };
+                    input.addEventListener((control.type === 'guide' || control.type === 'color') ? 'change' : 'input', updateOne);
+                    input.addEventListener('focus', () => { highlightTargets(control); updateStatus(control); });
+                    input.addEventListener('pointerenter', () => { highlightTargets(control); updateStatus(control); });
+                    groupEls.get(groupKey).appendChild(row);
+                });
+                panel.addEventListener('click', (event) => {
+                    const groupButton = event.target.closest('[data-ui-size-group]');
+                    if (groupButton) {
+                        const key = groupButton.dataset.uiSizeGroup;
+                        state.enabled[key] = !(state.enabled[key] !== false);
+                        const group = groupEls.get(key);
+                        group.classList.toggle('is-off', state.enabled[key] === false);
+                        groupButton.textContent = state.enabled[key] === false ? 'OFF' : 'ON';
+                        controls.filter((control) => `${control.page}::${control.group}` === key).forEach((control) => {
+                            if (control.type !== 'guide') {
+                                if (state.enabled[key] === false) removeControlValue(control);
+                                else setControlValue(control, state.values[control.name] ?? control.defaultValue);
+                            }
+                            const input = panel.querySelector(`[data-ui-size-var="${control.name}"]`);
+                            if (input) input.disabled = state.enabled[key] === false;
+                            const row = input?.closest('.ui-size-tuner-row');
+                            const computed = row?.querySelector('.ui-size-tuner-computed');
+                            if (computed) computed.textContent = control.type === 'guide' ? '表示ガイド' : getComputedText(control);
+                        });
+                        persist(); updateStatus();
+                        return;
+                    }
+                    const dock = event.target.closest('[data-ui-size-dock]')?.dataset.uiSizeDock;
+                    if (dock) { dockPanel(panel, toggle, dock); return; }
+                    const action = event.target.closest('[data-ui-size-action]')?.dataset.uiSizeAction;
+                    if (!action) return;
+                    if (action === 'close') { panel.classList.remove('is-open'); toggle.setAttribute('aria-expanded', 'false'); }
+                    if (action === 'reset') {
+                        state.values = {...defaults};
+                        state.enabled = Object.fromEntries(groupKeys.map((key) => [key, true]));
+                        localStorage.removeItem(storageKey);
+                        applyAllValues();
+                        panel.querySelectorAll('[data-ui-size-var]').forEach((input) => {
+                            const control = controls.find((item) => item.name === input.dataset.uiSizeVar);
+                            if (control.type === 'guide') input.checked = control.defaultValue !== false;
+                            else input.value = control.defaultValue;
+                            input.disabled = false;
+                            input.closest('.ui-size-tuner-row').querySelector('.ui-size-tuner-value').textContent = formatValue(control, control.defaultValue);
+                            input.closest('.ui-size-tuner-row').querySelector('.ui-size-tuner-computed').textContent = control.type === 'guide' ? '表示ガイド' : getComputedText(control);
+                        });
+                        groupEls.forEach((group, key) => { group.classList.remove('is-off'); group.querySelector('.ui-size-tuner-group-toggle').textContent = 'ON'; });
+                        updateStatus();
+                    }
+                    if (action === 'copy') {
+                        const mode = panel.querySelector('[data-ui-size-copy-mode]').value;
+                        copyText(buildCss(mode, currentPage));
+                    }
+                    if (action === 'export-json') {
+                        downloadTextFile(`ui-size-tuner-${new Date().toISOString().slice(0,10)}.json`, buildExportPayload());
+                    }
+                    if (action === 'save-preset') {
+                        const name = panel.querySelector('[data-ui-size-preset-name]').value.trim() || `preset-${Date.now()}`;
+                        state.presets[name] = { values: {...state.values}, enabled: {...state.enabled} };
+                        persist(); renderPresetSelect();
+                    }
+                    if (action === 'load-preset') {
+                        const name = panel.querySelector('[data-ui-size-preset-select]').value;
+                        const preset = state.presets[name];
+                        if (preset) { state.values = {...preset.values}; state.enabled = {...state.enabled, ...preset.enabled}; persist(); panel.remove(); toggle.remove(); init(); }
+                    }
+                    if (action === 'delete-preset') {
+                        const name = panel.querySelector('[data-ui-size-preset-select]').value;
+                        delete state.presets[name]; persist(); renderPresetSelect();
+                    }
+                    if (action === 'open-targets') openTargetsForPage(currentPage);
+                });
+                const actions = document.createElement('div');
+                actions.className = 'ui-size-tuner-actions';
+                actions.innerHTML = `<button type="button" data-ui-size-action="open-targets">対象を開く</button><button type="button" data-ui-size-action="reset">初期値へ戻す</button><select data-ui-size-copy-mode><option value="diff">差分だけ</option><option value="tab">現在タブ</option><option value="all">全部</option></select><button type="button" data-ui-size-action="copy">CSS変数をコピー</button><button type="button" data-ui-size-action="export-json">エクスポート</button><label class="ui-size-tuner-import-label">インポート<input type="file" accept="application/json,.json" data-ui-size-import-file></label><input type="text" data-ui-size-preset-name placeholder="プリセット名"><select data-ui-size-preset-select></select><button type="button" data-ui-size-action="save-preset">保存</button><button type="button" data-ui-size-action="load-preset">読込</button><button type="button" data-ui-size-action="delete-preset">削除</button><button type="button" data-ui-size-action="close">閉じる</button>`;
+                panel.appendChild(actions);
+                function renderPresetSelect() {
+                    const select = panel.querySelector('[data-ui-size-preset-select]');
+                    if (!select) return;
+                    select.innerHTML = Object.keys(state.presets).map((name) => `<option value="${name}">${name}</option>`).join('');
+                }
+                renderPresetSelect();
+                const importInput = panel.querySelector('[data-ui-size-import-file]');
+                if (importInput) {
+                    importInput.addEventListener('change', async () => {
+                        const file = importInput.files && importInput.files[0];
+                        if (!file) return;
+                        const text = await file.text();
+                        if (applyImportedPayload(text)) {
+                            panel.remove();
+                            toggle.remove();
+                            init();
+                        }
+                    });
+                }
+                toggle.addEventListener('click', () => {
+                    const isOpen = panel.classList.toggle('is-open');
+                    toggle.setAttribute('aria-expanded', String(isOpen));
+                    if (isOpen) { openTargetsForPage(currentPage); updateStatus(); }
+                });
+                document.body.appendChild(toggle);
+                document.body.appendChild(panel);
+                applyPanelPosition(panel, toggle);
+                makeDraggable(panel, panel.querySelector('.ui-size-tuner-head'));
+                updateStatus();
+            }
+            if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+            else init();
+        })();
+    </script>
+
+    <script id="ui-v73-bottom-color-neighbor-style-sync">
+        (() => {
+            const copyProps = [
+                'width','height','minWidth','minHeight','maxWidth','maxHeight',
+                'borderRadius','borderTopWidth','borderRightWidth','borderBottomWidth','borderLeftWidth',
+                'borderTopStyle','borderRightStyle','borderBottomStyle','borderLeftStyle',
+                'borderTopColor','borderRightColor','borderBottomColor','borderLeftColor',
+                'backgroundColor','backgroundImage','boxShadow','filter','backdropFilter'
+            ];
+            function findReferenceButton(colorButton) {
+                if (!colorButton) return null;
+                const bar = colorButton.closest('#glass-control-bar') || document.getElementById('glass-control-bar');
+                if (!bar) return null;
+                const candidates = Array.from(bar.querySelectorAll('.glass-control-pill'))
+                    .filter((el) => el !== colorButton && !el.classList.contains('canvas-bottom-color-button'));
+                return candidates.find((el) => /残像表示|流線表示|配置リセット|次へ/.test(el.textContent || '')) || candidates[0] || null;
+            }
+            function syncBottomColorButton() {
+                const button = document.querySelector('#glass-control-bar .canvas-bottom-color-button.glass-control-pill');
+                const ref = findReferenceButton(button);
+                if (!button || !ref) return;
+                const cs = getComputedStyle(ref);
+                copyProps.forEach((prop) => {
+                    const cssName = prop.replace(/[A-Z]/g, (m) => '-' + m.toLowerCase());
+                    const value = cs.getPropertyValue(cssName);
+                    if (value) button.style.setProperty(cssName, value, 'important');
+                });
+                button.style.setProperty('padding', '0', 'important');
+                button.style.setProperty('outline', '0', 'important');
+                button.style.setProperty('overflow', 'hidden', 'important');
+                button.style.setProperty('position', 'relative', 'important');
+            }
+            window.UIUXSyncBottomColorButton = syncBottomColorButton;
+            const run = () => {
+                syncBottomColorButton();
+                requestAnimationFrame(syncBottomColorButton);
+                setTimeout(syncBottomColorButton, 120);
+            };
+            if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', run);
+            else run();
+            window.addEventListener('resize', run);
+            document.addEventListener('click', (event) => {
+                if (event.target.closest('#glass-control-bar') || event.target.closest('#ui-variant-panel') || event.target.closest('#ui-variant-compact-panel')) {
+                    setTimeout(run, 0);
+                    setTimeout(run, 180);
+                }
+            }, true);
+            const observer = new MutationObserver(run);
+            observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class', 'style', 'data-ui-theme', 'data-ui-variant'] });
+            observer.observe(document.body, { attributes: true, attributeFilter: ['class', 'style', 'data-ui-theme', 'data-ui-variant'] });
+        })();
+    </script>
+
 </body>
 </html>

@@ -1,8 +1,13 @@
 // UI_GlassPanels.js - Glass時のパネル配置とドラッグ操作
 
 window.UIGlassPanels = (function() {
-    const PUBLIC_DEMO_DISABLE_EXPORT_IMPORT = true;
+    const PUBLIC_DEMO_DISABLE_EXPORT_IMPORT = false;
     const PUBLIC_DEMO_DISABLED_TITLE = '公開デモでは無効';
+    const DEBUG_LAYOUT_LOGS = false;
+    function layoutDebugLog(...args) {
+        if (DEBUG_LAYOUT_LOGS) console.log(...args);
+    }
+
     const STORAGE_KEY = 'uiGlassPanelPositions';
     const VISIBILITY_STORAGE_KEY = 'uiGlassPanelVisibility';
     const GLASS_PRESET_DETAILS_KEY = 'uiGlassPresetDetailsOpen';
@@ -40,6 +45,10 @@ window.UIGlassPanels = (function() {
     const LIQUID_GLASS_PRESET_SELECTION_KEY = 'uiLiquidGlassVariantPreset';
     const RESET_EDGE_MARGIN = 30;
     const PANEL_VISIBILITY_ANIMATION_MS = 700;
+    const RESET_PANELS_ANIMATION_MS = 2700;
+    const C_TOGGLE_OPEN_LOCK_MS = 1320;
+    const C_TOGGLE_CLOSE_LOCK_MS = 980;
+    const MOTION_LOCK_RELEASE_BUFFER_MS = 120;
     const panelVisibilityTimers = new WeakMap();
     const panelCollapseTimers = new WeakMap();
     const panelDockHideTimers = new WeakMap();
@@ -57,6 +66,9 @@ window.UIGlassPanels = (function() {
     let caseComparisonInitialPlacementActive = false;
     let caseComparisonResetPlacementPending = false;
     let suppressCaseComparisonPlacementAnimationUntil = 0;
+    let utilityPanelMotionLockTimer = 0;
+    let utilityPanelMotionLockReason = '';
+    let utilityPanelMotionLockUntil = 0;
     const individualPanelCollapsedStateBeforeHide = new Map();
     const DOCKED_PANEL_DEFS = [
         { key: 'color', label: '1.配色', displayOrder: 1, id: CURSOR_PANEL_3_ID, idPrefix: 'cursor-panel-3-' },
@@ -100,8 +112,8 @@ window.UIGlassPanels = (function() {
     const DOCKED_HOME = new Map();
     const SETTINGS_PANEL_DEFAULT_PLACEMENT = { right: 24, bottom: 120 };
     const DEFAULT_LAYOUT = {
-        'ui-variant-panel': { x: 0, y: 0, left: 30, top: 30 },
-        'glass-control-bar': { x: 0, y: 0, right: RESET_EDGE_MARGIN, bottom: RESET_EDGE_MARGIN },
+        'ui-variant-panel': { x: 0, y: 0, left: 14, top: 14 },
+        'glass-control-bar': { x: 0, y: 0, right: 14, bottom: 14 },
         [SETTINGS_PANEL_ID]: { x: 0, y: 0, right: 24, top: 860 },
         [SETTINGS_PANEL_TEST_ID]: { x: 0, y: 0, right: 24, bottom: 212 },
         [CURSOR_PANEL_1_ID]: { x: 0, y: 0, right: 24, top: 512 },
@@ -700,10 +712,25 @@ window.UIGlassPanels = (function() {
             el.style.setProperty('--auto-readable-text-color', autoTextColor);
             el.style.setProperty('--glass-resolved-text-color', resolvedTextColor);
         });
-        document.querySelectorAll('#ui-variant-panel, #ui-variant-panel *, #ui-preset-panel, #ui-preset-panel *').forEach((el) => {
-            el.style.setProperty('color', resolvedTextColor, 'important');
-            el.style.setProperty('-webkit-text-fill-color', resolvedTextColor, 'important');
+        /* v88: 左上miniパネルはプリセット文字色ではなく、右上設定UIと同じく
+         * canvas背景明暗から決める自動可読色を正本にする。
+         * ここで resolvedTextColor を入れると、Color側の自動反転より後勝ちして
+         * 起動時・テーマ切替時に左上だけ反応しないタイミングが出る。 */
+        document.querySelectorAll('#ui-variant-panel, #ui-variant-panel *, #ui-preset-panel, #ui-preset-panel *, #ui-variant-compact-panel, #ui-variant-compact-panel *, .ui-variant-compact-panel, .ui-variant-compact-panel *').forEach((el) => {
+            /* v97: 右上の詳細設定は白基調パネルなので、背景明暗連動の白文字を入れない。
+             * JS inline important がCSS黒固定より後勝ちするため、ここで対象から除外する。 */
+            if (el.closest && el.closest('#ui-preset-panel .glass-preset-details, #ui-preset-panel .glass-preset-rows, #ui-preset-panel .glass-preset-actions, #ui-preset-panel .glass-preset-details-toggle')) {
+                el.style.setProperty('color', '#111827', 'important');
+                el.style.setProperty('-webkit-text-fill-color', '#111827', 'important');
+                el.style.setProperty('text-shadow', 'none', 'important');
+                return;
+            }
+            el.style.setProperty('color', autoTextColor, 'important');
+            el.style.setProperty('-webkit-text-fill-color', autoTextColor, 'important');
         });
+        if (typeof window.UIUXRefreshReadableTextColors === 'function') {
+            window.UIUXRefreshReadableTextColors();
+        }
         document.querySelectorAll('#case-comparison, #case-comparison *, #code-explain-overlay, #code-explain-overlay *, #glass-panel-code-explain, #glass-panel-code-explain *').forEach((el) => {
             el.style.setProperty('color', resolvedTextColor, 'important');
             el.style.setProperty('-webkit-text-fill-color', resolvedTextColor, 'important');
@@ -1241,9 +1268,6 @@ window.UIGlassPanels = (function() {
         const positions = getPanelPositions();
         const saved = positions[id];
         if (!saved) return false;
-        if (isDockManagedPanelId(id) && (saved.dockMode === 'free' || saved.dockMode === 'docked')) {
-            setPanelDockMode(el, saved.dockMode);
-        }
         const hasRightBottom = Number.isFinite(saved.right) && Number.isFinite(saved.bottom);
         const hasLeftTop = Number.isFinite(saved.left) && Number.isFinite(saved.top);
         const hasXY = Number.isFinite(saved.x) && Number.isFinite(saved.y);
@@ -1406,7 +1430,7 @@ window.UIGlassPanels = (function() {
         });
     }
 
-    // TEMP DEBUG: expose dock order and layout state for browser-side verification.
+    // Debug helper: dock order and layout state for manual browser-side verification.
     function getGlassDockDebugState() {
         const storedOrder = (() => {
             try {
@@ -1432,7 +1456,7 @@ window.UIGlassPanels = (function() {
         };
     }
 
-    // TEMP DEBUG: capture before/after reset so the browser can prove where order changes.
+    // Debug helper: capture before/after reset for manual verification when DEBUG_LAYOUT_LOGS is enabled.
     function runGlassDockResetDebug() {
         const before = getGlassDockDebugState();
         const savedBeforeReset = before.storedOrder.slice();
@@ -1443,22 +1467,24 @@ window.UIGlassPanels = (function() {
             savedBeforeReset,
             after
         };
-        console.table({
-            beforeStoredOrder: JSON.stringify(before.storedOrder),
-            beforeLayoutOrder: JSON.stringify(before.layoutOrder),
-            beforeDockedPanelIds: JSON.stringify(before.dockedPanelIds),
-            afterStoredOrder: JSON.stringify(after.storedOrder),
-            afterLayoutOrder: JSON.stringify(after.layoutOrder),
-            afterDockedPanelIds: JSON.stringify(after.dockedPanelIds)
-        });
-        console.table(before.panels);
-        console.table(after.panels);
-        console.debug('[glass-dock-order]', 'TEMP DEBUG reset comparison', result);
+        if (DEBUG_LAYOUT_LOGS) {
+            console.table({
+                beforeStoredOrder: JSON.stringify(before.storedOrder),
+                beforeLayoutOrder: JSON.stringify(before.layoutOrder),
+                beforeDockedPanelIds: JSON.stringify(before.dockedPanelIds),
+                afterStoredOrder: JSON.stringify(after.storedOrder),
+                afterLayoutOrder: JSON.stringify(after.layoutOrder),
+                afterDockedPanelIds: JSON.stringify(after.dockedPanelIds)
+            });
+            console.table(before.panels);
+            console.table(after.panels);
+            layoutDebugLog('[glass-dock-order]', 'reset comparison', result);
+        }
         return result;
     }
 
     function debugDockedPanelOrder(stage, extra = {}) {
-        console.debug('[glass-dock-order]', stage, {
+        layoutDebugLog('[glass-dock-order]', stage, {
             order: getDockedPanelDebugSnapshot(),
             ...extra
         });
@@ -1579,20 +1605,15 @@ window.UIGlassPanels = (function() {
 
     function measurePanelCollapsedHeight(panel) {
         if (!panel) return 24;
-        const rect = panel.getBoundingClientRect();
-        const header = panel.querySelector('.ui-header');
-        const headerHeight = header?.getBoundingClientRect?.().height || 24;
-        const computed = window.getComputedStyle(panel);
-        const paddingTop = parseFloat(computed.paddingTop) || 0;
-        const paddingBottom = parseFloat(computed.paddingBottom) || 0;
-        const borderTop = parseFloat(computed.borderTopWidth) || 0;
-        const borderBottom = parseFloat(computed.borderBottomWidth) || 0;
-        const collapsedHeight = headerHeight + paddingTop + paddingBottom + borderTop + borderBottom;
-        const measuredHeight = Math.max(
-            Number.isFinite(rect?.height) && rect.height > 0 ? rect.height : 0,
-            Number.isFinite(collapsedHeight) && collapsedHeight > 0 ? collapsedHeight : 0
-        );
-        return measuredHeight > 0 ? Math.ceil(measuredHeight) : 24;
+        // v49: use the actual collapsed appearance, not header-only arithmetic.
+        // Header padding/border differs by Glass/Neumorphism and by panel state; arithmetic
+        // made the dock stack too short and caused collapsed headers to overlap after movement.
+        const measured = measurePanelClosedAnimationHeight(panel);
+        if (Number.isFinite(measured) && measured > 0) return Math.ceil(measured);
+        const rect = panel.getBoundingClientRect?.();
+        if (Number.isFinite(rect?.height) && rect.height > 0) return Math.ceil(rect.height);
+        const headerHeight = panel.querySelector('.ui-header')?.getBoundingClientRect?.().height || 24;
+        return Math.ceil(headerHeight);
     }
 
     function getCursorDockHeightOverridesForCurrentState() {
@@ -1610,36 +1631,15 @@ window.UIGlassPanels = (function() {
     }
 
     function getCursorDockOrderHint() {
-        const savedOrder = loadDockedPanelOrder();
-        return savedOrder.length ? savedOrder : captureDockedPanelOrder();
+        // v57: 1〜4ドック順は操作ごとに推測せず、常に正本順へ固定する。
+        return getCanonicalDockedPanelOrder();
     }
 
     function getCursorDockVisualOrderHint(fallbackOrderHint = getCursorDockOrderHint()) {
-        const panels = getDockedSortablePanels();
-        if (!panels.length) return fallbackOrderHint;
-        const fallbackIndexById = new Map(normalizeDockedPanelOrder(fallbackOrderHint).map((id, index) => [id, index]));
-        const order = panels
-            .map((panel, index) => {
-                const rect = panel.getBoundingClientRect();
-                return {
-                    panel,
-                    rect,
-                    distance: Math.hypot(
-                        window.innerWidth - rect.right,
-                        window.innerHeight - rect.bottom
-                    ),
-                    fallbackIndex: fallbackIndexById.has(panel.id) ? fallbackIndexById.get(panel.id) : index,
-                    domIndex: index
-                };
-            })
-            .sort((a, b) => {
-                const distanceDelta = a.distance - b.distance;
-                if (Number.isFinite(distanceDelta) && Math.abs(distanceDelta) >= 1) return distanceDelta;
-                if (a.fallbackIndex !== b.fallbackIndex) return a.fallbackIndex - b.fallbackIndex;
-                return a.domIndex - b.domIndex;
-            })
-            .map(({ panel }) => panel.id);
-        console.log('[layout-order-debug]', 'getCursorDockVisualOrderHint', {
+        // v57: 画面上の現在Y座標・右下からの距離では順番を作らない。
+        // 個別ヘッダー開閉やC開閉中の一時位置を保存すると、1,2,3,4 / 4,3,2,1 が揺れるため。
+        const order = getCanonicalDockedPanelOrder();
+        layoutDebugLog('[layout-order-debug]', 'getCursorDockVisualOrderHint:canonical', {
             fallbackOrderHint,
             order
         });
@@ -1647,13 +1647,14 @@ window.UIGlassPanels = (function() {
     }
 
     function getCursorDockResetOrderHint(fallbackOrderHint = getCursorDockOrderHint()) {
-        if (!cursorDockResetOrderHintDirty && cursorDockResetOrderHintCache.length === DOCKED_PANEL_DEFS.length) {
-            return cursorDockResetOrderHintCache.slice();
-        }
-        const order = getCursorDockVisualOrderHint(fallbackOrderHint);
-        cursorDockResetOrderHintCache = normalizeDockedPanelOrder(order);
+        const order = getCanonicalDockedPanelOrder();
+        cursorDockResetOrderHintCache = order.slice();
         cursorDockResetOrderHintDirty = false;
-        return cursorDockResetOrderHintCache.slice();
+        layoutDebugLog('[layout-order-debug]', 'getCursorDockResetOrderHint:canonical', {
+            fallbackOrderHint,
+            order
+        });
+        return order;
     }
 
     function buildCanonicalCursorDockLayout(orderHint = getCursorDockOrderHint(), heightOverrides = getCursorDockHeightOverridesForCurrentState()) {
@@ -1716,7 +1717,7 @@ window.UIGlassPanels = (function() {
         const panels = getDockedSortablePanels();
         if (!panels.length) return null;
         const resolvedOrderHint = Array.isArray(orderHint) && orderHint.length ? orderHint : getCursorDockOrderHint();
-        console.log('[layout-order-debug]', 'getCursorDockLayoutState:in', {
+        layoutDebugLog('[layout-order-debug]', 'getCursorDockLayoutState:in', {
             orderHint: resolvedOrderHint
         });
         const heightOverrides = {};
@@ -1749,7 +1750,7 @@ window.UIGlassPanels = (function() {
             withinLayoutBounds,
             aligned: (allCollapsed && withinGapBounds) || (withinGapBounds && withinLayoutBounds)
         };
-        console.log('[layout-order-debug]', 'getCursorDockLayoutState:out', {
+        layoutDebugLog('[layout-order-debug]', 'getCursorDockLayoutState:out', {
             orderHint: state.orderHint,
             layoutOrder: state.layout.map(({ panel }) => panel?.id).filter(Boolean)
         });
@@ -1760,7 +1761,7 @@ window.UIGlassPanels = (function() {
     function applyCursorDockLayoutState(state, options = {}) {
         if (!state) return false;
         if (state.aligned && !options.force) return false;
-        console.log('[layout-order-debug]', 'applyCursorDockLayoutState', {
+        layoutDebugLog('[layout-order-debug]', 'applyCursorDockLayoutState', {
             orderHint: state.orderHint,
             layoutOrder: state.layout.map(({ panel }) => panel?.id).filter(Boolean)
         });
@@ -1785,7 +1786,7 @@ window.UIGlassPanels = (function() {
                 : metric;
         });
         if (!metrics.length) return [];
-        console.debug('[glass-dock-order]', 'buildDockedPanelLayout', {
+        layoutDebugLog('[glass-dock-order]', 'buildDockedPanelLayout', {
             orderHint: orderHint || [],
             layoutOrder: metrics.map(({ id, label, headerTop, height, isCollapsed }) => ({
                 id,
@@ -1795,7 +1796,7 @@ window.UIGlassPanels = (function() {
                 collapsed: isCollapsed
             }))
         });
-        console.log('[layout-order-debug]', 'buildDockedPanelLayout', {
+        layoutDebugLog('[layout-order-debug]', 'buildDockedPanelLayout', {
             orderHint: orderHint || [],
             metricOrder: metrics.map(({ id }) => id)
         });
@@ -1872,14 +1873,14 @@ window.UIGlassPanels = (function() {
             ? options.speedPxPerMs
             : 1;
         const easing = 'cubic-bezier(0.22, 1, 0.36, 1)';
-        console.debug('[glass-dock-order]', 'applyDockedPanelLayout', {
+        layoutDebugLog('[glass-dock-order]', 'applyDockedPanelLayout', {
             layoutOrder: layout.map(({ panel, top }) => ({
                 id: panel?.id || '',
                 label: getCursorPanelConfig(panel?.id)?.title || panel?.id || '',
                 top
             }))
         });
-        console.log('[layout-order-debug]', 'applyDockedPanelLayout', {
+        layoutDebugLog('[layout-order-debug]', 'applyDockedPanelLayout', {
             layoutOrder: layout.map(({ panel }) => panel?.id).filter(Boolean)
         });
         layout.forEach(({ panel, left, top }, index) => {
@@ -2002,7 +2003,7 @@ window.UIGlassPanels = (function() {
                 return savedOrder.length ? savedOrder : captureDockedPanelOrder();
             })();
         const layout = buildDockedPanelLayout(panels, resolvedOrderHint, heightOverrides);
-        console.log('[layout-order-debug]', 'arrangeDockedPanels', {
+        layoutDebugLog('[layout-order-debug]', 'arrangeDockedPanels', {
             orderHint: resolvedOrderHint,
             layoutOrder: layout.map(({ panel }) => panel?.id).filter(Boolean)
         });
@@ -2073,7 +2074,7 @@ window.UIGlassPanels = (function() {
         const clampedTop = Math.max(minTop, Math.min(placement.top, maxTop));
         const clampedLeft = Math.max(12, Math.min(placement.left, Math.max(12, window.innerWidth - rect.width - 12)));
         if (clampedLeft !== placement.left || clampedTop !== placement.top) {
-            console.debug('[glass-dock-open]', phase, {
+            layoutDebugLog('[glass-dock-open]', phase, {
                 panelId: panel.id,
                 top: clampedTop,
                 left: clampedLeft,
@@ -2117,7 +2118,7 @@ window.UIGlassPanels = (function() {
         panel.dataset.glassTop = '';
         panel.dataset.glassX = '40';
         panel.dataset.glassY = '';
-        console.debug('[glass-panel5-place]', reason, {
+        layoutDebugLog('[glass-panel5-place]', reason, {
             panelId: panel.id,
             left: 40,
             bottom: 40,
@@ -2299,7 +2300,7 @@ window.UIGlassPanels = (function() {
             numberedDockLandingGuardTimer = null;
         }
         if (startupCollapsedDockPreserveActive) {
-            console.debug('[glass-dock-open]', 'requestNumberedDockLandingGuard suppressed during startup collapsed preserve', {
+            layoutDebugLog('[glass-dock-open]', 'requestNumberedDockLandingGuard suppressed during startup collapsed preserve', {
                 reason,
                 delayMs
             });
@@ -2307,7 +2308,7 @@ window.UIGlassPanels = (function() {
         }
         const isHideReason = String(reason).includes('hide');
         if (isHideReason) {
-            console.debug('[glass-dock-open]', 'requestNumberedDockLandingGuard hide suppressed', {
+            layoutDebugLog('[glass-dock-open]', 'requestNumberedDockLandingGuard hide suppressed', {
                 reason,
                 delayMs
             });
@@ -2315,14 +2316,14 @@ window.UIGlassPanels = (function() {
             return;
         }
         if (String(reason) === 'individual-show') {
-            console.debug('[glass-dock-open]', 'requestNumberedDockLandingGuard individual-show suppressed', {
+            layoutDebugLog('[glass-dock-open]', 'requestNumberedDockLandingGuard individual-show suppressed', {
                 reason,
                 delayMs
             });
             return;
         }
         if (String(reason).includes('nondock') || String(reason).includes('non-dock')) {
-            console.debug('[glass-dock-open]', 'requestNumberedDockLandingGuard non-dock suppressed', {
+            layoutDebugLog('[glass-dock-open]', 'requestNumberedDockLandingGuard non-dock suppressed', {
                 reason,
                 delayMs
             });
@@ -2801,6 +2802,41 @@ window.UIGlassPanels = (function() {
         }
     }
 
+    function getUiSizeTunerSnapshotForPresetExport() {
+        try {
+            if (window.UISizeTunerAPI && typeof window.UISizeTunerAPI.getSnapshot === 'function') {
+                return window.UISizeTunerAPI.getSnapshot();
+            }
+            const keys = [
+                'uiuxAnimationTools.uiSizeTuner.v26',
+                'uiuxAnimationTools.uiSizeTuner.v15',
+                'uiuxAnimationTools.uiSizeTuner.v14',
+                'uiuxAnimationTools.uiSizeTuner',
+            ];
+            for (const key of keys) {
+                const raw = localStorage.getItem(key);
+                if (raw) return JSON.parse(raw);
+            }
+        } catch (error) {
+            console.warn('[ui-size-tuner-export]', error);
+        }
+        return null;
+    }
+
+    function applyUiSizeTunerSnapshotFromPresetImport(snapshot) {
+        if (!snapshot || typeof snapshot !== 'object') return false;
+        try {
+            if (window.UISizeTunerAPI && typeof window.UISizeTunerAPI.applySnapshot === 'function') {
+                return window.UISizeTunerAPI.applySnapshot(snapshot);
+            }
+            localStorage.setItem('uiuxAnimationTools.uiSizeTuner.v26', JSON.stringify(snapshot));
+            return true;
+        } catch (error) {
+            console.warn('[ui-size-tuner-import]', error);
+            return false;
+        }
+    }
+
     function getExportedPresetSnapshot() {
         if (isLiquidGlassTheme()) {
             return {
@@ -2811,7 +2847,8 @@ window.UIGlassPanels = (function() {
                 exportedAt: new Date().toISOString(),
                 uiLiquidGlassCustomPresets: getCustomPresetStore(),
                 uiLiquidGlassPresetEditLocks: loadPresetEditLocks(),
-                uiLiquidGlassVariantPreset: getSelectedPresetValue()
+                uiLiquidGlassVariantPreset: getSelectedPresetValue(),
+                uiSizeTuner: getUiSizeTunerSnapshotForPresetExport()
             };
         }
         if (isNeumorphismTheme()) {
@@ -2823,7 +2860,8 @@ window.UIGlassPanels = (function() {
                 exportedAt: new Date().toISOString(),
                 uiNeumorphismCustomPresets: getCustomPresetStore(),
                 uiNeumorphismPresetEditLocks: loadPresetEditLocks(),
-                uiNeumorphismVariantPreset: getSelectedPresetValue()
+                uiNeumorphismVariantPreset: getSelectedPresetValue(),
+                uiSizeTuner: getUiSizeTunerSnapshotForPresetExport()
             };
         }
         return {
@@ -2834,7 +2872,8 @@ window.UIGlassPanels = (function() {
             exportedAt: new Date().toISOString(),
             uiGlassCustomPresets: getCustomPresetStore(),
             uiGlassPresetEditLocks: loadPresetEditLocks(),
-            uiVariantPreset: getSelectedPresetValue()
+            uiVariantPreset: getSelectedPresetValue(),
+            uiSizeTuner: getUiSizeTunerSnapshotForPresetExport()
         };
     }
 
@@ -2881,7 +2920,8 @@ window.UIGlassPanels = (function() {
             });
         }
         const selectedPreset = rawData[selectionKey] ? String(rawData[selectionKey]) : '';
-        return { customPresets, presetEditLocks, selectedPreset };
+        const uiSizeTuner = rawData.uiSizeTuner && typeof rawData.uiSizeTuner === 'object' ? rawData.uiSizeTuner : null;
+        return { customPresets, presetEditLocks, selectedPreset, uiSizeTuner };
     }
 
     function mergeImportedPresetStore(sourcePresets, sourceLocks, currentStore, currentLocks) {
@@ -2919,6 +2959,7 @@ window.UIGlassPanels = (function() {
             }
             ensureProtectedCustomPresets();
             applyPresetUI(panel);
+            applyUiSizeTunerSnapshotFromPresetImport(payload.uiSizeTuner);
             return true;
         } catch (error) {
             console.warn('[theme-preset-import]', error);
@@ -3456,10 +3497,25 @@ window.UIGlassPanels = (function() {
          * 光源方向の既存ベクトルを再利用し、面陰影と文字陰影の方向を一致させる。
          * Glassには作用させない。
          */
-        document.querySelectorAll('#ui-variant-panel, #ui-variant-panel *, #ui-preset-panel, #ui-preset-panel *').forEach((el) => {
-            el.style.setProperty('color', baseSurface.text, 'important');
-            el.style.setProperty('-webkit-text-fill-color', baseSurface.text, 'important');
+        /* v88: Neumorphism適用時も左上miniパネルは面色由来ではなく
+         * canvas背景由来の自動可読色を使う。baseSurface.text の後勝ちが
+         * 左上だけ白黒反転しない主因だった。 */
+        const miniReadableTextColor = getReadableTextColorForBackground(window.config?.canvasBgColor || '#e1e1e1');
+        document.querySelectorAll('#ui-variant-panel, #ui-variant-panel *, #ui-preset-panel, #ui-preset-panel *, #ui-variant-compact-panel, #ui-variant-compact-panel *, .ui-variant-compact-panel, .ui-variant-compact-panel *').forEach((el) => {
+            /* v97: Neumorphism側でも右上詳細設定は黒固定。
+             * 白基調パネルに背景連動文字色を入れない。 */
+            if (el.closest && el.closest('#ui-preset-panel .glass-preset-details, #ui-preset-panel .glass-preset-rows, #ui-preset-panel .glass-preset-actions, #ui-preset-panel .glass-preset-details-toggle')) {
+                el.style.setProperty('color', '#111827', 'important');
+                el.style.setProperty('-webkit-text-fill-color', '#111827', 'important');
+                el.style.setProperty('text-shadow', 'none', 'important');
+                return;
+            }
+            el.style.setProperty('color', miniReadableTextColor, 'important');
+            el.style.setProperty('-webkit-text-fill-color', miniReadableTextColor, 'important');
         });
+        if (typeof window.UIUXRefreshReadableTextColors === 'function') {
+            window.UIUXRefreshReadableTextColors();
+        }
         root.dataset.neumorphismPresetName = getSelectedPresetStoreName() || INITIAL_NEUMORPHISM_PRESET_NAME;
     }
 
@@ -3804,13 +3860,17 @@ window.UIGlassPanels = (function() {
         syncThemeSurfaceToGeneratedPanels(activeTheme);
         const preservedOpen = document.body.dataset.uiPresetDetailsTransitionOpen;
         const preserveAcrossThemeSwitch = preservedOpen === 'true' || preservedOpen === 'false';
+        const isInitialPresetUiApply = panel.dataset.presetUiApplied !== 'true';
         const open = preserveAcrossThemeSwitch
             ? preservedOpen === 'true'
             : localStorage.getItem(getActivePresetDetailsKey()) === 'true';
         if (preserveAcrossThemeSwitch) {
             delete document.body.dataset.uiPresetDetailsTransitionOpen;
         }
-        setPresetDetailsOpen(panel, open, { immediate: preserveAcrossThemeSwitch });
+        // 起動時・テーマ再生成直後は閉じ状態をアニメーションさせない。
+        // ここで通常アニメーションを走らせると、折り畳み済みでも操作ボタン行の余白だけが一瞬残る。
+        setPresetDetailsOpen(panel, open, { immediate: preserveAcrossThemeSwitch || isInitialPresetUiApply });
+        panel.dataset.presetUiApplied = 'true';
         const selectedLock = panel.querySelector('.glass-preset-selected-lock');
         panel.querySelectorAll('[data-glass-param]').forEach((input) => {
             const key = input.getAttribute('data-glass-param');
@@ -4163,41 +4223,42 @@ window.UIGlassPanels = (function() {
 
         const open = !collapsed;
         const run = () => {
-            const startPanelHeight = panel.getBoundingClientRect().height;
-            const overriddenExpandedHeight = Number(heightOverrides?.[panel.id]);
-            const targetPanelHeight = open
-                ? (Number.isFinite(overriddenExpandedHeight) && overriddenExpandedHeight > 0
-                    ? overriddenExpandedHeight
-                    : measurePanelExpandedHeight(panel))
-                : measurePanelClosedAnimationHeight(panel);
-
             panel.hidden = false;
-            // 外側の高さ変化とヘッダー形状の変化を同じ開閉フェーズで同期させる。
-            // collapsed は完了時まで確定させず、途中の見た目は target 属性で表現する。
-            panel.dataset.glassCollapseTarget = collapsed ? 'closed' : 'open';
             panel.classList.add('glass-panel-collapse-animating');
-            panel.style.setProperty('height', `${startPanelHeight}px`, 'important');
-            panel.style.setProperty('max-height', `${startPanelHeight}px`, 'important');
-            panel.style.overflow = 'hidden';
-            panel.style.willChange = 'height';
-
-            content.hidden = false;
-            if (open) content.style.removeProperty('display');
-            content.classList.toggle('glass-panel-content-open', open);
-            content.classList.toggle('glass-panel-content-closing', collapsed);
-            content.style.setProperty('max-height', 'none', 'important');
-            content.style.overflow = 'hidden';
-            content.style.willChange = 'opacity, transform';
-            content.style.opacity = open ? '0' : '1';
-            content.style.transform = open ? 'translateY(6px) scale(0.98)' : 'translateY(0)';
-
-            if (open) panel.classList.remove('collapsed');
-            panel.getBoundingClientRect();
+            if (open) {
+                panel.classList.toggle('collapsed', false);
+                content.hidden = false;
+                content.classList.add('glass-panel-content-open');
+                content.classList.remove('glass-panel-content-closing');
+                content.style.overflow = 'hidden';
+                content.style.willChange = 'max-height, opacity, transform';
+            } else {
+                // v48: 閉じ操作直後に本文領域が残る問題を避けるため、
+                // 外側パネルの高さは固定せず、collapsed状態だけを先に確定する。
+                panel.classList.toggle('collapsed', true);
+                content.classList.remove('glass-panel-content-open');
+                content.classList.add('glass-panel-content-closing');
+                content.style.removeProperty('max-height');
+                content.style.removeProperty('overflow');
+                content.style.removeProperty('opacity');
+                content.style.removeProperty('transform');
+                content.style.removeProperty('will-change');
+                clearNumberedDockContentTransform(panel);
+                panel.classList.remove('glass-panel-collapse-animating');
+                if (isDockManagedPanelId(panel.id)) {
+                    requestCursorDockLayoutRefresh(layoutHint || getCursorDockOrderHint(), heightOverrides || getCursorDockHeightOverridesForCurrentState(), { force: true });
+                }
+                return;
+            }
+            const startHeight = content.getBoundingClientRect().height;
+            const targetHeight = open ? content.scrollHeight : 0;
+            content.style.maxHeight = `${startHeight}px`;
+            content.style.opacity = open ? '1' : '0';
+            content.style.transform = open ? 'translateY(0)' : 'translateY(6px) scale(0.98)';
 
             requestAnimationFrame(() => {
-                if (!content.isConnected || !panel.isConnected) return;
-                panel.style.setProperty('height', `${targetPanelHeight}px`, 'important');
-                panel.style.setProperty('max-height', `${targetPanelHeight}px`, 'important');
+                if (!content.isConnected) return;
+                content.style.maxHeight = `${targetHeight}px`;
                 content.style.opacity = open ? '1' : '0';
                 content.style.transform = open ? 'translateY(0)' : 'translateY(6px) scale(0.98)';
             });
@@ -4206,29 +4267,13 @@ window.UIGlassPanels = (function() {
                 panel.classList.toggle('collapsed', collapsed);
                 content.classList.toggle('glass-panel-content-open', open);
                 content.classList.toggle('glass-panel-content-closing', collapsed);
-                // 閉じ確定時は内容を強制非表示にしてから固定高さを解除し、
-                // テーマ側の display / padding 遷移でタブが再膨張するのを防ぐ。
-                content.hidden = collapsed;
-                if (collapsed) {
-                    content.style.setProperty('display', 'none', 'important');
-                } else {
-                    content.style.removeProperty('display');
-                }
-                panel.style.removeProperty('height');
-                panel.style.removeProperty('max-height');
-                panel.style.removeProperty('overflow');
-                panel.style.removeProperty('will-change');
                 content.style.removeProperty('max-height');
                 content.style.removeProperty('overflow');
                 content.style.removeProperty('opacity');
                 content.style.removeProperty('transform');
                 content.style.removeProperty('will-change');
                 panel.classList.remove('glass-panel-collapse-animating');
-                delete panel.dataset.glassCollapseTarget;
                 clearNumberedDockContentTransform(panel);
-                if (open) {
-                    warnIfPanelAnimationHeightDrifted(panel, targetPanelHeight, 'after-open');
-                }
             }, PANEL_VISIBILITY_ANIMATION_MS);
             panelCollapseTimers.set(panel, timer);
         };
@@ -4259,7 +4304,7 @@ window.UIGlassPanels = (function() {
         if (phase === 'pre-open') {
             panel.dataset.glassPreOpenTopMap = JSON.stringify(Object.fromEntries(layoutTop.map(({ id, top }) => [id, top])));
         }
-        console.debug('[glass-dock-open]', phase, {
+        layoutDebugLog('[glass-dock-open]', phase, {
             openingPanelId: panel?.id || '',
             openingPanelLabel: getCursorPanelConfig(panel?.id)?.title || panel?.id || '',
             measuredExpandedHeight: heightOverrides?.[panel?.id] || null,
@@ -4410,8 +4455,7 @@ window.UIGlassPanels = (function() {
             }
             payload[id] = {
                 left,
-                top,
-                ...(isDockManagedPanelId(id) ? { dockMode: getPanelDockMode(el) } : {})
+                top
             };
         });
         localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
@@ -4435,16 +4479,13 @@ window.UIGlassPanels = (function() {
     }
 
     function loadDockedPanelOrder() {
-        try {
-            const stored = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}') || {};
-            return normalizeDockedPanelOrder(stored.order);
-        } catch (error) {
-            return [];
-        }
+        // v57: 古いlocalStorageの順番は読まない。正本順だけを返す。
+        return getCanonicalDockedPanelOrder();
     }
 
     function saveDockedPanelOrder() {
-        const order = normalizeDockedPanelOrder(captureDockedPanelOrder());
+        // v57: 現在Y座標から順番を保存しない。保存する場合も正本順だけにする。
+        const order = getCanonicalDockedPanelOrder();
         try {
             const stored = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}') || {};
             const next = { ...stored, order };
@@ -4734,31 +4775,48 @@ window.UIGlassPanels = (function() {
         });
     }
 
-    function resetPanels() {
+    function resetPanels(options = {}) {
+        if (!options.bypassMotionLock && !acquireUtilityPanelMotionLock('placement-reset', RESET_PANELS_ANIMATION_MS)) {
+            return false;
+        }
         debugDockedPanelOrder('reset:start');
-        // 配置リセットだけが、自由配置の右下パネルを正式にドック整列へ戻す。
-        markDockedPanelsDefault();
         const orderHint = getCursorDockResetOrderHint();
-        const placementOrderHint = orderHint.slice().reverse();
-        console.log('[layout-order-debug]', 'resetPanels:start', {
-            orderHint
+        const placementOrderHint = orderHint.slice();
+        layoutDebugLog('[layout-order-debug]', 'resetPanels:start', { orderHint });
+
+        // 配置リセットは、現在見えている位置を出発点として固定してから、
+        // 右側の正規ドック位置へ left/top を直線補間する。
+        // 途中で通常のFLIP/再配置処理を挟むと、先に目的地へ瞬間移動してから
+        // 別パネルとすり替わる見え方になるため、この関数内で完結させる。
+        const dockedPanelsBefore = DOCKED_PANEL_DEFS
+            .map(({ id }) => document.getElementById(id))
+            .filter((panel) => panel && !panel.hidden);
+        const resetStartRects = new Map();
+        dockedPanelsBefore.forEach((panel) => {
+            const rect = panel.getBoundingClientRect();
+            resetStartRects.set(panel.id, rect);
+            panel.classList.remove('glass-panel-moving', 'glass-panel-flip-moving');
+            panel.style.transitionProperty = 'none';
+            panel.style.transitionDuration = '0ms';
+            panel.style.transitionTimingFunction = '';
+            panel.style.transitionDelay = '';
+            panel.style.willChange = 'left, top';
+            panel.style.left = `${rect.left}px`;
+            panel.style.top = `${rect.top}px`;
+            panel.style.right = '';
+            panel.style.bottom = '';
+            panel.style.transform = '';
+            panel.dataset.glassLeft = String(rect.left);
+            panel.dataset.glassTop = String(rect.top);
+            panel.dataset.glassX = String(rect.left);
+            panel.dataset.glassY = String(rect.top);
+            setPanelDockMode(panel, 'docked');
         });
-        const dockedPanels = getDockedSortablePanels();
-        const dockLayoutState = getCursorDockLayoutState(placementOrderHint);
-        const dockPanelsAlreadyGapAligned = !!dockLayoutState?.aligned;
-        const flipBeforeRects = new Map();
-        dockedPanels.forEach((panel) => {
-            flipBeforeRects.set(panel.id, panel.getBoundingClientRect());
-        });
-        debugDockedPanelOrder('reset:after-capture', { orderHint });
-        if (!dockPanelsAlreadyGapAligned) {
-            clearTransforms();
-        }
-        debugDockedPanelOrder('reset:after-clearTransforms', { orderHint });
-        if (!dockPanelsAlreadyGapAligned) {
-            markDockedPanelsDefault();
-        }
-        debugDockedPanelOrder('reset:after-markDockedPanelsDefault', { orderHint });
+
+        clearSavedPanelPlacements();
+        markDockedPanelsDefault();
+        debugDockedPanelOrder('reset:after-freeze-and-dock', { orderHint });
+
         const resetOrder = [
             'ui-variant-panel',
             'glass-control-bar',
@@ -4777,9 +4835,7 @@ window.UIGlassPanels = (function() {
         resetOrder.forEach(id => {
             const el = document.getElementById(id);
             if (!el) return;
-            if (id === 'ui-variant-panel') {
-                return;
-            }
+            if (id === 'ui-variant-panel') return;
             if (id === 'case-comparison') {
                 if (isCaseComparisonCollapseAnimating()) {
                     caseComparisonResetPlacementPending = true;
@@ -4792,9 +4848,7 @@ window.UIGlassPanels = (function() {
                 return;
             }
             if (isDockManagedPanelId(id)) return;
-            if (!dockPanelsAlreadyGapAligned || !isDockManagedPanelId(id)) {
-                applyDefaultPlacement(el, id);
-            }
+            applyDefaultPlacement(el, id);
             if (isControlPanel(id)) return;
             const placement = id === SETTINGS_PANEL_ID ? SETTINGS_PANEL_DEFAULT_PLACEMENT : DEFAULT_LAYOUT[id];
             if (placement && Number.isFinite(placement.left) && Number.isFinite(placement.top)) {
@@ -4810,13 +4864,7 @@ window.UIGlassPanels = (function() {
                 el.dataset.glassY = '';
             }
         });
-        const nextLayout = dockLayoutState?.layout || buildCanonicalCursorDockLayout(placementOrderHint, dockLayoutState?.heightOverrides || getCursorDockHeightOverridesForCurrentState());
-        const needsFlipAnimation = nextLayout.some(({ panel, left, top }) => {
-            const beforeRect = flipBeforeRects.get(panel?.id);
-            if (!panel || !beforeRect) return false;
-            return Math.hypot(beforeRect.left - left, beforeRect.top - top) >= 2;
-        });
-        const hasCollapsedDockPanels = dockedPanels.some((panel) => panel.classList.contains('collapsed'));
+
         const stylePanel = document.getElementById('ui-variant-panel');
         if (stylePanel) stylePanel.classList.remove('collapsed');
         const settingsPanel = document.getElementById(SETTINGS_PANEL_ID);
@@ -4831,40 +4879,71 @@ window.UIGlassPanels = (function() {
             settingsPanel.dataset.glassY = '';
         }
         clearUiVariantIdleReturnTimer();
+
+        const heightOverrides = getCursorDockHeightOverridesForCurrentState();
+        const targetLayout = buildCanonicalCursorDockLayout(placementOrderHint, heightOverrides);
+        dockArrangeSequence += 1;
+        const sequence = dockArrangeSequence;
+        const durationMs = RESET_PANELS_ANIMATION_MS;
+
         requestAnimationFrame(() => {
-            debugDockedPanelOrder('reset:before-arrange', { orderHint });
-            const variantPanel = document.getElementById('ui-variant-panel');
-            if (variantPanel) {
-                applyViewportTrackedPlacement(variantPanel);
-            }
-            ensureCursorDockGapForCurrentState(placementOrderHint, {
-                animate: needsFlipAnimation,
-                beforeRects: flipBeforeRects,
-                useDistanceBasedDuration: true,
-                minDurationMs: 1200,
-                maxDurationMs: 4200,
-                speedPxPerMs: 0.08,
-                fixedDurationMs: 2700,
-                moveDurationMs: 2700,
-                linearMove: true,
-                force: true
-            });
-            console.log('[layout-order-debug]', 'resetPanels:after-arrange-schedule', {
-                orderHint,
-                storedOrder: loadDockedPanelOrder()
-            });
-            debugDockedPanelOrder('reset:after-arrange', { orderHint });
-            cursorDockResetOrderHintCache = normalizeDockedPanelOrder(orderHint);
-            cursorDockResetOrderHintDirty = false;
+            if (sequence !== dockArrangeSequence) return;
+            debugDockedPanelOrder('reset:before-linear-move', { orderHint });
+            const startTime = performance.now();
+            const moves = targetLayout
+                .map(({ panel, left, top }) => {
+                    if (!panel) return null;
+                    const startRect = resetStartRects.get(panel.id) || panel.getBoundingClientRect();
+                    return {
+                        panel,
+                        startLeft: startRect.left,
+                        startTop: startRect.top,
+                        targetLeft: left,
+                        targetTop: top
+                    };
+                })
+                .filter(Boolean);
+
+            const step = (now) => {
+                if (sequence !== dockArrangeSequence) return;
+                const progress = Math.min(Math.max((now - startTime) / durationMs, 0), 1);
+                moves.forEach(({ panel, startLeft, startTop, targetLeft, targetTop }) => {
+                    if (!panel.isConnected) return;
+                    const nextLeft = startLeft + ((targetLeft - startLeft) * progress);
+                    const nextTop = startTop + ((targetTop - startTop) * progress);
+                    panel.style.left = `${nextLeft}px`;
+                    panel.style.top = `${nextTop}px`;
+                    panel.style.right = '';
+                    panel.style.bottom = '';
+                    panel.style.transform = '';
+                });
+                if (progress < 1) {
+                    requestAnimationFrame(step);
+                    return;
+                }
+                moves.forEach(({ panel, targetLeft, targetTop }) => {
+                    if (!panel.isConnected) return;
+                    panel.classList.remove('glass-panel-moving', 'glass-panel-flip-moving');
+                    panel.style.transitionProperty = '';
+                    panel.style.transitionDuration = '';
+                    panel.style.transitionTimingFunction = '';
+                    panel.style.transitionDelay = '';
+                    panel.style.willChange = '';
+                    finalizeDockPanelPlacement(panel, targetLeft, targetTop);
+                });
+                const appliedOrderHint = normalizeDockedPanelOrder(placementOrderHint);
+                cursorDockResetOrderHintCache = appliedOrderHint;
+                cursorDockResetOrderHintDirty = false;
+                layoutDebugLog('[layout-order-debug]', 'resetPanels:linear-move-complete', {
+                    orderHint,
+                    placementOrderHint: appliedOrderHint,
+                    layoutOrder: targetLayout.map(({ panel }) => panel?.id).filter(Boolean)
+                });
+            };
+            requestAnimationFrame(step);
         });
-        setTimeout(() => {
-            const state = getCursorDockLayoutState(placementOrderHint);
-            console.log('[layout-order-debug]', 'resetPanels:delayed-check', {
-                orderHint,
-                layoutOrder: state?.layout?.map(({ panel }) => panel?.id).filter(Boolean) || []
-            });
-        }, PANEL_VISIBILITY_ANIMATION_MS + 80);
-        localStorage.setItem(STORAGE_KEY, JSON.stringify({ order: normalizeDockedPanelOrder(orderHint) }));
+
+        localStorage.setItem(STORAGE_KEY, JSON.stringify({ order: normalizeDockedPanelOrder(placementOrderHint) }));
     }
 
     function ensureControlBar() {
@@ -4889,6 +4968,7 @@ window.UIGlassPanels = (function() {
                 event.preventDefault();
                 event.stopPropagation();
                 if (button.id === 'glass-panel-reset') {
+                    if (isUtilityPanelMotionLocked()) return;
                     blurGlassControlFocusIfNeeded();
                     resetPanels();
                 }
@@ -4896,6 +4976,7 @@ window.UIGlassPanels = (function() {
         }
         updateSettingsToggleLabel();
         updateSettingsToggleLabelTest();
+        syncUtilityMotionLockControls();
     }
 
     function ensureSettingsPanel() {
@@ -5092,7 +5173,7 @@ window.UIGlassPanels = (function() {
             overrides[panel.id] = measurePanelExpandedHeight(panel);
             logDockOpenLayoutTrace(panel, 'pre-open', orderHint, overrides);
             arrangeDockedPanels(orderHint, overrides);
-            setPanelCollapsedAnimated(panel, collapsed, 0, orderHint, overrides);
+            setPanelCollapsedAnimated(panel, collapsed, 140, orderHint, overrides);
             setTimeout(() => {
                 logDockOpenLayoutTrace(panel, 'after-open', orderHint, overrides);
             }, PANEL_VISIBILITY_ANIMATION_MS + 32);
@@ -5420,10 +5501,14 @@ window.UIGlassPanels = (function() {
             if (blockPublicDemoDisabledAction(event)) return;
             if (isProtectedPresetSelection()) return;
             const values = currentPresetValues ? { ...currentPresetValues } : readValuesFromPanel(panel);
+            const tunerSnapshotBeforeSave = getUiSizeTunerSnapshotForPresetExport();
+            const selectedBeforeSave = getSelectedPresetValue();
             const saved = savePresetValues(values);
             if (!saved) return;
             syncPresetValues(panel, values);
+            if (isCustomPresetValue(selectedBeforeSave)) setPresetSelection(selectedBeforeSave);
             applyPresetUI(panel);
+            applyUiSizeTunerSnapshotFromPresetImport(tunerSnapshotBeforeSave);
             if (status) {
                 status.textContent = '保存しました';
                 status.classList.add('is-visible');
@@ -5503,6 +5588,76 @@ window.UIGlassPanels = (function() {
         }
     }
 
+    function getUtilityMotionLockButtons() {
+        return Array.from(document.querySelectorAll([
+            '.glass-panel-quick-toggle-button[data-action="toggle-utility-openclose"]',
+            '#glass-panel-reset'
+        ].join(','))).filter(Boolean);
+    }
+
+    function syncUtilityMotionLockControls() {
+        const locked = isUtilityPanelMotionLocked();
+        getUtilityMotionLockButtons().forEach((button) => {
+            button.disabled = locked;
+            button.classList.toggle('is-motion-locked', locked);
+            button.setAttribute('aria-disabled', String(locked));
+            if (locked) {
+                button.dataset.motionLockReason = utilityPanelMotionLockReason || 'panel-motion';
+            } else {
+                delete button.dataset.motionLockReason;
+            }
+        });
+        document.body?.classList?.toggle('uiux-panel-motion-locked', locked);
+    }
+
+    function isUtilityPanelMotionLocked() {
+        if (!utilityPanelMotionLockUntil) return false;
+        if (performance.now() <= utilityPanelMotionLockUntil) return true;
+        utilityPanelMotionLockUntil = 0;
+        utilityPanelMotionLockReason = '';
+        if (utilityPanelMotionLockTimer) {
+            clearTimeout(utilityPanelMotionLockTimer);
+            utilityPanelMotionLockTimer = 0;
+        }
+        syncUtilityMotionLockControls();
+        return false;
+    }
+
+    function releaseUtilityPanelMotionLock(reason = 'release') {
+        if (utilityPanelMotionLockTimer) {
+            clearTimeout(utilityPanelMotionLockTimer);
+            utilityPanelMotionLockTimer = 0;
+        }
+        utilityPanelMotionLockUntil = 0;
+        utilityPanelMotionLockReason = '';
+        syncUtilityMotionLockControls();
+        layoutDebugLog('[utility-motion-lock]', 'release', { reason });
+    }
+
+    function acquireUtilityPanelMotionLock(reason, durationMs) {
+        if (isUtilityPanelMotionLocked()) {
+            layoutDebugLog('[utility-motion-lock]', 'blocked', {
+                reason,
+                activeReason: utilityPanelMotionLockReason,
+                remainingMs: Math.max(0, utilityPanelMotionLockUntil - performance.now())
+            });
+            return false;
+        }
+        const duration = Math.max(120, Number(durationMs) || PANEL_VISIBILITY_ANIMATION_MS);
+        utilityPanelMotionLockReason = reason || 'panel-motion';
+        utilityPanelMotionLockUntil = performance.now() + duration + MOTION_LOCK_RELEASE_BUFFER_MS;
+        if (utilityPanelMotionLockTimer) clearTimeout(utilityPanelMotionLockTimer);
+        utilityPanelMotionLockTimer = setTimeout(() => {
+            releaseUtilityPanelMotionLock(`${reason || 'panel-motion'}:timer`);
+        }, duration + MOTION_LOCK_RELEASE_BUFFER_MS);
+        syncUtilityMotionLockControls();
+        layoutDebugLog('[utility-motion-lock]', 'acquire', {
+            reason: utilityPanelMotionLockReason,
+            durationMs: duration
+        });
+        return true;
+    }
+
     function toggleSettingsPanel(forceOpen) {
         const panel = document.getElementById(SETTINGS_PANEL_ID);
         if (!panel) return;
@@ -5531,11 +5686,59 @@ window.UIGlassPanels = (function() {
             .filter(Boolean);
     }
 
-    function setCursorPanelOpen(panel, isOpen, options = {}) {
+    function setDockedCursorPanelsClosedBatch(dockedPanels, orderHint = loadDockedPanelOrder()) {
+        const panels = (Array.isArray(dockedPanels) ? dockedPanels : [])
+            .filter((panel) => panel && isDockManagedPanelId(panel.id));
+        if (!panels.length) return false;
+
+        const resolvedOrderHint = normalizeDockedPanelOrder(
+            Array.isArray(orderHint) && orderHint.length ? orderHint : getCursorDockOrderHint()
+        );
+        const heightOverrides = {};
+
+        panels.forEach((panel) => {
+            clearPanelCollapseTimer(panel);
+            panel.hidden = false;
+            panel.style.display = '';
+            panel.style.visibility = '';
+            panel.classList.add('collapsed');
+            panel.classList.remove('glass-panel-collapse-animating');
+            const content = panel.querySelector('.ui-content');
+            if (content) {
+                content.classList.remove('glass-panel-content-open');
+                content.classList.add('glass-panel-content-closing');
+                content.style.removeProperty('max-height');
+                content.style.removeProperty('overflow');
+                content.style.removeProperty('opacity');
+                content.style.removeProperty('transform');
+                content.style.removeProperty('will-change');
+            }
+            const header = panel.querySelector('.ui-header');
+            if (header) {
+                header.setAttribute('aria-expanded', 'false');
+                header.setAttribute('data-ui-state', 'closed');
+            }
+            clearNumberedDockContentTransform(panel);
+            heightOverrides[panel.id] = measurePanelCollapsedHeight(panel);
+        });
+
+        dockArrangeSequence += 1;
+        arrangeDockedPanels(resolvedOrderHint, heightOverrides, {
+            animate: false,
+            force: true,
+            sequence: dockArrangeSequence,
+            skipMoveTransition: true
+        });
+        localStorage.setItem(STORAGE_KEY, JSON.stringify({ order: resolvedOrderHint }));
+        cursorDockResetOrderHintCache = resolvedOrderHint.slice();
+        cursorDockResetOrderHintDirty = false;
+        return true;
+    }
+
+    function setCursorPanelOpen(panel, isOpen) {
         if (!panel) return;
         panel.hidden = false;
-        const isManagedDockedPanel = isDockManagedPanelId(panel.id) && getPanelDockMode(panel) === 'docked';
-        if (isOpen && isManagedDockedPanel) {
+        if (isOpen && isDockManagedPanelId(panel.id)) {
             const orderHint = loadDockedPanelOrder();
             const overrides = {};
             overrides[panel.id] = measurePanelExpandedHeight(panel);
@@ -5560,17 +5763,17 @@ window.UIGlassPanels = (function() {
             header.setAttribute('aria-expanded', String(isOpen));
             header.setAttribute('data-ui-state', isOpen ? 'open' : 'closed');
         }
-        if (isManagedDockedPanel && panel.id !== CURSOR_PANEL_HIDDEN_ID && !isOpen && options.suppressDockRealign !== true) {
+        if (isDockManagedPanelId(panel.id) && panel.id !== CURSOR_PANEL_HIDDEN_ID && !isOpen) {
             setTimeout(() => {
                 realignDockedPanelsMeasured('setCursorPanelOpen');
             }, PANEL_VISIBILITY_ANIMATION_MS + 40);
         }
     }
 
-    function setUtilityCursorPanelOpen(panel, isOpen, reason = 'set-utility') {
+    function setUtilityCursorPanelOpen(panel, isOpen) {
         if (!panel) return;
         if (panel.id === 'case-comparison') {
-            setCaseComparisonOpenAnimated(isOpen, reason);
+            setCaseComparisonOpenAnimated(isOpen, 'set-utility');
             return;
         }
         if (panel.id === 'ui-variant-panel') {
@@ -5598,8 +5801,12 @@ window.UIGlassPanels = (function() {
     function syncCursorPanelsState(isOpen, options = {}) {
         const button = document.getElementById(SETTINGS_TOGGLE_TEST_ID);
         const preserveCollapsedDuringStartup = options?.preserveCollapsedDuringStartup === true;
+        const skipDockedPanels = options?.skipDockedPanels === true;
         const panels = getCursorPanels();
         panels.forEach((panel) => {
+            if (skipDockedPanels && isDockManagedPanelId(panel?.id)) {
+                return;
+            }
             if (preserveCollapsedDuringStartup && isDockManagedPanelId(panel?.id) && panel.classList.contains('collapsed')) {
                 return;
             }
@@ -5632,12 +5839,12 @@ window.UIGlassPanels = (function() {
             : panels.some((panel) => panel.classList.contains('collapsed'))
                 || !!caseComparison?.classList.contains('collapsed')
                 || !presetOpen;
+        const lockDuration = isOpen ? C_TOGGLE_OPEN_LOCK_MS : C_TOGGLE_CLOSE_LOCK_MS;
+        if (!acquireUtilityPanelMotionLock('c-toggle', lockDuration)) return false;
         const hasClosedPanels = isOpen && panels.some((panel) => panel.classList.contains('collapsed'));
         if (isOpen) {
             const closedPanels = panels.filter((panel) => panel.classList.contains('collapsed'));
-            const closedDockedPanels = closedPanels.filter((panel) => isDockManagedPanelId(panel.id) && getPanelDockMode(panel) === 'docked');
             if (closedPanels.length) {
-                // Cの一括開閉では、途中の重なりや過渡的な座標を順序として採用しない。
                 const orderHint = getCanonicalDockedPanelOrder();
                 const heightOverrides = {};
                 panels.forEach((panel) => {
@@ -5651,8 +5858,8 @@ window.UIGlassPanels = (function() {
                 closedPanels.forEach((panel) => {
                     logDockOpenLayoutTrace(panel, 'pre-open', orderHint, heightOverrides);
                 });
-                if (closedDockedPanels.length) arrangeDockedPanels(orderHint, heightOverrides);
-                const openDelayMs = 0;
+                arrangeDockedPanels(orderHint, heightOverrides);
+                const openDelayMs = 360;
                 closedPanels.forEach((panel, index) => {
                     setPanelCollapsedAnimated(panel, false, openDelayMs + (index * 16), orderHint, heightOverrides);
                 });
@@ -5665,7 +5872,7 @@ window.UIGlassPanels = (function() {
                     saveVisibilityFromDom();
                     restoreCaseComparisonVisiblePlacement('show-all');
                     requestCursorDockLayoutRefresh(orderHint, heightOverrides);
-                    closedDockedPanels.forEach((panel) => {
+                    closedPanels.forEach((panel) => {
                         const placement = clampDockPanelAboveButtons(panel, {
                             left: Number.parseFloat(panel.style.left) || panel.getBoundingClientRect().left,
                             top: Number.parseFloat(panel.style.top) || panel.getBoundingClientRect().top
@@ -5684,44 +5891,22 @@ window.UIGlassPanels = (function() {
                 }
             });
         } else {
-            // C は各パネルを一度だけ閉じる。自由配置は現在位置を維持し、整列処理へ渡さない。
-            const dockedPanels = panels.filter((panel) => isDockManagedPanelId(panel.id) && getPanelDockMode(panel) === 'docked');
-            // Cの閉じ配置は常に 1→2→3→4 の正規順序で計算する。
             const resolvedOrderHint = getCanonicalDockedPanelOrder();
-            const closedHeightOverrides = {};
-            const beforeRects = new Map();
-            dockedPanels.forEach((panel) => {
-                beforeRects.set(panel.id, panel.getBoundingClientRect());
-                closedHeightOverrides[panel.id] = measurePanelClosedAnimationHeight(panel);
-            });
-
-            panels.forEach((panel) => setCursorPanelOpen(panel, false, { suppressDockRealign: true }));
-
-            // 右整列中のパネルだけは、閉じた最終高さを前提に同時に詰める。
-            // 開いた高さのレイアウトを遅れて再適用しない。
-            if (dockedPanels.length) {
-                const sequence = ++dockArrangeSequence;
-                arrangeDockedPanels(resolvedOrderHint, closedHeightOverrides, {
-                    // 閉じ高さへ縮む時間と同じ700msで、正規の閉じ位置へ連続移動する。
-                    // 中間高さで再レイアウトせず、現在位置→完了位置を一度だけ補間する。
-                    animate: true,
-                    beforeRects,
-                    linearMove: true,
-                    fixedDurationMs: PANEL_VISIBILITY_ANIMATION_MS,
-                    startGapMs: 0,
+            const dockManagedPanels = panels.filter((panel) => isDockManagedPanelId(panel.id));
+            const otherCursorPanels = panels.filter((panel) => !isDockManagedPanelId(panel.id));
+            setDockedCursorPanelsClosedBatch(dockManagedPanels, resolvedOrderHint);
+            otherCursorPanels.forEach((panel) => setCursorPanelOpen(panel, isOpen));
+            syncCursorPanelsState(isOpen, { skipDockedPanels: true });
+            const dockLayoutState = getCursorDockLayoutState(resolvedOrderHint);
+            if (dockLayoutState?.layout?.length) {
+                requestCursorDockLayoutRefresh(resolvedOrderHint, dockLayoutState.heightOverrides, {
+                    animate: false,
                     force: true,
-                    sequence,
-                    moveDurationMs: PANEL_VISIBILITY_ANIMATION_MS
+                    skipMoveTransition: true
                 });
-                setTimeout(() => {
-                    realignDockedPanelsMeasured('c-close-final', { immediate: true });
-                    dockedPanels.forEach((panel) => {
-                        warnIfPanelAnimationHeightDrifted(panel, measurePanelClosedAnimationHeight(panel), 'after-close');
-                    });
-                }, PANEL_VISIBILITY_ANIMATION_MS + 80);
             }
         }
-        utilityPanels.forEach((panel) => setUtilityCursorPanelOpen(panel, isOpen, 'c-toggle'));
+        utilityPanels.forEach((panel) => setUtilityCursorPanelOpen(panel, isOpen));
         if (presetPanel) {
             setUtilityCursorPanelOpen(document.getElementById('ui-variant-panel'), isOpen);
         }
@@ -5736,7 +5921,9 @@ window.UIGlassPanels = (function() {
                 restoreCaseComparisonVisiblePlacement('toggle-cursor-open-no-closed-panels');
             }
         }
-        // Cの閉じ配置は閉じ分岐内で最終高さを使って確定する。
+        if (!isOpen) scheduleArrangeDockedPanels();
+        syncUtilityMotionLockControls();
+        return true;
     }
 
     function updateSettingsToggleLabel() {
@@ -6126,8 +6313,8 @@ window.UIGlassPanels = (function() {
             body[data-ui-variant="variant-1-glass"] #ui-container,
             body[data-ui-variant="variant-1-glass"] .ui-container,
             body[data-ui-variant="variant-1-glass"] #ui-variant-panel {
-                width: min(416px, calc(100vw - 24px));
-                max-width: min(416px, calc(100vw - 24px));
+                width: min(var(--ui-variant-panel-width, 274px), calc(100vw - (var(--ui-edge-gap, 12px) * 2)));
+                max-width: min(var(--ui-variant-panel-width, 274px), calc(100vw - (var(--ui-edge-gap, 12px) * 2)));
                 min-width: 0;
                 box-sizing: border-box;
             }
@@ -6139,26 +6326,36 @@ window.UIGlassPanels = (function() {
             body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6,
             body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7 {
                 position: fixed;
-                right: 24px;
-                width: min(320px, calc(100vw - 24px));
-                max-width: min(320px, calc(100vw - 24px));
+                right: var(--ui-edge-gap, 12px);
+                width: min(var(--ui-floating-panel-width, 211px), calc(100vw - (var(--ui-edge-gap, 12px) * 2)));
+                max-width: min(var(--ui-floating-panel-width, 211px), calc(100vw - (var(--ui-edge-gap, 12px) * 2)));
                 min-width: 0;
                 box-sizing: border-box;
                 z-index: 62;
             }
-            body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-1 { top: 480px; }
-            body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-2 { top: 538px; }
-            body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3 { top: 596px; }
-            body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-4 { top: 686px; }
-            body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-5 { top: 744px; }
-            body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6 { top: 802px; }
-            body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7 { top: 860px; }
+            body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-1 { top: 436px; }
+            body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-2 { top: 485px; }
+            body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3 { top: 534px; }
+            body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-4 { top: 606px; }
+            body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-5 { top: 655px; }
+            body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-6 { top: 704px; }
+            body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7 { top: 753px; }
             body[data-ui-variant="variant-1-glass"] #ui-variant-panel {
-                width: min(416px, calc(100vw - 24px));
-                max-width: min(416px, calc(100vw - 24px));
+                width: min(var(--ui-variant-panel-width, 274px), calc(100vw - (var(--ui-edge-gap, 12px) * 2)));
+                max-width: min(var(--ui-variant-panel-width, 274px), calc(100vw - (var(--ui-edge-gap, 12px) * 2)));
             }
             body[data-ui-variant="variant-1-glass"] .ui-container.is-dragging .ui-header {
                 cursor: grabbing;
+            }
+            .glass-panel-quick-toggle-button.is-motion-locked,
+            #glass-panel-reset.is-motion-locked {
+                opacity: 0.48;
+                cursor: not-allowed;
+                pointer-events: none;
+            }
+            body.uiux-panel-motion-locked .glass-panel-quick-toggle-button[data-action="toggle-utility-openclose"],
+            body.uiux-panel-motion-locked #glass-panel-reset {
+                filter: saturate(0.82);
             }
         `;
         document.head.appendChild(style);
@@ -6261,12 +6458,10 @@ window.UIGlassPanels = (function() {
         updateSettingsToggleLabelTest();
     }
 
-    return {
+    const publicApi = {
         init,
         refresh,
         resetPanels,
-        debugGlassDockOrder: getGlassDockDebugState,
-        testGlassDockResetOrder: runGlassDockResetDebug,
         applySavedPositions,
         repositionCaseComparison,
         togglePanelFromBottomButton,
@@ -6275,14 +6470,22 @@ window.UIGlassPanels = (function() {
         updateReadableTextColor: updateGlassReadableTextColor,
         syncNeumorphismBackgroundSurface
     };
+
+    if (DEBUG_LAYOUT_LOGS) {
+        publicApi.debugGlassDockOrder = getGlassDockDebugState;
+        publicApi.testGlassDockResetOrder = runGlassDockResetDebug;
+    }
+
+    return publicApi;
 })();
 
 window.updateGlassReadableTextColor = window.UIGlassPanels?.updateReadableTextColor;
 window.syncNeumorphismBackgroundSurface = window.UIGlassPanels?.syncNeumorphismBackgroundSurface;
 
-// TEMP DEBUG: expose browser console helpers directly on window for manual verification.
-window.debugGlassDockOrder = () => window.UIGlassPanels?.debugGlassDockOrder?.();
-window.testGlassDockResetOrder = () => window.UIGlassPanels?.testGlassDockResetOrder?.();
+if (typeof DEBUG_LAYOUT_LOGS !== 'undefined' && DEBUG_LAYOUT_LOGS) {
+    window.debugGlassDockOrder = () => window.UIGlassPanels?.debugGlassDockOrder?.();
+    window.testGlassDockResetOrder = () => window.UIGlassPanels?.testGlassDockResetOrder?.();
+}
 
 document.addEventListener('DOMContentLoaded', function() {
     window.UIGlassPanels.init();

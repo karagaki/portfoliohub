@@ -1,3 +1,5 @@
+var UIUX_PUBLIC_DEBUG_LOGS = window.UIUX_PUBLIC_DEBUG_LOGS === true;
+function uiuxPublicDebugLog(...args) { if (UIUX_PUBLIC_DEBUG_LOGS) console.log(...args); }
 // Table_Next.js - ケース切替の唯一の実装
 
 window.TableNext = (function() {
@@ -8,7 +10,7 @@ window.TableNext = (function() {
     }
 
     function switchToCase(caseIndex) {
-        console.log(`TableNext: Switching to case ${caseIndex}`);
+        uiuxPublicDebugLog(`TableNext: Switching to case ${caseIndex}`);
 
         if (!window.cases || !Array.isArray(window.cases) || window.cases[caseIndex] === undefined) {
             console.error('TableNext: Invalid case index or window.cases not ready');
@@ -77,7 +79,7 @@ window.TableNext = (function() {
             reason: 'table-next-direct-switch-complete'
         }));
 
-        console.log(`TableNext: Switched to case${caseIndex}`, window.currentCase);
+        uiuxPublicDebugLog(`TableNext: Switched to case${caseIndex}`, window.currentCase);
 
         // UIの更新
         if (window.Slider && typeof window.Slider.updateSliders === 'function') {
@@ -158,7 +160,7 @@ window.TableNext = (function() {
     }
 
     function initialize() {
-        console.log('TableNext: Initialized');
+        uiuxPublicDebugLog('TableNext: Initialized');
     }
 
     return {
@@ -168,6 +170,6 @@ window.TableNext = (function() {
 })();
 
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('DOM loaded: Table_Next.js initializing');
+    uiuxPublicDebugLog('DOM loaded: Table_Next.js initializing');
     window.TableNext.initialize();
 });

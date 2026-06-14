@@ -221,3 +221,69 @@
 #slider-container .changed-value {
     color: #ff0000;
 }
+
+/* v90: 順次遷移スライダー右側ロック。
+   初期状態はロック。🔓は解除可能時=100%、ロック中=半透明。
+   スライダー本体はロック中に操作できない。 */
+#pointSequenceSeconds-group .default-container,
+#glass-cursor-panel-4 #pointSequenceSeconds-group .default-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+}
+
+#pointSequenceSeconds-group .point-sequence-lock-button,
+#glass-cursor-panel-4 #pointSequenceSeconds-group .point-sequence-lock-button {
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    width: 14px !important;
+    min-width: 14px !important;
+    height: 14px !important;
+    min-height: 14px !important;
+    padding: 0 !important;
+    margin: 0 auto !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    filter: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    color: inherit !important;
+    font-size: 10px !important;
+    line-height: 1 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer;
+    opacity: 1;
+    transform: none !important;
+    transition: opacity 0.12s ease !important;
+}
+
+#pointSequenceSeconds-group .point-sequence-lock-button:hover,
+#pointSequenceSeconds-group .point-sequence-lock-button:active,
+#pointSequenceSeconds-group .point-sequence-lock-button:focus,
+#glass-cursor-panel-4 #pointSequenceSeconds-group .point-sequence-lock-button:hover,
+#glass-cursor-panel-4 #pointSequenceSeconds-group .point-sequence-lock-button:active,
+#glass-cursor-panel-4 #pointSequenceSeconds-group .point-sequence-lock-button:focus {
+    background: transparent !important;
+    box-shadow: none !important;
+    filter: none !important;
+    transform: none !important;
+    outline: none !important;
+}
+
+#pointSequenceSeconds-group.is-point-sequence-locked .point-sequence-lock-button,
+#glass-cursor-panel-4 #pointSequenceSeconds-group.is-point-sequence-locked .point-sequence-lock-button {
+    opacity: 0.38;
+}
+
+#pointSequenceSeconds-group.is-point-sequence-locked .slider,
+#glass-cursor-panel-4 #pointSequenceSeconds-group.is-point-sequence-locked .slider {
+    pointer-events: none !important;
+    cursor: not-allowed !important;
+    opacity: 0.55;
+}

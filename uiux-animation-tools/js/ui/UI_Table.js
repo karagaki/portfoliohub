@@ -6,9 +6,9 @@
     const HORIZONTAL = 'horizontal';
     const VERTICAL = 'vertical';
     const CASE_COUNT = 12;
-    const BUTTON_SIZE = 31;
-    const BUTTON_GAP = 4;
-    const TOGGLE_GAP = 7;
+    const BUTTON_SIZE = 21;
+    const BUTTON_GAP = 2;
+    const TOGGLE_GAP = 4;
     const STEP_MS = 200;
     const MOVE_MS = 800;
     const ARC_X = 0;
@@ -145,7 +145,7 @@
         if (!statusLabel) return;
         if (mode === VERTICAL && updateButton) {
             const deletePos = getActionPosition('delete', mode);
-            statusLabel.style.left = `${deletePos.x + BUTTON_SIZE + 8}px`;
+            statusLabel.style.left = `${deletePos.x + BUTTON_SIZE + 6}px`;
             statusLabel.style.top = `${deletePos.y + 3}px`;
             statusLabel.style.right = 'auto';
             statusLabel.style.bottom = 'auto';

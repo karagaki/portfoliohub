@@ -2123,3 +2123,15 @@
   filter: blur(0) !important;
   pointer-events: auto !important;
 }
+
+
+/* v805: Page 2 left conversation panel top spacing polish.
+   Keep a small breathable gap, but do not leave a large blank before the first User bubble. */
+#portfolio-quality.active .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-chat-thread,
+#portfolio-quality .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-chat-thread{
+  padding-top: clamp(8px, 1vw, 14px);
+}
+#portfolio-quality.active .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-chat-thread > .chat-bubble:first-child,
+#portfolio-quality .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-chat-thread > .chat-bubble:first-child{
+  margin-top: 0;
+}

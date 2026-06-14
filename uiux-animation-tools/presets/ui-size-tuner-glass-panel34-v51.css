@@ -1,0 +1,15 @@
+body[data-ui-variant="variant-1-glass"][data-ui-theme="glass"] #glass-cursor-panel-6 {
+  --ui-panel-3-label-width: 51px;
+  --ui-panel-3-slider-min-width: 38px;
+  --ui-panel-3-value-width: 49px;
+  --ui-panel-3-column-gap: 1px;
+  --ui-panel-3-slider-offset-x: 3px;
+}
+body[data-ui-variant="variant-1-glass"][data-ui-theme="glass"] #glass-cursor-panel-7 {
+  --ui-panel-4-label-width: 52px;
+  --ui-panel-4-slider-min-width: 62px;
+  --ui-panel-4-value-width: 24px;
+  --ui-panel-4-slider-offset-x: -8px;
+  --ui-panel-4-value-offset-x: -1px;
+  --ui-panel-4-label-font-size: 13px;
+}

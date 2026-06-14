@@ -1,3 +1,5 @@
+var UIUX_PUBLIC_DEBUG_LOGS = window.UIUX_PUBLIC_DEBUG_LOGS === true;
+function uiuxPublicDebugLog(...args) { if (UIUX_PUBLIC_DEBUG_LOGS) console.log(...args); }
 window.p5Instance = this;
 
 // グローバル変数の宣言
@@ -2027,7 +2029,7 @@ window.setup = function() {
     if (!window.Color) {
         window.Color = {
             updateColorPreview: function(color) {
-                console.log('Color preview updated with:', color);
+                uiuxPublicDebugLog('Color preview updated with:', color);
             },
             isUsingRandomColors: function() {
                 return false;
@@ -2160,7 +2162,7 @@ window.draw = function() {
 function loadAndSetImage() {
     const img = new Image();
     img.onload = function() {
-        console.log('Image loaded successfully');
+        uiuxPublicDebugLog('Image loaded successfully');
         const canvas = document.createElement('canvas');
         canvas.width = img.width;
         canvas.height = img.height;
@@ -2168,13 +2170,13 @@ function loadAndSetImage() {
         ctx.drawImage(img, 0, 0);
         const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
         window.Vector.setImageData(imageData);
-        console.log('Image data sent to Vector.js');
+        uiuxPublicDebugLog('Image data sent to Vector.js');
     }
     img.onerror = function(e) {
         console.error('Failed to load image:', e);
     }
     img.src = 'assets/star_image.png'; // 正しいパスに修正
-    console.log('Attempting to load image from:', img.src);
+    uiuxPublicDebugLog('Attempting to load image from:', img.src);
 }
 
 // 初期化時に呼び出す
@@ -2204,7 +2206,7 @@ function loadSavedSettings() {
             }
         });
         
-        console.log('Saved settings loaded:', allSettings);
+        uiuxPublicDebugLog('Saved settings loaded:', allSettings);
     }
 }
 
@@ -2359,7 +2361,7 @@ function loadAndSetImage(caseObj) {
     if (caseObj && caseObj.config && caseObj.config.image) {
         loadImage(caseObj.config.image, 
             img => {
-                console.log('Image loaded successfully:', img);
+                uiuxPublicDebugLog('Image loaded successfully:', img);
                 caseObj.config.image = img;
                 // 画像がロードされたら、テーブルを更新
                 if (window.Table && typeof window.Table.updateCaseComparisonTable === 'function') {

@@ -1,0 +1,790 @@
+/*
+  Runtime UI styles consolidated from former index-level fixes.
+  This file is a stable runtime layer loaded after base UI CSS to preserve final cascade.
+*/
+
+/* Color panel / bottom controls runtime fixes. */
+
+/* ===== runtime from index.html: <style id="v67-neumo-color-floating-fix"> ===== */
+
+/* v67: Neumorphismの馴染ボタンと右下case/color系UIの白浮きを最終上書きで抑える。
+           既存テーマ外の独自強調色・白塗りを避け、白は輪郭/ハイライトに限定する。 */
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-theme-actions button.color-blend-btn.is-active,
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-theme-actions button.color-blend-btn[aria-pressed="true"],
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-theme-actions button[data-theme-blend].is-active,
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-theme-actions button[data-theme-blend][aria-pressed="true"],
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #color-container .color-theme-actions button.color-blend-btn.is-active,
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #color-container .color-theme-actions button.color-blend-btn[aria-pressed="true"],
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #color-container .color-theme-actions button[data-theme-blend].is-active,
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #color-container .color-theme-actions button[data-theme-blend][aria-pressed="true"] {
+            background: rgba(190, 190, 190, 0.16) !important;
+            background-color: rgba(190, 190, 190, 0.16) !important;
+            color: rgba(16, 26, 40, 0.88) !important;
+            -webkit-text-fill-color: rgba(16, 26, 40, 0.88) !important;
+            border-color: rgba(255, 255, 255, 0.52) !important;
+            outline: 1px solid rgba(255, 255, 255, 0.34) !important;
+            outline-offset: -2px !important;
+            box-shadow:
+                inset 1px 1px 1px rgba(255, 255, 255, 0.26),
+                inset -1px -1px 2px rgba(0, 0, 0, 0.10),
+                0 1px 2px rgba(0, 0, 0, 0.08) !important;
+            filter: none !important;
+            opacity: 0.92 !important;
+        }
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-theme-actions button.color-blend-btn.is-active *,
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-theme-actions button.color-blend-btn[aria-pressed="true"] *,
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-theme-actions button[data-theme-blend].is-active *,
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-theme-actions button[data-theme-blend][aria-pressed="true"] *,
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #color-container .color-theme-actions button.color-blend-btn.is-active *,
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #color-container .color-theme-actions button.color-blend-btn[aria-pressed="true"] *,
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #color-container .color-theme-actions button[data-theme-blend].is-active *,
+        body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #color-container .color-theme-actions button[data-theme-blend][aria-pressed="true"] * {
+            color: rgba(16, 26, 40, 0.88) !important;
+            -webkit-text-fill-color: rgba(16, 26, 40, 0.88) !important;
+        }
+
+        body[data-ui-variant="variant-1-glass"] #case-comparison.case-palette-only .case-layout-toggle,
+        body[data-ui-variant="variant-1-glass"] #case-comparison.case-palette-only .case-choice-button,
+        body[data-ui-variant="variant-1-glass"] #case-comparison.case-palette-only .case-action-button,
+        body[data-ui-variant="variant-1-glass"] #case-comparison.case-palette-only .case-slot-button {
+            background: rgba(186, 190, 194, 0.20) !important;
+            background-color: rgba(186, 190, 194, 0.20) !important;
+            border-color: rgba(18, 28, 40, 0.20) !important;
+            color: rgba(16, 26, 40, 0.88) !important;
+            -webkit-text-fill-color: rgba(16, 26, 40, 0.88) !important;
+            box-shadow:
+                inset 1px 1px 1px rgba(255, 255, 255, 0.18),
+                inset -1px -1px 2px rgba(0, 0, 0, 0.08),
+                0 1px 2px rgba(0, 0, 0, 0.08) !important;
+            filter: none !important;
+        }
+        body[data-ui-variant="variant-1-glass"] #case-comparison.case-palette-only .case-choice-button.current-case,
+        body[data-ui-variant="variant-1-glass"] #case-comparison.case-palette-only .case-slot-button.is-selected {
+            background: rgba(192, 196, 200, 0.28) !important;
+            background-color: rgba(192, 196, 200, 0.28) !important;
+            border-color: rgba(255, 105, 168, 0.58) !important;
+            box-shadow:
+                inset 1px 1px 1px rgba(255, 255, 255, 0.20),
+                inset -1px -1px 2px rgba(0, 0, 0, 0.08),
+                0 0 0 1px rgba(255, 105, 168, 0.26) !important;
+        }
+        body[data-ui-variant="variant-1-glass"] #case-comparison.case-palette-only .case-choice-button:hover,
+        body[data-ui-variant="variant-1-glass"] #case-comparison.case-palette-only .case-layout-toggle:hover,
+        body[data-ui-variant="variant-1-glass"] #case-comparison.case-palette-only .case-action-button:hover,
+        body[data-ui-variant="variant-1-glass"] #case-comparison.case-palette-only .case-slot-button:hover {
+            background: rgba(190, 194, 198, 0.28) !important;
+            background-color: rgba(190, 194, 198, 0.28) !important;
+            border-color: rgba(18, 28, 40, 0.26) !important;
+        }
+
+/* ===== runtime from index.html: <style id="ui-v69-neumo-white-final-override"> ===== */
+
+/* v69 FINAL: Neumorphism white override.
+           Previous fixes failed because they were scoped to variant-1-glass while
+           Neumorphism uses data-ui-theme="neumorphism" with a different variant id.
+           This block is intentionally placed at the end of <head> to win over
+           UI_Color / UI_Table / UI_SoftUI / UI_Neumorphism and inline runtime links. */
+
+        body[data-ui-theme="neumorphism"] .color-theme-actions button.color-blend-btn,
+        body[data-ui-theme="neumorphism"] .color-theme-actions button[data-theme-blend],
+        body[data-ui-theme="neumorphism"] .color-utility-actions button.color-blend-btn,
+        body[data-ui-theme="neumorphism"] .color-utility-actions button[data-theme-blend],
+        body[data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-theme-actions button.color-blend-btn,
+        body[data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-theme-actions button[data-theme-blend],
+        body[data-ui-theme="neumorphism"] #color-container .color-theme-actions button.color-blend-btn,
+        body[data-ui-theme="neumorphism"] #color-container .color-theme-actions button[data-theme-blend] {
+            background: rgba(168, 165, 161, 0.28) !important;
+            background-color: rgba(168, 165, 161, 0.28) !important;
+            background-image: none !important;
+            color: rgba(17, 27, 39, 0.88) !important;
+            -webkit-text-fill-color: rgba(17, 27, 39, 0.88) !important;
+            border: 1px solid rgba(255, 255, 255, 0.42) !important;
+            outline: none !important;
+            box-shadow:
+                inset 1px 1px 2px rgba(255, 255, 255, 0.28),
+                inset -1px -1px 2px rgba(72, 70, 68, 0.12) !important;
+            filter: none !important;
+            opacity: 0.90 !important;
+        }
+
+        body[data-ui-theme="neumorphism"] .color-theme-actions button.color-blend-btn.is-active,
+        body[data-ui-theme="neumorphism"] .color-theme-actions button.color-blend-btn[aria-pressed="true"],
+        body[data-ui-theme="neumorphism"] .color-theme-actions button[data-theme-blend].is-active,
+        body[data-ui-theme="neumorphism"] .color-theme-actions button[data-theme-blend][aria-pressed="true"],
+        body[data-ui-theme="neumorphism"] .color-utility-actions button.color-blend-btn.is-active,
+        body[data-ui-theme="neumorphism"] .color-utility-actions button.color-blend-btn[aria-pressed="true"],
+        body[data-ui-theme="neumorphism"] .color-utility-actions button[data-theme-blend].is-active,
+        body[data-ui-theme="neumorphism"] .color-utility-actions button[data-theme-blend][aria-pressed="true"],
+        body[data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-theme-actions button.color-blend-btn.is-active,
+        body[data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-theme-actions button.color-blend-btn[aria-pressed="true"],
+        body[data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-theme-actions button[data-theme-blend].is-active,
+        body[data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-theme-actions button[data-theme-blend][aria-pressed="true"],
+        body[data-ui-theme="neumorphism"] #color-container .color-theme-actions button.color-blend-btn.is-active,
+        body[data-ui-theme="neumorphism"] #color-container .color-theme-actions button.color-blend-btn[aria-pressed="true"],
+        body[data-ui-theme="neumorphism"] #color-container .color-theme-actions button[data-theme-blend].is-active,
+        body[data-ui-theme="neumorphism"] #color-container .color-theme-actions button[data-theme-blend][aria-pressed="true"] {
+            background: rgba(154, 151, 147, 0.34) !important;
+            background-color: rgba(154, 151, 147, 0.34) !important;
+            background-image: none !important;
+            color: rgba(12, 24, 38, 0.96) !important;
+            -webkit-text-fill-color: rgba(12, 24, 38, 0.96) !important;
+            border: 1px solid rgba(255, 255, 255, 0.66) !important;
+            outline: 1px solid rgba(255, 255, 255, 0.28) !important;
+            outline-offset: -2px !important;
+            box-shadow:
+                inset 1px 1px 2px rgba(255, 255, 255, 0.32),
+                inset -1px -1px 2px rgba(72, 70, 68, 0.14) !important;
+            filter: none !important;
+            opacity: 0.96 !important;
+        }
+
+        body[data-ui-theme="neumorphism"] .color-theme-actions button.color-blend-btn.is-active *,
+        body[data-ui-theme="neumorphism"] .color-theme-actions button.color-blend-btn[aria-pressed="true"] *,
+        body[data-ui-theme="neumorphism"] .color-theme-actions button[data-theme-blend].is-active *,
+        body[data-ui-theme="neumorphism"] .color-theme-actions button[data-theme-blend][aria-pressed="true"] * {
+            color: rgba(12, 24, 38, 0.96) !important;
+            -webkit-text-fill-color: rgba(12, 24, 38, 0.96) !important;
+        }
+
+        body[data-ui-theme="neumorphism"] #case-comparison.case-palette-only .case-layout-toggle,
+        body[data-ui-theme="neumorphism"] #case-comparison.case-palette-only .case-choice-button,
+        body[data-ui-theme="neumorphism"] #case-comparison.case-palette-only .case-action-button,
+        body[data-ui-theme="neumorphism"] #case-comparison.case-palette-only .case-slot-button,
+        body[data-ui-theme="neumorphism"] #case-comparison .case-layout-toggle,
+        body[data-ui-theme="neumorphism"] #case-comparison .case-choice-button,
+        body[data-ui-theme="neumorphism"] #case-comparison .case-action-button,
+        body[data-ui-theme="neumorphism"] #case-comparison .case-slot-button {
+            background: rgba(166, 163, 159, 0.30) !important;
+            background-color: rgba(166, 163, 159, 0.30) !important;
+            background-image: none !important;
+            color: rgba(15, 28, 42, 0.88) !important;
+            -webkit-text-fill-color: rgba(15, 28, 42, 0.88) !important;
+            border: 1px solid rgba(255, 255, 255, 0.42) !important;
+            outline: none !important;
+            box-shadow:
+                inset 1px 1px 2px rgba(255, 255, 255, 0.26),
+                inset -1px -1px 2px rgba(76, 74, 72, 0.12) !important;
+            filter: none !important;
+            opacity: 0.90 !important;
+        }
+
+        body[data-ui-theme="neumorphism"] #case-comparison.case-palette-only .case-choice-button.current-case,
+        body[data-ui-theme="neumorphism"] #case-comparison.case-palette-only .case-choice-button.transition-target-case,
+        body[data-ui-theme="neumorphism"] #case-comparison.case-palette-only .case-slot-button.is-selected,
+        body[data-ui-theme="neumorphism"] #case-comparison.case-palette-only .case-slot-button.is-selected.is-draft-source,
+        body[data-ui-theme="neumorphism"] #case-comparison .case-choice-button.current-case,
+        body[data-ui-theme="neumorphism"] #case-comparison .case-choice-button.transition-target-case,
+        body[data-ui-theme="neumorphism"] #case-comparison .case-slot-button.is-selected,
+        body[data-ui-theme="neumorphism"] #case-comparison .case-slot-button.is-selected.is-draft-source {
+            background: rgba(150, 147, 143, 0.38) !important;
+            background-color: rgba(150, 147, 143, 0.38) !important;
+            background-image: none !important;
+            color: rgba(12, 24, 38, 0.96) !important;
+            -webkit-text-fill-color: rgba(12, 24, 38, 0.96) !important;
+            border: 1px solid rgba(255, 255, 255, 0.68) !important;
+            outline: 1px solid rgba(255, 255, 255, 0.28) !important;
+            outline-offset: -2px !important;
+            box-shadow:
+                inset 1px 1px 2px rgba(255, 255, 255, 0.30),
+                inset -1px -1px 2px rgba(76, 74, 72, 0.14) !important;
+            filter: none !important;
+            opacity: 0.98 !important;
+        }
+
+/* ===== runtime from index.html: <style id="ui-v70-blend-and-bottom-color-capsule-fix"> ===== */
+
+/* v70: 馴染ボタン色と右下カラーパレットUIを、既存ボタン質感に沿って最終上書きする。
+           白い塗り面や多重リングを作らず、カプセル型の小さな色インジケータだけを表示する。 */
+        :root {
+            --ui-color-blend-off-color: #b2b2b2;
+            --ui-color-blend-on-color: #aeb6c0;
+            --ui-color-blend-border-color: #f5f5f2;
+            --ui-color-blend-text-color: #0d1826;
+            --ui-color-blend-off-fill-alpha: 0.18;
+            --ui-color-blend-on-fill-alpha: 0.26;
+            --ui-color-blend-on-border-alpha: 0.48;
+            --ui-color-blend-text-alpha: 0.86;
+            --ui-color-blend-blue-mix: 0.10;
+            --ui-bottom-color-capsule-inset-x: 8px;
+            --ui-bottom-color-capsule-inset-y: 5px;
+        }
+
+        body[data-ui-theme="neumorphism"] .color-theme-actions button.color-blend-btn,
+        body[data-ui-theme="neumorphism"] .color-theme-actions button[data-theme-blend],
+        body[data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-theme-actions button.color-blend-btn,
+        body[data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-theme-actions button[data-theme-blend] {
+            background: rgba(
+                calc(178 - (28 * var(--ui-color-blend-blue-mix, 0.10))),
+                calc(178 - (18 * var(--ui-color-blend-blue-mix, 0.10))),
+                calc(178 + (10 * var(--ui-color-blend-blue-mix, 0.10))),
+                var(--ui-color-blend-off-fill-alpha, 0.18)
+            ) !important;
+            background-color: rgba(
+                calc(178 - (28 * var(--ui-color-blend-blue-mix, 0.10))),
+                calc(178 - (18 * var(--ui-color-blend-blue-mix, 0.10))),
+                calc(178 + (10 * var(--ui-color-blend-blue-mix, 0.10))),
+                var(--ui-color-blend-off-fill-alpha, 0.18)
+            ) !important;
+            background-image: none !important;
+            color: rgba(13, 24, 38, var(--ui-color-blend-text-alpha, 0.86)) !important;
+            -webkit-text-fill-color: rgba(13, 24, 38, var(--ui-color-blend-text-alpha, 0.86)) !important;
+            border-color: rgba(255, 255, 255, 0.32) !important;
+            box-shadow:
+                inset 1px 1px 2px rgba(255,255,255,0.22),
+                inset -1px -1px 2px rgba(64,60,58,0.10) !important;
+            filter: none !important;
+        }
+
+        body[data-ui-theme="neumorphism"] .color-theme-actions button.color-blend-btn.is-active,
+        body[data-ui-theme="neumorphism"] .color-theme-actions button.color-blend-btn[aria-pressed="true"],
+        body[data-ui-theme="neumorphism"] .color-theme-actions button[data-theme-blend].is-active,
+        body[data-ui-theme="neumorphism"] .color-theme-actions button[data-theme-blend][aria-pressed="true"],
+        body[data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-theme-actions button.color-blend-btn.is-active,
+        body[data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-theme-actions button.color-blend-btn[aria-pressed="true"],
+        body[data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-theme-actions button[data-theme-blend].is-active,
+        body[data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-theme-actions button[data-theme-blend][aria-pressed="true"] {
+            background: rgba(
+                calc(170 - (38 * var(--ui-color-blend-blue-mix, 0.10))),
+                calc(170 - (24 * var(--ui-color-blend-blue-mix, 0.10))),
+                calc(170 + (18 * var(--ui-color-blend-blue-mix, 0.10))),
+                var(--ui-color-blend-on-fill-alpha, 0.26)
+            ) !important;
+            background-color: rgba(
+                calc(170 - (38 * var(--ui-color-blend-blue-mix, 0.10))),
+                calc(170 - (24 * var(--ui-color-blend-blue-mix, 0.10))),
+                calc(170 + (18 * var(--ui-color-blend-blue-mix, 0.10))),
+                var(--ui-color-blend-on-fill-alpha, 0.26)
+            ) !important;
+            background-image: none !important;
+            border-color: rgba(255, 255, 255, var(--ui-color-blend-on-border-alpha, 0.48)) !important;
+            outline: none !important;
+            color: rgba(13, 24, 38, 0.94) !important;
+            -webkit-text-fill-color: rgba(13, 24, 38, 0.94) !important;
+            box-shadow:
+                inset 1px 1px 2px rgba(255,255,255,0.26),
+                inset -1px -1px 2px rgba(64,60,58,0.12),
+                0 0 0 1px rgba(255,255,255,0.16) !important;
+            filter: none !important;
+        }
+
+        body[data-ui-theme="neumorphism"] #glass-control-bar .canvas-bottom-color-button,
+        body[data-ui-theme="neumorphism"] #glass-control-bar .canvas-bottom-color-button:is(.selected, .is-selected),
+        body[data-ui-theme="neumorphism"] #glass-control-bar .canvas-bottom-color-button:active,
+        body[data-ui-theme="neumorphism"] #case-comparison.case-palette-only .case-slot-button,
+        body[data-ui-theme="neumorphism"] #case-comparison.case-palette-only .case-slot-button.is-selected,
+        body[data-ui-theme="neumorphism"] #case-comparison.case-palette-only .case-choice-button.current-case {
+            background: var(--neumo-base-raised, rgba(190,188,184,0.40)) !important;
+            background-color: var(--neumo-base-raised, rgba(190,188,184,0.40)) !important;
+            background-image: none !important;
+            border-color: rgba(255,255,255,0.34) !important;
+            outline: none !important;
+            box-shadow:
+                inset 1px 1px 2px rgba(255,255,255,0.22),
+                inset -1px -1px 2px rgba(55,52,50,0.10) !important;
+            overflow: hidden !important;
+        }
+
+        body[data-ui-theme="neumorphism"] #glass-control-bar .canvas-bottom-color-button::before,
+        body[data-ui-theme="neumorphism"] #glass-control-bar .canvas-bottom-color-button::after,
+        body[data-ui-theme="neumorphism"] #case-comparison.case-palette-only .case-slot-button::before,
+        body[data-ui-theme="neumorphism"] #case-comparison.case-palette-only .case-slot-button::after {
+            content: none !important;
+            display: none !important;
+        }
+
+        body[data-ui-theme="neumorphism"] #glass-control-bar .canvas-bottom-color-swatch {
+            position: absolute !important;
+            left: var(--ui-bottom-color-capsule-inset-x, 8px) !important;
+            right: var(--ui-bottom-color-capsule-inset-x, 8px) !important;
+            top: var(--ui-bottom-color-capsule-inset-y, 5px) !important;
+            bottom: var(--ui-bottom-color-capsule-inset-y, 5px) !important;
+            border-radius: 999px !important;
+            background: var(--canvas-bottom-color-value, #b8b6b2) !important;
+            border: 1px solid rgba(255,255,255,0.28) !important;
+            box-shadow:
+                inset 1px 1px 1px rgba(255,255,255,0.18),
+                inset -1px -1px 1px rgba(17,24,34,0.08) !important;
+            opacity: 0.78 !important;
+            pointer-events: none !important;
+        }
+
+        body[data-ui-theme="neumorphism"] #glass-control-bar .canvas-bottom-color-button input[type="color"] {
+            opacity: 0 !important;
+            border: 0 !important;
+            background: transparent !important;
+            box-shadow: none !important;
+        }
+
+/* ===== runtime from index.html: <style id="ui-v71-bottom-color-no-outer-ring"> ===== */
+
+/* v71: 右下カラーパレットボタンの外側二重リングを撤去。
+           ボタン外枠で色を主張せず、既存の下部ボタン面の中に小さい色カプセルだけを置く。 */
+        body[data-ui-variant="variant-1-glass"] #glass-control-bar .canvas-bottom-color-button,
+        body[data-ui-variant="variant-1-glass"] #glass-control-bar .canvas-bottom-color-button.selected,
+        body[data-ui-variant="variant-1-glass"] #glass-control-bar .canvas-bottom-color-button.is-selected,
+        body[data-ui-variant="variant-1-glass"] #glass-control-bar .canvas-bottom-color-button:active,
+        body[data-ui-theme="neumorphism"] #glass-control-bar .canvas-bottom-color-button,
+        body[data-ui-theme="neumorphism"] #glass-control-bar .canvas-bottom-color-button.selected,
+        body[data-ui-theme="neumorphism"] #glass-control-bar .canvas-bottom-color-button.is-selected,
+        body[data-ui-theme="neumorphism"] #glass-control-bar .canvas-bottom-color-button:active {
+            outline: none !important;
+            outline-offset: 0 !important;
+            border: 1px solid rgba(20, 28, 38, 0.18) !important;
+            background-image: none !important;
+            box-shadow: none !important;
+            filter: none !important;
+            overflow: hidden !important;
+        }
+
+        body[data-ui-theme="neumorphism"] #glass-control-bar .canvas-bottom-color-button,
+        body[data-ui-theme="neumorphism"] #glass-control-bar .canvas-bottom-color-button.selected,
+        body[data-ui-theme="neumorphism"] #glass-control-bar .canvas-bottom-color-button.is-selected,
+        body[data-ui-theme="neumorphism"] #glass-control-bar .canvas-bottom-color-button:active {
+            background: rgba(183, 181, 177, 0.30) !important;
+            background-color: rgba(183, 181, 177, 0.30) !important;
+            border-color: rgba(20, 28, 38, 0.16) !important;
+            box-shadow:
+                inset 1px 1px 1px rgba(255, 255, 255, 0.18),
+                inset -1px -1px 1px rgba(58, 55, 52, 0.08) !important;
+        }
+
+        body[data-ui-variant="variant-1-glass"] #glass-control-bar .canvas-bottom-color-button::before,
+        body[data-ui-variant="variant-1-glass"] #glass-control-bar .canvas-bottom-color-button::after,
+        body[data-ui-theme="neumorphism"] #glass-control-bar .canvas-bottom-color-button::before,
+        body[data-ui-theme="neumorphism"] #glass-control-bar .canvas-bottom-color-button::after {
+            content: none !important;
+            display: none !important;
+            background: transparent !important;
+            border: 0 !important;
+            box-shadow: none !important;
+            outline: none !important;
+        }
+
+        body[data-ui-variant="variant-1-glass"] #glass-control-bar .canvas-bottom-color-swatch,
+        body[data-ui-theme="neumorphism"] #glass-control-bar .canvas-bottom-color-swatch {
+            left: 10px !important;
+            right: 10px !important;
+            top: 6px !important;
+            bottom: 6px !important;
+            border-radius: 999px !important;
+            border: 0 !important;
+            outline: none !important;
+            box-shadow: none !important;
+            background: var(--canvas-bottom-color-value, #b8b6b2) !important;
+            opacity: 0.58 !important;
+            pointer-events: none !important;
+        }
+
+        body[data-ui-variant="variant-1-glass"] #glass-control-bar .canvas-bottom-color-button input[type="color"],
+        body[data-ui-theme="neumorphism"] #glass-control-bar .canvas-bottom-color-button input[type="color"] {
+            opacity: 0 !important;
+            border: 0 !important;
+            outline: none !important;
+            background: transparent !important;
+            box-shadow: none !important;
+        }
+
+/* ===== runtime from index.html: <style id="ui-v72-bottom-color-single-capsule-and-blend-note"> ===== */
+
+/* v72: 右下カラーパレットは、隣の下部ボタンと同じ外側面を使う。
+           色表示は内側の小さなカプセルだけ。外側の色違い・二重リング・input由来の面を完全に消す。 */
+        :root {
+            --ui-bottom-color-swatch-inset-x: 11px;
+            --ui-bottom-color-swatch-inset-y: 7px;
+            --ui-bottom-color-swatch-alpha: 0.56;
+        }
+
+        body[data-ui-variant="variant-1-glass"] #glass-control-bar .canvas-bottom-color-button.glass-control-pill,
+        body[data-ui-variant="variant-1-glass"] #glass-control-bar .canvas-bottom-color-button.glass-control-pill.selected,
+        body[data-ui-variant="variant-1-glass"] #glass-control-bar .canvas-bottom-color-button.glass-control-pill.is-selected,
+        body[data-ui-variant="variant-1-glass"] #glass-control-bar .canvas-bottom-color-button.glass-control-pill:active {
+            position: relative !important;
+            isolation: isolate !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            padding: 0 !important;
+            overflow: hidden !important;
+            outline: 0 !important;
+            -webkit-appearance: none !important;
+            appearance: none !important;
+            color: inherit !important;
+            -webkit-text-fill-color: inherit !important;
+            /* 外側は隣の下部ボタンの面に従わせる。ここで色パレット用の別面を作らない。 */
+            background: var(--glass-control-bg, rgba(255,255,255,0.10)) !important;
+            background-color: var(--glass-control-bg, rgba(255,255,255,0.10)) !important;
+            background-image: var(--glass-control-bg-image, none) !important;
+            border-color: var(--glass-control-border-color, rgba(255,255,255,0.34)) !important;
+            box-shadow: var(--glass-control-shadow, none) !important;
+        }
+
+        body[data-ui-theme="neumorphism"] #glass-control-bar .canvas-bottom-color-button.glass-control-pill,
+        body[data-ui-theme="neumorphism"] #glass-control-bar .canvas-bottom-color-button.glass-control-pill.selected,
+        body[data-ui-theme="neumorphism"] #glass-control-bar .canvas-bottom-color-button.glass-control-pill.is-selected,
+        body[data-ui-theme="neumorphism"] #glass-control-bar .canvas-bottom-color-button.glass-control-pill:active {
+            background: var(--neumo-base-raised, rgba(190,188,184,0.42)) !important;
+            background-color: var(--neumo-base-raised, rgba(190,188,184,0.42)) !important;
+            background-image: none !important;
+            border-color: rgba(255,255,255,0.28) !important;
+            box-shadow:
+                inset calc(var(--neumo-control-light-x, -1) * 1px) calc(var(--neumo-control-light-y, -1) * 1px) 1px rgba(255,255,255,0.18),
+                inset calc(var(--neumo-control-shadow-x, 1) * 1px) calc(var(--neumo-control-shadow-y, 1) * 1px) 1px rgba(54,50,48,0.08) !important;
+        }
+
+        body[data-ui-variant="variant-1-glass"] #glass-control-bar .canvas-bottom-color-button.glass-control-pill::before,
+        body[data-ui-variant="variant-1-glass"] #glass-control-bar .canvas-bottom-color-button.glass-control-pill::after,
+        body[data-ui-theme="neumorphism"] #glass-control-bar .canvas-bottom-color-button.glass-control-pill::before,
+        body[data-ui-theme="neumorphism"] #glass-control-bar .canvas-bottom-color-button.glass-control-pill::after {
+            content: none !important;
+            display: none !important;
+            opacity: 0 !important;
+            background: transparent !important;
+            border: 0 !important;
+            box-shadow: none !important;
+            outline: 0 !important;
+        }
+
+        body[data-ui-variant="variant-1-glass"] #glass-control-bar .canvas-bottom-color-button .canvas-bottom-color-swatch,
+        body[data-ui-theme="neumorphism"] #glass-control-bar .canvas-bottom-color-button .canvas-bottom-color-swatch {
+            position: absolute !important;
+            z-index: 1 !important;
+            left: var(--ui-bottom-color-swatch-inset-x, 11px) !important;
+            right: var(--ui-bottom-color-swatch-inset-x, 11px) !important;
+            top: var(--ui-bottom-color-swatch-inset-y, 7px) !important;
+            bottom: var(--ui-bottom-color-swatch-inset-y, 7px) !important;
+            min-width: 0 !important;
+            min-height: 0 !important;
+            border-radius: 999px !important;
+            background: var(--canvas-bottom-color-value, #b8b6b2) !important;
+            opacity: var(--ui-bottom-color-swatch-alpha, 0.56) !important;
+            border: 0 !important;
+            outline: 0 !important;
+            box-shadow: none !important;
+            filter: none !important;
+            pointer-events: none !important;
+        }
+
+        body[data-ui-variant="variant-1-glass"] #glass-control-bar .canvas-bottom-color-button .canvas-bottom-color-input,
+        body[data-ui-theme="neumorphism"] #glass-control-bar .canvas-bottom-color-button .canvas-bottom-color-input,
+        body[data-ui-variant="variant-1-glass"] #glass-control-bar .canvas-bottom-color-button input[type="color"],
+        body[data-ui-theme="neumorphism"] #glass-control-bar .canvas-bottom-color-button input[type="color"] {
+            position: absolute !important;
+            inset: 0 !important;
+            width: 100% !important;
+            height: 100% !important;
+            opacity: 0 !important;
+            border: 0 !important;
+            outline: 0 !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            background: transparent !important;
+            background-color: transparent !important;
+            background-image: none !important;
+            box-shadow: none !important;
+            filter: none !important;
+            -webkit-appearance: none !important;
+            appearance: none !important;
+        }
+
+        body[data-ui-variant="variant-1-glass"] #glass-control-bar .canvas-bottom-color-button input[type="color"]::-webkit-color-swatch-wrapper,
+        body[data-ui-theme="neumorphism"] #glass-control-bar .canvas-bottom-color-button input[type="color"]::-webkit-color-swatch-wrapper,
+        body[data-ui-variant="variant-1-glass"] #glass-control-bar .canvas-bottom-color-button input[type="color"]::-webkit-color-swatch,
+        body[data-ui-theme="neumorphism"] #glass-control-bar .canvas-bottom-color-button input[type="color"]::-webkit-color-swatch {
+            padding: 0 !important;
+            border: 0 !important;
+            outline: 0 !important;
+            background: transparent !important;
+            box-shadow: none !important;
+        }
+
+/* ===== runtime from index.html: <style id="ui-v73-bottom-color-match-neighbor-and-blend-controls"> ===== */
+
+/* v73: 右下カラーパレット外側は隣の下部ボタンと同一扱い。
+           ここでは色用の外側面・リング・多重線を作らず、色表示は内側カプセルだけに限定する。 */
+        #glass-control-bar .canvas-bottom-color-button.glass-control-pill,
+        #glass-control-bar .canvas-bottom-color-button.glass-control-pill.selected,
+        #glass-control-bar .canvas-bottom-color-button.glass-control-pill.is-selected,
+        #glass-control-bar .canvas-bottom-color-button.glass-control-pill:active,
+        #glass-control-bar .canvas-bottom-color-button.glass-control-pill:focus,
+        #glass-control-bar .canvas-bottom-color-button.glass-control-pill:focus-visible {
+            position: relative !important;
+            isolation: isolate !important;
+            overflow: hidden !important;
+            padding: 0 !important;
+            outline: 0 !important;
+            outline-offset: 0 !important;
+            -webkit-appearance: none !important;
+            appearance: none !important;
+            color: transparent !important;
+            -webkit-text-fill-color: transparent !important;
+        }
+
+        #glass-control-bar .canvas-bottom-color-button.glass-control-pill::before,
+        #glass-control-bar .canvas-bottom-color-button.glass-control-pill::after,
+        #glass-control-bar .canvas-bottom-color-button.glass-control-pill.selected::before,
+        #glass-control-bar .canvas-bottom-color-button.glass-control-pill.selected::after,
+        #glass-control-bar .canvas-bottom-color-button.glass-control-pill.is-selected::before,
+        #glass-control-bar .canvas-bottom-color-button.glass-control-pill.is-selected::after {
+            content: none !important;
+            display: none !important;
+            opacity: 0 !important;
+            background: transparent !important;
+            background-image: none !important;
+            border: 0 !important;
+            outline: 0 !important;
+            box-shadow: none !important;
+            filter: none !important;
+        }
+
+        #glass-control-bar .canvas-bottom-color-button.glass-control-pill .canvas-bottom-color-swatch {
+            position: absolute !important;
+            z-index: 2 !important;
+            left: 18% !important;
+            right: 18% !important;
+            top: 31% !important;
+            bottom: 31% !important;
+            min-width: 0 !important;
+            min-height: 0 !important;
+            border-radius: 999px !important;
+            background: var(--canvas-bottom-color-value, #b8b6b2) !important;
+            opacity: 0.46 !important;
+            border: 0 !important;
+            outline: 0 !important;
+            box-shadow: none !important;
+            filter: none !important;
+            pointer-events: none !important;
+        }
+
+        #glass-control-bar .canvas-bottom-color-button.glass-control-pill .canvas-bottom-color-input,
+        #glass-control-bar .canvas-bottom-color-button.glass-control-pill input[type="color"] {
+            position: absolute !important;
+            inset: 0 !important;
+            width: 100% !important;
+            height: 100% !important;
+            opacity: 0 !important;
+            border: 0 !important;
+            outline: 0 !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            background: transparent !important;
+            background-color: transparent !important;
+            background-image: none !important;
+            box-shadow: none !important;
+            filter: none !important;
+            -webkit-appearance: none !important;
+            appearance: none !important;
+        }
+
+        #glass-control-bar .canvas-bottom-color-button.glass-control-pill input[type="color"]::-webkit-color-swatch-wrapper,
+        #glass-control-bar .canvas-bottom-color-button.glass-control-pill input[type="color"]::-webkit-color-swatch,
+        #glass-control-bar .canvas-bottom-color-button.glass-control-pill input[type="color"]::-moz-color-swatch {
+            padding: 0 !important;
+            border: 0 !important;
+            outline: 0 !important;
+            background: transparent !important;
+            box-shadow: none !important;
+        }
+
+/* ===== runtime from index.html: <style id="ui-v74-blend-color-controls-visible-fix"> ===== */
+
+/* v74: 馴染ボタン色の「色指定」そのものを 1.配色 に追加。
+           既存の濃度スライダーだけではなく、OFF/ON/輪郭/文字の色を直接指定できるようにする。 */
+        body[data-ui-theme="neumorphism"] .color-theme-actions button.color-blend-btn,
+        body[data-ui-theme="neumorphism"] .color-theme-actions button[data-theme-blend],
+        body[data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-theme-actions button.color-blend-btn,
+        body[data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-theme-actions button[data-theme-blend] {
+            background: color-mix(in srgb, var(--ui-color-blend-off-color, #b2b2b2) 24%, transparent) !important;
+            background-color: color-mix(in srgb, var(--ui-color-blend-off-color, #b2b2b2) 24%, transparent) !important;
+            color: color-mix(in srgb, var(--ui-color-blend-text-color, #0d1826) 86%, transparent) !important;
+            -webkit-text-fill-color: color-mix(in srgb, var(--ui-color-blend-text-color, #0d1826) 86%, transparent) !important;
+            border-color: color-mix(in srgb, var(--ui-color-blend-border-color, #f5f5f2) 32%, transparent) !important;
+        }
+
+        body[data-ui-theme="neumorphism"] .color-theme-actions button.color-blend-btn.is-active,
+        body[data-ui-theme="neumorphism"] .color-theme-actions button.color-blend-btn[aria-pressed="true"],
+        body[data-ui-theme="neumorphism"] .color-theme-actions button[data-theme-blend].is-active,
+        body[data-ui-theme="neumorphism"] .color-theme-actions button[data-theme-blend][aria-pressed="true"],
+        body[data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-theme-actions button.color-blend-btn.is-active,
+        body[data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-theme-actions button.color-blend-btn[aria-pressed="true"],
+        body[data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-theme-actions button[data-theme-blend].is-active,
+        body[data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-theme-actions button[data-theme-blend][aria-pressed="true"] {
+            background: color-mix(in srgb, var(--ui-color-blend-on-color, #aeb6c0) 32%, transparent) !important;
+            background-color: color-mix(in srgb, var(--ui-color-blend-on-color, #aeb6c0) 32%, transparent) !important;
+            border-color: color-mix(in srgb, var(--ui-color-blend-border-color, #f5f5f2) 48%, transparent) !important;
+            color: color-mix(in srgb, var(--ui-color-blend-text-color, #0d1826) 94%, transparent) !important;
+            -webkit-text-fill-color: color-mix(in srgb, var(--ui-color-blend-text-color, #0d1826) 94%, transparent) !important;
+        }
+
+        #ui-size-tuner-panel .ui-size-tuner-row-color input[type="color"] {
+            justify-self: start;
+            width: 38px;
+            height: 22px;
+            padding: 0;
+            border: 1px solid rgba(120, 128, 140, 0.34);
+            border-radius: 999px;
+            background: transparent;
+            box-shadow: none;
+            cursor: pointer;
+        }
+        #ui-size-tuner-panel .ui-size-tuner-row-color input[type="color"]::-webkit-color-swatch-wrapper {
+            padding: 2px;
+            border: 0;
+        }
+        #ui-size-tuner-panel .ui-size-tuner-row-color input[type="color"]::-webkit-color-swatch {
+            border: 0;
+            border-radius: 999px;
+        }
+
+/* ===== runtime from index.html: <style id="ui-v75-blend-active-color-direct-link"> ===== */
+
+/* v75: 馴染ボタンの実表示色を 1.配色 > 馴染ボタン色 の色指定へ直結する。
+           画像で見えている薄い水色は「馴染ON 色指定」で調整する。 */
+        body[data-ui-theme="neumorphism"] .color-theme-actions button.color-blend-btn,
+        body[data-ui-theme="neumorphism"] .color-theme-actions button[data-theme-blend],
+        body[data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-theme-actions button.color-blend-btn,
+        body[data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-theme-actions button[data-theme-blend] {
+            background: color-mix(
+                in srgb,
+                var(--ui-color-blend-off-color, #b2b2b2) calc(var(--ui-color-blend-off-fill-alpha, 0.18) * 100%),
+                transparent
+            ) !important;
+            background-color: color-mix(
+                in srgb,
+                var(--ui-color-blend-off-color, #b2b2b2) calc(var(--ui-color-blend-off-fill-alpha, 0.18) * 100%),
+                transparent
+            ) !important;
+            color: color-mix(
+                in srgb,
+                var(--ui-color-blend-text-color, #0d1826) calc(var(--ui-color-blend-text-alpha, 0.86) * 100%),
+                transparent
+            ) !important;
+            -webkit-text-fill-color: color-mix(
+                in srgb,
+                var(--ui-color-blend-text-color, #0d1826) calc(var(--ui-color-blend-text-alpha, 0.86) * 100%),
+                transparent
+            ) !important;
+            border-color: color-mix(in srgb, var(--ui-color-blend-border-color, #f5f5f2) 22%, transparent) !important;
+        }
+
+        body[data-ui-theme="neumorphism"] .color-theme-actions button.color-blend-btn.is-active,
+        body[data-ui-theme="neumorphism"] .color-theme-actions button.color-blend-btn[aria-pressed="true"],
+        body[data-ui-theme="neumorphism"] .color-theme-actions button[data-theme-blend].is-active,
+        body[data-ui-theme="neumorphism"] .color-theme-actions button[data-theme-blend][aria-pressed="true"],
+        body[data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-theme-actions button.color-blend-btn.is-active,
+        body[data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-theme-actions button.color-blend-btn[aria-pressed="true"],
+        body[data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-theme-actions button[data-theme-blend].is-active,
+        body[data-ui-theme="neumorphism"] #glass-cursor-panel-3 .color-theme-actions button[data-theme-blend][aria-pressed="true"] {
+            background: color-mix(
+                in srgb,
+                var(--ui-color-blend-on-color, #aeb6c0) calc(var(--ui-color-blend-on-fill-alpha, 0.26) * 100%),
+                transparent
+            ) !important;
+            background-color: color-mix(
+                in srgb,
+                var(--ui-color-blend-on-color, #aeb6c0) calc(var(--ui-color-blend-on-fill-alpha, 0.26) * 100%),
+                transparent
+            ) !important;
+            border-color: color-mix(
+                in srgb,
+                var(--ui-color-blend-border-color, #f5f5f2) calc(var(--ui-color-blend-on-border-alpha, 0.48) * 100%),
+                transparent
+            ) !important;
+            color: color-mix(
+                in srgb,
+                var(--ui-color-blend-text-color, #0d1826) calc(var(--ui-color-blend-text-alpha, 0.86) * 100%),
+                transparent
+            ) !important;
+            -webkit-text-fill-color: color-mix(
+                in srgb,
+                var(--ui-color-blend-text-color, #0d1826) calc(var(--ui-color-blend-text-alpha, 0.86) * 100%),
+                transparent
+            ) !important;
+            background-image: none !important;
+            outline: none !important;
+        }
+
+/* ===== runtime from index.html: <style id="ui-v78-color-panel-button-shape-fixes"> ===== */
+
+/* v78: 1.配色パネル内ボタン角丸、遷移秒スピナー表面、調整ボタン透明度、左下ボタン中心揃えを最終上書き。 */
+        body[data-ui-variant="variant-1-glass"] #color-container .color-theme-card,
+        body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3 .color-theme-card {
+            border-radius: var(--ui-color-card-radius, 6px) !important;
+        }
+        body[data-ui-variant="variant-1-glass"] #color-container .color-assign-btn,
+        body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3 .color-assign-btn {
+            border-radius: var(--ui-color-assign-button-radius, 6px) !important;
+        }
+        body[data-ui-variant="variant-1-glass"] #color-container .color-blend-btn,
+        body[data-ui-variant="variant-1-glass"] #color-container .color-theme-recolor-btn,
+        body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3 .color-blend-btn,
+        body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-3 .color-theme-recolor-btn {
+            border-radius: var(--ui-color-action-button-radius, 6px) !important;
+        }
+        body[data-ui-variant="variant-1-glass"] #color-transition-seconds.color-transition-input {
+            background: transparent !important;
+            background-color: transparent !important;
+            box-shadow: none !important;
+            border-color: transparent !important;
+            color: #111827 !important;
+        }
+        body[data-ui-variant="variant-1-glass"] #color-transition-seconds.color-transition-input::-webkit-inner-spin-button,
+        body[data-ui-variant="variant-1-glass"] #color-transition-seconds.color-transition-input::-webkit-outer-spin-button {
+            opacity: 1 !important;
+            background: transparent !important;
+            background-color: transparent !important;
+            box-shadow: none !important;
+        }
+        #ui-size-tuner-toggle {
+            background: rgba(255, 255, 255, 0.42) !important;
+            backdrop-filter: blur(8px) !important;
+            -webkit-backdrop-filter: blur(8px) !important;
+        }
+        body[data-ui-variant="variant-1-glass"] #case-comparison.case-palette-only .case-layout-toggle,
+        body[data-ui-variant="variant-1-glass"] #case-comparison.case-palette-only .case-action-button,
+        body[data-ui-variant="variant-1-glass"] #case-comparison .case-layout-toggle,
+        body[data-ui-variant="variant-1-glass"] #case-comparison .case-action-button {
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            text-align: center !important;
+            padding: 0 !important;
+            line-height: 1 !important;
+            vertical-align: middle !important;
+        }
+
+
+/* v105 final: 左下case / サブcase / 登録slotの文字色を背景明暗の自動可読色へ最終接続。 */
+#case-comparison.case-palette-only .case-slot-button,
+#case-comparison.case-palette-only .case-slot-button *,
+#case-comparison.case-palette-only .case-choice-button,
+#case-comparison.case-palette-only .case-choice-button *,
+#case-comparison.case-palette-only .case-layout-toggle,
+#case-comparison.case-palette-only .case-layout-toggle *,
+#case-comparison.case-palette-only .case-action-button,
+#case-comparison.case-palette-only .case-action-button * {
+    color: var(--ui-auto-readable-icon-color, var(--auto-readable-text-color, #111827)) !important;
+    -webkit-text-fill-color: var(--ui-auto-readable-icon-color, var(--auto-readable-text-color, #111827)) !important;
+    text-shadow: var(--ui-auto-readable-icon-shadow, none) !important;
+}
+
+/* v105 final: Neumorphismでも更新・削除を少し落として、追加ボタンと視認差を作る。 */
+body[data-ui-theme="neumorphism"] #case-comparison.case-palette-only .case-action-button.case-update-slot-button,
+body[data-ui-theme="neumorphism"] #case-comparison.case-palette-only .case-action-button.case-delete-slot-button {
+    background: rgba(146, 143, 139, 0.30) !important;
+    background-color: rgba(146, 143, 139, 0.30) !important;
+    border-color: rgba(255, 255, 255, 0.36) !important;
+    box-shadow:
+        inset 1px 1px 2px rgba(255, 255, 255, 0.22),
+        inset -1px -1px 2px rgba(64, 62, 60, 0.16) !important;
+    opacity: 0.78 !important;
+}
+body[data-ui-theme="neumorphism"] #case-comparison.case-palette-only .case-action-button.case-update-slot-button:hover,
+body[data-ui-theme="neumorphism"] #case-comparison.case-palette-only .case-action-button.case-delete-slot-button:hover {
+    background: rgba(146, 143, 139, 0.38) !important;
+    background-color: rgba(146, 143, 139, 0.38) !important;
+    border-color: rgba(255, 255, 255, 0.48) !important;
+    opacity: 0.86 !important;
+}
+body[data-ui-theme="neumorphism"] #case-comparison.case-palette-only .case-action-button.case-add-slot-button {
+    opacity: 0.94 !important;
+}

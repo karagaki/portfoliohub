@@ -3017,7 +3017,8 @@
                     oninput="syncAccentColorFromText()"><span id="nmAccentValue">#962eff</span></div>
                 <div class="buttons"><button class="btn primary" type="button"
                     onclick="saveNeumorphismSettings()">表示設定を保存</button><button class="btn secondary" type="button"
-                    onclick="openDisplayResetConfirm()">初期設定へ戻す</button></div>
+                    onclick="openDisplayResetConfirm()">初期設定へ戻す</button><button class="btn secondary" type="button"
+                    onclick="saveCurrentNeumorphismAsDefault()">初期設定に反映</button></div>
                 <p class="settings-note">保存すると、次回起動時も同じ表示設定を使います。</p>
               </div>
               <div class="card settings-preview">
@@ -4922,7 +4923,7 @@
     async function refreshMeaningClassifications() { await load(); page('meaning-classification'); toast('分類対象を更新しました。') }
 
 
-    const NEUMORPHISM_SETTINGS_KEY = 'kashinoki_neumorphism_settings_v3'; const PREVIOUS_NEUMORPHISM_DEFAULT_SURFACE = '#e2e7eb'; const DEFAULT_NEUMORPHISM_SETTINGS = (PAGE_DEFINITIONS && PAGE_DEFINITIONS.DEFAULT_NEUMORPHISM_SETTINGS) || { relief: 0.20, blur: 6, light: 1.60, shadow: 1.60, surface: '#efefec', accent: '#962eff' }; const START_INK_SETTINGS_KEY = 'kashinoki_start_ink_settings_v1'; const DEFAULT_START_INK_SETTINGS = (PAGE_DEFINITIONS && PAGE_DEFINITIONS.DEFAULT_START_INK_SETTINGS) || { outer: '#a6ff6b', duration: 5.0, cleanup: 6.0 }; const PREVIOUS_NEUMORPHISM_DEFAULT_ACCENT = '#5e8e88';
+    const NEUMORPHISM_SETTINGS_KEY = 'kashinoki_neumorphism_settings_v3'; const NEUMORPHISM_CUSTOM_DEFAULT_KEY = 'kashinoki_neumorphism_custom_default_v1'; const PREVIOUS_NEUMORPHISM_DEFAULT_SURFACE = '#e2e7eb'; const DEFAULT_NEUMORPHISM_SETTINGS = (PAGE_DEFINITIONS && PAGE_DEFINITIONS.DEFAULT_NEUMORPHISM_SETTINGS) || { relief: 0.20, blur: 6, light: 1.60, shadow: 1.60, surface: '#efefec', accent: '#962eff' }; const START_INK_SETTINGS_KEY = 'kashinoki_start_ink_settings_v1'; const DEFAULT_START_INK_SETTINGS = (PAGE_DEFINITIONS && PAGE_DEFINITIONS.DEFAULT_START_INK_SETTINGS) || { outer: '#a6ff6b', duration: 5.0, cleanup: 6.0 }; const PREVIOUS_NEUMORPHISM_DEFAULT_ACCENT = '#5e8e88';
     function clampChannel(value) { return Math.max(0, Math.min(255, Math.round(value))) }
     function normalizeHexColor(value) {
       const raw = String(value || '').trim().toLowerCase();
@@ -4949,14 +4950,36 @@
       let rgb = h < 60 ? [c, x, 0] : h < 120 ? [x, c, 0] : h < 180 ? [0, c, x] : h < 240 ? [0, x, c] : h < 300 ? [x, 0, c] : [c, 0, x];
       return rgbToHexValue({ r: (rgb[0] + m) * 255, g: (rgb[1] + m) * 255, b: (rgb[2] + m) * 255 });
     }
+    function normalizeNeumorphismSettings(value, base = DEFAULT_NEUMORPHISM_SETTINGS) {
+      const raw = value && typeof value === 'object' ? value : {};
+      let surface = typeof raw.surface === 'number' ? legacyHueToHex(raw.surface) : normalizeHexColor(raw.surface || base.surface || DEFAULT_NEUMORPHISM_SETTINGS.surface);
+      if (surface === PREVIOUS_NEUMORPHISM_DEFAULT_SURFACE) surface = DEFAULT_NEUMORPHISM_SETTINGS.surface;
+      let accent = normalizeHexColor(raw.accent || base.accent || DEFAULT_NEUMORPHISM_SETTINGS.accent);
+      if (accent === PREVIOUS_NEUMORPHISM_DEFAULT_ACCENT) accent = DEFAULT_NEUMORPHISM_SETTINGS.accent;
+      return {
+        ...base,
+        ...raw,
+        relief: Number.isFinite(Number(raw.relief)) ? Number(raw.relief) : Number(base.relief),
+        blur: Number.isFinite(Number(raw.blur)) ? Number(raw.blur) : Number(base.blur),
+        light: Number.isFinite(Number(raw.light)) ? Number(raw.light) : Number(base.light),
+        shadow: Number.isFinite(Number(raw.shadow)) ? Number(raw.shadow) : Number(base.shadow),
+        surface,
+        accent
+      };
+    }
+    function readNeumorphismDefaultSettings() {
+      try {
+        const raw = JSON.parse(localStorage.getItem(NEUMORPHISM_CUSTOM_DEFAULT_KEY) || '{}');
+        return normalizeNeumorphismSettings(raw, DEFAULT_NEUMORPHISM_SETTINGS);
+      } catch (e) { return { ...DEFAULT_NEUMORPHISM_SETTINGS } }
+    }
     function readNeumorphismSettings() {
+      const currentDefault = readNeumorphismDefaultSettings();
       try
       {
         const raw = JSON.parse(localStorage.getItem(NEUMORPHISM_SETTINGS_KEY) || localStorage.getItem('kashinoki_neumorphism_settings_v2') || localStorage.getItem('kashinoki_neumorphism_settings_v1') || '{}');
-        let surface = typeof raw.surface === 'number' ? legacyHueToHex(raw.surface) : normalizeHexColor(raw.surface || DEFAULT_NEUMORPHISM_SETTINGS.surface);
-        if (surface === PREVIOUS_NEUMORPHISM_DEFAULT_SURFACE) surface = DEFAULT_NEUMORPHISM_SETTINGS.surface;
-        let accent = normalizeHexColor(raw.accent || DEFAULT_NEUMORPHISM_SETTINGS.accent); if (accent === PREVIOUS_NEUMORPHISM_DEFAULT_ACCENT) accent = DEFAULT_NEUMORPHISM_SETTINGS.accent; return { ...DEFAULT_NEUMORPHISM_SETTINGS, ...raw, surface, accent };
-      } catch (e) { return { ...DEFAULT_NEUMORPHISM_SETTINGS } }
+        return normalizeNeumorphismSettings(raw, currentDefault);
+      } catch (e) { return { ...currentDefault } }
     }
     function neumorphismValuesFromControls() {
       return { relief: Number(qs('#nmRelief')?.value ?? DEFAULT_NEUMORPHISM_SETTINGS.relief), blur: Number(qs('#nmBlur')?.value ?? DEFAULT_NEUMORPHISM_SETTINGS.blur), light: Number(qs('#nmLight')?.value ?? DEFAULT_NEUMORPHISM_SETTINGS.light), shadow: Number(qs('#nmShadow')?.value ?? DEFAULT_NEUMORPHISM_SETTINGS.shadow), surface: normalizeHexColor(qs('#nmSurfaceHex')?.value || qs('#nmSurface')?.value || DEFAULT_NEUMORPHISM_SETTINGS.surface), accent: normalizeHexColor(qs('#nmAccentHex')?.value || qs('#nmAccent')?.value || DEFAULT_NEUMORPHISM_SETTINGS.accent) }
@@ -5275,6 +5298,13 @@
       applyNeumorphismSettings(value, true);
       toast('Neumorphism設定を保存しました。');
     }
+    function saveCurrentNeumorphismAsDefault() {
+      const value = neumorphismValuesFromControls();
+      localStorage.setItem(NEUMORPHISM_CUSTOM_DEFAULT_KEY, JSON.stringify(value));
+      localStorage.setItem(NEUMORPHISM_SETTINGS_KEY, JSON.stringify(value));
+      applyNeumorphismSettings(value, true);
+      toast('現在の表示設定を初期設定に反映しました。');
+    }
     function openDisplayResetConfirm() { qs('#displayResetConfirmDialog')?.showModal() }
     function closeDisplayResetConfirm() { qs('#displayResetConfirmDialog')?.close() }
     function executeDisplayResetConfirm(event) {
@@ -5283,7 +5313,7 @@
       localStorage.removeItem(NEUMORPHISM_SETTINGS_KEY);
       localStorage.removeItem('kashinoki_neumorphism_settings_v2');
       localStorage.removeItem('kashinoki_neumorphism_settings_v1');
-      applyNeumorphismSettings(DEFAULT_NEUMORPHISM_SETTINGS, true);
+      applyNeumorphismSettings(readNeumorphismDefaultSettings(), true);
       toast('表示設定を初期設定へ戻しました。');
     }
 
@@ -6543,20 +6573,27 @@
       {
         return src.map((c, i) => {
           const title = c.adopted_statement || c.suggested_statement || c.statement || '候補範囲';
-          const ev = String(evidenceText(c) || title).split('\n').map(x => x.trim()).filter(Boolean).join(' ');
-          const body = ev && ev !== title ? ev : title;
-          return `${i + 1}. ${title}\n${body}`;
-        }).join('\n\n');
+          return `${i + 1}. ${title}`;
+        }).join('\n');
       }
-      return 'System Toolsの修正版は、稼働中の本体を壊さず、更新配布ZIPとして渡す。\n\n会話・指示・判断・失敗要因は、次のAI作業へ渡す前提として整理する。\n\n仕様が未確定のまま突っ走らず、範囲確認、分類確認、照合、成果物確認、振り返りの順に進める。';
+      return '1. 会話素材を確認する\n2. 重要候補を選別する\n3. 次のAI作業へ渡す前提を整える';
     }
     function renderWorkflowFullText(items, mode = 'quality') {
       const src = workflowEvidenceSample(items);
       const escaped = esc(src);
       return escaped
         .replace(/(^|\n)(\d+\.\s[^\n]+)/g, (m, br, line) => `${br}<span class="workflow-fulltext-candidate-title">${line}</span>`)
-        .replace(/J\.A\.R\.V\.I\.S\.|会話・指示・判断・失敗要因|次のAI作業へ渡す前提|仕様が未確定/g, m => `<span class="workflow-fulltext-mark">${m}</span>`)
-        .replace(/更新配布ZIP|範囲確認|分類確認|照合|成果物確認|振り返り/g, m => `<span class="workflow-fulltext-mark alt">${m}</span>`);
+        .replace(/会話素材|重要候補|次のAI作業へ渡す前提/g, m => `<span class="workflow-fulltext-mark">${m}</span>`)
+        .replace(/確認|選別|整える/g, m => `<span class="workflow-fulltext-mark alt">${m}</span>`);
+    }
+    function renderWorkflowCandidateDigest(base, filtered, filterLabel) {
+      const total = Array.isArray(base) ? base.length : 0;
+      const shown = Array.isArray(filtered) ? filtered.length : 0;
+      const sample = (filtered || []).slice(0, 5).map((c, i) => {
+        const text = c.adopted_statement || c.suggested_statement || c.statement || '候補範囲';
+        return `<li><span>${esc(String(i + 1).padStart(2, '0'))}</span><b>${esc(text)}</b></li>`;
+      }).join('');
+      return `<div class="workflow-public-digest"><div class="workflow-public-digest-head"><span>公開デモ表示</span><b>${esc(filterLabel)} ${shown}件 / 全${total}件</b></div><p>候補の全文を左側へ大量展開する表示は停止しました。確認は右側の候補カードで行い、本文と同一の根拠範囲は重複表示しません。</p>${sample ? `<ol>${sample}</ol>` : '<div class="capture-state-empty">該当候補はありません。</div>'}</div>`;
     }
 
     function toggleWorkflowRangeCard(trigger) {
@@ -6919,14 +6956,18 @@
       const filtered = base.filter(c => filter === 'all' || captureCandidateStatusKind(c) === filter);
       const filterLabel = (defs.find(d => d[0] === filter) || defs[0])[1];
       const rangeCards = (filtered.length ? filtered : []).slice(0, 80).map((c, i) => {
-        const st = c.review_state || '未確認'; const kind = captureCandidateStatusKind(c); const text = c.suggested_statement || c.adopted_statement || '候補範囲'; const evidence = String(evidenceText(c) || text).split('\n').join(' ').slice(0, 110);
+        const st = c.review_state || '未確認'; const kind = captureCandidateStatusKind(c); const text = c.suggested_statement || c.adopted_statement || '候補範囲';
+        const rawEvidence = String(evidenceText(c) || '').split('\n').map(v => v.trim()).filter(Boolean).join(' ');
+        const normalizedText = String(text || '').replace(/\s+/g, ' ').trim();
+        const normalizedEvidence = rawEvidence.replace(/\s+/g, ' ').trim();
+        const evidence = normalizedEvidence && normalizedEvidence !== normalizedText ? `${normalizedEvidence.slice(0, 110)}…` : '候補文と同一範囲のため、公開デモでは重複表示を省略しています。';
         const statusLabel = kind === 'approved' ? '了承済み' : kind === 'needs' ? '要修正' : kind === 'excluded' ? '除外' : (st === 'pending' ? '未確認' : st);
         const marker = kind === 'approved' ? '<span class="workflow-chip ok workflow-mini-marker">✓</span>' : '';
         const absoluteIndex = Math.max(1, base.indexOf(c) + 1);
-        return `<article class="workflow-range-item kashinoki-reveal-item ${kind === 'approved' ? 'is-approved' : ''}"><button type="button" class="workflow-range-summary" onclick="toggleWorkflowRangeCard(this)"><div class="workflow-card-meta"><span class="workflow-chip workflow-sequence-chip">表示 ${i + 1}/${filtered.length}</span><span class="workflow-chip">候補 ${absoluteIndex}</span><span class="workflow-chip ${kind === 'approved' ? 'ok' : kind === 'needs' ? 'warn' : kind === 'excluded' ? 'bad' : ''}">${esc(statusLabel)}</span><span class="workflow-chip">全文内ハイライト</span>${marker}</div><h4>${esc(text)}</h4></button><div class="workflow-range-body"><p>${esc(evidence)}…</p><div class="workflow-range-actions"><button class="btn secondary" onclick="${c.capture_candidate_id ? `reviewCaptureCandidate('${c.capture_candidate_id}','edited_approved')` : `toast('Sample候補です。')`}">${kind === 'approved' ? '了承済み' : '了承'}</button><button class="btn hold" onclick="${c.capture_candidate_id ? `reviewCaptureCandidate('${c.capture_candidate_id}','insufficient_evidence')` : `toast('範囲修正の表示例です。')`}">範囲を修正</button><button class="btn danger" onclick="${c.capture_candidate_id ? `reviewCaptureCandidate('${c.capture_candidate_id}','excluded')` : `toast('除外の表示例です。')`}">除外</button></div></div></article>`
+        return `<article class="workflow-range-item kashinoki-reveal-item ${kind === 'approved' ? 'is-approved' : ''}"><button type="button" class="workflow-range-summary" onclick="toggleWorkflowRangeCard(this)"><div class="workflow-card-meta"><span class="workflow-chip workflow-sequence-chip">表示 ${i + 1}/${filtered.length}</span><span class="workflow-chip">候補 ${absoluteIndex}</span><span class="workflow-chip ${kind === 'approved' ? 'ok' : kind === 'needs' ? 'warn' : kind === 'excluded' ? 'bad' : ''}">${esc(statusLabel)}</span>${marker}</div><h4>${esc(text)}</h4></button><div class="workflow-range-body"><p>${esc(evidence)}</p><div class="workflow-range-actions"><button class="btn secondary" onclick="${c.capture_candidate_id ? `reviewCaptureCandidate('${c.capture_candidate_id}','edited_approved')` : `toast('Sample候補です。')`}">${kind === 'approved' ? '了承済み' : '了承'}</button><button class="btn hold" onclick="${c.capture_candidate_id ? `reviewCaptureCandidate('${c.capture_candidate_id}','insufficient_evidence')` : `toast('範囲修正の表示例です。')`}">範囲を修正</button><button class="btn danger" onclick="${c.capture_candidate_id ? `reviewCaptureCandidate('${c.capture_candidate_id}','excluded')` : `toast('除外の表示例です。')`}">除外</button></div></div></article>`
       }).join('');
       const empty = `<div class="capture-state-empty">${esc(filterLabel)}に該当する候補はありません。上のボタンで表示対象を切り替えられます。</div>`;
-      el.innerHTML = `<div class="workflow-fulltext-layout"><div class="workflow-fulltext-card kashinoki-neumo-panel kashinoki-reveal-shell"><h3>全文と候補範囲</h3><p>取り込んだ候補範囲の全文を省略せず表示し、AIが拾った箇所を色で示します。右側の候補一覧と照らしながら、全体文脈と候補範囲のズレを確認します。</p><div class="workflow-fulltext-box is-full-source">${renderWorkflowFullText(base, 'quality')}</div></div><aside class="workflow-range-panel workflow-side-card kashinoki-neumo-panel kashinoki-reveal-shell"><h3>候補範囲の確認</h3><p>登録候補・了承済み・要修正・除外のボタンで表示対象を絞り込みます。</p><p class="workflow-filter-note">現在表示: <b>${esc(filterLabel)}</b> / ${filtered.length}件</p><div class="workflow-range-scroll"><div class="workflow-range-list">${rangeCards || empty}</div></div></aside></div>`;
+      el.innerHTML = `<div class="workflow-fulltext-layout"><div class="workflow-fulltext-card kashinoki-neumo-panel kashinoki-reveal-shell"><h3>候補範囲サマリー</h3><p>公開デモでは、取り込んだ候補全文を左側に大量表示しません。候補文と根拠範囲が同一の場合は重複表示を省略し、次に確認すべき単位だけを表示します。</p><div class="workflow-fulltext-box is-full-source">${renderWorkflowCandidateDigest(base, filtered, filterLabel)}</div></div><aside class="workflow-range-panel workflow-side-card kashinoki-neumo-panel kashinoki-reveal-shell"><h3>候補範囲の確認</h3><p>登録候補・了承済み・要修正・除外のボタンで表示対象を絞り込みます。</p><p class="workflow-filter-note">現在表示: <b>${esc(filterLabel)}</b> / ${filtered.length}件</p><div class="workflow-range-scroll"><div class="workflow-range-list">${rangeCards || empty}</div></div></aside></div>`;
     }
 
 

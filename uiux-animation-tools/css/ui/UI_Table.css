@@ -258,3 +258,115 @@ body[data-ui-variant="variant-1-glass"] #case-comparison.case-palette-only::afte
     outline-offset: 1px;
     background: rgba(66, 128, 228, 0.22) !important;
 }
+
+/* v68: Right-bottom case / color-palette mini controls must not remain white in Neumorphism.
+   Override the later selected/current rules that reintroduced bright white/blue surfaces. */
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #case-comparison.case-palette-only .case-layout-toggle,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #case-comparison.case-palette-only .case-choice-button,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #case-comparison.case-palette-only .case-action-button,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #case-comparison.case-palette-only .case-slot-button {
+    background: rgba(188, 186, 183, 0.34) !important;
+    background-color: rgba(188, 186, 183, 0.34) !important;
+    border-color: rgba(255, 255, 255, 0.42) !important;
+    color: rgba(18, 28, 40, 0.90) !important;
+    -webkit-text-fill-color: rgba(18, 28, 40, 0.90) !important;
+    box-shadow:
+        inset 1px 1px 2px rgba(255, 255, 255, 0.34),
+        inset -1px -1px 2px rgba(86, 84, 82, 0.12) !important;
+    outline: none !important;
+    filter: none !important;
+    opacity: 0.88 !important;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #case-comparison.case-palette-only .case-choice-button.current-case,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #case-comparison.case-palette-only .case-slot-button.is-selected,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #case-comparison.case-palette-only .case-slot-button.is-selected.is-draft-source,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #case-comparison.case-palette-only .case-choice-button.transition-target-case {
+    background: rgba(188, 186, 183, 0.48) !important;
+    background-color: rgba(188, 186, 183, 0.48) !important;
+    border: 1px solid rgba(255, 255, 255, 0.62) !important;
+    outline: none !important;
+    color: rgba(18, 28, 40, 0.98) !important;
+    -webkit-text-fill-color: rgba(18, 28, 40, 0.98) !important;
+    box-shadow:
+        inset 1px 1px 2px rgba(255, 255, 255, 0.42),
+        inset -1px -1px 2px rgba(86, 84, 82, 0.16),
+        0 0 0 1px rgba(255, 255, 255, 0.18) !important;
+    opacity: 0.96 !important;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #case-comparison.case-palette-only .case-layout-toggle:hover,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #case-comparison.case-palette-only .case-choice-button:hover,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #case-comparison.case-palette-only .case-action-button:hover,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #case-comparison.case-palette-only .case-slot-button:hover {
+    background: rgba(188, 186, 183, 0.42) !important;
+    background-color: rgba(188, 186, 183, 0.42) !important;
+    border-color: rgba(255, 255, 255, 0.58) !important;
+}
+
+/* v81: 左下 追加・更新・削除ボタンの記号縦位置。
+   直修正する場合は、この translateY の数値だけを変更する。 */
+body[data-ui-variant="variant-1-glass"] #case-comparison.case-palette-only .case-action-button.case-add-slot-button .case-action-glyph {
+    transform: translateY(0.2px) !important;
+    font-size: 1.38em !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #case-comparison.case-palette-only .case-action-button.case-update-slot-button .case-action-glyph {
+    transform: translateY(-1.5px) !important;
+    font-size: 1.28em !important;
+}
+
+body[data-ui-variant="variant-1-glass"] #case-comparison.case-palette-only .case-action-button.case-delete-slot-button .case-action-glyph {
+    transform: translateY(1px) !important;
+    font-size: 1.38em !important;
+
+
+}
+
+/* v105: 左下サブcase / 登録slotボタンの文字色を背景明暗の自動可読色へ接続。
+   a-e などの追加slotボタンも、背景が暗い時は白、明るい時は黒基調へ追従する。 */
+#case-comparison.case-palette-only .case-slot-button,
+#case-comparison.case-palette-only .case-slot-button *,
+#case-comparison.case-palette-only .case-choice-button,
+#case-comparison.case-palette-only .case-choice-button *,
+#case-comparison.case-palette-only .case-layout-toggle,
+#case-comparison.case-palette-only .case-layout-toggle *,
+#case-comparison.case-palette-only .case-action-button,
+#case-comparison.case-palette-only .case-action-button * {
+    color: var(--ui-auto-readable-icon-color, var(--auto-readable-text-color, #111827)) !important;
+    -webkit-text-fill-color: var(--ui-auto-readable-icon-color, var(--auto-readable-text-color, #111827)) !important;
+    text-shadow: var(--ui-auto-readable-icon-shadow, none) !important;
+}
+
+/* 選択slotの旧固定青文字を無効化し、文字色は自動可読色に統一する。 */
+#case-comparison.case-palette-only .case-slot-button.is-selected,
+#case-comparison.case-palette-only .case-slot-button.is-selected *,
+#case-comparison.case-palette-only .case-slot-button.is-selected.is-draft-source,
+#case-comparison.case-palette-only .case-slot-button.is-selected.is-draft-source * {
+    color: var(--ui-auto-readable-icon-color, var(--auto-readable-text-color, #111827)) !important;
+    -webkit-text-fill-color: var(--ui-auto-readable-icon-color, var(--auto-readable-text-color, #111827)) !important;
+}
+
+/* v105: NeumorphismでもGlass同様に、更新・削除ボタンだけ少し落として識別しやすくする。 */
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #case-comparison.case-palette-only .case-action-button.case-update-slot-button,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #case-comparison.case-palette-only .case-action-button.case-delete-slot-button {
+    background: rgba(146, 143, 139, 0.30) !important;
+    background-color: rgba(146, 143, 139, 0.30) !important;
+    border-color: rgba(255, 255, 255, 0.36) !important;
+    box-shadow:
+        inset 1px 1px 2px rgba(255, 255, 255, 0.22),
+        inset -1px -1px 2px rgba(64, 62, 60, 0.16) !important;
+    opacity: 0.78 !important;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #case-comparison.case-palette-only .case-action-button.case-update-slot-button:hover,
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #case-comparison.case-palette-only .case-action-button.case-delete-slot-button:hover {
+    background: rgba(146, 143, 139, 0.38) !important;
+    background-color: rgba(146, 143, 139, 0.38) !important;
+    border-color: rgba(255, 255, 255, 0.48) !important;
+    opacity: 0.86 !important;
+}
+
+body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #case-comparison.case-palette-only .case-action-button.case-add-slot-button {
+    opacity: 0.94 !important;
+}

@@ -7,8 +7,8 @@
 }
 
 .start-hero {
-  width: min(1030px, calc(100% - 72px));
-  max-width: 1030px;
+  width: min(980px, calc(100% - 72px));
+  max-width: 980px;
   margin: 0 auto;
   padding: 16px 0 24px;
   box-sizing: border-box;
@@ -452,3 +452,5 @@ body {
     text-align: left;
   }
 }
+
+/* v805: TOP width aligned with workflow pages. */

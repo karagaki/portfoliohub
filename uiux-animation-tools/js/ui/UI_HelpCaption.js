@@ -6,7 +6,7 @@ window.UIHelpCaption = (function() {
         sliders: {
             count: '点の数を調整｜増減時は分岐・集束の形が変わる',
             size: '点の大きさを調整｜線の太さと密度感が変わる',
-            radius: '全体スケールを調整｜描画の広がりを変える',
+            radius: '全体サイズを調整｜描画の広がりを変える',
             trailLength: '軌跡の幅を調整｜線が残る長さを変える',
             morphSpeed: '点の速度を調整｜描画の進む速さを変える',
             fadeSpeed: '墨の幅を調整｜残像の濃さと消え方を変える',
@@ -106,7 +106,7 @@ window.UIHelpCaption = (function() {
             'case-comparison': '5.描画切替',
             'ui-variant-panel': '6.UIパネル',
             'color-container': '配色パネル',
-            'slider-container': '点の設定パネル',
+            'slider-container': '旧点設定パネル（公開版では非表示）',
             'cursor-container': 'カーソル設定パネル',
             'svg-file-container': 'SVGファイルパネル',
             'svg-anime-container': 'SVGアニメーションパネル',
