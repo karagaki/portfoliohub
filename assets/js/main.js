@@ -317,8 +317,6 @@ const previewItems = [
     cta: "ポートフォリオを見る",
     href: document.querySelector("#graphic")?.getAttribute("href") || "https://karagaki.github.io/testportfolio/",
     images: [
-      "system-tools-preview-02.png",
-      "system-tools-preview-02_1.png",
       "system-tools-preview-02_2.png",
       "system-tools-preview-02_3.png",
     ],
@@ -339,7 +337,6 @@ const previewItems = [
     cta: "ツールを見る",
     href: document.querySelector("#system-tools")?.getAttribute("href") || "./system-tools/index.html",
     images: [
-      "system-tools-preview-01.png",
       "system-tools-preview-01_1.png",
     ],
   },
@@ -359,7 +356,6 @@ const previewItems = [
     cta: "ツールを見る",
     href: document.querySelector("#uiux-animation-tools")?.getAttribute("href") || "./uiux-animation-tools/index.html",
     images: [
-      "system-tools-preview-03.png",
       "system-tools-preview-03_1.png",
       "system-tools-preview-03_2.png",
       "system-tools-preview-03_3.png",

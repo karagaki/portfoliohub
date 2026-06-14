@@ -3,7 +3,7 @@
   --bg: #c8beb1;
   --bg-soft: #a99f93;
   /* 仮素材。後で正式なTOP背景素材へ差し替え予定。 */
-  --hub-preview-image: url("../img/system-tools-preview-01.png");
+  --hub-preview-image: url("../img/system-tools-preview-01_1.png");
   --hub-page-background:
     radial-gradient(circle at calc(18% * var(--hub-light-position)) calc(16% * var(--hub-light-position)), rgba(255, 247, 236, calc(0.58 * var(--hub-light-strength) * var(--hub-bg-contrast))), transparent 0 calc(22% * var(--hub-light-spread))),
     radial-gradient(circle at calc(84% / var(--hub-light-position)) 14%, rgba(255, 255, 255, calc(0.34 * var(--hub-light-strength) * var(--hub-bg-contrast))), transparent 0 calc(18% * var(--hub-light-spread))),
