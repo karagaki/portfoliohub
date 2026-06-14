@@ -2008,6 +2008,65 @@ window.setup = function() {
         return;
     }
 
+    const UIUX_UI_SYNC_MIN_INTERVAL_MS = 160;
+    let uiuxUiSyncDirty = true;
+    let uiuxUiSyncLastFlushAt = 0;
+    let uiuxUiSyncListenersInstalled = false;
+
+    function markUiSyncDirty(reason) {
+        uiuxUiSyncDirty = true;
+        window.__uiuxUiDirtyReason = reason || window.__uiuxUiDirtyReason || '';
+    }
+
+    function shouldFlushUiSync() {
+        if (!uiuxUiSyncDirty) return false;
+        const now = Date.now();
+        if (uiuxUiSyncLastFlushAt && (now - uiuxUiSyncLastFlushAt) < UIUX_UI_SYNC_MIN_INTERVAL_MS) return false;
+        uiuxUiSyncDirty = false;
+        uiuxUiSyncLastFlushAt = now;
+        return true;
+    }
+
+    function isUiSyncTarget(target) {
+        if (!target || typeof target.closest !== 'function') return false;
+        return Boolean(target.closest('button, input, select, textarea, [role="button"]'));
+    }
+
+    function installUiSyncListeners() {
+        if (uiuxUiSyncListenersInstalled) return;
+        uiuxUiSyncListenersInstalled = true;
+
+        const handle = (event) => {
+            if (!event) {
+                markUiSyncDirty('unknown');
+                return;
+            }
+            if (event.type === 'caseChanged' || event.type === 'registeredSlotStateChanged' || event.type === 'DOMContentLoaded' || event.type === 'load') {
+                markUiSyncDirty(event.type);
+                return;
+            }
+            if (isUiSyncTarget(event.target)) {
+                markUiSyncDirty(event.type);
+            }
+        };
+
+        document.addEventListener('input', handle, true);
+        document.addEventListener('change', handle, true);
+        document.addEventListener('click', handle, true);
+        document.addEventListener('caseChanged', handle);
+        document.addEventListener('registeredSlotStateChanged', handle);
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', handle, { once: true });
+        } else {
+            markUiSyncDirty('boot-ready');
+        }
+        window.addEventListener('load', handle, { once: true });
+    }
+
+    window.__uiuxMarkUiDirty = markUiSyncDirty;
+    window.__uiuxShouldFlushUi = shouldFlushUiSync;
+    installUiSyncListeners();
+
     // 以下、既存の初期化コード
     if (window.UI && typeof window.UI.initializeUI === 'function') {
         window.UI.initializeUI();
@@ -2139,9 +2198,15 @@ window.draw = function() {
         if (window.UI && typeof window.UI.update === 'function') {
             window.UI.update();
         }
-        
-        if (window.Slider && typeof window.Slider.updateSliders === 'function') {
-            window.Slider.updateSliders(currentCase);
+
+        if (window.__uiuxShouldFlushUi && window.__uiuxShouldFlushUi()) {
+            if (window.Slider && typeof window.Slider.updateSliders === 'function') {
+                window.Slider.updateSliders(currentCase);
+            }
+
+            if (window.Table && typeof window.Table.updateCaseComparisonTable === 'function') {
+                window.Table.updateCaseComparisonTable();
+            }
         }
         
         if (window.RippleEffect && typeof window.RippleEffect.updateRipples === 'function') {

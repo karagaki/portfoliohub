@@ -1449,23 +1449,30 @@ ${(control.targets || []).join(', ')}`;
                 button.style.setProperty('position', 'relative', 'important');
             }
             window.UIUXSyncBottomColorButton = syncBottomColorButton;
-            const run = () => {
-                syncBottomColorButton();
-                requestAnimationFrame(syncBottomColorButton);
-                setTimeout(syncBottomColorButton, 120);
-            };
-            if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', run);
+            let bottomColorSyncTimer = null;
+            function queueBottomColorSync() {
+                if (bottomColorSyncTimer) window.clearTimeout(bottomColorSyncTimer);
+                bottomColorSyncTimer = window.setTimeout(() => {
+                    bottomColorSyncTimer = null;
+                    syncBottomColorButton();
+                }, 90);
+            }
+            window.UIUXRequestBottomColorButtonSync = queueBottomColorSync;
+            const run = () => queueBottomColorSync();
+            if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', run, { once: true });
             else run();
+            window.addEventListener('load', run, { once: true });
             window.addEventListener('resize', run);
             document.addEventListener('click', (event) => {
                 if (event.target.closest('#glass-control-bar') || event.target.closest('#ui-variant-panel') || event.target.closest('#ui-variant-compact-panel')) {
-                    setTimeout(run, 0);
-                    setTimeout(run, 180);
+                    queueBottomColorSync();
                 }
             }, true);
-            const observer = new MutationObserver(run);
-            observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class', 'style', 'data-ui-theme', 'data-ui-variant'] });
-            observer.observe(document.body, { attributes: true, attributeFilter: ['class', 'style', 'data-ui-theme', 'data-ui-variant'] });
+            document.addEventListener('change', (event) => {
+                if (event.target.closest('#glass-control-bar') || event.target.closest('#ui-variant-panel') || event.target.closest('#ui-variant-compact-panel')) {
+                    queueBottomColorSync();
+                }
+            }, true);
         })();
     </script>
 

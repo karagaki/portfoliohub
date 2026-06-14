@@ -612,40 +612,41 @@ window.Color = window.Color || {};
         const body = document.body;
         if (!body || typeof MutationObserver === 'undefined') return;
         let scheduled = false;
+        let rafId = 0;
+        let timerId = 0;
+        const flush = () => {
+            if (!scheduled) return;
+            scheduled = false;
+            if (rafId) {
+                window.cancelAnimationFrame(rafId);
+                rafId = 0;
+            }
+            if (timerId) {
+                window.clearTimeout(timerId);
+                timerId = 0;
+            }
+            applyReadableTextColors();
+        };
         const schedule = () => {
             if (scheduled) return;
             scheduled = true;
-            const run = () => {
-                applyReadableTextColors();
-            };
-            window.requestAnimationFrame(() => {
-                scheduled = false;
-                run();
-                /* v88: 左上miniパネルはGlass/Neumorphism適用処理が
-                 * 後からinline colorを書き戻す場合がある。右上設定UIと同じ
-                 * 最終可読色を維持するため、テーマ切替直後だけ数回再適用する。 */
-                setTimeout(run, 0);
-                setTimeout(run, 80);
-                setTimeout(run, 220);
-            });
+            if (timerId) {
+                window.clearTimeout(timerId);
+            }
+            timerId = window.setTimeout(flush, 120);
         };
         const observer = new MutationObserver((mutations) => {
             const shouldRun = mutations.some((mutation) => {
-                if (mutation.type === 'childList') return true;
                 return mutation.type === 'attributes' && ['class', 'style', 'data-canvas-bg-tone', 'data-ui-theme', 'data-ui-variant'].includes(mutation.attributeName);
             });
             if (shouldRun) schedule();
         });
         observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class', 'style', 'data-canvas-bg-tone', 'data-ui-theme', 'data-ui-variant'] });
-        observer.observe(body, { attributes: true, childList: true, subtree: true, attributeFilter: ['class', 'style', 'data-canvas-bg-tone', 'data-ui-theme', 'data-ui-variant'] });
+        observer.observe(body, { attributes: true, attributeFilter: ['class', 'style', 'data-canvas-bg-tone', 'data-ui-theme', 'data-ui-variant'] });
         window.__colorReadableTextObserver = observer;
         window.UIUXApplyReadableTextColors = applyReadableTextColors;
         window.UIUXRefreshReadableTextColors = schedule;
         schedule();
-        setTimeout(schedule, 0);
-        setTimeout(schedule, 80);
-        setTimeout(schedule, 240);
-        setTimeout(schedule, 720);
         window.addEventListener('load', schedule, { once: true });
     }
 

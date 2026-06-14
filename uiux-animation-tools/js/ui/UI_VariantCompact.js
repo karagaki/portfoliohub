@@ -285,9 +285,7 @@
     } else if (window.UIVariant && typeof window.UIVariant.applyVariant === 'function') {
       window.UIVariant.applyVariant(nextValue);
     }
-    requestAnimationFrame(() => {
-      requestAnimationFrame(scheduleSync);
-    });
+    scheduleSync();
   }
 
   function syncThemeButtons() {
@@ -353,7 +351,7 @@
       syncThemeButtons();
       syncPresetSelect();
       syncCompactComputedStyles();
-    }, 30);
+    }, 120);
   }
 
   function observePresetPanel() {
@@ -394,7 +392,7 @@
   document.addEventListener('DOMContentLoaded', () => {
     requestAnimationFrame(() => {
       init();
-      requestAnimationFrame(syncAll);
+      scheduleSync();
     });
   });
 })();

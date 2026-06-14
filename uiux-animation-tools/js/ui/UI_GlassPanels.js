@@ -3954,14 +3954,10 @@ window.UIGlassPanels = (function() {
         // 次の通常開閉アニメーションへ古い高さ計測を持ち越さない。
         document.body.classList.add('glass-theme-layout-settling');
         window.clearTimeout(themeLayoutSettleTimer);
-        window.requestAnimationFrame(() => {
-            window.requestAnimationFrame(() => {
-                realignDockedPanelsMeasured('theme-switch-settle', { immediate: true });
-                themeLayoutSettleTimer = window.setTimeout(() => {
-                    document.body.classList.remove('glass-theme-layout-settling');
-                }, 34);
-            });
-        });
+        themeLayoutSettleTimer = window.setTimeout(() => {
+            realignDockedPanelsMeasured('theme-switch-settle', { immediate: true });
+            document.body.classList.remove('glass-theme-layout-settling');
+        }, 34);
     }
 
     function handlePresetSelectChange(panel, select) {
