@@ -434,6 +434,10 @@
     }
 
     async function fetchBundledInitialSettings() {
+        if (window.location && window.location.protocol === 'file:') {
+            const fallback = cloneBundledInitialSettings();
+            if (fallback && fallback.schema === INITIAL_SETTINGS_SCHEMA) return fallback;
+        }
         if (typeof fetch === 'function') {
             try {
                 const response = await fetch(BUNDLED_INITIAL_SETTINGS_URL, { cache: 'no-store' });
@@ -441,8 +445,7 @@
                     const payload = await response.json();
                     if (payload && payload.schema === INITIAL_SETTINGS_SCHEMA) return payload;
                 }
-            } catch (error) {
-                console.warn('[initial-settings] bundled initial settings fetch failed. Embedded fallback will be used.', error);
+            } catch (_) {
             }
         }
         const fallback = cloneBundledInitialSettings();

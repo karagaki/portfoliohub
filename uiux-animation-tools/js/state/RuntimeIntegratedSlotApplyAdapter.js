@@ -9,6 +9,8 @@ window.RuntimeIntegratedSlotApplyAdapter = (function() {
     const BASE_SLOT_ID = '-';
     const EXTRA_SLOT_IDS = Object.freeze(['a', 'b', 'c', 'd', 'e']);
     const ALL_SLOT_IDS = Object.freeze([BASE_SLOT_ID].concat(EXTRA_SLOT_IDS));
+    const DEFAULT_CASES_URL = 'assets/data/default-cases.json';
+    const DEFAULT_CASES_SCHEMA = 'uiux-animation-tools.default-cases';
     let activeVisualSlot = null;
     let draftState = null;
     let intendedRuntimeId = null;
@@ -39,12 +41,39 @@ window.RuntimeIntegratedSlotApplyAdapter = (function() {
         }
     }
 
-    function loadStore() {
+    function readBundledDefaultCasesSync() {
         try {
-            const stored = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null');
+            const request = new XMLHttpRequest();
+            request.open('GET', DEFAULT_CASES_URL, false);
+            request.send(null);
+            if ((request.status >= 200 && request.status < 300) || request.status === 0) {
+                const payload = JSON.parse(request.responseText);
+                if (payload && payload.schema === DEFAULT_CASES_SCHEMA) return payload;
+            }
+        } catch (_) {}
+        return null;
+    }
+
+    function loadStore() {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw == null) {
+            const bundled = readBundledDefaultCasesSync();
+            const defaultStore = bundled && bundled.registeredSlots
+                && bundled.registeredSlots.schemaVersion === SCHEMA_VERSION
+                && bundled.registeredSlots.cases
+                ? cloneValue(bundled.registeredSlots)
+                : null;
+            if (defaultStore) {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(defaultStore));
+                return defaultStore;
+            }
+            return { schemaVersion: SCHEMA_VERSION, cases: {} };
+        }
+        try {
+            const stored = JSON.parse(raw);
             if (stored && stored.schemaVersion === SCHEMA_VERSION && stored.cases) return stored;
-        } catch (error) {
-            console.warn('Failed to load registered slots:', error);
+        } catch (_) {
+            return { schemaVersion: SCHEMA_VERSION, cases: {} };
         }
         return { schemaVersion: SCHEMA_VERSION, cases: {} };
     }

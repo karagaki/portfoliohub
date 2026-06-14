@@ -2095,7 +2095,6 @@ Color.updateSliderValue = function(param, value) {
 Color.updateAllSliders = function() {
     uiuxPublicDebugLog('Updating all sliders');
     if (!window.currentCase || !window.currentCase.config) {
-        console.warn('Current case or its config is undefined. Using default values.');
         return;
     }
 

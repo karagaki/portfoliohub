@@ -2244,6 +2244,19 @@ function loadAndSetImage() {
     uiuxPublicDebugLog('Attempting to load image from:', img.src);
 }
 
+function readBundledDefaultCasesSync() {
+    try {
+        const request = new XMLHttpRequest();
+        request.open('GET', 'assets/data/default-cases.json', false);
+        request.send(null);
+        if ((request.status >= 200 && request.status < 300) || request.status === 0) {
+            const payload = JSON.parse(request.responseText);
+            if (payload && payload.schema === 'uiux-animation-tools.default-cases') return payload;
+        }
+    } catch (_) {}
+    return null;
+}
+
 // 初期化時に呼び出す
 loadAndSetImage();
 
@@ -2252,26 +2265,37 @@ loadAndSetImage();
 
 
 function loadSavedSettings() {
-    const savedSettings = localStorage.getItem('allCaseSettings');
+    let savedSettings = localStorage.getItem('allCaseSettings');
+    if (savedSettings == null) {
+        const bundled = readBundledDefaultCasesSync();
+        if (bundled && bundled.allCaseSettings && typeof bundled.allCaseSettings === 'object') {
+            savedSettings = JSON.stringify(bundled.allCaseSettings);
+            localStorage.setItem('allCaseSettings', savedSettings);
+        }
+    }
     if (savedSettings) {
-        const allSettings = JSON.parse(savedSettings);
-        Object.keys(allSettings).forEach(caseKey => {
-            const caseIndex = parseInt(caseKey.replace('case', ''));
-            if (window.cases[caseIndex]) {
-                // configとinitialConfigの両方を更新
-                window.cases[caseIndex].config = { ...window.cases[caseIndex].config, ...allSettings[caseKey].config };
-                window.cases[caseIndex].initialConfig = { ...window.cases[caseIndex].initialConfig, ...allSettings[caseKey].initialConfig };
-                
-                // グローバル変数のケースも更新
-                window[`case${caseIndex}`] = {
-                    ...window[`case${caseIndex}`],
-                    config: { ...window[`case${caseIndex}`].config, ...allSettings[caseKey].config },
-                    initialConfig: { ...window[`case${caseIndex}`].initialConfig, ...allSettings[caseKey].initialConfig }
-                };
-            }
-        });
-        
-        uiuxPublicDebugLog('Saved settings loaded:', allSettings);
+        try {
+            const allSettings = JSON.parse(savedSettings);
+            Object.keys(allSettings).forEach(caseKey => {
+                const caseIndex = parseInt(caseKey.replace('case', ''));
+                if (window.cases[caseIndex]) {
+                    // configとinitialConfigの両方を更新
+                    window.cases[caseIndex].config = { ...window.cases[caseIndex].config, ...allSettings[caseKey].config };
+                    window.cases[caseIndex].initialConfig = { ...window.cases[caseIndex].initialConfig, ...allSettings[caseKey].initialConfig };
+                    
+                    // グローバル変数のケースも更新
+                    window[`case${caseIndex}`] = {
+                        ...window[`case${caseIndex}`],
+                        config: { ...window[`case${caseIndex}`].config, ...allSettings[caseKey].config },
+                        initialConfig: { ...window[`case${caseIndex}`].initialConfig, ...allSettings[caseKey].initialConfig }
+                    };
+                }
+            });
+            
+            uiuxPublicDebugLog('Saved settings loaded:', allSettings);
+        } catch (error) {
+            console.error('Error parsing saved settings:', error);
+        }
     }
 }
 
@@ -2438,6 +2462,6 @@ function loadAndSetImage(caseObj) {
             }
         );
     } else {
-        console.warn('No image to load for the current case');
+        return;
     }
 }
