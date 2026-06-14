@@ -211,36 +211,8 @@ function escapeHtml(value) {
     .replace(/'/g, "&#39;");
 }
 
-function sequentialPreviewImages(baseName, maxIndex = 12) {
-  const images = [`${baseName}.png`];
-  for (let index = 1; index <= maxIndex; index += 1) {
-    images.push(`${baseName}_${index}.png`);
-  }
-  return images;
-}
-
 function cardPreviewImagePath(image) {
   return image ? `./assets/img/${image}` : "";
-}
-
-const previewImageAvailability = new Map();
-
-function imageExists(image) {
-  if (!image) return Promise.resolve(false);
-  if (previewImageAvailability.has(image)) return previewImageAvailability.get(image);
-  const promise = new Promise((resolve) => {
-    const tester = new Image();
-    tester.onload = () => resolve(true);
-    tester.onerror = () => resolve(false);
-    tester.src = cardPreviewImagePath(image);
-  });
-  previewImageAvailability.set(image, promise);
-  return promise;
-}
-
-async function existingPreviewImages(images) {
-  const results = await Promise.all(images.map(async (image) => ({ image, ok: await imageExists(image) })));
-  return results.filter((result) => result.ok).map((result) => result.image);
 }
 
 function restartCardPreviewTimer() {
@@ -285,9 +257,8 @@ function startCardPreview(card) {
   const item = previewItems.find((previewItem) => previewItem.id === card.id);
   if (!item || !item.images.length) return;
 
-  const firstImage = item.images[0];
   activeCardPreviewId = item.id;
-  activeCardPreviewImages = [firstImage];
+  activeCardPreviewImages = item.images.slice();
   activeCardPreviewIndex = 0;
   stopCardPreviewTimer();
 
@@ -297,18 +268,12 @@ function startCardPreview(card) {
   });
 
   activeCardPreviewLayer = 0;
-  cardPreviewLayers[activeCardPreviewLayer].style.backgroundImage = `url("${cardPreviewImagePath(firstImage)}")`;
+  cardPreviewLayers[activeCardPreviewLayer].style.backgroundImage = `url("${cardPreviewImagePath(activeCardPreviewImages[0])}")`;
   cardPreviewLayers[activeCardPreviewLayer].classList.add("is-visible");
   page.classList.add("has-card-preview");
   cardPreviewBackdrop.classList.add("is-active");
-
-  existingPreviewImages(item.images).then((validImages) => {
-    if (activeCardPreviewId !== item.id) return;
-    activeCardPreviewImages = validImages.length ? validImages : [firstImage];
-    activeCardPreviewIndex = 0;
-    showCardPreviewImage(activeCardPreviewImages[0]);
-    restartCardPreviewTimer();
-  });
+  showCardPreviewImage(activeCardPreviewImages[0]);
+  restartCardPreviewTimer();
 }
 
 function stopCardPreview() {
@@ -351,7 +316,12 @@ const previewItems = [
     hoverCopy: ["これまで携わってきたグラフィック制作の実績を、", "個人制作と仕事での表現の幅が伝わるように整理したポートフォリオです。", "イラスト、キャラクター、デザインなどの経験をまとめ、今後の制作や仕事につながる実績として構成しています。"],
     cta: "ポートフォリオを見る",
     href: document.querySelector("#graphic")?.getAttribute("href") || "https://karagaki.github.io/testportfolio/",
-    images: sequentialPreviewImages("system-tools-preview-02"),
+    images: [
+      "system-tools-preview-02.png",
+      "system-tools-preview-02_1.png",
+      "system-tools-preview-02_2.png",
+      "system-tools-preview-02_3.png",
+    ],
   },
   {
     id: "system-tools",
@@ -368,7 +338,10 @@ const previewItems = [
     hoverCopy: ["ChatAIとの制作対話で生まれる仕様、判断、失敗の流れ、", "会話内のルールを分類し、次の制作へ活用するためのローカル管理ツールです。", "永続メモリの代替として制作の前提を蓄積し、自分の判断基準や制作方針を反映した「分身」の土台として発展させていきます。"],
     cta: "ツールを見る",
     href: document.querySelector("#system-tools")?.getAttribute("href") || "./system-tools/index.html",
-    images: sequentialPreviewImages("system-tools-preview-01"),
+    images: [
+      "system-tools-preview-01.png",
+      "system-tools-preview-01_1.png",
+    ],
   },
   {
     id: "uiux-animation-tools",
@@ -385,7 +358,12 @@ const previewItems = [
     hoverCopy: ["AI生成が広がる中で、生成AIとは別の角度から、", "コードによる絵作りや動きの表現を追求するために制作した研究ツールです。", "描画、アニメーション、操作感を組み合わせ、将来的なロボットアームによる描画・彫刻など、実体制作との連係も視野に入れて継続して検証していきます。"],
     cta: "ツールを見る",
     href: document.querySelector("#uiux-animation-tools")?.getAttribute("href") || "./uiux-animation-tools/index.html",
-    images: sequentialPreviewImages("system-tools-preview-03"),
+    images: [
+      "system-tools-preview-03.png",
+      "system-tools-preview-03_1.png",
+      "system-tools-preview-03_2.png",
+      "system-tools-preview-03_3.png",
+    ],
   },
 ];
 let currentPreviewIndex = 1;
