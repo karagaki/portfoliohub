@@ -422,10 +422,10 @@
 
 
     function hasExistingUserState() {
+        // UI_Variant.init() が起動時に uiVariant / uiVariantMain を自動で書くため、
+        // それだけでは「既存ユーザー状態」とはみなさない。
         const stableKeys = [
             UI_SIZE_TUNER_KEY,
-            'uiVariant',
-            'uiVariantMain',
             'globalCanvasBgColor',
             'colorThemeCardState',
             'allCaseSettings'
