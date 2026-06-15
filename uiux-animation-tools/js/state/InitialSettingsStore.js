@@ -2412,6 +2412,49 @@
         return Object.keys(value).length;
     }
 
+    function cloneSerializableValue(value) {
+        try {
+            return JSON.parse(JSON.stringify(value));
+        } catch (_) {
+            return value;
+        }
+    }
+
+    function sanitizeCaseSettingsValue(value) {
+        if (!value || typeof value !== 'object' || Array.isArray(value)) return value;
+        const out = {};
+        Object.entries(value).forEach(([caseId, caseValue]) => {
+            if (caseId === 'case11') return;
+            out[caseId] = caseValue;
+        });
+        return out;
+    }
+
+    function sanitizeRegisteredSlotsValue(value) {
+        if (!value || typeof value !== 'object' || Array.isArray(value)) return value;
+        const out = cloneSerializableValue(value);
+        if (!out || typeof out !== 'object' || Array.isArray(out)) return out;
+        if (out.cases && typeof out.cases === 'object' && !Array.isArray(out.cases)) {
+            delete out.cases['11'];
+        }
+        return out;
+    }
+
+    function sanitizeUserInitialSettingsValue(key, value) {
+        if (key === 'allCaseSettings') return sanitizeCaseSettingsValue(value);
+        if (key === 'p5jsRegisteredArtworkSlotsV1') return sanitizeRegisteredSlotsValue(value);
+        return value;
+    }
+
+    function sanitizeUserInitialSettingsKeys(keys) {
+        const out = {};
+        Object.entries(keys || {}).forEach(([key, value]) => {
+            const sanitized = sanitizeUserInitialSettingsValue(key, value);
+            if (sanitized !== undefined) out[key] = sanitized;
+        });
+        return out;
+    }
+
     function normalizeThemeValue(value) {
         if (value === 'variant-2-neumorphism') return 'Neumorphism';
         if (value === 'variant-1-glass') return 'Glass';
@@ -2485,31 +2528,32 @@
             group.items.forEach((item) => {
                 const storageKey = item.storageKey || item.key;
                 const value = item.key === 'uiSizeTuner' ? getUiSizeTunerSnapshot() : readStorageValue(storageKey);
-                if (value !== undefined) keys[item.key] = value;
+                if (value !== undefined) keys[item.key] = sanitizeUserInitialSettingsValue(item.key, value);
             });
         });
         return keys;
     }
 
     function buildUserInitialSettingsSummary(keys) {
-        const allCaseSettings = keys.allCaseSettings;
-        const registeredSlots = summarizeRegisteredSlots(keys.p5jsRegisteredArtworkSlotsV1);
-        const uiGlassCustomPresets = keys.uiGlassCustomPresets;
-        const uiNeumorphismCustomPresets = keys.uiNeumorphismCustomPresets;
+        const sanitizedKeys = sanitizeUserInitialSettingsKeys(keys);
+        const allCaseSettings = sanitizedKeys.allCaseSettings;
+        const registeredSlots = summarizeRegisteredSlots(sanitizedKeys.p5jsRegisteredArtworkSlotsV1);
+        const uiGlassCustomPresets = sanitizedKeys.uiGlassCustomPresets;
+        const uiNeumorphismCustomPresets = sanitizedKeys.uiNeumorphismCustomPresets;
         return {
             caseCount: countObjectEntries(allCaseSettings),
             registeredSlotCount: registeredSlots.registeredSlotCount,
             glassPresetCount: countObjectEntries(uiGlassCustomPresets),
             neumorphismPresetCount: countObjectEntries(uiNeumorphismCustomPresets),
-            hasUiSizeTuner: keys.uiSizeTuner !== undefined && keys.uiSizeTuner !== null,
-            activeGlassPreset: keys.uiVariantPreset ? String(keys.uiVariantPreset) : 'なし',
-            activeNeumorphismPreset: keys.uiNeumorphismVariantPreset ? String(keys.uiNeumorphismVariantPreset) : 'なし'
+            hasUiSizeTuner: sanitizedKeys.uiSizeTuner !== undefined && sanitizedKeys.uiSizeTuner !== null,
+            activeGlassPreset: sanitizedKeys.uiVariantPreset ? String(sanitizedKeys.uiVariantPreset) : 'なし',
+            activeNeumorphismPreset: sanitizedKeys.uiNeumorphismVariantPreset ? String(sanitizedKeys.uiNeumorphismVariantPreset) : 'なし'
         };
     }
 
     function getUserInitialSettingsSections(payload = exportUserInitialSettings()) {
         const keys = payload && typeof payload === 'object' && payload.keys && typeof payload.keys === 'object'
-            ? payload.keys
+            ? sanitizeUserInitialSettingsKeys(payload.keys)
             : {};
         return USER_INITIAL_SETTINGS_GROUPS.map((group) => ({
             label: group.label,
@@ -2529,7 +2573,7 @@
     function getUserInitialSettingsReport(payload = exportUserInitialSettings()) {
         const validation = validateUserInitialSettingsPayload(payload);
         const keys = payload && typeof payload === 'object' && payload.keys && typeof payload.keys === 'object'
-            ? payload.keys
+            ? sanitizeUserInitialSettingsKeys(payload.keys)
             : {};
         return {
             schema: payload && payload.schema,
@@ -2615,7 +2659,7 @@
                 appliedKeys: []
             };
         }
-        const keys = payload.keys || {};
+        const keys = sanitizeUserInitialSettingsKeys(payload.keys || {});
         const appliedKeys = [];
         USER_INITIAL_SETTINGS_GROUPS.forEach((group) => {
             group.items.forEach((item) => {
@@ -2832,9 +2876,9 @@
                 uiGlassPanelVisibility: storage.uiGlassPanelVisibility
             },
             cursorState,
-            caseSettings: storage.allCaseSettings,
+            caseSettings: sanitizeCaseSettingsValue(storage.allCaseSettings),
             uiGlassPresetDetailsOpen: readStorageValue('uiGlassPresetDetailsOpen'),
-            registeredSlots: artwork.p5jsRegisteredArtworkSlotsV1,
+            registeredSlots: sanitizeRegisteredSlotsValue(artwork.p5jsRegisteredArtworkSlotsV1),
             snapshotStore: artwork.p5jsArtworkSnapshotStoreV1,
             excludedRuntimeKeys: EXCLUDED_RUNTIME_KEYS.slice()
         };
@@ -2846,7 +2890,7 @@
             schema: ARTWORK_SLOTS_SCHEMA,
             version: VERSION,
             exportedAt: new Date().toISOString(),
-            registeredSlots: storage.p5jsRegisteredArtworkSlotsV1,
+            registeredSlots: sanitizeRegisteredSlotsValue(storage.p5jsRegisteredArtworkSlotsV1),
             snapshotStore: storage.p5jsArtworkSnapshotStoreV1
         };
     }
@@ -2868,9 +2912,9 @@
         if (payload.uiGlassPresetDetailsOpen !== undefined) out.uiGlassPresetDetailsOpen = payload.uiGlassPresetDetailsOpen;
         if (payload.uiNeumorphismPresetDetailsOpen !== undefined) out.uiNeumorphismPresetDetailsOpen = payload.uiNeumorphismPresetDetailsOpen;
         if (payload.uiState !== undefined) out.uiState = payload.uiState;
-        if (payload.caseSettings !== undefined) out.allCaseSettings = payload.caseSettings;
-        if (payload.allCaseSettings !== undefined) out.allCaseSettings = payload.allCaseSettings;
-        if (payload.registeredSlots !== undefined) out.p5jsRegisteredArtworkSlotsV1 = payload.registeredSlots;
+        if (payload.caseSettings !== undefined) out.allCaseSettings = sanitizeCaseSettingsValue(payload.caseSettings);
+        if (payload.allCaseSettings !== undefined) out.allCaseSettings = sanitizeCaseSettingsValue(payload.allCaseSettings);
+        if (payload.registeredSlots !== undefined) out.p5jsRegisteredArtworkSlotsV1 = sanitizeRegisteredSlotsValue(payload.registeredSlots);
         if (payload.snapshotStore !== undefined) out.p5jsArtworkSnapshotStoreV1 = payload.snapshotStore;
         return out;
     }
@@ -2900,7 +2944,7 @@
     function applyArtworkSlots(payload, options = {}) {
         if (!payload || typeof payload !== 'object') return false;
         if (payload.schema && payload.schema !== ARTWORK_SLOTS_SCHEMA) return false;
-        writeStorageValue('p5jsRegisteredArtworkSlotsV1', payload.registeredSlots);
+        writeStorageValue('p5jsRegisteredArtworkSlotsV1', sanitizeRegisteredSlotsValue(payload.registeredSlots));
         writeStorageValue('p5jsArtworkSnapshotStoreV1', payload.snapshotStore);
         if (options.reload === true) setTimeout(() => window.location.reload(), 60);
         return true;

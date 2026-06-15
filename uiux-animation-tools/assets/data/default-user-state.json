@@ -1289,46 +1289,6 @@
         "b": 200,
         "pointSequenceSeconds": 8
       }
-    },
-    "case11": {
-      "config": {
-        "count": 6,
-        "color": [
-          0,
-          0,
-          0
-        ],
-        "size": 36,
-        "radius": 240,
-        "trailLength": 120,
-        "morphSpeed": 0.012,
-        "fadeSpeed": 0.0026,
-        "waveSpacing": 120,
-        "vectorSpeed": 1,
-        "vectorDirection": 0,
-        "vectorSize": 10,
-        "image": null,
-        "pointSequenceSeconds": 8
-      },
-      "initialConfig": {
-        "count": 6,
-        "color": [
-          0,
-          0,
-          0
-        ],
-        "size": 36,
-        "radius": 240,
-        "trailLength": 120,
-        "morphSpeed": 0.012,
-        "fadeSpeed": 0.0026,
-        "waveSpacing": 120,
-        "vectorSpeed": 1,
-        "vectorDirection": 0,
-        "vectorSize": 10,
-        "image": null,
-        "pointSequenceSeconds": 8
-      }
     }
   },
   "registeredSlots": {
@@ -3383,90 +3343,6 @@
                 "trailLength": 20,
                 "morphSpeed": 0.04,
                 "fadeSpeed": 0.07,
-                "pointSequenceSeconds": 8
-              },
-              "cycles": {},
-              "extraParams": []
-            },
-            "color": {
-              "storage": {
-                "colorThemeCardState": null,
-                "colorThemeAssignMode": "alternate",
-                "colorThemeBlendEnabled": 0,
-                "colorTransitionSeconds": null,
-                "useRandomColors": null,
-                "randomColorCount": null,
-                "randomColorAssignMode": null,
-                "colorMode": null,
-                "hueCount": null,
-                "mixMin": null,
-                "mixMax": null,
-                "hueRangeAssignMode": null,
-                "saturationMin": null,
-                "saturationMax": null,
-                "paletteSystem": null,
-                "colorEngineSettings": {
-                  "engineEnabled": true,
-                  "groupCount": 2,
-                  "assignModeGlobal": "alternate",
-                  "mixMin": 0.15,
-                  "mixMax": 1,
-                  "baseSeed": 1781480164519
-                },
-                "globalCanvasBgColor": null
-              },
-              "enginePublicState": {
-                "engineEnabled": true,
-                "groupCount": 2,
-                "assignModeGlobal": "alternate",
-                "mixMin": 0.15,
-                "mixMax": 1,
-                "baseColors": [
-                  [
-                    225,
-                    240,
-                    5
-                  ],
-                  [
-                    91,
-                    91,
-                    240
-                  ]
-                ],
-                "baseSeed": 1781480164519
-              },
-              "applyStatus": "capture-only-until-color-adapter-is-validated"
-            },
-            "render": {
-              "trailMode": "history",
-              "canvasBackground": "#e1e1e1"
-            },
-            "transition": {
-              "pointSequenceSeconds": 8
-            },
-            "metadata": {
-              "capturedAs": "base",
-              "capturedAt": "2026-06-14T23:36:05.836Z"
-            }
-          }
-        },
-        "slots": {}
-      },
-      "11": {
-        "base": {
-          "slotId": "-",
-          "locked": true,
-          "snapshot": {
-            "schemaVersion": 1,
-            "caseId": 11,
-            "point": {
-              "fixed": {
-                "count": 6,
-                "size": 36,
-                "radius": 240,
-                "trailLength": 120,
-                "morphSpeed": 0.012,
-                "fadeSpeed": 0.0026,
                 "pointSequenceSeconds": 8
               },
               "cycles": {},

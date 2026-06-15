@@ -960,6 +960,29 @@ function handleCase11EntryFade(bgR, bgG, bgB, fadeAlpha) {
     return true;
 }
 
+function sanitizeCaseSettingsCollection(caseSettings) {
+    if (!caseSettings || typeof caseSettings !== 'object' || Array.isArray(caseSettings)) return caseSettings;
+    const out = {};
+    Object.entries(caseSettings).forEach(([caseKey, caseValue]) => {
+        if (caseKey === 'case11') return;
+        out[caseKey] = caseValue;
+    });
+    return out;
+}
+
+function getNextVisibleCaseIndex(startIndex) {
+    const caseList = Array.isArray(window.cases) ? window.cases : [];
+    if (caseList.length === 0) return 0;
+    const baseIndex = Number.isInteger(startIndex) ? startIndex : -1;
+    for (let step = 1; step <= caseList.length; step += 1) {
+        const candidateIndex = (baseIndex + step + caseList.length) % caseList.length;
+        const candidateCase = caseList[candidateIndex];
+        if (isCase11Object(candidateCase)) continue;
+        return candidateIndex;
+    }
+    return baseIndex >= 0 ? baseIndex : 0;
+}
+
 function prepareNextCase(targetCase = null, options = {}) {
     const allowInterrupt = !!(options && options.interrupt);
     const usePointSequence = !!(options && options.pointSequence);
@@ -968,7 +991,7 @@ function prepareNextCase(targetCase = null, options = {}) {
     const currentBelongsToState = currentCase && getBaseCaseIndex(currentCase) === state;
     const preserveRuntimeSource = currentCase && currentCase.__isRuntimeCase === true && currentBelongsToState;
     currentCase = (isTransitioning && allowInterrupt) || preserveRuntimeSource ? currentCase : cases[state];
-    nextCase = targetCase || cases[(state + 1) % cases.length];
+    nextCase = targetCase || cases[getNextVisibleCaseIndex(state)];
     const transitionId = ++window.__caseTransitionSeq;
     
     const currentCount = Math.max(1, Number(currentCase.config.count) || 1);
@@ -2269,13 +2292,14 @@ function loadSavedSettings() {
     if (savedSettings == null) {
         const bundled = readBundledDefaultCasesSync();
         if (bundled && bundled.allCaseSettings && typeof bundled.allCaseSettings === 'object') {
-            savedSettings = JSON.stringify(bundled.allCaseSettings);
+            const sanitizedBundled = sanitizeCaseSettingsCollection(bundled.allCaseSettings);
+            savedSettings = JSON.stringify(sanitizedBundled);
             localStorage.setItem('allCaseSettings', savedSettings);
         }
     }
     if (savedSettings) {
         try {
-            const allSettings = JSON.parse(savedSettings);
+            const allSettings = sanitizeCaseSettingsCollection(JSON.parse(savedSettings));
             Object.keys(allSettings).forEach(caseKey => {
                 const caseIndex = parseInt(caseKey.replace('case', ''));
                 if (window.cases[caseIndex]) {

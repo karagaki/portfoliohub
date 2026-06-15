@@ -5,7 +5,7 @@
     const LAYOUT_KEY = 'casePaletteLayoutMode';
     const HORIZONTAL = 'horizontal';
     const VERTICAL = 'vertical';
-    const CASE_COUNT = 12;
+    const CASE_COUNT = 11;
     const BUTTON_SIZE = 21;
     const BUTTON_GAP = 2;
     const TOGGLE_GAP = 4;
