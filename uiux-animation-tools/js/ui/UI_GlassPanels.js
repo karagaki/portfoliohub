@@ -69,6 +69,13 @@ window.UIGlassPanels = (function() {
     let utilityPanelMotionLockTimer = 0;
     let utilityPanelMotionLockReason = '';
     let utilityPanelMotionLockUntil = 0;
+    const USER_INITIAL_SETTINGS_TAB_DETAIL = 'detail';
+    const USER_INITIAL_SETTINGS_TAB_INITIAL = 'initial';
+    let userInitialSettingsPreviewPayload = null;
+    let userInitialSettingsPreviewFileName = '';
+    let userInitialSettingsFeedback = '';
+    let userInitialSettingsFeedbackKind = 'info';
+    let userInitialSettingsReloadAvailable = false;
     const individualPanelCollapsedStateBeforeHide = new Map();
     const DOCKED_PANEL_DEFS = [
         { key: 'color', label: '1.配色', displayOrder: 1, id: CURSOR_PANEL_3_ID, idPrefix: 'cursor-panel-3-' },
@@ -3840,6 +3847,228 @@ window.UIGlassPanels = (function() {
         localStorage.setItem(getActivePresetDetailsKey(), String(open));
     }
 
+    function escapeHtml(value) {
+        return String(value ?? '')
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;');
+    }
+
+    function getUserInitialSettingsApi() {
+        return window.UIUXInitialSettingsAPI || null;
+    }
+
+    function setUserInitialSettingsFeedback(message, kind = 'info', reloadAvailable = false) {
+        userInitialSettingsFeedback = message || '';
+        userInitialSettingsFeedbackKind = kind || 'info';
+        userInitialSettingsReloadAvailable = reloadAvailable === true;
+    }
+
+    function renderUserInitialSettingsSummaryCard(label, value, note = '') {
+        return `
+            <div style="min-width:0; padding:4px 6px; border:1px solid rgba(255,255,255,0.16); border-radius:6px; background:rgba(255,255,255,0.05); box-sizing:border-box;">
+                <div style="font-size:calc(8px * var(--ui-font-scale)); line-height:1.1; opacity:0.72;">${escapeHtml(label)}</div>
+                <div style="font-size:calc(11px * var(--ui-font-scale)); line-height:1.15; font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${escapeHtml(value)}</div>
+                ${note ? `<div style="font-size:calc(7px * var(--ui-font-scale)); line-height:1.1; opacity:0.62; margin-top:1px;">${escapeHtml(note)}</div>` : ''}
+            </div>
+        `;
+    }
+
+    function renderUserInitialSettingsItemRow(item) {
+        return `
+            <div style="display:grid; grid-template-columns:minmax(0,1fr) auto auto; gap:4px; align-items:center; min-width:0;">
+                <div style="min-width:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-size:calc(8px * var(--ui-font-scale)); line-height:1.15;">${escapeHtml(item.label)}</div>
+                <div style="font-size:calc(7px * var(--ui-font-scale)); font-weight:700; letter-spacing:0.02em; color:rgba(23,32,42,0.72);">${item.present ? 'あり' : 'なし'}</div>
+                <div style="min-width:0; max-width:100%; text-align:right; font-size:calc(8px * var(--ui-font-scale)); line-height:1.15; font-variant-numeric:tabular-nums; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${escapeHtml(item.valueText || '')}</div>
+            </div>
+        `;
+    }
+
+    function renderUserInitialSettingsSection(section) {
+        return `
+            <div style="display:flex; flex-direction:column; gap:3px; min-width:0;">
+                <div style="font-size:calc(8px * var(--ui-font-scale)); line-height:1.1; font-weight:700; letter-spacing:0.03em; color:rgba(23,32,42,0.74); border-bottom:1px solid rgba(230,230,230,0.24); padding-bottom:1px;">${escapeHtml(section.label)}</div>
+                <div style="display:flex; flex-direction:column; gap:2px; min-width:0;">
+                    ${section.items.map(renderUserInitialSettingsItemRow).join('')}
+                </div>
+            </div>
+        `;
+    }
+
+    function renderRegisteredSlotRows(report) {
+        const slots = report?.registeredSlots;
+        if (!slots || !slots.hasSlots) {
+            return `
+                <div style="font-size:calc(8px * var(--ui-font-scale)); line-height:1.25; color:rgba(23,32,42,0.68);">登録スロットなし</div>
+            `;
+        }
+        return `
+            <div style="display:flex; flex-direction:column; gap:2px; min-width:0;">
+                ${slots.caseRows.map((row) => `
+                    <div style="display:grid; grid-template-columns:auto minmax(0,1fr); gap:4px; align-items:start; min-width:0;">
+                        <div style="font-size:calc(7px * var(--ui-font-scale)); line-height:1.15; font-weight:700; white-space:nowrap;">case${escapeHtml(row.caseId)}</div>
+                        <div style="font-size:calc(8px * var(--ui-font-scale)); line-height:1.15; min-width:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${escapeHtml(row.slotIds.join(', '))}</div>
+                    </div>
+                `).join('')}
+            </div>
+        `;
+    }
+
+    function renderUserInitialSettingsReport(report, options = {}) {
+        if (!report || typeof report !== 'object') {
+            return '<div style="font-size:calc(8px * var(--ui-font-scale));">初期設定データを表示できません。</div>';
+        }
+        const summary = report.summary || {};
+        const showActions = !options.compact && options.showActions !== false;
+        const cards = [
+            ['case数', `${summary.caseCount ?? 0}`],
+            ['登録スロット数', `${summary.registeredSlotCount ?? 0}`],
+            ['Glassプリセット数', `${summary.glassPresetCount ?? 0}`],
+            ['Neumoプリセット数', `${summary.neumorphismPresetCount ?? 0}`],
+            ['UI Size Tuner', summary.hasUiSizeTuner ? 'あり' : 'なし'],
+            ['UIバリエーション', report.themeValue || 'なし']
+        ];
+        const intro = options.compact
+            ? ''
+            : (options.preview
+                ? '読み込み済みJSON'
+                : '現在の localStorage を読み取り、初期設定用 JSON を収集します。読み込みは明示的に反映するまで localStorage を書き換えません。');
+        const feedback = !options.compact && userInitialSettingsFeedback
+            ? `<div style="padding:4px 6px; border:1px solid rgba(255,255,255,0.16); border-radius:6px; background:${userInitialSettingsFeedbackKind === 'error' ? 'rgba(255,90,90,0.10)' : 'rgba(90,255,150,0.08)'}; font-size:calc(8px * var(--ui-font-scale)); line-height:1.3;">${escapeHtml(userInitialSettingsFeedback)}</div>`
+            : '';
+        const warnings = !options.compact && report.validation && report.validation.warnings && report.validation.warnings.length
+            ? `<div style="padding:4px 6px; border:1px solid rgba(255,255,255,0.16); border-radius:6px; background:rgba(255,185,90,0.08); font-size:calc(8px * var(--ui-font-scale)); line-height:1.3;">${report.validation.warnings.map(escapeHtml).join('<br>')}</div>`
+            : '';
+        return `
+            <div style="display:flex; flex-direction:column; gap:5px; min-width:0;">
+                ${intro ? `<div style="font-size:calc(8px * var(--ui-font-scale)); line-height:1.3; color:rgba(23,32,42,0.74);">${escapeHtml(intro)}</div>` : ''}
+                ${feedback}
+                ${warnings}
+                <div style="display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:4px;">
+                    ${cards.map(([label, value]) => renderUserInitialSettingsSummaryCard(label, value)).join('')}
+                </div>
+                <div style="display:flex; flex-direction:column; gap:4px;">
+                    <div style="display:grid; grid-template-columns:minmax(0,1fr) auto; gap:4px; align-items:center; font-size:calc(8px * var(--ui-font-scale)); line-height:1.15;">
+                        <div style="font-weight:700; color:rgba(23,32,42,0.72);">現在選択中 Glass / Neumo</div>
+                        <div style="text-align:right; font-variant-numeric:tabular-nums; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${escapeHtml(summary.activeGlassPreset || 'なし')} / ${escapeHtml(summary.activeNeumorphismPreset || 'なし')}</div>
+                    </div>
+                </div>
+                ${showActions ? `
+                    <div class="glass-preset-actions" style="position:static; inset:auto; margin:0; flex-wrap:wrap; gap:4px;">
+                        <button type="button" data-user-initial-settings-action="copy">JSONコピー</button>
+                        <button type="button" data-user-initial-settings-action="download">JSONダウンロード</button>
+                        <button type="button" data-user-initial-settings-action="load">JSON読み込み</button>
+                        <button type="button" data-user-initial-settings-action="apply" ${options.previewValid === false ? 'disabled' : ''}>現在のlocalStorageへ反映</button>
+                        <button type="button" data-user-initial-settings-action="reload" ${userInitialSettingsReloadAvailable ? '' : 'disabled'}>再読み込み</button>
+                    </div>
+                    <input type="file" accept="application/json,.json" data-user-initial-settings-import-input hidden>
+                ` : ''}
+                ${options.compact ? '' : `
+                    <div style="display:flex; flex-direction:column; gap:4px;">
+                        ${report.sections.map(renderUserInitialSettingsSection).join('')}
+                    </div>
+                    <div style="display:flex; flex-direction:column; gap:4px;">
+                        <div style="font-size:calc(8px * var(--ui-font-scale)); line-height:1.1; font-weight:700; color:rgba(23,32,42,0.74); border-bottom:1px solid rgba(230,230,230,0.24); padding-bottom:1px;">登録スロット内容</div>
+                        ${renderRegisteredSlotRows(report)}
+                    </div>
+                    ${options.preview && options.previewReport ? `
+                        <div style="display:flex; flex-direction:column; gap:4px; padding-top:2px;">
+                            <div style="font-size:calc(8px * var(--ui-font-scale)); line-height:1.1; font-weight:700; color:rgba(23,32,42,0.74); border-bottom:1px solid rgba(230,230,230,0.24); padding-bottom:1px;">読み込み済みプレビュー${options.previewFileName ? `: ${escapeHtml(options.previewFileName)}` : ''}</div>
+                            ${renderUserInitialSettingsReport(options.previewReport, { compact: true, preview: true, showActions: false })}
+                        </div>
+                    ` : ''}
+                `}
+            </div>
+        `;
+    }
+
+    function renderUserInitialSettingsRoot(panel) {
+        if (!panel) return;
+        const root = panel.querySelector('[data-user-initial-settings-root]');
+        if (!root) return;
+        const api = getUserInitialSettingsApi();
+        if (!api || typeof api.getUserInitialSettingsReport !== 'function' || typeof api.exportUserInitialSettings !== 'function') {
+            root.innerHTML = '<div style="font-size:calc(8px * var(--ui-font-scale)); line-height:1.3;">初期設定APIが読み込まれていません。</div>';
+            return;
+        }
+        const currentPayload = api.exportUserInitialSettings();
+        const currentReport = api.getUserInitialSettingsReport(currentPayload);
+        const previewReport = userInitialSettingsPreviewPayload
+            ? api.getUserInitialSettingsReport(userInitialSettingsPreviewPayload)
+            : null;
+        root.innerHTML = renderUserInitialSettingsReport(currentReport, {
+            preview: Boolean(previewReport),
+            previewReport,
+            previewFileName: userInitialSettingsPreviewFileName,
+            previewValid: Boolean(previewReport && previewReport.validation?.ok !== false)
+        });
+    }
+
+    function setUserInitialSettingsTab(panel, tab) {
+        if (!panel) return;
+        const normalized = tab === USER_INITIAL_SETTINGS_TAB_INITIAL ? USER_INITIAL_SETTINGS_TAB_INITIAL : USER_INITIAL_SETTINGS_TAB_DETAIL;
+        panel.dataset.userInitialSettingsActiveTab = normalized;
+        const detailPanel = panel.querySelector('[data-user-initial-settings-tab-panel="detail"]');
+        const initialPanel = panel.querySelector('[data-user-initial-settings-tab-panel="initial"]');
+        if (detailPanel) detailPanel.hidden = normalized !== USER_INITIAL_SETTINGS_TAB_DETAIL;
+        if (initialPanel) initialPanel.hidden = normalized !== USER_INITIAL_SETTINGS_TAB_INITIAL;
+        panel.querySelectorAll('button[data-user-initial-settings-tab]').forEach((button) => {
+            const active = button.getAttribute('data-user-initial-settings-tab') === normalized;
+            button.classList.toggle('is-on', active);
+            button.setAttribute('aria-pressed', String(active));
+        });
+        if (normalized === USER_INITIAL_SETTINGS_TAB_INITIAL) {
+            renderUserInitialSettingsRoot(panel);
+        }
+    }
+
+    async function loadUserInitialSettingsPreview(panel, file) {
+        if (!file) return;
+        const api = getUserInitialSettingsApi();
+        if (!api || typeof file.text !== 'function' || typeof api.parseUserInitialSettingsText !== 'function') return;
+        const text = await file.text();
+        const parsed = api.parseUserInitialSettingsText(text);
+        if (!parsed.ok) {
+            userInitialSettingsPreviewPayload = null;
+            userInitialSettingsPreviewFileName = file.name || '';
+            const message = parsed.validation && parsed.validation.warnings && parsed.validation.warnings.length
+                ? parsed.validation.warnings.join(' / ')
+                : 'JSONの読み込みに失敗しました。';
+            setUserInitialSettingsFeedback(message, 'error', false);
+            renderUserInitialSettingsRoot(panel);
+            return;
+        }
+        userInitialSettingsPreviewPayload = parsed.payload;
+        userInitialSettingsPreviewFileName = file.name || '';
+        setUserInitialSettingsFeedback(`JSONを読み込みました: ${file.name || 'untitled.json'}`, 'success', false);
+        renderUserInitialSettingsRoot(panel);
+    }
+
+    async function copyTextToClipboard(text) {
+        try {
+            if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
+                await navigator.clipboard.writeText(text);
+                return true;
+            }
+        } catch (_) {}
+        try {
+            const ta = document.createElement('textarea');
+            ta.value = text;
+            ta.setAttribute('readonly', 'readonly');
+            ta.style.position = 'fixed';
+            ta.style.left = '-9999px';
+            document.body.appendChild(ta);
+            ta.select();
+            const ok = document.execCommand('copy');
+            ta.remove();
+            return ok;
+        } catch (_) {
+            return false;
+        }
+    }
+
     function applyPresetUI(panel) {
         if (!panel) return;
         const activeTheme = getActiveThemeId();
@@ -5330,6 +5559,10 @@ window.UIGlassPanels = (function() {
                     return `<div class="glass-preset-category-header"></div>${defs.map(renderPresetControl).join('')}`;
                 }).join('');
             })();
+        const initialSettingsTab = panel.dataset.userInitialSettingsActiveTab === USER_INITIAL_SETTINGS_TAB_INITIAL
+            ? USER_INITIAL_SETTINGS_TAB_INITIAL
+            : USER_INITIAL_SETTINGS_TAB_DETAIL;
+        panel.dataset.userInitialSettingsActiveTab = initialSettingsTab;
         panel.innerHTML = `
             <div class="glass-preset-header-row">
                 <button type="button" class="glass-preset-details-toggle" data-glass-preset-toggle aria-label="テーマ詳細">▶</button>
@@ -5337,21 +5570,30 @@ window.UIGlassPanels = (function() {
                 <span class="glass-preset-selected-lock" aria-hidden="true" hidden>🔒</span>
             </div>
             <div class="glass-preset-details" data-glass-preset-details hidden>
-                <div class="glass-preset-rows">
-                    ${rowsMarkup}
+                <div class="glass-preset-tabs" style="display:flex; flex-wrap:wrap; gap:4px; margin:0 0 4px;">
+                    <button type="button" class="glass-chip${initialSettingsTab === USER_INITIAL_SETTINGS_TAB_DETAIL ? ' is-on' : ''}" data-user-initial-settings-tab="detail" aria-pressed="${String(initialSettingsTab === USER_INITIAL_SETTINGS_TAB_DETAIL)}">詳細設定</button>
+                    <button type="button" class="glass-chip${initialSettingsTab === USER_INITIAL_SETTINGS_TAB_INITIAL ? ' is-on' : ''}" data-user-initial-settings-tab="initial" aria-pressed="${String(initialSettingsTab === USER_INITIAL_SETTINGS_TAB_INITIAL)}">初期設定</button>
                 </div>
-                <div class="glass-preset-status" aria-live="polite"></div>
-                <div class="glass-preset-actions">
-                    <button type="button" class="glass-preset-dup">複製</button>
-                    <button type="button" class="glass-preset-new">新規</button>
-                    <button type="button" class="glass-preset-rename">名前変更</button>
-                    <button type="button" class="glass-preset-delete">削除</button>
-                    <button type="button" class="glass-preset-export">export</button>
-                    <button type="button" class="glass-preset-import">import</button>
-                    <button type="button" class="glass-preset-save">保存</button>
-                    <button type="button" class="glass-preset-edit-lock-toggle" aria-pressed="false" title="編集ロックを設定">🔒</button>
+                <div class="glass-preset-tab-panel" data-user-initial-settings-tab-panel="detail" ${initialSettingsTab === USER_INITIAL_SETTINGS_TAB_DETAIL ? '' : 'hidden'}>
+                    <div class="glass-preset-rows">
+                        ${rowsMarkup}
+                    </div>
+                    <div class="glass-preset-status" aria-live="polite"></div>
+                    <div class="glass-preset-actions">
+                        <button type="button" class="glass-preset-dup">複製</button>
+                        <button type="button" class="glass-preset-new">新規</button>
+                        <button type="button" class="glass-preset-rename">名前変更</button>
+                        <button type="button" class="glass-preset-delete">削除</button>
+                        <button type="button" class="glass-preset-export">export</button>
+                        <button type="button" class="glass-preset-import">import</button>
+                        <button type="button" class="glass-preset-save">保存</button>
+                        <button type="button" class="glass-preset-edit-lock-toggle" aria-pressed="false" title="編集ロックを設定">🔒</button>
+                    </div>
+                    <input type="file" class="glass-preset-import-input" accept="application/json,.json" hidden>
                 </div>
-                <input type="file" class="glass-preset-import-input" accept="application/json,.json" hidden>
+                <div class="glass-preset-tab-panel" data-user-initial-settings-tab-panel="initial" ${initialSettingsTab === USER_INITIAL_SETTINGS_TAB_INITIAL ? '' : 'hidden'}>
+                    <div data-user-initial-settings-root></div>
+                </div>
             </div>
         `;
 
@@ -5372,6 +5614,73 @@ window.UIGlassPanels = (function() {
         if (importInput && PUBLIC_DEMO_DISABLE_EXPORT_IMPORT) {
             importInput.disabled = true;
             importInput.setAttribute('aria-disabled', 'true');
+        }
+
+        if (panel.dataset.userInitialSettingsListenersBound !== 'true') {
+            panel.dataset.userInitialSettingsListenersBound = 'true';
+            panel.addEventListener('click', async (event) => {
+                const tabButton = event.target.closest('button[data-user-initial-settings-tab]');
+                if (tabButton && panel.contains(tabButton)) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    setUserInitialSettingsTab(panel, tabButton.getAttribute('data-user-initial-settings-tab'));
+                    return;
+                }
+                const initialActionButton = event.target.closest('[data-user-initial-settings-action]');
+                if (initialActionButton && panel.contains(initialActionButton)) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    const action = initialActionButton.getAttribute('data-user-initial-settings-action');
+                    const api = getUserInitialSettingsApi();
+                    if (!api) return;
+                    if (action === 'copy') {
+                        const payload = api.exportUserInitialSettings();
+                        const copied = await copyTextToClipboard(JSON.stringify(payload, null, 2));
+                        setUserInitialSettingsFeedback(copied ? 'JSONをコピーしました。' : 'JSONのコピーに失敗しました。', copied ? 'success' : 'error', false);
+                        renderUserInitialSettingsRoot(panel);
+                        return;
+                    }
+                    if (action === 'download') {
+                        api.downloadUserInitialSettings();
+                        setUserInitialSettingsFeedback('JSONをダウンロードしました。', 'success', false);
+                        renderUserInitialSettingsRoot(panel);
+                        return;
+                    }
+                    if (action === 'load') {
+                        importInput?.click();
+                        return;
+                    }
+                    if (action === 'apply') {
+                        if (!userInitialSettingsPreviewPayload) {
+                            setUserInitialSettingsFeedback('先に JSON を読み込んでください。', 'error', false);
+                            renderUserInitialSettingsRoot(panel);
+                            return;
+                        }
+                        const result = api.applyUserInitialSettings(userInitialSettingsPreviewPayload, { reload: false });
+                        if (!result || result.ok !== true) {
+                            const message = result?.validation?.warnings?.length ? result.validation.warnings.join(' / ') : '反映に失敗しました。';
+                            setUserInitialSettingsFeedback(message, 'error', false);
+                            renderUserInitialSettingsRoot(panel);
+                            return;
+                        }
+                        setUserInitialSettingsFeedback(`反映しました。${result.appliedKeys.length ? `(${result.appliedKeys.length}件)` : ''} 再読み込みしてください。`, 'success', true);
+                        renderUserInitialSettingsRoot(panel);
+                        return;
+                    }
+                    if (action === 'reload') {
+                        if (!userInitialSettingsReloadAvailable) return;
+                        window.location.reload();
+                    }
+                }
+            });
+
+            panel.addEventListener('change', async (event) => {
+                const fileInput = event.target.closest('[data-user-initial-settings-import-input]');
+                if (!fileInput || !panel.contains(fileInput)) return;
+                const file = fileInput.files && fileInput.files[0];
+                fileInput.value = '';
+                await loadUserInitialSettingsPreview(panel, file);
+            });
         }
 
         toggle?.addEventListener('click', (event) => {
@@ -5527,6 +5836,7 @@ window.UIGlassPanels = (function() {
         });
 
         applyPresetUI(panel);
+        renderUserInitialSettingsRoot(panel);
     }
 
     function isolateStylePresetPanel() {

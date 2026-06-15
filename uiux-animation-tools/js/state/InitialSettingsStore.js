@@ -7,6 +7,52 @@
     const VERSION = 1;
     const UI_SIZE_TUNER_KEY = 'uiuxAnimationTools.uiSizeTuner.v26';
     const BUNDLED_INITIAL_SETTINGS_URL = 'assets/data/default-user-state.json';
+    const USER_INITIAL_SETTINGS_SCHEMA = 'uiux-animation-tools.user-initial-settings-export';
+    const USER_INITIAL_SETTINGS_SOURCE = 'detail-settings-initial-tab';
+    const USER_INITIAL_SETTINGS_EXPORT_VERSION = 1;
+    const USER_INITIAL_SETTINGS_THEME_KEYS = ['uiVariantMain', 'uiVariant'];
+    const USER_INITIAL_SETTINGS_GROUPS = [
+        {
+            label: 'UIバリエーション',
+            items: [
+                { key: 'uiVariantMain', label: 'uiVariantMain', summaryLabel: 'UIバリエーション(main)' },
+                { key: 'uiVariant', label: 'uiVariant', summaryLabel: 'UIバリエーション' }
+            ]
+        },
+        {
+            label: 'case / 登録スロット',
+            items: [
+                { key: 'allCaseSettings', label: 'allCaseSettings', summaryLabel: 'case設定' },
+                { key: 'p5jsRegisteredArtworkSlotsV1', label: 'p5jsRegisteredArtworkSlotsV1', summaryLabel: '登録スロット状態' }
+            ]
+        },
+        {
+            label: 'Glass登録設定',
+            items: [
+                { key: 'uiGlassCustomPresets', label: 'uiGlassCustomPresets', summaryLabel: 'Glass登録設定' },
+                { key: 'uiGlassPresetEditLocks', label: 'uiGlassPresetEditLocks', summaryLabel: 'Glass編集ロック' },
+                { key: 'uiGlassPresetParams', label: 'uiGlassPresetParams', summaryLabel: 'Glass詳細設定' },
+                { key: 'uiVariantPreset', label: 'uiVariantPreset', summaryLabel: '現在選択中の Glass プリセット' },
+                { key: 'uiGlassPresetDetailsOpen', label: 'uiGlassPresetDetailsOpen', summaryLabel: 'Glass詳細の開閉状態' }
+            ]
+        },
+        {
+            label: 'Neumorphism登録設定',
+            items: [
+                { key: 'uiNeumorphismCustomPresets', label: 'uiNeumorphismCustomPresets', summaryLabel: 'Neumorphism登録設定' },
+                { key: 'uiNeumorphismPresetEditLocks', label: 'uiNeumorphismPresetEditLocks', summaryLabel: 'Neumorphism編集ロック' },
+                { key: 'uiNeumorphismPresetParams', label: 'uiNeumorphismPresetParams', summaryLabel: 'Neumorphism詳細設定' },
+                { key: 'uiNeumorphismVariantPreset', label: 'uiNeumorphismVariantPreset', summaryLabel: '現在選択中の Neumorphism プリセット' },
+                { key: 'uiNeumorphismPresetDetailsOpen', label: 'uiNeumorphismPresetDetailsOpen', summaryLabel: 'Neumorphism詳細の開閉状態' }
+            ]
+        },
+        {
+            label: 'UI Size Tuner',
+            items: [
+                { key: 'uiSizeTuner', label: 'uiSizeTuner', storageKey: UI_SIZE_TUNER_KEY, summaryLabel: 'UI Size Tuner' }
+            ]
+        }
+    ];
 
     const BUNDLED_INITIAL_SETTINGS_EMBEDDED = JSON.parse(String.raw`{
   "schema": "uiux-animation-tools.default-user-state",
@@ -2361,6 +2407,243 @@
         return out;
     }
 
+    function countObjectEntries(value) {
+        if (!value || typeof value !== 'object' || Array.isArray(value)) return 0;
+        return Object.keys(value).length;
+    }
+
+    function normalizeThemeValue(value) {
+        if (value === 'variant-2-neumorphism') return 'Neumorphism';
+        if (value === 'variant-1-glass') return 'Glass';
+        return value ? String(value) : 'なし';
+    }
+
+    function summarizeRegisteredSlots(store) {
+        const cases = store && typeof store === 'object' && store.cases && typeof store.cases === 'object'
+            ? store.cases
+            : {};
+        const caseRows = Object.keys(cases)
+            .map((caseId) => {
+                const record = cases[caseId] && typeof cases[caseId] === 'object' ? cases[caseId] : {};
+                const slots = record.slots && typeof record.slots === 'object' ? record.slots : {};
+                const slotIds = Object.keys(slots).filter((slotId) => slotId && slotId !== '-').sort();
+                return {
+                    caseId,
+                    slotIds,
+                    slotCount: slotIds.length
+                };
+            })
+            .filter((row) => row.slotCount > 0)
+            .sort((a, b) => Number(a.caseId) - Number(b.caseId));
+        const registeredSlotCount = caseRows.reduce((sum, row) => sum + row.slotCount, 0);
+        return {
+            registeredSlotCount,
+            hasSlots: registeredSlotCount > 0,
+            caseRows,
+            caseSummaryText: registeredSlotCount > 0
+                ? caseRows.map((row) => `case${row.caseId}: ${row.slotIds.join(', ')}`).join(' / ')
+                : '登録スロットなし'
+        };
+    }
+
+    function describeUserInitialSettingsValue(key, value) {
+        if (value === undefined) return 'なし';
+        if (key === 'uiSizeTuner') return 'あり';
+        if (key === 'uiGlassPresetDetailsOpen' || key === 'uiNeumorphismPresetDetailsOpen') {
+            return value === true ? '開' : '閉';
+        }
+        if (key === 'uiVariantMain' || key === 'uiVariant') {
+            return normalizeThemeValue(value);
+        }
+        if (key === 'uiVariantPreset' || key === 'uiNeumorphismVariantPreset') {
+            return value ? String(value) : 'なし';
+        }
+        if (key === 'p5jsRegisteredArtworkSlotsV1') {
+            const slots = summarizeRegisteredSlots(value);
+            return slots.caseSummaryText;
+        }
+        if (key === 'allCaseSettings') {
+            const count = countObjectEntries(value);
+            return count > 0 ? `${count}件` : 'なし';
+        }
+        if (key === 'uiGlassCustomPresets' || key === 'uiGlassPresetEditLocks' || key === 'uiGlassPresetParams'
+            || key === 'uiNeumorphismCustomPresets' || key === 'uiNeumorphismPresetEditLocks' || key === 'uiNeumorphismPresetParams') {
+            const count = countObjectEntries(value);
+            return count > 0 ? `${count}件` : 'なし';
+        }
+        if (value === null) return 'null';
+        if (typeof value === 'boolean') return value ? 'true' : 'false';
+        if (typeof value === 'number') return Number.isFinite(value) ? String(value) : 'なし';
+        if (typeof value === 'string') return value || 'なし';
+        if (typeof value === 'object') return `${countObjectEntries(value)}件`;
+        return String(value);
+    }
+
+    function collectUserInitialSettingsKeys() {
+        const keys = {};
+        USER_INITIAL_SETTINGS_GROUPS.forEach((group) => {
+            group.items.forEach((item) => {
+                const storageKey = item.storageKey || item.key;
+                const value = item.key === 'uiSizeTuner' ? getUiSizeTunerSnapshot() : readStorageValue(storageKey);
+                if (value !== undefined) keys[item.key] = value;
+            });
+        });
+        return keys;
+    }
+
+    function buildUserInitialSettingsSummary(keys) {
+        const allCaseSettings = keys.allCaseSettings;
+        const registeredSlots = summarizeRegisteredSlots(keys.p5jsRegisteredArtworkSlotsV1);
+        const uiGlassCustomPresets = keys.uiGlassCustomPresets;
+        const uiNeumorphismCustomPresets = keys.uiNeumorphismCustomPresets;
+        return {
+            caseCount: countObjectEntries(allCaseSettings),
+            registeredSlotCount: registeredSlots.registeredSlotCount,
+            glassPresetCount: countObjectEntries(uiGlassCustomPresets),
+            neumorphismPresetCount: countObjectEntries(uiNeumorphismCustomPresets),
+            hasUiSizeTuner: keys.uiSizeTuner !== undefined && keys.uiSizeTuner !== null,
+            activeGlassPreset: keys.uiVariantPreset ? String(keys.uiVariantPreset) : 'なし',
+            activeNeumorphismPreset: keys.uiNeumorphismVariantPreset ? String(keys.uiNeumorphismVariantPreset) : 'なし'
+        };
+    }
+
+    function getUserInitialSettingsSections(payload = exportUserInitialSettings()) {
+        const keys = payload && typeof payload === 'object' && payload.keys && typeof payload.keys === 'object'
+            ? payload.keys
+            : {};
+        return USER_INITIAL_SETTINGS_GROUPS.map((group) => ({
+            label: group.label,
+            items: group.items.map((item) => {
+                const value = Object.prototype.hasOwnProperty.call(keys, item.key) ? keys[item.key] : undefined;
+                return {
+                    key: item.key,
+                    label: item.summaryLabel || item.label,
+                    present: value !== undefined,
+                    value,
+                    valueText: describeUserInitialSettingsValue(item.key, value)
+                };
+            })
+        }));
+    }
+
+    function getUserInitialSettingsReport(payload = exportUserInitialSettings()) {
+        const validation = validateUserInitialSettingsPayload(payload);
+        const keys = payload && typeof payload === 'object' && payload.keys && typeof payload.keys === 'object'
+            ? payload.keys
+            : {};
+        return {
+            schema: payload && payload.schema,
+            version: payload && payload.version,
+            exportedAt: payload && payload.exportedAt,
+            source: payload && payload.source,
+            validation,
+            summary: buildUserInitialSettingsSummary(keys),
+            sections: getUserInitialSettingsSections(payload),
+            registeredSlots: summarizeRegisteredSlots(keys.p5jsRegisteredArtworkSlotsV1),
+            themeValue: normalizeThemeValue(keys.uiVariantMain || keys.uiVariant)
+        };
+    }
+
+    function exportUserInitialSettings() {
+        const keys = collectUserInitialSettingsKeys();
+        const summary = buildUserInitialSettingsSummary(keys);
+        return {
+            schema: USER_INITIAL_SETTINGS_SCHEMA,
+            version: USER_INITIAL_SETTINGS_EXPORT_VERSION,
+            exportedAt: new Date().toISOString(),
+            source: USER_INITIAL_SETTINGS_SOURCE,
+            keys,
+            summary
+        };
+    }
+
+    function validateUserInitialSettingsPayload(payload) {
+        const report = {
+            ok: true,
+            schema: payload && payload.schema,
+            version: payload && payload.version,
+            warnings: []
+        };
+        if (!payload || typeof payload !== 'object' || Array.isArray(payload)) {
+            report.ok = false;
+            report.warnings.push('payload が object ではありません。');
+            return report;
+        }
+        if (payload.schema !== USER_INITIAL_SETTINGS_SCHEMA) {
+            report.ok = false;
+            report.warnings.push(`schema が ${USER_INITIAL_SETTINGS_SCHEMA} ではありません。`);
+        }
+        if (payload.version !== USER_INITIAL_SETTINGS_EXPORT_VERSION) {
+            report.ok = false;
+            report.warnings.push(`version が ${USER_INITIAL_SETTINGS_EXPORT_VERSION} ではありません。`);
+        }
+        if (!payload.keys || typeof payload.keys !== 'object' || Array.isArray(payload.keys)) {
+            report.ok = false;
+            report.warnings.push('keys が object ではありません。');
+        }
+        return report;
+    }
+
+    function parseUserInitialSettingsText(text) {
+        try {
+            const payload = JSON.parse(text);
+            const validation = validateUserInitialSettingsPayload(payload);
+            return {
+                ok: validation.ok,
+                payload,
+                validation
+            };
+        } catch (error) {
+            return {
+                ok: false,
+                error,
+                validation: {
+                    ok: false,
+                    warnings: [error && error.message ? error.message : 'JSONの解析に失敗しました。']
+                }
+            };
+        }
+    }
+
+    function applyUserInitialSettings(payload, options = {}) {
+        const validation = validateUserInitialSettingsPayload(payload);
+        if (!validation.ok) {
+            return {
+                ok: false,
+                validation,
+                changed: false,
+                appliedKeys: []
+            };
+        }
+        const keys = payload.keys || {};
+        const appliedKeys = [];
+        USER_INITIAL_SETTINGS_GROUPS.forEach((group) => {
+            group.items.forEach((item) => {
+                if (!Object.prototype.hasOwnProperty.call(keys, item.key)) return;
+                const storageKey = item.key === 'uiSizeTuner' ? UI_SIZE_TUNER_KEY : (item.storageKey || item.key);
+                const value = keys[item.key];
+                if (item.key === 'uiSizeTuner') {
+                    if (value !== undefined) {
+                        applyUiSizeTunerSnapshot(value);
+                        appliedKeys.push(item.key);
+                    }
+                    return;
+                }
+                writeStorageValue(storageKey, value);
+                appliedKeys.push(item.key);
+            });
+        });
+        if (options.reload !== false && appliedKeys.length > 0) {
+            setTimeout(() => window.location.reload(), 60);
+        }
+        return {
+            ok: true,
+            validation,
+            changed: appliedKeys.length > 0,
+            appliedKeys
+        };
+    }
+
     function getUiSizeTunerSnapshot() {
         try {
             if (window.UISizeTunerAPI && typeof window.UISizeTunerAPI.getSnapshot === 'function') {
@@ -2631,6 +2914,11 @@
         downloadJson(`uiux-animation-tools_artwork-slots_${stamp}.json`, exportArtworkSlots());
     }
 
+    function downloadUserInitialSettings() {
+        const stamp = new Date().toISOString().replace(/[:.]/g, '-');
+        downloadJson(`uiux-animation-tools_user-initial-settings_${stamp}.json`, exportUserInitialSettings());
+    }
+
     async function importInitialSettingsFile(file, options = {}) {
         if (!file) return false;
         const text = await file.text();
@@ -2710,6 +2998,15 @@
         excludedRuntimeKeys: EXCLUDED_RUNTIME_KEYS.slice(),
         bundledInitialSettingsUrl: BUNDLED_INITIAL_SETTINGS_URL,
         hasEmbeddedBundledInitialSettings: true,
+        userInitialSettingsSchema: USER_INITIAL_SETTINGS_SCHEMA,
+        userInitialSettingsVersion: USER_INITIAL_SETTINGS_EXPORT_VERSION,
+        userInitialSettingsSource: USER_INITIAL_SETTINGS_SOURCE,
+        getUserInitialSettingsReport,
+        exportUserInitialSettings,
+        validateUserInitialSettingsPayload,
+        parseUserInitialSettingsText,
+        applyUserInitialSettings,
+        downloadUserInitialSettings,
         exportInitialSettings,
         validateInitialSettingsPayload,
         getInitialSettingsCoverageReport,
