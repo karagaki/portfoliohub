@@ -54,6 +54,25 @@ window.RuntimeIntegratedSlotApplyAdapter = (function() {
         return null;
     }
 
+    function getStoredSlotIds(record) {
+        if (!record || !record.slots || typeof record.slots !== 'object') return [];
+        return EXTRA_SLOT_IDS.filter(function(slotId) { return Boolean(record.slots[slotId]); });
+    }
+
+    function normalizeStoreShape(store) {
+        if (!store || typeof store !== 'object' || Array.isArray(store)) {
+            return { schemaVersion: SCHEMA_VERSION, cases: {} };
+        }
+        const normalized = cloneValue(store);
+        if (!Number.isFinite(Number(normalized.schemaVersion))) {
+            normalized.schemaVersion = SCHEMA_VERSION;
+        }
+        if (!normalized.cases || typeof normalized.cases !== 'object' || Array.isArray(normalized.cases)) {
+            normalized.cases = {};
+        }
+        return normalized;
+    }
+
     function loadStore() {
         const raw = localStorage.getItem(STORAGE_KEY);
         if (raw == null) {
@@ -70,8 +89,8 @@ window.RuntimeIntegratedSlotApplyAdapter = (function() {
             return { schemaVersion: SCHEMA_VERSION, cases: {} };
         }
         try {
-            const stored = JSON.parse(raw);
-            if (stored && stored.schemaVersion === SCHEMA_VERSION && stored.cases) return stored;
+            const stored = normalizeStoreShape(JSON.parse(raw));
+            if (stored && stored.cases) return stored;
         } catch (_) {
             return { schemaVersion: SCHEMA_VERSION, cases: {} };
         }
@@ -284,15 +303,16 @@ window.RuntimeIntegratedSlotApplyAdapter = (function() {
 
     function hasCaseRecord(caseId) {
         const record = loadStore().cases[String(caseId)];
-        return Boolean(record && record.base);
+        return Boolean(record && (record.base || getStoredSlotIds(record).length > 0));
     }
 
     function getSlotsForCase(caseId) {
         const record = loadStore().cases[String(caseId)];
-        if (!record || !record.base) return { base: false, slots: [] };
+        if (!record) return { base: false, slots: [] };
+        const slotIds = getStoredSlotIds(record);
         return {
-            base: true,
-            slots: EXTRA_SLOT_IDS.filter(function(slotId) { return Boolean(record.slots[slotId]); })
+            base: Boolean(record.base || slotIds.length > 0),
+            slots: slotIds
         };
     }
 

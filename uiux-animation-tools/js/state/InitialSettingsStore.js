@@ -2633,6 +2633,19 @@
                 appliedKeys.push(item.key);
             });
         });
+        if (appliedKeys.includes('p5jsRegisteredArtworkSlotsV1')
+            && typeof document !== 'undefined'
+            && typeof document.dispatchEvent === 'function'
+            && window.RuntimeIntegratedSlotApplyAdapter
+            && typeof window.RuntimeIntegratedSlotApplyAdapter.getStatus === 'function') {
+            try {
+                document.dispatchEvent(new CustomEvent('registeredSlotStateChanged', {
+                    detail: window.RuntimeIntegratedSlotApplyAdapter.getStatus()
+                }));
+            } catch (error) {
+                console.warn('[initial-settings] registeredSlotStateChanged dispatch failed', error);
+            }
+        }
         if (options.reload !== false && appliedKeys.length > 0) {
             setTimeout(() => window.location.reload(), 60);
         }
