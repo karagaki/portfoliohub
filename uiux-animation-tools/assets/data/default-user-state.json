@@ -662,9 +662,9 @@
     "exportedAt": "2026-06-14T23:45:36.822Z"
   },
   "theme": {
-    "uiVariant": "variant-1-glass",
-    "uiVariantMain": "variant-1-glass",
-    "uiVariantPreset": "custom:初期設定",
+    "uiVariant": "variant-2-neumorphism",
+    "uiVariantMain": "variant-2-neumorphism",
+    "uiVariantPreset": "custom:ガラス-06",
     "uiNeumorphismVariantPreset": "custom:初期設定"
   },
   "themePresets": {
@@ -708,10 +708,133 @@
         "dropShadowSharpness": 0.38,
         "dropShadowColor": "#1d2636",
         "dropShadowColorAlpha": 0.62
+      },
+      "ガラス-06": {
+        "lightAngle": -36,
+        "surfaceColor": "#050505",
+        "surfaceColorAlpha": 0,
+        "opacity": 0.08,
+        "colorInfluence": 0.43,
+        "paletteAlpha": 0,
+        "blurAmount": 0.61,
+        "saturation": 0,
+        "brightness": 0,
+        "chromAberration": 0.05,
+        "innerWarp": 0.12,
+        "refraction": 0.69,
+        "reflectionColor": "#534141",
+        "reflectionColorAlpha": 1,
+        "reflectionColorSaturation": 1,
+        "specular": 0,
+        "shadowOpacity": 1,
+        "shadowSpread": 120,
+        "faceHighlightDistance": 42,
+        "reflectionSize": 160,
+        "shadowSize": 300,
+        "shadowColor": "#5b2427",
+        "shadowColorAlpha": 1,
+        "shadowColorSaturation": 0.19,
+        "shadowColorInfluence": 0.53,
+        "cornerRadius": 15,
+        "edgeHighlight": 0,
+        "edgeWidth": 0.3,
+        "edgeBlend": 0.44,
+        "edgeColor": "#757575",
+        "edgeColorAlpha": 1,
+        "fresnel": 1,
+        "bevelMode": 0,
+        "dropShadowOpacity": 0.27,
+        "dropShadowSpread": 18,
+        "dropShadowSharpness": 0.34,
+        "dropShadowColor": "#42464c",
+        "dropShadowColorAlpha": 0.47
+      },
+      "ガラス-07": {
+        "lightAngle": -36,
+        "surfaceColor": "#050505",
+        "surfaceColorAlpha": 0,
+        "opacity": 0.08,
+        "colorInfluence": 0.43,
+        "paletteAlpha": 0,
+        "blurAmount": 0.61,
+        "saturation": 0,
+        "brightness": 0,
+        "chromAberration": 0.05,
+        "innerWarp": 0.12,
+        "refraction": 0.69,
+        "reflectionColor": "#534141",
+        "reflectionColorAlpha": 1,
+        "reflectionColorSaturation": 1,
+        "specular": 0,
+        "shadowOpacity": 1,
+        "shadowSpread": 84,
+        "faceHighlightDistance": 42,
+        "reflectionSize": 160,
+        "shadowSize": 300,
+        "shadowColor": "#5a57ff",
+        "shadowColorAlpha": 1,
+        "shadowColorSaturation": 0.38,
+        "shadowColorInfluence": 0.53,
+        "cornerRadius": 7,
+        "edgeHighlight": 0,
+        "edgeWidth": 0.3,
+        "edgeBlend": 0.44,
+        "edgeColor": "#757575",
+        "edgeColorAlpha": 1,
+        "fresnel": 1,
+        "bevelMode": 0,
+        "dropShadowOpacity": 0.23,
+        "dropShadowSpread": 18,
+        "dropShadowSharpness": 0.35,
+        "dropShadowColor": "#42464c",
+        "dropShadowColorAlpha": 0.47
+      },
+      "ガラス-05": {
+        "lightAngle": -46,
+        "surfaceColor": "#606255",
+        "surfaceColorAlpha": 0.11,
+        "opacity": 0,
+        "colorInfluence": 0,
+        "paletteAlpha": 0.18,
+        "blurAmount": 0.56,
+        "saturation": 0,
+        "brightness": 0,
+        "chromAberration": 0.05,
+        "innerWarp": 0.53,
+        "refraction": 1.61,
+        "reflectionColor": "#49483c",
+        "reflectionColorAlpha": 1,
+        "reflectionColorSaturation": 1,
+        "specular": 0,
+        "shadowOpacity": 0.69,
+        "shadowSpread": 120,
+        "faceHighlightDistance": 70,
+        "reflectionSize": 191,
+        "shadowSize": 300,
+        "shadowColor": "#0a12ff",
+        "shadowColorAlpha": 1,
+        "shadowColorSaturation": 0.25,
+        "shadowColorInfluence": 0,
+        "cornerRadius": 11,
+        "edgeHighlight": 0,
+        "edgeWidth": 0,
+        "edgeBlend": 0,
+        "edgeColor": "#ffffff",
+        "edgeColorAlpha": 0,
+        "fresnel": 0,
+        "bevelMode": 0,
+        "dropShadowOpacity": 0.43,
+        "dropShadowSpread": 21,
+        "dropShadowSharpness": 0.12,
+        "dropShadowColor": "#1d2636",
+        "dropShadowColorAlpha": 0.41
       }
     },
     "uiGlassPresetEditLocks": {
-      "custom:初期設定": true
+      "custom:初期設定": true,
+      "custom:ガラス-06": true,
+      "custom:ガラス-07": false,
+      "custom:ガラス-05": true
     },
     "uiNeumorphismCustomPresets": {
       "初期設定": {
@@ -734,7 +857,7 @@
       }
     },
     "uiNeumorphismPresetEditLocks": {
-      "custom:初期設定": true
+      "custom:初期設定": false
     }
   },
   "canvasState": {},
@@ -1293,7 +1416,156 @@
             }
           }
         },
-        "slots": {}
+        "slots": {
+          "a": {
+            "schemaVersion": 1,
+            "caseId": 0,
+            "slotId": "a",
+            "point": {
+              "fixed": {
+                "count": 38,
+                "color": [
+                  0,
+                  0,
+                  0
+                ],
+                "size": 18,
+                "radius": 693.84,
+                "trailLength": 37,
+                "morphSpeed": 0.0084,
+                "fadeSpeed": 0.0324,
+                "vectorSpeed": 1,
+                "vectorDirection": 0,
+                "vectorSize": 10,
+                "image": null,
+                "pointSequenceSeconds": 8
+              },
+              "cycles": {}
+            },
+            "displayedColor": {
+              "ok": true,
+              "schemaVersion": 1,
+              "displaySource": "case-base-color",
+              "paletteSystem": "legacy",
+              "colorMode": "fixed",
+              "theme": {
+                "selectedThemeKey": "initial",
+                "selectedThemeStep": 0,
+                "activeThemeRenderStep": 0,
+                "activeThemeRenderColors": [],
+                "activeAssignMode": "alternate",
+                "colorBlendEnabled": false
+              },
+              "random": {
+                "enabled": false,
+                "colors": [],
+                "assignMode": "alternate"
+              },
+              "hueRange": {
+                "colors": [],
+                "baseColors": [],
+                "assignMode": "alternate",
+                "hueCount": 1,
+                "mixMin": 0,
+                "mixMax": 1,
+                "saturationMin": 0,
+                "saturationMax": 0
+              },
+              "engineStablePalette": {
+                "ok": false,
+                "reason": "seeded-from-default-user-state"
+              },
+              "caseBaseColor": [
+                0,
+                0,
+                0
+              ],
+              "transitionSeconds": 8
+            },
+            "render": {
+              "canvasBackground": "#e1e1e1",
+              "trailMode": "history"
+            },
+            "metadata": {
+              "capturedAt": "2026-06-14T23:36:05.836Z",
+              "createdOrder": 1
+            }
+          },
+          "b": {
+            "schemaVersion": 1,
+            "caseId": 0,
+            "slotId": "b",
+            "point": {
+              "fixed": {
+                "count": 38,
+                "color": [
+                  0,
+                  0,
+                  0
+                ],
+                "size": 18,
+                "radius": 693.84,
+                "trailLength": 37,
+                "morphSpeed": 0.0084,
+                "fadeSpeed": 0.0324,
+                "vectorSpeed": 1,
+                "vectorDirection": 0,
+                "vectorSize": 10,
+                "image": null,
+                "pointSequenceSeconds": 8
+              },
+              "cycles": {}
+            },
+            "displayedColor": {
+              "ok": true,
+              "schemaVersion": 1,
+              "displaySource": "case-base-color",
+              "paletteSystem": "legacy",
+              "colorMode": "fixed",
+              "theme": {
+                "selectedThemeKey": "initial",
+                "selectedThemeStep": 0,
+                "activeThemeRenderStep": 0,
+                "activeThemeRenderColors": [],
+                "activeAssignMode": "alternate",
+                "colorBlendEnabled": false
+              },
+              "random": {
+                "enabled": false,
+                "colors": [],
+                "assignMode": "alternate"
+              },
+              "hueRange": {
+                "colors": [],
+                "baseColors": [],
+                "assignMode": "alternate",
+                "hueCount": 1,
+                "mixMin": 0,
+                "mixMax": 1,
+                "saturationMin": 0,
+                "saturationMax": 0
+              },
+              "engineStablePalette": {
+                "ok": false,
+                "reason": "seeded-from-default-user-state"
+              },
+              "caseBaseColor": [
+                0,
+                0,
+                0
+              ],
+              "transitionSeconds": 8
+            },
+            "render": {
+              "canvasBackground": "#e1e1e1",
+              "trailMode": "history"
+            },
+            "metadata": {
+              "capturedAt": "2026-06-14T23:36:05.836Z",
+              "createdOrder": 2
+            }
+          }
+        }
       },
       "1": {
         "base": {
@@ -1377,7 +1649,156 @@
             }
           }
         },
-        "slots": {}
+        "slots": {
+          "a": {
+            "schemaVersion": 1,
+            "caseId": 1,
+            "slotId": "a",
+            "point": {
+              "fixed": {
+                "count": 4,
+                "color": [
+                  56,
+                  17,
+                  13
+                ],
+                "size": 83.32,
+                "radius": 93.29,
+                "trailLength": 17,
+                "morphSpeed": 0.0073,
+                "fadeSpeed": 0.0005,
+                "vectorSpeed": 1,
+                "vectorDirection": 0,
+                "vectorSize": 10,
+                "image": null,
+                "pointSequenceSeconds": 8
+              },
+              "cycles": {}
+            },
+            "displayedColor": {
+              "ok": true,
+              "schemaVersion": 1,
+              "displaySource": "case-base-color",
+              "paletteSystem": "legacy",
+              "colorMode": "fixed",
+              "theme": {
+                "selectedThemeKey": "initial",
+                "selectedThemeStep": 0,
+                "activeThemeRenderStep": 0,
+                "activeThemeRenderColors": [],
+                "activeAssignMode": "alternate",
+                "colorBlendEnabled": false
+              },
+              "random": {
+                "enabled": false,
+                "colors": [],
+                "assignMode": "alternate"
+              },
+              "hueRange": {
+                "colors": [],
+                "baseColors": [],
+                "assignMode": "alternate",
+                "hueCount": 1,
+                "mixMin": 0,
+                "mixMax": 1,
+                "saturationMin": 0,
+                "saturationMax": 0
+              },
+              "engineStablePalette": {
+                "ok": false,
+                "reason": "seeded-from-default-user-state"
+              },
+              "caseBaseColor": [
+                56,
+                17,
+                13
+              ],
+              "transitionSeconds": 8
+            },
+            "render": {
+              "canvasBackground": "#e1e1e1",
+              "trailMode": "history"
+            },
+            "metadata": {
+              "capturedAt": "2026-06-14T23:36:05.836Z",
+              "createdOrder": 1
+            }
+          },
+          "b": {
+            "schemaVersion": 1,
+            "caseId": 1,
+            "slotId": "b",
+            "point": {
+              "fixed": {
+                "count": 4,
+                "color": [
+                  56,
+                  17,
+                  13
+                ],
+                "size": 83.32,
+                "radius": 93.29,
+                "trailLength": 17,
+                "morphSpeed": 0.0073,
+                "fadeSpeed": 0.0005,
+                "vectorSpeed": 1,
+                "vectorDirection": 0,
+                "vectorSize": 10,
+                "image": null,
+                "pointSequenceSeconds": 8
+              },
+              "cycles": {}
+            },
+            "displayedColor": {
+              "ok": true,
+              "schemaVersion": 1,
+              "displaySource": "case-base-color",
+              "paletteSystem": "legacy",
+              "colorMode": "fixed",
+              "theme": {
+                "selectedThemeKey": "initial",
+                "selectedThemeStep": 0,
+                "activeThemeRenderStep": 0,
+                "activeThemeRenderColors": [],
+                "activeAssignMode": "alternate",
+                "colorBlendEnabled": false
+              },
+              "random": {
+                "enabled": false,
+                "colors": [],
+                "assignMode": "alternate"
+              },
+              "hueRange": {
+                "colors": [],
+                "baseColors": [],
+                "assignMode": "alternate",
+                "hueCount": 1,
+                "mixMin": 0,
+                "mixMax": 1,
+                "saturationMin": 0,
+                "saturationMax": 0
+              },
+              "engineStablePalette": {
+                "ok": false,
+                "reason": "seeded-from-default-user-state"
+              },
+              "caseBaseColor": [
+                56,
+                17,
+                13
+              ],
+              "transitionSeconds": 8
+            },
+            "render": {
+              "canvasBackground": "#e1e1e1",
+              "trailMode": "history"
+            },
+            "metadata": {
+              "capturedAt": "2026-06-14T23:36:05.836Z",
+              "createdOrder": 2
+            }
+          }
+        }
       },
       "2": {
         "base": {
@@ -1461,7 +1882,156 @@
             }
           }
         },
-        "slots": {}
+        "slots": {
+          "a": {
+            "schemaVersion": 1,
+            "caseId": 2,
+            "slotId": "a",
+            "point": {
+              "fixed": {
+                "count": 90,
+                "color": [
+                  0,
+                  0,
+                  83
+                ],
+                "size": 1,
+                "radius": 289.71,
+                "trailLength": 16,
+                "morphSpeed": 0.022,
+                "fadeSpeed": 0.0313,
+                "vectorSpeed": 1,
+                "vectorDirection": 0,
+                "vectorSize": 10,
+                "image": null,
+                "pointSequenceSeconds": 8
+              },
+              "cycles": {}
+            },
+            "displayedColor": {
+              "ok": true,
+              "schemaVersion": 1,
+              "displaySource": "case-base-color",
+              "paletteSystem": "legacy",
+              "colorMode": "fixed",
+              "theme": {
+                "selectedThemeKey": "initial",
+                "selectedThemeStep": 0,
+                "activeThemeRenderStep": 0,
+                "activeThemeRenderColors": [],
+                "activeAssignMode": "alternate",
+                "colorBlendEnabled": false
+              },
+              "random": {
+                "enabled": false,
+                "colors": [],
+                "assignMode": "alternate"
+              },
+              "hueRange": {
+                "colors": [],
+                "baseColors": [],
+                "assignMode": "alternate",
+                "hueCount": 1,
+                "mixMin": 0,
+                "mixMax": 1,
+                "saturationMin": 0,
+                "saturationMax": 0
+              },
+              "engineStablePalette": {
+                "ok": false,
+                "reason": "seeded-from-default-user-state"
+              },
+              "caseBaseColor": [
+                0,
+                0,
+                83
+              ],
+              "transitionSeconds": 8
+            },
+            "render": {
+              "canvasBackground": "#e1e1e1",
+              "trailMode": "history"
+            },
+            "metadata": {
+              "capturedAt": "2026-06-14T23:36:05.836Z",
+              "createdOrder": 1
+            }
+          },
+          "b": {
+            "schemaVersion": 1,
+            "caseId": 2,
+            "slotId": "b",
+            "point": {
+              "fixed": {
+                "count": 90,
+                "color": [
+                  0,
+                  0,
+                  83
+                ],
+                "size": 1,
+                "radius": 289.71,
+                "trailLength": 16,
+                "morphSpeed": 0.022,
+                "fadeSpeed": 0.0313,
+                "vectorSpeed": 1,
+                "vectorDirection": 0,
+                "vectorSize": 10,
+                "image": null,
+                "pointSequenceSeconds": 8
+              },
+              "cycles": {}
+            },
+            "displayedColor": {
+              "ok": true,
+              "schemaVersion": 1,
+              "displaySource": "case-base-color",
+              "paletteSystem": "legacy",
+              "colorMode": "fixed",
+              "theme": {
+                "selectedThemeKey": "initial",
+                "selectedThemeStep": 0,
+                "activeThemeRenderStep": 0,
+                "activeThemeRenderColors": [],
+                "activeAssignMode": "alternate",
+                "colorBlendEnabled": false
+              },
+              "random": {
+                "enabled": false,
+                "colors": [],
+                "assignMode": "alternate"
+              },
+              "hueRange": {
+                "colors": [],
+                "baseColors": [],
+                "assignMode": "alternate",
+                "hueCount": 1,
+                "mixMin": 0,
+                "mixMax": 1,
+                "saturationMin": 0,
+                "saturationMax": 0
+              },
+              "engineStablePalette": {
+                "ok": false,
+                "reason": "seeded-from-default-user-state"
+              },
+              "caseBaseColor": [
+                0,
+                0,
+                83
+              ],
+              "transitionSeconds": 8
+            },
+            "render": {
+              "canvasBackground": "#e1e1e1",
+              "trailMode": "history"
+            },
+            "metadata": {
+              "capturedAt": "2026-06-14T23:36:05.836Z",
+              "createdOrder": 2
+            }
+          }
+        }
       },
       "3": {
         "base": {
@@ -1545,7 +2115,82 @@
             }
           }
         },
-        "slots": {}
+        "slots": {
+          "a": {
+            "schemaVersion": 1,
+            "caseId": 3,
+            "slotId": "a",
+            "point": {
+              "fixed": {
+                "count": 28,
+                "color": [
+                  0,
+                  0,
+                  0
+                ],
+                "size": 1,
+                "radius": 30,
+                "trailLength": 30,
+                "morphSpeed": 0.047,
+                "fadeSpeed": 0.009,
+                "vectorSpeed": 1,
+                "vectorDirection": 0,
+                "vectorSize": 10,
+                "image": null,
+                "pointSequenceSeconds": 8
+              },
+              "cycles": {}
+            },
+            "displayedColor": {
+              "ok": true,
+              "schemaVersion": 1,
+              "displaySource": "case-base-color",
+              "paletteSystem": "legacy",
+              "colorMode": "fixed",
+              "theme": {
+                "selectedThemeKey": "initial",
+                "selectedThemeStep": 0,
+                "activeThemeRenderStep": 0,
+                "activeThemeRenderColors": [],
+                "activeAssignMode": "alternate",
+                "colorBlendEnabled": false
+              },
+              "random": {
+                "enabled": false,
+                "colors": [],
+                "assignMode": "alternate"
+              },
+              "hueRange": {
+                "colors": [],
+                "baseColors": [],
+                "assignMode": "alternate",
+                "hueCount": 1,
+                "mixMin": 0,
+                "mixMax": 1,
+                "saturationMin": 0,
+                "saturationMax": 0
+              },
+              "engineStablePalette": {
+                "ok": false,
+                "reason": "seeded-from-default-user-state"
+              },
+              "caseBaseColor": [
+                0,
+                0,
+                0
+              ],
+              "transitionSeconds": 8
+            },
+            "render": {
+              "canvasBackground": "#e1e1e1",
+              "trailMode": "history"
+            },
+            "metadata": {
+              "capturedAt": "2026-06-14T23:36:05.836Z",
+              "createdOrder": 1
+            }
+          }
+        }
       },
       "4": {
         "base": {
@@ -1629,7 +2274,156 @@
             }
           }
         },
-        "slots": {}
+        "slots": {
+          "a": {
+            "schemaVersion": 1,
+            "caseId": 4,
+            "slotId": "a",
+            "point": {
+              "fixed": {
+                "count": 16,
+                "color": [
+                  0,
+                  45,
+                  40
+                ],
+                "size": 7.24,
+                "radius": 314.56,
+                "trailLength": 20,
+                "morphSpeed": 0.0227,
+                "fadeSpeed": 0.0225,
+                "vectorSpeed": 1,
+                "vectorDirection": 0,
+                "vectorSize": 10,
+                "image": null,
+                "pointSequenceSeconds": 8
+              },
+              "cycles": {}
+            },
+            "displayedColor": {
+              "ok": true,
+              "schemaVersion": 1,
+              "displaySource": "case-base-color",
+              "paletteSystem": "legacy",
+              "colorMode": "fixed",
+              "theme": {
+                "selectedThemeKey": "initial",
+                "selectedThemeStep": 0,
+                "activeThemeRenderStep": 0,
+                "activeThemeRenderColors": [],
+                "activeAssignMode": "alternate",
+                "colorBlendEnabled": false
+              },
+              "random": {
+                "enabled": false,
+                "colors": [],
+                "assignMode": "alternate"
+              },
+              "hueRange": {
+                "colors": [],
+                "baseColors": [],
+                "assignMode": "alternate",
+                "hueCount": 1,
+                "mixMin": 0,
+                "mixMax": 1,
+                "saturationMin": 0,
+                "saturationMax": 0
+              },
+              "engineStablePalette": {
+                "ok": false,
+                "reason": "seeded-from-default-user-state"
+              },
+              "caseBaseColor": [
+                0,
+                45,
+                40
+              ],
+              "transitionSeconds": 8
+            },
+            "render": {
+              "canvasBackground": "#e1e1e1",
+              "trailMode": "history"
+            },
+            "metadata": {
+              "capturedAt": "2026-06-14T23:36:05.836Z",
+              "createdOrder": 1
+            }
+          },
+          "b": {
+            "schemaVersion": 1,
+            "caseId": 4,
+            "slotId": "b",
+            "point": {
+              "fixed": {
+                "count": 16,
+                "color": [
+                  0,
+                  45,
+                  40
+                ],
+                "size": 7.24,
+                "radius": 314.56,
+                "trailLength": 20,
+                "morphSpeed": 0.0227,
+                "fadeSpeed": 0.0225,
+                "vectorSpeed": 1,
+                "vectorDirection": 0,
+                "vectorSize": 10,
+                "image": null,
+                "pointSequenceSeconds": 8
+              },
+              "cycles": {}
+            },
+            "displayedColor": {
+              "ok": true,
+              "schemaVersion": 1,
+              "displaySource": "case-base-color",
+              "paletteSystem": "legacy",
+              "colorMode": "fixed",
+              "theme": {
+                "selectedThemeKey": "initial",
+                "selectedThemeStep": 0,
+                "activeThemeRenderStep": 0,
+                "activeThemeRenderColors": [],
+                "activeAssignMode": "alternate",
+                "colorBlendEnabled": false
+              },
+              "random": {
+                "enabled": false,
+                "colors": [],
+                "assignMode": "alternate"
+              },
+              "hueRange": {
+                "colors": [],
+                "baseColors": [],
+                "assignMode": "alternate",
+                "hueCount": 1,
+                "mixMin": 0,
+                "mixMax": 1,
+                "saturationMin": 0,
+                "saturationMax": 0
+              },
+              "engineStablePalette": {
+                "ok": false,
+                "reason": "seeded-from-default-user-state"
+              },
+              "caseBaseColor": [
+                0,
+                45,
+                40
+              ],
+              "transitionSeconds": 8
+            },
+            "render": {
+              "canvasBackground": "#e1e1e1",
+              "trailMode": "history"
+            },
+            "metadata": {
+              "capturedAt": "2026-06-14T23:36:05.836Z",
+              "createdOrder": 2
+            }
+          }
+        }
       },
       "5": {
         "base": {
@@ -1713,7 +2507,82 @@
             }
           }
         },
-        "slots": {}
+        "slots": {
+          "a": {
+            "schemaVersion": 1,
+            "caseId": 5,
+            "slotId": "a",
+            "point": {
+              "fixed": {
+                "count": 16,
+                "color": [
+                  0,
+                  0,
+                  15
+                ],
+                "size": 86.21,
+                "radius": 167.22,
+                "trailLength": 172,
+                "morphSpeed": 0.0321,
+                "fadeSpeed": 0.0568,
+                "vectorSpeed": 1,
+                "vectorDirection": 0,
+                "vectorSize": 10,
+                "image": null,
+                "pointSequenceSeconds": 8
+              },
+              "cycles": {}
+            },
+            "displayedColor": {
+              "ok": true,
+              "schemaVersion": 1,
+              "displaySource": "case-base-color",
+              "paletteSystem": "legacy",
+              "colorMode": "fixed",
+              "theme": {
+                "selectedThemeKey": "initial",
+                "selectedThemeStep": 0,
+                "activeThemeRenderStep": 0,
+                "activeThemeRenderColors": [],
+                "activeAssignMode": "alternate",
+                "colorBlendEnabled": false
+              },
+              "random": {
+                "enabled": false,
+                "colors": [],
+                "assignMode": "alternate"
+              },
+              "hueRange": {
+                "colors": [],
+                "baseColors": [],
+                "assignMode": "alternate",
+                "hueCount": 1,
+                "mixMin": 0,
+                "mixMax": 1,
+                "saturationMin": 0,
+                "saturationMax": 0
+              },
+              "engineStablePalette": {
+                "ok": false,
+                "reason": "seeded-from-default-user-state"
+              },
+              "caseBaseColor": [
+                0,
+                0,
+                15
+              ],
+              "transitionSeconds": 8
+            },
+            "render": {
+              "canvasBackground": "#e1e1e1",
+              "trailMode": "history"
+            },
+            "metadata": {
+              "capturedAt": "2026-06-14T23:36:05.836Z",
+              "createdOrder": 1
+            }
+          }
+        }
       },
       "6": {
         "base": {
@@ -1797,7 +2666,82 @@
             }
           }
         },
-        "slots": {}
+        "slots": {
+          "a": {
+            "schemaVersion": 1,
+            "caseId": 6,
+            "slotId": "a",
+            "point": {
+              "fixed": {
+                "count": 5,
+                "color": [
+                  59,
+                  63,
+                  57
+                ],
+                "size": 26.33,
+                "radius": 92.26,
+                "trailLength": 27,
+                "morphSpeed": 0.0286,
+                "fadeSpeed": 0.0007,
+                "vectorSpeed": 1,
+                "vectorDirection": 0,
+                "vectorSize": 10,
+                "image": null,
+                "pointSequenceSeconds": 8
+              },
+              "cycles": {}
+            },
+            "displayedColor": {
+              "ok": true,
+              "schemaVersion": 1,
+              "displaySource": "case-base-color",
+              "paletteSystem": "legacy",
+              "colorMode": "fixed",
+              "theme": {
+                "selectedThemeKey": "initial",
+                "selectedThemeStep": 0,
+                "activeThemeRenderStep": 0,
+                "activeThemeRenderColors": [],
+                "activeAssignMode": "alternate",
+                "colorBlendEnabled": false
+              },
+              "random": {
+                "enabled": false,
+                "colors": [],
+                "assignMode": "alternate"
+              },
+              "hueRange": {
+                "colors": [],
+                "baseColors": [],
+                "assignMode": "alternate",
+                "hueCount": 1,
+                "mixMin": 0,
+                "mixMax": 1,
+                "saturationMin": 0,
+                "saturationMax": 0
+              },
+              "engineStablePalette": {
+                "ok": false,
+                "reason": "seeded-from-default-user-state"
+              },
+              "caseBaseColor": [
+                59,
+                63,
+                57
+              ],
+              "transitionSeconds": 8
+            },
+            "render": {
+              "canvasBackground": "#e1e1e1",
+              "trailMode": "history"
+            },
+            "metadata": {
+              "capturedAt": "2026-06-14T23:36:05.836Z",
+              "createdOrder": 1
+            }
+          }
+        }
       },
       "7": {
         "base": {
@@ -1881,7 +2825,156 @@
             }
           }
         },
-        "slots": {}
+        "slots": {
+          "a": {
+            "schemaVersion": 1,
+            "caseId": 7,
+            "slotId": "a",
+            "point": {
+              "fixed": {
+                "count": 12,
+                "color": [
+                  0,
+                  0,
+                  0
+                ],
+                "size": 16.27,
+                "radius": 141.16,
+                "trailLength": 108,
+                "morphSpeed": 0.0406,
+                "fadeSpeed": 0.0118,
+                "vectorSpeed": 1,
+                "vectorDirection": 0,
+                "vectorSize": 10,
+                "image": null,
+                "pointSequenceSeconds": 8
+              },
+              "cycles": {}
+            },
+            "displayedColor": {
+              "ok": true,
+              "schemaVersion": 1,
+              "displaySource": "case-base-color",
+              "paletteSystem": "legacy",
+              "colorMode": "fixed",
+              "theme": {
+                "selectedThemeKey": "initial",
+                "selectedThemeStep": 0,
+                "activeThemeRenderStep": 0,
+                "activeThemeRenderColors": [],
+                "activeAssignMode": "alternate",
+                "colorBlendEnabled": false
+              },
+              "random": {
+                "enabled": false,
+                "colors": [],
+                "assignMode": "alternate"
+              },
+              "hueRange": {
+                "colors": [],
+                "baseColors": [],
+                "assignMode": "alternate",
+                "hueCount": 1,
+                "mixMin": 0,
+                "mixMax": 1,
+                "saturationMin": 0,
+                "saturationMax": 0
+              },
+              "engineStablePalette": {
+                "ok": false,
+                "reason": "seeded-from-default-user-state"
+              },
+              "caseBaseColor": [
+                0,
+                0,
+                0
+              ],
+              "transitionSeconds": 8
+            },
+            "render": {
+              "canvasBackground": "#e1e1e1",
+              "trailMode": "history"
+            },
+            "metadata": {
+              "capturedAt": "2026-06-14T23:36:05.836Z",
+              "createdOrder": 1
+            }
+          },
+          "b": {
+            "schemaVersion": 1,
+            "caseId": 7,
+            "slotId": "b",
+            "point": {
+              "fixed": {
+                "count": 12,
+                "color": [
+                  0,
+                  0,
+                  0
+                ],
+                "size": 16.27,
+                "radius": 141.16,
+                "trailLength": 108,
+                "morphSpeed": 0.0406,
+                "fadeSpeed": 0.0118,
+                "vectorSpeed": 1,
+                "vectorDirection": 0,
+                "vectorSize": 10,
+                "image": null,
+                "pointSequenceSeconds": 8
+              },
+              "cycles": {}
+            },
+            "displayedColor": {
+              "ok": true,
+              "schemaVersion": 1,
+              "displaySource": "case-base-color",
+              "paletteSystem": "legacy",
+              "colorMode": "fixed",
+              "theme": {
+                "selectedThemeKey": "initial",
+                "selectedThemeStep": 0,
+                "activeThemeRenderStep": 0,
+                "activeThemeRenderColors": [],
+                "activeAssignMode": "alternate",
+                "colorBlendEnabled": false
+              },
+              "random": {
+                "enabled": false,
+                "colors": [],
+                "assignMode": "alternate"
+              },
+              "hueRange": {
+                "colors": [],
+                "baseColors": [],
+                "assignMode": "alternate",
+                "hueCount": 1,
+                "mixMin": 0,
+                "mixMax": 1,
+                "saturationMin": 0,
+                "saturationMax": 0
+              },
+              "engineStablePalette": {
+                "ok": false,
+                "reason": "seeded-from-default-user-state"
+              },
+              "caseBaseColor": [
+                0,
+                0,
+                0
+              ],
+              "transitionSeconds": 8
+            },
+            "render": {
+              "canvasBackground": "#e1e1e1",
+              "trailMode": "history"
+            },
+            "metadata": {
+              "capturedAt": "2026-06-14T23:36:05.836Z",
+              "createdOrder": 2
+            }
+          }
+        }
       },
       "8": {
         "base": {
@@ -1965,7 +3058,82 @@
             }
           }
         },
-        "slots": {}
+        "slots": {
+          "a": {
+            "schemaVersion": 1,
+            "caseId": 8,
+            "slotId": "a",
+            "point": {
+              "fixed": {
+                "count": 16,
+                "color": [
+                  4,
+                  11,
+                  56
+                ],
+                "size": 27.79,
+                "radius": 38.53,
+                "trailLength": 237,
+                "morphSpeed": 0.0143,
+                "fadeSpeed": 0.0042,
+                "vectorSpeed": 1,
+                "vectorDirection": 0,
+                "vectorSize": 10,
+                "image": null,
+                "pointSequenceSeconds": 8
+              },
+              "cycles": {}
+            },
+            "displayedColor": {
+              "ok": true,
+              "schemaVersion": 1,
+              "displaySource": "case-base-color",
+              "paletteSystem": "legacy",
+              "colorMode": "fixed",
+              "theme": {
+                "selectedThemeKey": "initial",
+                "selectedThemeStep": 0,
+                "activeThemeRenderStep": 0,
+                "activeThemeRenderColors": [],
+                "activeAssignMode": "alternate",
+                "colorBlendEnabled": false
+              },
+              "random": {
+                "enabled": false,
+                "colors": [],
+                "assignMode": "alternate"
+              },
+              "hueRange": {
+                "colors": [],
+                "baseColors": [],
+                "assignMode": "alternate",
+                "hueCount": 1,
+                "mixMin": 0,
+                "mixMax": 1,
+                "saturationMin": 0,
+                "saturationMax": 0
+              },
+              "engineStablePalette": {
+                "ok": false,
+                "reason": "seeded-from-default-user-state"
+              },
+              "caseBaseColor": [
+                4,
+                11,
+                56
+              ],
+              "transitionSeconds": 8
+            },
+            "render": {
+              "canvasBackground": "#e1e1e1",
+              "trailMode": "history"
+            },
+            "metadata": {
+              "capturedAt": "2026-06-14T23:36:05.836Z",
+              "createdOrder": 1
+            }
+          }
+        }
       },
       "9": {
         "base": {
@@ -2049,7 +3217,156 @@
             }
           }
         },
-        "slots": {}
+        "slots": {
+          "a": {
+            "schemaVersion": 1,
+            "caseId": 9,
+            "slotId": "a",
+            "point": {
+              "fixed": {
+                "count": 3,
+                "color": [
+                  236,
+                  224,
+                  198
+                ],
+                "size": 18,
+                "radius": 250,
+                "trailLength": 72,
+                "morphSpeed": 0.01,
+                "fadeSpeed": 0.046,
+                "vectorSpeed": 1,
+                "vectorDirection": 0,
+                "vectorSize": 10,
+                "image": null,
+                "pointSequenceSeconds": 8
+              },
+              "cycles": {}
+            },
+            "displayedColor": {
+              "ok": true,
+              "schemaVersion": 1,
+              "displaySource": "case-base-color",
+              "paletteSystem": "legacy",
+              "colorMode": "fixed",
+              "theme": {
+                "selectedThemeKey": "initial",
+                "selectedThemeStep": 0,
+                "activeThemeRenderStep": 0,
+                "activeThemeRenderColors": [],
+                "activeAssignMode": "alternate",
+                "colorBlendEnabled": false
+              },
+              "random": {
+                "enabled": false,
+                "colors": [],
+                "assignMode": "alternate"
+              },
+              "hueRange": {
+                "colors": [],
+                "baseColors": [],
+                "assignMode": "alternate",
+                "hueCount": 1,
+                "mixMin": 0,
+                "mixMax": 1,
+                "saturationMin": 0,
+                "saturationMax": 0
+              },
+              "engineStablePalette": {
+                "ok": false,
+                "reason": "seeded-from-default-user-state"
+              },
+              "caseBaseColor": [
+                236,
+                224,
+                198
+              ],
+              "transitionSeconds": 8
+            },
+            "render": {
+              "canvasBackground": "#e1e1e1",
+              "trailMode": "history"
+            },
+            "metadata": {
+              "capturedAt": "2026-06-14T23:36:05.836Z",
+              "createdOrder": 1
+            }
+          },
+          "b": {
+            "schemaVersion": 1,
+            "caseId": 9,
+            "slotId": "b",
+            "point": {
+              "fixed": {
+                "count": 3,
+                "color": [
+                  236,
+                  224,
+                  198
+                ],
+                "size": 18,
+                "radius": 250,
+                "trailLength": 72,
+                "morphSpeed": 0.01,
+                "fadeSpeed": 0.046,
+                "vectorSpeed": 1,
+                "vectorDirection": 0,
+                "vectorSize": 10,
+                "image": null,
+                "pointSequenceSeconds": 8
+              },
+              "cycles": {}
+            },
+            "displayedColor": {
+              "ok": true,
+              "schemaVersion": 1,
+              "displaySource": "case-base-color",
+              "paletteSystem": "legacy",
+              "colorMode": "fixed",
+              "theme": {
+                "selectedThemeKey": "initial",
+                "selectedThemeStep": 0,
+                "activeThemeRenderStep": 0,
+                "activeThemeRenderColors": [],
+                "activeAssignMode": "alternate",
+                "colorBlendEnabled": false
+              },
+              "random": {
+                "enabled": false,
+                "colors": [],
+                "assignMode": "alternate"
+              },
+              "hueRange": {
+                "colors": [],
+                "baseColors": [],
+                "assignMode": "alternate",
+                "hueCount": 1,
+                "mixMin": 0,
+                "mixMax": 1,
+                "saturationMin": 0,
+                "saturationMax": 0
+              },
+              "engineStablePalette": {
+                "ok": false,
+                "reason": "seeded-from-default-user-state"
+              },
+              "caseBaseColor": [
+                236,
+                224,
+                198
+              ],
+              "transitionSeconds": 8
+            },
+            "render": {
+              "canvasBackground": "#e1e1e1",
+              "trailMode": "history"
+            },
+            "metadata": {
+              "capturedAt": "2026-06-14T23:36:05.836Z",
+              "createdOrder": 2
+            }
+          }
+        }
       },
       "10": {
         "base": {
@@ -2222,5 +3539,6 @@
     }
   },
   "note": "Seeded from exported custom presets plus accessible Chrome localStorage snapshots. Existing localStorage values are not overwritten on startup.",
-  "updatedAt": "2026-06-15T00:06:12.792Z"
+  "updatedAt": "2026-06-15T00:06:12.792Z",
+  "uiNeumorphismPresetDetailsOpen": true
 }

@@ -2866,6 +2866,7 @@
         copy(payload.colorState);
         copy(payload.uiLayout);
         if (payload.uiGlassPresetDetailsOpen !== undefined) out.uiGlassPresetDetailsOpen = payload.uiGlassPresetDetailsOpen;
+        if (payload.uiNeumorphismPresetDetailsOpen !== undefined) out.uiNeumorphismPresetDetailsOpen = payload.uiNeumorphismPresetDetailsOpen;
         if (payload.uiState !== undefined) out.uiState = payload.uiState;
         if (payload.caseSettings !== undefined) out.allCaseSettings = payload.caseSettings;
         if (payload.allCaseSettings !== undefined) out.allCaseSettings = payload.allCaseSettings;
