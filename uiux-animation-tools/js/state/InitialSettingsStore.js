@@ -6,6 +6,7 @@
     const ARTWORK_SLOTS_SCHEMA = 'uiux-animation-tools.artwork-slots';
     const VERSION = 1;
     const UI_SIZE_TUNER_KEY = 'uiuxAnimationTools.uiSizeTuner.v26';
+    const USER_INITIAL_SETTINGS_STORAGE_KEY = 'uiuxAnimationTools.userInitialSettings.v1';
     const BUNDLED_INITIAL_SETTINGS_URL = 'assets/data/default-user-state.json';
     const USER_INITIAL_SETTINGS_SCHEMA = 'uiux-animation-tools.user-initial-settings-export';
     const USER_INITIAL_SETTINGS_SOURCE = 'detail-settings-initial-tab';
@@ -56,8 +57,8 @@
 
     const BUNDLED_INITIAL_SETTINGS_EMBEDDED = JSON.parse(String.raw`{
   "schema": "uiux-animation-tools.default-user-state",
-  "version": 1,
-  "name": "GitHub公開用 default-user-state 正本 v1",
+  "version": 2,
+  "name": "GitHub公開用 default-user-state 正本 v2",
   "createdAt": "2026-06-15T00:06:12.792Z",
   "source": {
     "glassExport": "p5js-glass-presets-20260615-084621.json",
@@ -2534,6 +2535,53 @@
         return keys;
     }
 
+    function hasPersistedAppState() {
+        if (typeof localStorage === 'undefined') return false;
+        for (let i = 0; i < localStorage.length; i += 1) {
+            const key = localStorage.key(i);
+            if (key && key !== USER_INITIAL_SETTINGS_STORAGE_KEY) return true;
+        }
+        return false;
+    }
+
+    function getStoredUserInitialSettings() {
+        const payload = readStorageValue(USER_INITIAL_SETTINGS_STORAGE_KEY);
+        const validation = validateUserInitialSettingsPayload(payload);
+        return validation.ok ? payload : null;
+    }
+
+    function saveCurrentStateAsUserInitialSettings() {
+        const payload = exportUserInitialSettings();
+        payload.source = 'registered-current-state';
+        writeStorageValue(USER_INITIAL_SETTINGS_STORAGE_KEY, payload);
+        return payload;
+    }
+
+    function downloadStoredUserInitialSettings() {
+        const payload = getStoredUserInitialSettings();
+        if (!payload) return false;
+        const stamp = new Date().toISOString().replace(/[:.]/g, '-');
+        downloadJson(`uiux-animation-tools_user-initial-settings-registered_${stamp}.json`, payload);
+        return true;
+    }
+
+    function buildDefaultUserStateDownloadPayload() {
+        const payload = exportInitialSettings();
+        const normalized = cloneSerializableValue(payload);
+        const assignMode = normalized && normalized.colorState && typeof normalized.colorState.colorThemeAssignMode === 'string'
+            ? normalized.colorState.colorThemeAssignMode.trim()
+            : '';
+        if (assignMode && !(assignMode.startsWith('"') && assignMode.endsWith('"'))) {
+            normalized.colorState.colorThemeAssignMode = JSON.stringify(normalized.colorState.colorThemeAssignMode);
+        }
+        return normalized;
+    }
+
+    function downloadDefaultUserStateJson() {
+        downloadJson('uiux-animation-tools_default-user-state.json', buildDefaultUserStateDownloadPayload());
+        return true;
+    }
+
     function buildUserInitialSettingsSummary(keys) {
         const sanitizedKeys = sanitizeUserInitialSettingsKeys(keys);
         const allCaseSettings = sanitizedKeys.allCaseSettings;
@@ -3039,18 +3087,33 @@
 
     function scheduleBundledInitialSettingsApply() {
         if (typeof window === 'undefined' || typeof document === 'undefined') return;
-        const result = applyBundledInitialSettings({ reload: false });
-        if (result && typeof result.then === 'function') {
-            result.catch((error) => {
-                console.warn('[initial-settings] bundled initial settings apply failed', error);
-            });
+        if (hasPersistedAppState()) return;
+        const storedUserInitialSettings = getStoredUserInitialSettings();
+        const bundledPayload = fetchBundledInitialSettings();
+        if (storedUserInitialSettings) {
+            applyUserInitialSettings(storedUserInitialSettings, { reload: false });
         }
+        const applySeedPayload = (payload) => {
+            if (!payload) return false;
+            return applyInitialSettings(payload, { reload: false });
+        };
+        if (bundledPayload && typeof bundledPayload.then === 'function') {
+            const result = bundledPayload.then(applySeedPayload);
+            if (result && typeof result.then === 'function') {
+                result.catch((error) => {
+                    console.warn('[initial-settings] bundled initial settings apply failed', error);
+                });
+            }
+            return;
+        }
+        applySeedPayload(bundledPayload);
     }
 
     window.UIUXInitialSettingsAPI = {
         schema: INITIAL_SETTINGS_SCHEMA,
         version: VERSION,
         uiSizeTunerStorageKey: UI_SIZE_TUNER_KEY,
+        userInitialSettingsStorageKey: USER_INITIAL_SETTINGS_STORAGE_KEY,
         initialStorageKeys: INITIAL_STORAGE_KEYS.slice(),
         artworkStorageKeys: ARTWORK_STORAGE_KEYS.slice(),
         excludedRuntimeKeys: EXCLUDED_RUNTIME_KEYS.slice(),
@@ -3065,6 +3128,10 @@
         parseUserInitialSettingsText,
         applyUserInitialSettings,
         downloadUserInitialSettings,
+        getStoredUserInitialSettings,
+        saveCurrentStateAsUserInitialSettings,
+        downloadStoredUserInitialSettings,
+        downloadDefaultUserStateJson,
         exportInitialSettings,
         validateInitialSettingsPayload,
         getInitialSettingsCoverageReport,

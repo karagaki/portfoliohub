@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UI/UX Animation Tools</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23141822'/%3E%3Cpath d='M4 11h8' stroke='%23ffffff' stroke-width='1.6' stroke-linecap='round'/%3E%3Cpath d='M8 4v8' stroke='%23ffffff' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E">
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/ui/UI_all.css">
     <link rel="stylesheet" href="css/ui/UI_Table.css">
@@ -334,6 +335,7 @@
 
             const pages = [...new Set(controls.map((control) => control.page))];
             if (!pages.includes('UI切替')) pages.push('UI切替');
+            if (!pages.includes('初期設定')) pages.push('初期設定');
             if (!pages.includes('Engine')) pages.push('Engine');
             const groupKeys = [...new Set(controls.map((control) => `${control.page}::${control.group}`))];
             const defaults = Object.fromEntries(controls.map((control) => [control.name, control.defaultValue]));
@@ -1057,8 +1059,12 @@ body[data-ui-variant="variant-1-glass"] #glass-cursor-panel-7.collapsed > .ui-co
             async function copyText(text) {
                 try { await navigator.clipboard.writeText(text); }
                 catch (_) {
-                    const ta = document.createElement('textarea'); ta.value = text; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove();
+                    const ta = document.createElement('textarea'); ta.value = text; document.body.appendChild(ta); ta.select();
+                    const ok = document.execCommand('copy');
+                    ta.remove();
+                    return ok;
                 }
+                return true;
             }
             function buildExportPayload() {
                 return JSON.stringify({
@@ -1225,6 +1231,346 @@ registered: ${list || 'p5: p5.js Stable'}
                     const readout = panel.querySelector('.ui-size-tuner-engine-readout');
                     if (readout) readout.textContent = getEngineTunerSnapshotText();
                 }
+                let userInitialSettingsPreviewPayload = null;
+                let userInitialSettingsPreviewFileName = '';
+                let userInitialSettingsFeedback = '';
+                let userInitialSettingsFeedbackKind = 'ok';
+                let userInitialSettingsReloadAvailable = true;
+                function escapeInitialSettingsHtml(value) {
+                    return String(value ?? '').replace(/[&<>"]/g, (char) => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;' }[char]));
+                }
+                function getInitialSettingsApi() {
+                    return window.UIUXInitialSettingsAPI || null;
+                }
+                function setInitialSettingsFeedback(message, kind = 'ok') {
+                    userInitialSettingsFeedback = message || '';
+                    userInitialSettingsFeedbackKind = kind;
+                    refreshInitialSettingsTunerPage();
+                }
+                function syncRuntimeAfterInitialSettingsApply() {
+                    if (typeof window.loadSavedSettings === 'function') {
+                        window.loadSavedSettings();
+                    }
+
+                    const adapter = window.RuntimeIntegratedSlotApplyAdapter || null;
+                    const activeSlot = adapter && typeof adapter.getStatus === 'function'
+                        ? adapter.getStatus().activeVisualSlot
+                        : null;
+                    let syncedRegisteredSlot = false;
+
+                    if (activeSlot
+                        && activeSlot.slotId
+                        && activeSlot.slotId !== '-'
+                        && adapter
+                        && typeof adapter.selectRegisteredSlot === 'function') {
+                        try {
+                            adapter.selectRegisteredSlot(activeSlot.caseId, activeSlot.slotId);
+                            syncedRegisteredSlot = true;
+                        } catch (error) {
+                            console.warn('[initial-settings] active slot sync failed', error);
+                        }
+                    }
+
+                    if (!syncedRegisteredSlot) {
+                        const currentCase = window.currentCase || (Array.isArray(window.cases) && Number.isInteger(window.state)
+                            ? window.cases[window.state]
+                            : null);
+
+                        if (currentCase && currentCase.config) {
+                            if (typeof window.adjustVectorCount === 'function') {
+                                window.adjustVectorCount(currentCase.config.count, currentCase.config.trailLength);
+                            }
+                            if (window.Color && typeof window.Color.updateAllSliders === 'function') {
+                                window.Color.updateAllSliders();
+                            }
+                            if (window.Color && typeof window.Color.updateColorPreview === 'function') {
+                                window.Color.updateColorPreview();
+                            }
+                            if (window.Slider && typeof window.Slider.updateSliders === 'function') {
+                                window.Slider.updateSliders(currentCase);
+                            }
+                        }
+
+                        if (window.Table && typeof window.Table.updateCaseComparisonTable === 'function') {
+                            window.Table.updateCaseComparisonTable();
+                        }
+
+                        if (window.UI && typeof window.UI.update === 'function') {
+                            window.UI.update();
+                        }
+                    } else if (window.__uiuxMarkUiDirty) {
+                        window.__uiuxMarkUiDirty('initial-settings-active-slot-sync');
+                    }
+
+                    if (typeof document !== 'undefined' && typeof document.dispatchEvent === 'function') {
+                        try {
+                            document.dispatchEvent(new CustomEvent('registeredSlotStateChanged', {
+                                detail: adapter && typeof adapter.getStatus === 'function' ? adapter.getStatus() : null
+                            }));
+                        } catch (error) {
+                            console.warn('[initial-settings] registeredSlotStateChanged dispatch failed', error);
+                        }
+                        if (!syncedRegisteredSlot) {
+                            const currentCase = window.currentCase || (Array.isArray(window.cases) && Number.isInteger(window.state)
+                                ? window.cases[window.state]
+                                : null);
+                            try {
+                                document.dispatchEvent(new CustomEvent('caseChanged', {
+                                    detail: {
+                                        currentCase,
+                                        nextCase: currentCase,
+                                        phase: 'initial-settings-apply-sync'
+                                    }
+                                }));
+                            } catch (error) {
+                                console.warn('[initial-settings] caseChanged dispatch failed', error);
+                            }
+                        }
+                    }
+
+                    if (typeof window.__uiuxMarkUiDirty === 'function') {
+                        window.__uiuxMarkUiDirty('initial-settings-apply-sync');
+                    }
+                }
+                async function handleUserInitialSettingsImportedFile(file, options = {}) {
+                    const api = getInitialSettingsApi();
+                    if (!api || !file || typeof file.text !== 'function' || typeof api.parseUserInitialSettingsText !== 'function') return;
+                    const applyImmediately = options.applyImmediately === true;
+                    try {
+                        const text = await file.text();
+                        const parsed = api.parseUserInitialSettingsText(text);
+                        if (!parsed.ok) {
+                            userInitialSettingsPreviewPayload = parsed.payload || null;
+                            userInitialSettingsPreviewFileName = file.name || '';
+                            setInitialSettingsFeedback((parsed.validation?.warnings || ['JSONの読み込みに失敗しました。']).join(' / '), 'error');
+                            return;
+                        }
+                        userInitialSettingsPreviewPayload = parsed.payload;
+                        userInitialSettingsPreviewFileName = file.name || '';
+                        refreshInitialSettingsTunerPage();
+                        if (!applyImmediately) {
+                            setInitialSettingsFeedback('JSONを読み込みました。詳細操作から反映できます。', 'ok');
+                            return;
+                        }
+                        const result = api.applyUserInitialSettings(parsed.payload, { reload: false });
+                        if (!result || result.ok !== true) {
+                            setInitialSettingsFeedback((result?.validation?.warnings || ['反映に失敗しました。']).join(' / '), 'error');
+                            return;
+                        }
+                        syncRuntimeAfterInitialSettingsApply();
+                        refreshInitialSettingsTunerPage();
+                        setInitialSettingsFeedback('JSONを読み込み、現在のlocalStorageへ反映しました。', 'ok');
+                    } catch (error) {
+                        setInitialSettingsFeedback(error && error.message ? error.message : 'JSON読み込みに失敗しました。', 'error');
+                    }
+                }
+                function buildInitialSettingsMiniReport(payload) {
+                    const api = getInitialSettingsApi();
+                    if (!api || typeof api.getUserInitialSettingsReport !== 'function') return null;
+                    try { return api.getUserInitialSettingsReport(payload); }
+                    catch (_) { return null; }
+                }
+                function renderInitialSettingsPresenceRows(report) {
+                    const sections = Array.isArray(report?.sections) ? report.sections : [];
+                    if (!sections.length) return '<div class="ui-size-tuner-engine-note">収集項目を表示できません。</div>';
+                    return sections.map((section) => `
+                        <div class="ui-size-tuner-group" style="padding:10px;">
+                            <div class="ui-size-tuner-group-head"><h3>${escapeInitialSettingsHtml(section.label)}</h3><button type="button" class="ui-size-tuner-group-toggle" disabled>確認</button></div>
+                            <div style="display:flex; flex-direction:column; gap:6px;">
+                                ${(section.items || []).map((item) => `
+                                    <div class="ui-size-tuner-row" style="grid-template-columns:minmax(0, var(--ui-size-tuner-row-label-width,108px)) minmax(0,1fr) minmax(0,var(--ui-size-tuner-row-value-width,72px)) minmax(0,var(--ui-size-tuner-row-computed-width,110px));">
+                                        <span class="ui-size-tuner-label">${escapeInitialSettingsHtml(item.label)}</span>
+                                        <span class="ui-size-tuner-engine-note" style="margin:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${item.present ? 'あり' : 'なし'}</span>
+                                        <span class="ui-size-tuner-value">${escapeInitialSettingsHtml(item.valueText || '')}</span>
+                                        <span class="ui-size-tuner-computed">${escapeInitialSettingsHtml(item.key || '')}</span>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    `).join('');
+                }
+                function renderInitialSettingsSlotRows(report) {
+                    const slots = report?.registeredSlots;
+                    if (!slots || !slots.hasSlots) return '<div class="ui-size-tuner-engine-note">登録スロットなし</div>';
+                    return `<div style="display:flex; flex-direction:column; gap:5px;">${(slots.caseRows || []).map((row) => `
+                        <div class="ui-size-tuner-row" style="grid-template-columns:64px minmax(0,1fr);">
+                            <span class="ui-size-tuner-label">case${escapeInitialSettingsHtml(row.caseId)}</span>
+                            <span class="ui-size-tuner-engine-note" style="margin:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${escapeInitialSettingsHtml((row.slotIds || []).join(', '))}</span>
+                        </div>
+                    `).join('')}</div>`;
+                }
+                function renderInitialSettingsSummaryGrid(summary) {
+                    const safeSummary = summary || {};
+                    return `
+                        <div style="display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px;">
+                            ${[
+                                ['case数', safeSummary.caseCount ?? 0],
+                                ['登録スロット数', safeSummary.registeredSlotCount ?? 0],
+                                ['Glassプリセット数', safeSummary.glassPresetCount ?? 0],
+                                ['Neumoプリセット数', safeSummary.neumorphismPresetCount ?? 0],
+                                ['UI Size Tuner', safeSummary.hasUiSizeTuner ? 'あり' : 'なし'],
+                                ['Glass / Neumo', `${safeSummary.activeGlassPreset || 'なし'} / ${safeSummary.activeNeumorphismPreset || 'なし'}`]
+                            ].map(([label, value]) => `<div style="padding:8px 10px; border-radius:12px; background:rgba(255,255,255,0.38); box-shadow:inset 0 1px 0 rgba(255,255,255,0.55);"><div style="font-weight:700; font-size:11px;">${escapeInitialSettingsHtml(label)}</div><div style="font-weight:800; font-size:12px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${escapeInitialSettingsHtml(value)}</div></div>`).join('')}
+                        </div>
+                    `;
+                }
+                function renderRegisteredInitialSettingsReport(report) {
+                    if (!report) {
+                        return `
+                            <div class="ui-size-tuner-group" style="padding:12px;">
+                                <div class="ui-size-tuner-group-head"><h3>登録済み初期設定</h3><button type="button" class="ui-size-tuner-group-toggle" disabled>未登録</button></div>
+                                <p class="ui-size-tuner-engine-note">まだ登録されていません。現在の状態を初期設定に登録すると、ここに保存内容が表示されます。</p>
+                            </div>
+                        `;
+                    }
+                    const exportedAt = report.exportedAt ? new Date(report.exportedAt).toLocaleString('ja-JP') : '';
+                    return `
+                        <div class="ui-size-tuner-group" style="padding:12px;">
+                            <div class="ui-size-tuner-group-head"><h3>登録済み初期設定</h3><button type="button" class="ui-size-tuner-group-toggle" disabled>${escapeInitialSettingsHtml(report.source === 'registered-current-state' ? '登録済み' : '保存済み')}</button></div>
+                            <p class="ui-size-tuner-engine-note">source: ${escapeInitialSettingsHtml(report.source || 'unknown')}${exportedAt ? ` / ${escapeInitialSettingsHtml(exportedAt)}` : ''}</p>
+                            ${renderInitialSettingsSummaryGrid(report.summary)}
+                        </div>
+                    `;
+                }
+                function renderInitialSettingsTunerPage(pageEl) {
+                    const api = getInitialSettingsApi();
+                    if (!api || typeof api.exportUserInitialSettings !== 'function' || typeof api.getUserInitialSettingsReport !== 'function') {
+                        pageEl.innerHTML = '<div class="ui-size-tuner-group"><div class="ui-size-tuner-engine-note">初期設定APIが読み込まれていません。</div></div>';
+                        return;
+                    }
+                    const payload = api.exportUserInitialSettings();
+                    const report = api.getUserInitialSettingsReport(payload);
+                    const summary = report?.summary || {};
+                    const registeredPayload = api.getStoredUserInitialSettings ? api.getStoredUserInitialSettings() : null;
+                    const registeredReport = registeredPayload ? api.getUserInitialSettingsReport(registeredPayload) : null;
+                    const previewReport = userInitialSettingsPreviewPayload ? buildInitialSettingsMiniReport(userInitialSettingsPreviewPayload) : null;
+                    const validation = previewReport?.validation;
+                    const previewOk = previewReport ? validation?.ok !== false : false;
+                    pageEl.innerHTML = `
+                        <div data-user-initial-settings-root>
+                        <div class="ui-size-tuner-group" style="padding:12px;">
+                            <div class="ui-size-tuner-group-head"><h3>初期設定</h3><button type="button" class="ui-size-tuner-group-toggle" data-user-initial-settings-action="refresh">更新</button></div>
+                            <p class="ui-size-tuner-engine-note">このChromeプロファイル内の登録状態をJSON化します。別Chromeへ移す場合は、JSONダウンロード後、別Chromeで「JSONを読み込んで反映」を使ってください。</p>
+                            ${userInitialSettingsFeedback ? `<div class="ui-size-tuner-engine-note" style="border:1px solid rgba(18,24,34,0.10); border-radius:10px; padding:8px; background:${userInitialSettingsFeedbackKind === 'error' ? 'rgba(255,90,90,0.10)' : 'rgba(80,150,255,0.08)'};">${escapeInitialSettingsHtml(userInitialSettingsFeedback)}</div>` : ''}
+                            ${renderInitialSettingsSummaryGrid(summary)}
+                            <div class="ui-size-tuner-actions" style="position:static; inset:auto; padding:0; margin-top:8px; background:transparent; box-shadow:none; border-top:0; display:flex; flex-direction:column; gap:8px;">
+                                <div style="display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px;">
+                                    <button type="button" data-user-initial-settings-action="import-apply" style="font-weight:700; min-height:44px; padding:12px 14px; box-shadow:inset 0 1px 0 rgba(255,255,255,0.45), 0 0 0 1px rgba(40,100,255,0.20);">JSONを読み込んで反映</button>
+                                    <button type="button" data-user-initial-settings-action="download" style="font-weight:700; min-height:44px; padding:12px 14px;">JSONダウンロード</button>
+                                </div>
+                                <button type="button" data-user-initial-settings-action="register-current" style="font-weight:700; min-height:44px; padding:12px 14px; box-shadow:inset 0 1px 0 rgba(255,255,255,0.45), 0 0 0 1px rgba(40,100,255,0.20);">このブラウザの初期設定に登録</button>
+                                <p class="ui-size-tuner-engine-note" style="margin:0;">このChromeプロファイル内で、次回以降の初期状態として使います。別Chromeへ移す場合はJSONダウンロードを使ってください。</p>
+                                <p class="ui-size-tuner-engine-note" style="margin:0;">別Chromeへ移す場合は、JSONダウンロード後、別Chromeで JSONを読み込んで反映 を使います。</p>
+                                <div style="display:flex; justify-content:flex-end;">
+                                    <button type="button" data-user-initial-settings-action="reload" ${userInitialSettingsReloadAvailable ? '' : 'disabled'} style="font-size:11px; min-height:28px; padding:5px 10px;">再読み込み</button>
+                                </div>
+                                <details style="margin-top:2px;">
+                                    <summary style="cursor:pointer; font-size:12px; font-weight:700; color:rgba(18,24,34,0.72); list-style:none;">詳細操作</summary>
+                                    <div style="display:flex; flex-wrap:wrap; gap:8px; margin-top:8px;">
+                                        <button type="button" data-user-initial-settings-action="copy">JSONコピー</button>
+                                        <label class="ui-size-tuner-import-label">JSON読み込みのみ<input type="file" accept="application/json,.json" data-user-initial-settings-import-input></label>
+                                        <button type="button" data-user-initial-settings-action="apply" ${previewOk ? '' : 'disabled'}>読み込み済みJSONを反映</button>
+                                        <button type="button" data-user-initial-settings-action="download-registered" ${registeredReport ? '' : 'disabled'}>登録済み初期設定を書き出し</button>
+                                        <button type="button" data-user-initial-settings-action="download-default-user-state">default-user-state用JSONを書き出し</button>
+                                    </div>
+                                </details>
+                                <input type="file" accept="application/json,.json" data-user-initial-settings-import-input="apply" hidden>
+                            </div>
+                        </div>
+                        ${renderRegisteredInitialSettingsReport(registeredReport)}
+                        ${previewReport ? `<div class="ui-size-tuner-group" style="padding:12px;"><div class="ui-size-tuner-group-head"><h3>読み込み済みプレビュー</h3><button type="button" class="ui-size-tuner-group-toggle" disabled>${previewOk ? 'OK' : 'NG'}</button></div><p class="ui-size-tuner-engine-note">${escapeInitialSettingsHtml(userInitialSettingsPreviewFileName || '選択済みJSON')}</p>${validation?.warnings?.length ? `<p class="ui-size-tuner-engine-note">${validation.warnings.map(escapeInitialSettingsHtml).join('<br>')}</p>` : ''}</div>` : ''}
+                        <div class="ui-size-tuner-group" style="padding:12px;"><div class="ui-size-tuner-group-head"><h3>収集項目</h3><button type="button" class="ui-size-tuner-group-toggle" disabled>現在</button></div></div>
+                        ${renderInitialSettingsPresenceRows(report)}
+                        <div class="ui-size-tuner-group" style="padding:12px;"><div class="ui-size-tuner-group-head"><h3>登録スロット内容</h3><button type="button" class="ui-size-tuner-group-toggle" disabled>${summary.registeredSlotCount || 0}</button></div>${renderInitialSettingsSlotRows(report)}</div>
+                        </div>
+                    `;
+                    if (pageEl.dataset.userInitialSettingsListenersBound === 'true') return;
+                    pageEl.dataset.userInitialSettingsListenersBound = 'true';
+                    pageEl.addEventListener('click', async (event) => {
+                        const actionButton = event.target.closest('[data-user-initial-settings-action]');
+                        if (!actionButton || !pageEl.contains(actionButton)) return;
+                        event.preventDefault();
+                        event.stopPropagation();
+                        const action = actionButton.getAttribute('data-user-initial-settings-action');
+                        if (action === 'refresh') {
+                            refreshInitialSettingsTunerPage();
+                            return;
+                        }
+                        if (action === 'copy') {
+                            const copied = await copyText(JSON.stringify(api.exportUserInitialSettings(), null, 2));
+                            setInitialSettingsFeedback(copied ? 'JSONをコピーしました。' : 'JSONのコピーに失敗しました。', copied ? 'ok' : 'error');
+                            return;
+                        }
+                        if (action === 'download') {
+                            api.downloadUserInitialSettings();
+                            setInitialSettingsFeedback('JSONをダウンロードしました。別Chromeへ移す場合は、別Chromeで JSONを読み込んで反映 を使ってください。', 'ok');
+                            return;
+                        }
+                        if (action === 'register-current') {
+                            const savedPayload = api.saveCurrentStateAsUserInitialSettings ? api.saveCurrentStateAsUserInitialSettings() : null;
+                            if (!savedPayload) {
+                                setInitialSettingsFeedback('初期設定の登録に失敗しました。', 'error');
+                                return;
+                            }
+                            refreshInitialSettingsTunerPage();
+                            setInitialSettingsFeedback('このブラウザの初期設定として登録しました。', 'ok');
+                            return;
+                        }
+                        if (action === 'import-apply') {
+                            const importInput = pageEl.querySelector('[data-user-initial-settings-import-input="apply"]');
+                            importInput?.click();
+                            return;
+                        }
+                        if (action === 'apply') {
+                            if (!userInitialSettingsPreviewPayload) {
+                                setInitialSettingsFeedback('先に JSON を読み込んでください。', 'error');
+                                return;
+                            }
+                            const result = api.applyUserInitialSettings(userInitialSettingsPreviewPayload, { reload: false });
+                            if (!result || result.ok !== true) {
+                                setInitialSettingsFeedback((result?.validation?.warnings || ['反映に失敗しました。']).join(' / '), 'error');
+                                return;
+                            }
+                            syncRuntimeAfterInitialSettingsApply();
+                            setInitialSettingsFeedback(`反映しました。${result.appliedKeys.length ? `(${result.appliedKeys.length}件)` : ''} 再読み込みしてください。`, 'ok');
+                            return;
+                        }
+                        if (action === 'download-registered') {
+                            const downloaded = api.downloadStoredUserInitialSettings ? api.downloadStoredUserInitialSettings() : false;
+                            if (!downloaded) {
+                                setInitialSettingsFeedback('先に現在の状態を初期設定に登録してください。', 'error');
+                                return;
+                            }
+                            setInitialSettingsFeedback('登録済み初期設定を書き出しました。', 'ok');
+                            return;
+                        }
+                        if (action === 'download-default-user-state') {
+                            const downloaded = api.downloadDefaultUserStateJson ? api.downloadDefaultUserStateJson() : false;
+                            if (!downloaded) {
+                                setInitialSettingsFeedback('default-user-state用JSONの書き出しに失敗しました。', 'error');
+                                return;
+                            }
+                            setInitialSettingsFeedback('default-user-state用JSONを書き出しました。', 'ok');
+                            return;
+                        }
+                        if (action === 'reload') {
+                            window.location.reload();
+                        }
+                    });
+                    pageEl.addEventListener('change', async (event) => {
+                        const importInput = event.target.closest('[data-user-initial-settings-import-input]');
+                        if (!importInput || !pageEl.contains(importInput)) return;
+                        const file = importInput.files && importInput.files[0];
+                        importInput.value = '';
+                        if (!file) return;
+                        const applyImmediately = importInput.getAttribute('data-user-initial-settings-import-input') === 'apply';
+                        await handleUserInitialSettingsImportedFile(file, { applyImmediately });
+                    });
+                }
+                function refreshInitialSettingsTunerPage() {
+                    const pageEl = pageEls.get('初期設定');
+                    if (pageEl) renderInitialSettingsTunerPage(pageEl);
+                }
                 function compactTargetText(rawTargets) {
                     const list = (rawTargets || [])
                         .filter(Boolean)
@@ -1256,6 +1602,7 @@ registered: ${list || 'p5: p5.js Stable'}
                     body.appendChild(pageEl);
                     pageEls.set(page, pageEl);
                     if (page === 'UI切替') renderVariantCompactTunerPage(pageEl);
+                    if (page === '初期設定') renderInitialSettingsTunerPage(pageEl);
                     if (page === 'Engine') renderEngineTunerPage(pageEl);
                 });
                 tabs.addEventListener('click', (event) => {
@@ -1266,6 +1613,7 @@ registered: ${list || 'p5: p5.js Stable'}
                     pageEls.forEach((el, key) => el.classList.toggle('is-active', key === page));
                     if (page === 'Engine') refreshEngineTunerPage();
                     else if (page === 'UI切替') refreshVariantCompactTunerPage();
+                    else if (page === '初期設定') refreshInitialSettingsTunerPage();
                     else openTargetsForPage(page);
                     updateStatus();
                 });

@@ -1,19 +1,7 @@
 {
   "schema": "uiux-animation-tools.default-user-state",
   "version": 1,
-  "name": "GitHub公開用 default-user-state 正本 v1",
-  "createdAt": "2026-06-15T00:06:12.792Z",
-  "source": {
-    "glassExport": "p5js-glass-presets-20260615-084621.json",
-    "neumorphismExport": "p5js-neumorphism-presets-20260615-084615.json",
-    "uiSizeTunerExport": "ui-size-tuner-2026-06-14 (2).json",
-    "caseSettingsSource": "assets/data/default-cases.json",
-    "registeredSlotsSource": "assets/data/default-cases.json",
-    "localStorageProfiles": [
-      "Profile 8",
-      "Default"
-    ]
-  },
+  "exportedAt": "2026-06-15T14:44:36.318Z",
   "uiSizeTunerStorageKey": "uiuxAnimationTools.uiSizeTuner.v26",
   "uiSizeTuner": {
     "schema": "uiux-animation-tools.uiSizeTuner",
@@ -658,8 +646,7 @@
         }
       }
     },
-    "copyMode": "diff",
-    "exportedAt": "2026-06-14T23:45:36.822Z"
+    "copyMode": "diff"
   },
   "theme": {
     "uiVariant": "variant-2-neumorphism",
@@ -861,10 +848,22 @@
     }
   },
   "canvasState": {},
-  "colorState": {},
-  "uiLayout": {},
+  "colorState": {
+    "colorThemeAssignMode": "\"alternate\"",
+    "colorThemeBlendEnabled": 0,
+    "colorEngineSettings": {
+      "engineEnabled": true,
+      "groupCount": 2,
+      "assignModeGlobal": "alternate",
+      "mixMin": 0.15,
+      "mixMax": 1,
+      "baseSeed": 1781534674300
+    }
+  },
+  "uiLayout": {
+    "uiGlassPanelPositions": {}
+  },
   "cursorState": {},
-  "uiGlassPresetDetailsOpen": true,
   "caseSettings": {
     "case0": {
       "config": {
@@ -1291,6 +1290,7 @@
       }
     }
   },
+  "uiGlassPresetDetailsOpen": true,
   "registeredSlots": {
     "schemaVersion": 1,
     "cases": {
@@ -3414,7 +3414,12 @@
       }
     }
   },
-  "note": "Seeded from exported custom presets plus accessible Chrome localStorage snapshots. Existing localStorage values are not overwritten on startup.",
-  "updatedAt": "2026-06-15T00:06:12.792Z",
-  "uiNeumorphismPresetDetailsOpen": true
+  "excludedRuntimeKeys": [
+    "uiux.engineDiagnostics.enabled",
+    "uiux.engineSwitcher.open",
+    "uiGlassPresetEditLocksMigratedV2",
+    "uiGlassPresetDetailsOpen",
+    "uiNeumorphismPresetDetailsOpen",
+    "uiLiquidGlassPresetDetailsOpen"
+  ]
 }

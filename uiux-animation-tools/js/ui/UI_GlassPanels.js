@@ -5559,10 +5559,6 @@ window.UIGlassPanels = (function() {
                     return `<div class="glass-preset-category-header"></div>${defs.map(renderPresetControl).join('')}`;
                 }).join('');
             })();
-        const initialSettingsTab = panel.dataset.userInitialSettingsActiveTab === USER_INITIAL_SETTINGS_TAB_INITIAL
-            ? USER_INITIAL_SETTINGS_TAB_INITIAL
-            : USER_INITIAL_SETTINGS_TAB_DETAIL;
-        panel.dataset.userInitialSettingsActiveTab = initialSettingsTab;
         panel.innerHTML = `
             <div class="glass-preset-header-row">
                 <button type="button" class="glass-preset-details-toggle" data-glass-preset-toggle aria-label="テーマ詳細">▶</button>
@@ -5571,10 +5567,9 @@ window.UIGlassPanels = (function() {
             </div>
             <div class="glass-preset-details" data-glass-preset-details hidden>
                 <div class="glass-preset-tabs" style="display:flex; flex-wrap:wrap; gap:4px; margin:0 0 4px;">
-                    <button type="button" class="glass-chip${initialSettingsTab === USER_INITIAL_SETTINGS_TAB_DETAIL ? ' is-on' : ''}" data-user-initial-settings-tab="detail" aria-pressed="${String(initialSettingsTab === USER_INITIAL_SETTINGS_TAB_DETAIL)}">詳細設定</button>
-                    <button type="button" class="glass-chip${initialSettingsTab === USER_INITIAL_SETTINGS_TAB_INITIAL ? ' is-on' : ''}" data-user-initial-settings-tab="initial" aria-pressed="${String(initialSettingsTab === USER_INITIAL_SETTINGS_TAB_INITIAL)}">初期設定</button>
+                    <button type="button" class="glass-chip is-on" data-user-initial-settings-tab="detail" aria-pressed="true">詳細設定</button>
                 </div>
-                <div class="glass-preset-tab-panel" data-user-initial-settings-tab-panel="detail" ${initialSettingsTab === USER_INITIAL_SETTINGS_TAB_DETAIL ? '' : 'hidden'}>
+                <div class="glass-preset-tab-panel" data-user-initial-settings-tab-panel="detail">
                     <div class="glass-preset-rows">
                         ${rowsMarkup}
                     </div>
@@ -5590,9 +5585,6 @@ window.UIGlassPanels = (function() {
                         <button type="button" class="glass-preset-edit-lock-toggle" aria-pressed="false" title="編集ロックを設定">🔒</button>
                     </div>
                     <input type="file" class="glass-preset-import-input" accept="application/json,.json" hidden>
-                </div>
-                <div class="glass-preset-tab-panel" data-user-initial-settings-tab-panel="initial" ${initialSettingsTab === USER_INITIAL_SETTINGS_TAB_INITIAL ? '' : 'hidden'}>
-                    <div data-user-initial-settings-root></div>
                 </div>
             </div>
         `;
