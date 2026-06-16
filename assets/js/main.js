@@ -1,3 +1,22 @@
+const HUB_PUBLIC_DEMO_ADMIN_KEY = "portfoliohub.adminMode";
+const HUB_PUBLIC_DEMO_ADMIN_TOKEN = "karagaki-local";
+function syncHubPublicDemoAdminMode() {
+  try {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("disableAdmin") === "1") {
+      localStorage.removeItem(HUB_PUBLIC_DEMO_ADMIN_KEY);
+    }
+    if (params.get("enableAdmin") === HUB_PUBLIC_DEMO_ADMIN_TOKEN || params.get("creator") === HUB_PUBLIC_DEMO_ADMIN_TOKEN || params.get("admin") === HUB_PUBLIC_DEMO_ADMIN_TOKEN) {
+      localStorage.setItem(HUB_PUBLIC_DEMO_ADMIN_KEY, "1");
+    }
+    return localStorage.getItem(HUB_PUBLIC_DEMO_ADMIN_KEY) === "1";
+  } catch {
+    return false;
+  }
+}
+const HUB_PUBLIC_DEMO_ADMIN_MODE = syncHubPublicDemoAdminMode();
+document.documentElement.classList.toggle("hub-public-demo-admin-locked", !HUB_PUBLIC_DEMO_ADMIN_MODE);
+
 const root = document.documentElement;
 const STORAGE_KEY = "portfoliohub.systemToolsIntroSettings";
 const LEGACY_STORAGE_KEY = "portfoliohub.visual-settings.v1";
@@ -1024,6 +1043,10 @@ function setStatus(message) {
 }
 
 async function copySettings() {
+  if (!HUB_PUBLIC_DEMO_ADMIN_MODE) {
+    setStatus("公開デモでは無効です");
+    return;
+  }
   const text = JSON.stringify(currentSettingsSnapshot(), null, 2);
   try {
     if (navigator.clipboard && navigator.clipboard.writeText) {
@@ -1340,6 +1363,15 @@ function applySettings(settings) {
 }
 
 function setOpen(open) {
+  if (!HUB_PUBLIC_DEMO_ADMIN_MODE) {
+    if (panel) {
+      panel.classList.remove("is-open");
+      panel.setAttribute("aria-hidden", "true");
+    }
+    if (toggle) toggle.setAttribute("aria-expanded", "false");
+    document.body.classList.remove("hub-settings-open");
+    return;
+  }
   if (!panel || !toggle) return;
   panel.classList.toggle("is-open", open);
   panel.setAttribute("aria-hidden", String(!open));
@@ -1367,7 +1399,7 @@ controls.forEach((control) => {
   control.addEventListener("change", syncAndSave);
 });
 
-if (toggle && panel) {
+if (toggle && panel && HUB_PUBLIC_DEMO_ADMIN_MODE) {
   toggle.addEventListener("click", () => {
     setOpen(!panel.classList.contains("is-open"));
   });
@@ -1375,7 +1407,7 @@ if (toggle && panel) {
 
 if (closeBtn) closeBtn.addEventListener("click", () => setOpen(false));
 
-if (copyBtn) copyBtn.addEventListener("click", copySettings);
+if (copyBtn && HUB_PUBLIC_DEMO_ADMIN_MODE) copyBtn.addEventListener("click", copySettings);
 
 if (resetBtn) {
   resetBtn.addEventListener("click", () => {

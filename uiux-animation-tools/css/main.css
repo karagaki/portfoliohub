@@ -6246,3 +6246,52 @@ body[data-ui-variant="variant-1-glass"][data-ui-theme="glass"] .ui-variant-compa
     box-shadow: none !important;
     filter: none !important;
 }
+
+/* Public demo: hide p5/admin detailed settings unless enabled locally. */
+html.uiux-public-demo-admin-locked #glass-settings-toggle,
+html.uiux-public-demo-admin-locked #glass-settings-toggle-test,
+html.uiux-public-demo-admin-locked #glass-settings-panel,
+html.uiux-public-demo-admin-locked #glass-settings-panel-test {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+
+/* Public demo admin gate v2: creator-only controls are fully hidden in normal public view. */
+html.uiux-public-demo-admin-locked #glass-settings-toggle,
+html.uiux-public-demo-admin-locked #glass-settings-toggle-test,
+html.uiux-public-demo-admin-locked #glass-settings-panel,
+html.uiux-public-demo-admin-locked #glass-settings-panel-test,
+html.uiux-public-demo-admin-locked #ui-size-tuner-toggle,
+html.uiux-public-demo-admin-locked #ui-size-tuner-panel,
+html.uiux-public-demo-admin-locked #save-btn,
+html.uiux-public-demo-admin-locked #export-btn,
+html.uiux-public-demo-admin-locked #load-image-btn,
+html.uiux-public-demo-admin-locked #apply-image-btn,
+html.uiux-public-demo-admin-locked [data-user-initial-settings-action],
+html.uiux-public-demo-admin-locked [data-user-initial-settings-import-input],
+html.uiux-public-demo-admin-locked [data-ui-size-action],
+html.uiux-public-demo-admin-locked [data-ui-size-import-file],
+html.uiux-public-demo-admin-locked [data-ui-size-copy-mode],
+html.uiux-public-demo-admin-locked [data-ui-size-preset-name],
+html.uiux-public-demo-admin-locked [data-ui-size-preset-select],
+html.uiux-public-demo-admin-locked .ui-size-tuner-import-label,
+html.uiux-public-demo-admin-locked .glass-preset-save,
+html.uiux-public-demo-admin-locked .glass-preset-export,
+html.uiux-public-demo-admin-locked .glass-preset-import,
+html.uiux-public-demo-admin-locked .glass-preset-details-toggle,
+html.uiux-public-demo-admin-locked .glass-preset-details,
+html.uiux-public-demo-admin-locked .glass-preset-actions,
+html.uiux-public-demo-admin-locked .palette-details-toggle,
+html.uiux-public-demo-admin-locked [data-palette-details-toggle],
+html.uiux-public-demo-admin-locked .palette-details,
+html.uiux-public-demo-admin-locked .palette-details-section,
+html.uiux-public-demo-admin-locked [data-palette-details],
+html.uiux-public-demo-admin-locked .palette-detail-group,
+html.uiux-public-demo-admin-locked [data-ui-variant-mini-full="show"],
+html.uiux-public-demo-admin-locked [data-ui-variant-mini-full="hide"] {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}

@@ -6,6 +6,22 @@
     <meta name="description" content="AI時代の制作を支える、試作と表現のポートフォリオ" />
     <title>Making Tools for Making</title>
     <link rel="icon" href="data:," />
+    <script>
+      (function() {
+        var KEY = "portfoliohub.adminMode";
+        var TOKEN = "karagaki-local";
+        var params = new URLSearchParams(window.location.search);
+        if (params.get("disableAdmin") === "1") {
+          localStorage.removeItem(KEY);
+        }
+        if (params.get("enableAdmin") === TOKEN || params.get("creator") === TOKEN || params.get("admin") === TOKEN) {
+          localStorage.setItem(KEY, "1");
+        }
+        if (localStorage.getItem(KEY) !== "1") {
+          document.documentElement.classList.add("hub-public-demo-admin-locked");
+        }
+      })();
+    </script>
     <link rel="stylesheet" href="./assets/css/style.css" />
     <script defer src="./assets/js/main.js"></script>
   </head>
