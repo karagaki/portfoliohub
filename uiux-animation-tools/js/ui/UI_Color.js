@@ -814,12 +814,29 @@ window.Color = window.Color || {};
         }
     }
 
-    function saveTransitionSecondsValue(value) {
+    function applyTransitionSecondsValue(value, options = {}) {
         const seconds = Number(value);
         const normalized = Number.isFinite(seconds) && seconds >= 0 ? Math.min(9.9, seconds) : 3;
-        localStorage.setItem('colorTransitionSeconds', String(normalized));
+        if (options.persist !== false) {
+            try {
+                localStorage.setItem('colorTransitionSeconds', String(normalized));
+            } catch (error) {
+                console.warn('Failed to save colorTransitionSeconds:', error);
+            }
+        }
         setTransitionSecondsInputValue(normalized);
+        const durationMs = Math.round(normalized * 1000);
+        if (window.updateColorTransitionDurationMs) {
+            window.updateColorTransitionDurationMs(durationMs);
+        }
+        if (window.ColorEngine && typeof window.ColorEngine.updateTransitionDuration === 'function') {
+            window.ColorEngine.updateTransitionDuration(durationMs);
+        }
         return normalized;
+    }
+
+    function saveTransitionSecondsValue(value) {
+        return applyTransitionSecondsValue(value, { persist: true });
     }
 
     function handleTransitionSecondsChange(event) {
@@ -1880,9 +1897,10 @@ Color.updatePaletteSystemUI = function() {
         const engineAssignValue = document.getElementById('color-engine-assign-mode-value');
         const hueAssignValue = document.getElementById('hue-range-assign-mode-value');
         const randomAssignValue = document.getElementById('random-color-assign-mode-value');
+        const normalizedColorMode = colorMode === 'fixed' ? 'off' : colorMode;
         if (paletteSystemSelect) paletteSystemSelect.value = paletteSystem;
-        if (colorModeSelect) colorModeSelect.value = colorMode;
-        if (colorModeValue) colorModeValue.textContent = colorMode;
+        if (colorModeSelect) colorModeSelect.value = normalizedColorMode;
+        if (colorModeValue) colorModeValue.textContent = normalizedColorMode;
         if (engineAssignValue) engineAssignValue.textContent = window.ColorEngine?.assignModeGlobal || 'auto';
         if (hueAssignValue) hueAssignValue.textContent = hueRangeAssignMode;
         if (randomAssignValue) randomAssignValue.textContent = randomColorAssignMode;
@@ -2328,9 +2346,8 @@ Color.updateColorPreview();
             saturationMax = Number.isFinite(Number(snapshot.hueRange.saturationMax)) ? Number(snapshot.hueRange.saturationMax) : saturationMax;
         }
 
-        const transitionInput = document.getElementById('color-transition-seconds');
-        if (transitionInput && Number.isFinite(Number(snapshot.transitionSeconds))) {
-            transitionInput.value = Number(snapshot.transitionSeconds);
+        if (Number.isFinite(Number(snapshot.transitionSeconds))) {
+            applyTransitionSecondsValue(snapshot.transitionSeconds, { persist: true });
         }
 
         syncThemeCards();
@@ -2443,11 +2460,12 @@ Color.updateColorModeUI = function() {
         const checkbox = document.getElementById('random-color-checkbox');
         const modeSelect = document.getElementById('color-mode-select');
         const hueControls = document.getElementById('hue-range-controls');
+        const normalizedMode = colorMode === 'fixed' ? 'off' : colorMode;
         if (checkbox) {
             checkbox.checked = colorMode === 'random';
         }
         if (modeSelect) {
-            modeSelect.value = colorMode;
+            modeSelect.value = normalizedMode;
         }
         if (hueControls) {
             hueControls.style.display = colorMode === 'hue-range' ? 'block' : 'none';

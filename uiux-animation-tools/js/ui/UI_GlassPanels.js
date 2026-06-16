@@ -1,7 +1,21 @@
 // UI_GlassPanels.js - Glass時のパネル配置とドラッグ操作
 
 window.UIGlassPanels = (function() {
-    const PUBLIC_DEMO_DISABLE_EXPORT_IMPORT = false;
+    const PUBLIC_DEMO_ADMIN_STORAGE_KEY = 'portfoliohub.adminMode';
+    const PUBLIC_DEMO_ADMIN_TOKEN = 'karagaki-local';
+    function syncPublicDemoAdminMode() {
+        try {
+            const params = new URLSearchParams(window.location.search);
+            if (params.get('disableAdmin') === '1') localStorage.removeItem(PUBLIC_DEMO_ADMIN_STORAGE_KEY);
+            if (params.get('enableAdmin') === PUBLIC_DEMO_ADMIN_TOKEN || params.get('creator') === PUBLIC_DEMO_ADMIN_TOKEN || params.get('admin') === PUBLIC_DEMO_ADMIN_TOKEN) localStorage.setItem(PUBLIC_DEMO_ADMIN_STORAGE_KEY, '1');
+            return localStorage.getItem(PUBLIC_DEMO_ADMIN_STORAGE_KEY) === '1';
+        } catch (_) {
+            return false;
+        }
+    }
+    const PUBLIC_DEMO_ADMIN_MODE = syncPublicDemoAdminMode();
+    const PUBLIC_DEMO_DISABLE_EXPORT_IMPORT = !PUBLIC_DEMO_ADMIN_MODE;
+    document.documentElement.classList.toggle('uiux-public-demo-admin-locked', !PUBLIC_DEMO_ADMIN_MODE);
     const PUBLIC_DEMO_DISABLED_TITLE = '公開デモでは無効';
     const DEBUG_LAYOUT_LOGS = false;
     function layoutDebugLog(...args) {
@@ -2750,9 +2764,18 @@ window.UIGlassPanels = (function() {
         button.setAttribute('aria-disabled', 'true');
         button.setAttribute('title', PUBLIC_DEMO_DISABLED_TITLE);
         button.classList.add('public-demo-disabled-action');
-        button.style.setProperty('opacity', '0.42', 'important');
-        button.style.setProperty('cursor', 'not-allowed', 'important');
-        button.style.setProperty('filter', 'grayscale(0.35)', 'important');
+        button.style.setProperty('display', 'none', 'important');
+        button.style.setProperty('visibility', 'hidden', 'important');
+        button.style.setProperty('pointer-events', 'none', 'important');
+    }
+
+    function hidePublicDemoDisabledElement(element) {
+        if (!element || !PUBLIC_DEMO_DISABLE_EXPORT_IMPORT) return;
+        element.setAttribute?.('aria-hidden', 'true');
+        element.style?.setProperty('display', 'none', 'important');
+        element.style?.setProperty('visibility', 'hidden', 'important');
+        element.style?.setProperty('pointer-events', 'none', 'important');
+        if ('disabled' in element) element.disabled = true;
     }
 
     function blockPublicDemoDisabledAction(event) {
@@ -2763,20 +2786,45 @@ window.UIGlassPanels = (function() {
     }
 
     function shouldDisablePublicDemoElement(element) {
-        if (!element || element.tagName !== 'BUTTON') return false;
-        if (element.matches('.glass-preset-export, .glass-preset-import, .glass-preset-save, #save-btn, #export-btn, #load-image-btn, #apply-image-btn')) return true;
+        if (!element) return false;
+        if (element.matches?.('#glass-settings-toggle, #glass-settings-toggle-test, #glass-settings-panel, #glass-settings-panel-test, #ui-size-tuner-toggle, #ui-size-tuner-panel')) return true;
+        if (element.matches?.('.glass-preset-export, .glass-preset-import, .glass-preset-save, .glass-preset-details-toggle, #save-btn, #export-btn, #load-image-btn, #apply-image-btn')) return true;
+        if (element.matches?.('[data-user-initial-settings-action], [data-user-initial-settings-import-input], [data-ui-size-action], [data-ui-size-import-file], [data-ui-size-copy-mode], [data-ui-size-preset-name], [data-ui-size-preset-select]')) return true;
+        if (element.matches?.('.ui-size-tuner-import-label, .palette-details-toggle, [data-palette-details-toggle], .palette-details, .palette-details-section, [data-palette-details], .palette-detail-group, [data-ui-variant-mini-full="show"], [data-ui-variant-mini-full="hide"]')) return true;
+        if (element.tagName !== 'BUTTON' && element.tagName !== 'LABEL') return false;
         const text = String(element.textContent || '').trim();
-        return text === 'SVG読込' || text === '読込み' || text === '画像反映';
+        return text === 'SVG読込'
+            || text === '読込み'
+            || text === '読込'
+            || text === '保存'
+            || text === '削除'
+            || text === '画像反映'
+            || text === '詳細設定'
+            || text === '詳細設定 ▼'
+            || text === '詳細設定 ▲'
+            || text === 'JSONコピー'
+            || text === 'JSONダウンロード'
+            || text === 'JSON読み込み'
+            || text === 'JSON読み込みのみ'
+            || text === '登録済み初期設定を書き出し'
+            || text === 'このブラウザの初期設定に登録'
+            || text === '現在のlocalStorageへ反映'
+            || text === 'CSS変数をコピー'
+            || text === 'エクスポート'
+            || text === 'インポート'
+            || text === '再読み込み';
     }
 
     function markPublicDemoDisabledActions(root = document) {
         if (!PUBLIC_DEMO_DISABLE_EXPORT_IMPORT) return;
-        root.querySelectorAll?.('button').forEach((button) => {
-            if (shouldDisablePublicDemoElement(button)) markPublicDemoDisabledButton(button);
+        root.querySelectorAll?.('button, label, input, select, #glass-settings-toggle, #glass-settings-toggle-test, #glass-settings-panel, #glass-settings-panel-test, #ui-size-tuner-toggle, #ui-size-tuner-panel, .glass-preset-details, .glass-preset-actions, .palette-details, .palette-details-section, [data-palette-details], .palette-detail-group').forEach((element) => {
+            if (shouldDisablePublicDemoElement(element)) {
+                if (element.tagName === 'BUTTON') markPublicDemoDisabledButton(element);
+                else hidePublicDemoDisabledElement(element);
+            }
         });
         root.querySelectorAll?.('input[type="file"]').forEach((input) => {
-            input.disabled = true;
-            input.setAttribute('aria-disabled', 'true');
+            hidePublicDemoDisabledElement(input);
         });
     }
 
@@ -2784,8 +2832,8 @@ window.UIGlassPanels = (function() {
         if (!PUBLIC_DEMO_DISABLE_EXPORT_IMPORT) return;
         markPublicDemoDisabledActions();
         document.addEventListener('click', (event) => {
-            const button = event.target.closest?.('button');
-            if (!shouldDisablePublicDemoElement(button)) return;
+            const target = event.target.closest?.('button, label, input, select, #glass-settings-toggle, #glass-settings-toggle-test, #ui-size-tuner-toggle, .glass-preset-details-toggle, .palette-details-toggle, [data-palette-details-toggle]');
+            if (!shouldDisablePublicDemoElement(target)) return;
             blockPublicDemoDisabledAction(event);
             event.stopImmediatePropagation();
         }, true);
@@ -5622,6 +5670,7 @@ window.UIGlassPanels = (function() {
                 if (initialActionButton && panel.contains(initialActionButton)) {
                     event.preventDefault();
                     event.stopPropagation();
+                    if (blockPublicDemoDisabledAction(event)) return;
                     const action = initialActionButton.getAttribute('data-user-initial-settings-action');
                     const api = getUserInitialSettingsApi();
                     if (!api) return;

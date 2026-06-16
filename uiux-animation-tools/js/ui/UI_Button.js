@@ -5,7 +5,19 @@ function uiuxPublicDebugLog(...args) { if (UIUX_PUBLIC_DEBUG_LOGS) console.log(.
 window.Button = window.Button || {};
 
 (function(Button) {
-    const PUBLIC_DEMO_DISABLE_EXPORT_IMPORT = true;
+    const PUBLIC_DEMO_ADMIN_STORAGE_KEY = 'portfoliohub.adminMode';
+    const PUBLIC_DEMO_ADMIN_TOKEN = 'karagaki-local';
+    function syncPublicDemoAdminMode() {
+        try {
+            const params = new URLSearchParams(window.location.search);
+            if (params.get('disableAdmin') === '1') localStorage.removeItem(PUBLIC_DEMO_ADMIN_STORAGE_KEY);
+            if (params.get('enableAdmin') === PUBLIC_DEMO_ADMIN_TOKEN || params.get('creator') === PUBLIC_DEMO_ADMIN_TOKEN || params.get('admin') === PUBLIC_DEMO_ADMIN_TOKEN) localStorage.setItem(PUBLIC_DEMO_ADMIN_STORAGE_KEY, '1');
+            return localStorage.getItem(PUBLIC_DEMO_ADMIN_STORAGE_KEY) === '1';
+        } catch (_) {
+            return false;
+        }
+    }
+    const PUBLIC_DEMO_DISABLE_EXPORT_IMPORT = !syncPublicDemoAdminMode();
     const PUBLIC_DEMO_DISABLED_TITLE = '公開デモでは無効';
 
     function markPublicDemoDisabledButton(button) {

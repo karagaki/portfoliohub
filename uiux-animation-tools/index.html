@@ -5,6 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UI/UX Animation Tools</title>
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%23141822'/%3E%3Cpath d='M4 11h8' stroke='%23ffffff' stroke-width='1.6' stroke-linecap='round'/%3E%3Cpath d='M8 4v8' stroke='%23ffffff' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E">
+    <script>
+        (function() {
+            var KEY = "portfoliohub.adminMode";
+            var TOKEN = "karagaki-local";
+            var params = new URLSearchParams(window.location.search);
+            if (params.get("disableAdmin") === "1") localStorage.removeItem(KEY);
+            if (params.get("enableAdmin") === TOKEN || params.get("creator") === TOKEN || params.get("admin") === TOKEN) localStorage.setItem(KEY, "1");
+            if (localStorage.getItem(KEY) !== "1") document.documentElement.classList.add("uiux-public-demo-admin-locked");
+        })();
+    </script>
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/ui/UI_all.css">
     <link rel="stylesheet" href="css/ui/UI_Table.css">

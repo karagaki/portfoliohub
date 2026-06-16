@@ -160,6 +160,50 @@ window.RuntimeIntegratedSlotApplyAdapter = (function() {
         return cloneValue(registry['case' + caseId] || {});
     }
 
+    function currentCursorState() {
+        const radius = Number.parseFloat(localStorage.getItem('cursorUI_cursor-radius'));
+        const strength = Number.parseFloat(localStorage.getItem('cursorUI_cursor-strength'));
+        const pullStrength = Number.parseFloat(localStorage.getItem('cursorUI_pull-strength'));
+        if (window.CursorUI && typeof window.CursorUI.getSettings === 'function') {
+            return cloneValue(window.CursorUI.getSettings());
+        }
+        const state = {
+            cursorUI_showCustomCursor: localStorage.getItem('cursorUI_showCustomCursor') !== 'false',
+            cursorUI_continuousEffect: localStorage.getItem('cursorUI_continuousEffect') === 'true',
+            cursorUI_pullEffect: localStorage.getItem('cursorUI_pullEffect') === 'true',
+            'cursorUI_cursor-radius': Number.isFinite(radius) ? radius : 500,
+            'cursorUI_cursor-strength': Number.isFinite(strength) ? strength : 0.5,
+            'cursorUI_pull-strength': Number.isFinite(pullStrength) ? pullStrength : 0
+        };
+        return state;
+    }
+
+    function currentColorEnginePublicSettings() {
+        if (!window.ColorEngine || typeof window.ColorEngine.captureStablePaletteSnapshot !== 'function') return null;
+        const snapshot = window.ColorEngine.captureStablePaletteSnapshot();
+        if (!snapshot || snapshot.ok !== true) return null;
+        return cloneValue(snapshot.publicSettings || null);
+    }
+
+    function colorEngineSettingsDiffer(nextSettings) {
+        if (!nextSettings) return false;
+        const current = currentColorEnginePublicSettings();
+        if (!current) return true;
+        try {
+            const pickComparable = (settings) => {
+                if (!settings || typeof settings !== 'object') return settings;
+                const copy = cloneValue(settings);
+                if (copy && typeof copy === 'object') {
+                    delete copy.baseSeed;
+                }
+                return copy;
+            };
+            return JSON.stringify(pickComparable(current)) !== JSON.stringify(pickComparable(nextSettings));
+        } catch (error) {
+            return true;
+        }
+    }
+
     function representativeRgb(displayed) {
         const colors = displayed && displayed.theme && displayed.theme.activeThemeRenderColors;
         if (Array.isArray(colors) && Array.isArray(colors[0])) return colors[0].slice(0, 3);
@@ -200,6 +244,10 @@ window.RuntimeIntegratedSlotApplyAdapter = (function() {
                 cycles: currentCycles(id)
             },
             displayedColor: cloneValue(displayed),
+            colorEngineSettings: displayed && displayed.engineStablePalette && displayed.engineStablePalette.ok === true
+                ? cloneValue(displayed.engineStablePalette.publicSettings || null)
+                : null,
+            cursorState: currentCursorState(),
             render: {
                 canvasBackground: currentBackground(),
                 trailMode: window.CanvasResizer && typeof window.CanvasResizer.getTrailMode === 'function'
@@ -365,6 +413,19 @@ window.RuntimeIntegratedSlotApplyAdapter = (function() {
         draftState = null;
         if (window.Color && typeof window.Color.syncDisplayedSnapshotPanel === 'function') {
             window.Color.syncDisplayedSnapshotPanel(item.displayedColor);
+        }
+        if (item.colorEngineSettings && window.ColorEngine && typeof window.ColorEngine.applySettings === 'function'
+            && colorEngineSettingsDiffer(item.colorEngineSettings)) {
+            window.ColorEngine.applySettings(cloneValue(item.colorEngineSettings), 'registered-slot');
+            if (window.Color && typeof window.Color.updateColorEngineUI === 'function') {
+                window.Color.updateColorEngineUI();
+            }
+            if (window.Color && typeof window.Color.updatePaletteSystemUI === 'function') {
+                window.Color.updatePaletteSystemUI();
+            }
+        }
+        if (item.cursorState && window.CursorUI && typeof window.CursorUI.applySettings === 'function') {
+            window.CursorUI.applySettings(item.cursorState, { persist: true });
         }
         window.CanvasResizer.setBackgroundColor(item.render.canvasBackground);
         if (window.CanvasResizer && typeof window.CanvasResizer.setTrailMode === 'function'

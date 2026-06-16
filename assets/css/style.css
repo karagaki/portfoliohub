@@ -2253,3 +2253,11 @@ body.hub-settings-open .hub-settings-toggle {
   background: rgba(255, 255, 255, 0.14);
   cursor: pointer;
 }
+
+/* Public demo: hide Hub admin controls unless enabled locally. */
+html.hub-public-demo-admin-locked .hub-settings-toggle,
+html.hub-public-demo-admin-locked .hub-settings {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}

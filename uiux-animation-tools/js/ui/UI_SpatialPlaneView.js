@@ -6,6 +6,7 @@
     "use strict";
 
     const PANEL_ID = "glass-cursor-panel-7";
+    const STORAGE_KEY = "uiSpatialPlaneState";
     const state = {
         enabled: false,
         guidesVisible: true,
@@ -41,6 +42,72 @@
 
     function radians(deg) {
         return deg * Math.PI / 180;
+    }
+
+    function normalizeStateValue(value, fallback, min, max) {
+        const parsed = Number(value);
+        if (!Number.isFinite(parsed)) return fallback;
+        return clamp(parsed, min, max);
+    }
+
+    function normalizeBooleanValue(value, fallback) {
+        if (value === true || value === 1 || value === '1' || value === 'true') return true;
+        if (value === false || value === 0 || value === '0' || value === 'false') return false;
+        return fallback;
+    }
+
+    function readStoredSettings() {
+        try {
+            const raw = localStorage.getItem(STORAGE_KEY);
+            if (raw == null) return null;
+            const parsed = JSON.parse(raw);
+            if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) return null;
+            return parsed;
+        } catch (_) {
+            return null;
+        }
+    }
+
+    function exportSettings() {
+        return {
+            enabled: state.enabled,
+            guidesVisible: state.guidesVisible,
+            pitch: state.pitch,
+            yaw: state.yaw,
+            roll: state.roll
+        };
+    }
+
+    function saveSettings() {
+        try {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(exportSettings()));
+            return true;
+        } catch (_) {
+            return false;
+        }
+    }
+
+    function applySettings(nextState, options) {
+        const settings = nextState && typeof nextState === "object" ? nextState : {};
+        state.enabled = normalizeBooleanValue(settings.enabled, false);
+        state.guidesVisible = normalizeBooleanValue(settings.guidesVisible, true);
+        state.pitch = normalizeStateValue(settings.pitch, 0, -MAX_PITCH, MAX_PITCH);
+        state.yaw = normalizeStateValue(settings.yaw, 0, -MAX_YAW, MAX_YAW);
+        state.roll = normalizeStateValue(settings.roll, 0, -MAX_ROLL, MAX_ROLL);
+        if (!options || options.persist !== false) {
+            saveSettings();
+        }
+        applyUi();
+        return true;
+    }
+
+    function loadSettings() {
+        const stored = readStoredSettings();
+        if (!stored) {
+            applyUi();
+            return false;
+        }
+        return applySettings(stored, { persist: false });
     }
 
     function getCanvas() {
@@ -238,6 +305,7 @@
         state.yaw = 0;
         state.roll = 0;
         requestClear();
+        saveSettings();
         applyUi();
     }
 
@@ -286,6 +354,7 @@
             if (key === "y") state.yaw = value;
             if (key === "z") state.roll = value;
             requestClear();
+            saveSettings();
             applyUi();
         });
 
@@ -317,10 +386,12 @@
             state.enabled = !state.enabled;
             state.draggingCanvas = false;
             requestClear();
+            saveSettings();
             applyUi();
         });
         guideButton = createButton("軸表示", "spatial-action-button is-active", function() {
             state.guidesVisible = !state.guidesVisible;
+            saveSettings();
             applyUi();
         });
         const resetButton = createButton("正面へ戻す", "spatial-action-button", resetView);
@@ -336,6 +407,7 @@
 
         panel.appendChild(header);
         panel.appendChild(content);
+        loadSettings();
         applyUi();
         return true;
     }
@@ -377,6 +449,7 @@
         state.yaw = clamp(state.yaw + dx * 0.18, -MAX_YAW, MAX_YAW);
         state.pitch = clamp(state.pitch - dy * 0.18, -MAX_PITCH, MAX_PITCH);
         requestClear();
+        saveSettings();
         applyUi();
         event.preventDefault();
         event.stopPropagation();
@@ -425,12 +498,17 @@
                 fpsReadout.textContent = Number.isFinite(fps) ? "FPS " + Math.round(fps) : "FPS --";
             }, 700);
         }
+        loadSettings();
         applyUi();
     }
 
     window.SpatialPlaneView = {
         initialize: initialize,
         populatePanel: populatePanel,
+        loadSettings: loadSettings,
+        saveSettings: saveSettings,
+        exportSettings: exportSettings,
+        applySettings: applySettings,
         projectRenderPoint: projectPoint,
         projectScreenFacingSegment: projectScreenFacingSegment,
         consumeClearRequested: consumeClearRequested,

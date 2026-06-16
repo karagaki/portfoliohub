@@ -143,7 +143,8 @@ window.CursorUI = (function() {
         slider.min = min;
         slider.max = max;
         slider.step = step;
-        slider.value = loadSetting(param) || (window.RippleEffect ? window.RippleEffect.getParameter(param) : min);
+        const loadedValue = loadSetting(param);
+        slider.value = loadedValue ?? (window.RippleEffect ? window.RippleEffect.getParameter(param) : min);
         value.textContent = Number.parseFloat(slider.value).toFixed(2);
         
         sliderContainer.appendChild(slider);
@@ -162,7 +163,7 @@ window.CursorUI = (function() {
         parent.appendChild(sliderGroup);
     }
 
-    function updateCursorParameter(param, value) {
+    function updateCursorParameter(param, value, options = {}) {
         value = parseFloat(value);
         if (window.RippleEffect && typeof window.RippleEffect.setParameter === 'function') {
             window.RippleEffect.setParameter(param, value);
@@ -170,7 +171,9 @@ window.CursorUI = (function() {
             console.warn('RippleEffect.setParameter is not available');
         }
         updateCursorSliderValue(param, value);
-        saveSetting(param, value);
+        if (options.persist !== false) {
+            saveSetting(param, value);
+        }
     }
 
     function updateCursorSliderValue(param, value) {
@@ -208,6 +211,93 @@ window.CursorUI = (function() {
         return value ? JSON.parse(value) : null;
     }
 
+    function getCursorSettingValue(key, fallback = null) {
+        const stored = loadSetting(key);
+        if (stored !== null && stored !== undefined) return stored;
+        if (window.RippleEffect && typeof window.RippleEffect.getParameter === 'function') {
+            const current = window.RippleEffect.getParameter(key);
+            if (Number.isFinite(Number(current))) return Number(current);
+        }
+        return fallback;
+    }
+
+    function setCheckboxState(selectorSuffix, checked) {
+        document.querySelectorAll(`[id$="${selectorSuffix}"]`).forEach((checkbox) => {
+            if (checkbox && checkbox.type === 'checkbox') {
+                checkbox.checked = Boolean(checked);
+            }
+        });
+    }
+
+    function getCursorStateSnapshot() {
+        return {
+            cursorUI_showCustomCursor: Boolean(getCursorSettingValue('showCustomCursor', true)),
+            cursorUI_continuousEffect: Boolean(getCursorSettingValue('continuousEffect', false)),
+            cursorUI_pullEffect: Boolean(getCursorSettingValue('pullEffect', false)),
+            'cursorUI_cursor-radius': Number(getCursorSettingValue('cursor-radius', 500)),
+            'cursorUI_cursor-strength': Number(getCursorSettingValue('cursor-strength', 0.5)),
+            'cursorUI_pull-strength': Number(getCursorSettingValue('pull-strength', 0))
+        };
+    }
+
+    function applyCursorStateSnapshot(state = {}, options = {}) {
+        if (!state || typeof state !== 'object') return getCursorStateSnapshot();
+        const persist = options.persist !== false;
+
+        const showCustomCursorValue = Object.prototype.hasOwnProperty.call(state, 'cursorUI_showCustomCursor')
+            ? state.cursorUI_showCustomCursor
+            : state.showCustomCursor;
+        if (showCustomCursorValue !== undefined) {
+            showCustomCursor = Boolean(showCustomCursorValue);
+            if (persist) saveSetting('showCustomCursor', showCustomCursor);
+        }
+
+        const continuousEffectValue = Object.prototype.hasOwnProperty.call(state, 'cursorUI_continuousEffect')
+            ? state.cursorUI_continuousEffect
+            : state.continuousEffect;
+        if (continuousEffectValue !== undefined) {
+            continuousEffect = Boolean(continuousEffectValue);
+            if (persist) saveSetting('continuousEffect', continuousEffect);
+        }
+
+        const pullEffectValue = Object.prototype.hasOwnProperty.call(state, 'cursorUI_pullEffect')
+            ? state.cursorUI_pullEffect
+            : state.pullEffect;
+        if (pullEffectValue !== undefined) {
+            pullEffect = Boolean(pullEffectValue);
+            if (persist) saveSetting('pullEffect', pullEffect);
+        }
+
+        const cursorRadiusValue = Object.prototype.hasOwnProperty.call(state, 'cursorUI_cursor-radius')
+            ? state['cursorUI_cursor-radius']
+            : state['cursor-radius'];
+        if (cursorRadiusValue !== undefined) {
+            updateCursorParameter('cursor-radius', cursorRadiusValue, { persist });
+        }
+
+        const cursorStrengthValue = Object.prototype.hasOwnProperty.call(state, 'cursorUI_cursor-strength')
+            ? state['cursorUI_cursor-strength']
+            : state['cursor-strength'];
+        if (cursorStrengthValue !== undefined) {
+            updateCursorParameter('cursor-strength', cursorStrengthValue, { persist });
+        }
+
+        const pullStrengthValue = Object.prototype.hasOwnProperty.call(state, 'cursorUI_pull-strength')
+            ? state['cursorUI_pull-strength']
+            : state['pull-strength'];
+        if (pullStrengthValue !== undefined) {
+            updateCursorParameter('pull-strength', pullStrengthValue, { persist });
+        }
+
+        setCheckboxState('custom-cursor-checkbox', showCustomCursor);
+        setCheckboxState('continuous-effect-checkbox', continuousEffect);
+        setCheckboxState('pull-effect-checkbox', pullEffect);
+        applyCustomCursorVisibility();
+        applyContinuousEffect();
+        applyPullEffect();
+        return getCursorStateSnapshot();
+    }
+
     function handleCustomCursorToggle(event) {
         showCustomCursor = event.target.checked;
         applyCustomCursorVisibility();
@@ -242,7 +332,7 @@ window.CursorUI = (function() {
         cursorParams.forEach(param => {
             const value = loadSetting(param);
             if (value !== null) {
-                updateCursorParameter(param, value);
+                updateCursorParameter(param, value, { persist: false });
             }
         });
     }
@@ -279,6 +369,8 @@ window.CursorUI = (function() {
     return {
         createCursorSliders: createCursorSliders,
         updateCursorSliderValue: updateCursorSliderValue,
+        getSettings: getCursorStateSnapshot,
+        applySettings: applyCursorStateSnapshot,
         isCustomCursorVisible: () => showCustomCursor,
         applyCustomCursorVisibility: applyCustomCursorVisibility,
         applyContinuousEffect: applyContinuousEffect,
