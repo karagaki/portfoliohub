@@ -626,3 +626,18 @@ html body.theme-neumorphism #portfolio-quality #captureQualitySummary[data-quali
   box-shadow:none !important;
   pointer-events:none !important;
 }
+
+/* v806: STEP2上部分類カウントの凹選択面に分類色を反映。
+   会話全体は基準ボタンなので対象外。色は表示設定3/チップタグと同じ分類色変数を使う。 */
+html body.theme-neumorphism #portfolio-quality #captureQualitySummary.workflow-brief .workflow-brief-card[data-quality02-count-card][data-review02-filter]:not([data-review02-filter="all"]).is-active,
+html body.theme-neumorphism #portfolio-quality #captureQualitySummary.workflow-brief .workflow-brief-card[data-quality02-count-card][data-review02-filter]:not([data-review02-filter="all"]).is-selected,
+html body.theme-neumorphism #portfolio-quality #captureQualitySummary.workflow-brief .workflow-brief-card[data-quality02-count-card][data-review02-filter]:not([data-review02-filter="all"])[aria-pressed="true"],
+html body.theme-neumorphism #portfolio-quality #captureQualitySummary.ck02-quality-count-summary .workflow-brief-card[data-quality02-count-card][data-review02-filter]:not([data-review02-filter="all"]).is-active,
+html body.theme-neumorphism #portfolio-quality #captureQualitySummary.ck02-quality-count-summary .workflow-brief-card[data-quality02-count-card][data-review02-filter]:not([data-review02-filter="all"]).is-selected,
+html body.theme-neumorphism #portfolio-quality #captureQualitySummary.ck02-quality-count-summary .workflow-brief-card[data-quality02-count-card][data-review02-filter]:not([data-review02-filter="all"])[aria-pressed="true"],
+html body.theme-neumorphism #portfolio-quality #captureQualitySummary[data-quality02-summary-owner="classification-bridge-02"] .workflow-brief-card[data-quality02-count-card][data-review02-filter]:not([data-review02-filter="all"]).is-active,
+html body.theme-neumorphism #portfolio-quality #captureQualitySummary[data-quality02-summary-owner="classification-bridge-02"] .workflow-brief-card[data-quality02-count-card][data-review02-filter]:not([data-review02-filter="all"]).is-selected,
+html body.theme-neumorphism #portfolio-quality #captureQualitySummary[data-quality02-summary-owner="classification-bridge-02"] .workflow-brief-card[data-quality02-count-card][data-review02-filter]:not([data-review02-filter="all"])[aria-pressed="true"]{
+  background:color-mix(in srgb, var(--ck02-count-color, transparent) 18%, var(--neumo-pressed, rgba(239,239,236,.72)) 82%) !important;
+  border-color:color-mix(in srgb, var(--ck02-count-color, rgba(104,127,123,.10)) 24%, rgba(255,255,255,.45) 76%) !important;
+}

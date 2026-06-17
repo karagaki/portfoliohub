@@ -1,6 +1,6 @@
 (function(){
   'use strict';
-  const VERSION='v1.0749';
+  const VERSION='v1.0817';
   const PAGE_ID='portfolio-review';
   const shelves=[
     {key:'A',title:'AI理解前提',cats:['AI理解前提'],display:['AI理解前提'],page:'artifact-intent'},
@@ -43,7 +43,7 @@
         });
       });
     });
-    const thread = (state.conversation?.source?.title || '星空科学館_v1.4原文会話').trim();
+    const thread = (state.conversation?.source?.title || '読み込み済み会話').trim();
     const out=[];
     anns.forEach((ann, i)=>{
       const qt = normalizeJ03QualityType(ann.qualityType || ann.displayCategory || ann.category);
@@ -64,306 +64,20 @@
         category,
         qualityType:qt,
         speaker:speaker || '',
-        date:'06-09',
+        date:'—',
         thread,
         text,
-        order:i+1
+        order:i+1,
+        sourceAnnotationId: ann.id || `q02-ann-${i+1}`,
+        sourceStatus: ann.source === 'manual' ? 'manual' : 'linked'
       });
     });
     return out;
   }
 
-  const demo=[
-    [
-        "J03-001",
-        "AI理解前提",
-        "User",
-        "06-09",
-        "星空科学館_v1.4原文会話",
-        "施策案ではなく、手元資料から見えることに絞りたいです。"
-    ],
-    [
-        "J03-002",
-        "AI理解前提",
-        "ChatGPT",
-        "06-09",
-        "星空科学館_v1.4原文会話",
-        "最初からSNSや広告施策へ行くと、原因確認と対策案が混ざりやすいです。"
-    ],
-    [
-        "J03-003",
-        "AI理解前提",
-        "ChatGPT",
-        "06-09",
-        "星空科学館_v1.4原文会話",
-        "Webを綺麗にするためではなく、来館前の不安を減らす入口として作る、という位置づけです。"
-    ],
-    [
-        "J03-004",
-        "AI理解前提",
-        "User",
-        "06-09",
-        "星空科学館_v1.4原文会話",
-        "星空感が悪いのではなく、順番が違う。\nここを間違えると、また施設紹介と雰囲気だけのページに戻ってしまいます。"
-    ],
-    [
-        "J03-005",
-        "AI理解前提",
-        "ChatGPT",
-        "06-09",
-        "星空科学館_v1.4原文会話",
-        "星空感は、余白、小さな星点、見出し周辺の淡い光、カード角の弱い演出で補助する程度が合います。"
-    ],
-    [
-        "J03-006",
-        "AI理解前提",
-        "User",
-        "06-09",
-        "星空科学館_v1.4原文会話",
-        "人間側がAIの案をそのまま採用するのではなく、資料と照らして違和感の正体を見つける。"
-    ],
-    [
-        "J03-007",
-        "引き継ぎ",
-        "User",
-        "06-09",
-        "星空科学館_v1.4原文会話",
-        "パンフは展示名と設備説明が多いです。\n見出しも「宇宙展示室」「太陽系模型」「プラネタリウム設備」みたいな感じです。"
-    ],
-    [
-        "J03-008",
-        "引き継ぎ",
-        "User",
-        "06-09",
-        "星空科学館_v1.4原文会話",
-        "アンケートには「屋上で本物の星を見たのを子どもが帰ってから話していた」「星座カードを家で見返していた」みたいな回答があります。\n設備名より、体験の方が残っている感じがします。"
-    ],
-    [
-        "J03-009",
-        "引き継ぎ",
-        "User",
-        "06-09",
-        "星空科学館_v1.4原文会話",
-        "既存ページのスクショもあります。\nトップに星空写真と施設紹介があり、その下に展示一覧があります。"
-    ],
-    [
-        "J03-010",
-        "引き継ぎ",
-        "User",
-        "06-09",
-        "星空科学館_v1.4原文会話",
-        "ここでやっと、この科学館の見え方が変わった気がします。\n\n最初は「来館者が減っている施設をどう改善するか」くらいの話でした。\nでも今は、来館前の不安を減らして、館内の体験につなげて、帰った後に空を見るところまで残す話に見えてきています。"
-    ],
-    [
-        "J03-011",
-        "引き継ぎ",
-        "User",
-        "06-09",
-        "星空科学館_v1.4原文会話",
-        "最後に、次のAIへ渡すなら最初に何を読ませるべきかも短く残してください。\n次回はファーストビュー案、3カード文面、星座カードの見せ方から再開したいです。"
-    ],
-    [
-        "J03-012",
-        "仕様",
-        "ChatGPT",
-        "06-09",
-        "星空科学館_v1.4原文会話",
-        "目的は、親子連れ・初回来館者が30秒以内に行けるか判断できること。\n最初に出す情報は、今日行けるか、何歳から楽しめるか、所要時間、予約要否、雨天時対応、アクセスの安心感です。"
-    ],
-    [
-        "J03-013",
-        "仕様",
-        "User",
-        "06-09",
-        "星空科学館_v1.4原文会話",
-        "では、来館案内ページの最初は、見出し、確認チップ、3カードの順が良さそうです。"
-    ],
-    [
-        "J03-014",
-        "仕様",
-        "ChatGPT",
-        "06-09",
-        "星空科学館_v1.4原文会話",
-        "確認チップは「対象年齢」「所要時間」「予約」「雨天時」程度に絞ります。\n3カードは「今日行ける？」「何歳から楽しめる？」「どれくらい時間がかかる？」を候補にできます。"
-    ],
-    [
-        "J03-015",
-        "仕様",
-        "ChatGPT",
-        "06-09",
-        "星空科学館_v1.4原文会話",
-        "PCでは3カード横並び、スマホでは1列。\n本文は15px未満にせず、カード説明は2行以内、詳細リンクは各カード1つまでに抑えると見やすいです。"
-    ],
-    [
-        "J03-016",
-        "仕様",
-        "ChatGPT",
-        "06-09",
-        "星空科学館_v1.4原文会話",
-        "1枚目は「今日行ける？」として、開館日、予約要否、雨天時の確認へつなげます。\n2枚目は「何歳から楽しめる？」として、対象年齢や体験の難しさを扱います。\n3枚目は「どれくらい時間がかかる？」として、滞在目安と観測会の有無を扱います。"
-    ],
-    [
-        "J03-017",
-        "仕様",
-        "ChatGPT",
-        "06-09",
-        "星空科学館_v1.4原文会話",
-        "上部の3カードは「行けるかどうかの判断」。\nその下の体験カードは「行ったら何が残るか」。"
-    ],
-    [
-        "J03-018",
-        "再発防止",
-        "User",
-        "06-09",
-        "星空科学館_v1.4原文会話",
-        "料金・営業時間・予約方式も未確認です。\n\nここをAIがそれっぽく埋めると、本番文言と混ざって危ないです。"
-    ],
-    [
-        "J03-019",
-        "再発防止",
-        "User",
-        "06-09",
-        "星空科学館_v1.4原文会話",
-        "仮の画面を作っているだけなのに、自然な文章として入ると、数日後に見返した時に「これは確認済みなのか」「AIが埋めただけなのか」が分からなくなる。"
-    ],
-    [
-        "J03-020",
-        "再発防止",
-        "User",
-        "06-09",
-        "星空科学館_v1.4原文会話",
-        "この混ざり方が一番怖いです。\nなので、見た目の仮案でも、未確認は未確認として表示したいです。\nここはデザインの都合より優先したいです。"
-    ],
-    [
-        "J03-021",
-        "再発防止",
-        "ChatGPT",
-        "06-09",
-        "星空科学館_v1.4原文会話",
-        "チップ内でも「予約：要確認」「所要時間：目安掲載予定」のように、未確定であることを残します。\nこれにより、仮文言と公開文面が混ざる事故を防げます。"
-    ],
-    [
-        "J03-022",
-        "再発防止",
-        "User",
-        "06-09",
-        "星空科学館_v1.4原文会話",
-        "屋上観測会も主役にしたい気持ちはありますが、開催日が限られるなら最初に大きく出しすぎるのは危ないですね。"
-    ],
-    [
-        "J03-023",
-        "再発防止",
-        "ChatGPT",
-        "06-09",
-        "星空科学館_v1.4原文会話",
-        "屋上観測会は魅力として強いですが、開催日が月数回なら、常時体験できるように見せるのは避けたいです。"
-    ],
-    [
-        "J03-024",
-        "デザイン",
-        "User",
-        "06-09",
-        "星空科学館_v1.4原文会話",
-        "ここで少し見え方が変わりますね。\n\n展示物を説明する施設だと思っていましたが、来館者の記憶はそこではない気がします。"
-    ],
-    [
-        "J03-025",
-        "デザイン",
-        "User",
-        "06-09",
-        "星空科学館_v1.4原文会話",
-        "たぶんAIに任せると、最初にこういう絵として綺麗な方向へ行きやすいんですよね。"
-    ],
-    [
-        "J03-026",
-        "デザイン",
-        "User",
-        "06-09",
-        "星空科学館_v1.4原文会話",
-        "綺麗な星空サイトを作る話ではなく、親が「今日行って大丈夫か」と判断できて、その先に子どもの記憶が残る流れを作る話なんだと思います。"
-    ],
-    [
-        "J03-027",
-        "デザイン",
-        "ChatGPT",
-        "06-09",
-        "星空科学館_v1.4原文会話",
-        "アニメーションも常時流れる星ではなく、見出し、判断カード、予約導線が順に出る程度で十分です。"
-    ],
-    [
-        "J03-028",
-        "デザイン",
-        "User",
-        "06-09",
-        "星空科学館_v1.4原文会話",
-        "「今日行ける？」は分かりやすいですが、少し軽く見えます。\n\n親がスマホで移動中に見ても迷わないことが大事なので、予約や雨天時も含めて判断できるカードにしたいです。"
-    ],
-    [
-        "J03-029",
-        "デザイン",
-        "User",
-        "06-09",
-        "星空科学館_v1.4原文会話",
-        "星座カードはかなり気になります。\n\nこれは単なる配布物ではなくて、家に帰ったあとに親子で空を見るきっかけになっている可能性があります。"
-    ],
-    [
-        "J03-030",
-        "デザイン",
-        "User",
-        "06-09",
-        "星空科学館_v1.4原文会話",
-        "展示がすごい、設備がすごい、という方向では大きい施設に勝てないかもしれません。\nでも、帰り道や家で子どもが空を見上げるなら、この科学館に行く意味がちゃんとある。"
-    ],
-    [
-        "J03-031",
-        "発展タスク",
-        "User",
-        "06-09",
-        "星空科学館_v1.4原文会話",
-        "ただ、これを初期の来館案内ページに全部入れると重くなるので、今回は入口に少しだけ見せたいです。\n詳しい展開は後ろに回して、発展タスクとして残したいです。"
-    ],
-    [
-        "J03-032",
-        "発展タスク",
-        "ChatGPT",
-        "06-09",
-        "星空科学館_v1.4原文会話",
-        "後続では、星座カードの持ち帰り導線、夜に親子で空を見る導線、次の観測会への再来館導線へ広げられます。"
-    ],
-    [
-        "J03-033",
-        "発展タスク",
-        "User",
-        "06-09",
-        "星空科学館_v1.4原文会話",
-        "次回は、ファーストビューと3カード文面だけでなく、星座カードをどの程度見せるかも続きで見たいです。"
-    ],
-    [
-        "J03-034",
-        "発展タスク",
-        "User",
-        "06-09",
-        "星空科学館_v1.4原文会話",
-        "雨の日シアターは雨でも行く理由になるので使いたいですが、常設かどうかは確認が必要です。\n魅力としては残しつつ、断定しない出し方にしたいです。"
-    ],
-    [
-        "J03-035",
-        "発展タスク",
-        "User",
-        "06-09",
-        "星空科学館_v1.4原文会話",
-        "発展タスクとしては、星座カードの持ち帰り導線、雨の日コース、観測会詳細ページは残したいです。"
-    ],
-    [
-        "J03-036",
-        "発展タスク",
-        "User",
-        "06-09",
-        "星空科学館_v1.4原文会話",
-        "SNSや学校連携はさらに後でいいです。\n全部を同じ後回しにすると、次に見た時にまた迷うので、体験に近いものを近い発展候補として残したいです。"
-    ]
-]
-.map((r,i)=>({id:r[0],category:r[1],speaker:r[2],date:r[3],thread:r[4],text:r[5],order:i+1}));
+  /* v810: 旧J03固定デモ候補は物理削除。
+     03は転送済みの02 annotationだけを表示する。 */
+  const demo=[];
 
   const STORAGE_KEY='kashinoki03_registered_artifacts_v1';
   function buildRegisteredPayload(){
@@ -383,7 +97,10 @@
           date:chip.date || '',
           text:chip.text || '',
           detail:chip.text || '',
-          order:chip.order || i+1
+          order:chip.order || i+1,
+          sourceAnnotationId: chip.sourceAnnotationId || chip.id || '',
+          sourceStatus: chip.sourceStatus || 'linked',
+          editorStatus: chip.editorStatus || 'active'
         }))
       };
     });
@@ -401,6 +118,7 @@
 
   let selected='A';
   let registered=false;
+  let transferReady=false;
   let rendering=false;
   let scheduledRender=0;
   let lastRenderedSignature='';
@@ -408,6 +126,12 @@
   let destIntroPlayed=false;
   let actionIntroPlayed=false;
   const esc=(v)=>String(v==null?'':v).replace(/[&<>"]/g,(c)=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  function isTransferButtonText(text){
+    const value=String(text||'').replace(/\s+/g,'');
+    return value.includes('分類チップを03へ登録') || value.includes('了承した範囲を03へ送る') || value.includes('03へ送る');
+  }
+  function markTransferReady(){ transferReady=true; window.__kashinoki03TransferReady=true; }
+  function isTransferReady(){ return transferReady===true || window.__kashinoki03TransferReady===true; }
   function pageEl(){return document.getElementById(PAGE_ID)}
   function isActive(){return !!pageEl()?.classList.contains('active')}
   function ensureTopGuide(animateIntro=false){
@@ -469,6 +193,11 @@
     const parts = String(text || '').split(/(?<=[。．.!?！？])\s*/).map(v=>v.trim()).filter(Boolean);
     return parts.length > 1 ? parts.slice(0, 4) : [normalizeSourceText(text)];
   }
+  function qualityTypeToShelfCategory(type){
+    const normalized = normalizeJ03QualityType(type);
+    if(!normalized || normalized === '会話全体') return '';
+    return qualityToShelfCategory[normalized] || (order.includes(normalized) ? normalized : '');
+  }
   function liveQuality02Chips(){
     const root = document.getElementById('portfolio-quality');
     const list = document.getElementById('captureQualityList');
@@ -483,51 +212,74 @@
       const speaker = articleSpeaker(article);
       if(ranges.length){
         ranges.forEach((range, rangeIndex)=>{
-          const category = normalizeSourceText(range?.type || '');
-          if(!category || category === '会話全体') return;
+          const qualityType = normalizeSourceText(range?.type || '');
+          const category = qualityTypeToShelfCategory(qualityType);
+          if(!category) return;
           const rawText = normalizeSourceText(range?.text || fallbackText[rangeIndex % fallbackText.length] || articleText || category);
           const fragments = splitLongSourceText(rawText);
-          fragments.forEach((fragment, fragmentIndex)=>{
+          fragments.forEach((fragment)=>{
             const text = normalizeSourceText(fragment);
             if(!text) return;
-            const order = seq++;
+            const itemOrder = seq++;
             chips.push({
-              id: `q02-live-${order}`,
+              id: `q02-live-range-${itemOrder}`,
               category,
+              qualityType,
               speaker,
-              date: '06-09',
+              date: '—',
               thread,
               text,
-              order
+              order: itemOrder
             });
           });
         });
-        return;
       }
-      Array.from(article.querySelectorAll(':scope > .kashinoki-v449-chip-row > .kashinoki-v449-chip')).forEach((chip)=>{
-        const category=(chip.getAttribute('data-quality02-chip-type') || chip.textContent || '').trim();
-        if(!category || category === '会話全体') return;
-        const id = chip.getAttribute('data-quality02-chip-id') || `q02-live-${seq}`;
+      /* v795: 手動登録チップは、旧下部 .kashinoki-v449-chip-row ではなく
+         選択行右側の .ck02-left-line-tags 配下にも入る。
+         03/A-F登録は見た目の置き場所ではなく data-quality02-chip-id/type を正本にして全チップを読む。 */
+      Array.from(article.querySelectorAll('.kashinoki-v449-chip')).forEach((chip)=>{
+        if(chip.classList.contains('kashinoki-v470-temp-chip')) return;
+        const qualityType=(chip.getAttribute('data-quality02-chip-type') || chip.textContent || '').trim();
+        const category = qualityTypeToShelfCategory(qualityType);
+        if(!category) return;
+        const id = chip.getAttribute('data-quality02-chip-id') || `q02-live-chip-${seq}`;
         const text = normalizeSourceText(chip.getAttribute('data-quality02-chip-text') || findMarkTextByChipId(list, id) || article.querySelector('p')?.textContent || article.textContent || '');
         chips.push({
-          id: id || `q02-live-${seq}`,
+          id: id || `q02-live-chip-${seq}`,
           category,
+          qualityType,
           speaker,
-          date: '06-09',
+          date: '—',
           thread,
-          text: text || category,
+          text: text || qualityType || category,
           order: seq++
         });
       });
     });
     return chips;
   }
+  function mergeJ03ChipSources(primary, secondary){
+    const merged=[];
+    const seen=new Set();
+    [primary||[], secondary||[]].forEach((source)=>{
+      source.forEach((chip)=>{
+        const key = chip.id || `${chip.category}|${chip.qualityType||''}|${chip.speaker||''}|${chip.text||''}`;
+        if(seen.has(key)) return;
+        seen.add(key);
+        merged.push(chip);
+      });
+    });
+    return merged;
+  }
   function grouped(){
     const out={}; shelves.forEach(s=>out[s.key]=[]);
-    const bridgeSource = bridgeQuality02Chips();
-    const source = bridgeSource.length ? bridgeSource : liveQuality02Chips();
-    const chips = source.length ? source : demo;
-    chips.forEach(chip=>{
+    /* v807: 03は、02下部の「分類チップを03へ登録」操作後だけ候補を表示する。
+       起動直後や左ナビから直接03へ入った場合は、旧デモ/星空科学館の固定候補を一切流し込まない。 */
+    const bridgeSource = isTransferReady() ? bridgeQuality02Chips() : [];
+    const liveSource = [];
+    const chips = mergeJ03ChipSources(bridgeSource, liveSource);
+    const source = chips;
+    source.forEach(chip=>{
       shelves.forEach(s=>{
         if(!s.cats.includes(chip.category)) return;
         if(out[s.key].some(x=>x.id===chip.id)) return;
@@ -766,7 +518,7 @@
       const countDelay=Math.round(1260 + index*120);
       return `<button type="button" class="kashinoki03-dest-button ${active?'is-active':''}" data-kashinoki03-shelf="${esc(s.key)}" data-j03-dest-item style="--j03-dest-delay:${delay}s" aria-pressed="${active?'true':'false'}"><span class="kashinoki03-dest-main"><b>${esc(s.key)} ${esc(s.title)}</b><small>${esc(shelfBreakdown(g[s.key]||[], s))}</small></span><em data-j03-count-target="${count}" data-j03-count-delay="${countDelay}">${animateDestIntro?'0':count}件</em></button>`;
     }).join('');
-    const rows=items.length?items.map(chip=>`<div class="kashinoki03-transfer-row"><span class="kashinoki03-transfer-id">${esc(chip.id)}</span><span class="kashinoki03-transfer-source">${esc(chip.thread)} / ${esc(chip.date)}</span><span class="kashinoki03-transfer-text">${esc(chip.text)}</span></div>`).join(''):`<div class="kashinoki03-empty">この送り先へ登録する候補はありません。</div>`;
+    const rows=items.length?items.map(chip=>`<div class="kashinoki03-transfer-row"><span class="kashinoki03-transfer-id">${esc(chip.id)}</span><span class="kashinoki03-transfer-source">${esc(chip.thread)} / ${esc(chip.date)}</span><span class="kashinoki03-transfer-text">${esc(chip.text)}</span></div>`).join(''):`<div class="kashinoki03-empty">${isTransferReady()?'この送り先へ登録する候補はありません。':'02下部の「分類チップを03へ登録」を押すと、ここに送り先候補を表示します。'}</div>`;
     root.innerHTML=`<div class="kashinoki03-transfer-layout" data-j03-final="true" data-j03-dest-seq-ready="true"><aside class="kashinoki03-dest-panel kashinoki-neumo-panel ${animateDestIntro?'j03-dest-run':'j03-dest-complete'}"><div class="kashinoki03-panel-head-simple"><h3 data-j03-dest-item style="--j03-dest-delay:.16s">送り先</h3><p data-j03-dest-item style="--j03-dest-delay:.40s">02で分類したチップを、A〜Fへ振り分けます。</p></div><div class="kashinoki03-dest-list">${buttons}</div><div class="kashinoki03-check-mini" data-j03-dest-item style="--j03-dest-delay:1.62s"><b>要確認</b><br><span>未分類 0 / 送り先なし 0 / 空欄 0</span></div></aside><section class="kashinoki03-list-panel kashinoki-neumo-panel ${animateDestIntro?'j03-right-run':'j03-right-complete'}"><div class="kashinoki03-list-head" data-j03-right-item style="--j03-right-delay:2.48s"><div><h3>${esc(shelf.key)} ${esc(shelf.title)}へ送る候補</h3><p>${esc(shelfBreakdown(items, shelf))} / 合計 ${items.length}件</p></div><strong data-j03-right-count="${items.length}">${animateDestIntro?'0':items.length}件</strong></div><div class="kashinoki03-transfer-table-head" data-j03-right-item style="--j03-right-delay:2.68s"><span>ID</span><span>スレッド名 / 登録日</span><span>内容</span></div><div class="kashinoki03-transfer-list" data-j03-right-item style="--j03-right-delay:2.88s">${rows}</div><div class="kashinoki03-check-mini kashinoki03-check-inline" data-j03-right-item style="--j03-right-delay:3.08s"><span>未分類 0 / 送り先なし 0 / 空欄 0</span></div>${registered?`<div class="kashinoki03-register-done"><b>A〜F登録完了</b><div>${shelves.map(s=>`<button type="button" data-kashinoki03-goal="${esc(s.page)}">${esc(s.key)}で確認</button>`).join('')}</div></div>`:''}</section></div>`;
     if(animateDestIntro){
       startDestinationIntro(root);
@@ -820,6 +572,8 @@
   window.selectKashinoKi03Shelf=function(key){selected=key||'A';registered=false;render(true);};
   window.sendKashinoKi03ToShelf=function(){saveRegisteredArtifacts(); registered=true; render(true); if(typeof window.toast==='function') window.toast('A〜Fへ登録しました。');};
   document.addEventListener('click',function(ev){
+    const transferBtn=ev.target.closest?.('button,a');
+    if(transferBtn && isTransferButtonText(transferBtn.textContent)){ markTransferReady(); }
     const shelfBtn=ev.target.closest?.('[data-kashinoki03-shelf]');
     if(shelfBtn){ev.preventDefault();ev.stopPropagation();window.selectKashinoKi03Shelf(shelfBtn.getAttribute('data-kashinoki03-shelf'));return;}
     const reg=ev.target.closest?.('[data-kashinoki03-register]');

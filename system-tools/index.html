@@ -1116,7 +1116,7 @@
 <script id="kashinoki-v787-version-sync">
 (function(){
   'use strict';
-  const VERSION='v1.0792';
+  const VERSION='v1.0817';
   function setVersion(){
     document.querySelectorAll('.side-version, #versionText, #kashinokiFixedVersionBadge, [data-version-text]').forEach(el=>{el.textContent=VERSION;});
   }
@@ -1849,186 +1849,30 @@
             <div class="workflow-brief-card kashinoki-filter-button"><span>AI前提</span><b data-quality-final="3">0</b></div>
           </div>
           <div id="captureQualityList" class="capture-quality-list presentation-chat-extract-view">
-            <div class="workflow-fulltext-layout workflow-fallback-view presentation-chat-layout">
+            <div class="workflow-fulltext-layout workflow-fallback-view presentation-chat-layout kashinoki-v719-waiting-layout">
               <div class="workflow-fulltext-card kashinoki-neumo-panel kashinoki-reveal-shell presentation-chat-card">
                 <div class="presentation-card-heading">
                   <span>ChatGPT / User</span>
-                  <h3>星空科学館 来館案内ページ改善の会話</h3>
-                  <p>表示中：星空科学館v1.4原文会話。会話内の発言そのものから、A〜Fへ残す候補を見せます。</p>
+                  <h3>会話JSONはまだ確定されていません</h3>
+                  <p>STEP 1でJSONを読み込み、下部の「中身を確かめる ➡」を押すと、このパネルへ会話本文を表示します。</p>
                 </div>
-                                <div aria-label="ChatGPTとUserの会話例" class="presentation-chat-thread">
-<article class="chat-bubble user" data-review02-class="" data-quality02-none="true">
-<label>User</label>
-<p>地方の小さな星空科学館で来館者が減っている場合、まず何を見れば原因が分かりますか。</p>
-</article>
-<article class="chat-bubble assistant" data-review02-class="課題" data-review02-classes="課題,注意・禁止" data-quality02-ranges="[{&quot;text&quot;: &quot;来る前に何を見ているか&quot;, &quot;type&quot;: &quot;課題&quot;}, {&quot;text&quot;: &quot;来た後に何が記憶に残っているか&quot;, &quot;type&quot;: &quot;課題&quot;}, {&quot;text&quot;: &quot;最初からそこへ行くと、原因確認と対策案が混ざりやすいです。&quot;, &quot;type&quot;: &quot;注意・禁止&quot;}]">
-<label>ChatGPT</label>
-<p>まずは来館者数だけでなく、「来る前に何を見ているか」と「来た後に何が記憶に残っているか」を分けて見るのがよいです。<br/>手元資料なら、古いパンフレット、来館者アンケート、イベント一覧、既存ページを確認します。<br/>可能なら問い合わせ内容や、予約前に離脱していそうな箇所も見たいです。<br/>SNS、学校連携、広告、地域イベントなども候補にはなりますが、最初からそこへ行くと、原因確認と対策案が混ざりやすいです。</p>
-</article>
-<article class="chat-bubble user" data-review02-class="意図理解" data-review02-classes="意図理解" data-quality02-ranges="[{&quot;text&quot;: &quot;手元資料から見えることに絞りたい&quot;, &quot;type&quot;: &quot;意図理解&quot;}]">
-<label>User</label>
-<p>施策案ではなく、手元資料から見えることに絞りたいです。</p>
-</article>
-<article class="chat-bubble assistant" data-review02-class="仕様" data-review02-classes="仕様,課題" data-quality02-ranges="[{&quot;text&quot;: &quot;施設側が何を伝えようとしているか&quot;, &quot;type&quot;: &quot;仕様&quot;}, {&quot;text&quot;: &quot;来館者に何が残っているか&quot;, &quot;type&quot;: &quot;仕様&quot;}, {&quot;text&quot;: &quot;来館前に判断できるか&quot;, &quot;type&quot;: &quot;仕様&quot;}, {&quot;text&quot;: &quot;伝えている内容と残っている体験がズレている&quot;, &quot;type&quot;: &quot;課題&quot;}]">
-<label>ChatGPT</label>
-<p>では、資料ごとに役割を分けて見ます。<br/>パンフレットは「施設側が何を伝えようとしているか」。<br/>アンケートは「来館者に何が残っているか」。<br/>既存ページは「来館前に判断できるか」。<br/>この3つを比べると、単なる情報不足なのか、伝えている内容と残っている体験がズレているのかを分けやすくなります。</p>
-</article>
-<article class="chat-bubble user" data-review02-class="課題" data-review02-classes="課題,引き継ぎ" data-quality02-ranges="[{&quot;text&quot;: &quot;展示名と設備説明が多い&quot;, &quot;type&quot;: &quot;課題&quot;}, {&quot;text&quot;: &quot;宇宙展示室&quot;, &quot;type&quot;: &quot;引き継ぎ&quot;}, {&quot;text&quot;: &quot;太陽系模型&quot;, &quot;type&quot;: &quot;引き継ぎ&quot;}, {&quot;text&quot;: &quot;プラネタリウム設備&quot;, &quot;type&quot;: &quot;引き継ぎ&quot;}]">
-<label>User</label>
-<p>パンフは展示名と設備説明が多いです。<br/>見出しも「宇宙展示室」「太陽系模型」「プラネタリウム設備」みたいな感じです。</p>
-</article>
-<article class="chat-bubble assistant" data-review02-class="課題" data-review02-classes="課題,デザイン,仕様" data-quality02-ranges="[{&quot;text&quot;: &quot;施設側の言葉はかなり設備寄り&quot;, &quot;type&quot;: &quot;課題&quot;}, {&quot;text&quot;: &quot;うちの子は楽しめるのか&quot;, &quot;type&quot;: &quot;デザイン&quot;}, {&quot;text&quot;: &quot;どのくらい時間がかかるのか&quot;, &quot;type&quot;: &quot;デザイン&quot;}, {&quot;text&quot;: &quot;親が判断する材料へ翻訳する必要&quot;, &quot;type&quot;: &quot;仕様&quot;}]">
-<label>ChatGPT</label>
-<p>それだと、施設側の言葉はかなり設備寄りです。<br/>悪いわけではありませんが、初めて行く親子にとっては「結局、うちの子は楽しめるのか」「どのくらい時間がかかるのか」が見えにくい可能性があります。<br/>パンフレットの情報は施設説明としては使えます。<br/>ただし来館前の入口では、展示名よりも、親が判断する材料へ翻訳する必要がありそうです。</p>
-</article>
-<article class="chat-bubble user" data-review02-class="引き継ぎ" data-review02-classes="引き継ぎ,課題" data-quality02-ranges="[{&quot;text&quot;: &quot;屋上で本物の星を見たのを子どもが帰ってから話していた&quot;, &quot;type&quot;: &quot;引き継ぎ&quot;}, {&quot;text&quot;: &quot;星座カードを家で見返していた&quot;, &quot;type&quot;: &quot;引き継ぎ&quot;}, {&quot;text&quot;: &quot;体験の方が残っている&quot;, &quot;type&quot;: &quot;課題&quot;}]">
-<label>User</label>
-<p>アンケートには「屋上で本物の星を見たのを子どもが帰ってから話していた」「星座カードを家で見返していた」みたいな回答があります。<br/>設備名より、体験の方が残っている感じがします。</p>
-</article>
-<article class="chat-bubble assistant" data-review02-class="デザイン" data-review02-classes="デザイン,発展タスク,意図理解" data-quality02-ranges="[{&quot;text&quot;: &quot;親子の会話や帰宅後の行動&quot;, &quot;type&quot;: &quot;デザイン&quot;}, {&quot;text&quot;: &quot;星座カードは持ち帰り&quot;, &quot;type&quot;: &quot;発展タスク&quot;}, {&quot;text&quot;: &quot;家に帰ってから星を見たくなる体験&quot;, &quot;type&quot;: &quot;意図理解&quot;}]">
-<label>ChatGPT</label>
-<p>そこはかなり強い材料です。<br/>来館者に残っているのは、展示名そのものではなく、親子の会話や帰宅後の行動です。<br/>屋上観測会はその場の体験、星座カードは持ち帰り、雨の日シアターは不安を覆した体験です。<br/>つまり、この科学館の価値は「展示を見る」だけではなく、家に帰ってから星を見たくなる体験にあるかもしれません。</p>
-</article>
-<article class="chat-bubble user" data-review02-class="意図理解" data-review02-classes="意図理解,課題,デザイン,仕様" data-quality02-ranges="[{&quot;text&quot;: &quot;見え方が変わります&quot;, &quot;type&quot;: &quot;意図理解&quot;}, {&quot;text&quot;: &quot;来館者の記憶はそこではない&quot;, &quot;type&quot;: &quot;課題&quot;}, {&quot;text&quot;: &quot;後に続く体験&quot;, &quot;type&quot;: &quot;デザイン&quot;}, {&quot;text&quot;: &quot;ページで最初に見せるものも変わりそう&quot;, &quot;type&quot;: &quot;仕様&quot;}]">
-<label>User</label>
-<p>ここで少し見え方が変わりますね。<br/><br/>展示物を説明する施設だと思っていましたが、来館者の記憶はそこではない気がします。<br/>屋上で星を見たことや、家でカードを見返したことが残っているなら、施設の価値は「展示物そのもの」より後に続く体験なのかもしれません。<br/><br/>そうなると、ページで最初に見せるものも変わりそうです。</p>
-</article>
-<article class="chat-bubble assistant" data-review02-class="課題" data-review02-classes="課題,仕様,デザイン" data-quality02-ranges="[{&quot;text&quot;: &quot;施設側は設備を説明している&quot;, &quot;type&quot;: &quot;課題&quot;}, {&quot;text&quot;: &quot;来館者は体験の余韻を覚えている&quot;, &quot;type&quot;: &quot;課題&quot;}, {&quot;text&quot;: &quot;価値が伝わりにくい&quot;, &quot;type&quot;: &quot;課題&quot;}, {&quot;text&quot;: &quot;行く前に分かる安心&quot;, &quot;type&quot;: &quot;仕様&quot;}, {&quot;text&quot;: &quot;行った後に残る体験&quot;, &quot;type&quot;: &quot;デザイン&quot;}]">
-<label>ChatGPT</label>
-<p>はい。そこがこの資料から見える一番大きな変化です。<br/>施設側は設備を説明している。<br/>来館者は体験の余韻を覚えている。<br/>このズレをそのまま放置すると、来館前の人には価値が伝わりにくいです。<br/>来館案内では、「行く前に分かる安心」と「行った後に残る体験」をつなげる必要があります。</p>
-</article>
-<article class="chat-bubble user" data-review02-class="課題" data-review02-classes="課題" data-quality02-ranges="[{&quot;text&quot;: &quot;星空写真と施設紹介&quot;, &quot;type&quot;: &quot;課題&quot;}, {&quot;text&quot;: &quot;展示一覧&quot;, &quot;type&quot;: &quot;課題&quot;}]">
-<label>User</label>
-<p>既存ページのスクショもあります。<br/>トップに星空写真と施設紹介があり、その下に展示一覧があります。</p>
-</article>
-<article class="chat-bubble assistant" data-review02-class="デザイン" data-review02-classes="デザイン,仕様,意図理解" data-quality02-ranges="[{&quot;text&quot;: &quot;親子連れが最初に判断したい情報&quot;, &quot;type&quot;: &quot;デザイン&quot;}, {&quot;text&quot;: &quot;今日行けるか&quot;, &quot;type&quot;: &quot;仕様&quot;}, {&quot;text&quot;: &quot;何歳から楽しめるか&quot;, &quot;type&quot;: &quot;仕様&quot;}, {&quot;text&quot;: &quot;予約が必要か&quot;, &quot;type&quot;: &quot;仕様&quot;}, {&quot;text&quot;: &quot;雨の日でも意味があるか&quot;, &quot;type&quot;: &quot;仕様&quot;}, {&quot;text&quot;: &quot;来館案内ページ&quot;, &quot;type&quot;: &quot;仕様&quot;}, {&quot;text&quot;: &quot;Webを綺麗にするためではなく、来館前の不安を減らす入口&quot;, &quot;type&quot;: &quot;意図理解&quot;}]">
-<label>ChatGPT</label>
-<p>その構成だと、雰囲気と施設説明はありますが、親子連れが最初に判断したい情報が下に埋もれている可能性があります。<br/>たとえば「今日行けるか」「何歳から楽しめるか」「予約が必要か」「雨の日でも意味があるか」がすぐ見えないと、興味はあっても候補から外れやすいです。<br/>ここで初めて、改善対象として来館案内ページが出てきます。<br/>Webを綺麗にするためではなく、来館前の不安を減らす入口として作る、という位置づけです。</p>
-</article>
-<article class="chat-bubble user" data-review02-class="AI回答改善" data-review02-classes="AI回答改善" data-quality02-ranges="[{&quot;text&quot;: &quot;AIが普通に作りそうなファーストビュー案&quot;, &quot;type&quot;: &quot;AI回答改善&quot;}, {&quot;text&quot;: &quot;よくある綺麗な星空サイト案&quot;, &quot;type&quot;: &quot;AI回答改善&quot;}]">
-<label>User</label>
-<p>一度、AIが普通に作りそうなファーストビュー案を出すとどうなりますか。<br/>あえて、よくある綺麗な星空サイト案を見てみたいです。</p>
-</article>
-<article class="chat-bubble assistant" data-review02-class="禁止失敗" data-review02-classes="禁止失敗,課題,注意・禁止" data-quality02-ranges="[{&quot;text&quot;: &quot;濃紺背景に大きな星空写真&quot;, &quot;type&quot;: &quot;禁止失敗&quot;}, {&quot;text&quot;: &quot;星降る夜に、親子で宇宙と出会う&quot;, &quot;type&quot;: &quot;禁止失敗&quot;}, {&quot;text&quot;: &quot;判断材料は後ろに回りがち&quot;, &quot;type&quot;: &quot;課題&quot;}, {&quot;text&quot;: &quot;予約・所要時間・対象年齢・雨天時案内が見つけにくくなります&quot;, &quot;type&quot;: &quot;注意・禁止&quot;}]">
-<label>ChatGPT</label>
-<p>よくある案だと、濃紺背景に大きな星空写真を敷き、白文字で「星降る夜に、親子で宇宙と出会う」などのコピーを置く構成です。<br/>その下に、施設紹介、展示一覧、イベント情報、アクセス、予約ボタンを並べる形になります。<br/>見た目は星空らしくなりますが、判断材料は後ろに回りがちです。<br/>特にスマホでは、写真とコピーが大きいほど、予約・所要時間・対象年齢・雨天時案内が見つけにくくなります。</p>
-</article>
-<article class="chat-bubble user" data-review02-class="意図理解" data-review02-classes="意図理解" data-quality02-ranges="[{&quot;text&quot;: &quot;ああ、これです。&quot;, &quot;type&quot;: &quot;意図理解&quot;}]">
-<label>User</label>
-<p>ああ、これです。</p>
-</article>
-<article class="chat-bubble assistant" data-review02-class="課題" data-review02-classes="課題,注意・禁止,AI回答改善" data-quality02-ranges="[{&quot;text&quot;: &quot;資料から見えた課題とは少しズレている&quot;, &quot;type&quot;: &quot;課題&quot;}, {&quot;text&quot;: &quot;親が最初に判断したい情報が下へ流れます&quot;, &quot;type&quot;: &quot;注意・禁止&quot;}, {&quot;text&quot;: &quot;比較対象&quot;, &quot;type&quot;: &quot;AI回答改善&quot;}]">
-<label>ChatGPT</label>
-<p>はい。見た目としては分かりやすい星空サイトですが、今回の資料から見えた課題とは少しズレている可能性があります。<br/>写真やコピーを大きく見せるほど、親が最初に判断したい情報が下へ流れます。<br/>この案を比較対象にすると、今回必要なページの方向が逆に見えやすくなります。</p>
-</article>
-<article class="chat-bubble user" data-review02-class="AI回答改善" data-review02-classes="AI回答改善,禁止失敗,デザイン,意図理解,注意・禁止" data-quality02-ranges="[{&quot;text&quot;: &quot;AIに任せると、最初にこういう絵として綺麗な方向へ行きやすい&quot;, &quot;type&quot;: &quot;AI回答改善&quot;}, {&quot;text&quot;: &quot;星空っぽい画面&quot;, &quot;type&quot;: &quot;禁止失敗&quot;}, {&quot;text&quot;: &quot;親が「今日行って大丈夫か」と判断できて&quot;, &quot;type&quot;: &quot;デザイン&quot;}, {&quot;text&quot;: &quot;その先に子どもの記憶が残る流れ&quot;, &quot;type&quot;: &quot;意図理解&quot;}, {&quot;text&quot;: &quot;星空感が悪いのではなく、順番が違う&quot;, &quot;type&quot;: &quot;デザイン&quot;}, {&quot;text&quot;: &quot;施設紹介と雰囲気だけのページに戻ってしまいます&quot;, &quot;type&quot;: &quot;注意・禁止&quot;}]">
-<label>User</label>
-<p>たぶんAIに任せると、最初にこういう絵として綺麗な方向へ行きやすいんですよね。<br/><br/>でも資料を見ると、来館者が覚えているのは「星空っぽい画面」ではなくて、屋上で本物の星を見たことや、子どもが星座カードを家で見返していたことです。<br/>綺麗な星空サイトを作る話ではなく、親が「今日行って大丈夫か」と判断できて、その先に子どもの記憶が残る流れを作る話なんだと思います。<br/><br/>星空感が悪いのではなく、順番が違う。<br/>ここを間違えると、また施設紹介と雰囲気だけのページに戻ってしまいます。</p>
-</article>
-<article class="chat-bubble assistant" data-review02-class="意図理解" data-review02-classes="意図理解,注意・禁止,仕様,デザイン" data-quality02-ranges="[{&quot;text&quot;: &quot;方向を決める軸&quot;, &quot;type&quot;: &quot;意図理解&quot;}, {&quot;text&quot;: &quot;星空演出を主役にして判断材料を後ろへ回す&quot;, &quot;type&quot;: &quot;注意・禁止&quot;}, {&quot;text&quot;: &quot;今日行けるか&quot;, &quot;type&quot;: &quot;仕様&quot;}, {&quot;text&quot;: &quot;何歳から楽しめるか&quot;, &quot;type&quot;: &quot;仕様&quot;}, {&quot;text&quot;: &quot;予約が必要か&quot;, &quot;type&quot;: &quot;仕様&quot;}, {&quot;text&quot;: &quot;雨の日でも意味があるか&quot;, &quot;type&quot;: &quot;仕様&quot;}, {&quot;text&quot;: &quot;余白、小さな星点、見出し周辺の淡い光、カード角の弱い演出&quot;, &quot;type&quot;: &quot;デザイン&quot;}, {&quot;text&quot;: &quot;見出し、判断カード、予約導線が順に出る&quot;, &quot;type&quot;: &quot;デザイン&quot;}]">
-<label>ChatGPT</label>
-<p>その整理は、このページの方向を決める軸になります。<br/>否定すべきなのは星空感ではなく、星空演出を主役にして判断材料を後ろへ回すことです。<br/>親が最初に必要とするのは、今日行けるか、何歳から楽しめるか、予約が必要か、雨の日でも意味があるかです。<br/>星空感は、余白、小さな星点、見出し周辺の淡い光、カード角の弱い演出で補助する程度が合います。<br/>アニメーションも常時流れる星ではなく、見出し、判断カード、予約導線が順に出る程度で十分です。</p>
-</article>
-<article class="chat-bubble user" data-review02-class="課題" data-review02-classes="課題,注意・禁止,仕様" data-quality02-ranges="[{&quot;text&quot;: &quot;料金・営業時間・予約方式も未確認&quot;, &quot;type&quot;: &quot;課題&quot;}, {&quot;text&quot;: &quot;AIがそれっぽく埋めると、本番文言と混ざって危ない&quot;, &quot;type&quot;: &quot;注意・禁止&quot;}, {&quot;text&quot;: &quot;確認済みなのか&quot;, &quot;type&quot;: &quot;課題&quot;}, {&quot;text&quot;: &quot;AIが埋めただけなのか&quot;, &quot;type&quot;: &quot;課題&quot;}, {&quot;text&quot;: &quot;未確認は未確認として表示したい&quot;, &quot;type&quot;: &quot;仕様&quot;}, {&quot;text&quot;: &quot;デザインの都合より優先&quot;, &quot;type&quot;: &quot;注意・禁止&quot;}]">
-<label>User</label>
-<p>料金・営業時間・予約方式も未確認です。<br/><br/>ここをAIがそれっぽく埋めると、本番文言と混ざって危ないです。<br/>仮の画面を作っているだけなのに、自然な文章として入ると、数日後に見返した時に「これは確認済みなのか」「AIが埋めただけなのか」が分からなくなる。<br/><br/>この混ざり方が一番怖いです。<br/>なので、見た目の仮案でも、未確認は未確認として表示したいです。<br/>ここはデザインの都合より優先したいです。</p>
-</article>
-<article class="chat-bubble assistant" data-review02-class="注意・禁止" data-review02-classes="注意・禁止,仕様,課題,禁止失敗" data-quality02-ranges="[{&quot;text&quot;: &quot;再発防止ルール&quot;, &quot;type&quot;: &quot;注意・禁止&quot;}, {&quot;text&quot;: &quot;確認チップを置くこと&quot;, &quot;type&quot;: &quot;仕様&quot;}, {&quot;text&quot;: &quot;3カード構成&quot;, &quot;type&quot;: &quot;仕様&quot;}, {&quot;text&quot;: &quot;スマホ1列&quot;, &quot;type&quot;: &quot;仕様&quot;}, {&quot;text&quot;: &quot;予約導線を上部と体験カード後に置く&quot;, &quot;type&quot;: &quot;仕様&quot;}, {&quot;text&quot;: &quot;料金、営業時間、休館日、予約方式、アクセス詳細、実際のイベント開催日&quot;, &quot;type&quot;: &quot;課題&quot;}, {&quot;text&quot;: &quot;予約：要確認&quot;, &quot;type&quot;: &quot;仕様&quot;}, {&quot;text&quot;: &quot;仮文言と公開文面が混ざる事故&quot;, &quot;type&quot;: &quot;禁止失敗&quot;}]">
-<label>ChatGPT</label>
-<p>そこは強い再発防止ルールとして残すべきです。<br/>確定できるのは、確認チップを置くこと、3カード構成、スマホ1列、予約導線を上部と体験カード後に置くことです。<br/>未確認として残すのは、料金、営業時間、休館日、予約方式、アクセス詳細、実際のイベント開催日です。<br/>チップ内でも「予約：要確認」「所要時間：目安掲載予定」のように、未確定であることを残します。<br/>これにより、仮文言と公開文面が混ざる事故を防げます。</p>
-</article>
-<article class="chat-bubble user" data-review02-class="仕様" data-review02-classes="仕様" data-quality02-ranges="[{&quot;text&quot;: &quot;屋上観測会・星座カード・雨の日シアター&quot;, &quot;type&quot;: &quot;仕様&quot;}]">
-<label>User</label>
-<p>屋上観測会・星座カード・雨の日シアターの扱いも少し見たいです。</p>
-</article>
-<article class="chat-bubble assistant" data-review02-class="仕様" data-review02-classes="仕様,デザイン,注意・禁止" data-quality02-ranges="[{&quot;text&quot;: &quot;体験カード&quot;, &quot;type&quot;: &quot;仕様&quot;}, {&quot;text&quot;: &quot;行けるかどうかの判断&quot;, &quot;type&quot;: &quot;デザイン&quot;}, {&quot;text&quot;: &quot;行ったら何が残るか&quot;, &quot;type&quot;: &quot;デザイン&quot;}, {&quot;text&quot;: &quot;帰ってから見返す体験&quot;, &quot;type&quot;: &quot;デザイン&quot;}, {&quot;text&quot;: &quot;断定しない見せ方&quot;, &quot;type&quot;: &quot;注意・禁止&quot;}]">
-<label>ChatGPT</label>
-<p>体験カードとして、3カードの下に置くのがよいです。<br/>上部の3カードは「行けるかどうかの判断」。<br/>その下の体験カードは「行ったら何が残るか」。<br/>屋上観測会は「本物の星を見る体験」、星座カードは「帰ってから見返す体験」、雨の日シアターは「天候が悪くても楽しめる可能性」として扱えます。<br/>ただし、それぞれ開催条件や常設かどうかは未確認なので、断定しない見せ方にします。</p>
-</article>
-<article class="chat-bubble user" data-review02-class="意図理解" data-review02-classes="意図理解,デザイン,注意・禁止,仕様,タスク" data-quality02-ranges="[{&quot;text&quot;: &quot;星座カードはかなり気になります&quot;, &quot;type&quot;: &quot;意図理解&quot;}, {&quot;text&quot;: &quot;単なる配布物ではなくて&quot;, &quot;type&quot;: &quot;デザイン&quot;}, {&quot;text&quot;: &quot;家に帰ったあとに親子で空を見るきっかけ&quot;, &quot;type&quot;: &quot;デザイン&quot;}, {&quot;text&quot;: &quot;大きな価値&quot;, &quot;type&quot;: &quot;意図理解&quot;}, {&quot;text&quot;: &quot;この科学館に行く意味がちゃんとある&quot;, &quot;type&quot;: &quot;意図理解&quot;}, {&quot;text&quot;: &quot;初期の来館案内ページに全部入れると重くなる&quot;, &quot;type&quot;: &quot;注意・禁止&quot;}, {&quot;text&quot;: &quot;入口に少しだけ見せたい&quot;, &quot;type&quot;: &quot;仕様&quot;}, {&quot;text&quot;: &quot;発展タスクとして残したい&quot;, &quot;type&quot;: &quot;タスク&quot;}]">
-<label>User</label>
-<p>星座カードはかなり気になります。<br/><br/>これは単なる配布物ではなくて、家に帰ったあとに親子で空を見るきっかけになっている可能性があります。<br/>小さい施設でも、そこまで体験が続いているなら、それは大きな価値ですよね。<br/><br/>展示がすごい、設備がすごい、という方向では大きい施設に勝てないかもしれません。<br/>でも、帰り道や家で子どもが空を見上げるなら、この科学館に行く意味がちゃんとある。<br/><br/>ただ、これを初期の来館案内ページに全部入れると重くなるので、今回は入口に少しだけ見せたいです。<br/>詳しい展開は後ろに回して、発展タスクとして残したいです。</p>
-</article>
-<article class="chat-bubble assistant" data-review02-class="仕様" data-review02-classes="仕様,タスク,デザイン,意図理解" data-quality02-ranges="[{&quot;text&quot;: &quot;今回のページに少し出す価値&quot;, &quot;type&quot;: &quot;仕様&quot;}, {&quot;text&quot;: &quot;詳しい導線は後続に回す&quot;, &quot;type&quot;: &quot;タスク&quot;}, {&quot;text&quot;: &quot;来館後も楽しめる体験がある&quot;, &quot;type&quot;: &quot;デザイン&quot;}, {&quot;text&quot;: &quot;星座カードの持ち帰り導線&quot;, &quot;type&quot;: &quot;タスク&quot;}, {&quot;text&quot;: &quot;夜に親子で空を見る導線&quot;, &quot;type&quot;: &quot;タスク&quot;}, {&quot;text&quot;: &quot;価値の芽だけ残す&quot;, &quot;type&quot;: &quot;意図理解&quot;}]">
-<label>ChatGPT</label>
-<p>その判断はかなり良いです。<br/>星座カードは、今回のページに少し出す価値がありますが、詳しい導線は後続に回すのが自然です。<br/>初期ページでは「来館後も楽しめる体験がある」と軽く見せる。<br/>後続では、星座カードの持ち帰り導線、夜に親子で空を見る導線、次の観測会への再来館導線へ広げられます。<br/>つまり、今はページを重くせず、価値の芽だけ残す扱いです。</p>
-</article>
-<article class="chat-bubble user" data-review02-class="意図理解" data-review02-classes="意図理解,デザイン,引き継ぎ" data-quality02-ranges="[{&quot;text&quot;: &quot;見え方が変わった&quot;, &quot;type&quot;: &quot;意図理解&quot;}, {&quot;text&quot;: &quot;来館前の不安を減らして&quot;, &quot;type&quot;: &quot;意図理解&quot;}, {&quot;text&quot;: &quot;館内の体験につなげて&quot;, &quot;type&quot;: &quot;意図理解&quot;}, {&quot;text&quot;: &quot;帰った後に空を見るところまで残す&quot;, &quot;type&quot;: &quot;意図理解&quot;}, {&quot;text&quot;: &quot;ただの案内ページではなくなる&quot;, &quot;type&quot;: &quot;デザイン&quot;}, {&quot;text&quot;: &quot;次回は、ファーストビューと3カード文面だけでなく、星座カードをどの程度見せるか&quot;, &quot;type&quot;: &quot;引き継ぎ&quot;}]">
-<label>User</label>
-<p>ここでやっと、この科学館の見え方が変わった気がします。<br/><br/>最初は「来館者が減っている施設をどう改善するか」くらいの話でした。<br/>でも今は、来館前の不安を減らして、館内の体験につなげて、帰った後に空を見るところまで残す話に見えてきています。<br/><br/>この変化があるから、ただの案内ページではなくなるんだと思います。<br/>次回は、ファーストビューと3カード文面だけでなく、星座カードをどの程度見せるかも続きで見たいです。</p>
-</article>
-<article class="chat-bubble assistant" data-review02-class="仕様" data-review02-classes="仕様,デザイン,意図理解" data-quality02-ranges="[{&quot;text&quot;: &quot;安心して行ける判断材料&quot;, &quot;type&quot;: &quot;仕様&quot;}, {&quot;text&quot;: &quot;屋上観測会やシアターのような体験&quot;, &quot;type&quot;: &quot;デザイン&quot;}, {&quot;text&quot;: &quot;星座カードをきっかけに親子で空を見る可能性&quot;, &quot;type&quot;: &quot;デザイン&quot;}, {&quot;text&quot;: &quot;記憶に残る体験&quot;, &quot;type&quot;: &quot;意図理解&quot;}]">
-<label>ChatGPT</label>
-<p>それはこのページの中心にしてよい考えです。<br/>来館前には、安心して行ける判断材料を出す。<br/>来館中には、屋上観測会やシアターのような体験を見せる。<br/>帰宅後には、星座カードをきっかけに親子で空を見る可能性を残す。<br/>この流れを作ると、施設の規模が小さいことを弱点として扱うのではなく、記憶に残る体験として伝えられます。</p>
-</article>
-<article class="chat-bubble user" data-review02-class="意図理解" data-review02-classes="意図理解,仕様,タスク,注意・禁止,自動化,デザイン" data-quality02-ranges="[{&quot;text&quot;: &quot;ただの会話要約ではなくなります&quot;, &quot;type&quot;: &quot;意図理解&quot;}, {&quot;text&quot;: &quot;今すぐ使うもの&quot;, &quot;type&quot;: &quot;仕様&quot;}, {&quot;text&quot;: &quot;後で広げるもの&quot;, &quot;type&quot;: &quot;タスク&quot;}, {&quot;text&quot;: &quot;AIに禁止するもの&quot;, &quot;type&quot;: &quot;注意・禁止&quot;}, {&quot;text&quot;: &quot;同じ説明を繰り返さずに済む&quot;, &quot;type&quot;: &quot;自動化&quot;}, {&quot;text&quot;: &quot;順番の違いに気づくところ&quot;, &quot;type&quot;: &quot;デザイン&quot;}, {&quot;text&quot;: &quot;未確認情報を補完しないところ&quot;, &quot;type&quot;: &quot;注意・禁止&quot;}]">
-<label>User</label>
-<p>このあたりが分けられると、ただの会話要約ではなくなりますね。<br/><br/>今すぐ使うもの、仕様にするもの、後で広げるもの、AIに禁止するものが全部混ざっています。<br/>そこを分けられるから、次に別のAIへ渡しても同じ説明を繰り返さずに済む。<br/><br/>特に、星空サイト案を一度出してから順番の違いに気づくところと、未確認情報を補完しないところは見せたいです。</p>
-</article>
-<article class="chat-bubble assistant" data-review02-class="デザイン" data-review02-classes="デザイン,注意・禁止,意図理解,仕様" data-quality02-ranges="[{&quot;text&quot;: &quot;情報の順番を判断している点&quot;, &quot;type&quot;: &quot;デザイン&quot;}, {&quot;text&quot;: &quot;それっぽい補完を防ぐ点&quot;, &quot;type&quot;: &quot;注意・禁止&quot;}, {&quot;text&quot;: &quot;次のAI作業で失敗を減らす前提作り&quot;, &quot;type&quot;: &quot;意図理解&quot;}, {&quot;text&quot;: &quot;判断・禁止・仕様・発展案&quot;, &quot;type&quot;: &quot;仕様&quot;}]">
-<label>ChatGPT</label>
-<p>その2か所は見せ場になります。<br/>1つ目は、デザインの見た目ではなく、情報の順番を判断している点。<br/>2つ目は、AIが作業中にやりがちな「それっぽい補完」を防ぐ点。<br/>この2つがあると、KashinoKiが単なる要約ツールではなく、次のAI作業で失敗を減らす前提作りのツールだと伝わります。<br/>会話の中に散らばった判断・禁止・仕様・発展案を、次に使える形へ分けられます。</p>
-</article>
-<article class="chat-bubble user" data-review02-class="タスク" data-review02-classes="タスク" data-quality02-ranges="[{&quot;text&quot;: &quot;星座カードの持ち帰り導線&quot;, &quot;type&quot;: &quot;タスク&quot;}, {&quot;text&quot;: &quot;雨の日コース&quot;, &quot;type&quot;: &quot;タスク&quot;}, {&quot;text&quot;: &quot;観測会詳細ページ&quot;, &quot;type&quot;: &quot;タスク&quot;}, {&quot;text&quot;: &quot;SNSや学校連携はさらに後でいい&quot;, &quot;type&quot;: &quot;タスク&quot;}, {&quot;text&quot;: &quot;体験に近いものを近い発展候補として残したい&quot;, &quot;type&quot;: &quot;タスク&quot;}]">
-<label>User</label>
-<p>発展タスクとしては、星座カードの持ち帰り導線、雨の日コース、観測会詳細ページは残したいです。<br/><br/>SNSや学校連携はさらに後でいいです。<br/>全部を同じ後回しにすると、次に見た時にまた迷うので、体験に近いものを近い発展候補として残したいです。</p>
-</article>
-<article class="chat-bubble assistant" data-review02-class="タスク" data-review02-classes="タスク,引き継ぎ" data-quality02-ranges="[{&quot;text&quot;: &quot;優先度を付けます&quot;, &quot;type&quot;: &quot;タスク&quot;}, {&quot;text&quot;: &quot;星座カードの持ち帰り導線、雨の日コース、観測会詳細ページ、FAQ整理&quot;, &quot;type&quot;: &quot;タスク&quot;}, {&quot;text&quot;: &quot;SNS運用、学校連携、動画、地域連携、季節イベント、親子ミッション&quot;, &quot;type&quot;: &quot;タスク&quot;}, {&quot;text&quot;: &quot;再開時に判断しやすくなります&quot;, &quot;type&quot;: &quot;引き継ぎ&quot;}]">
-<label>ChatGPT</label>
-<p>では、発展タスクにも優先度を付けます。<br/>近い発展タスクは、星座カードの持ち帰り導線、雨の日コース、観測会詳細ページ、FAQ整理。<br/>後段の発展タスクは、SNS運用、学校連携、動画、地域連携、季節イベント、親子ミッション。<br/>こう分けると、次に広げる場合も、来館案内ページから自然につながるものを先に扱えます。<br/>全部を同列で残すより、再開時に判断しやすくなります。</p>
-</article>
-<article class="chat-bubble user" data-review02-class="引き継ぎ" data-review02-classes="引き継ぎ" data-quality02-ranges="[{&quot;text&quot;: &quot;次のAIへ渡すなら最初に何を読ませるべきか&quot;, &quot;type&quot;: &quot;引き継ぎ&quot;}, {&quot;text&quot;: &quot;次回はファーストビュー案、3カード文面、星座カードの見せ方から再開したい&quot;, &quot;type&quot;: &quot;引き継ぎ&quot;}]">
-<label>User</label>
-<p>最後に、次のAIへ渡すなら最初に何を読ませるべきかも短く残してください。<br/>次回はファーストビュー案、3カード文面、星座カードの見せ方から再開したいです。</p>
-</article>
-<article class="chat-bubble assistant" data-review02-class="意図理解" data-review02-classes="意図理解,注意・禁止,デザイン,引き継ぎ" data-quality02-ranges="[{&quot;text&quot;: &quot;資料から見えることを優先&quot;, &quot;type&quot;: &quot;意図理解&quot;}, {&quot;text&quot;: &quot;SNS・広告・学校連携へ広げない&quot;, &quot;type&quot;: &quot;注意・禁止&quot;}, {&quot;text&quot;: &quot;来館前不安を減らす入口&quot;, &quot;type&quot;: &quot;意図理解&quot;}, {&quot;text&quot;: &quot;星空感は主役にせず、判断材料を先に置く&quot;, &quot;type&quot;: &quot;デザイン&quot;}, {&quot;text&quot;: &quot;AIが本番文言のように補完しない&quot;, &quot;type&quot;: &quot;注意・禁止&quot;}, {&quot;text&quot;: &quot;ファーストビュー案、3カード文面、星座カードの見せ方から再開&quot;, &quot;type&quot;: &quot;引き継ぎ&quot;}]">
-<label>ChatGPT</label>
-<p>次AIへ渡す前提は、以下です。<br/>この案件では、資料から見えることを優先し、いきなりSNS・広告・学校連携へ広げない。<br/>来館案内ページは、Webを綺麗にするためではなく、親子連れ・初回来館者の来館前不安を減らす入口として扱う。<br/>星空感は主役にせず、判断材料を先に置く。<br/>料金・営業時間・予約方式・アクセス詳細・イベント開催日は未確認のため、AIが本番文言のように補完しない。<br/>次回は、ファーストビュー案、3カード文面、星座カードの見せ方から再開する。</p>
-</article>
-</div>
+                <div class="presentation-chat-thread">
+                  <article class="chat-bubble assistant" data-quality02-none="true">
+                    <label>System</label>
+                    <p>押す前の段階では、02に本文を先読み表示しません。</p>
+                  </article>
+                </div>
               </div>
               <div class="workflow-fulltext-card kashinoki-neumo-panel kashinoki-reveal-shell presentation-extract-card">
                 <div class="presentation-card-heading">
                   <span>AI workflow Tools Extract</span>
-                  <h3>会話から拾った重要箇所</h3>
-                  <p>会話内の要望を、次に使える制作条件へ変換します。</p>
+                  <h3>確認待ち</h3>
+                  <p>01から確定された会話JSONを受け取ると、候補表示を生成します。</p>
                 </div>
                 <div class="presentation-extract-list">
-                  <div><b>資料から見える前提</b><span>パンフ・アンケート・既存ページから、施設説明と体験記憶のズレを拾う</span></div>
-                  <div><b>判断の山場</b><span>AIの普通案を比較対象にし、星空感ではなく情報順序の問題として捉える</span></div>
-                  <div><b>未確認の保護</b><span>料金・営業時間・予約方式などをAIが本番文言として補完しない</span></div>
-                  <div><b>次に渡す材料</b><span>ファーストビュー、3カード、星座カードの見せ方から再開する</span></div>
+                  <div><b>未表示</b><span>01の主操作を実行してください。</span></div>
                 </div>
               </div>
-              <aside class="workflow-range-panel workflow-side-card kashinoki-neumo-panel kashinoki-reveal-shell presentation-handoff-card">
-                <div class="presentation-card-heading">
-                  <span>活用前提</span>
-                  <h3>次AIへ渡す前提</h3>
-                  <p>この会話を、次の制作へそのまま渡せる4つの前提に変換します。</p>
-                </div>
-                <div class="presentation-handoff-stack">
-                  <section>
-                    <label>仕様</label>
-                    <b>現在有効な仕様</b>
-                    <p>親子連れが来館判断と予約方法をすぐ理解できる案内にする。</p>
-                  </section>
-                  <section>
-                    <label>禁止</label>
-                    <b>壊してはいけない条件</b>
-                    <p>展示説明を増やして予約ボタンを埋もれさせない。</p>
-                  </section>
-                  <section>
-                    <label>次</label>
-                    <b>次にやること</b>
-                    <p>冒頭コピー・見せ場・確認項目を1ページにまとめる。</p>
-                  </section>
-                  <section>
-                    <label>注意</label>
-                    <b>未確認・危険</b>
-                    <p>サンプルなのに実データや内部コード名のように見せない。</p>
-                  </section>
-                </div>
-              </aside>
             </div>
           </div>
           <div class="guided-action-slot portfolio-action kashinoki-action-panel-slot">
@@ -4241,7 +4085,7 @@
     const PORTFOLIO_DEMO_SAMPLE = PAGE_DEFINITIONS && PAGE_DEFINITIONS.PORTFOLIO_DEMO_SAMPLE;
     const PORTFOLIO_DEMO_SAMPLE_FILE = 'samples/星空科学館_来館体験と案内ページ設計_v1.4_raw_20260609.json';
     let PORTFOLIO_DEMO_RUNTIME_SAMPLE = null;
-    function currentPortfolioDemoSample() { return PORTFOLIO_DEMO_RUNTIME_SAMPLE || PORTFOLIO_DEMO_SAMPLE || { filename: '未読込', title: '星空科学館デモ', message_count: 0, user_count: 0, assistant_count: 0, candidates: [] }; }
+    function currentPortfolioDemoSample() { return PORTFOLIO_DEMO_RUNTIME_SAMPLE || PORTFOLIO_DEMO_SAMPLE || { filename: '未読込', title: 'デモ未読込', message_count: 0, user_count: 0, assistant_count: 0, candidates: [] }; }
     function normalizeFlow(flow) { return FLOW_ALIASES[flow] || flow }
     function inferRouteStep(flow, id) { const cfg = ROUTE_CONFIG[flow]; if (!cfg) return 0; for (let i = 0; i < cfg.steps.length; i++) { if ((cfg.steps[i].pages || []).includes(id)) return i + 1 } return id === flow ? 0 : ACTIVE_STEP }
     function setLocationCode(id) { const el = qs('#locationCode'), meta = PAGE_META[id]; if (el) el.textContent = meta ? meta.id : '—' }
@@ -6405,7 +6249,9 @@
       if (PORTFOLIO_DEMO_MODE) return currentPortfolioDemoSample().candidates;
       const synthetic = buildSyntheticCaptureCandidates();
       if (synthetic.length) return synthetic;
-      return PORTFOLIO_DEMO_SAMPLE && Array.isArray(currentPortfolioDemoSample().candidates) ? currentPortfolioDemoSample().candidates : [];
+      /* v809: 通常動線では旧デモ候補へフォールバックしない。
+         START/STEP1のデモ会話本文は残すが、分類済み候補として02以降へ自動流入させない。 */
+      return [];
     }
     function pContracts() { return captureCandidates().filter(c => (c.review_state || 'pending') !== 'excluded').map((c, i) => { const n = normalizeCaptureCandidate(c, i); return { label: n.source_label || n.source_contract_key, statement: n.adopted_statement || n.suggested_statement, type: n.adopted_category || n.suggested_category, candidate_id: n.capture_candidate_id, review_state: n.review_state, usable_for_current_state: n.usable_for_current_state, relation: n.relation || n.compare_relation || n.current_relation || n.existing_relation || '', compare_relation: n.compare_relation || n.relation || '', current_relation: n.current_relation || n.relation || '', evidence: n.evidence || [] } }) }
     function pMatches(use) { return pContracts().filter(x => use.types.includes(x.type)) }
@@ -6770,204 +6616,30 @@
           } catch (e) { console.warn('[v753] STEP2 underline refresh failed', e); }
         });
         return;
-        el.innerHTML = `
-
-<div class="workflow-fulltext-layout workflow-fallback-view presentation-chat-layout">
-<div class="workflow-fulltext-card kashinoki-neumo-panel kashinoki-reveal-shell presentation-chat-card">
-<div class="presentation-card-heading">
-<span>ChatGPT / User</span>
-<h3>星空科学館 来館案内ページ改善の会話</h3>
-<p>表示中：星空科学館v1.4原文会話。会話内の発言そのものから、A〜Fへ残す候補を見せます。</p>
-</div>
-<div aria-label="ChatGPTとUserの会話例" class="presentation-chat-thread">
-<article class="chat-bubble user" data-review02-class="" data-quality02-none="true">
-<label>User</label>
-<p>地方の小さな星空科学館で来館者が減っている場合、まず何を見れば原因が分かりますか。</p>
-</article>
-<article class="chat-bubble assistant" data-review02-class="" data-quality02-none="true">
-<label>ChatGPT</label>
-<p>まずは来館者数だけでなく、「来る前に何を見ているか」と「来た後に何が記憶に残っているか」を分けて見るのがよいです。<br/>手元資料なら、古いパンフレット、来館者アンケート、イベント一覧、既存ページを確認します。<br/>可能なら問い合わせ内容や、予約前に離脱していそうな箇所も見たいです。<br/>SNS、学校連携、広告、地域イベントなども候補にはなりますが、最初からそこへ行くと、原因確認と対策案が混ざりやすいです。</p>
-</article>
-<article class="chat-bubble user" data-review02-class="" data-quality02-none="true">
-<label>User</label>
-<p>施策案ではなく、手元資料から見えることに絞りたいです。</p>
-</article>
-<article class="chat-bubble assistant" data-review02-class="" data-quality02-none="true">
-<label>ChatGPT</label>
-<p>では、資料ごとに役割を分けて見ます。<br/>パンフレットは「施設側が何を伝えようとしているか」。<br/>アンケートは「来館者に何が残っているか」。<br/>既存ページは「来館前に判断できるか」。<br/>この3つを比べると、単なる情報不足なのか、伝えている内容と残っている体験がズレているのかを分けやすくなります。</p>
-</article>
-<article class="chat-bubble user" data-review02-class="" data-quality02-none="true">
-<label>User</label>
-<p>アンケートには「屋上で本物の星を見たのを子どもが帰ってから話していた」「星座カードを家で見返していた」みたいな回答があります。<br/>設備名より、体験の方が残っている感じがします。</p>
-</article>
-<article class="chat-bubble assistant" data-review02-class="" data-quality02-none="true">
-<label>ChatGPT</label>
-<p>そこはかなり強い材料です。<br/>来館者に残っているのは、展示名そのものではなく、親子の会話や帰宅後の行動です。<br/>屋上観測会はその場の体験、星座カードは持ち帰り、雨の日シアターは不安を覆した体験です。<br/>つまり、この科学館の価値は「展示を見る」だけではなく、家に帰ってから星を見たくなる体験にあるかもしれません。</p>
-</article>
-<article class="chat-bubble user" data-review02-class="" data-quality02-none="true">
-<label>User</label>
-<p>ここで少し見え方が変わりますね。<br/><br/>展示物を説明する施設だと思っていましたが、来館者の記憶はそこではない気がします。<br/>屋上で星を見たことや、家でカードを見返したことが残っているなら、施設の価値は「展示物そのもの」より後に続く体験なのかもしれません。<br/><br/>そうなると、ページで最初に見せるものも変わりそうです。</p>
-</article>
-<article class="chat-bubble assistant" data-review02-class="" data-quality02-none="true">
-<label>ChatGPT</label>
-<p>はい。そこがこの資料から見える一番大きな変化です。<br/>施設側は設備を説明している。<br/>来館者は体験の余韻を覚えている。<br/>このズレをそのまま放置すると、来館前の人には価値が伝わりにくいです。<br/>来館案内では、「行く前に分かる安心」と「行った後に残る体験」をつなげる必要があります。</p>
-</article>
-<article class="chat-bubble user" data-review02-class="" data-quality02-none="true">
-<label>User</label>
-<p>一度、AIが普通に作りそうなファーストビュー案を出すとどうなりますか。<br/>あえて、よくある綺麗な星空サイト案を見てみたいです。</p>
-</article>
-<article class="chat-bubble assistant" data-review02-class="" data-quality02-none="true">
-<label>ChatGPT</label>
-<p>よくある案だと、濃紺背景に大きな星空写真を敷き、白文字で「星降る夜に、親子で宇宙と出会う」などのコピーを置く構成です。<br/>その下に、施設紹介、展示一覧、イベント情報、アクセス、予約ボタンを並べる形になります。<br/>見た目は星空らしくなりますが、判断材料は後ろに回りがちです。<br/>特にスマホでは、写真とコピーが大きいほど、予約・所要時間・対象年齢・雨天時案内が見つけにくくなります。</p>
-</article>
-<article class="chat-bubble user" data-review02-class="" data-quality02-none="true">
-<label>User</label>
-<p>ああ、これです。</p>
-</article>
-<article class="chat-bubble assistant" data-review02-class="" data-quality02-none="true">
-<label>ChatGPT</label>
-<p>はい。見た目としては分かりやすい星空サイトですが、今回の資料から見えた課題とは少しズレている可能性があります。<br/>写真やコピーを大きく見せるほど、親が最初に判断したい情報が下へ流れます。<br/>この案を比較対象にすると、今回必要なページの方向が逆に見えやすくなります。</p>
-</article>
-<article class="chat-bubble user" data-review02-class="" data-quality02-none="true">
-<label>User</label>
-<p>たぶんAIに任せると、最初にこういう絵として綺麗な方向へ行きやすいんですよね。<br/><br/>でも資料を見ると、来館者が覚えているのは「星空っぽい画面」ではなくて、屋上で本物の星を見たことや、子どもが星座カードを家で見返していたことです。<br/>綺麗な星空サイトを作る話ではなく、親が「今日行って大丈夫か」と判断できて、その先に子どもの記憶が残る流れを作る話なんだと思います。<br/><br/>星空感が悪いのではなく、順番が違う。<br/>ここを間違えると、また施設紹介と雰囲気だけのページに戻ってしまいます。</p>
-</article>
-<article class="chat-bubble assistant" data-review02-class="" data-quality02-none="true">
-<label>ChatGPT</label>
-<p>その整理は、このページの方向を決める軸になります。<br/>否定すべきなのは星空感ではなく、星空演出を主役にして判断材料を後ろへ回すことです。<br/>親が最初に必要とするのは、今日行けるか、何歳から楽しめるか、予約が必要か、雨の日でも意味があるかです。<br/>星空感は、余白、小さな星点、見出し周辺の淡い光、カード角の弱い演出で補助する程度が合います。<br/>アニメーションも常時流れる星ではなく、見出し、判断カード、予約導線が順に出る程度で十分です。</p>
-</article>
-<article class="chat-bubble user" data-review02-class="" data-quality02-none="true">
-<label>User</label>
-<p>料金・営業時間・予約方式も未確認です。<br/><br/>ここをAIがそれっぽく埋めると、本番文言と混ざって危ないです。<br/>仮の画面を作っているだけなのに、自然な文章として入ると、数日後に見返した時に「これは確認済みなのか」「AIが埋めただけなのか」が分からなくなる。<br/><br/>この混ざり方が一番怖いです。<br/>なので、見た目の仮案でも、未確認は未確認として表示したいです。<br/>ここはデザインの都合より優先したいです。</p>
-</article>
-<article class="chat-bubble assistant" data-review02-class="" data-quality02-none="true">
-<label>ChatGPT</label>
-<p>そこは強い再発防止ルールとして残すべきです。<br/>確定できるのは、確認チップを置くこと、3カード構成、スマホ1列、予約導線を上部と体験カード後に置くことです。<br/>未確認として残すのは、料金、営業時間、休館日、予約方式、アクセス詳細、実際のイベント開催日です。<br/>チップ内でも「予約：要確認」「所要時間：目安掲載予定」のように、未確定であることを残します。<br/>これにより、仮文言と公開文面が混ざる事故を防げます。</p>
-</article>
-<article class="chat-bubble user" data-review02-class="" data-quality02-none="true">
-<label>User</label>
-<p>星座カードはかなり気になります。<br/><br/>これは単なる配布物ではなくて、家に帰ったあとに親子で空を見るきっかけになっている可能性があります。<br/>小さい施設でも、そこまで体験が続いているなら、それは大きな価値ですよね。<br/><br/>展示がすごい、設備がすごい、という方向では大きい施設に勝てないかもしれません。<br/>でも、帰り道や家で子どもが空を見上げるなら、この科学館に行く意味がちゃんとある。<br/><br/>ただ、これを初期の来館案内ページに全部入れると重くなるので、今回は入口に少しだけ見せたいです。<br/>詳しい展開は後ろに回して、発展タスクとして残したいです。</p>
-</article>
-<article class="chat-bubble assistant" data-review02-class="" data-quality02-none="true">
-<label>ChatGPT</label>
-<p>その判断はかなり良いです。<br/>星座カードは、今回のページに少し出す価値がありますが、詳しい導線は後続に回すのが自然です。<br/>初期ページでは「来館後も楽しめる体験がある」と軽く見せる。<br/>後続では、星座カードの持ち帰り導線、夜に親子で空を見る導線、次の観測会への再来館導線へ広げられます。<br/>つまり、今はページを重くせず、価値の芽だけ残す扱いです。</p>
-</article>
-<article class="chat-bubble user" data-review02-class="" data-quality02-none="true">
-<label>User</label>
-<p>ここでやっと、この科学館の見え方が変わった気がします。<br/><br/>最初は「来館者が減っている施設をどう改善するか」くらいの話でした。<br/>でも今は、来館前の不安を減らして、館内の体験につなげて、帰った後に空を見るところまで残す話に見えてきています。<br/><br/>この変化があるから、ただの案内ページではなくなるんだと思います。<br/>次回は、ファーストビューと3カード文面だけでなく、星座カードをどの程度見せるかも続きで見たいです。</p>
-</article>
-<article class="chat-bubble assistant" data-review02-class="" data-quality02-none="true">
-<label>ChatGPT</label>
-<p>それはこのページの中心にしてよい考えです。<br/>来館前には、安心して行ける判断材料を出す。<br/>来館中には、屋上観測会やシアターのような体験を見せる。<br/>帰宅後には、星座カードをきっかけに親子で空を見る可能性を残す。<br/>この流れを作ると、施設の規模が小さいことを弱点として扱うのではなく、記憶に残る体験として伝えられます。</p>
-</article>
-<article class="chat-bubble user" data-review02-class="" data-quality02-none="true">
-<label>User</label>
-<p>このあたりが分けられると、ただの会話要約ではなくなりますね。<br/><br/>今すぐ使うもの、仕様にするもの、後で広げるもの、AIに禁止するものが全部混ざっています。<br/>そこを分けられるから、次に別のAIへ渡しても同じ説明を繰り返さずに済む。<br/><br/>特に、星空サイト案を一度出してから順番の違いに気づくところと、未確認情報を補完しないところは見せたいです。</p>
-</article>
-<article class="chat-bubble assistant" data-review02-class="" data-quality02-none="true">
-<label>ChatGPT</label>
-<p>その2か所は見せ場になります。<br/>1つ目は、デザインの見た目ではなく、情報の順番を判断している点。<br/>2つ目は、AIが作業中にやりがちな「それっぽい補完」を防ぐ点。<br/>この2つがあると、KashinoKiが単なる要約ツールではなく、次のAI作業で失敗を減らす前提作りのツールだと伝わります。<br/>会話の中に散らばった判断・禁止・仕様・発展案を、次に使える形へ分けられます。</p>
-</article>
-<article class="chat-bubble user" data-review02-class="" data-quality02-none="true">
-<label>User</label>
-<p>発展タスクとしては、星座カードの持ち帰り導線、雨の日コース、観測会詳細ページは残したいです。<br/><br/>SNSや学校連携はさらに後でいいです。<br/>全部を同じ後回しにすると、次に見た時にまた迷うので、体験に近いものを近い発展候補として残したいです。</p>
-</article>
-<article class="chat-bubble assistant" data-review02-class="" data-quality02-none="true">
-<label>ChatGPT</label>
-<p>では、発展タスクにも優先度を付けます。<br/>近い発展タスクは、星座カードの持ち帰り導線、雨の日コース、観測会詳細ページ、FAQ整理。<br/>後段の発展タスクは、SNS運用、学校連携、動画、地域連携、季節イベント、親子ミッション。<br/>こう分けると、次に広げる場合も、来館案内ページから自然につながるものを先に扱えます。<br/>全部を同列で残すより、再開時に判断しやすくなります。</p>
-</article>
-</div>
-</div>
-<div class="workflow-fulltext-card kashinoki-neumo-panel kashinoki-reveal-shell presentation-extract-card">
-<div class="presentation-card-heading">
-<span>AI workflow Tools Extract</span>
-<h3>会話から拾った重要箇所</h3>
-<p>会話内の要望を、次に使える制作条件へ変換します。</p>
-</div>
-<div class="presentation-extract-list">
-<div><b>資料から見える前提</b><span>パンフ・アンケート・既存ページから、施設説明と体験記憶のズレを拾う</span></div>
-<div><b>判断の山場</b><span>AIの普通案を比較対象にし、星空感ではなく情報順序の問題として捉える</span></div>
-<div><b>未確認の保護</b><span>料金・営業時間・予約方式などをAIが本番文言として補完しない</span></div>
-<div><b>次に渡す材料</b><span>ファーストビュー、3カード、星座カードの見せ方から再開する</span></div>
-</div>
-</div>
-<aside class="workflow-range-panel workflow-side-card kashinoki-neumo-panel kashinoki-reveal-shell presentation-handoff-card">
-<div class="presentation-card-heading">
-<span>活用前提</span>
-<h3>次AIへ渡す前提</h3>
-<p>この会話を、次の制作へそのまま渡せる4つの前提に変換します。</p>
-</div>
-<div class="presentation-handoff-stack">
-<section>
-<label>仕様</label>
-<b>現在有効な仕様</b>
-<p>親子連れが来館判断と予約方法をすぐ理解できる案内にする。</p>
-</section>
-<section>
-<label>禁止</label>
-<b>壊してはいけない条件</b>
-<p>展示説明を増やして予約ボタンを埋もれさせない。</p>
-</section>
-<section>
-<label>次</label>
-<b>次にやること</b>
-<p>冒頭コピー・見せ場・確認項目を1ページにまとめる。</p>
-</section>
-<section>
-<label>注意</label>
-<b>未確認・危険</b>
-<p>サンプルなのに実データや内部コード名のように見せない。</p>
-</section>
-</div>
-</aside>
-</div>
-
-`;
+      }
+      const committedSample = activePortfolioChatExportSample();
+      const jsonChatHtml = committedSample ? renderChatExportQualityView(committedSample) : '';
+      if (!jsonChatHtml) {
+        if (sum) {
+          sum.removeAttribute('data-quality02-summary-owner');
+          sum.removeAttribute('data-quality02-count-controller');
+          sum.innerHTML = renderPortfolioQualityPendingSummary();
+        }
+        el.innerHTML = renderPortfolioQualityEmptyState();
         return;
       }
-      const items = captureCandidates();
-      const fallback = [{ suggested_statement: '仕様が未確定のまま進めない', review_state: 'pending' }, { suggested_statement: '会話・指示・判断・失敗要因を回収する', review_state: 'pending' }, { suggested_statement: '次のAI作業へ渡す前提を整える', review_state: 'pending' }];
-      const base = items.length ? items : fallback;
-      const counts = computeQualityFilterCounts(base);
-      const filter = window.kashinokiQualityFilter || 'all';
-      const defs = [['all', '会話', counts.all], ['approved', '重要箇所', counts.approved], ['needs', '改善条件', counts.needs], ['excluded', 'AI前提', counts.excluded]];
-      if (sum)
-      {
-        const isCounting = typeof window.isQualityCountsActive === 'function' && window.isQualityCountsActive();
-        const buttons = Array.from(sum.querySelectorAll('.workflow-brief-card.kashinoki-filter-button'));
-        if (isCounting && buttons.length === defs.length)
-        {
-          defs.forEach(([key, label], index) => {
-            const btn = buttons[index];
-            if (!btn) return;
-            const selected = filter === key;
-            btn.classList.toggle('is-active', selected);
-            btn.classList.toggle('is-selected', selected);
-            btn.setAttribute('aria-pressed', selected ? 'true' : 'false');
-            btn.setAttribute('onclick', `setQualityFilter('${key}')`);
-            btn.setAttribute('title', `${label}だけ表示`);
-            const span = btn.querySelector('span');
-            if (span) span.textContent = label;
-          });
-        } else {
-          sum.innerHTML = defs.map(([key, label, num]) => `<button type="button" class="workflow-brief-card kashinoki-filter-button ${filter === key ? 'is-active is-selected' : ''}" onclick="setQualityFilter('${key}')" aria-pressed="${filter === key ? 'true' : 'false'}" title="${label}だけ表示"><span>${label}</span><b>${num}</b></button>`).join('');
-        }
-      }
-      const filtered = base.filter(c => filter === 'all' || captureCandidateStatusKind(c) === filter);
-      const filterLabel = (defs.find(d => d[0] === filter) || defs[0])[1];
-      const rangeCards = (filtered.length ? filtered : []).slice(0, 80).map((c, i) => {
-        const st = c.review_state || '未確認'; const kind = captureCandidateStatusKind(c); const text = c.suggested_statement || c.adopted_statement || '候補範囲';
-        const rawEvidence = String(evidenceText(c) || '').split('\n').map(v => v.trim()).filter(Boolean).join(' ');
-        const normalizedText = String(text || '').replace(/\s+/g, ' ').trim();
-        const normalizedEvidence = rawEvidence.replace(/\s+/g, ' ').trim();
-        const evidence = normalizedEvidence && normalizedEvidence !== normalizedText ? `${normalizedEvidence.slice(0, 110)}…` : '候補文と同一範囲のため、公開デモでは重複表示を省略しています。';
-        const statusLabel = kind === 'approved' ? '了承済み' : kind === 'needs' ? '要修正' : kind === 'excluded' ? '除外' : (st === 'pending' ? '未確認' : st);
-        const marker = kind === 'approved' ? '<span class="workflow-chip ok workflow-mini-marker">✓</span>' : '';
-        const absoluteIndex = Math.max(1, base.indexOf(c) + 1);
-        return `<article class="workflow-range-item kashinoki-reveal-item ${kind === 'approved' ? 'is-approved' : ''}"><button type="button" class="workflow-range-summary" onclick="toggleWorkflowRangeCard(this)"><div class="workflow-card-meta"><span class="workflow-chip workflow-sequence-chip">表示 ${i + 1}/${filtered.length}</span><span class="workflow-chip">候補 ${absoluteIndex}</span><span class="workflow-chip ${kind === 'approved' ? 'ok' : kind === 'needs' ? 'warn' : kind === 'excluded' ? 'bad' : ''}">${esc(statusLabel)}</span>${marker}</div><h4>${esc(text)}</h4></button><div class="workflow-range-body"><p>${esc(evidence)}</p><div class="workflow-range-actions"><button class="btn secondary" onclick="${c.capture_candidate_id ? `reviewCaptureCandidate('${c.capture_candidate_id}','edited_approved')` : `toast('Sample候補です。')`}">${kind === 'approved' ? '了承済み' : '了承'}</button><button class="btn hold" onclick="${c.capture_candidate_id ? `reviewCaptureCandidate('${c.capture_candidate_id}','insufficient_evidence')` : `toast('範囲修正の表示例です。')`}">範囲を修正</button><button class="btn danger" onclick="${c.capture_candidate_id ? `reviewCaptureCandidate('${c.capture_candidate_id}','excluded')` : `toast('除外の表示例です。')`}">除外</button></div></div></article>`
-      }).join('');
-      const empty = `<div class="capture-state-empty">${esc(filterLabel)}に該当する候補はありません。上のボタンで表示対象を切り替えられます。</div>`;
-      el.innerHTML = `<div class="workflow-fulltext-layout"><div class="workflow-fulltext-card kashinoki-neumo-panel kashinoki-reveal-shell"><h3>候補範囲サマリー</h3><p>公開デモでは、取り込んだ候補全文を左側に大量表示しません。候補文と根拠範囲が同一の場合は重複表示を省略し、次に確認すべき単位だけを表示します。</p><div class="workflow-fulltext-box is-full-source">${renderWorkflowCandidateDigest(base, filtered, filterLabel)}</div></div><aside class="workflow-range-panel workflow-side-card kashinoki-neumo-panel kashinoki-reveal-shell"><h3>候補範囲の確認</h3><p>登録候補・了承済み・要修正・除外のボタンで表示対象を絞り込みます。</p><p class="workflow-filter-note">現在表示: <b>${esc(filterLabel)}</b> / ${filtered.length}件</p><div class="workflow-range-scroll"><div class="workflow-range-list">${rangeCards || empty}</div></div></aside></div>`;
+      el.className = 'capture-quality-list presentation-chat-extract-view';
+      el.innerHTML = jsonChatHtml;
+      requestAnimationFrame(() => {
+        try {
+          if (typeof window.renderAllQuality02UnderlineLayers === 'function') {
+            window.renderAllQuality02UnderlineLayers(el);
+          }
+        } catch (e) { console.warn('[v797] STEP2 underline refresh failed', e); }
+      });
+      return;
+      // 会話JSON未確定時は renderPortfolioQualityEmptyState() の待機表示、
+      // 確定時は renderChatExportQualityView() + classification-bridge-02 の分類反映に統一する。
     }
 
 
@@ -7003,303 +6675,20 @@
       return 'タスク';
     }
     function kashinoki03DemoChips() {
-          const thread = '星空科学館_来館体験と案内ページ設計_v1.4';
-          const rows = [
-            [
-                    "J03-001",
-                    "意図理解",
-                    "User",
-                    "06-09",
-                    "この案件では、最初からSNS・広告・学校連携などの施策案へ広げず、まず古いパンフレット、来館者アンケート、イベント一覧、既存ページから見える原因を優先する。",
-                    "施策案ではなく、手元資料から見えることに絞りたいです。"
-            ],
-            [
-                    "J03-002",
-                    "意図理解",
-                    "User",
-                    "06-09",
-                    "来館案内ページは、Webを綺麗にするためではなく、親子連れ・初回来館者が来館前の不安を減らし、行けるか判断するための入口として扱う。",
-                    "Webを綺麗にするためではなく、来館前の不安を減らす入口として作る。"
-            ],
-            [
-                    "J03-003",
-                    "意図理解",
-                    "User",
-                    "06-09",
-                    "星空感は否定しないが主役にしない。親が必要とする判断材料を先に置き、星空らしさは余白、小さな星点、淡い光、カード角の弱い演出で補助する。",
-                    "星空感が悪いのではなく、順番が違う。"
-            ],
-            [
-                    "J03-004",
-                    "AI回答改善",
-                    "ChatGPT",
-                    "06-09",
-                    "料金、営業時間、休館日、予約方式、アクセス詳細、イベント開催日は未確認のため、AIが自然な本番文言として補完しない。",
-                    "ここをAIがそれっぽく埋めると、本番文言と混ざって危ないです。"
-            ],
-            [
-                    "J03-005",
-                    "意図理解",
-                    "User",
-                    "06-09",
-                    "この科学館の価値は、展示設備の大きさではなく、帰宅後に親子で空を見るきっかけが残る体験にある可能性がある。",
-                    "家に帰ったあとに親子で空を見るきっかけになっている可能性があります。"
-            ],
-            [
-                    "J03-006",
-                    "引き継ぎ",
-                    "User",
-                    "06-09",
-                    "確認済み資料は、古いパンフレット、来館者アンケート、イベント一覧、既存ページスクリーンショット。",
-                    "古いパンフレット、来館者アンケート、イベント一覧、既存ページを確認します。"
-            ],
-            [
-                    "J03-007",
-                    "引き継ぎ",
-                    "User",
-                    "06-09",
-                    "パンフレットは「宇宙展示室」「太陽系模型」「プラネタリウム設備」など展示名・設備説明が中心。一方、アンケートでは屋上観測会、星座カード、雨の日シアターが記憶に残っていた。",
-                    "パンフは展示名と設備説明が多いです。"
-            ],
-            [
-                    "J03-008",
-                    "引き継ぎ",
-                    "User",
-                    "06-09",
-                    "最初は来館者減少の改善相談だったが、会話を通じて「来館前の不安を減らし、館内体験につなげ、帰宅後に空を見るところまで残す」設計へ見え方が変わった。",
-                    "ここでやっと、この科学館の見え方が変わった気がします。"
-            ],
-            [
-                    "J03-009",
-                    "引き継ぎ",
-                    "User",
-                    "06-09",
-                    "料金、営業時間、休館日、予約方式、アクセス詳細、実際のイベント開催日、屋上観測会や雨の日シアターの開催条件は未確認。",
-                    "料金・営業時間・予約方式も未確認です。"
-            ],
-            [
-                    "J03-010",
-                    "引き継ぎ",
-                    "User",
-                    "06-09",
-                    "次回は、ファーストビュー案、3カード文面、星座カードの見せ方から再開する。",
-                    "次回はファーストビュー案、3カード文面、星座カードの見せ方から再開したいです。"
-            ],
-            [
-                    "J03-011",
-                    "仕様",
-                    "ChatGPT",
-                    "06-09",
-                    "来館案内ページの目的は、親子連れ・初回来館者が30秒以内に「今日行けるか」「何歳から楽しめるか」「どれくらい時間がかかるか」「予約が必要か」「雨の日でも意味があるか」を判断できること。",
-                    "目的は、親子連れ・初回来館者が30秒以内に行けるか判断できること。"
-            ],
-            [
-                    "J03-012",
-                    "仕様",
-                    "ChatGPT",
-                    "06-09",
-                    "ファーストビューは、見出し、確認チップ、3カード、予約導線の順で構成する。",
-                    "来館案内ページの最初は、見出し、確認チップ、3カードの順が良さそうです。"
-            ],
-            [
-                    "J03-013",
-                    "仕様",
-                    "ChatGPT",
-                    "06-09",
-                    "確認チップには、対象年齢、所要時間、予約、雨天時を置く。未確認項目には「要確認」や「目安掲載予定」を残す。",
-                    "チップ内でも「予約：要確認」「所要時間：目安掲載予定」のように、未確定であることを残します。"
-            ],
-            [
-                    "J03-014",
-                    "仕様",
-                    "ChatGPT",
-                    "06-09",
-                    "3カードは「今日行ける？」「何歳から楽しめる？」「どれくらい時間がかかる？」を基本にする。",
-                    "3カードは「今日行ける？」「何歳から楽しめる？」「どれくらい時間がかかる？」を候補にできます。"
-            ],
-            [
-                    "J03-015",
-                    "仕様",
-                    "ChatGPT",
-                    "06-09",
-                    "「今日行ける？」は開館日・予約要否・雨天時、「何歳から楽しめる？」は対象年齢・子どもの反応、「どれくらい時間がかかる？」は通常見学と観測会ありの日の違いを扱う。",
-                    "軽い言葉に見えても、中身は実用に寄せたいです。"
-            ],
-            [
-                    "J03-016",
-                    "仕様",
-                    "ChatGPT",
-                    "06-09",
-                    "PCでは3カード横並び、スマホでは1列表示にする。本文は15px未満にせず、カード説明は2行以内、詳細リンクは各カード1つまでに抑える。",
-                    "PCでは3カード横並び、スマホでは1列。"
-            ],
-            [
-                    "J03-017",
-                    "仕様",
-                    "ChatGPT",
-                    "06-09",
-                    "3カードの下に、屋上観測会、星座カード、雨の日シアターの体験カードを置く。ただし開催条件や常設性が未確認のものは断定しない。",
-                    "体験カードとして、3カードの下に置くのがよいです。"
-            ],
-            [
-                    "J03-018",
-                    "仕様",
-                    "ChatGPT",
-                    "06-09",
-                    "予約導線は、ページ上部と体験カード後の2か所に置く。",
-                    "予約導線を上部と体験カード後に置くことです。"
-            ],
-            [
-                    "J03-019",
-                    "禁止失敗",
-                    "User",
-                    "06-09",
-                    "来館者減少の原因確認前に、SNS運用、広告、学校連携、地域連携などの施策案を大量に出して、原因確認を曖昧にしない。",
-                    "最初からSNSや広告施策へ行くと、原因確認と対策案が混ざりやすいです。"
-            ],
-            [
-                    "J03-020",
-                    "禁止失敗",
-                    "User",
-                    "06-09",
-                    "濃紺背景、大きな星空写真、白文字の幻想コピー、常時流れる星演出を主役に戻さない。",
-                    "よくある案だと、濃紺背景に大きな星空写真を敷き、白文字でコピーを置く構成です。"
-            ],
-            [
-                    "J03-021",
-                    "禁止失敗",
-                    "User",
-                    "06-09",
-                    "来館前の判断材料より先に、施設紹介や展示名の羅列を中心にしない。",
-                    "トップに星空写真と施設紹介があり、その下に展示一覧があります。"
-            ],
-            [
-                    "J03-022",
-                    "禁止失敗",
-                    "User",
-                    "06-09",
-                    "料金、営業時間、予約方式、アクセス詳細、イベント開催日をAIがそれらしい公開文面として補完しない。",
-                    "仮の画面を作っているだけなのに、自然な文章として入ると確認済みか分からなくなる。"
-            ],
-            [
-                    "J03-023",
-                    "禁止失敗",
-                    "User",
-                    "06-09",
-                    "仮段階の文言と、施設確認後に公開する本番文言を混ぜない。未確認情報は要確認表示を残す。",
-                    "未確認は未確認として表示したいです。"
-            ],
-            [
-                    "J03-024",
-                    "禁止失敗",
-                    "User",
-                    "06-09",
-                    "屋上観測会や雨の日シアターを、毎日または常時体験できるものとして断定しない。",
-                    "観測会は毎日ではなく月数回のようです。雨の日シアターも常設かは分かりません。"
-            ],
-            [
-                    "J03-025",
-                    "デザイン",
-                    "User",
-                    "06-09",
-                    "親が最初に見たいのは綺麗なコピーではなく、今日行けるかどうか。情緒コピーより来館判断カードを先に置く。",
-                    "親が「今日行って大丈夫か」と判断できて、その先に子どもの記憶が残る流れを作る話。"
-            ],
-            [
-                    "J03-026",
-                    "デザイン",
-                    "User",
-                    "06-09",
-                    "星空感は背景全面ではなく、余白、小さな星点、見出し周辺の淡い光、カード角の弱い演出で補助する。",
-                    "星空感は、余白、小さな星点、見出し周辺の淡い光、カード角の弱い演出で補助します。"
-            ],
-            [
-                    "J03-027",
-                    "デザイン",
-                    "User",
-                    "06-09",
-                    "アニメーションは常時装飾ではなく、見出し、判断カード、予約導線が順に出る程度の視線誘導として使う。",
-                    "アニメーションも常時流れる星ではなく、見出し、判断カード、予約導線が順に出る程度で十分です。"
-            ],
-            [
-                    "J03-028",
-                    "デザイン",
-                    "User",
-                    "06-09",
-                    "スマホでは1列にし、見出し、短い説明、確認リンクの順で表示する。移動中でも読めることを優先する。",
-                    "親がスマホで移動中に見ても迷わないことが大事。"
-            ],
-            [
-                    "J03-029",
-                    "デザイン",
-                    "User",
-                    "06-09",
-                    "星座カードは単なる配布物ではなく、帰宅後に親子で空を見るきっかけとして扱う。",
-                    "これは単なる配布物ではなくて、家に帰ったあとに親子で空を見るきっかけになっている可能性があります。"
-            ],
-            [
-                    "J03-030",
-                    "デザイン",
-                    "User",
-                    "06-09",
-                    "施設の価値は、大きな展示設備ではなく、来館前の安心、館内体験、帰宅後に空を見る記憶の流れとして見せる。",
-                    "帰り道や家で子どもが空を見上げるなら、この科学館に行く意味がちゃんとある。"
-            ],
-            [
-                    "J03-031",
-                    "自動化",
-                    "User",
-                    "06-09",
-                    "星座カードの持ち帰り導線は、帰宅後に親子で空を見る体験や、次の観測会への再来館導線へ広げられる。",
-                    "詳しい展開は後ろに回して、発展タスクとして残したいです。"
-            ],
-            [
-                    "J03-032",
-                    "自動化",
-                    "User",
-                    "06-09",
-                    "雨の日シアターは、施設確認後に常設性や開催条件が分かれば、雨の日コースやFAQへ発展できる。",
-                    "雨の日シアターは雨でも行く理由になるので使いたいです。"
-            ],
-            [
-                    "J03-033",
-                    "自動化",
-                    "User",
-                    "06-09",
-                    "屋上観測会は魅力が強いが開催日が限られるため、来館案内ページでは控えめに扱い、観測会詳細ページや開催日確認導線へ発展させる。",
-                    "開催日が限られるなら最初に大きく出しすぎるのは危ないですね。"
-            ],
-            [
-                    "J03-034",
-                    "自動化",
-                    "User",
-                    "06-09",
-                    "近い発展タスクは、星座カードの持ち帰り導線、雨の日コース、観測会詳細ページ、FAQ整理。",
-                    "体験に近いものを近い発展候補として残したいです。"
-            ],
-            [
-                    "J03-035",
-                    "自動化",
-                    "User",
-                    "06-09",
-                    "SNS運用、学校連携、動画、地域連携、季節イベント、親子ミッションは、今回の初期成果物には入れず、後段の発展タスクとして残す。",
-                    "SNSや学校連携はさらに後でいいです。"
-            ]
-    ];
-          return rows.map(([id, category, speaker, date, text, excerpt]) => ({id, category, speaker, date, thread, text, excerpt}));
-        }
+      /* v810: 旧J03固定デモ候補は物理削除。03は02下部の転送操作後のannotationのみを正本にする。 */
+      return [];
+    }
     function kashinoki03SourceChips() {
-      const base = kashinoki03DemoChips();
-      if (PORTFOLIO_DEMO_MODE) return base;
+      if (PORTFOLIO_DEMO_MODE) return [];
       const candidates = captureCandidates();
-      if (!candidates || !candidates.length) return base;
+      if (!candidates || !candidates.length) return [];
       const mapped = candidates.map((c, i) => {
         const text = c.statement || c.suggested_statement || c.adopted_statement || c.text || c.raw_text || '';
         const source = evidenceText(c) || text;
         const cat = kashinoki03NormalizeCategory(c.adopted_category || c.suggested_category || c.type, text + ' ' + source);
-        return { id: c.id || c.capture_candidate_id || `cap_${i+1}`, category: cat, speaker: c.speaker || c.role || 'ChatGPT', thread: c.thread || c.thread_name || c.project || '回収スレッド', date: c.date || c.created_at || c.registered_at || '06-08', text: text || source || '分類チップ', excerpt: source || text };
+        return { id: c.id || c.capture_candidate_id || `cap_${i+1}`, category: cat, speaker: c.speaker || c.role || 'ChatGPT', thread: c.thread || c.thread_name || c.project || '回収スレッド', date: c.date || c.created_at || c.registered_at || '—', text: text || source || '分類チップ', excerpt: source || text };
       });
-      return mapped.length ? mapped : base;
+      return mapped.length ? mapped : [];
     }
     function kashinoki03ShelfOf(chip) {
       const found = KASHINOKI03_SHELVES.find(s => s.cats.includes(chip.category));
@@ -7324,10 +6713,10 @@
       toast(`${total}件の分類チップをA〜Fへ登録しました。`);
     };
     function kashinoki03ChipDate(chip, index) {
-      return chip.date || chip.created_at || chip.registered_at || '06-08';
+      return chip.date || chip.created_at || chip.registered_at || '—';
     }
     function kashinoki03ThreadName(chip) {
-      return chip.thread || chip.thread_name || chip.project || '星空科学館';
+      return chip.thread || chip.thread_name || chip.project || '読み込み済み会話';
     }
     function kashinoki03CategoryOrder(category) {
       const order = ['仕様','タスク','引き継ぎ','注意・禁止','デザイン','課題','禁止失敗','自動化','AI回答改善','意図理解'];
@@ -7385,7 +6774,7 @@
       }).join('');
       const rows = currentItems.map((chip) => {
         const id = chip.id || `${currentShelf.key}_${chip._order || 1}`;
-        const source = `${kashinoki03ThreadName(chip)} / ${chip.date || '06-08'}`;
+        const source = `${kashinoki03ThreadName(chip)} / ${chip.date || '—'}`;
         return `<div class="kashinoki03-transfer-row"><span class="kashinoki03-transfer-id">${esc(id)}</span><span class="kashinoki03-transfer-source">${esc(source)}</span><span class="kashinoki03-transfer-text">${esc(chip.text)}</span></div>`;
       }).join('') || '<div class="kashinoki03-empty">この送り先へ登録する候補はありません。</div>';
       const total = Object.values(grouped).reduce((n, items) => n + items.length, 0);
@@ -7564,7 +6953,7 @@
 
     /* v204: keep guide icons visible on 01-06 after dynamic re-render. */
     (function () {
-      const VERSION = 'v1.0792';
+      const VERSION = 'v1.0817';
       const IDS = ['portfolio-collect', 'portfolio-quality', 'portfolio-review', 'portfolio-current', 'portfolio-purpose', 'portfolio-next'];
       function escId(id) { return (window.CSS && CSS.escape) ? CSS.escape(id) : id.replace(/[^a-zA-Z0-9_-]/g, '\\$&'); }
       function ensureDockSlot(id) {
@@ -7630,7 +7019,7 @@
 
     /* v203: version marker */
     (function () {
-      const VERSION = 'v1.0792';
+      const VERSION = 'v1.0817';
       function setVersion() {
         const side = document.querySelector('.side-version'); if (side) side.textContent = VERSION;
         const vt = document.getElementById('versionText'); if (vt) vt.textContent = VERSION;
@@ -7643,7 +7032,7 @@
 
     /* v206: version marker */
     (function () {
-      const VERSION = 'v1.0792';
+      const VERSION = 'v1.0817';
       function setVersion() {
         const side = document.querySelector('.side-version'); if (side) side.textContent = VERSION;
         const vt = document.getElementById('versionText'); if (vt) vt.textContent = VERSION;
@@ -7791,7 +7180,7 @@
 
     /* v204: keep guide icons visible on 01-06 after dynamic re-render. */
     (function () {
-      const VERSION = 'v1.0792';
+      const VERSION = 'v1.0817';
       const IDS = ['portfolio-collect', 'portfolio-quality', 'portfolio-review', 'portfolio-current', 'portfolio-purpose', 'portfolio-next'];
       function escId(id) { return (window.CSS && CSS.escape) ? CSS.escape(id) : id.replace(/[^a-zA-Z0-9_-]/g, '\\$&'); }
       function ensureDockSlot(id) {
@@ -7857,7 +7246,7 @@
 
     /* v203: version marker */
     (function () {
-      const VERSION = 'v1.0792';
+      const VERSION = 'v1.0817';
       function setVersion() {
         const side = document.querySelector('.side-version'); if (side) side.textContent = VERSION;
         const vt = document.getElementById('versionText'); if (vt) vt.textContent = VERSION;
@@ -8441,7 +7830,7 @@
 
     /* v204: keep guide icons visible on 01-06 after dynamic re-render. */
     (function () {
-      const VERSION = 'v1.0792';
+      const VERSION = 'v1.0817';
       const IDS = ['portfolio-collect', 'portfolio-quality', 'portfolio-review', 'portfolio-current', 'portfolio-purpose', 'portfolio-next'];
       function escId(id) { return (window.CSS && CSS.escape) ? CSS.escape(id) : id.replace(/[^a-zA-Z0-9_-]/g, '\\$&'); }
       function ensureDockSlot(id) {
@@ -8507,7 +7896,7 @@
 
     /* v203: version marker */
     (function () {
-      const VERSION = 'v1.0792';
+      const VERSION = 'v1.0817';
       function setVersion() {
         const side = document.querySelector('.side-version'); if (side) side.textContent = VERSION;
         const vt = document.getElementById('versionText'); if (vt) vt.textContent = VERSION;
@@ -8623,7 +8012,7 @@
 
     /* v204: keep guide icons visible on 01-06 after dynamic re-render. */
     (function () {
-      const VERSION = 'v1.0792';
+      const VERSION = 'v1.0817';
       const IDS = ['portfolio-collect', 'portfolio-quality', 'portfolio-review', 'portfolio-current', 'portfolio-purpose', 'portfolio-next'];
       function escId(id) { return (window.CSS && CSS.escape) ? CSS.escape(id) : id.replace(/[^a-zA-Z0-9_-]/g, '\\$&'); }
       function ensureDockSlot(id) {
@@ -8689,7 +8078,7 @@
 
     /* v203: version marker */
     (function () {
-      const VERSION = 'v1.0792';
+      const VERSION = 'v1.0817';
       function setVersion() {
         const side = document.querySelector('.side-version'); if (side) side.textContent = VERSION;
         const vt = document.getElementById('versionText'); if (vt) vt.textContent = VERSION;
@@ -8820,7 +8209,7 @@
 
     /* v204: keep guide icons visible on 01-06 after dynamic re-render. */
     (function () {
-      const VERSION = 'v1.0792';
+      const VERSION = 'v1.0817';
       const IDS = ['portfolio-collect', 'portfolio-quality', 'portfolio-review', 'portfolio-current', 'portfolio-purpose', 'portfolio-next'];
       function escId(id) { return (window.CSS && CSS.escape) ? CSS.escape(id) : id.replace(/[^a-zA-Z0-9_-]/g, '\\$&'); }
       function ensureDockSlot(id) {
@@ -8886,7 +8275,7 @@
 
     /* v203: version marker */
     (function () {
-      const VERSION = 'v1.0792';
+      const VERSION = 'v1.0817';
       function setVersion() {
         const side = document.querySelector('.side-version'); if (side) side.textContent = VERSION;
         const vt = document.getElementById('versionText'); if (vt) vt.textContent = VERSION;
@@ -9012,7 +8401,7 @@
 
     /* v204: keep guide icons visible on 01-06 after dynamic re-render. */
     (function () {
-      const VERSION = 'v1.0792';
+      const VERSION = 'v1.0817';
       const IDS = ['portfolio-collect', 'portfolio-quality', 'portfolio-review', 'portfolio-current', 'portfolio-purpose', 'portfolio-next'];
       function escId(id) { return (window.CSS && CSS.escape) ? CSS.escape(id) : id.replace(/[^a-zA-Z0-9_-]/g, '\\$&'); }
       function ensureDockSlot(id) {
@@ -9078,7 +8467,7 @@
 
     /* v203: version marker */
     (function () {
-      const VERSION = 'v1.0792';
+      const VERSION = 'v1.0817';
       function setVersion() {
         const side = document.querySelector('.side-version'); if (side) side.textContent = VERSION;
         const vt = document.getElementById('versionText'); if (vt) vt.textContent = VERSION;
@@ -9177,7 +8566,7 @@
 
     /* v204: keep guide icons visible on 01-06 after dynamic re-render. */
     (function () {
-      const VERSION = 'v1.0792';
+      const VERSION = 'v1.0817';
       const IDS = ['portfolio-collect', 'portfolio-quality', 'portfolio-review', 'portfolio-current', 'portfolio-purpose', 'portfolio-next'];
       function escId(id) { return (window.CSS && CSS.escape) ? CSS.escape(id) : id.replace(/[^a-zA-Z0-9_-]/g, '\\$&'); }
       function ensureDockSlot(id) {
@@ -9243,7 +8632,7 @@
 
     /* v203: version marker */
     (function () {
-      const VERSION = 'v1.0792';
+      const VERSION = 'v1.0817';
       function setVersion() {
         const side = document.querySelector('.side-version'); if (side) side.textContent = VERSION;
         const vt = document.getElementById('versionText'); if (vt) vt.textContent = VERSION;
@@ -9278,7 +8667,7 @@
 
     /* v204: keep guide icons visible on 01-06 after dynamic re-render. */
     (function () {
-      const VERSION = 'v1.0792';
+      const VERSION = 'v1.0817';
       const IDS = ['portfolio-collect', 'portfolio-quality', 'portfolio-review', 'portfolio-current', 'portfolio-purpose', 'portfolio-next'];
       function escId(id) { return (window.CSS && CSS.escape) ? CSS.escape(id) : id.replace(/[^a-zA-Z0-9_-]/g, '\\$&'); }
       function ensureDockSlot(id) {
@@ -9344,7 +8733,7 @@
 
     /* v203: version marker */
     (function () {
-      const VERSION = 'v1.0792';
+      const VERSION = 'v1.0817';
       function setVersion() {
         const side = document.querySelector('.side-version'); if (side) side.textContent = VERSION;
         const vt = document.getElementById('versionText'); if (vt) vt.textContent = VERSION;
@@ -9428,7 +8817,7 @@
 
     /* v204: keep guide icons visible on 01-06 after dynamic re-render. */
     (function () {
-      const VERSION = 'v1.0792';
+      const VERSION = 'v1.0817';
       const IDS = ['portfolio-collect', 'portfolio-quality', 'portfolio-review', 'portfolio-current', 'portfolio-purpose', 'portfolio-next'];
       function escId(id) { return (window.CSS && CSS.escape) ? CSS.escape(id) : id.replace(/[^a-zA-Z0-9_-]/g, '\\$&'); }
       function ensureDockSlot(id) {
@@ -9494,7 +8883,7 @@
 
     /* v203: version marker */
     (function () {
-      const VERSION = 'v1.0792';
+      const VERSION = 'v1.0817';
       function setVersion() {
         const side = document.querySelector('.side-version'); if (side) side.textContent = VERSION;
         const vt = document.getElementById('versionText'); if (vt) vt.textContent = VERSION;
@@ -9510,7 +8899,7 @@
 
   <script id="kashinoki-v192-next-page-single-structure">
     (() => {
-      const VERSION = 'v1.0792';
+      const VERSION = 'v1.0817';
       const $ = (q, root = document) => root.querySelector(q);
       const setVersion = () => { const side = document.querySelector('.side-version'); if (side) side.textContent = VERSION; const vt = document.getElementById('versionText'); if (vt) vt.textContent = VERSION; };
       const esc = (v) => String(v ?? '').replace(/[&<>\"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '\"': '&quot;' }[c] || c));
@@ -9617,7 +9006,7 @@
 
     /* v204: keep guide icons visible on 01-06 after dynamic re-render. */
     (function () {
-      const VERSION = 'v1.0792';
+      const VERSION = 'v1.0817';
       const IDS = ['portfolio-collect', 'portfolio-quality', 'portfolio-review', 'portfolio-current', 'portfolio-purpose', 'portfolio-next'];
       function escId(id) { return (window.CSS && CSS.escape) ? CSS.escape(id) : id.replace(/[^a-zA-Z0-9_-]/g, '\\$&'); }
       function ensureDockSlot(id) {
@@ -9683,7 +9072,7 @@
 
     /* v203: version marker */
     (function () {
-      const VERSION = 'v1.0792';
+      const VERSION = 'v1.0817';
       function setVersion() {
         const side = document.querySelector('.side-version'); if (side) side.textContent = VERSION;
         const vt = document.getElementById('versionText'); if (vt) vt.textContent = VERSION;
@@ -9699,7 +9088,7 @@
 
   <script id="kashinoki-v193-version-script">
     (() => {
-      const VERSION = 'v1.0792';
+      const VERSION = 'v1.0817';
       const setVersion = () => {
         const side = document.querySelector('.side-version');
         if (side) side.textContent = VERSION;
@@ -9716,7 +9105,7 @@
 
     /* v204: keep guide icons visible on 01-06 after dynamic re-render. */
     (function () {
-      const VERSION = 'v1.0792';
+      const VERSION = 'v1.0817';
       const IDS = ['portfolio-collect', 'portfolio-quality', 'portfolio-review', 'portfolio-current', 'portfolio-purpose', 'portfolio-next'];
       function escId(id) { return (window.CSS && CSS.escape) ? CSS.escape(id) : id.replace(/[^a-zA-Z0-9_-]/g, '\\$&'); }
       function ensureDockSlot(id) {
@@ -9782,7 +9171,7 @@
 
     /* v203: version marker */
     (function () {
-      const VERSION = 'v1.0792';
+      const VERSION = 'v1.0817';
       function setVersion() {
         const side = document.querySelector('.side-version'); if (side) side.textContent = VERSION;
         const vt = document.getElementById('versionText'); if (vt) vt.textContent = VERSION;
@@ -9798,7 +9187,7 @@
 
   <script id="kashinoki-v198-purpose-left-height-center-fit-js">
     (() => {
-      const VERSION = 'v1.0792';
+      const VERSION = 'v1.0817';
       let raf = 0;
       function setVersion() {
         const side = document.querySelector('.side-version');
@@ -9873,7 +9262,7 @@
 
     /* v204: keep guide icons visible on 01-06 after dynamic re-render. */
     (function () {
-      const VERSION = 'v1.0792';
+      const VERSION = 'v1.0817';
       const IDS = ['portfolio-collect', 'portfolio-quality', 'portfolio-review', 'portfolio-current', 'portfolio-purpose', 'portfolio-next'];
       function escId(id) { return (window.CSS && CSS.escape) ? CSS.escape(id) : id.replace(/[^a-zA-Z0-9_-]/g, '\\$&'); }
       function ensureDockSlot(id) {
@@ -9939,7 +9328,7 @@
 
     /* v203: version marker */
     (function () {
-      const VERSION = 'v1.0792';
+      const VERSION = 'v1.0817';
       function setVersion() {
         const side = document.querySelector('.side-version'); if (side) side.textContent = VERSION;
         const vt = document.getElementById('versionText'); if (vt) vt.textContent = VERSION;
@@ -9954,7 +9343,7 @@
 
   <script id="kashinoki-v202-version">
     (() => {
-      const VERSION = 'v1.0792';
+      const VERSION = 'v1.0817';
       const setVersion = () => {
         const side = document.querySelector('.side-version'); if (side) side.textContent = VERSION;
         const vt = document.getElementById('versionText'); if (vt) vt.textContent = VERSION;
@@ -9967,7 +9356,7 @@
 
     /* v204: keep guide icons visible on 01-06 after dynamic re-render. */
     (function () {
-      const VERSION = 'v1.0792';
+      const VERSION = 'v1.0817';
       const IDS = ['portfolio-collect', 'portfolio-quality', 'portfolio-review', 'portfolio-current', 'portfolio-purpose', 'portfolio-next'];
       function escId(id) { return (window.CSS && CSS.escape) ? CSS.escape(id) : id.replace(/[^a-zA-Z0-9_-]/g, '\\$&'); }
       function ensureDockSlot(id) {
@@ -10033,7 +9422,7 @@
 
     /* v203: version marker */
     (function () {
-      const VERSION = 'v1.0792';
+      const VERSION = 'v1.0817';
       function setVersion() {
         const side = document.querySelector('.side-version'); if (side) side.textContent = VERSION;
         const vt = document.getElementById('versionText'); if (vt) vt.textContent = VERSION;
@@ -10050,7 +9439,7 @@
 
   <script id="kashinoki-v208-review-guide-script">
     (function () {
-      const VERSION = 'v1.0792';
+      const VERSION = 'v1.0817';
       function setVersion() {
         const side = document.querySelector('.side-version'); if (side) side.textContent = VERSION;
         const vt = document.getElementById('versionText'); if (vt) vt.textContent = VERSION;
@@ -10087,7 +9476,7 @@
 
   <script id="kashinoki-v214-artifact-guide-script">
     (function () {
-      const VERSION = 'v1.0792';
+      const VERSION = 'v1.0817';
       const IDS = ['artifact-intent', 'artifact-handoff', 'artifact-spec', 'artifact-countermeasure', 'artifact-design', 'artifact-ideas'];
       function setVersion() {
         const side = document.querySelector('.side-version'); if (side) side.textContent = VERSION;
@@ -10212,7 +9601,7 @@
 
   <script id="kashinoki-v620-portfolio-flow-arrow-script">
     (function () {
-      const VERSION = 'v1.0792';
+      const VERSION = 'v1.0817';
       const STACK_QUERY = '(max-width:900px)';
       const HORIZONTAL_START_OFFSET = 32;
       const HORIZONTAL_END_OFFSET = -8;
@@ -10501,7 +9890,7 @@
 
   <script id="kashinoki-v226-guide-control-stabilizer">
     (function () {
-      const VERSION = 'v1.0792';
+      const VERSION = 'v1.0817';
       const CONTROLLED = new Set(['portfolio-quality', 'portfolio-review']);
       function setVersion() { const vt = document.getElementById('versionText'); if (vt) vt.textContent = VERSION; const side = document.querySelector('.side-version'); if (side) side.textContent = VERSION; }
       function activeId() { return document.querySelector('.page.active')?.id || ''; }
@@ -10563,7 +9952,7 @@
 
   <script id="kashinoki-v230-review-guide-auto-finish">
     (function () {
-      const VERSION = 'v1.0792';
+      const VERSION = 'v1.0817';
       const PAGE_ID = 'portfolio-review';
       const FINISH_AFTER_MS = 6900;
       let timer = 0;
@@ -10706,7 +10095,7 @@
   <script id="kashinoki-v410-wrench-stabilizer">
     (function () {
       'use strict';
-      const VERSION = 'v1.0792';
+      const VERSION = 'v1.0817';
       function setVersion() {
         const side = document.querySelector('.side-version'); if (side) side.textContent = VERSION;
         const vt = document.getElementById('versionText'); if (vt) vt.textContent = VERSION;
@@ -10767,7 +10156,7 @@
 
   <script id="kashinoki-v434-version-note">window.__KASHINOKI_V434__ = true;</script>
   <script id="kashinoki-v436-version-note">window.__KASHINOKI_V440__ = true;</script>
-  <script src="assets/kashinoki-workflow-03plus-v422-layout.js?v=444-review03-focus"></script>
+  <script src="assets/kashinoki-workflow-03plus-v422-layout.js?v=797-step2-persist"></script>
   <script src="assets/kashinoki03-fixed-panel.js?v=520"></script>
 
 <style id="kashinoki-v578-start-artifact-final-fixes">
@@ -10785,7 +10174,7 @@
 (function(){
   'use strict';
   const START_ID = 'kashinoki-start';
-  const VERSION = 'v1.0792';
+  const VERSION = 'v1.0817';
   function activeId(){ return document.querySelector('.page.active')?.id || ''; }
   function hideStartGuide(){
     const controls = document.getElementById('floatingGuideControls');
@@ -10872,7 +10261,7 @@
 (function(){
   'use strict';
   const START_ID = 'kashinoki-start';
-  const VERSION = 'v1.0792';
+  const VERSION = 'v1.0817';
   function activeId(){ return document.querySelector('.page.active')?.id || ''; }
   function controls(){ return document.getElementById('floatingGuideControls'); }
   function clearStartHiddenState(id){
@@ -10954,6 +10343,7 @@
 
 <!-- v705: STEP 2 integrated classification reflection mode. -->
 <link rel="stylesheet" href="assets/classification-bridge-02/classification-bridge-02.css">
+<script src="assets/starry-museum-classification-sample.js"></script>
 <script src="assets/classification-bridge-02/classification-bridge-02.js"></script>
 
 
@@ -11115,7 +10505,7 @@
 <script id="kashinoki-v785-step1-flow-replay-sync">
 (function(){
   'use strict';
-  const VERSION='v1.0792';
+  const VERSION='v1.0817';
   function setVersion(){
     document.querySelectorAll('.side-version, #versionText, #kashinokiFixedVersionBadge, [data-version-text]').forEach(el=>{el.textContent=VERSION;});
   }
@@ -11191,7 +10581,7 @@
 <script id="kashinoki-v786-step1-flow-replay-event-sync">
 (function(){
   'use strict';
-  const VERSION='v1.0792';
+  const VERSION='v1.0817';
   function setVersion(){
     document.querySelectorAll('.side-version, #versionText, #kashinokiFixedVersionBadge, [data-version-text]').forEach(el=>{el.textContent=VERSION;});
   }
@@ -11235,7 +10625,7 @@
 <script id="kashinoki-v790-version-sync">
 (function(){
   'use strict';
-  const VERSION='v1.0792';
+  const VERSION='v1.0817';
   function setVersion(){
     document.querySelectorAll('.side-version, #versionText, #kashinokiFixedVersionBadge, [data-version-text]').forEach(el=>{el.textContent=VERSION;});
   }
@@ -11408,7 +10798,7 @@
 </style>
 <script id="v688-left-bottom-version-script">
 (function(){
-  const RELEASE_VERSION = 'v1.0792';
+  const RELEASE_VERSION = 'v1.0817';
   function setReleaseVersion(){
     let badge = document.getElementById('kashinokiFixedVersionBadge');
     if(!badge){
@@ -11432,7 +10822,7 @@
 
 <script>
 (function(){
-  const VERSION = 'v1.0792';
+  const VERSION = 'v1.0817';
   function setFinalVersion(){
     document.querySelectorAll('.side-version, #versionText, [data-version-text]').forEach(el=>{ el.textContent = VERSION; });
   }

@@ -61,47 +61,67 @@
     annotations: []
   };
 
-  const sampleConversation = {
-    schemaVersion: 1,
-    exportType: 'chatgpt_conversation_full_export',
-    source: { title: '星空科学館ファーストビュー仕様テスト' },
-    capture: { status: 'sample' },
-    messages: [
-      { index: 1, role: 'user', text: '地方にある小さなプラネタリウム施設のWebページ冒頭を作りたいです。\n普通の科学館サイトではなく、親子向けの物語性のある星空体験として見せたいです。\nただし、上映時間、予約、料金、駐車場、バス、屋上観測の条件はまだ未確認なので、断定しないようにしたいです。' },
-      { index: 2, role: 'assistant', text: 'ファーストビューでは、左側を物語の入口、右側を親が安心できる星座カード風の小カード、下部をアクセス確認導線として構成するとよいです。\n採用する見出しは「親子で星空の物語に入る、小さなプラネタリウム。」です。\n補足文は「星に詳しくなくても大丈夫。映像や物語、星座カードをきっかけに、親子で星空に触れられる小さな体験施設です。」が使えます。\n上映時間、予約、料金、駐車場、バス、屋上観測の開催条件は、確認済みになるまでファーストビューでは断定しないでください。\n右側カードはチェックリストではなく、夜空に浮かぶ星座カードのように見せてください。' },
-      { index: 3, role: 'user', text: 'この方向で進めたいです。\n大見出しと補足文は採用します。\n右側カードは文言だけだと案内ページっぽく見えるので、チェックリストではなく星座カード風に見せることを必須にしてください。\n雨の日の展示室・シアター、アクセス案内ページの受け皿は本番前に確認が必要です。\n未確認情報を自然な文章で補完しないことも禁止事項として残してください。' },
-      { index: 4, role: 'assistant', text: '最終仕様として、採用する文言、保留する情報、禁止表現、デザイン上の必須条件を分けます。\n採用文言は「親子で星空の物語に入る、小さなプラネタリウム。」と「星に詳しくなくても大丈夫。映像や物語、星座カードをきっかけに、親子で星空に触れられる小さな体験施設です。」です。\n保留情報は、上映時間、予約方法、料金、駐車場、バス案内、屋上観測の開催条件です。\n禁止表現は、本日上映中、予約不要、駐車場あり、毎日開催、アクセス良好、駅から◯分などです。\nデザイン条件は、夜の絵本のようなファーストビュー、深い紺〜紫の夜空、星座カード風の小カード、チェックマークや番号を使わないことです。\n完成後は、普通の科学館サイトに見えないか、未確認情報を断定していないか、右側カードが星座カードに見えるかを確認してください。' },
-      { index: 5, role: 'user', text: 'この内容を、次の制作AIに渡せる最終プロンプトとして整えてください。\n採用仕様、禁止事項、未確認・保留情報、デザイン条件、完成後の確認基準が分かれる形にしてください。' },
-      { index: 6, role: 'assistant', text: '地方にある小さなプラネタリウム施設のWebページ冒頭、ファーストビューを制作してください。\n目的は、普通の科学館サイトや設備紹介ページではなく、夜の絵本のような小さな親子向け星空体験として見せることです。\n採用仕様として、左側は物語の入口、右側は星座カード風の安心材料、下部はアクセス確認導線で構成してください。\n見出しは「親子で星空の物語に入る、小さなプラネタリウム。」を使用してください。\n補足文は「星に詳しくなくても大丈夫。映像や物語、星座カードをきっかけに、親子で星空に触れられる小さな体験施設です。」を使用してください。\n禁止事項として、本日上映中、予約不要、駐車場あり、毎日開催、アクセス良好、駅から◯分などの未確認情報を断定する表現は使わないでください。\n未確認・保留情報として、上映時間、予約方法、料金、駐車場、バス案内、屋上観測の開催条件は確認済みになるまでファーストビューでは断定しないでください。\nデザイン条件として、深い紺〜紫の夜空、やわらかい星の粒、ドームのような淡い光、星座カード風の小カードを使い、SF風UIや派手な銀河背景には寄せないでください。\n完成後は、普通の科学館サイトに見えないか、未確認情報を断定していないか、右側カードがチェックリストではなく星座カードに見えるかを自己確認してください。' }
-    ]
+  const QUALITY02_MANUAL_ANNOTATIONS_KEY = 'kashinoki_quality02_manual_annotations_v798';
+  const QUALITY02_DELETED_ANNOTATIONS_KEY = 'kashinoki_quality02_deleted_annotations_v800';
+  const QUALITY02_MANUAL_CATEGORY_BY_TYPE = {
+    '仕様':'adopted_spec',
+    'タスク':'next_action',
+    '引き継ぎ':'handoff_prompt',
+    '注意・禁止':'must_not',
+    'デザイン':'design_rule',
+    '課題':'hold_verify',
+    '禁止失敗':'must_not',
+    '自動化':'next_action',
+    'AI回答改善':'ai_suggestion',
+    '意図理解':'user_intent'
   };
 
-  const sampleAnnotations = { classificationVersion:'0.1', sourceMode:'line_based_annotation', annotations:[
-    {id:'ann_0001',messageIndex:1,role:'user',startLine:1,endLine:1,category:'next_action',label:'制作対象',reason:'Webページ冒頭制作という作業対象を示している'},
-    {id:'ann_0002',messageIndex:1,role:'user',startLine:2,endLine:2,category:'user_intent',label:'ユーザー意図',reason:'普通の科学館サイトではなく親子向けの物語性を重視する意図'},
-    {id:'ann_0003',messageIndex:1,role:'user',startLine:3,endLine:3,category:'hold_verify',label:'未確認・保留情報',reason:'上映時間、予約、料金などが未確認'},
-    {id:'ann_0004',messageIndex:1,role:'user',startLine:3,endLine:3,category:'must_not',label:'断定禁止',reason:'未確認情報を断定しないという禁止条件'},
-    {id:'ann_0005',messageIndex:2,role:'assistant',startLine:1,endLine:1,category:'ai_suggestion',label:'構成提案',reason:'左・右・下部の構成をAIが提案'},
-    {id:'ann_0006',messageIndex:2,role:'assistant',startLine:2,endLine:2,category:'adopted_spec_candidate',label:'採用候補見出し',reason:'採用可能な見出し候補'},
-    {id:'ann_0007',messageIndex:2,role:'assistant',startLine:3,endLine:3,category:'adopted_spec_candidate',label:'採用候補補足文',reason:'採用可能な補足文候補'},
-    {id:'ann_0008',messageIndex:2,role:'assistant',startLine:4,endLine:4,category:'must_not',label:'未確認情報の断定禁止',reason:'未確認項目を断定しない条件'},
-    {id:'ann_0009',messageIndex:2,role:'assistant',startLine:5,endLine:5,category:'design_rule',label:'星座カード表現',reason:'右側カードの見た目条件'},
-    {id:'ann_0010',messageIndex:3,role:'user',startLine:1,endLine:1,category:'user_approval',label:'方向性承認',reason:'ユーザーが方向性を承認'},
-    {id:'ann_0011',messageIndex:3,role:'user',startLine:2,endLine:2,category:'adopted_spec',label:'採用確定',reason:'大見出しと補足文を採用すると明言'},
-    {id:'ann_0012',messageIndex:3,role:'user',startLine:3,endLine:3,category:'design_rule',label:'星座カード必須',reason:'チェックリストではなく星座カード風を必須化'},
-    {id:'ann_0013',messageIndex:3,role:'user',startLine:4,endLine:4,category:'hold_verify',label:'本番前確認',reason:'展示室・シアター、アクセス案内ページの確認が必要'},
-    {id:'ann_0014',messageIndex:3,role:'user',startLine:5,endLine:5,category:'must_not',label:'自然補完禁止',reason:'未確認情報の自然補完を禁止'},
-    {id:'ann_0015',messageIndex:4,role:'assistant',startLine:1,endLine:1,category:'final_spec_structure',label:'最終仕様構成',reason:'最終仕様の構成項目'},
-    {id:'ann_0016',messageIndex:4,role:'assistant',startLine:2,endLine:2,category:'adopted_spec',label:'採用文言',reason:'採用する文言'},
-    {id:'ann_0017',messageIndex:4,role:'assistant',startLine:3,endLine:3,category:'hold_verify',label:'保留情報',reason:'確認済みまで断定しない情報群'},
-    {id:'ann_0018',messageIndex:4,role:'assistant',startLine:4,endLine:4,category:'must_not',label:'禁止表現',reason:'ファーストビューで使わない表現'},
-    {id:'ann_0019',messageIndex:4,role:'assistant',startLine:5,endLine:5,category:'design_rule',label:'デザイン条件',reason:'夜の絵本・星座カードなどの条件'},
-    {id:'ann_0020',messageIndex:4,role:'assistant',startLine:6,endLine:6,category:'verification_gate',label:'完成後確認',reason:'完成後の判定基準'},
-    {id:'ann_0021',messageIndex:5,role:'user',startLine:1,endLine:2,category:'next_action',label:'最終プロンプト化',reason:'次の制作AIへ渡す形式に整える依頼'},
-    {id:'ann_0022',messageIndex:6,role:'assistant',startLine:1,endLine:9,category:'handoff_prompt',label:'次AI用プロンプト',reason:'制作AIに渡せる最終プロンプト'}
-  ]};
+  /* v814: 開発用の3ターンサンプル会話・小型サンプル分類JSONは、本番動線から削除。
+     STEP1で明示的に使う星空科学館分類サンプルだけを残す。 */
 
-  const starryMuseumClassificationSample = {"classificationVersion":"0.1-sample","sourceMode":"line_based_annotation","sourceFile":"星空科学館_来館体験と案内ページ設計_v1.4_raw_20260609.json","sourceExportType":"chatgpt_conversation_full_export","sourceTitle":"運営のひっ迫 - プラネタリウム再生計画","createdFor":"presentation_demo_before_full_classifier","notes":"分類機能本実装前の表示確認用サンプル。本文JSONとは別ファイルとして扱う。全行分類ではなく、プレゼン確認用に代表箇所を抽出。","annotations":[{"id":"starry_ann_0001","messageIndex":1,"role":"user","startLine":1,"endLine":1,"category":"next_action","qualityType":"タスク","label":"次作業","reason":"ユーザーが次に進めたい作業・相談内容","priority":"medium","sourceAuthority":"user_statement","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0002","messageIndex":1,"role":"user","startLine":3,"endLine":3,"category":"user_intent","qualityType":"意図理解","label":"ユーザー意図","reason":"見た目・体験設計・方向性に関する条件","priority":"high","sourceAuthority":"user_confirmed","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0003","messageIndex":1,"role":"user","startLine":5,"endLine":5,"category":"hold_verify","qualityType":"課題","label":"未確認・保留","reason":"本番前に確認が必要な情報","priority":"high","sourceAuthority":"user_statement","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0004","messageIndex":2,"role":"assistant","startLine":2,"endLine":2,"category":"design_rule","qualityType":"デザイン","label":"デザイン条件","reason":"見た目・体験設計・方向性に関する条件","priority":"medium","sourceAuthority":"ai_structured","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0005","messageIndex":2,"role":"assistant","startLine":16,"endLine":16,"category":"hold_verify","qualityType":"課題","label":"未確認・保留","reason":"本番前に確認が必要な情報","priority":"high","sourceAuthority":"ai_structured","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0006","messageIndex":2,"role":"assistant","startLine":18,"endLine":18,"category":"hold_verify","qualityType":"課題","label":"未確認・保留","reason":"本番前に確認が必要な情報","priority":"high","sourceAuthority":"ai_structured","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0007","messageIndex":3,"role":"user","startLine":3,"endLine":3,"category":"user_approval","qualityType":"意図理解","label":"ユーザー承認","reason":"ユーザーの承認・採用判断","priority":"high","sourceAuthority":"user_confirmed","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0008","messageIndex":3,"role":"user","startLine":7,"endLine":7,"category":"user_intent","qualityType":"意図理解","label":"ユーザー意図","reason":"見た目・体験設計・方向性に関する条件","priority":"high","sourceAuthority":"user_confirmed","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0009","messageIndex":3,"role":"user","startLine":17,"endLine":17,"category":"user_approval","qualityType":"意図理解","label":"ユーザー承認","reason":"ユーザーの承認・採用判断","priority":"high","sourceAuthority":"user_confirmed","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0010","messageIndex":4,"role":"assistant","startLine":22,"endLine":22,"category":"hold_verify","qualityType":"課題","label":"未確認・保留","reason":"本番前に確認が必要な情報","priority":"high","sourceAuthority":"ai_structured","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0011","messageIndex":4,"role":"assistant","startLine":34,"endLine":34,"category":"hold_verify","qualityType":"課題","label":"未確認・保留","reason":"本番前に確認が必要な情報","priority":"high","sourceAuthority":"ai_structured","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0012","messageIndex":4,"role":"assistant","startLine":52,"endLine":52,"category":"adopted_spec","qualityType":"仕様","label":"採用仕様","reason":"制作へ残せる仕様・文言","priority":"medium","sourceAuthority":"ai_structured","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0013","messageIndex":5,"role":"user","startLine":4,"endLine":4,"category":"user_approval","qualityType":"意図理解","label":"ユーザー承認","reason":"ユーザーの承認・採用判断","priority":"high","sourceAuthority":"user_confirmed","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0014","messageIndex":5,"role":"user","startLine":7,"endLine":7,"category":"hold_verify","qualityType":"課題","label":"未確認・保留","reason":"本番前に確認が必要な情報","priority":"high","sourceAuthority":"user_statement","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0015","messageIndex":5,"role":"user","startLine":10,"endLine":10,"category":"user_intent","qualityType":"意図理解","label":"ユーザー意図","reason":"見た目・体験設計・方向性に関する条件","priority":"high","sourceAuthority":"user_confirmed","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0016","messageIndex":6,"role":"assistant","startLine":2,"endLine":2,"category":"design_rule","qualityType":"デザイン","label":"デザイン条件","reason":"見た目・体験設計・方向性に関する条件","priority":"medium","sourceAuthority":"ai_structured","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0017","messageIndex":6,"role":"assistant","startLine":11,"endLine":11,"category":"hold_verify","qualityType":"課題","label":"未確認・保留","reason":"本番前に確認が必要な情報","priority":"high","sourceAuthority":"ai_structured","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0018","messageIndex":6,"role":"assistant","startLine":71,"endLine":71,"category":"hold_verify","qualityType":"課題","label":"未確認・保留","reason":"本番前に確認が必要な情報","priority":"high","sourceAuthority":"ai_structured","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0019","messageIndex":7,"role":"user","startLine":3,"endLine":3,"category":"user_intent","qualityType":"意図理解","label":"ユーザー意図","reason":"見た目・体験設計・方向性に関する条件","priority":"high","sourceAuthority":"user_confirmed","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0020","messageIndex":7,"role":"user","startLine":5,"endLine":5,"category":"next_action","qualityType":"タスク","label":"次作業","reason":"ユーザーが次に進めたい作業・相談内容","priority":"medium","sourceAuthority":"user_statement","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0021","messageIndex":7,"role":"user","startLine":7,"endLine":7,"category":"user_intent","qualityType":"意図理解","label":"ユーザー意図","reason":"見た目・体験設計・方向性に関する条件","priority":"high","sourceAuthority":"user_confirmed","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0022","messageIndex":8,"role":"assistant","startLine":12,"endLine":12,"category":"hold_verify","qualityType":"課題","label":"未確認・保留","reason":"本番前に確認が必要な情報","priority":"high","sourceAuthority":"ai_structured","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0023","messageIndex":8,"role":"assistant","startLine":24,"endLine":24,"category":"hold_verify","qualityType":"課題","label":"未確認・保留","reason":"本番前に確認が必要な情報","priority":"high","sourceAuthority":"ai_structured","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0024","messageIndex":8,"role":"assistant","startLine":63,"endLine":63,"category":"adopted_spec","qualityType":"仕様","label":"採用仕様","reason":"制作へ残せる仕様・文言","priority":"medium","sourceAuthority":"ai_structured","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0025","messageIndex":9,"role":"user","startLine":4,"endLine":4,"category":"user_intent","qualityType":"意図理解","label":"ユーザー意図","reason":"見た目・体験設計・方向性に関する条件","priority":"high","sourceAuthority":"user_confirmed","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0026","messageIndex":9,"role":"user","startLine":7,"endLine":7,"category":"user_intent","qualityType":"意図理解","label":"ユーザー意図","reason":"見た目・体験設計・方向性に関する条件","priority":"high","sourceAuthority":"user_confirmed","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0027","messageIndex":9,"role":"user","startLine":10,"endLine":10,"category":"hold_verify","qualityType":"課題","label":"未確認・保留","reason":"本番前に確認が必要な情報","priority":"high","sourceAuthority":"user_statement","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0028","messageIndex":10,"role":"assistant","startLine":7,"endLine":7,"category":"hold_verify","qualityType":"課題","label":"未確認・保留","reason":"本番前に確認が必要な情報","priority":"high","sourceAuthority":"ai_structured","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0029","messageIndex":10,"role":"assistant","startLine":9,"endLine":9,"category":"hold_verify","qualityType":"課題","label":"未確認・保留","reason":"本番前に確認が必要な情報","priority":"high","sourceAuthority":"ai_structured","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0030","messageIndex":10,"role":"assistant","startLine":21,"endLine":21,"category":"adopted_spec","qualityType":"仕様","label":"採用仕様","reason":"制作へ残せる仕様・文言","priority":"medium","sourceAuthority":"ai_structured","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0031","messageIndex":11,"role":"user","startLine":4,"endLine":4,"category":"hold_verify","qualityType":"課題","label":"未確認・保留","reason":"本番前に確認が必要な情報","priority":"high","sourceAuthority":"user_statement","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0032","messageIndex":11,"role":"user","startLine":12,"endLine":12,"category":"user_intent","qualityType":"意図理解","label":"ユーザー意図","reason":"見た目・体験設計・方向性に関する条件","priority":"high","sourceAuthority":"user_confirmed","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0033","messageIndex":11,"role":"user","startLine":19,"endLine":19,"category":"user_intent","qualityType":"意図理解","label":"ユーザー意図","reason":"見た目・体験設計・方向性に関する条件","priority":"high","sourceAuthority":"user_confirmed","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0034","messageIndex":12,"role":"assistant","startLine":2,"endLine":2,"category":"hold_verify","qualityType":"課題","label":"未確認・保留","reason":"本番前に確認が必要な情報","priority":"high","sourceAuthority":"ai_structured","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0035","messageIndex":12,"role":"assistant","startLine":5,"endLine":5,"category":"must_not","qualityType":"注意・禁止","label":"注意・禁止","reason":"制作時に避ける条件・未確認情報の断定禁止","priority":"high","sourceAuthority":"ai_structured","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0036","messageIndex":12,"role":"assistant","startLine":20,"endLine":20,"category":"must_not","qualityType":"注意・禁止","label":"注意・禁止","reason":"制作時に避ける条件・未確認情報の断定禁止","priority":"high","sourceAuthority":"ai_structured","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0037","messageIndex":13,"role":"user","startLine":4,"endLine":4,"category":"hold_verify","qualityType":"課題","label":"未確認・保留","reason":"本番前に確認が必要な情報","priority":"high","sourceAuthority":"user_statement","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0038","messageIndex":13,"role":"user","startLine":6,"endLine":6,"category":"must_not","qualityType":"注意・禁止","label":"注意・禁止","reason":"制作時に避ける条件・未確認情報の断定禁止","priority":"high","sourceAuthority":"user_confirmed","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0039","messageIndex":13,"role":"user","startLine":8,"endLine":8,"category":"user_intent","qualityType":"意図理解","label":"ユーザー意図","reason":"見た目・体験設計・方向性に関する条件","priority":"high","sourceAuthority":"user_confirmed","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0040","messageIndex":14,"role":"assistant","startLine":3,"endLine":3,"category":"hold_verify","qualityType":"課題","label":"未確認・保留","reason":"本番前に確認が必要な情報","priority":"high","sourceAuthority":"ai_structured","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0041","messageIndex":14,"role":"assistant","startLine":48,"endLine":48,"category":"must_not","qualityType":"注意・禁止","label":"注意・禁止","reason":"制作時に避ける条件・未確認情報の断定禁止","priority":"high","sourceAuthority":"ai_structured","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0042","messageIndex":14,"role":"assistant","startLine":92,"endLine":92,"category":"must_not","qualityType":"注意・禁止","label":"注意・禁止","reason":"制作時に避ける条件・未確認情報の断定禁止","priority":"high","sourceAuthority":"ai_structured","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0043","messageIndex":15,"role":"user","startLine":5,"endLine":5,"category":"user_approval","qualityType":"意図理解","label":"ユーザー承認","reason":"ユーザーの承認・採用判断","priority":"high","sourceAuthority":"user_confirmed","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0044","messageIndex":15,"role":"user","startLine":6,"endLine":6,"category":"hold_verify","qualityType":"課題","label":"未確認・保留","reason":"本番前に確認が必要な情報","priority":"high","sourceAuthority":"user_statement","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0045","messageIndex":15,"role":"user","startLine":8,"endLine":8,"category":"user_intent","qualityType":"意図理解","label":"ユーザー意図","reason":"見た目・体験設計・方向性に関する条件","priority":"high","sourceAuthority":"user_confirmed","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0046","messageIndex":16,"role":"assistant","startLine":5,"endLine":5,"category":"hold_verify","qualityType":"課題","label":"未確認・保留","reason":"本番前に確認が必要な情報","priority":"high","sourceAuthority":"ai_structured","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0047","messageIndex":16,"role":"assistant","startLine":10,"endLine":10,"category":"adopted_spec","qualityType":"仕様","label":"採用仕様","reason":"制作へ残せる仕様・文言","priority":"medium","sourceAuthority":"ai_structured","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0048","messageIndex":16,"role":"assistant","startLine":32,"endLine":32,"category":"hold_verify","qualityType":"課題","label":"未確認・保留","reason":"本番前に確認が必要な情報","priority":"high","sourceAuthority":"ai_structured","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0049","messageIndex":17,"role":"user","startLine":3,"endLine":3,"category":"user_approval","qualityType":"意図理解","label":"ユーザー承認","reason":"ユーザーの承認・採用判断","priority":"high","sourceAuthority":"user_confirmed","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0050","messageIndex":17,"role":"user","startLine":6,"endLine":6,"category":"user_intent","qualityType":"意図理解","label":"ユーザー意図","reason":"見た目・体験設計・方向性に関する条件","priority":"high","sourceAuthority":"user_confirmed","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0051","messageIndex":18,"role":"assistant","startLine":10,"endLine":10,"category":"adopted_spec","qualityType":"仕様","label":"採用仕様","reason":"制作へ残せる仕様・文言","priority":"medium","sourceAuthority":"ai_structured","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0052","messageIndex":18,"role":"assistant","startLine":45,"endLine":45,"category":"hold_verify","qualityType":"課題","label":"未確認・保留","reason":"本番前に確認が必要な情報","priority":"high","sourceAuthority":"ai_structured","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0053","messageIndex":18,"role":"assistant","startLine":50,"endLine":50,"category":"hold_verify","qualityType":"課題","label":"未確認・保留","reason":"本番前に確認が必要な情報","priority":"high","sourceAuthority":"ai_structured","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0054","messageIndex":19,"role":"user","startLine":3,"endLine":3,"category":"user_intent","qualityType":"意図理解","label":"ユーザー意図","reason":"見た目・体験設計・方向性に関する条件","priority":"high","sourceAuthority":"user_confirmed","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0055","messageIndex":19,"role":"user","startLine":5,"endLine":5,"category":"next_action","qualityType":"タスク","label":"次作業","reason":"ユーザーが次に進めたい作業・相談内容","priority":"medium","sourceAuthority":"user_statement","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0056","messageIndex":19,"role":"user","startLine":7,"endLine":7,"category":"hold_verify","qualityType":"課題","label":"未確認・保留","reason":"本番前に確認が必要な情報","priority":"high","sourceAuthority":"user_statement","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0057","messageIndex":20,"role":"assistant","startLine":8,"endLine":8,"category":"hold_verify","qualityType":"課題","label":"未確認・保留","reason":"本番前に確認が必要な情報","priority":"high","sourceAuthority":"ai_structured","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0058","messageIndex":20,"role":"assistant","startLine":35,"endLine":35,"category":"adopted_spec","qualityType":"仕様","label":"採用仕様","reason":"制作へ残せる仕様・文言","priority":"medium","sourceAuthority":"ai_structured","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0059","messageIndex":20,"role":"assistant","startLine":86,"endLine":86,"category":"must_not","qualityType":"注意・禁止","label":"注意・禁止","reason":"制作時に避ける条件・未確認情報の断定禁止","priority":"high","sourceAuthority":"ai_structured","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0060","messageIndex":21,"role":"user","startLine":4,"endLine":4,"category":"hold_verify","qualityType":"課題","label":"未確認・保留","reason":"本番前に確認が必要な情報","priority":"high","sourceAuthority":"user_statement","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0061","messageIndex":21,"role":"user","startLine":7,"endLine":7,"category":"user_intent","qualityType":"意図理解","label":"ユーザー意図","reason":"見た目・体験設計・方向性に関する条件","priority":"high","sourceAuthority":"user_confirmed","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0062","messageIndex":22,"role":"assistant","startLine":26,"endLine":26,"category":"hold_verify","qualityType":"課題","label":"未確認・保留","reason":"本番前に確認が必要な情報","priority":"high","sourceAuthority":"ai_structured","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0063","messageIndex":22,"role":"assistant","startLine":148,"endLine":148,"category":"must_not","qualityType":"注意・禁止","label":"注意・禁止","reason":"制作時に避ける条件・未確認情報の断定禁止","priority":"high","sourceAuthority":"ai_structured","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0064","messageIndex":22,"role":"assistant","startLine":155,"endLine":155,"category":"must_not","qualityType":"注意・禁止","label":"注意・禁止","reason":"制作時に避ける条件・未確認情報の断定禁止","priority":"high","sourceAuthority":"ai_structured","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0065","messageIndex":23,"role":"user","startLine":4,"endLine":4,"category":"hold_verify","qualityType":"課題","label":"未確認・保留","reason":"本番前に確認が必要な情報","priority":"high","sourceAuthority":"user_statement","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0066","messageIndex":23,"role":"user","startLine":6,"endLine":6,"category":"user_intent","qualityType":"意図理解","label":"ユーザー意図","reason":"見た目・体験設計・方向性に関する条件","priority":"high","sourceAuthority":"user_confirmed","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0067","messageIndex":23,"role":"user","startLine":7,"endLine":7,"category":"user_approval","qualityType":"意図理解","label":"ユーザー承認","reason":"ユーザーの承認・採用判断","priority":"high","sourceAuthority":"user_confirmed","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0068","messageIndex":24,"role":"assistant","startLine":6,"endLine":6,"category":"hold_verify","qualityType":"課題","label":"未確認・保留","reason":"本番前に確認が必要な情報","priority":"high","sourceAuthority":"ai_structured","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0069","messageIndex":24,"role":"assistant","startLine":17,"endLine":17,"category":"adopted_spec","qualityType":"仕様","label":"採用仕様","reason":"制作へ残せる仕様・文言","priority":"medium","sourceAuthority":"ai_structured","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0070","messageIndex":24,"role":"assistant","startLine":34,"endLine":34,"category":"must_not","qualityType":"注意・禁止","label":"注意・禁止","reason":"制作時に避ける条件・未確認情報の断定禁止","priority":"high","sourceAuthority":"ai_structured","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0071","messageIndex":25,"role":"user","startLine":4,"endLine":4,"category":"must_not","qualityType":"注意・禁止","label":"注意・禁止","reason":"制作時に避ける条件・未確認情報の断定禁止","priority":"high","sourceAuthority":"user_confirmed","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0072","messageIndex":25,"role":"user","startLine":6,"endLine":6,"category":"user_intent","qualityType":"意図理解","label":"ユーザー意図","reason":"見た目・体験設計・方向性に関する条件","priority":"high","sourceAuthority":"user_confirmed","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0073","messageIndex":26,"role":"assistant","startLine":1,"endLine":1,"category":"must_not","qualityType":"注意・禁止","label":"注意・禁止","reason":"制作時に避ける条件・未確認情報の断定禁止","priority":"high","sourceAuthority":"ai_structured","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0074","messageIndex":26,"role":"assistant","startLine":10,"endLine":10,"category":"hold_verify","qualityType":"課題","label":"未確認・保留","reason":"本番前に確認が必要な情報","priority":"high","sourceAuthority":"ai_structured","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0075","messageIndex":26,"role":"assistant","startLine":23,"endLine":23,"category":"must_not","qualityType":"注意・禁止","label":"注意・禁止","reason":"制作時に避ける条件・未確認情報の断定禁止","priority":"high","sourceAuthority":"ai_structured","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0076","messageIndex":27,"role":"user","startLine":3,"endLine":3,"category":"next_action","qualityType":"タスク","label":"次作業","reason":"ユーザーが次に進めたい作業・相談内容","priority":"medium","sourceAuthority":"user_statement","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0077","messageIndex":27,"role":"user","startLine":4,"endLine":4,"category":"must_not","qualityType":"注意・禁止","label":"注意・禁止","reason":"制作時に避ける条件・未確認情報の断定禁止","priority":"high","sourceAuthority":"user_confirmed","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0078","messageIndex":27,"role":"user","startLine":6,"endLine":6,"category":"must_not","qualityType":"注意・禁止","label":"注意・禁止","reason":"制作時に避ける条件・未確認情報の断定禁止","priority":"high","sourceAuthority":"user_confirmed","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0079","messageIndex":28,"role":"assistant","startLine":1,"endLine":1,"category":"must_not","qualityType":"注意・禁止","label":"注意・禁止","reason":"制作時に避ける条件・未確認情報の断定禁止","priority":"high","sourceAuthority":"ai_structured","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0080","messageIndex":28,"role":"assistant","startLine":14,"endLine":14,"category":"hold_verify","qualityType":"課題","label":"未確認・保留","reason":"本番前に確認が必要な情報","priority":"high","sourceAuthority":"ai_structured","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0081","messageIndex":28,"role":"assistant","startLine":95,"endLine":95,"category":"must_not","qualityType":"注意・禁止","label":"注意・禁止","reason":"制作時に避ける条件・未確認情報の断定禁止","priority":"high","sourceAuthority":"ai_structured","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0082","messageIndex":29,"role":"user","startLine":3,"endLine":3,"category":"user_approval","qualityType":"意図理解","label":"ユーザー承認","reason":"ユーザーの承認・採用判断","priority":"high","sourceAuthority":"user_confirmed","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0083","messageIndex":29,"role":"user","startLine":5,"endLine":5,"category":"user_intent","qualityType":"意図理解","label":"ユーザー意図","reason":"見た目・体験設計・方向性に関する条件","priority":"high","sourceAuthority":"user_confirmed","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0084","messageIndex":30,"role":"assistant","startLine":13,"endLine":13,"category":"hold_verify","qualityType":"課題","label":"未確認・保留","reason":"本番前に確認が必要な情報","priority":"high","sourceAuthority":"ai_structured","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0085","messageIndex":30,"role":"assistant","startLine":47,"endLine":47,"category":"must_not","qualityType":"注意・禁止","label":"注意・禁止","reason":"制作時に避ける条件・未確認情報の断定禁止","priority":"high","sourceAuthority":"ai_structured","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0086","messageIndex":30,"role":"assistant","startLine":48,"endLine":48,"category":"must_not","qualityType":"注意・禁止","label":"注意・禁止","reason":"制作時に避ける条件・未確認情報の断定禁止","priority":"high","sourceAuthority":"ai_structured","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0087","messageIndex":31,"role":"user","startLine":3,"endLine":3,"category":"user_approval","qualityType":"意図理解","label":"ユーザー承認","reason":"ユーザーの承認・採用判断","priority":"high","sourceAuthority":"user_confirmed","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0088","messageIndex":31,"role":"user","startLine":5,"endLine":5,"category":"user_intent","qualityType":"意図理解","label":"ユーザー意図","reason":"見た目・体験設計・方向性に関する条件","priority":"high","sourceAuthority":"user_confirmed","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0089","messageIndex":32,"role":"assistant","startLine":8,"endLine":8,"category":"hold_verify","qualityType":"課題","label":"未確認・保留","reason":"本番前に確認が必要な情報","priority":"high","sourceAuthority":"ai_structured","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0090","messageIndex":32,"role":"assistant","startLine":56,"endLine":56,"category":"must_not","qualityType":"注意・禁止","label":"注意・禁止","reason":"制作時に避ける条件・未確認情報の断定禁止","priority":"high","sourceAuthority":"ai_structured","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0091","messageIndex":32,"role":"assistant","startLine":76,"endLine":76,"category":"must_not","qualityType":"注意・禁止","label":"注意・禁止","reason":"制作時に避ける条件・未確認情報の断定禁止","priority":"high","sourceAuthority":"ai_structured","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0092","messageIndex":33,"role":"user","startLine":3,"endLine":3,"category":"user_approval","qualityType":"意図理解","label":"ユーザー承認","reason":"ユーザーの承認・採用判断","priority":"high","sourceAuthority":"user_confirmed","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0093","messageIndex":33,"role":"user","startLine":5,"endLine":5,"category":"user_intent","qualityType":"意図理解","label":"ユーザー意図","reason":"見た目・体験設計・方向性に関する条件","priority":"high","sourceAuthority":"user_confirmed","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0094","messageIndex":33,"role":"user","startLine":11,"endLine":11,"category":"must_not","qualityType":"注意・禁止","label":"注意・禁止","reason":"制作時に避ける条件・未確認情報の断定禁止","priority":"high","sourceAuthority":"user_confirmed","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0095","messageIndex":34,"role":"assistant","startLine":23,"endLine":23,"category":"must_not","qualityType":"注意・禁止","label":"注意・禁止","reason":"制作時に避ける条件・未確認情報の断定禁止","priority":"high","sourceAuthority":"ai_structured","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0096","messageIndex":34,"role":"assistant","startLine":38,"endLine":38,"category":"hold_verify","qualityType":"課題","label":"未確認・保留","reason":"本番前に確認が必要な情報","priority":"high","sourceAuthority":"ai_structured","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0097","messageIndex":34,"role":"assistant","startLine":60,"endLine":60,"category":"must_not","qualityType":"注意・禁止","label":"注意・禁止","reason":"制作時に避ける条件・未確認情報の断定禁止","priority":"high","sourceAuthority":"ai_structured","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0098","messageIndex":35,"role":"user","startLine":6,"endLine":6,"category":"user_intent","qualityType":"意図理解","label":"ユーザー意図","reason":"見た目・体験設計・方向性に関する条件","priority":"high","sourceAuthority":"user_confirmed","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0099","messageIndex":35,"role":"user","startLine":8,"endLine":8,"category":"user_intent","qualityType":"意図理解","label":"ユーザー意図","reason":"見た目・体験設計・方向性に関する条件","priority":"high","sourceAuthority":"user_confirmed","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0100","messageIndex":35,"role":"user","startLine":11,"endLine":11,"category":"hold_verify","qualityType":"課題","label":"未確認・保留","reason":"本番前に確認が必要な情報","priority":"high","sourceAuthority":"user_statement","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0101","messageIndex":36,"role":"assistant","startLine":2,"endLine":2,"category":"hold_verify","qualityType":"課題","label":"未確認・保留","reason":"本番前に確認が必要な情報","priority":"high","sourceAuthority":"ai_structured","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0102","messageIndex":36,"role":"assistant","startLine":7,"endLine":7,"category":"adopted_spec","qualityType":"仕様","label":"採用仕様","reason":"制作へ残せる仕様・文言","priority":"medium","sourceAuthority":"ai_structured","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0103","messageIndex":36,"role":"assistant","startLine":54,"endLine":54,"category":"must_not","qualityType":"注意・禁止","label":"注意・禁止","reason":"制作時に避ける条件・未確認情報の断定禁止","priority":"high","sourceAuthority":"ai_structured","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0104","messageIndex":37,"role":"user","startLine":3,"endLine":3,"category":"user_intent","qualityType":"意図理解","label":"ユーザー意図","reason":"見た目・体験設計・方向性に関する条件","priority":"high","sourceAuthority":"user_confirmed","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0105","messageIndex":37,"role":"user","startLine":8,"endLine":8,"category":"user_approval","qualityType":"意図理解","label":"ユーザー承認","reason":"ユーザーの承認・採用判断","priority":"high","sourceAuthority":"user_confirmed","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0106","messageIndex":37,"role":"user","startLine":14,"endLine":14,"category":"must_not","qualityType":"注意・禁止","label":"注意・禁止","reason":"制作時に避ける条件・未確認情報の断定禁止","priority":"high","sourceAuthority":"user_confirmed","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0107","messageIndex":38,"role":"assistant","startLine":22,"endLine":22,"category":"hold_verify","qualityType":"課題","label":"未確認・保留","reason":"本番前に確認が必要な情報","priority":"high","sourceAuthority":"ai_structured","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0108","messageIndex":38,"role":"assistant","startLine":56,"endLine":56,"category":"must_not","qualityType":"注意・禁止","label":"注意・禁止","reason":"制作時に避ける条件・未確認情報の断定禁止","priority":"high","sourceAuthority":"ai_structured","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0109","messageIndex":38,"role":"assistant","startLine":58,"endLine":58,"category":"must_not","qualityType":"注意・禁止","label":"注意・禁止","reason":"制作時に避ける条件・未確認情報の断定禁止","priority":"high","sourceAuthority":"ai_structured","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0110","messageIndex":39,"role":"user","startLine":3,"endLine":3,"category":"user_intent","qualityType":"意図理解","label":"ユーザー意図","reason":"見た目・体験設計・方向性に関する条件","priority":"high","sourceAuthority":"user_confirmed","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0111","messageIndex":39,"role":"user","startLine":5,"endLine":5,"category":"must_not","qualityType":"注意・禁止","label":"注意・禁止","reason":"制作時に避ける条件・未確認情報の断定禁止","priority":"high","sourceAuthority":"user_confirmed","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0112","messageIndex":39,"role":"user","startLine":7,"endLine":7,"category":"must_not","qualityType":"注意・禁止","label":"注意・禁止","reason":"制作時に避ける条件・未確認情報の断定禁止","priority":"high","sourceAuthority":"user_confirmed","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0113","messageIndex":40,"role":"assistant","startLine":19,"endLine":19,"category":"hold_verify","qualityType":"課題","label":"未確認・保留","reason":"本番前に確認が必要な情報","priority":"high","sourceAuthority":"ai_structured","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0114","messageIndex":40,"role":"assistant","startLine":59,"endLine":59,"category":"must_not","qualityType":"注意・禁止","label":"注意・禁止","reason":"制作時に避ける条件・未確認情報の断定禁止","priority":"high","sourceAuthority":"ai_structured","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0115","messageIndex":40,"role":"assistant","startLine":73,"endLine":73,"category":"must_not","qualityType":"注意・禁止","label":"注意・禁止","reason":"制作時に避ける条件・未確認情報の断定禁止","priority":"high","sourceAuthority":"ai_structured","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0116","messageIndex":41,"role":"user","startLine":5,"endLine":5,"category":"must_not","qualityType":"注意・禁止","label":"注意・禁止","reason":"制作時に避ける条件・未確認情報の断定禁止","priority":"high","sourceAuthority":"user_confirmed","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0117","messageIndex":41,"role":"user","startLine":7,"endLine":7,"category":"must_not","qualityType":"注意・禁止","label":"注意・禁止","reason":"制作時に避ける条件・未確認情報の断定禁止","priority":"high","sourceAuthority":"user_confirmed","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0118","messageIndex":41,"role":"user","startLine":9,"endLine":9,"category":"user_intent","qualityType":"意図理解","label":"ユーザー意図","reason":"見た目・体験設計・方向性に関する条件","priority":"high","sourceAuthority":"user_confirmed","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0119","messageIndex":42,"role":"assistant","startLine":1,"endLine":1,"category":"handoff_prompt","qualityType":"引き継ぎ","label":"次AI用プロンプト","reason":"制作AIへ渡す前提またはプロンプト化の内容","priority":"high","sourceAuthority":"ai_structured","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0120","messageIndex":42,"role":"assistant","startLine":2,"endLine":2,"category":"must_not","qualityType":"注意・禁止","label":"注意・禁止","reason":"制作時に避ける条件・未確認情報の断定禁止","priority":"high","sourceAuthority":"ai_structured","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0121","messageIndex":43,"role":"user","startLine":5,"endLine":5,"category":"must_not","qualityType":"注意・禁止","label":"注意・禁止","reason":"制作時に避ける条件・未確認情報の断定禁止","priority":"high","sourceAuthority":"user_confirmed","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0122","messageIndex":43,"role":"user","startLine":7,"endLine":7,"category":"user_intent","qualityType":"意図理解","label":"ユーザー意図","reason":"見た目・体験設計・方向性に関する条件","priority":"high","sourceAuthority":"user_confirmed","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0123","messageIndex":43,"role":"user","startLine":15,"endLine":15,"category":"next_action","qualityType":"タスク","label":"次作業","reason":"ユーザーが次に進めたい作業・相談内容","priority":"medium","sourceAuthority":"user_statement","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0124","messageIndex":44,"role":"assistant","startLine":1,"endLine":1,"category":"design_rule","qualityType":"デザイン","label":"デザイン条件","reason":"見た目・体験設計・方向性に関する条件","priority":"medium","sourceAuthority":"ai_structured","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0125","messageIndex":44,"role":"assistant","startLine":3,"endLine":3,"category":"must_not","qualityType":"注意・禁止","label":"注意・禁止","reason":"制作時に避ける条件・未確認情報の断定禁止","priority":"high","sourceAuthority":"ai_structured","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0126","messageIndex":44,"role":"assistant","startLine":4,"endLine":4,"category":"must_not","qualityType":"注意・禁止","label":"注意・禁止","reason":"制作時に避ける条件・未確認情報の断定禁止","priority":"high","sourceAuthority":"ai_structured","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0127","messageIndex":45,"role":"user","startLine":5,"endLine":5,"category":"must_not","qualityType":"注意・禁止","label":"注意・禁止","reason":"制作時に避ける条件・未確認情報の断定禁止","priority":"high","sourceAuthority":"user_confirmed","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0128","messageIndex":45,"role":"user","startLine":8,"endLine":8,"category":"user_intent","qualityType":"意図理解","label":"ユーザー意図","reason":"見た目・体験設計・方向性に関する条件","priority":"high","sourceAuthority":"user_confirmed","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0129","messageIndex":45,"role":"user","startLine":16,"endLine":16,"category":"must_not","qualityType":"注意・禁止","label":"注意・禁止","reason":"制作時に避ける条件・未確認情報の断定禁止","priority":"high","sourceAuthority":"user_confirmed","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0130","messageIndex":46,"role":"assistant","startLine":2,"endLine":2,"category":"must_not","qualityType":"注意・禁止","label":"注意・禁止","reason":"制作時に避ける条件・未確認情報の断定禁止","priority":"high","sourceAuthority":"ai_structured","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0131","messageIndex":47,"role":"user","startLine":3,"endLine":3,"category":"user_intent","qualityType":"意図理解","label":"ユーザー意図","reason":"見た目・体験設計・方向性に関する条件","priority":"high","sourceAuthority":"user_confirmed","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0132","messageIndex":47,"role":"user","startLine":5,"endLine":5,"category":"must_not","qualityType":"注意・禁止","label":"注意・禁止","reason":"制作時に避ける条件・未確認情報の断定禁止","priority":"high","sourceAuthority":"user_confirmed","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0133","messageIndex":47,"role":"user","startLine":10,"endLine":10,"category":"must_not","qualityType":"注意・禁止","label":"注意・禁止","reason":"制作時に避ける条件・未確認情報の断定禁止","priority":"high","sourceAuthority":"user_confirmed","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0134","messageIndex":48,"role":"assistant","startLine":22,"endLine":22,"category":"must_not","qualityType":"注意・禁止","label":"注意・禁止","reason":"制作時に避ける条件・未確認情報の断定禁止","priority":"high","sourceAuthority":"ai_structured","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0135","messageIndex":48,"role":"assistant","startLine":32,"endLine":32,"category":"adopted_spec","qualityType":"仕様","label":"採用仕様","reason":"制作へ残せる仕様・文言","priority":"high","sourceAuthority":"ai_structured","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0136","messageIndex":48,"role":"assistant","startLine":107,"endLine":107,"category":"must_not","qualityType":"注意・禁止","label":"注意・禁止","reason":"制作時に避ける条件・未確認情報の断定禁止","priority":"high","sourceAuthority":"ai_structured","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0137","messageIndex":48,"role":"assistant","startLine":110,"endLine":110,"category":"must_not","qualityType":"注意・禁止","label":"注意・禁止","reason":"制作時に避ける条件・未確認情報の断定禁止","priority":"high","sourceAuthority":"ai_structured","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0138","messageIndex":49,"role":"user","startLine":3,"endLine":3,"category":"next_action","qualityType":"タスク","label":"次作業","reason":"ユーザーが次に進めたい作業・相談内容","priority":"medium","sourceAuthority":"user_statement","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0139","messageIndex":49,"role":"user","startLine":5,"endLine":5,"category":"user_intent","qualityType":"意図理解","label":"ユーザー意図","reason":"見た目・体験設計・方向性に関する条件","priority":"high","sourceAuthority":"user_confirmed","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0140","messageIndex":49,"role":"user","startLine":6,"endLine":6,"category":"must_not","qualityType":"注意・禁止","label":"注意・禁止","reason":"制作時に避ける条件・未確認情報の断定禁止","priority":"high","sourceAuthority":"user_confirmed","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0141","messageIndex":50,"role":"assistant","startLine":1,"endLine":1,"category":"design_rule","qualityType":"デザイン","label":"デザイン条件","reason":"見た目・体験設計・方向性に関する条件","priority":"medium","sourceAuthority":"ai_structured","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0142","messageIndex":50,"role":"assistant","startLine":2,"endLine":2,"category":"adopted_spec","qualityType":"仕様","label":"採用仕様","reason":"制作へ残せる仕様・文言","priority":"high","sourceAuthority":"ai_structured","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0143","messageIndex":50,"role":"assistant","startLine":3,"endLine":3,"category":"must_not","qualityType":"注意・禁止","label":"注意・禁止","reason":"制作時に避ける条件・未確認情報の断定禁止","priority":"high","sourceAuthority":"ai_structured","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0144","messageIndex":51,"role":"user","startLine":3,"endLine":3,"category":"user_approval","qualityType":"意図理解","label":"ユーザー承認","reason":"ユーザーの承認・採用判断","priority":"high","sourceAuthority":"user_confirmed","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0145","messageIndex":51,"role":"user","startLine":7,"endLine":7,"category":"user_intent","qualityType":"意図理解","label":"ユーザー意図","reason":"見た目・体験設計・方向性に関する条件","priority":"high","sourceAuthority":"user_confirmed","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0146","messageIndex":51,"role":"user","startLine":8,"endLine":8,"category":"must_not","qualityType":"注意・禁止","label":"注意・禁止","reason":"制作時に避ける条件・未確認情報の断定禁止","priority":"high","sourceAuthority":"user_confirmed","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0147","messageIndex":52,"role":"assistant","startLine":1,"endLine":1,"category":"adopted_spec","qualityType":"仕様","label":"採用仕様","reason":"制作へ残せる仕様・文言","priority":"high","sourceAuthority":"ai_structured","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0148","messageIndex":52,"role":"assistant","startLine":16,"endLine":16,"category":"must_not","qualityType":"注意・禁止","label":"注意・禁止","reason":"制作時に避ける条件・未確認情報の断定禁止","priority":"high","sourceAuthority":"ai_structured","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0149","messageIndex":52,"role":"assistant","startLine":17,"endLine":17,"category":"must_not","qualityType":"注意・禁止","label":"注意・禁止","reason":"制作時に避ける条件・未確認情報の断定禁止","priority":"high","sourceAuthority":"ai_structured","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0150","messageIndex":53,"role":"user","startLine":3,"endLine":3,"category":"next_action","qualityType":"タスク","label":"次作業","reason":"ユーザーが次に進めたい作業・相談内容","priority":"medium","sourceAuthority":"user_statement","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0151","messageIndex":53,"role":"user","startLine":5,"endLine":5,"category":"user_intent","qualityType":"意図理解","label":"ユーザー意図","reason":"見た目・体験設計・方向性に関する条件","priority":"high","sourceAuthority":"user_confirmed","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0152","messageIndex":53,"role":"user","startLine":15,"endLine":15,"category":"hold_verify","qualityType":"課題","label":"未確認・保留","reason":"本番前に確認が必要な情報","priority":"high","sourceAuthority":"user_statement","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0153","messageIndex":54,"role":"assistant","startLine":2,"endLine":2,"category":"adopted_spec","qualityType":"仕様","label":"採用仕様","reason":"制作へ残せる仕様・文言","priority":"high","sourceAuthority":"ai_structured","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0154","messageIndex":54,"role":"assistant","startLine":3,"endLine":3,"category":"verification_gate","qualityType":"課題","label":"確認基準","reason":"完成後に確認する判定基準","priority":"high","sourceAuthority":"ai_structured","reuseTarget":["presentation_demo","step2_annotation_view"]},{"id":"starry_ann_0155","messageIndex":54,"role":"assistant","startLine":11,"endLine":11,"category":"hold_verify","qualityType":"課題","label":"未確認・保留","reason":"本番前に確認が必要な情報","priority":"high","sourceAuthority":"ai_structured","reuseTarget":["presentation_demo","step2_annotation_view"]}]};
+  /* v817: 残すデモ分類データは通常処理から隔離する。
+     サンプル本体は window.KashinoKiDemoSamples.starryMuseumClassification に置き、
+     STEP1→02の明示遷移で発行した短命permitがある時だけ参照する。 */
+  const STARRY_SAMPLE_PERMIT_TTL_MS = 15000;
+  function emptyClassificationSample(){
+    return { classificationVersion:'0.1-empty', sourceMode:'line_based_annotation', annotations:[] };
+  }
+  function conversationKeyForPermit(raw){
+    const conv = raw || {};
+    const messages = Array.isArray(conv.messages) ? conv.messages : [];
+    const title = conv.source?.title || conv.capture?.title || conv.title || '';
+    const file = conv.sourceFile || conv.filename || conv.fileName || conv.source?.filename || '';
+    const first = messages[0]?.text || '';
+    return [file, title, messages.length, first.slice(0, 80)].join('|').toLowerCase();
+  }
+  function activeConversationKeyForPermit(){
+    return conversationKeyForPermit(state.conversation || resolveExternalConversationJson() || {});
+  }
+  function issueStarrySamplePermit(reason){
+    window.__KASHINOKI_DEMO_SAMPLE_PERMIT = {
+      sample: 'starry-museum-classification',
+      reason: reason || 'step1-explicit-enter-step2',
+      issuedAt: Date.now(),
+      conversationKey: activeConversationKeyForPermit()
+    };
+  }
+  function readStarrySamplePermit(){
+    const permit = window.__KASHINOKI_DEMO_SAMPLE_PERMIT;
+    if(!permit || permit.sample !== 'starry-museum-classification') return null;
+    if(Date.now() - Number(permit.issuedAt || 0) > STARRY_SAMPLE_PERMIT_TTL_MS) return null;
+    if(permit.conversationKey !== activeConversationKeyForPermit()) return null;
+    return permit;
+  }
+  function restoreStarrySamplePermit(previous){
+    if(previous) window.__KASHINOKI_DEMO_SAMPLE_PERMIT = previous;
+    else { try{ delete window.__KASHINOKI_DEMO_SAMPLE_PERMIT; }catch(e){ window.__KASHINOKI_DEMO_SAMPLE_PERMIT = null; } }
+  }
+  function getStarryMuseumClassificationSample(){
+    if(!readStarrySamplePermit()) return emptyClassificationSample();
+    const sample = window.KashinoKiDemoSamples && window.KashinoKiDemoSamples.starryMuseumClassification;
+    if(sample && Array.isArray(sample.annotations)) return sample;
+    return emptyClassificationSample();
+  }
 
   const $ = (sel, root=document) => root.querySelector(sel);
   const $$ = (sel, root=document) => Array.from(root.querySelectorAll(sel));
@@ -189,6 +209,14 @@
   function annotationsForLine(messageIndex, line){
     return state.annotations.filter((a)=>Number(a.messageIndex)===Number(messageIndex) && Number(a.startLine)<=line && Number(a.endLine)>=line);
   }
+  /* v801: 複数行を1回のドラッグで登録したannotationは、アンダーラインは範囲全行へ出すが、
+     行右チップは1分類につき1個だけ表示する。削除・03登録・A〜F登録はannotation id単位のまま維持する。 */
+  function lineChipAnnotations(messageIndex, line){
+    return annotationsForLine(messageIndex, line).filter((a)=>{
+      const endLine = Number.isFinite(Number(a.endLine)) ? Number(a.endLine) : Number(a.startLine);
+      return Number(endLine) === Number(line);
+    });
+  }
 
   function normalizeConversation(raw){
     if(!raw || !Array.isArray(raw.messages)) throw new Error('messages[] を含む会話JSONを読み込んでください。');
@@ -224,20 +252,166 @@
       label:a.label || meta.label,
       reason:a.reason || '',
       displayGroup:a.displayGroup || meta.group || displayGroupOf(a.category),
-      qualityType: safeQualityType(a.qualityType || a.reviewType, a.category)
+      qualityType: safeQualityType(a.qualityType || a.reviewType, a.category),
+      source:a.source || '',
+      selectedText:a.selectedText || a.text || '',
+      conversationSignature:a.conversationSignature || '',
+      createdAt:a.createdAt || '',
+      deletedAt:a.deletedAt || '',
+      editorStatus:a.editorStatus || 'active',
+      sourceAnnotationId:a.sourceAnnotationId || a.id || ''
     };
   }
+
+  function conversationSignature(){
+    if(!state.conversation) return '';
+    const title = String(state.conversation.source?.title || '');
+    const file = String(state.conversation.sourceFile || '');
+    const count = Number(state.conversation.messages?.length || 0);
+    return `${title}|${file}|${count}`;
+  }
+  function readManualAnnotations(){
+    try{
+      const raw = localStorage.getItem(QUALITY02_MANUAL_ANNOTATIONS_KEY);
+      const parsed = raw ? JSON.parse(raw) : [];
+      return Array.isArray(parsed) ? parsed : [];
+    }catch(e){ return []; }
+  }
+  function writeManualAnnotations(records){
+    try{ localStorage.setItem(QUALITY02_MANUAL_ANNOTATIONS_KEY, JSON.stringify(Array.isArray(records) ? records : [])); }catch(e){}
+  }
+  function manualAnnotationsForCurrentConversation(){
+    const sig = conversationSignature();
+    if(!sig) return [];
+    return readManualAnnotations().filter(a => a && a.conversationSignature === sig);
+  }
+  function readDeletedAnnotationRecords(){
+    try{
+      const raw = localStorage.getItem(QUALITY02_DELETED_ANNOTATIONS_KEY);
+      const parsed = raw ? JSON.parse(raw) : [];
+      return Array.isArray(parsed) ? parsed : [];
+    }catch(e){ return []; }
+  }
+  function writeDeletedAnnotationRecords(records){
+    try{ localStorage.setItem(QUALITY02_DELETED_ANNOTATIONS_KEY, JSON.stringify(Array.isArray(records) ? records : [])); }catch(e){}
+  }
+  function deletedAnnotationIdsForCurrentConversation(){
+    const sig = conversationSignature();
+    if(!sig) return new Set();
+    return new Set(readDeletedAnnotationRecords().filter(r => r && r.conversationSignature === sig && r.id).map(r => String(r.id)));
+  }
+  function markAnnotationDeleted(id, ann){
+    const value = String(id || '').trim();
+    if(!value) return;
+    const sig = conversationSignature();
+    const records = readDeletedAnnotationRecords();
+    const next = records.filter(r => !(r && r.id === value && r.conversationSignature === sig));
+    next.push({ id:value, conversationSignature:sig, deletedAt:new Date().toISOString(), source:ann && ann.source || 'json', qualityType:ann && ann.qualityType || '', selectedText:ann && ann.selectedText || '' });
+    writeDeletedAnnotationRecords(next);
+  }
+  function removeManualAnnotationRecord(id){
+    const value = String(id || '').trim();
+    if(!value) return;
+    writeManualAnnotations(readManualAnnotations().filter(a => !(a && a.id === value)));
+  }
+  function mergeAnnotations(base, extra){
+    const out = [];
+    const seen = new Set();
+    const deletedIds = deletedAnnotationIdsForCurrentConversation();
+    (base || []).concat(extra || []).forEach((ann, i)=>{
+      const normalized = normalizeAnnotation(ann, i);
+      if(normalized.editorStatus === 'deleted' || normalized.deletedAt) return;
+      if(normalized.id && deletedIds.has(String(normalized.id))) return;
+      if(!Number.isFinite(normalized.messageIndex) || !Number.isFinite(normalized.startLine) || !Number.isFinite(normalized.endLine)) return;
+      const key = normalized.id || [normalized.messageIndex, normalized.startLine, normalized.endLine, normalized.qualityType, normalized.selectedText].join('|');
+      if(seen.has(key)) return;
+      seen.add(key);
+      out.push(normalized);
+    });
+    return out;
+  }
+  function saveManualAnnotationRecords(records){
+    const existing = readManualAnnotations();
+    const byId = new Map();
+    existing.concat(records || []).forEach(record=>{ if(record && record.id) byId.set(record.id, record); });
+    writeManualAnnotations(Array.from(byId.values()));
+  }
+  function lineMessageFor(messageIndex){
+    return state.lineMessages.find(msg => Number(msg.messageIndex) === Number(messageIndex));
+  }
+  function addManualAnnotation(payload){
+    if(!state.conversation) return [];
+    const messageIndex = Number(payload && payload.messageIndex);
+    const line = Number(payload && (payload.line || payload.startLine));
+    const startLine = Number(payload && (payload.startLine || payload.line));
+    const endLine = Number(payload && (payload.endLine || payload.line || payload.startLine));
+    if(!Number.isFinite(messageIndex) || !Number.isFinite(line)) return [];
+    const msg = lineMessageFor(messageIndex);
+    const role = payload.role || msg?.role || '';
+    const selectedText = String(payload.selectedText || payload.text || '').trim();
+    const types = Array.isArray(payload.qualityTypes) ? payload.qualityTypes : [payload.qualityType || payload.category || '仕様'];
+    const sig = conversationSignature();
+    const records = types.map((type, idx)=>{
+      const qualityType = isQuality02Type(type) ? type : '仕様';
+      const category = QUALITY02_MANUAL_CATEGORY_BY_TYPE[qualityType] || 'adopted_spec';
+      const meta = metaFor(category);
+      return {
+        id: payload.id || `manual_${Date.now()}_${Math.random().toString(36).slice(2,8)}_${idx+1}`,
+        messageIndex,
+        role,
+        startLine: Number.isFinite(startLine) ? startLine : line,
+        endLine: Number.isFinite(endLine) ? Math.max(startLine || line, endLine) : line,
+        category,
+        qualityType,
+        label: payload.label || meta.label || qualityType,
+        reason: payload.reason || selectedText || '02で手動追加した分類範囲',
+        displayGroup: meta.group || displayGroupOf(category),
+        source: 'manual',
+        selectedText,
+        conversationSignature: sig,
+        createdAt: new Date().toISOString()
+      };
+    });
+    saveManualAnnotationRecords(records);
+    state.annotations = mergeAnnotations(state.annotations, records);
+    updateStatus();
+    renderAll({ animateCounts:false });
+    return records;
+  }
+  function deleteAnnotation(id){
+    const value = String(id || '').trim();
+    if(!value) return false;
+    const ann = state.annotations.find(a => String(a.id || '') === value);
+    if(!ann) return false;
+    if(String(ann.source || '') === 'manual') removeManualAnnotationRecord(value);
+    else markAnnotationDeleted(value, ann);
+    state.annotations = state.annotations.filter(a => String(a.id || '') !== value);
+    updateStatus();
+    renderAll({ animateCounts:false });
+    try{ window.dispatchEvent(new CustomEvent('kashinoki02:annotation-deleted', { detail:{ id:value, annotation:ann } })); }catch(e){}
+    return true;
+  }
+  function restoreDeletedAnnotation(id){
+    const value = String(id || '').trim();
+    if(!value) return false;
+    const sig = conversationSignature();
+    writeDeletedAnnotationRecords(readDeletedAnnotationRecords().filter(r => !(r && r.id === value && r.conversationSignature === sig)));
+    syncFromExternalConversation({force:false, refresh:true});
+    return true;
+  }
+
   function setConversation(raw){
     state.conversation = normalizeConversation(raw);
     state.lineMessages = buildLineMessages(state.conversation);
-    state.annotations=[];
+    state.annotations = mergeAnnotations([], manualAnnotationsForCurrentConversation());
     updateStatus();
     renderAll();
   }
   function setAnnotations(raw, options={}){
     const anns = Array.isArray(raw) ? raw : raw.annotations;
     if(!Array.isArray(anns)) throw new Error('annotations[] が見つかりません。');
-    state.annotations = anns.map(normalizeAnnotation).filter((a)=>Number.isFinite(a.messageIndex)&&Number.isFinite(a.startLine)&&Number.isFinite(a.endLine));
+    const currentManual = state.annotations.filter(a => a && a.source === 'manual');
+    state.annotations = mergeAnnotations(anns, currentManual.concat(manualAnnotationsForCurrentConversation()));
     updateStatus();
     if(options && options.deferCountAnimation){
       renderAll({ countsInitialZero: true });
@@ -293,7 +467,7 @@
       const previousAnnotations = Array.isArray(state.annotations) ? state.annotations.slice() : [];
       state.conversation = normalizeConversation(raw);
       state.lineMessages = buildLineMessages(state.conversation);
-      state.annotations = (same && options.preserveAnnotations !== false && !options.clearAnnotations) ? previousAnnotations : [];
+      state.annotations = (same && options.preserveAnnotations !== false && !options.clearAnnotations) ? mergeAnnotations(previousAnnotations, manualAnnotationsForCurrentConversation()) : mergeAnnotations([], manualAnnotationsForCurrentConversation());
       updateStatus();
       renderAll({ animateCounts: !!options.animateCounts, countsInitialZero: !!options.countsInitialZero });
       return true;
@@ -327,7 +501,13 @@
   function syncFromStep1AndApplySample(options={}){
     const synced = syncFromExternalConversation({force:true});
     if(!synced) return false;
-    return applySampleAnnotationsForCurrentConversation(options);
+    const previousPermit = window.__KASHINOKI_DEMO_SAMPLE_PERMIT || null;
+    issueStarrySamplePermit('step1-explicit-enter-step2');
+    try{
+      return applySampleAnnotationsForCurrentConversation(options);
+    }finally{
+      restoreStarrySamplePermit(previousPermit);
+    }
   }
 
   window.KashinoKiClassificationBridge02 = window.KashinoKiClassificationBridge02 || {};
@@ -335,6 +515,10 @@
     loadConversation(raw){ setConversation(raw); return true; },
     loadAnnotations(raw){ setAnnotations(raw); return true; },
     loadSampleAnnotations(){ return applySampleAnnotationsForCurrentConversation({openPanel:false}); },
+    addManualAnnotation(payload){ return addManualAnnotation(payload || {}); },
+    deleteAnnotation(id){ return deleteAnnotation(id); },
+    removeAnnotation(id){ return deleteAnnotation(id); },
+    restoreDeletedAnnotation(id){ return restoreDeletedAnnotation(id); },
     syncFromStep1(){ return syncFromExternalConversation({force:true}); },
     syncFromStep1AndApplySample(options){ return syncFromStep1AndApplySample(options || {}); },
     sampleAnnotationsForCurrentConversation,
@@ -347,7 +531,7 @@
     const el=$('#ck02Status');
     if(!el) return;
     if(!state.conversation){
-      el.textContent='未読込：02内の分類反映モードです。サンプルまたはChatGPT会話JSONを読み込んでください。';
+      el.textContent='未読込：02内の分類反映モードです。ChatGPT会話JSONを読み込んでください。';
       return;
     }
     const title=state.conversation.source?.title || '無題';
@@ -384,7 +568,7 @@
         const color = primaryType ? (readQualityColors()[primaryType] || QUALITY02_DEFAULT_COLORS[primaryType]) : 'transparent';
         const lineStyle = primaryType ? lineStyleForQualityType(primaryType) : 'solid';
         const isBlankLine = !String(line.text || '').trim();
-        return `<span class="ck02-chat-line${anns.length?' is-annotated':''}${isBlankLine?' is-blank-line':''} is-line-style-${escapeHtml(lineStyle)}" data-message-index="${msg.messageIndex}" data-line="${line.line}" data-primary-type="${escapeHtml(primaryType)}" data-line-style="${escapeHtml(lineStyle)}" style="--ck02-line-color:${escapeHtml(color)};--ck02-line-style:${escapeHtml(lineStyle)};" ${typeAttrs}><span class="ck02-line-no">${padLine(line.line)}</span><span class="ck02-line-text">${isBlankLine ? '&nbsp;' : escapeHtml(line.text)}</span>${isBlankLine ? '' : annotationTagsHTML(anns)}</span>`;
+        return `<span class="ck02-chat-line${anns.length?' is-annotated':''}${isBlankLine?' is-blank-line':''} is-line-style-${escapeHtml(lineStyle)}" data-message-index="${msg.messageIndex}" data-line="${line.line}" data-primary-type="${escapeHtml(primaryType)}" data-line-style="${escapeHtml(lineStyle)}" style="--ck02-line-color:${escapeHtml(color)};--ck02-line-style:${escapeHtml(lineStyle)};" ${typeAttrs}><span class="ck02-line-no">${padLine(line.line)}</span><span class="ck02-line-text">${isBlankLine ? '&nbsp;' : escapeHtml(line.text)}</span>${isBlankLine ? '' : annotationTagsHTML(lineChipAnnotations(msg.messageIndex,line.line))}</span>`;
       }).join('');
       return `<article class="chat-bubble ${roleClass} ck02-message" data-message-index="${msg.messageIndex}"><label>${escapeHtml(roleLabel)} / message ${msg.messageIndex}</label><p>${lineHtml}</p></article>`;
     }).join('')}</div>`;
@@ -498,16 +682,17 @@
 
   function renderExistingLeftLine(messageIndex, line){
     const anns = annotationsForLine(messageIndex, line.line);
+    const chipAnns = lineChipAnnotations(messageIndex, line.line);
     const types = lineQualityTypes(messageIndex, line.line);
     const primaryType = types[0] || '';
     const color = primaryType ? (readQualityColors()[primaryType] || QUALITY02_DEFAULT_COLORS[primaryType] || '#ef9cad') : 'transparent';
     const lineStyle = primaryType ? lineStyleForQualityType(primaryType) : 'solid';
-    const lineTags = anns.length ? `<span class="ck02-left-line-tags">${anns.map((a)=>{
+    const lineTags = chipAnns.length ? `<span class="ck02-left-line-tags">${chipAnns.map((a)=>{
       const qt = safeQualityType(a.qualityType, a.category);
       if(!qt) return '';
       const chipColor = readQualityColors()[qt] || QUALITY02_DEFAULT_COLORS[qt] || '#dfe7e4';
       const chipText = textColorFor(chipColor);
-      return `<span class="ck02-left-line-tag" title="${escapeHtml(a.reason || '')}" style="--ck02-left-chip-color:${escapeHtml(chipColor)};--ck02-left-chip-text:${escapeHtml(chipText)};">${escapeHtml(qt)}</span>`;
+      return `<button type="button" class="ck02-left-line-tag kashinoki-v444-class-chip kashinoki-v449-chip is-quality02-line-chip" data-quality02-chip-id="${escapeHtml(a.id)}" data-quality02-chip-type="${escapeHtml(qt)}" data-quality02-chip-text="${escapeHtml(a.selectedText || a.reason || line.text || '')}" data-source-annotation-id="${escapeHtml(a.id)}" data-quality02-source="${escapeHtml(a.source || 'json')}" title="${escapeHtml(a.reason || '')}" style="--ck02-left-chip-color:${escapeHtml(chipColor)};--ck02-left-chip-text:${escapeHtml(chipText)};">${escapeHtml(qt)}</button>`;
     }).filter(Boolean).join('')}</span>` : '';
     const isBlankLine = !String(line.text || '').trim();
     return `<span class="ck02-left-line${types.length?' is-annotated':''}${isBlankLine?' is-blank-line':''} is-line-style-${escapeHtml(lineStyle)}" data-message-index="${messageIndex}" data-line="${line.line}" data-line-style="${escapeHtml(lineStyle)}" style="--ck02-left-line-color:${escapeHtml(color)};--ck02-left-line-style:${escapeHtml(lineStyle)};"><span class="ck02-left-line-no">${padLine(line.line)}</span><span class="ck02-left-line-text">${isBlankLine ? '&nbsp;' : escapeHtml(line.text)}</span>${isBlankLine ? '' : lineTags}</span>`;
@@ -569,11 +754,14 @@
 
   function summaryHtmlFromCounts(counts, initialZero){
     const current = document.getElementById('portfolio-quality')?.getAttribute('data-review02-current') || 'all';
+    const colors = readQualityColors();
     const items = COUNT_LABELS.map(([label, filter], index)=>{
       const selected = filter === current || (!current && index === 0);
       const value = Number(counts[filter] || 0);
       const shown = initialZero ? 0 : value;
-      return `<button type="button" class="workflow-brief-card kashinoki-filter-button${selected ? ' is-active is-selected' : ''}" role="button" tabindex="0" aria-pressed="${selected ? 'true' : 'false'}" data-review02-filter="${escapeHtml(filter)}" data-quality02-count-card="true" title="${escapeHtml(label)}だけ表示"><span>${escapeHtml(label)}</span><b data-quality-final="${escapeHtml(value)}">${escapeHtml(shown)}</b></button>`;
+      const typeColor = isQuality02Type(filter) ? (colors[filter] || QUALITY02_DEFAULT_COLORS[filter] || '') : '';
+      const colorStyle = typeColor ? ` style="--ck02-count-color:${escapeHtml(typeColor)};--ck02-count-text:${escapeHtml(textColorFor(typeColor))};"` : '';
+      return `<button type="button" class="workflow-brief-card kashinoki-filter-button${selected ? ' is-active is-selected' : ''}" role="button" tabindex="0" aria-pressed="${selected ? 'true' : 'false'}" data-review02-filter="${escapeHtml(filter)}" data-quality02-count-card="true" title="${escapeHtml(label)}だけ表示"${colorStyle}><span>${escapeHtml(label)}</span><b data-quality-final="${escapeHtml(value)}">${escapeHtml(shown)}</b></button>`;
     });
     /* v733: 既存02の3段目密度を維持するため、ボタンが無いマスも白い枠で埋める。 */
     const columns = 5;
@@ -596,9 +784,18 @@
     if(existingSignature !== currentSignature){
       summary.innerHTML = summaryHtmlFromCounts(counts, !!initialZero);
     }else{
+      const colors = readQualityColors();
       COUNT_LABELS.forEach(([,filter])=>{
-        const b = summary.querySelector(`[data-review02-filter="${cssEscape(filter)}"] b`);
+        const button = summary.querySelector(`[data-review02-filter="${cssEscape(filter)}"]`);
+        const b = button ? button.querySelector('b') : null;
         if(!b) return;
+        if(button && isQuality02Type(filter)){
+          const typeColor = colors[filter] || QUALITY02_DEFAULT_COLORS[filter] || '';
+          if(typeColor){
+            button.style.setProperty('--ck02-count-color', typeColor);
+            button.style.setProperty('--ck02-count-text', textColorFor(typeColor));
+          }
+        }
         const value = String(Number(counts[filter] || 0));
         b.setAttribute('data-quality-final', value);
         if(initialZero) b.textContent = '0';
@@ -778,8 +975,6 @@
       </div>
       <div class="ck02-bridge-body">
         <div class="ck02-actions">
-          <button class="ck02-btn ck02-btn-primary" id="ck02LoadSample" type="button">3ターンサンプル</button>
-          <button class="ck02-btn" id="ck02LoadSampleAnn" type="button">サンプル分類JSON</button>
           <button class="ck02-btn" id="ck02ApplyAnn" type="button">分類JSONを反映</button>
           <button class="ck02-btn" id="ck02MakePrompt" type="button">分類プロンプト生成</button>
           <label class="ck02-file-label">会話JSONを選択<input id="ck02ConversationFile" type="file" accept="application/json,.json"></label>
@@ -807,14 +1002,33 @@
   }
 
   function currentConversationLooksStarryMuseum(){
-    const title = String(state.conversation?.source?.title || '');
-    const sourceFile = String(state.conversation?.sourceFile || '');
-    const count = Number(state.conversation?.messages?.length || 0);
-    return title.includes('プラネタリウム') || title.includes('星空科学館') || sourceFile.includes('星空科学館') || count >= 20;
+    /* v809:
+       旧デモ分類の「自動流入」は止めたまま、STEP1下部の
+       「中身を確かめる」から明示的に02へ進んだ場合だけ、
+       星空科学館デモ本文に対応する分類サンプルを反映する。
+       03へ直接入った場合や、未確定のPENDING会話だけでは true にしない。 */
+    if(!readStarrySamplePermit()) return false;
+    const conv = state.conversation || resolveExternalConversationJson() || {};
+    const haystack = [
+      conv.sourceFile,
+      conv.filename,
+      conv.fileName,
+      conv.source?.title,
+      conv.source?.filename,
+      conv.capture?.title,
+      conv.title,
+      (Array.isArray(conv.messages) ? conv.messages.slice(0, 8).map(m => m && m.text).join(' ') : '')
+    ].filter(Boolean).join(' ');
+    return /星空科学館|プラネタリウム|来館体験|starry[-_ ]?museum/i.test(haystack);
   }
 
   function sampleAnnotationsForCurrentConversation(){
-    return currentConversationLooksStarryMuseum() ? starryMuseumClassificationSample : sampleAnnotations;
+    if(currentConversationLooksStarryMuseum()) return getStarryMuseumClassificationSample();
+    return {
+      classificationVersion: '0.1-empty',
+      sourceMode: 'line_based_annotation',
+      annotations: []
+    };
   }
 
   function bindEvents(){
@@ -822,14 +1036,6 @@
       const panel=$('#ck02BridgePanel');
       panel?.classList.toggle('is-open');
       $('#ck02Toggle').textContent=panel?.classList.contains('is-open')?'閉じる':'開く';
-    });
-    $('#ck02LoadSample')?.addEventListener('click',()=>{
-      setConversation(sampleConversation);
-      $('#ck02BridgePanel')?.classList.add('is-open');
-      $('#ck02Toggle').textContent='閉じる';
-    });
-    $('#ck02LoadSampleAnn')?.addEventListener('click',()=>{
-      $('#ck02AnnotationArea').value=JSON.stringify(sampleAnnotationsForCurrentConversation(),null,2);
     });
     $('#ck02ApplyAnn')?.addEventListener('click',()=>{
       try{ setAnnotations(JSON.parse($('#ck02AnnotationArea').value)); }
