@@ -407,9 +407,10 @@ html body.theme-neumorphism .kashinoki-v422-03plus .kashinoki-v422-03plus-btn[ar
   font-size:11px !important;
 }
 #portfolio-quality .kashinoki-v449-category-picks .is-selected{
-  background:var(--kashinoki-accent-12, rgba(150,46,255,.16)) !important;
-  border-color:var(--kashinoki-accent-54, rgba(150,46,255,.44)) !important;
-  box-shadow:inset 3px 3px 7px rgba(132,142,155,.18), inset -3px -3px 7px rgba(255,255,255,.54) !important;
+  background:color-mix(in srgb, var(--quality02-pick-color, var(--kashinoki-accent, #962eff)) 16%, rgba(255,255,255,.70)) !important;
+  border-color:color-mix(in srgb, var(--quality02-pick-color, var(--kashinoki-accent, #962eff)) 68%, transparent) !important;
+  color:color-mix(in srgb, var(--quality02-pick-color, var(--kashinoki-accent, #962eff)) 34%, #27322f) !important;
+  box-shadow:inset 3px 3px 7px rgba(132,142,155,.18), inset -3px -3px 7px rgba(255,255,255,.54), 0 0 0 1px color-mix(in srgb, var(--quality02-pick-color, var(--kashinoki-accent, #962eff)) 34%, transparent) !important;
 }
 #portfolio-quality .kashinoki-v449-editor-label{
   font-size:10px !important;
@@ -740,8 +741,8 @@ html body.theme-neumorphism .kashinoki-v422-03plus .kashinoki-v422-03plus-btn[ar
   opacity:.88 !important;
 }
 #portfolio-quality .kashinoki-v449-category-picks .kashinoki-v422-03plus-btn.is-selected{
-  box-shadow:inset 4px 4px 9px rgba(132,142,155,.20), inset -4px -4px 9px rgba(255,255,255,.58) !important;
-  border-color:var(--kashinoki-accent-54, rgba(150,46,255,.44)) !important;
+  box-shadow:inset 4px 4px 9px rgba(132,142,155,.20), inset -4px -4px 9px rgba(255,255,255,.58), 0 0 0 1px color-mix(in srgb, var(--quality02-pick-color, var(--kashinoki-accent, #962eff)) 38%, transparent), 0 0 12px color-mix(in srgb, var(--quality02-pick-color, var(--kashinoki-accent, #962eff)) 18%, transparent) !important;
+  border-color:color-mix(in srgb, var(--quality02-pick-color, var(--kashinoki-accent, #962eff)) 68%, transparent) !important;
 }
 #portfolio-quality[data-quality02-editor-mode="range"] .kashinoki-v449-editor-panel,
 #portfolio-quality[data-quality02-editor-mode="chip"] .kashinoki-v449-editor-panel{
@@ -4227,3 +4228,174 @@ html body.theme-neumorphism .kashinoki-v422-03plus .kashinoki-v422-03plus-btn[ar
 
 /* v805: Public demo removes the abandoned A-F text-selection popover. */
 .artifact-v572-selection-popover{ display:none !important; }
+
+/* v793: STEP2 registered chips stay on the selected line, not in the old lower chip rail. */
+#portfolio-quality .ck02-left-line .ck02-left-line-tags .kashinoki-v449-chip.is-quality02-line-chip{
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  min-height:12px !important;
+  height:12px !important;
+  padding:1px 6px !important;
+  margin:0 !important;
+  border-radius:999px !important;
+  font-size:6px !important;
+  line-height:1 !important;
+  opacity:.74 !important;
+  box-shadow:2px 2px 6px rgba(124,135,132,.10), -2px -2px 6px rgba(255,255,255,.48) !important;
+  vertical-align:baseline !important;
+}
+#portfolio-quality .ck02-left-line .ck02-left-line-tags .kashinoki-v449-chip.is-quality02-line-chip:not(.is-quality02-chip-selected){
+  background:color-mix(in srgb, var(--quality02-spec-color, #9dd3d9) 34%, rgba(255,255,255,.62)) !important;
+  border-color:rgba(84,104,100,.16) !important;
+}
+#portfolio-quality .ck02-left-line .ck02-left-line-tags .kashinoki-v449-chip.is-quality02-line-chip.is-quality02-chip-selected{
+  opacity:1 !important;
+}
+
+/* v794: STEP2 manual registration must reuse the same visual contract as JSON-reflected classifications.
+   Line-side chips use .ck02-left-line-tag sizing/color, and manual underlines inside JSON line rows use the
+   same text-decoration thickness/style/offset as .ck02-left-line-text. The old absolute underline layer is
+   suppressed for ck02-left-message so dotted/wavy intervals do not diverge from imported JSON display. */
+#portfolio-quality .ck02-left-message > p{
+  padding-bottom:0 !important;
+}
+#portfolio-quality .ck02-left-message > .kashinoki-v482-underline-layer{
+  display:none !important;
+}
+#portfolio-quality .ck02-left-line .ck02-left-line-tags .kashinoki-v449-chip.ck02-left-line-tag.is-quality02-line-chip{
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  min-height:10px !important;
+  height:auto !important;
+  padding:1px 4px !important;
+  margin:0 !important;
+  border-radius:999px !important;
+  font-size:6px !important;
+  line-height:1 !important;
+  letter-spacing:.01em !important;
+  font-weight:800 !important;
+  opacity:1 !important;
+  background:var(--ck02-left-chip-color, rgba(255,255,255,.72)) !important;
+  border:1px solid color-mix(in srgb, var(--ck02-left-chip-color, #dfe7e4) 58%, rgba(40,48,46,.12)) !important;
+  color:var(--ck02-left-chip-text, rgba(37,52,49,.66)) !important;
+  -webkit-text-fill-color:var(--ck02-left-chip-text, rgba(37,52,49,.66)) !important;
+  box-shadow:4px 4px 10px rgba(160,166,164,.14), -4px -4px 10px rgba(255,255,255,.52), inset 1px 1px 2px rgba(255,255,255,.24) !important;
+  vertical-align:baseline !important;
+}
+#portfolio-quality .ck02-left-line .ck02-left-line-tags .kashinoki-v449-chip.ck02-left-line-tag.is-quality02-line-chip:not(.is-quality02-chip-selected){
+  background:var(--ck02-left-chip-color, rgba(255,255,255,.72)) !important;
+  border-color:color-mix(in srgb, var(--ck02-left-chip-color, #dfe7e4) 58%, rgba(40,48,46,.12)) !important;
+  color:var(--ck02-left-chip-text, rgba(37,52,49,.66)) !important;
+  -webkit-text-fill-color:var(--ck02-left-chip-text, rgba(37,52,49,.66)) !important;
+  opacity:1 !important;
+}
+#portfolio-quality .ck02-left-line .kashinoki-v449-marked-range{
+  background-image:none !important;
+  background-color:transparent !important;
+  padding:0 !important;
+  box-shadow:none !important;
+  border-radius:0 !important;
+  text-decoration-line:underline !important;
+  text-decoration-color:var(--ck02-left-line-color, currentColor) !important;
+  text-decoration-style:var(--ck02-left-line-style, solid) !important;
+  text-decoration-thickness:1.25px !important;
+  text-underline-offset:.18em !important;
+  text-decoration-skip-ink:auto !important;
+}
+#portfolio-quality .ck02-left-line .kashinoki-v449-marked-range.is-line-style-wavy{
+  text-decoration-thickness:1.15px !important;
+  text-underline-offset:.16em !important;
+}
+#portfolio-quality .ck02-left-line .kashinoki-v449-marked-range.is-line-style-dotted{
+  text-decoration-thickness:1.35px !important;
+  text-underline-offset:.18em !important;
+}
+
+/* v800: A〜F editor link-state badges. Editor text remains editable, but source link status stays visible. */
+.artifact-v800-link-status{
+  display:inline-flex;
+  align-items:center;
+  margin:0 7px 0 4px;
+  padding:2px 7px;
+  border-radius:999px;
+  font-size:10px;
+  line-height:1.35;
+  letter-spacing:.02em;
+  color:rgba(52,64,61,.78);
+  background:rgba(255,255,255,.34);
+  box-shadow:inset 2px 2px 4px rgba(113,126,121,.12), inset -2px -2px 4px rgba(255,255,255,.36);
+  user-select:none;
+}
+.artifact-v660-editor-row.is-source-missing .artifact-v800-link-status{
+  color:rgba(92,54,48,.88);
+  background:rgba(239,156,173,.18);
+}
+.artifact-v660-editor-row.is-source-missing .artifact-v702-row-copy{
+  text-decoration: underline dotted rgba(239,156,173,.52);
+  text-underline-offset: 3px;
+}
+
+/* v805: STEP2 selection guidance pulse uses the display accent color, 1.8s timing, and category-colored selected buttons.
+   When a text range is active, guide three targets without changing the data flow:
+   1) register/cancel action group, 2) category button group, 3) temporary line chip. */
+#portfolio-quality[data-quality02-editor-mode="range"]{
+  --kashinoki-v803-guide-accent: var(--nm-accent, var(--kashinoki-accent, #962eff));
+  --kashinoki-v803-guide-border: var(--kashinoki-accent-54, color-mix(in srgb, var(--kashinoki-v803-guide-accent) 54%, transparent));
+  --kashinoki-v803-guide-soft: var(--kashinoki-accent-16, color-mix(in srgb, var(--kashinoki-v803-guide-accent) 16%, transparent));
+  --kashinoki-v803-guide-glow: var(--kashinoki-accent-30, color-mix(in srgb, var(--kashinoki-v803-guide-accent) 30%, transparent));
+}
+#portfolio-quality[data-quality02-editor-mode="range"] .kashinoki-v451-left-actions,
+#portfolio-quality[data-quality02-editor-mode="range"] .kashinoki-v449-category-picks{
+  position:relative !important;
+  isolation:isolate !important;
+  border-radius:18px !important;
+}
+#portfolio-quality[data-quality02-editor-mode="range"] .kashinoki-v451-left-actions::after,
+#portfolio-quality[data-quality02-editor-mode="range"] .kashinoki-v449-category-picks::after{
+  content:"";
+  position:absolute;
+  inset:-7px !important;
+  border:1px solid var(--kashinoki-v803-guide-border) !important;
+  border-radius:20px !important;
+  pointer-events:none !important;
+  opacity:.22;
+  box-shadow:0 0 0 0 transparent, 0 0 10px var(--kashinoki-v803-guide-soft);
+  animation:kashinokiV803GuideFramePulse 1.8s ease-in-out infinite !important;
+  z-index:4;
+}
+#portfolio-quality[data-quality02-editor-mode="range"] .kashinoki-v451-left-actions > *,
+#portfolio-quality[data-quality02-editor-mode="range"] .kashinoki-v449-category-picks > *{
+  position:relative;
+  z-index:5;
+}
+#portfolio-quality[data-quality02-editor-mode="range"] .kashinoki-v470-temp-chip{
+  outline:none !important;
+  animation:kashinokiV803TempChipPulse 1.8s ease-in-out infinite !important;
+  will-change:opacity, filter, box-shadow;
+}
+#portfolio-quality[data-quality02-editor-mode="range"] .kashinoki-v470-temp-chip:not(:empty){
+  opacity:.48 !important;
+  filter:saturate(.9) brightness(1.03);
+  box-shadow:4px 4px 10px rgba(160,166,164,.12), -4px -4px 10px rgba(255,255,255,.42), inset 1px 1px 2px rgba(255,255,255,.18) !important;
+}
+@keyframes kashinokiV803GuideFramePulse{
+  0%,100%{opacity:.20;box-shadow:0 0 0 0 transparent, 0 0 10px var(--kashinoki-v803-guide-soft);}
+  48%{opacity:.94;box-shadow:0 0 0 3px var(--kashinoki-v803-guide-soft), 0 0 18px var(--kashinoki-v803-guide-glow);}
+}
+@keyframes kashinokiV803TempChipPulse{
+  0%,100%{opacity:.42;filter:saturate(.82) brightness(1.02);}
+  48%{opacity:.90;filter:saturate(1.08) brightness(1.08);}
+}
+@media(prefers-reduced-motion:reduce){
+  #portfolio-quality[data-quality02-editor-mode="range"] .kashinoki-v451-left-actions::after,
+  #portfolio-quality[data-quality02-editor-mode="range"] .kashinoki-v449-category-picks::after,
+  #portfolio-quality[data-quality02-editor-mode="range"] .kashinoki-v470-temp-chip{
+    animation:none !important;
+  }
+  #portfolio-quality[data-quality02-editor-mode="range"] .kashinoki-v451-left-actions::after,
+  #portfolio-quality[data-quality02-editor-mode="range"] .kashinoki-v449-category-picks::after{
+    opacity:.72 !important;
+  }
+}
