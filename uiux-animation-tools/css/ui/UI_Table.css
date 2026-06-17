@@ -370,3 +370,166 @@ body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #case-compa
 body[data-ui-variant="variant-1-glass"][data-ui-theme="neumorphism"] #case-comparison.case-palette-only .case-action-button.case-add-slot-button {
     opacity: 0.94 !important;
 }
+
+
+/* v-left-button-icon-stable: 左下ボタンの画像アイコンを確実に表示し、ボタン中心へ固定する。 */
+#case-comparison .case-layout-toggle,
+#case-comparison.case-palette-only .case-layout-toggle,
+#case-comparison .case-action-button,
+#case-comparison.case-palette-only .case-action-button {
+    overflow: hidden !important;
+    font-size: 0 !important;
+    line-height: 0 !important;
+    color: transparent !important;
+    -webkit-text-fill-color: transparent !important;
+    text-shadow: none !important;
+}
+
+#case-comparison .case-layout-toggle::before,
+#case-comparison.case-palette-only .case-layout-toggle::before,
+#case-comparison .case-action-button .case-action-glyph::before,
+#case-comparison.case-palette-only .case-action-button .case-action-glyph::before {
+    content: none !important;
+    display: none !important;
+}
+
+#case-comparison .case-layout-toggle .case-layout-glyph,
+#case-comparison.case-palette-only .case-layout-toggle .case-layout-glyph,
+#case-comparison .case-action-button .case-action-glyph,
+#case-comparison.case-palette-only .case-action-button .case-action-glyph {
+    position: absolute !important;
+    left: 50% !important;
+    top: 50% !important;
+    display: block !important;
+    width: 66% !important;
+    height: 66% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    color: transparent !important;
+    -webkit-text-fill-color: transparent !important;
+    text-shadow: none !important;
+    background-color: rgba(255, 255, 255, 0.92) !important;
+    -webkit-mask-repeat: no-repeat !important;
+    mask-repeat: no-repeat !important;
+    -webkit-mask-position: center center !important;
+    mask-position: center center !important;
+    -webkit-mask-size: contain !important;
+    mask-size: contain !important;
+    transform: translate(-50%, -50%) !important;
+    transform-origin: center center !important;
+    pointer-events: none !important;
+}
+
+#case-comparison .case-layout-toggle .case-layout-glyph,
+#case-comparison.case-palette-only .case-layout-toggle .case-layout-glyph {
+    width: 64% !important;
+    height: 64% !important;
+    -webkit-mask-image: url('../../assets/icons/case-layout-toggle.png') !important;
+    mask-image: url('../../assets/icons/case-layout-toggle.png') !important;
+}
+
+#case-comparison .case-action-button.case-add-slot-button .case-action-glyph,
+#case-comparison.case-palette-only .case-action-button.case-add-slot-button .case-action-glyph {
+    -webkit-mask-image: url('../../assets/icons/case-action-add.png') !important;
+    mask-image: url('../../assets/icons/case-action-add.png') !important;
+}
+
+#case-comparison .case-action-button.case-update-slot-button .case-action-glyph,
+#case-comparison.case-palette-only .case-action-button.case-update-slot-button .case-action-glyph {
+    -webkit-mask-image: url('../../assets/icons/case-action-update.png') !important;
+    mask-image: url('../../assets/icons/case-action-update.png') !important;
+}
+
+#case-comparison .case-action-button.case-delete-slot-button .case-action-glyph,
+#case-comparison.case-palette-only .case-action-button.case-delete-slot-button .case-action-glyph {
+    -webkit-mask-image: url('../../assets/icons/case-action-delete.png') !important;
+    mask-image: url('../../assets/icons/case-action-delete.png') !important;
+}
+/* v-left-button-img-icons: font/maskを使わず、画像そのものを中央配置する。 */
+#case-comparison .case-layout-toggle,
+#case-comparison.case-palette-only .case-layout-toggle,
+#case-comparison .case-action-button,
+#case-comparison.case-palette-only .case-action-button {
+    position: absolute !important;
+    overflow: hidden !important;
+    font-size: 0 !important;
+    line-height: 0 !important;
+    color: transparent !important;
+    -webkit-text-fill-color: transparent !important;
+    text-shadow: none !important;
+}
+
+#case-comparison .case-layout-toggle::before,
+#case-comparison.case-palette-only .case-layout-toggle::before,
+#case-comparison .case-action-button::before,
+#case-comparison.case-palette-only .case-action-button::before,
+#case-comparison .case-layout-glyph,
+#case-comparison.case-palette-only .case-layout-glyph,
+#case-comparison .case-action-glyph,
+#case-comparison.case-palette-only .case-action-glyph {
+    content: none !important;
+    display: none !important;
+}
+
+#case-comparison .case-layout-icon,
+#case-comparison.case-palette-only .case-layout-icon,
+#case-comparison .case-action-icon,
+#case-comparison.case-palette-only .case-action-icon {
+    position: absolute !important;
+    left: 50% !important;
+    top: 50% !important;
+    display: block !important;
+    width: 66% !important;
+    height: 66% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    transform: translate(-50%, -50%) !important;
+    transform-origin: center center !important;
+    object-fit: contain !important;
+    opacity: 0.94 !important;
+    pointer-events: none !important;
+    user-select: none !important;
+    filter: none !important;
+}
+
+#case-comparison .case-layout-icon,
+#case-comparison.case-palette-only .case-layout-icon {
+    width: 64% !important;
+    height: 64% !important;
+}
+
+
+/* v-left-layout-inline-svg: 三角だけは外部画像参照に依存せず、inline SVGをボタン中央へ表示する。 */
+#case-comparison .case-layout-toggle .case-layout-icon,
+#case-comparison.case-palette-only .case-layout-toggle .case-layout-icon {
+    position: absolute !important;
+    left: 50% !important;
+    top: 50% !important;
+    display: block !important;
+    width: 64% !important;
+    height: 64% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    transform: translate(-50%, -50%) !important;
+    transform-origin: center center !important;
+    opacity: 0.96 !important;
+    pointer-events: none !important;
+    user-select: none !important;
+    overflow: visible !important;
+}
+#case-comparison .case-layout-toggle .case-layout-icon path,
+#case-comparison.case-palette-only .case-layout-toggle .case-layout-icon path {
+    fill: rgba(255,255,255,0.94) !important;
+}
+
+
+/* v-left-layout-state-arrow: レイアウト状態に合わせて三角を上/右へ切り替える。 */
+#case-comparison.case-palette-only[data-layout="vertical"] .case-layout-toggle .case-layout-icon,
+#case-comparison[data-layout="vertical"] .case-layout-toggle .case-layout-icon {
+    transform: translate(-50%, -50%) rotate(0deg) !important;
+}
+
+#case-comparison.case-palette-only:not([data-layout="vertical"]) .case-layout-toggle .case-layout-icon,
+#case-comparison:not([data-layout="vertical"]) .case-layout-toggle .case-layout-icon {
+    transform: translate(-50%, -50%) rotate(90deg) !important;
+}

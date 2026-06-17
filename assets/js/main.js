@@ -22,25 +22,36 @@ const STORAGE_KEY = "portfoliohub.systemToolsIntroSettings";
 const LEGACY_STORAGE_KEY = "portfoliohub.visual-settings.v1";
 
 const defaults = {
-  "bg-lightness": 0.82,
-  "bg-warmth": 1.42,
+  "bg-lightness": 1.16,
+  "bg-warmth": 1.17,
   "light-strength": 2,
   "card-alpha": 0.19,
   "card-blur": 8,
   "card-border-alpha": 0.59,
   "card-shadow-strength": 0.24,
   "text-strength": 1,
-  scale: 1.06,
+  "scale": 1.06,
   "card-gap": 6,
   "card-radius": 16,
   "card-height": 380,
   "card-padding": 34,
-  "light-position": 1.5,
-  "light-spread": 0.83,
+  "light-position": 0.9,
+  "light-spread": 0.56,
   "card-highlight-strength": 0.9,
   "card-inner-light": 0.02,
   "text-shadow-strength": 0.21,
   "hover-text-shadow-color": "#b3a18f",
+  "hover-line1-size": 19.5,
+  "hover-line2-size": 19.5,
+  "hover-line3-size": 14.5,
+  "hover-line-gap": 16,
+  "hover-summary-gap": 30,
+  "hover-char-start-delay": 0.08,
+  "hover-char-step": 0.04,
+  "hover-char-duration": 1.12,
+  "hover-char-offset": 0.87,
+  "hover-char-blur": 3.5,
+  "hover-reveal-mode": "down",
   "shadow-distance": 10,
   "shadow-blur": 8,
   "shadow-alpha": 0.5,
@@ -52,7 +63,7 @@ const defaults = {
   "card-radius-smooth": 0.82,
   "card-highlight-y": 0.18,
   "card-bottom-tint": 0.4,
-  "bg-angle": 240,
+  "bg-angle": 238,
   "bg-contrast": 1.3,
   "page-padding-x": 1.28,
   "page-padding-y": 1.28,
@@ -60,7 +71,7 @@ const defaults = {
   "extensions-size": 0.84,
   "pill-alpha": 0.17,
   "pill-border-alpha": 0.32,
-  "card-content-y": -12,
+  "card-content-y": -5,
   "card-content-x": 12,
   "card-text-gap": 2,
   "title-size": 0.86,
@@ -75,14 +86,19 @@ const defaults = {
   "shadow-spread": 0.72,
   "card-exit-duration": 1.6,
   "intro-in-duration": 1.9,
-  "intro-out-duration": 0.2,
-  "copy-delay": 0,
-  "page-jump-delay": 0,
+  "intro-out-duration": 0.5,
+  "copy-delay": 1.2,
+  "page-jump-delay": 0.8,
   "preview-float-duration": 3,
   "preview-float-distance": 0,
-  "preview-slide-duration": 2,
-  "card-preview-fade-duration": 1.5,
-  "card-preview-opacity": 0.45,
+  "preview-slide-duration": 12,
+  "card-preview-fade-duration": 2.4,
+  "card-preview-opacity": 0.31,
+  "auto-panel-enabled": "On",
+  "auto-panel-start-delay": 5,
+  "auto-panel-interval": 12,
+  "auto-panel-resume-delay": 8,
+  "auto-panel-lift-duration": 1.35,
   "panel-switch-duration": 2.5,
   "panel-switch-delay": 2,
   "panel-overlap-duration": 1.5,
@@ -90,7 +106,7 @@ const defaults = {
   "return-response-duration": 0.15,
   "arrow-response-duration": 0.5,
   "button-hover-lift": 6,
-  "card-preview-slide-duration": 0.5,
+  "card-preview-slide-duration": 3.5,
   "ui-heading-size": 22,
   "ui-subheading-size": 14,
   "ui-tab-font-size": 16,
@@ -117,8 +133,14 @@ const defaults = {
   "ui-tab-radius": 8,
   "ui-chip-radius": 8,
   "ui-tab-emboss": 2,
-  "ui-chip-emboss": 2
-
+  "ui-chip-emboss": 2,
+  "logo-delay": 0.1,
+  "logo-portfolio-color": "#5d94b6",
+  "logo-portfolio-duration": 4.2,
+  "logo-portfolio-direction": "up",
+  "logo-tools-color": "#a76c6c",
+  "logo-tools-duration": 4.2,
+  "logo-tools-direction": "up",
 };
 
 /*
@@ -130,51 +152,93 @@ const defaults = {
   新しいスライダーを追加する場合は、まずこの定義に追加する。
 */
 const HUB_CONTROL_SETTINGS = [
-  { key: "card-exit-duration", category: "intro", label: "カード退避", unit: "s", min: 0.2, max: 2.5, step: 0.1, default: 0.8, strengthType: "speed" },
-  { key: "intro-in-duration", category: "intro", label: "紹介表示", unit: "s", min: 0.2, max: 2.5, step: 0.1, default: 1, strengthType: "speed" },
-  { key: "intro-out-duration", category: "intro", label: "紹介終了", unit: "s", min: 0.2, max: 2.5, step: 0.1, default: 0.8, strengthType: "speed" },
-  { key: "copy-delay", category: "intro", label: "本文遅延", unit: "s", min: 0, max: 2, step: 0.1, default: 0.4, strengthType: "speed" },
-  { key: "page-jump-delay", category: "intro", label: "遷移待機", unit: "s", min: 0, max: 2, step: 0.1, default: 0.5, strengthType: "speed" },
-  { key: "preview-float-duration", category: "intro", label: "揺れ速度", unit: "s", min: 3, max: 12, step: 0.5, default: 6, strengthType: "speed" },
-  { key: "preview-float-distance", category: "intro", label: "揺れ量", unit: "px", min: 0, max: 18, step: 1, default: 6, strengthType: "amount" },
-  { key: "preview-slide-duration", category: "intro", label: "紹介カード内スライド速度", unit: "s", min: 0.5, max: 12, step: 0.5, default: 2, strengthType: "speed" },
-  { key: "card-preview-fade-duration", category: "intro", label: "背景フェード秒", unit: "s", min: 0.1, max: 3, step: 0.1, default: 1.5, strengthType: "speed" },
-  { key: "card-preview-slide-duration", category: "intro", label: "TOP背景スライド速度", unit: "s", min: 0.5, max: 12, step: 0.5, default: 0.5, strengthType: "speed" },
-  { key: "card-preview-opacity", category: "intro", label: "背景表示濃度", min: 0.1, max: 5, step: 0.01, default: 0.45, strengthType: "amount" },
-  { key: "panel-switch-duration", category: "switch", label: "パネル切替フェード時間", unit: "s", min: 0.2, max: 2.5, step: 0.1, default: 0.6, strengthType: "speed" },
-  { key: "panel-switch-delay", category: "switch", label: "左右切替待機", unit: "s", min: 0, max: 2, step: 0.1, default: 0.2, strengthType: "speed" },
-  { key: "panel-overlap-duration", category: "switch", label: "スライド切替の重なり時間", unit: "s", min: 0, max: 1.5, step: 0.05, default: 0.25, strengthType: "speed" },
-  { key: "cta-fade-duration", category: "buttons", label: "CTAフェード時間", unit: "s", min: 0.1, max: 2, step: 0.1, default: 0.5, strengthType: "speed" },
-  { key: "return-response-duration", category: "buttons", label: "戻るボタン反応速度", unit: "s", min: 0.05, max: 1, step: 0.05, default: 0.18, strengthType: "speed" },
-  { key: "arrow-response-duration", category: "buttons", label: "左右矢印反応速度", unit: "s", min: 0.05, max: 1, step: 0.05, default: 0.18, strengthType: "speed" },
-  { key: "button-hover-lift", category: "buttons", label: "hover浮き量", unit: "px", min: 0, max: 12, step: 1, default: 2, strengthType: "amount" },
-  { key: "ui-heading-size", category: "ui", label: "見出しサイズ", unit: "px", min: 14, max: 22, step: 0.5, default: 17 },
-  { key: "ui-subheading-size", category: "ui", label: "小見出しサイズ", unit: "px", min: 9, max: 14, step: 0.5, default: 10.5 },
-  { key: "ui-tab-font-size", category: "ui", label: "タブ文字サイズ", unit: "px", min: 10, max: 16, step: 0.5, default: 11.5 },
-  { key: "ui-chip-font-size", category: "ui", label: "チップ文字サイズ", unit: "px", min: 10, max: 16, step: 0.5, default: 11 },
-  { key: "ui-label-size", category: "ui", label: "項目ラベルサイズ", unit: "px", min: 10, max: 16, step: 0.5, default: 11.5 },
-  { key: "ui-value-size", category: "ui", label: "数値サイズ", unit: "px", min: 10, max: 16, step: 0.5, default: 11.2 },
-  { key: "ui-button-font-size", category: "ui", label: "ボタン文字サイズ", unit: "px", min: 10, max: 16, step: 0.5, default: 11.2 },
-  { key: "ui-panel-width", category: "ui", label: "パネル幅", unit: "px", min: 220, max: 320, step: 1, default: 260 },
-  { key: "ui-panel-padding", category: "ui", label: "パネル内余白", unit: "px", min: 2, max: 14, step: 1, default: 6 },
-  { key: "ui-section-gap", category: "ui", label: "セクション間隔", unit: "px", min: 0, max: 12, step: 1, default: 4 },
-  { key: "ui-row-gap", category: "ui", label: "行間", unit: "px", min: 0, max: 8, step: 1, default: 2 },
-  { key: "ui-chip-gap", category: "ui", label: "チップ間隔", unit: "px", min: 0, max: 8, step: 1, default: 2 },
-  { key: "ui-button-gap", category: "ui", label: "ボタン間隔", unit: "px", min: 0, max: 8, step: 1, default: 2 },
-  { key: "ui-value-width", category: "ui", label: "数値幅", unit: "px", min: 36, max: 72, step: 1, default: 50 },
-  { key: "ui-slider-width", category: "ui", label: "スライダー幅", unit: "%", min: 0, max: 100, step: 1, default: 100 },
-  { key: "ui-slider-right-gap", category: "ui", label: "スライダー右余白", unit: "px", min: 0, max: 24, step: 1, default: 0 },
-  { key: "ui-slider-row-height", category: "ui", label: "スライダー行高さ", unit: "px", min: 8, max: 18, step: 1, default: 12 },
-  { key: "ui-track-height", category: "ui", label: "スライダー軸の太さ", unit: "px", min: 3, max: 6, step: 0.5, default: 4 },
-  { key: "ui-thumb-width", category: "ui", label: "thumb幅", unit: "px", min: 10, max: 16, step: 1, default: 12 },
-  { key: "ui-thumb-height", category: "ui", label: "thumb高さ", unit: "px", min: 8, max: 16, step: 1, default: 10 },
-  { key: "ui-thumb-radius", category: "ui", label: "thumb角丸", unit: "px", min: 0, max: 8, step: 1, default: 4 },
-  { key: "ui-thumb-shadow", category: "ui", label: "thumb影", min: 0, max: 2, step: 0.1, default: 1 },
-  { key: "ui-track-sink", category: "ui", label: "track凹み強度", min: 0, max: 2, step: 0.1, default: 1 },
-  { key: "ui-tab-radius", category: "ui", label: "タブ角丸", unit: "px", min: 0, max: 8, step: 1, default: 3 },
-  { key: "ui-chip-radius", category: "ui", label: "チップ角丸", unit: "px", min: 0, max: 8, step: 1, default: 3 },
-  { key: "ui-tab-emboss", category: "ui", label: "タブ凹凸強度", min: 0, max: 2, step: 0.1, default: 1 },
-  { key: "ui-chip-emboss", category: "ui", label: "チップ凹凸強度", min: 0, max: 2, step: 0.1, default: 1 },
+  { key: "card-exit-duration", category: "intro", label: "カード退避", unit: "s", min: 0.2, max: 2.5, step: 0.1, default: 1.6, strengthType: "speed" },
+  { key: "intro-in-duration", category: "intro", label: "紹介表示", unit: "s", min: 0.2, max: 2.5, step: 0.1, default: 1.9, strengthType: "speed" },
+  { key: "intro-out-duration", category: "intro", label: "紹介終了", unit: "s", min: 0.2, max: 2.5, step: 0.1, default: 0.5, strengthType: "speed" },
+  { key: "copy-delay", category: "intro", label: "本文遅延", unit: "s", min: 0, max: 2, step: 0.1, default: 1.2, strengthType: "speed" },
+  { key: "page-jump-delay", category: "intro", label: "遷移待機", unit: "s", min: 0, max: 2, step: 0.1, default: 0.8, strengthType: "speed" },
+  { key: "preview-float-duration", category: "intro", label: "揺れ速度", unit: "s", min: 3, max: 12, step: 0.5, default: 3, strengthType: "speed" },
+  { key: "preview-float-distance", category: "intro", label: "揺れ量", unit: "px", min: 0, max: 18, step: 1, default: 0, strengthType: "amount" },
+  { key: "preview-slide-duration", category: "intro", label: "紹介カード内スライド速度", unit: "s", min: 0.5, max: 12, step: 0.5, default: 12, strengthType: "speed" },
+  { key: "card-preview-fade-duration", category: "intro", label: "パネルhover背景フェード時間", unit: "s", min: 0.1, max: 6, step: 0.1, default: 2.4, strengthType: "speed" },
+  { key: "card-preview-slide-duration", category: "intro", label: "TOP背景スライド速度", unit: "s", min: 0.5, max: 12, step: 0.5, default: 3.5, strengthType: "speed" },
+  { key: "card-preview-opacity", category: "intro", label: "背景表示濃度", min: 0.1, max: 5, step: 0.01, default: 0.31, strengthType: "amount" },
+  { key: "auto-panel-enabled", category: "autoPanel", label: "自動パネル選択", type: "select", options: [
+    { value: "On", label: "On" },
+    { value: "Off", label: "Off" },
+  ], default: "On" },
+  { key: "auto-panel-start-delay", category: "autoPanel", label: "開始までの待機", unit: "s", min: 0, max: 60, step: 0.5, default: 5, strengthType: "speed" },
+  { key: "auto-panel-interval", category: "autoPanel", label: "次パネルまでの秒数", unit: "s", min: 1, max: 60, step: 0.5, default: 12, strengthType: "speed" },
+  { key: "auto-panel-resume-delay", category: "autoPanel", label: "カーソル後の再開待機", unit: "s", min: 0, max: 60, step: 0.5, default: 8, strengthType: "speed" },
+  { key: "auto-panel-lift-duration", category: "autoPanel", label: "自動パネル上昇速度", unit: "s", min: 0.2, max: 4, step: 0.05, default: 1.35, strengthType: "speed" },
+  { key: "hover-line1-size", category: "hoverText", label: "1行目文字サイズ", unit: "px", min: 10, max: 30, step: 0.5, default: 19.5},
+  { key: "hover-line2-size", category: "hoverText", label: "2行目文字サイズ", unit: "px", min: 10, max: 30, step: 0.5, default: 19.5},
+  { key: "hover-line3-size", category: "hoverText", label: "3行目文字サイズ", unit: "px", min: 9, max: 24, step: 0.5, default: 14.5},
+  { key: "hover-line-gap", category: "hoverText", label: "2行目下の間隔", unit: "px", min: 0, max: 24, step: 1, default: 16},
+  { key: "hover-summary-gap", category: "hoverText", label: "説明文の上余白", unit: "px", min: -40, max: 80, step: 1, default: 30, strengthType: "amount" },
+  { key: "hover-char-start-delay", category: "hoverText", label: "文字開始遅延", unit: "s", min: 0, max: 1.5, step: 0.01, default: 0.08, strengthType: "speed" },
+  { key: "hover-char-step", category: "hoverText", label: "1文字ごとの間隔", unit: "s", min: 0.001, max: 0.08, step: 0.001, default: 0.04, strengthType: "speed" },
+  { key: "hover-char-duration", category: "hoverText", label: "1文字の出現時間", unit: "s", min: 0.05, max: 1.2, step: 0.01, default: 1.12, strengthType: "speed" },
+  { key: "hover-char-offset", category: "hoverText", label: "出現移動量", unit: "em", min: 0, max: 1.2, step: 0.01, default: 0.87, strengthType: "amount" },
+  { key: "hover-char-blur", category: "hoverText", label: "出現ぼかし", unit: "px", min: 0, max: 8, step: 0.1, default: 3.5, strengthType: "amount" },
+  { key: "hover-reveal-mode", category: "hoverText", label: "文字の出し方", type: "select", options: [
+    { value: "down", label: "下から上" },
+    { value: "up", label: "上から下" },
+    { value: "left", label: "左から右" },
+    { value: "right", label: "右から左" },
+    { value: "fade", label: "その場でフェード" },
+  ], default: "down" },
+  { key: "panel-switch-duration", category: "switch", label: "パネル切替フェード時間", unit: "s", min: 0.2, max: 2.5, step: 0.1, default: 2.5, strengthType: "speed" },
+  { key: "panel-switch-delay", category: "switch", label: "左右切替待機", unit: "s", min: 0, max: 2, step: 0.1, default: 2, strengthType: "speed" },
+  { key: "panel-overlap-duration", category: "switch", label: "スライド切替の重なり時間", unit: "s", min: 0, max: 1.5, step: 0.05, default: 1.5, strengthType: "speed" },
+  { key: "cta-fade-duration", category: "buttons", label: "CTAフェード時間", unit: "s", min: 0.1, max: 2, step: 0.1, default: 0.7, strengthType: "speed" },
+  { key: "return-response-duration", category: "buttons", label: "戻るボタン反応速度", unit: "s", min: 0.05, max: 1, step: 0.05, default: 0.15, strengthType: "speed" },
+  { key: "arrow-response-duration", category: "buttons", label: "左右矢印反応速度", unit: "s", min: 0.05, max: 1, step: 0.05, default: 0.5, strengthType: "speed" },
+  { key: "button-hover-lift", category: "buttons", label: "hover浮き量", unit: "px", min: 0, max: 12, step: 1, default: 6, strengthType: "amount" },
+  { key: "ui-heading-size", category: "ui", label: "見出しサイズ", unit: "px", min: 14, max: 22, step: 0.5, default: 22},
+  { key: "ui-subheading-size", category: "ui", label: "小見出しサイズ", unit: "px", min: 9, max: 14, step: 0.5, default: 14},
+  { key: "ui-tab-font-size", category: "ui", label: "タブ文字サイズ", unit: "px", min: 10, max: 16, step: 0.5, default: 14.5},
+  { key: "ui-chip-font-size", category: "ui", label: "チップ文字サイズ", unit: "px", min: 10, max: 16, step: 0.5, default: 14.5},
+  { key: "ui-label-size", category: "ui", label: "項目ラベルサイズ", unit: "px", min: 10, max: 16, step: 0.5, default: 14.5},
+  { key: "ui-value-size", category: "ui", label: "数値サイズ", unit: "px", min: 10, max: 16, step: 0.5, default: 14.5},
+  { key: "ui-button-font-size", category: "ui", label: "ボタン文字サイズ", unit: "px", min: 10, max: 16, step: 0.5, default: 14.5},
+  { key: "ui-panel-width", category: "ui", label: "パネル幅", unit: "px", min: 220, max: 320, step: 1, default: 320},
+  { key: "ui-panel-padding", category: "ui", label: "パネル内余白", unit: "px", min: 2, max: 14, step: 1, default: 14},
+  { key: "ui-section-gap", category: "ui", label: "セクション間隔", unit: "px", min: 0, max: 12, step: 1, default: 0},
+  { key: "ui-row-gap", category: "ui", label: "行間", unit: "px", min: 0, max: 8, step: 1, default: 0},
+  { key: "ui-chip-gap", category: "ui", label: "チップ間隔", unit: "px", min: 0, max: 8, step: 1, default: 0},
+  { key: "ui-button-gap", category: "ui", label: "ボタン間隔", unit: "px", min: 0, max: 8, step: 1, default: 8},
+  { key: "ui-value-width", category: "ui", label: "数値幅", unit: "px", min: 36, max: 72, step: 1, default: 72},
+  { key: "ui-slider-width", category: "ui", label: "スライダー幅", unit: "%", min: 0, max: 100, step: 1, default: 100},
+  { key: "ui-slider-right-gap", category: "ui", label: "スライダー右余白", unit: "px", min: 0, max: 24, step: 1, default: 24},
+  { key: "ui-slider-row-height", category: "ui", label: "スライダー行高さ", unit: "px", min: 8, max: 18, step: 1, default: 18},
+  { key: "ui-track-height", category: "ui", label: "スライダー軸の太さ", unit: "px", min: 3, max: 6, step: 0.5, default: 6},
+  { key: "ui-thumb-width", category: "ui", label: "thumb幅", unit: "px", min: 10, max: 16, step: 1, default: 14.5},
+  { key: "ui-thumb-height", category: "ui", label: "thumb高さ", unit: "px", min: 8, max: 16, step: 1, default: 14.5},
+  { key: "ui-thumb-radius", category: "ui", label: "thumb角丸", unit: "px", min: 0, max: 8, step: 1, default: 8},
+  { key: "ui-thumb-shadow", category: "ui", label: "thumb影", min: 0, max: 2, step: 0.1, default: 2},
+  { key: "ui-track-sink", category: "ui", label: "track凹み強度", min: 0, max: 2, step: 0.1, default: 2},
+  { key: "ui-tab-radius", category: "ui", label: "タブ角丸", unit: "px", min: 0, max: 8, step: 1, default: 8},
+  { key: "ui-chip-radius", category: "ui", label: "チップ角丸", unit: "px", min: 0, max: 8, step: 1, default: 8},
+  { key: "ui-tab-emboss", category: "ui", label: "タブ凹凸強度", min: 0, max: 2, step: 0.1, default: 2},
+  { key: "ui-chip-emboss", category: "ui", label: "チップ凹凸強度", min: 0, max: 2, step: 0.1, default: 2},
+  { key: "logo-delay", category: "logo", label: "開始遅延", unit: "s", type: "range", min: 0, max: 6, step: 0.1, default: 0.1, strengthType: "speed" },
+  { key: "logo-portfolio-color", category: "logo", label: "Portfolio 色", type: "color", default: "#5d94b6"},
+  { key: "logo-portfolio-duration", category: "logo", label: "Portfolio 秒数", unit: "s", type: "range", min: 0.4, max: 6, step: 0.1, default: 4.2, strengthType: "speed" },
+  { key: "logo-portfolio-direction", category: "logo", label: "Portfolio 方向", type: "select", options: [
+    { value: "up", label: "下から上" },
+    { value: "down", label: "上から下" },
+    { value: "left", label: "右から左" },
+    { value: "right", label: "左から右" },
+  ], default: "up" },
+  { key: "logo-tools-color", category: "logo", label: "Tools 色", type: "color", default: "#a76c6c"},
+  { key: "logo-tools-duration", category: "logo", label: "Tools 秒数", unit: "s", type: "range", min: 0.4, max: 6, step: 0.1, default: 4.2, strengthType: "speed" },
+  { key: "logo-tools-direction", category: "logo", label: "Tools 方向", type: "select", options: [
+    { value: "up", label: "下から上" },
+    { value: "down", label: "上から下" },
+    { value: "left", label: "右から左" },
+    { value: "right", label: "左から右" },
+  ], default: "up" },
 ];
 
 HUB_CONTROL_SETTINGS.forEach((setting) => {
@@ -220,6 +284,11 @@ let activeCardPreviewImages = [];
 let activeCardPreviewIndex = 0;
 let activeCardPreviewLayer = 0;
 let cardPreviewTimer = 0;
+let autoPanelTimer = 0;
+let autoPanelResumeTimer = 0;
+let autoPanelIndex = 0;
+let autoPanelCard = null;
+let autoPanelPaused = false;
 
 function escapeHtml(value) {
   return String(value)
@@ -228,6 +297,22 @@ function escapeHtml(value) {
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#39;");
+}
+
+function buildSequentialTextLines(lines) {
+  let charIndex = 0;
+  return lines
+    .filter(Boolean)
+    .map((line, lineIndex) => {
+      const chars = Array.from(String(line)).map((char) => {
+        const safeChar = char === " " ? "&nbsp;" : escapeHtml(char);
+        const span = `<span class="card-hover-summary__char" style="--char-index:${charIndex};">${safeChar}</span>`;
+        charIndex += 1;
+        return span;
+      });
+      return `<span class="card-hover-summary__line card-hover-summary__line--${lineIndex + 1}" style="--line-index:${lineIndex};">${chars.join("")}</span>`;
+    })
+    .join("");
 }
 
 function cardPreviewImagePath(image) {
@@ -258,10 +343,27 @@ function showCardPreviewImage(image) {
   activeCardPreviewLayer = activeCardPreviewLayer === 0 ? 1 : 0;
   const nextLayer = cardPreviewLayers[activeCardPreviewLayer];
   const prevLayer = cardPreviewLayers[activeCardPreviewLayer === 0 ? 1 : 0];
+
+  nextLayer.classList.remove("is-visible");
+  nextLayer.style.transition = "none";
+  nextLayer.style.opacity = "0";
+  nextLayer.style.transform = "translate3d(0, 0, 0) scale(1.04)";
   nextLayer.style.backgroundImage = `url("${cardPreviewImagePath(image)}")`;
+
+  // 切替後の画像を必ず拡大状態から開始させる。
+  // ここで一度レイアウトを確定しないと、前回の scale(1) を引き継ぎ、
+  // フェードだけが動いて縮小アニメが見えなくなる。
+  void nextLayer.offsetWidth;
+
+  nextLayer.style.transition = "";
+  nextLayer.style.opacity = "";
+  nextLayer.style.transform = "";
+
   window.requestAnimationFrame(() => {
-    nextLayer.classList.add("is-visible");
-    prevLayer.classList.remove("is-visible");
+    window.requestAnimationFrame(() => {
+      nextLayer.classList.add("is-visible");
+      prevLayer.classList.remove("is-visible");
+    });
   });
 }
 
@@ -276,19 +378,25 @@ function startCardPreview(card) {
   const item = previewItems.find((previewItem) => previewItem.id === card.id);
   if (!item || !item.images.length) return;
 
+  const shouldCrossfadeFromCurrent = Boolean(
+    activeCardPreviewId &&
+    activeCardPreviewId !== item.id &&
+    cardPreviewBackdrop.classList.contains("is-active")
+  );
+
   activeCardPreviewId = item.id;
   activeCardPreviewImages = item.images.slice();
   activeCardPreviewIndex = 0;
   stopCardPreviewTimer();
 
-  cardPreviewLayers.forEach((layer) => {
-    layer.classList.remove("is-visible");
-    layer.style.backgroundImage = "";
-  });
+  if (!shouldCrossfadeFromCurrent) {
+    cardPreviewLayers.forEach((layer) => {
+      layer.classList.remove("is-visible");
+      layer.style.backgroundImage = "";
+    });
+    activeCardPreviewLayer = 0;
+  }
 
-  activeCardPreviewLayer = 0;
-  cardPreviewLayers[activeCardPreviewLayer].style.backgroundImage = `url("${cardPreviewImagePath(activeCardPreviewImages[0])}")`;
-  cardPreviewLayers[activeCardPreviewLayer].classList.add("is-visible");
   page.classList.add("has-card-preview");
   cardPreviewBackdrop.classList.add("is-active");
   showCardPreviewImage(activeCardPreviewImages[0]);
@@ -316,6 +424,10 @@ function syncCardBackdropState() {
     if (activeCardPreviewId !== hoveredCard.id) startCardPreview(hoveredCard);
     return;
   }
+  if (autoPanelCard) {
+    if (activeCardPreviewId !== autoPanelCard.id) startCardPreview(autoPanelCard);
+    return;
+  }
   stopCardPreview();
 }
 
@@ -336,32 +448,33 @@ const previewItems = [
     cta: "ポートフォリオを見る",
     href: document.querySelector("#graphic")?.getAttribute("href") || "https://karagaki.github.io/testportfolio/",
     images: [
-      "system-tools-preview-02_2.png",
-      "system-tools-preview-02_3.png",
+      "system-tools-preview02-1.webp",
+      "system-tools-preview02-2.webp",
+      "system-tools-preview02-3.webp",
     ],
   },
   {
     id: "system-tools",
-    title: "System Tools",
-    heading: "AIとの会話を、次の制作へ活かすローカル管理ツール",
-    subcopy: "AIとの会話を、次の制作へ活かすためのローカル管理ツールです。",
+    title: "AI workflow Tools",
+    heading: "AI制作における記憶の限界を補うローカル管理ツール",
+    subcopy: "過去の指示・判断・やり取りを整理し、次の制作へ効率よく活用するためのローカル管理ツールです。",
     copy: [
-      "制作中に生まれる会話、判断、指示、失敗の経緯、仕様内容を整理し、次回以降のAI作業で使える前提として再利用できるようにします。",
-      "一度きりの会話を流して終わらせるのではなく、自分の考え方や判断基準を蓄積し、AIとのやり取りをより安定して継続できる状態へ近づけます。",
-      "将来的には、自分の制作方針や判断基準、ノウハウ、個性を反映した“分身”を実現し、制作の継続性と生産性を高めていくことを目指しています。",
+      "ChatAIとの制作対話で生まれる仕様、判断、失敗の流れ、会話内のルールを分類し、後から参照・再利用できる形で蓄積します。",
+      "一度きりのやり取りで終わらせず、自分の制作方針や判断基準を反映した前提として活用し、AIとの共同制作をより安定させます。",
+      "将来的には自分の意図・考え方・品質基準を理解する“分身”の土台へ発展させながら、生産性とアウトプットの質を高めていきます。",
     ],
     chips: ["Local Knowledge", "AI Conversation Archive", "Memory Alternative", "Reuse for Next Work"],
     caption: "ローカル管理 / 会話を資産化 / 判断を再利用",
-    hoverCopy: ["ChatAIとの制作対話で生まれる仕様、判断、失敗の流れ、", "会話内のルールを分類し、次の制作へ活用するためのローカル管理ツールです。", "永続メモリの代替として制作の前提を蓄積し、自分の判断基準や制作方針を反映した「分身」の土台として発展させていきます。"],
+    hoverCopy: ["AI制作における記憶の限界を補いながら、", "過去の指示・判断・やり取りを整理し、次の制作へ効率よく活用するためのローカル管理ツール。", "将来的には自分の意図・考え方・品質基準を理解する“分身”の土台へ発展させながら、生産性とアウトプットの質を高めていきます。"],
     cta: "ツールを見る",
     href: document.querySelector("#system-tools")?.getAttribute("href") || "./system-tools/index.html",
     images: [
-      "system-tools-preview-01_1.png",
+      "system-tools-preview01-1.webp",
     ],
   },
   {
     id: "uiux-animation-tools",
-    title: "UI/UX Animation Tools",
+    title: "Motion Drawing Tools",
     heading: "心地よい動きとUI表現を探るアニメーションツール",
     subcopy: "UIの動き、視線誘導、質感表現を調整しながら検証するためのツールです。",
     copy: [
@@ -369,46 +482,46 @@ const previewItems = [
       "数学的・物理的な動きの考え方を取り入れながら、フェード、揺れ、残像、反応、質感などを調整し、表現として使えるUIアニメーションを探っています。",
       "単なる見た目の装飾ではなく、操作感や印象を支える動きの設計を検証するためのページです。",
     ],
-    chips: ["UI Motion", "Interaction", "Animation Study", "Visual Feel"],
-    caption: "UI Motion / Interaction / Animation Study",
-    hoverCopy: ["AI生成が広がる中で、生成AIとは別の角度から、", "コードによる絵作りや動きの表現を追求するために制作した研究ツールです。", "描画、アニメーション、操作感を組み合わせ、将来的なロボットアームによる描画・彫刻など、実体制作との連係も視野に入れて継続して検証していきます。"],
+    chips: ["Motion Drawing", "Interaction", "Visual Study", "Exhibition"],
+    caption: "Motion Drawing / Interaction / Visual Study",
+    hoverCopy: ["視線を惹きつける動きや操作感を追求する研究ツールです。", "p5.jsなどのコーディングを起点に、動き・変化・操作への反応を組み合わせ、制作者の意図を反映した表現をどこまで再現・活用できるかを検証しています。", "まずはインタラクティブ展示への出品を目標に、ロボットアーム、ドローンペイント・彫刻など、実体を伴う表現への展開も念頭に置いて進めています。"],
     cta: "ツールを見る",
     href: document.querySelector("#uiux-animation-tools")?.getAttribute("href") || "./uiux-animation-tools/index.html",
     images: [
-      "system-tools-preview-03_1.png",
-      "system-tools-preview-03_2.png",
-      "system-tools-preview-03_3.png",
+      "system-tools-preview03-1.webp",
+      "system-tools-preview03-2.webp",
+      "system-tools-preview03-3.webp",
     ],
   },
 ];
 let currentPreviewIndex = 1;
 
-function setActiveTopCard(card) {
+function setActiveTopCard(card, source = "manual") {
   const cardsWrap = document.querySelector(".cards");
   if (!cardsWrap) return;
+  const isAutoSource = source === "auto" && Boolean(card);
   previewCards.forEach((previewCard) => {
     previewCard.classList.toggle("is-active-card", Boolean(card && previewCard === card));
   });
   cardsWrap.classList.toggle("has-active-card", Boolean(card));
+  cardsWrap.classList.toggle("is-auto-panel-motion", isAutoSource);
 }
 
 function currentInteractiveCard() {
   const focusedCard = previewCards.find((card) => card.matches(":focus-visible") || card.matches(":focus-within"));
   const hoveredCard = previewCards.find((card) => card.matches(":hover"));
-  return focusedCard || hoveredCard || null;
+  return focusedCard || hoveredCard || autoPanelCard || null;
 }
 
-function showCardHoverSummary(card) {
+function showCardHoverSummary(card, source = "manual") {
   if (!cardHoverSummary || !cardHoverText || !card) return;
   const item = previewItems.find((previewItem) => previewItem.id === card.id);
   if (!item) return;
-  setActiveTopCard(card);
+  setActiveTopCard(card, source);
   const copy = Array.isArray(item.hoverCopy) ? item.hoverCopy : [item.hoverCopy || item.subcopy || ""];
-  cardHoverText.innerHTML = copy
-    .filter(Boolean)
-    .map((line, index) => `<span class="card-hover-summary__line card-hover-summary__line--${index + 1}">${escapeHtml(line)}</span>`)
-    .join("");
+  cardHoverText.innerHTML = buildSequentialTextLines(copy);
   cardHoverSummary.classList.remove("is-visible");
+  void cardHoverSummary.offsetWidth;
   window.requestAnimationFrame(() => {
     cardHoverSummary.classList.add("is-visible");
   });
@@ -430,8 +543,13 @@ function isHexColor(value) {
 }
 
 function toValue(key, raw) {
-  if (key === "hover-text-shadow-color") {
+  const meta = settingDefinitionByKey.get(key);
+  if (meta?.type === "color" || key === "hover-text-shadow-color") {
     return isHexColor(raw) ? raw : defaults[key];
+  }
+  if (meta?.type === "select") {
+    const options = Array.isArray(meta.options) ? meta.options.map((option) => option.value) : [];
+    return options.includes(raw) ? raw : defaults[key];
   }
   const numeric = Number(raw);
   if (!Number.isFinite(numeric)) return defaults[key];
@@ -450,17 +568,40 @@ function readMode(settings, key, fallback) {
   return typeof value === "string" && value ? value : fallback;
 }
 
+function sanitizeSettings(rawSettings = {}) {
+  const clean = { ...defaults };
+  Object.keys(defaults).forEach((key) => {
+    if (Object.prototype.hasOwnProperty.call(rawSettings, key)) {
+      clean[key] = rawSettings[key];
+    }
+  });
+
+  // 旧版の自動パネル初期値は切替が速すぎたため、
+  // ユーザーが未調整の旧初期値だけ新しい初期値へ移行する。
+  const legacyAutoPanelDefaults = {
+    "auto-panel-start-delay": 2.4,
+    "auto-panel-interval": 5.2,
+    "auto-panel-resume-delay": 3.2,
+  };
+  Object.entries(legacyAutoPanelDefaults).forEach(([key, legacyValue]) => {
+    if (Number(rawSettings[key]) === legacyValue) clean[key] = defaults[key];
+  });
+
+  return clean;
+}
+
 function readSettings() {
   try {
     const stored = JSON.parse(localStorage.getItem(STORAGE_KEY) || localStorage.getItem(LEGACY_STORAGE_KEY) || "{}");
-    return { ...defaults, ...stored };
+    return sanitizeSettings(stored);
   } catch {
     return { ...defaults };
   }
 }
 
 function writeSettings(settings) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
+  const clean = sanitizeSettings(settings);
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(clean));
 }
 
 const appearanceCategoryDefinitions = [
@@ -472,6 +613,8 @@ const appearanceCategoryDefinitions = [
       { key: "bg-lightness", label: "背景明るさ" },
       { key: "bg-warmth", label: "背景暖色" },
       { key: "light-strength", label: "背景光" },
+      { key: "light-position", label: "背景光位置" },
+      { key: "light-spread", label: "背景光広がり" },
       { key: "bg-angle", label: "背景角度" },
       { key: "bg-contrast", label: "背景対比" },
     ],
@@ -485,6 +628,8 @@ const appearanceCategoryDefinitions = [
       { key: "card-blur", label: "カードぼかし" },
       { key: "card-border-alpha", label: "境界線" },
       { key: "card-shadow-strength", label: "カード影" },
+      { key: "card-highlight-strength", label: "ハイライト" },
+      { key: "card-inner-light", label: "内側光" },
       { key: "card-width", label: "カード幅" },
       { key: "card-height", label: "カード高さ" },
       { key: "card-radius", label: "カード角丸" },
@@ -560,13 +705,26 @@ appearanceCategoryDefinitions.forEach((category) => {
 
 function formatSettingValue(key, value) {
   const meta = settingDefinitionByKey.get(key);
+  if (meta?.type === "select") {
+    const option = Array.isArray(meta.options) ? meta.options.find((item) => item.value === value) : null;
+    return option?.label || String(value ?? defaults[key] ?? "");
+  }
+  if (meta?.type === "color") return String(value || defaults[key]);
   if (meta?.unit === "px") {
     const numeric = Number(value);
     if (Number.isFinite(numeric)) return `${Number.isInteger(numeric) ? numeric.toFixed(0) : numeric.toFixed(1)}px`;
   }
+  if (meta?.unit === "s") {
+    const numeric = Number(value);
+    if (Number.isFinite(numeric)) return `${numeric.toFixed(1)}s`;
+  }
   if (meta?.unit === "%") {
     const numeric = Number(value);
     if (Number.isFinite(numeric)) return `${Math.round(numeric)}%`;
+  }
+  if (meta?.unit === "em") {
+    const numeric = Number(value);
+    if (Number.isFinite(numeric)) return `${numeric.toFixed(2)}em`;
   }
   if (key === "preview-float-distance" || key === "button-hover-lift") return `${Math.round(value)}px`;
   if (
@@ -619,7 +777,10 @@ function intensityFor(key, value) {
     key === "arrow-response-duration" ||
     key === "preview-float-duration" ||
     key === "preview-slide-duration" ||
-    key === "card-preview-slide-duration"
+    key === "card-preview-slide-duration" ||
+    key === "hover-char-start-delay" ||
+    key === "hover-char-step" ||
+    key === "hover-char-duration"
   ) {
     if (value <= 0.4 || (key.includes("preview") && value <= 4)) return "速い";
     if (value >= 1.5 || (key.includes("preview") && value >= 9)) return "ゆっくり";
@@ -637,8 +798,9 @@ function updateValueOutputs(settings) {
       output.textContent = formatAppearanceSummaryValue(key, value);
       return;
     }
-    if (key === "hover-text-shadow-color") {
-      output.textContent = String(value || defaults[key]);
+    const meta = settingDefinitionByKey.get(key);
+    if (meta?.type === "color" || meta?.type === "select" || key === "hover-text-shadow-color") {
+      output.textContent = formatSettingValue(key, value);
       return;
     }
     const numericValue = Number(value);
@@ -688,20 +850,29 @@ const introControlKeys = [
 
 const settingsPages = [
   { id: "intro", label: "紹介ステージ" },
+  { id: "hoverText", label: "説明文字" },
+  { id: "autoPanel", label: "自動パネル" },
   { id: "switch", label: "パネル切替" },
   { id: "buttons", label: "ボタン / 導線" },
   { id: "appearance", label: "外観" },
+  { id: "logo", label: "ロゴ" },
   { id: "ui", label: "UI調整" },
 ];
 
-function controlTemplate({ key, label, min, max, step }) {
+function controlTemplate(setting) {
+  const { key, label, min, max, step, type = "range", options = [] } = setting;
+  const controlMarkup = type === "select"
+    ? `<select class="control-select" id="hub-control-${key}" data-hub-control="${key}">${options.map((option) => `<option value="${option.value}">${option.label}</option>`).join("")}</select>`
+    : type === "color"
+      ? `<input class="control-color" id="hub-control-${key}" type="color" data-hub-control="${key}" />`
+      : `<input class="control-range" id="hub-control-${key}" type="range" min="${min}" max="${max}" step="${step}" data-hub-control="${key}" />`;
   return `
-    <div class="control-row" data-control-key="${key}">
+    <div class="control-row${type !== "range" ? ` control-row--${type}` : ""}" data-control-key="${key}">
       <div class="control-meta">
         <label class="control-label" for="hub-control-${key}" data-control-label="${key}" data-default-label="${label}">${label}</label>
         <output class="control-value" for="hub-control-${key}" data-hub-value="${key}"></output>
       </div>
-      <input class="control-range" id="hub-control-${key}" type="range" min="${min}" max="${max}" step="${step}" data-hub-control="${key}" />
+      ${controlMarkup}
     </div>`;
 }
 
@@ -848,6 +1019,16 @@ function setupSettingsPanel() {
         <h3 class="hub-settings__group">紹介ステージ</h3>
         ${controlsForPage("intro")}
       </section>
+      <section class="hub-settings-page" data-settings-page="hoverText" aria-label="説明文字">
+        <h3 class="hub-settings__group">説明文字</h3>
+        <p class="hub-settings__note">TOPカードhover時の説明文を、行ごとの文字サイズ・表示速度・出し方で調整します。</p>
+        ${controlsForPage("hoverText")}
+      </section>
+      <section class="hub-settings-page" data-settings-page="autoPanel" aria-label="自動パネル">
+        <h3 class="hub-settings__group">自動パネル</h3>
+        <p class="hub-settings__note">TOPカードを開いた後、自動でパネル選択状態にして、一定間隔で隣のパネルへ切り替えます。カーソル操作中は一時停止します。</p>
+        ${controlsForPage("autoPanel")}
+      </section>
       <section class="hub-settings-page" data-settings-page="switch" aria-label="パネル切替">
         <h3 class="hub-settings__group">パネル切替</h3>
         ${controlsForPage("switch")}
@@ -857,6 +1038,11 @@ function setupSettingsPanel() {
         ${controlsForPage("buttons")}
       </section>
       <section class="hub-settings-page" data-settings-page="appearance" aria-label="外観"></section>
+      <section class="hub-settings-page" data-settings-page="logo" aria-label="ロゴ">
+        <h3 class="hub-settings__group">ロゴ</h3>
+        <p class="hub-settings__note">Portfolio と Tools のカテゴリ色、開始秒数、流れる方向を指定します。</p>
+        ${controlsForPage("logo")}
+      </section>
       <section class="hub-settings-page" data-settings-page="ui" aria-label="UI調整">
         <h3 class="hub-settings__group">UI調整</h3>
         ${uiAdjustmentGroups
@@ -1081,6 +1267,43 @@ function hexToRgbString(value, fallback = "#000000") {
   return `${r}, ${g}, ${b}`;
 }
 
+function logoWashSetting(direction) {
+  switch (direction) {
+    case "down":
+      return {
+        clipFrom: "inset(0 0 100% 0)",
+        clipTo: "inset(100% 0 0 0)",
+        gradientAngle: "180deg"
+      };
+    case "left":
+      return {
+        clipFrom: "inset(0 0 0 100%)",
+        clipTo: "inset(0 100% 0 0)",
+        gradientAngle: "270deg"
+      };
+    case "right":
+      return {
+        clipFrom: "inset(0 100% 0 0)",
+        clipTo: "inset(0 0 0 100%)",
+        gradientAngle: "90deg"
+      };
+    case "up":
+    default:
+      return {
+        clipFrom: "inset(100% 0 0 0)",
+        clipTo: "inset(0 0 100% 0)",
+        gradientAngle: "0deg"
+      };
+  }
+}
+
+function applyLogoDirection(prefix, direction) {
+  const setting = logoWashSetting(direction);
+  root.style.setProperty(`--hub-logo-${prefix}-clip-from`, setting.clipFrom);
+  root.style.setProperty(`--hub-logo-${prefix}-clip-to`, setting.clipTo);
+  root.style.setProperty(`--hub-logo-${prefix}-gradient-angle`, setting.gradientAngle);
+}
+
 function applySettings(settings) {
   const bgLightness = settings["bg-lightness"] ** 1.35;
   const bgWarmth = settings["bg-warmth"] ** 1.2;
@@ -1095,10 +1318,10 @@ function applySettings(settings) {
   const cardRadius = Math.round(settings["card-radius"]);
   const cardHeight = Math.round(settings["card-height"]);
   const cardPadding = Math.round(settings["card-padding"]);
-  const lightPosition = Math.min(1.4, Math.max(0.6, settings["light-position"]));
+  const lightPosition = Math.min(1.5, Math.max(0.6, settings["light-position"]));
   const lightSpread = Math.min(1.6, Math.max(0.55, settings["light-spread"]));
-  const cardHighlightStrength = Math.min(0.88, Math.max(0.08, settings["card-highlight-strength"]));
-  const cardInnerLight = Math.min(0.56, Math.max(0.04, settings["card-inner-light"]));
+  const cardHighlightStrength = Math.min(0.9, Math.max(0.08, settings["card-highlight-strength"]));
+  const cardInnerLight = Math.min(0.56, Math.max(0.02, settings["card-inner-light"]));
   const textShadowStrength = Math.min(0.5, Math.max(0.02, settings["text-shadow-strength"]));
   const hoverTextShadowColor = isHexColor(settings["hover-text-shadow-color"]) ? settings["hover-text-shadow-color"] : defaults["hover-text-shadow-color"];
   const shadowDistance = Math.min(64, Math.max(0, settings["shadow-distance"]));
@@ -1141,9 +1364,25 @@ function applySettings(settings) {
   const previewFloatDuration = readNumber(settings, "preview-float-duration", 3, 12);
   const previewFloatDistance = readNumber(settings, "preview-float-distance", 0, 18);
   const previewSlideDuration = readNumber(settings, "preview-slide-duration", 2, 12);
-  const cardPreviewFadeDuration = readNumber(settings, "card-preview-fade-duration", 0.1, 3);
+  const cardPreviewFadeDuration = readNumber(settings, "card-preview-fade-duration", 0.1, 6);
   const cardPreviewSlideDuration = readNumber(settings, "card-preview-slide-duration", 0.5, 12);
   const cardPreviewOpacity = readNumber(settings, "card-preview-opacity", 0.1, 5);
+  const autoPanelEnabledValue = readMode(settings, "auto-panel-enabled", defaults["auto-panel-enabled"]);
+  const autoPanelStartDelay = readNumber(settings, "auto-panel-start-delay", 0, 60);
+  const autoPanelInterval = readNumber(settings, "auto-panel-interval", 1, 60);
+  const autoPanelResumeDelay = readNumber(settings, "auto-panel-resume-delay", 0, 60);
+  const autoPanelLiftDuration = readNumber(settings, "auto-panel-lift-duration", 0.2, 4);
+  const hoverLine1Size = readNumber(settings, "hover-line1-size", 10, 30);
+  const hoverLine2Size = readNumber(settings, "hover-line2-size", 10, 30);
+  const hoverLine3Size = readNumber(settings, "hover-line3-size", 9, 24);
+  const hoverLineGap = readNumber(settings, "hover-line-gap", 0, 24);
+  const hoverSummaryGap = readNumber(settings, "hover-summary-gap", -40, 80);
+  const hoverCharStartDelay = readNumber(settings, "hover-char-start-delay", 0, 1.5);
+  const hoverCharStep = readNumber(settings, "hover-char-step", 0.001, 0.08);
+  const hoverCharDuration = readNumber(settings, "hover-char-duration", 0.05, 1.2);
+  const hoverCharOffset = readNumber(settings, "hover-char-offset", 0, 1.2);
+  const hoverCharBlur = readNumber(settings, "hover-char-blur", 0, 8);
+  const hoverRevealMode = readMode(settings, "hover-reveal-mode", defaults["hover-reveal-mode"]);
   const panelSwitchDuration = readNumber(settings, "panel-switch-duration", 0.2, 2.5);
   const panelSwitchDelay = readNumber(settings, "panel-switch-delay", 0, 2);
   const panelOverlapDuration = readNumber(settings, "panel-overlap-duration", 0, 1.5);
@@ -1178,6 +1417,13 @@ function applySettings(settings) {
   const uiChipRadius = readNumber(settings, "ui-chip-radius", 0, 8);
   const uiTabEmboss = readNumber(settings, "ui-tab-emboss", 0, 2);
   const uiChipEmboss = readNumber(settings, "ui-chip-emboss", 0, 2);
+  const logoDelay = readNumber(settings, "logo-delay", 0, 6);
+  const logoPortfolioColor = isHexColor(settings["logo-portfolio-color"]) ? settings["logo-portfolio-color"] : defaults["logo-portfolio-color"];
+  const logoPortfolioDuration = readNumber(settings, "logo-portfolio-duration", 0.4, 6);
+  const logoPortfolioDirection = readMode(settings, "logo-portfolio-direction", defaults["logo-portfolio-direction"]);
+  const logoToolsColor = isHexColor(settings["logo-tools-color"]) ? settings["logo-tools-color"] : defaults["logo-tools-color"];
+  const logoToolsDuration = readNumber(settings, "logo-tools-duration", 0.4, 6);
+  const logoToolsDirection = readMode(settings, "logo-tools-direction", defaults["logo-tools-direction"]);
 
   const shadowPresets = {
     Soft: { distance: 18, blur: 38, alpha: 0.18, y: 12, inner: 0.58, ground: 0.14 },
@@ -1265,8 +1511,30 @@ function applySettings(settings) {
   root.style.setProperty("--hub-card-preview-fade-duration", `${cardPreviewFadeDuration}s`);
   root.style.setProperty("--hub-card-preview-slide-duration", `${cardPreviewSlideDuration}s`);
   root.style.setProperty("--hub-card-preview-opacity", Math.min(1, cardPreviewOpacity));
+  root.style.setProperty("--hub-auto-panel-lift-duration", `${autoPanelLiftDuration}s`);
   root.style.setProperty("--hub-card-preview-contrast", 1 + Math.max(0, cardPreviewOpacity - 1) * 0.18);
   root.style.setProperty("--hub-card-preview-brightness", 1 + Math.max(0, cardPreviewOpacity - 1) * 0.08);
+  root.style.setProperty("--hub-hover-line1-size", `${hoverLine1Size}px`);
+  root.style.setProperty("--hub-hover-line2-size", `${hoverLine2Size}px`);
+  root.style.setProperty("--hub-hover-line3-size", `${hoverLine3Size}px`);
+  root.style.setProperty("--hub-hover-line-gap", `${hoverLineGap}px`);
+  root.style.setProperty("--hub-hover-summary-gap", `${hoverSummaryGap}px`);
+  root.style.setProperty("--hub-hover-char-start-delay", `${hoverCharStartDelay}s`);
+  root.style.setProperty("--hub-hover-char-step", `${hoverCharStep}s`);
+  root.style.setProperty("--hub-hover-char-duration", `${hoverCharDuration}s`);
+  root.style.setProperty("--hub-hover-char-blur", `${hoverCharBlur}px`);
+  const hoverOffset = `${hoverCharOffset}em`;
+  const hoverRevealVectors = {
+    down: { x: "0em", y: hoverOffset },
+    up: { x: "0em", y: `-${hoverOffset}` },
+    left: { x: `-${hoverOffset}`, y: "0em" },
+    right: { x: hoverOffset, y: "0em" },
+    fade: { x: "0em", y: "0em" },
+  };
+  const hoverVector = hoverRevealVectors[hoverRevealMode] || hoverRevealVectors.down;
+  root.style.setProperty("--hub-hover-char-x-start", hoverVector.x);
+  root.style.setProperty("--hub-hover-char-y-start", hoverVector.y);
+  document.documentElement.dataset.hoverRevealMode = hoverRevealMode;
   root.style.setProperty("--hub-panel-switch-duration", `${panelSwitchDuration}s`);
   root.style.setProperty("--hub-panel-switch-delay", `${panelSwitchDelay}s`);
   root.style.setProperty("--hub-panel-overlap-duration", `${panelOverlapDuration}s`);
@@ -1303,6 +1571,15 @@ function applySettings(settings) {
   settingsSurface?.style.setProperty("--settings-chip-radius", `${uiChipRadius}px`);
   settingsSurface?.style.setProperty("--settings-tab-emboss", uiTabEmboss);
   settingsSurface?.style.setProperty("--settings-chip-emboss", uiChipEmboss);
+  root.style.setProperty("--hub-logo-delay", `${logoDelay}s`);
+  root.style.setProperty("--hub-logo-portfolio-color", logoPortfolioColor);
+  root.style.setProperty("--hub-logo-portfolio-color-rgb", hexToRgbString(logoPortfolioColor, defaults["logo-portfolio-color"]));
+  root.style.setProperty("--hub-logo-portfolio-duration", `${logoPortfolioDuration}s`);
+  root.style.setProperty("--hub-logo-tools-color", logoToolsColor);
+  root.style.setProperty("--hub-logo-tools-color-rgb", hexToRgbString(logoToolsColor, defaults["logo-tools-color"]));
+  root.style.setProperty("--hub-logo-tools-duration", `${logoToolsDuration}s`);
+  applyLogoDirection("portfolio", logoPortfolioDirection);
+  applyLogoDirection("tools", logoToolsDirection);
 
   controls.forEach((control) => {
     const key = control.dataset.hubControl;
@@ -1324,6 +1601,22 @@ function applySettings(settings) {
     "card-preview-fade-duration": cardPreviewFadeDuration,
     "card-preview-slide-duration": cardPreviewSlideDuration,
     "card-preview-opacity": cardPreviewOpacity,
+    "auto-panel-enabled": autoPanelEnabledValue,
+    "auto-panel-start-delay": autoPanelStartDelay,
+    "auto-panel-interval": autoPanelInterval,
+    "auto-panel-resume-delay": autoPanelResumeDelay,
+    "auto-panel-lift-duration": autoPanelLiftDuration,
+    "hover-line1-size": hoverLine1Size,
+    "hover-line2-size": hoverLine2Size,
+    "hover-line3-size": hoverLine3Size,
+    "hover-line-gap": hoverLineGap,
+    "hover-summary-gap": hoverSummaryGap,
+    "hover-char-start-delay": hoverCharStartDelay,
+    "hover-char-step": hoverCharStep,
+    "hover-char-duration": hoverCharDuration,
+    "hover-char-offset": hoverCharOffset,
+    "hover-char-blur": hoverCharBlur,
+    "hover-reveal-mode": hoverRevealMode,
     "panel-switch-duration": panelSwitchDuration,
     "panel-switch-delay": panelSwitchDelay,
     "panel-overlap-duration": panelOverlapDuration,
@@ -1358,6 +1651,13 @@ function applySettings(settings) {
     "ui-chip-radius": uiChipRadius,
     "ui-tab-emboss": uiTabEmboss,
     "ui-chip-emboss": uiChipEmboss,
+    "logo-delay": logoDelay,
+    "logo-portfolio-color": logoPortfolioColor,
+    "logo-portfolio-duration": logoPortfolioDuration,
+    "logo-portfolio-direction": logoPortfolioDirection,
+    "logo-tools-color": logoToolsColor,
+    "logo-tools-duration": logoToolsDuration,
+    "logo-tools-direction": logoToolsDirection,
   } });
   syncControlProgress(settings);
 }
@@ -1377,6 +1677,11 @@ function setOpen(open) {
   panel.setAttribute("aria-hidden", String(!open));
   toggle.setAttribute("aria-expanded", String(open));
   document.body.classList.toggle("hub-settings-open", open);
+  if (open) {
+    pauseAutoPanelRotation();
+  } else {
+    resumeAutoPanelRotationAfterDelay();
+  }
 }
 
 function syncAndSave() {
@@ -1387,6 +1692,12 @@ function syncAndSave() {
   });
   applySettings(settings);
   writeSettings(settings);
+  if (settings["auto-panel-enabled"] === "Off") {
+    clearAutoPanelTimers();
+    autoPanelCard = null;
+  } else if (!document.body.classList.contains("hub-settings-open") && !previewCards.some((card) => card.matches(":hover") || card.matches(":focus-within"))) {
+    startAutoPanelRotation(settingMs("auto-panel-start-delay"));
+  }
 }
 
 setupSettingsPanel();
@@ -1450,6 +1761,8 @@ function switchPreview(direction) {
 function resetPortfolioHubListState() {
   if (!page || !previewStage) return;
   page.classList.remove("is-system-preview", "is-system-preview-leaving", "is-preview-switching");
+  clearAutoPanelTimers();
+  autoPanelCard = null;
   stopCardPreview();
   previewStage.setAttribute("aria-hidden", "true");
   setOpen(false);
@@ -1462,6 +1775,7 @@ function setPortfolioPreview(open, index = currentPreviewIndex) {
     renderPreview(index);
     page.classList.add("is-system-preview");
     page.classList.remove("is-system-preview-leaving", "is-preview-switching");
+    pauseAutoPanelRotation();
     stopCardPreview();
     previewStage.setAttribute("aria-hidden", "false");
     setOpen(false);
@@ -1479,6 +1793,7 @@ function setPortfolioPreview(open, index = currentPreviewIndex) {
     previewStage.setAttribute("aria-hidden", "true");
     window.scrollTo({ top: 0, behavior: "smooth" });
     syncCardBackdropState();
+    resumeAutoPanelRotationAfterDelay();
   }, settingMs("intro-out-duration"));
 }
 
@@ -1488,6 +1803,95 @@ function openCurrentPreviewPage() {
   window.setTimeout(() => {
     window.location.href = previewOpen.href;
   }, settingMs("page-jump-delay"));
+}
+
+function autoPanelEnabled() {
+  return readSettings()["auto-panel-enabled"] !== "Off";
+}
+
+function clearAutoPanelTimers() {
+  if (autoPanelTimer) {
+    window.clearTimeout(autoPanelTimer);
+    autoPanelTimer = 0;
+  }
+  if (autoPanelResumeTimer) {
+    window.clearTimeout(autoPanelResumeTimer);
+    autoPanelResumeTimer = 0;
+  }
+}
+
+function autoPanelRevealDelayMs() {
+  const previewFade = settingMs("card-preview-fade-duration");
+  return Math.min(900, Math.max(280, previewFade * 0.38));
+}
+
+function showAutoPanelCard(index = autoPanelIndex) {
+  if (!autoPanelEnabled() || !previewCards.length || !page || page.classList.contains("is-system-preview")) return;
+  if (document.body.classList.contains("hub-settings-open")) return;
+  const normalizedIndex = ((index % previewCards.length) + previewCards.length) % previewCards.length;
+  const card = previewCards[normalizedIndex];
+  if (!card) return;
+
+  const previousAutoPanelCard = autoPanelCard;
+  const isSwitchingCard = Boolean(previousAutoPanelCard && previousAutoPanelCard !== card);
+
+  autoPanelIndex = (normalizedIndex + 1) % previewCards.length;
+
+  if (isSwitchingCard) {
+    // 自動切替では、背景スライドのクロスフェード開始と同時に、
+    // いったん前カードと説明文をフェードアウトさせる。
+    autoPanelCard = null;
+    setActiveTopCard(null);
+    cardHoverSummary?.classList.remove("is-visible");
+    startCardPreview(card);
+
+    window.setTimeout(() => {
+      if (autoPanelPaused || !autoPanelEnabled()) return;
+      const hoveredOrFocusedCard = previewCards.find((item) => item.matches(":hover") || item.matches(":focus-within"));
+      if (hoveredOrFocusedCard || document.body.classList.contains("hub-settings-open")) return;
+      autoPanelCard = card;
+      showCardHoverSummary(card, "auto");
+    }, autoPanelRevealDelayMs());
+    return;
+  }
+
+  autoPanelCard = card;
+  startCardPreview(card);
+  showCardHoverSummary(card, "auto");
+}
+
+function scheduleNextAutoPanel(intervalMs = settingMs("auto-panel-interval")) {
+  if (!autoPanelEnabled() || autoPanelPaused) return;
+  if (autoPanelTimer) window.clearTimeout(autoPanelTimer);
+  autoPanelTimer = window.setTimeout(() => {
+    showAutoPanelCard(autoPanelIndex);
+    scheduleNextAutoPanel();
+  }, Math.max(200, intervalMs));
+}
+
+function startAutoPanelRotation(delayMs = settingMs("auto-panel-start-delay")) {
+  clearAutoPanelTimers();
+  if (!autoPanelEnabled() || !previewCards.length) return;
+  autoPanelPaused = false;
+  autoPanelTimer = window.setTimeout(() => {
+    showAutoPanelCard(autoPanelIndex);
+    scheduleNextAutoPanel();
+  }, Math.max(0, delayMs));
+}
+
+function pauseAutoPanelRotation() {
+  autoPanelPaused = true;
+  clearAutoPanelTimers();
+  autoPanelCard = null;
+}
+
+function resumeAutoPanelRotationAfterDelay() {
+  clearAutoPanelTimers();
+  if (!autoPanelEnabled()) return;
+  autoPanelPaused = false;
+  autoPanelResumeTimer = window.setTimeout(() => {
+    startAutoPanelRotation(0);
+  }, Math.max(0, settingMs("auto-panel-resume-delay")));
 }
 
 previewCards.forEach((card) => {
@@ -1508,20 +1912,24 @@ previewCards.forEach((card) => {
     event.stopPropagation();
   });
   card.addEventListener("pointerenter", () => {
+    pauseAutoPanelRotation();
     startCardPreview(card);
     showCardHoverSummary(card);
   });
   card.addEventListener("pointerleave", () => {
     window.requestAnimationFrame(syncCardBackdropState);
     window.requestAnimationFrame(hideCardHoverSummary);
+    resumeAutoPanelRotationAfterDelay();
   });
   card.addEventListener("focusin", () => {
+    pauseAutoPanelRotation();
     syncCardBackdropState();
     showCardHoverSummary(card);
   });
   card.addEventListener("focusout", () => {
     window.requestAnimationFrame(syncCardBackdropState);
     window.requestAnimationFrame(hideCardHoverSummary);
+    resumeAutoPanelRotationAfterDelay();
   });
 });
 
@@ -1541,16 +1949,20 @@ if (previewNext) previewNext.addEventListener("click", () => switchPreview(1));
 renderPreview(currentPreviewIndex);
 hideCardHoverSummary();
 syncCardBackdropState();
+startAutoPanelRotation();
 
 window.addEventListener("pageshow", (event) => {
   if (event.persisted) {
     resetPortfolioHubListState();
+    startAutoPanelRotation();
   } else {
     syncCardBackdropState();
+    startAutoPanelRotation();
   }
 });
 
 window.addEventListener("pagehide", () => {
+  clearAutoPanelTimers();
   resetPortfolioHubListState();
 });
 

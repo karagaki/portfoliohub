@@ -1446,7 +1446,7 @@
   <div class="app">
     <aside class="side">
       <div class="side-brand-row">
-        <div class="side-brand-name">System Tools</div>
+        <div class="side-brand-name">AI workflow Tools</div>
       </div>
       <nav class="nav nav-direct portfolio-nav">
         <div class="nav-direct-section portfolio-start-nav"><span class="nav-direct-title">はじめに</span><button
@@ -1526,15 +1526,15 @@
           <div class="heading">
             <div>
               <h2>バックアップ管理</h2>
-              <p>System Tools本体の状態と、Conversation Captureから書き出したバックアップを安全に保管・復元します。</p>
+              <p>AI workflow Tools本体の状態と、Conversation Captureから書き出したバックアップを安全に保管・復元します。</p>
             </div><span class="tag">保護 / バックアップ</span>
           </div>
           <div class="card backup-warning"><b>重要</b>
-            <p>ブラウザ拡張の管理画面は補助入口です。継続管理の正本はこのSystem Tools本体画面へ寄せます。</p>
+            <p>ブラウザ拡張の管理画面は補助入口です。継続管理の正本はこのAI workflow Tools本体画面へ寄せます。</p>
           </div>
           <div class="backup-grid">
             <div class="card backup-panel">
-              <h3>System Tools本体データ</h3>
+              <h3>AI workflow Tools本体データ</h3>
               <p>PROJECT、IMPORT、CORE、知識パッケージ、仕様正本など、本体側の状態をバックアップします。</p>
               <div class="backup-actions"><button class="btn primary"
                   onclick="exportKashinoKiBackup()">本体バックアップを書き出す</button><label class="btn secondary"
@@ -1543,7 +1543,7 @@
             </div>
             <div class="card backup-panel">
               <h3>Conversation Captureデータ</h3>
-              <p>機能拡張側で書き出したバックアップJSONを、System Tools本体のIMPORTキューへ取り込みます。</p>
+              <p>機能拡張側で書き出したバックアップJSONを、AI workflow Tools本体のIMPORTキューへ取り込みます。</p>
               <div class="backup-actions"><label class="btn primary"
                   for="captureBackupImportFile">Captureバックアップを読み込む</label><input id="captureBackupImportFile"
                   type="file" accept=".json" hidden></div>
@@ -1555,7 +1555,7 @@
               <li>機能拡張が有効な間に、Capture側でバックアップJSONを書き出す。</li>
               <li>この画面で `Captureバックアップを読み込む` を実行する。</li>
               <li>取り込まれた会話は「回収データ取込」で追加／既出／改訂／欠落を確認する。</li>
-              <li>以後はSystem Tools本体側のバックアップを書き出して保管する。</li>
+              <li>以後はAI workflow Tools本体側のバックアップを書き出して保管する。</li>
             </ol>
           </div>
           <div id="unifiedBackupResult" class="card backup-result">まだバックアップ操作は実行していません。</div>
@@ -1989,7 +1989,7 @@
               </div>
               <div class="workflow-fulltext-card kashinoki-neumo-panel kashinoki-reveal-shell presentation-extract-card">
                 <div class="presentation-card-heading">
-                  <span>System Tools Extract</span>
+                  <span>AI workflow Tools Extract</span>
                   <h3>会話から拾った重要箇所</h3>
                   <p>会話内の要望を、次に使える制作条件へ変換します。</p>
                 </div>
@@ -2277,7 +2277,7 @@
           <div class="heading">
             <div>
               <h2 class="guided-map-title"><span>どこから回収し、何を取り出し、何へ効かせるか</span></h2>
-              <p>System Toolsで必要な情報源と再活用先を、接続済み・未接続を含めて確認します。</p>
+              <p>AI workflow Toolsで必要な情報源と再活用先を、接続済み・未接続を含めて確認します。</p>
             </div><span class="tag">回収元の不足も見直す</span>
           </div>
           <div class="card system-map recessed-info-card">
@@ -3125,7 +3125,7 @@
                 class="intake-input-request">以下3つの欄に入力をお願いします</strong></p>
             <div class="target-form guided-form">
               <label class="intake-field" data-field="name"><small><span>対象名</span></small><input id="inboxTargetName"
-                  type="text" maxlength="80" placeholder="例：System Tools / 制作案件名"></label>
+                  type="text" maxlength="80" placeholder="例：AI workflow Tools / 制作案件名"></label>
               <label class="intake-field" data-field="kind"><small><span>種類</span></small><select id="inboxTargetKind">
                   <option>制作対象</option>
                   <option>開発ツール</option>
@@ -3294,7 +3294,7 @@
               <h3>新しい結び付け先を作る</h3>
               <p class="muted">回収した情報を迷子にしないための受け皿です。プロジェクト名、制作物名、改善テーマなど、後からまとめて見返したい単位を登録します。</p>
               <div class="target-form"><input id="targetName" type="text"
-                  placeholder="結び付け先 例：System Tools / p5jsアプリ2"><select id="targetKind">
+                  placeholder="結び付け先 例：AI workflow Tools / p5jsアプリ2"><select id="targetKind">
                   <option>制作対象</option>
                   <option>開発ツール</option>
                   <option>運用課題</option>
@@ -3740,7 +3740,7 @@
             <div class="card stage-card">
               <h3>保護条件</h3>
               <div class="notice">
-                <b>ClipboardKnowledgeを保護</b><br>保存先はSystem Tools専用領域です。既存のClipboardKnowledge格納領域には書き込みません。</div>
+                <b>ClipboardKnowledgeを保護</b><br>保存先はAI workflow Tools専用領域です。既存のClipboardKnowledge格納領域には書き込みません。</div>
               <div class="buttons"><button class="btn secondary"
                   onclick="page('boundary','stage-govern')">保存先と条件を見る</button></div>
             </div>
@@ -4009,7 +4009,7 @@
             <div class="card goal-panel">
               <h3>安全条件</h3>
               <div class="notice"><b>ClipboardKnowledge
-                  保護</b><br>System Toolsの保存先は専用領域です。既存のClipboardKnowledge格納領域へは書き込みません。</div>
+                  保護</b><br>AI workflow Toolsの保存先は専用領域です。既存のClipboardKnowledge格納領域へは書き込みません。</div>
               <div class="goal-warning">次段階では、未処理件数だけでなく「成果の活用を止めている問題」「展開へ近い作業」をここに接続する仕様を検討します。</div>
             </div>
           </div>
@@ -4100,7 +4100,7 @@
             </div><span class="tag" id="candidateCount"></span>
           </div>
           <div class="tabs"><button class="tab active" data-filter="ALL">すべて</button><button class="tab"
-              data-filter="KASHINOKI">System Tools</button><button class="tab" data-filter="KASHINOKI_DESIGN">System Tools
+              data-filter="KASHINOKI">AI workflow Tools</button><button class="tab" data-filter="KASHINOKI_DESIGN">AI workflow Tools
               Design</button><button class="tab" data-filter="approved_candidate">承認候補</button></div>
           <div class="split">
             <div class="list" id="candidateList"></div>
@@ -4128,11 +4128,11 @@
             </div><span class="tag">候補段階 / 強制適用なし</span>
           </div>
           <div class="notice" style="margin-bottom:14px"><b>振り分け修正が必要な場合</b><br>`AI結果台帳の上に、状態サマリー・機能別マップ・次アクション一覧を構築する`
-            は System Tools 本体側で扱います。Design側にある場合は、そのカード内の <b>System Toolsへ移動</b> を押してください。</div>
+            は AI workflow Tools 本体側で扱います。Design側にある場合は、そのカード内の <b>AI workflow Toolsへ移動</b> を押してください。</div>
           <div id="approvalReceipt"></div>
           <div class="cols">
             <div class="card">
-              <h3>System Tools</h3>
+              <h3>AI workflow Tools</h3>
               <div class="list" id="approvedKashinoKi"></div>
             </div>
             <div class="card">
@@ -4187,7 +4187,7 @@
           </div>
           <div class="cols">
             <div class="card">
-              <h3>System Tools 基盤改善</h3>
+              <h3>AI workflow Tools 基盤改善</h3>
               <p class="muted">収集・整理・再利用・運用設計を改善する作業へ接続します。</p><button class="btn primary"
                 onclick="generateApplication('kashinoki_system')">基盤改善用を生成</button>
             </div>
@@ -4203,7 +4203,7 @@
           <div class="heading">
             <div>
               <h2>保存先と保護条件<span class="internal">内部画面: 連携・保護境界</span></h2>
-              <p>System Tools専用領域の保存先と、引き続き禁止する処理を確認します。</p>
+              <p>AI workflow Tools専用領域の保存先と、引き続き禁止する処理を確認します。</p>
             </div>
           </div>
           <div class="notice"><b>ClipboardKnowledgeは独立した継続利用システムとして保護します。</b><br>書込先は
@@ -4482,21 +4482,21 @@
     }
     async function load() { STATE = normalizeWebState(null); render(); }
     function labelStatus(s) { return ({ new_conversation: '新規会話', additional_messages: '末尾追加', edited_existing_content: '既存本文変更', missing_existing_messages: '発言欠落', new_document: '新規資料', updated_document: '更新資料', same_content: '同一内容' }[s] || s) }
-    function displayTarget(v) { return v === 'KASHINOKI_DESIGN' ? 'Design Tools' : 'System Tools' }
+    function displayTarget(v) { return v === 'KASHINOKI_DESIGN' ? 'Design Tools' : 'AI workflow Tools' }
     function renderQueue() {
       const pending = STATE.candidates.filter(c => c.review_state === 'pending');
       qs('#queueCount').textContent = '未承認 ' + pending.length + '件';
       qs('#reviewQueue').innerHTML = pending.length ? pending.map(c => {
-        const target = c.target_system === 'KASHINOKI_DESIGN' ? 'Design Tools' : 'System Tools';
+        const target = c.target_system === 'KASHINOKI_DESIGN' ? 'Design Tools' : 'AI workflow Tools';
         const src = c.source_title || '旧版候補（根拠元未記録）';
-        return `<div class="card" style="margin-bottom:12px"><div class="type">${esc(c.knowledge_type)} / ${esc(target)}</div><h3 style="margin:8px 0">${esc(c.summary)}</h3><div class="muted">根拠元: ${esc(src)}<br>候補理由: ${esc(c.why || '根拠に基づく候補')}</div><div class="buttons"><button class="btn primary" onclick="reviewQueue('${c.candidate_id}','approved_candidate')">承認候補として保持</button><button class="btn hold" onclick="reviewQueue('${c.candidate_id}','held')">保留</button><button class="btn danger" onclick="reviewQueue('${c.candidate_id}','rejected')">却下</button><button class="btn secondary" onclick="reviewQueue('${c.candidate_id}','pending','${c.target_system === 'KASHINOKI_DESIGN' ? 'KASHINOKI' : 'KASHINOKI_DESIGN'}')">${c.target_system === 'KASHINOKI_DESIGN' ? 'System Toolsへ変更' : 'Designへ変更'}</button></div></div>`;
+        return `<div class="card" style="margin-bottom:12px"><div class="type">${esc(c.knowledge_type)} / ${esc(target)}</div><h3 style="margin:8px 0">${esc(c.summary)}</h3><div class="muted">根拠元: ${esc(src)}<br>候補理由: ${esc(c.why || '根拠に基づく候補')}</div><div class="buttons"><button class="btn primary" onclick="reviewQueue('${c.candidate_id}','approved_candidate')">承認候補として保持</button><button class="btn hold" onclick="reviewQueue('${c.candidate_id}','held')">保留</button><button class="btn danger" onclick="reviewQueue('${c.candidate_id}','rejected')">却下</button><button class="btn secondary" onclick="reviewQueue('${c.candidate_id}','pending','${c.target_system === 'KASHINOKI_DESIGN' ? 'KASHINOKI' : 'KASHINOKI_DESIGN'}')">${c.target_system === 'KASHINOKI_DESIGN' ? 'AI workflow Toolsへ変更' : 'Designへ変更'}</button></div></div>`;
       }).join('') : '<div class="empty">未承認候補はありません。</div>';
     }
     async function reviewQueue(id, status, target) { const r = await api('public-demo-disabled/candidate-review', { method: 'POST', body: JSON.stringify({ candidate_id: id, review_state: status, target_system: target }) }); if (!r.ok) { toast(r.error); return } await load(); page('queue'); toast(r.no_change ? r.message : '選別結果を保存しました。') }
 
     function renderApproved() {
       const approved = STATE.candidates.filter(c => c.review_state === 'approved_candidate');
-      const renderItems = (items, target) => items.length ? items.map(c => `<div class="item"><div class="type">${esc(c.knowledge_type)} / approved_candidate</div><b>${esc(c.summary)}</b><div class="muted" style="margin-top:7px">候補ID: ${esc(c.candidate_id)}<br>根拠元: ${esc(c.source_title || '未取得')}<br>保存日時: ${esc(c.reviewed_at || '旧版保存・日時未取得')}</div><div class="buttons"><button class="btn secondary" onclick="moveApproved('${c.candidate_id}','${target === 'KASHINOKI' ? 'KASHINOKI_DESIGN' : 'KASHINOKI'}')">${target === 'KASHINOKI' ? 'Design Toolsへ移動' : 'System Toolsへ移動'}</button></div></div>`).join('') : '<div class="empty">承認候補はありません。</div>';
+      const renderItems = (items, target) => items.length ? items.map(c => `<div class="item"><div class="type">${esc(c.knowledge_type)} / approved_candidate</div><b>${esc(c.summary)}</b><div class="muted" style="margin-top:7px">候補ID: ${esc(c.candidate_id)}<br>根拠元: ${esc(c.source_title || '未取得')}<br>保存日時: ${esc(c.reviewed_at || '旧版保存・日時未取得')}</div><div class="buttons"><button class="btn secondary" onclick="moveApproved('${c.candidate_id}','${target === 'KASHINOKI' ? 'KASHINOKI_DESIGN' : 'KASHINOKI'}')">${target === 'KASHINOKI' ? 'Design Toolsへ移動' : 'AI workflow Toolsへ移動'}</button></div></div>`).join('') : '<div class="empty">承認候補はありません。</div>';
       qs('#approvedKashinoKi').innerHTML = renderItems(approved.filter(c => c.target_system === 'KASHINOKI'), 'KASHINOKI');
       qs('#approvedDesign').innerHTML = renderItems(approved.filter(c => c.target_system === 'KASHINOKI_DESIGN'), 'KASHINOKI_DESIGN');
       const rec = STATE.last_candidate_receipt;
@@ -4512,7 +4512,7 @@
       const c = STATE.current_contract;
       if (!c) { qs('#contractContent').innerHTML = '<div class="notice">まだ生成されていません。Context Packを生成すると、承認候補からCurrent Contractも同時に作成されます。</div>'; return }
       const section = (title, items) => `<div class="card"><h3>${title}</h3>${items.length ? items.map(x => `<div class="item" style="margin-bottom:9px"><div class="type">${esc(x.knowledge_type)} / approved_candidate</div><b>${esc(x.summary)}</b><div class="muted" style="margin-top:7px">根拠元: ${esc(x.source_title || '旧版候補（根拠元未記録）')} / ${esc(x.candidate_id)}</div></div>`).join('') : '<div class="empty">承認候補はありません。</div>'}</div>`;
-      qs('#contractContent').innerHTML = `<div class="banner good">生成済み: ${esc(c.generated_at)} / System Tools ${c.counts.kashinoki}件 / Design ${c.counts.design}件</div><div class="cols">${section('System Tools / 判断・制約', c.kashinoki)}${section('Design Tools / 表現判断', c.design)}</div>`;
+      qs('#contractContent').innerHTML = `<div class="banner good">生成済み: ${esc(c.generated_at)} / AI workflow Tools ${c.counts.kashinoki}件 / Design ${c.counts.design}件</div><div class="cols">${section('AI workflow Tools / 判断・制約', c.kashinoki)}${section('Design Tools / 表現判断', c.design)}</div>`;
     }
     function renderPack() {
       const packs = STATE.context_packs || [];
@@ -5686,9 +5686,9 @@
     async function submitDocumentUpdate(id, file) { const r = await api('public-demo-disabled/import-document-update', { method: 'POST', body: JSON.stringify({ document_id: id, filename: file.name, content: await file.text() }) }); if (!r.ok) { toast(r.error); return } await load(); page('intake'); if (r.review) { showReview(r.review.review_id); toast('新版を比較用に取り込みました。差分確認後に反映してください。') } else { qs('#importResult').innerHTML = '<div class="banner neutral">同じ内容のため、正本資料は変更しません。</div>'; toast('同一内容です。追加反映はありません。') } }
     async function generate(kind, id) { const r = await api('public-demo-disabled/candidates', { method: 'POST', body: JSON.stringify({ kind, item_id: id }) }); if (!r.ok) { toast(r.error); return } await load(); const kept = (r.approved_preserved_ids || []).length; toast(kept ? `候補を再生成しました。承認候補 ${kept}件を維持しました。` : '根拠付き知識候補を作成しました。'); page(kept ? 'approved' : 'candidates') }
     function filtered() { return STATE.candidates.filter(c => FILTER === 'ALL' || c.target_system === FILTER || c.review_state === FILTER) }
-    function renderCandidates() { const items = filtered(); qs('#candidateCount').textContent = `候補 ${STATE.counts.candidates}件 / 承認候補 ${STATE.counts.approved_candidates}件`; const el = qs('#candidateList'); if (!items.length) { el.innerHTML = '<div class="empty">表示対象の候補はありません。</div>'; qs('#candidateDetail').innerHTML = '<div class="empty">候補を選択してください。</div>'; return } el.innerHTML = items.map((c, i) => `<button class="item candidate ${SELECTED === c.candidate_id || (!SELECTED && i === 0) ? 'active' : ''}" onclick="selectCandidate('${c.candidate_id}')"><div class="type">${esc(c.knowledge_type)} / ${esc(c.review_state)}</div><b>${esc(c.summary)}</b><span class="route ${c.target_system === 'KASHINOKI_DESIGN' ? 'design' : ''}">${c.target_system === 'KASHINOKI_DESIGN' ? 'Design Tools' : 'System Tools'}</span></button>`).join(''); let chosen = items.find(c => c.candidate_id === SELECTED) || items[0]; SELECTED = chosen.candidate_id; showCandidate(chosen) }
+    function renderCandidates() { const items = filtered(); qs('#candidateCount').textContent = `候補 ${STATE.counts.candidates}件 / 承認候補 ${STATE.counts.approved_candidates}件`; const el = qs('#candidateList'); if (!items.length) { el.innerHTML = '<div class="empty">表示対象の候補はありません。</div>'; qs('#candidateDetail').innerHTML = '<div class="empty">候補を選択してください。</div>'; return } el.innerHTML = items.map((c, i) => `<button class="item candidate ${SELECTED === c.candidate_id || (!SELECTED && i === 0) ? 'active' : ''}" onclick="selectCandidate('${c.candidate_id}')"><div class="type">${esc(c.knowledge_type)} / ${esc(c.review_state)}</div><b>${esc(c.summary)}</b><span class="route ${c.target_system === 'KASHINOKI_DESIGN' ? 'design' : ''}">${c.target_system === 'KASHINOKI_DESIGN' ? 'Design Tools' : 'AI workflow Tools'}</span></button>`).join(''); let chosen = items.find(c => c.candidate_id === SELECTED) || items[0]; SELECTED = chosen.candidate_id; showCandidate(chosen) }
     function selectCandidate(id) { SELECTED = id; renderCandidates() }
-    function showCandidate(c) { qs('#candidateDetail').innerHTML = `<h3>${esc(c.summary)}</h3><div class="kv"><label>候補種別</label><div>${esc(c.knowledge_type)}</div></div><div class="kv"><label>振り分け</label><div>${c.target_system === 'KASHINOKI_DESIGN' ? 'Design Tools' : 'System Tools'}</div></div><div class="kv"><label>状態</label><div>${esc(c.review_state)} / 強制適用なし</div></div><div class="kv"><label>根拠元</label><div>${esc(c.source_title || '未取得')} / ${c.source_kind === 'document' ? '資料正本' : '会話正本'}</div></div><div class="kv"><label>候補理由</label><div>${esc(c.why || '根拠に基づく候補')}</div></div><div class="quote"><b>該当箇所</b><br>${c.evidence.map(e => '<b>' + esc(e.label) + '</b><br>' + esc(e.fragment)).join('<br><br>')}</div><div class="buttons"><button class="btn primary" onclick="reviewCandidate('${c.candidate_id}','approved_candidate')">承認候補として保持</button><button class="btn hold" onclick="reviewCandidate('${c.candidate_id}','held')">保留</button><button class="btn danger" onclick="reviewCandidate('${c.candidate_id}','rejected')">却下</button></div><div class="buttons"><button class="btn secondary" onclick="reviewCandidate('${c.candidate_id}','${c.review_state}','KASHINOKI')">System Toolsへ</button><button class="btn secondary" onclick="reviewCandidate('${c.candidate_id}','${c.review_state}','KASHINOKI_DESIGN')">Design Toolsへ</button></div>` }
+    function showCandidate(c) { qs('#candidateDetail').innerHTML = `<h3>${esc(c.summary)}</h3><div class="kv"><label>候補種別</label><div>${esc(c.knowledge_type)}</div></div><div class="kv"><label>振り分け</label><div>${c.target_system === 'KASHINOKI_DESIGN' ? 'Design Tools' : 'AI workflow Tools'}</div></div><div class="kv"><label>状態</label><div>${esc(c.review_state)} / 強制適用なし</div></div><div class="kv"><label>根拠元</label><div>${esc(c.source_title || '未取得')} / ${c.source_kind === 'document' ? '資料正本' : '会話正本'}</div></div><div class="kv"><label>候補理由</label><div>${esc(c.why || '根拠に基づく候補')}</div></div><div class="quote"><b>該当箇所</b><br>${c.evidence.map(e => '<b>' + esc(e.label) + '</b><br>' + esc(e.fragment)).join('<br><br>')}</div><div class="buttons"><button class="btn primary" onclick="reviewCandidate('${c.candidate_id}','approved_candidate')">承認候補として保持</button><button class="btn hold" onclick="reviewCandidate('${c.candidate_id}','held')">保留</button><button class="btn danger" onclick="reviewCandidate('${c.candidate_id}','rejected')">却下</button></div><div class="buttons"><button class="btn secondary" onclick="reviewCandidate('${c.candidate_id}','${c.review_state}','KASHINOKI')">AI workflow Toolsへ</button><button class="btn secondary" onclick="reviewCandidate('${c.candidate_id}','${c.review_state}','KASHINOKI_DESIGN')">Design Toolsへ</button></div>` }
     async function reviewCandidate(id, status, target) { const r = await api('public-demo-disabled/candidate-review', { method: 'POST', body: JSON.stringify({ candidate_id: id, review_state: status, target_system: target }) }); if (!r.ok) { toast(r.error); return } await load(); if (r.no_change) { toast(r.message); if (status === 'approved_candidate') page('approved'); return } if (status === 'approved_candidate') { page('approved'); toast('承認候補として保存しました。台帳で証跡を確認できます。') } else { toast('候補の状態を保存しました。') } }
     async function moveApproved(id, target) { const r = await api('public-demo-disabled/candidate-review', { method: 'POST', body: JSON.stringify({ candidate_id: id, review_state: 'approved_candidate', target_system: target }) }); if (!r.ok) { toast(r.error); return } await load(); page('approved'); toast(r.no_change ? r.message : '承認候補の振り分けを修正しました。') }
     qsa('.tab').forEach(b => b.onclick = () => { qsa('.tab').forEach(x => x.classList.toggle('active', x === b)); FILTER = b.dataset.filter; SELECTED = null; renderCandidates() });
@@ -5740,13 +5740,13 @@
       if (!result.ok) { toast(result.error || 'バックアップを書き出せませんでした。'); return }
       const blob = new Blob([JSON.stringify(result, null, 2)], { type: 'application/json' });
       const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `SystemTools_Demo_backup_${backupStamp()}.json`; a.click(); URL.revokeObjectURL(a.href);
-      toast('System Tools本体バックアップを書き出しました。'); renderUnifiedBackup();
+      toast('AI workflow Tools本体バックアップを書き出しました。'); renderUnifiedBackup();
     }
     async function importKashinoKiBackupFile(file) {
       const raw = JSON.parse(await file.text());
       const result = await api('public-demo-disabled/kashinoki-backup-import', { method: 'POST', body: JSON.stringify({ backup: raw }) });
       if (!result.ok) { toast(result.error); return }
-      await load(); page('unified-backup'); toast('System Tools本体バックアップを読み込みました。');
+      await load(); page('unified-backup'); toast('AI workflow Tools本体バックアップを読み込みました。');
     }
     async function importCaptureBackupFile(file) {
       const result = await api('public-demo-disabled/capture-backup-import', { method: 'POST', body: JSON.stringify({ filename: file.name, content: await file.text() }) });
@@ -6636,7 +6636,7 @@
       return null;
     }
     function renderPortfolioQualityEmptyState() {
-      return `<div class="workflow-fulltext-layout workflow-fallback-view presentation-chat-layout kashinoki-v719-waiting-layout"><div class="workflow-fulltext-card kashinoki-neumo-panel kashinoki-reveal-shell presentation-chat-card"><div class="presentation-card-heading"><span>ChatGPT / User</span><h3>会話JSONはまだ確定されていません</h3><p>STEP 1でJSONを読み込み、下部の「中身を確かめる ➡」を押すと、このパネルへ会話本文を表示します。</p></div><div class="presentation-chat-thread"><article class="chat-bubble assistant" data-quality02-none="true"><label>System</label><p>押す前の段階では、02に本文を先読み表示しません。</p></article></div></div><div class="workflow-fulltext-card kashinoki-neumo-panel kashinoki-reveal-shell presentation-extract-card"><div class="presentation-card-heading"><span>System Tools Extract</span><h3>確認待ち</h3><p>01から確定された会話JSONを受け取ると、候補表示を生成します。</p></div><div class="presentation-extract-list"><div><b>未表示</b><span>01の主操作を実行してください。</span></div></div></div></div>`;
+      return `<div class="workflow-fulltext-layout workflow-fallback-view presentation-chat-layout kashinoki-v719-waiting-layout"><div class="workflow-fulltext-card kashinoki-neumo-panel kashinoki-reveal-shell presentation-chat-card"><div class="presentation-card-heading"><span>ChatGPT / User</span><h3>会話JSONはまだ確定されていません</h3><p>STEP 1でJSONを読み込み、下部の「中身を確かめる ➡」を押すと、このパネルへ会話本文を表示します。</p></div><div class="presentation-chat-thread"><article class="chat-bubble assistant" data-quality02-none="true"><label>System</label><p>押す前の段階では、02に本文を先読み表示しません。</p></article></div></div><div class="workflow-fulltext-card kashinoki-neumo-panel kashinoki-reveal-shell presentation-extract-card"><div class="presentation-card-heading"><span>AI workflow Tools Extract</span><h3>確認待ち</h3><p>01から確定された会話JSONを受け取ると、候補表示を生成します。</p></div><div class="presentation-extract-list"><div><b>未表示</b><span>01の主操作を実行してください。</span></div></div></div></div>`;
     }
     function renderPortfolioQualityPendingSummary() {
       const labels = ['会話全体','タスク','仕様','引き継ぎ','注意・禁止','デザイン','課題','禁止失敗','自動化','AI回答改善','意図理解'];
@@ -6715,7 +6715,7 @@
   </div>
   <div class="workflow-fulltext-card kashinoki-neumo-panel kashinoki-reveal-shell presentation-extract-card">
     <div class="presentation-card-heading">
-      <span>System Tools Extract</span>
+      <span>AI workflow Tools Extract</span>
       <h3>会話から拾った重要箇所</h3>
       <p>読み込まれたJSONの発言から、次に使う候補を生成します。</p>
     </div>
@@ -6880,7 +6880,7 @@
 </div>
 <div class="workflow-fulltext-card kashinoki-neumo-panel kashinoki-reveal-shell presentation-extract-card">
 <div class="presentation-card-heading">
-<span>System Tools Extract</span>
+<span>AI workflow Tools Extract</span>
 <h3>会話から拾った重要箇所</h3>
 <p>会話内の要望を、次に使える制作条件へ変換します。</p>
 </div>
@@ -7493,7 +7493,7 @@
     }
     function pSections(use) { const items = pMatches(use); return items.map(x => [pLabel(x.type), x.statement || x.adopted_statement || x.suggested_statement || '候補']) }
     function renderPPreview() {
-      const use = ensurePortfolioSelection(), project = qs('#portfolioProjectSelect')?.value || 'System Tools', items = pMatches(use);
+      const use = ensurePortfolioSelection(), project = qs('#portfolioProjectSelect')?.value || 'AI workflow Tools', items = pMatches(use);
       const imports = (STATE.capture_imports || []).length, candidates = captureCandidates().length, approved = pContracts().length, issues = captureCandidates().filter(c => ['pending', 'insufficient_evidence'].includes(c.review_state || 'pending')).length;
       const setText = (id, val) => { const n = qs('#' + id); if (n) n.textContent = val };
       setText('resultImportCount', imports); setText('resultCandidateCount', candidates); setText('resultApprovedCount', approved); setText('resultIssueCount', issues); setText('workflowCompareItems', '');
@@ -7504,7 +7504,7 @@
       const evidence = items.length ? items.slice(0, 3).map(x => `<div class="portfolio-preview-item kashinoki-reveal-item"><label>${esc(pLabel(x.type || x.suggested_category || x.adopted_category))}</label><p>${esc(x.statement || x.adopted_statement || x.suggested_statement || '採用済み根拠')}</p></div>`).join('') : `<div class="portfolio-empty-note kashinoki-reveal-item">05で前提候補を選択すると、採用済み根拠または選択した前提枠をここに表示します。</div>`;
       const pv = qs('#portfolioPreview'); if (pv) pv.innerHTML = base + evidence + pSections(use).map(x => `<div class="portfolio-preview-item kashinoki-reveal-item"><label>${esc(x[0])}</label><p>${esc(x[1])}</p></div>`).join('');
     }
-    function buildPText() { const use = pUse() || PORTFOLIO_USES[0], project = qs('#portfolioProjectSelect')?.value || 'System Tools', items = pMatches(use); return ['# System Tools 次AI作業用前提プレビュー', '', ...(PORTFOLIO_DEMO_MODE ? ['- 表示状態: DEMO / SAMPLE（実登録データではありません）', ''] : []), `- 対象候補: ${project}`, `- 活用目的: ${use.code}：${use.title}`, '- 状態: Conversation Capture回収情報のうち、人間が採用済みとした根拠のみを使用', '', '## 利用する根拠', ...items.map(x => `- ${pLabel(x.type)}: ${x.statement}`), '', '## 現在の制限', '- 機能拡張からの自動同期・他AI成果物の自動回収・正式な対象紐付けは未接続です。'].join('\n') }
+    function buildPText() { const use = pUse() || PORTFOLIO_USES[0], project = qs('#portfolioProjectSelect')?.value || 'AI workflow Tools', items = pMatches(use); return ['# AI workflow Tools 次AI作業用前提プレビュー', '', ...(PORTFOLIO_DEMO_MODE ? ['- 表示状態: DEMO / SAMPLE（実登録データではありません）', ''] : []), `- 対象候補: ${project}`, `- 活用目的: ${use.code}：${use.title}`, '- 状態: Conversation Capture回収情報のうち、人間が採用済みとした根拠のみを使用', '', '## 利用する根拠', ...items.map(x => `- ${pLabel(x.type)}: ${x.statement}`), '', '## 現在の制限', '- 機能拡張からの自動同期・他AI成果物の自動回収・正式な対象紐付けは未接続です。'].join('\n') }
     async function copyPortfolioPreview() { try { await navigator.clipboard.writeText(buildPText()); toast('次AI作業用の前提をコピーしました。') } catch (e) { downloadPortfolioPreview(); toast('Markdownを保存しました。') } }
     function downloadPortfolioPreview() { const blob = new Blob([buildPText()], { type: 'text/markdown;charset=utf-8' }), a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'SystemTools_Demo_next_step_preview.md'; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 1000) }
     async function initPortfolio() { DEMO_MODE_SETTING = true; try { localStorage.setItem(DEMO_MODE_SETTING_KEY, '1'); } catch (e) {} await load(); DEMO_MODE_SETTING = true; try { localStorage.setItem(DEMO_MODE_SETTING_KEY, '1'); } catch (e) {} applyDemoModeSetting(); renderPortfolio(); qs('#portfolioProjectSelect')?.addEventListener('change', renderPPreview); qs('#portfolioJsonFile')?.addEventListener('change', async e => { PORTFOLIO_DEMO_MODE = false; syncPortfolioDemoBanner(); syncPortfolioProjectOptions(); await importQueueFiles(e.target.files); e.target.value = '' }); qs('#importQueueFiles')?.addEventListener('change', async e => { PORTFOLIO_DEMO_MODE = false; await importQueueFiles(e.target.files); e.target.value = '' }); qs('#kashinokiBackupImportFile')?.addEventListener('change', async e => { const f = e.target.files[0]; if (f) await importKashinoKiBackupFile(f); e.target.value = '' }); qs('#captureBackupImportFile')?.addEventListener('change', async e => { const f = e.target.files[0]; if (f) await importCaptureBackupFile(f); e.target.value = '' }); page('kashinoki-start') }
@@ -10978,7 +10978,7 @@
     if(title){
       var active = qs('#' + (window.CSS && CSS.escape ? CSS.escape(id) : id));
       var h = active && active.querySelector('h1,h2,h3');
-      title.textContent = h ? h.textContent.trim() : 'System Tools';
+      title.textContent = h ? h.textContent.trim() : 'AI workflow Tools';
     }
     try{ window.scrollTo({top:0, behavior:'smooth'}); }catch(e){ window.scrollTo(0,0); }
   }

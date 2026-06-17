@@ -90,7 +90,7 @@
     const BUNDLED_INITIAL_SETTINGS_EMBEDDED = JSON.parse(String.raw`{
   "schema": "uiux-animation-tools.user-initial-settings-export",
   "version": 1,
-  "exportedAt": "2026-06-16T02:18:05.296Z",
+  "exportedAt": "2026-06-17T04:28:41.246Z",
   "source": "detail-settings-initial-tab",
   "keys": {
     "uiVariantMain": "variant-2-neumorphism",
@@ -111,7 +111,7 @@
     "cursorUI_showCustomCursor": false,
     "cursorUI_cursor-radius": 277,
     "cursorUI_cursor-strength": 0.1,
-    "cursorUI_continuousEffect": false,
+    "cursorUI_continuousEffect": true,
     "cursorUI_pullEffect": false,
     "cursorUI_pull-strength": 0,
     "casePaletteLayoutMode": "vertical",
@@ -4970,7 +4970,7 @@
     },
     "activeRegisteredSlot": {
       "caseId": 0,
-      "slotId": "b"
+      "slotId": "-"
     },
     "uiGlassCustomPresets": {
       "初期設定": {
@@ -5807,6 +5807,14 @@
     "hasUiSizeTuner": true,
     "activeGlassPreset": "custom:ガラス-06",
     "activeNeumorphismPreset": "custom:初期設定"
+  },
+  "activeRegisteredSlot": {
+    "caseId": 0,
+    "slotId": "-"
+  },
+  "initialActiveRegisteredSlot": {
+    "caseId": 0,
+    "slotId": "-"
   }
 }`);
 

@@ -4636,7 +4636,7 @@ body[data-ui-variant="variant-1-glass"].glass-theme-layout-settling #glass-curso
 
 
 /* =========================================================
-   Runtime 75%-density contract for UI/UX Animation Tools
+   Runtime 75%-density contract for Motion Drawing Tools
    ---------------------------------------------------------
    Chrome倍率を変更せず、Glass UI部品の実寸だけを75%表示時の密度へ寄せる。
    body zoom / 全体 transform / viewport逆補正は禁止。

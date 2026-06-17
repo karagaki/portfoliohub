@@ -1,5 +1,5 @@
 /* Public display scale layer
-   Uniformly scales the System Tools demo for portfolio viewing without changing
+   Uniformly scales the AI workflow Tools demo for portfolio viewing without changing
    the internal page, panel, workflow, or animation layout rules. */
 :root {
   --public-demo-scale: 0.8;

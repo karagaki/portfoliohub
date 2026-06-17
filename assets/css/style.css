@@ -3,7 +3,7 @@
   --bg: #c8beb1;
   --bg-soft: #a99f93;
   /* 仮素材。後で正式なTOP背景素材へ差し替え予定。 */
-  --hub-preview-image: url("../img/system-tools-preview-01_1.png");
+  --hub-preview-image: url("../img/system-tools-preview01-1.webp");
   --hub-page-background:
     radial-gradient(circle at calc(18% * var(--hub-light-position)) calc(16% * var(--hub-light-position)), rgba(255, 247, 236, calc(0.58 * var(--hub-light-strength) * var(--hub-bg-contrast))), transparent 0 calc(22% * var(--hub-light-spread))),
     radial-gradient(circle at calc(84% / var(--hub-light-position)) 14%, rgba(255, 255, 255, calc(0.34 * var(--hub-light-strength) * var(--hub-bg-contrast))), transparent 0 calc(18% * var(--hub-light-spread))),
@@ -41,6 +41,17 @@
   --hub-text-shadow-strength: 0.2;
   --hub-hover-text-shadow-color: #000000;
   --hub-hover-text-shadow-rgb: 0, 0, 0;
+  --hub-hover-line1-size: 19.5px;
+  --hub-hover-line2-size: 19.5px;
+  --hub-hover-line3-size: 14.5px;
+  --hub-hover-line-gap: 16px;
+  --hub-hover-summary-gap: 30px;
+  --hub-hover-char-start-delay: 0.08s;
+  --hub-hover-char-step: 0.04s;
+  --hub-hover-char-duration: 1.12s;
+  --hub-hover-char-x-start: 0em;
+  --hub-hover-char-y-start: 0.87em;
+  --hub-hover-char-blur: 3.5px;
   --hub-shadow-distance: 18px;
   --hub-shadow-blur: 38px;
   --hub-shadow-alpha: 0.18;
@@ -84,8 +95,9 @@
   --hub-preview-float-duration: 6s;
   --hub-preview-float-distance: 6px;
   --hub-preview-slide-duration: 5s;
-  --hub-card-preview-fade-duration: 0.8s;
+  --hub-card-preview-fade-duration: 1.8s;
   --hub-card-preview-opacity: 0.74;
+  --hub-card-preview-image-width: 1800px;
   --hub-panel-switch-duration: 0.6s;
   --hub-panel-switch-delay: 0.2s;
   --hub-panel-overlap-duration: 0.25s;
@@ -93,6 +105,20 @@
   --hub-return-response-duration: 0.18s;
   --hub-arrow-response-duration: 0.18s;
   --hub-button-hover-lift: 2px;
+  --hub-auto-panel-lift-duration: 1.35s;
+  --hub-logo-delay: 1.2s;
+  --hub-logo-portfolio-color: #7fb6d8;
+  --hub-logo-portfolio-color-rgb: 127, 182, 216;
+  --hub-logo-portfolio-duration: 2.4s;
+  --hub-logo-portfolio-clip-from: inset(100% 0 0 0);
+  --hub-logo-portfolio-clip-to: inset(0 0 100% 0);
+  --hub-logo-portfolio-gradient-angle: 0deg;
+  --hub-logo-tools-color: #d79a6f;
+  --hub-logo-tools-color-rgb: 215, 154, 111;
+  --hub-logo-tools-duration: 2.4s;
+  --hub-logo-tools-clip-from: inset(100% 0 0 0);
+  --hub-logo-tools-clip-to: inset(0 0 100% 0);
+  --hub-logo-tools-gradient-angle: 0deg;
   --settings-dock-width: clamp(248px, 20vw, 260px);
   --settings-dock-gap: clamp(6px, 0.8vw, 10px);
 }
@@ -129,6 +155,7 @@ a {
 
 .page {
   position: relative;
+  z-index: 1;
   isolation: isolate;
   width: min(calc(940px * var(--hub-scale) * var(--hub-card-width)), calc(100% - 28px));
   margin: 0 auto;
@@ -212,12 +239,12 @@ body.hub-settings-open .page {
 .card-preview-backdrop {
   position: fixed;
   inset: -8vh -8vw;
-  z-index: -2;
+  z-index: 0;
   overflow: hidden;
   pointer-events: none;
   opacity: 0;
   transform: translate3d(0, 8px, 0) scale(1.03);
-  transition: opacity 240ms ease, transform 240ms ease;
+  transition: opacity var(--hub-card-preview-fade-duration) ease-in-out, transform var(--hub-card-preview-fade-duration) ease-in-out;
 }
 
 .card-preview-backdrop.is-active {
@@ -228,12 +255,17 @@ body.hub-settings-open .page {
 .card-preview-backdrop__layer {
   position: absolute;
   inset: 0;
-  background-size: cover;
+  background-size: var(--hub-card-preview-image-width) auto;
   background-position: center center;
   background-repeat: no-repeat;
   opacity: 0;
+  transform: translate3d(0, 0, 0) scale(1.04);
+  transform-origin: center center;
   filter: blur(0.45px) saturate(1.12) brightness(1.08) contrast(1.04);
-  transition: opacity var(--hub-card-preview-fade-duration) ease-in-out;
+  transition:
+    opacity var(--hub-card-preview-fade-duration) ease-in-out,
+    transform var(--hub-card-preview-fade-duration) ease-in-out;
+  will-change: opacity, transform;
   -webkit-mask-image: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.01) 2%, rgba(0, 0, 0, 0.03) 8%, rgba(0, 0, 0, 0.1) 16%, rgba(0, 0, 0, 0.42) 26%, rgba(0, 0, 0, 0.96) 36%, rgba(0, 0, 0, 1) 46%, rgba(0, 0, 0, 1) 54%, rgba(0, 0, 0, 0.96) 64%, rgba(0, 0, 0, 0.42) 74%, rgba(0, 0, 0, 0.1) 84%, rgba(0, 0, 0, 0.03) 92%, rgba(0, 0, 0, 0.01) 98%, transparent 100%);
   mask-image: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.01) 2%, rgba(0, 0, 0, 0.03) 8%, rgba(0, 0, 0, 0.1) 16%, rgba(0, 0, 0, 0.42) 26%, rgba(0, 0, 0, 0.96) 36%, rgba(0, 0, 0, 1) 46%, rgba(0, 0, 0, 1) 54%, rgba(0, 0, 0, 0.96) 64%, rgba(0, 0, 0, 0.42) 74%, rgba(0, 0, 0, 0.1) 84%, rgba(0, 0, 0, 0.03) 92%, rgba(0, 0, 0, 0.01) 98%, transparent 100%);
   -webkit-mask-size: 100% 100%;
@@ -246,6 +278,7 @@ body.hub-settings-open .page {
 
 .card-preview-backdrop__layer.is-visible {
   opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
 }
 
 .card {
@@ -322,6 +355,105 @@ body.hub-settings-open .page {
   color: rgba(255, 255, 255, var(--hub-text-strength));
   text-shadow: 0 6px 18px rgba(124, 98, 73, var(--hub-text-shadow-strength));
   transition: opacity 260ms ease, filter 260ms ease, transform 260ms ease;
+}
+
+.logo-word {
+  display: inline-block;
+  position: relative;
+  line-height: inherit;
+  vertical-align: baseline;
+  color: rgba(255, 255, 255, var(--hub-text-strength));
+  -webkit-text-fill-color: currentColor;
+}
+
+.logo-word--portfolio,
+.logo-word--tools {
+  overflow: hidden;
+  isolation: isolate;
+  vertical-align: -0.085em;
+}
+
+.logo-word--portfolio {
+  animation: hubLogoPortfolioColorSet 0.01s linear calc(var(--hub-logo-delay) + var(--hub-logo-portfolio-duration)) forwards;
+}
+
+.logo-word--tools {
+  animation: hubLogoToolsColorSet 0.01s linear calc(var(--hub-logo-delay) + var(--hub-logo-tools-duration)) forwards;
+}
+
+.logo-word--portfolio::after,
+.logo-word--tools::after {
+  content: attr(data-logo-text);
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  line-height: inherit;
+  z-index: 1;
+  opacity: 1;
+  pointer-events: none;
+  clip-path: inset(100% 0 0 0);
+}
+
+.logo-word--portfolio::after {
+  color: var(--hub-logo-portfolio-color);
+  -webkit-text-fill-color: var(--hub-logo-portfolio-color);
+  animation: hubLogoPortfolioWash var(--hub-logo-portfolio-duration) cubic-bezier(0.2, 0.72, 0.22, 1) var(--hub-logo-delay) forwards;
+}
+
+.logo-word--tools::after {
+  color: var(--hub-logo-tools-color);
+  -webkit-text-fill-color: var(--hub-logo-tools-color);
+  animation: hubLogoToolsWash var(--hub-logo-tools-duration) cubic-bezier(0.2, 0.72, 0.22, 1) var(--hub-logo-delay) forwards;
+}
+
+@keyframes hubLogoPortfolioWash {
+  from {
+    clip-path: var(--hub-logo-portfolio-clip-from);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes hubLogoToolsWash {
+  from {
+    clip-path: var(--hub-logo-tools-clip-from);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes hubLogoPortfolioColorSet {
+  from,
+  to {
+    color: var(--hub-logo-portfolio-color);
+    -webkit-text-fill-color: var(--hub-logo-portfolio-color);
+  }
+}
+
+@keyframes hubLogoToolsColorSet {
+  from,
+  to {
+    color: var(--hub-logo-tools-color);
+    -webkit-text-fill-color: var(--hub-logo-tools-color);
+  }
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+  .logo-word--portfolio,
+  .logo-word--tools {
+    animation-delay: 0s;
+    animation-duration: 0.01s;
+  }
+  .logo-word--portfolio::after,
+  .logo-word--tools::after {
+    animation: none;
+    clip-path: inset(0 0 0 0);
+  }
 }
 
 .card-title-ja {
@@ -1987,8 +2119,8 @@ body.hub-settings-open .hub-settings-toggle {
   width: min(100%, 1180px);
   max-width: none;
   margin-inline: auto;
-  overflow-wrap: normal;
-  word-break: keep-all;
+  overflow-wrap: anywhere;
+  word-break: normal;
   line-break: strict;
   text-wrap: balance;
 }
@@ -2260,4 +2392,160 @@ html.hub-public-demo-admin-locked .hub-settings {
   display: none !important;
   visibility: hidden !important;
   pointer-events: none !important;
+}
+
+
+.control-select,
+.control-color {
+  width: min(100%, var(--settings-slider-width));
+  min-height: var(--settings-range-height);
+  border: 1px solid rgba(255, 255, 255, 0.42);
+  border-radius: calc(var(--settings-chip-radius) * 1px);
+  background: rgba(255, 255, 255, 0.18);
+  color: rgba(255, 255, 255, 0.92);
+  box-shadow:
+    inset 1px 1px 2px rgba(96, 77, 61, calc(0.18 * var(--settings-track-sink-strength))),
+    inset -1px -1px 2px rgba(255, 255, 255, 0.22);
+}
+
+.control-select {
+  padding: 3px 6px;
+  font-size: var(--settings-label-size);
+}
+
+.control-color {
+  height: 24px;
+  padding: 2px;
+}
+
+.hub-settings__note {
+  margin: 0 0 6px;
+  font-size: var(--settings-subheading-size);
+  line-height: 1.45;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+/* v18: TOP hover text eye-guidance reveal. Panel/backdrop appears first, then copy is read left-to-right and line-by-line. */
+.card-hover-summary {
+  min-height: 132px;
+  margin-top: var(--hub-hover-summary-gap);
+}
+
+.card-hover-summary p {
+  min-height: 132px;
+  padding-top: 0;
+}
+
+.card-hover-summary__line {
+  opacity: 1;
+  transform: none;
+}
+
+.card-hover-summary__char {
+  display: inline-block;
+  opacity: 0;
+  transform: translate3d(var(--hub-hover-char-x-start), var(--hub-hover-char-y-start), 0);
+  filter: blur(var(--hub-hover-char-blur));
+  animation: none;
+  will-change: opacity, transform, filter;
+}
+
+.card-hover-summary.is-visible .card-hover-summary__char {
+  animation: hubHoverCharReveal var(--hub-hover-char-duration) cubic-bezier(0.19, 1, 0.22, 1) forwards;
+  animation-delay: calc(var(--hub-hover-char-start-delay) + (var(--char-index, 0) * var(--hub-hover-char-step)));
+}
+
+@keyframes hubHoverCharReveal {
+  0% {
+    opacity: 0;
+    transform: translate3d(var(--hub-hover-char-x-start), var(--hub-hover-char-y-start), 0);
+    filter: blur(var(--hub-hover-char-blur));
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+@media (max-width: 960px) {
+  .card-hover-summary {
+    min-height: 138px;
+    margin-top: 12px;
+  }
+
+  .card-hover-summary p {
+    min-height: 138px;
+  }
+
+  .card-hover-summary.is-visible .card-hover-summary__char {
+    animation-delay: calc(var(--hub-hover-char-start-delay) + (var(--char-index, 0) * var(--hub-hover-char-step)));
+  }
+}
+
+@media (max-width: 520px) {
+  .card-hover-summary {
+    min-height: 148px;
+  }
+
+  .card-hover-summary p {
+    min-height: 148px;
+  }
+
+  .card-hover-summary.is-visible .card-hover-summary__char {
+    animation-delay: calc(var(--hub-hover-char-start-delay) + (var(--char-index, 0) * var(--hub-hover-char-step)));
+  }
+}
+
+
+
+/* v19: adjustable TOP hover appeal typography/reveal controls. */
+.card-hover-summary__line--1 {
+  font-size: var(--hub-hover-line1-size);
+}
+
+.card-hover-summary__line--2 {
+  font-size: var(--hub-hover-line2-size);
+}
+
+.card-hover-summary__line--3 {
+  margin-top: var(--hub-hover-line-gap);
+  font-size: var(--hub-hover-line3-size);
+}
+
+html[data-hover-reveal-mode="fade"] .card-hover-summary__char {
+  transform: translate3d(0, 0, 0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card-hover-summary__char,
+  .card-hover-summary.is-visible .card-hover-summary__char {
+    opacity: 1;
+    transform: none;
+    filter: none;
+    animation: none;
+  }
+}
+
+/* vAutoPanel: 自動選択時もhoverと同じパネル退避・Open表示を適用する。 */
+
+.cards.is-auto-panel-motion .card.is-active-card {
+  transition:
+    transform var(--hub-auto-panel-lift-duration) cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow var(--hub-auto-panel-lift-duration) cubic-bezier(0.22, 1, 0.36, 1),
+    filter 260ms ease;
+}
+.cards.has-active-card .card.is-active-card {
+  transform: translateY(-10px);
+  box-shadow:
+    var(--hub-shadow-x) var(--hub-shadow-y) calc(var(--hub-shadow-blur) + 10px) rgba(116, 98, 78, var(--hub-card-shadow-hover-alpha-final)),
+    0 calc(var(--hub-shadow-distance) + 6px) calc(var(--hub-shadow-blur) * 0.82) rgba(116, 98, 78, var(--hub-card-shadow-ambient-alpha-final)),
+    0 0 0 1px rgba(255, 255, 255, calc(var(--hub-card-border-alpha) + 0.06)),
+    inset 0 1px 0 rgba(255, 255, 255, calc((var(--hub-inner-highlight) + 0.1) * var(--hub-edge-white))),
+    inset 0 -1px 0 rgba(255, 255, 255, calc((var(--hub-ground-shadow) + 0.04) * var(--hub-edge-white)));
+}
+
+.cards.has-active-card .card.is-active-card::after {
+  opacity: 1;
+  transform: translateY(0);
 }

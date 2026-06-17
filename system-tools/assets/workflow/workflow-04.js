@@ -1,4 +1,4 @@
-/* System Tools workflow 04 separated owner. Scope: #portfolio-current. */
+/* AI workflow Tools workflow 04 separated owner. Scope: #portfolio-current. */
 (function(){
   'use strict';
   const PAGE_ID='portfolio-current';

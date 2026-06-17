@@ -1,4 +1,4 @@
-/* System Tools presentation polish layer. Minimal overrides only. */
+/* AI workflow Tools presentation polish layer. Minimal overrides only. */
 .logo .chord,
 .logo small,
 .logo .toolname,
@@ -300,7 +300,7 @@
   }
 }
 
-/* v359: System Tools presentation flow - fixed reference layout, no text clipping */
+/* v359: AI workflow Tools presentation flow - fixed reference layout, no text clipping */
 .mroak-three-flow{
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 34px;
@@ -409,7 +409,7 @@
 }
 
 
-/* v362: fix System Tools flow cards - exact 2-line text and single number */
+/* v362: fix AI workflow Tools flow cards - exact 2-line text and single number */
 .mroak-flow-card.start-value::before{
   content: none !important;
   counter-increment: none !important;

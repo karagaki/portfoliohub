@@ -123,6 +123,17 @@
         }, 420);
     }
 
+
+    function layoutToggleIconMarkup() {
+        return '<svg class="case-layout-icon" viewBox="0 0 128 128" aria-hidden="true" focusable="false"><path d="M64 14 C68 14 72 17 75 22 L117 94 C120 99 120 105 117 110 C114 115 109 118 103 118 H25 C19 118 14 115 11 110 C8 105 8 99 11 94 L53 22 C56 17 60 14 64 14 Z" fill="rgba(255,255,255,0.94)"/></svg>';
+    }
+    function ensureLayoutToggleIcon() {
+        if (!toggleButton) return;
+        if (!toggleButton.querySelector('.case-layout-icon')) {
+            toggleButton.innerHTML = layoutToggleIconMarkup();
+        }
+    }
+
     function setStaticLayout(mode) {
         if (!root || !toggleButton) return;
         const size = getRootSize();
@@ -135,7 +146,7 @@
         if (updateButton) setNodePosition(updateButton, getActionPosition('update', mode));
         if (deleteButton) setNodePosition(deleteButton, getActionPosition('delete', mode));
         positionStatusLabel(mode);
-        toggleButton.textContent = mode === VERTICAL ? '▲' : '▶';
+        ensureLayoutToggleIcon();
         toggleButton.setAttribute('aria-label', mode === VERTICAL ? 'case一覧を横に戻す' : 'case一覧を縦に並べる');
         toggleButton.setAttribute('aria-pressed', String(mode === VERTICAL));
         renderSlotLayer();
@@ -188,7 +199,7 @@
         root.dataset.layout = nextMode;
         root.classList.add('is-layout-animating');
         positionStatusLabel(nextMode);
-        toggleButton.textContent = goingVertical ? '▲' : '▶';
+        ensureLayoutToggleIcon();
         buttons.forEach((button, orderIndex) => {
             const caseIndex = Number(button.dataset.case);
             const from = getVisualPosition(button);
@@ -384,6 +395,7 @@
         toggleButton.type = 'button';
         toggleButton.id = 'case-layout-toggle';
         toggleButton.className = 'case-layout-toggle';
+        toggleButton.innerHTML = layoutToggleIconMarkup();
         toggleButton.addEventListener('click', toggleLayout);
         stage.appendChild(toggleButton);
 
@@ -395,13 +407,13 @@
         }
 
         plusButton = createActionButton('', 'case-add-slot-button', registerCurrent);
-        plusButton.innerHTML = '<span class="case-action-glyph case-add-slot-glyph" aria-hidden="true">+</span>';
+        plusButton.innerHTML = '<img class="case-action-icon case-add-slot-icon" src="assets/icons/case-action-add.png" alt="" aria-hidden="true" decoding="async">';
         plusButton.setAttribute('aria-label', '現在の設定を新規登録');
         updateButton = createActionButton('', 'case-update-slot-button', updateCurrent);
-        updateButton.innerHTML = '<span class="case-action-glyph case-update-slot-glyph" aria-hidden="true">↻</span>';
+        updateButton.innerHTML = '<img class="case-action-icon case-update-slot-icon" src="assets/icons/case-action-update.png" alt="" aria-hidden="true" decoding="async">';
         updateButton.setAttribute('aria-label', '選択中の登録を更新');
         deleteButton = createActionButton('', 'case-delete-slot-button', deleteCurrent);
-        deleteButton.innerHTML = '<span class="case-action-glyph case-delete-slot-glyph" aria-hidden="true">×</span>';
+        deleteButton.innerHTML = '<img class="case-action-icon case-delete-slot-icon" src="assets/icons/case-action-delete.png" alt="" aria-hidden="true" decoding="async">';
         deleteButton.setAttribute('aria-label', '選択中の登録を削除');
         stage.appendChild(plusButton);
         stage.appendChild(updateButton);

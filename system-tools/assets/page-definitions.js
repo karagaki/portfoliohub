@@ -141,8 +141,8 @@ window.KASHINOKI_PAGE_DEFINITIONS = {
     evolution_count: 1,
     contracts: [
       { label: 'Design UI方向', statement: 'Design Tools UIは白寄りの薄灰色に微かな彩度を含む、静かで明るい質感を基準とする。', type: 'design_direction' },
-      { label: 'システム自己改善', statement: 'System Tools自身の不足・改善案・新技術への置換可能性を継続的に見直す。', type: 'principle' },
-      { label: '保存境界・禁止', statement: '既存領域や元データを上書きせず、System Tools側の別領域で扱う。', type: 'invariant' },
+      { label: 'システム自己改善', statement: 'AI workflow Tools自身の不足・改善案・新技術への置換可能性を継続的に見直す。', type: 'principle' },
+      { label: '保存境界・禁止', statement: '既存領域や元データを上書きせず、AI workflow Tools側の別領域で扱う。', type: 'invariant' },
       { label: '実装・進行判断', statement: '仕様説明だけで止めず、触って一連を判断できる検証実装へ進める。', type: 'action' }
     ],
     source_note: 'ブラウザChatGPTから回収した書出し結果を元にした表示用サマリーです。会話全文は公開用表示に含めません。'

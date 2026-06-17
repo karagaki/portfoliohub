@@ -289,7 +289,7 @@
 }
 
 /* source: index.html#kashinoki-v063-admin-artifact-band (7142-7804) */
-    /* v98: System Tools本体とConversation Captureのバックアップ入口を本体側へ集約。 */
+    /* v98: AI workflow Tools本体とConversation Captureのバックアップ入口を本体側へ集約。 */
     .backup-main-nav {
       display: grid;
       gap: 5px;
