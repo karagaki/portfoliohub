@@ -534,7 +534,7 @@
     if(action){
       action.className='guided-action kashinoki-action-panel';
       action.classList.add(animateActionIntro?'j03-action-run':'j03-action-complete');
-      action.innerHTML=`<div class="guided-action-copy"><label data-j03-action-item style="--j03-action-delay:3.48s">今行う主操作 <span class="guided-action-badge">分ける</span></label><b data-j03-action-item style="--j03-action-delay:3.72s">A〜Fへ登録する</b><p data-j03-action-item style="--j03-action-delay:3.96s">03では送り先と内容だけ確認します。修正が必要な場合は02へ戻ります。</p></div><button class="btn primary workflow-primary-target" type="button" data-kashinoki03-register data-j03-action-item style="--j03-action-delay:4.22s">A〜Fへ登録する</button><button class="workflow-secondary-link" type="button" data-kashinoki03-back data-j03-action-item style="--j03-action-delay:4.42s">02へ戻る</button>`;
+      action.innerHTML=`<div class="guided-action-copy"><label data-j03-action-item style="--j03-action-delay:3.48s">今行う主操作 <span class="guided-action-badge">活かすへ</span></label><b data-j03-action-item style="--j03-action-delay:3.72s">A〜Fへ登録する</b><p data-j03-action-item style="--j03-action-delay:3.96s">03では送り先と内容だけ確認します。修正が必要な場合は02へ戻ります。</p></div><button class="btn primary workflow-primary-target" type="button" data-kashinoki03-register data-j03-action-item style="--j03-action-delay:4.22s">A〜Fへ登録する</button><button class="workflow-secondary-link" type="button" data-kashinoki03-back data-j03-action-item style="--j03-action-delay:4.42s">02へ戻る</button>`;
       if(animateActionIntro) startBottomActionIntro(page); else completeBottomActionIntro(page);
     }
     page.querySelectorAll('#portfolioAnalysisSummary,.workflow-filter-row').forEach(n=>n.remove());
