@@ -1,6 +1,6 @@
 (function(){
   'use strict';
-  const VERSION='v1.0817';
+  const VERSION='v1.0823';
   const PAGE_ID='portfolio-review';
   const shelves=[
     {key:'A',title:'AI理解前提',cats:['AI理解前提'],display:['AI理解前提'],page:'artifact-intent'},
@@ -141,7 +141,7 @@
     if(!guide){ guide=document.createElement('div'); guide.className='workflow-step-guide workflow03-step-intro'; heading.insertAdjacentElement('afterend',guide); }
     guide.classList.add('workflow03-step-intro');
     if(guide.getAttribute('data-j03-guide-ready')!=='true'){
-      guide.innerHTML='<span class="workflow-step-number" data-j03-guide-item="1">分ける</span><span class="workflow-step-copy"><b data-j03-guide-item="2">送り先と件数を確認します</b><small data-j03-guide-item="3">02で分類したチップの送り先と件数を確認し、A〜Fへ登録します。</small></span>';
+      guide.innerHTML='<span class="workflow-step-number" data-j03-guide-item="1">活かすへ</span><span class="workflow-step-copy"><b data-j03-guide-item="2">送り先と件数を確認します</b><small data-j03-guide-item="3">02で分類したチップの送り先と件数を確認し、A〜Fへ登録します。</small></span>';
       guide.setAttribute('data-j03-guide-ready','true');
     }
     const items=[...guide.querySelectorAll('[data-j03-guide-item]')];
