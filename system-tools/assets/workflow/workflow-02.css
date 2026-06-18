@@ -2087,7 +2087,6 @@
 /* v639: STEP2 classification editor flash guard.
    The editor panel is generated before workflow-02.js owns the reveal sequence.
    Hide only the requested editor heading/category/settings targets from the first active frame. */
-#portfolio-quality.active:not(.guide-show-all):not(.jv02-complete) #captureQualityList .presentation-extract-card:not(.jv02-visible),
 #portfolio-quality.active:not(.guide-show-all):not(.jv02-page) #captureQualityList .presentation-extract-card .presentation-card-heading > span,
 #portfolio-quality.active:not(.guide-show-all):not(.jv02-page) #captureQualityList .presentation-extract-card .presentation-card-heading > h3,
 #portfolio-quality.active:not(.guide-show-all):not(.jv02-page) #captureQualityList .presentation-extract-card [data-quality02-category-picks] [data-quality02-pick-category],

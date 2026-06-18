@@ -106,7 +106,6 @@
       || $("#captureQualityList .presentation-extract-card", page);
     if (!editor) return [];
     return [
-      $(".presentation-extract-card", editor),
       $(".presentation-card-heading > span", editor),
       $(".presentation-card-heading > h3", editor),
       ...$$("[data-quality02-category-picks] [data-quality02-pick-category]", editor),
