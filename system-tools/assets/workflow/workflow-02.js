@@ -4,7 +4,7 @@
   window.__kashinokiWorkflow02Installed = true;
 
   const PAGE_ID = "portfolio-quality";
-  const VERSION = 'v1.0764';
+  const VERSION = 'v1.0765';
   let timers = [];
   let token = 0;
   let running = false;
@@ -230,8 +230,9 @@
     running = true;
     completed = false;
     phase = "top";
-    ensureStepGuide();
     hideAll();
+    ensureStepGuide();
+    markTargets();
     restartTitleUnderline(page);
 
     after(0.08, () => show(stepTargets()[0]));
