@@ -4,7 +4,7 @@
   window.__kashinokiWorkflow02Installed = true;
 
   const PAGE_ID = "portfolio-quality";
-  const VERSION = 'v1.0763';
+  const VERSION = 'v1.0764';
   let timers = [];
   let token = 0;
   let running = false;
@@ -68,7 +68,7 @@
       heading.insertAdjacentElement("afterend", guide);
     }
     guide.classList.add("workflow02-step-intro");
-    guide.innerHTML = '<span class="workflow-step-number">分ける</span><span class="workflow-step-copy"><b>会話から集めた中身を確かめます</b><small>ChatGPT / User のやり取りから、仕様・失敗・禁止条件の素材を拾えているか確認します。</small></span>';
+    guide.innerHTML = '<span class="workflow-step-number jv02-target">分ける</span><span class="workflow-step-copy"><b class="jv02-target">会話から集めた中身を確かめます</b><small class="jv02-target">ChatGPT / User のやり取りから、仕様・失敗・禁止条件の素材を拾えているか確認します。</small></span>';
     [".workflow-step-number", ".workflow-step-copy > b", ".workflow-step-copy > small"]
       .map((sel) => $(sel, guide))
       .filter(Boolean)
