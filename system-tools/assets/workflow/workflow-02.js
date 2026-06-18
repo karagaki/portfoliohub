@@ -4,7 +4,7 @@
   window.__kashinokiWorkflow02Installed = true;
 
   const PAGE_ID = "portfolio-quality";
-  const VERSION = 'v1.0762';
+  const VERSION = 'v1.0763';
   let timers = [];
   let token = 0;
   let running = false;

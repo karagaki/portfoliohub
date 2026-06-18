@@ -154,7 +154,6 @@
   }
 }
 
-#portfolio-quality.workflow-animate:not(.guide-show-all) .workflow-step-guide,
 #portfolio-quality.workflow-animate:not(.guide-show-all) #captureQualitySummary .workflow-brief-card,
 #portfolio-quality.workflow-animate:not(.guide-show-all) .workflow-fulltext-card,
 #portfolio-quality.workflow-animate:not(.guide-show-all) .workflow-range-panel,
@@ -164,10 +163,6 @@
   opacity: 0;
   transform: translateY(10px);
   animation: kashinokiV207GuideRise .58s cubic-bezier(.22, .61, .28, 1) forwards;
-}
-
-#portfolio-quality.workflow-animate:not(.guide-show-all) .workflow-step-guide {
-  animation-delay: .48s
 }
 
 #portfolio-quality.workflow-animate:not(.guide-show-all) #captureQualitySummary .workflow-brief-card:nth-child(1) {
@@ -250,7 +245,6 @@
 
 @media(prefers-reduced-motion:reduce) {
 
-  #portfolio-quality.workflow-animate .workflow-step-guide,
   #portfolio-quality.workflow-animate #captureQualitySummary .workflow-brief-card,
   #portfolio-quality.workflow-animate .workflow-fulltext-card,
   #portfolio-quality.workflow-animate .workflow-range-panel,
@@ -273,7 +267,6 @@
   pointer-events: auto !important;
 }
 
-#portfolio-quality.workflow-animate:not(.guide-show-all) .workflow-step-guide,
 #portfolio-quality.workflow-animate:not(.guide-show-all) #captureQualitySummary .workflow-brief-card,
 #portfolio-quality.workflow-animate:not(.guide-show-all) .workflow-fulltext-card,
 #portfolio-quality.workflow-animate:not(.guide-show-all) .workflow-range-panel,
@@ -286,7 +279,6 @@
   animation: none !important;
 }
 
-#portfolio-quality.workflow-animate:not(.guide-show-all) .workflow-step-guide>*,
 #portfolio-quality.workflow-animate:not(.guide-show-all) #captureQualitySummary .workflow-brief-card>*,
 #portfolio-quality.workflow-animate:not(.guide-show-all) .workflow-fulltext-card>*,
 #portfolio-quality.workflow-animate:not(.guide-show-all) .workflow-range-panel>h3,
@@ -300,10 +292,6 @@
   transform: translateY(8px);
   filter: blur(1.4px);
   animation: kashinokiV222GuideContentIn .72s cubic-bezier(.22, .61, .28, 1) forwards;
-}
-
-#portfolio-quality.workflow-animate:not(.guide-show-all) .workflow-step-guide>* {
-  animation-delay: .32s
 }
 
 #portfolio-quality.workflow-animate:not(.guide-show-all) #captureQualitySummary .workflow-brief-card:nth-child(1)>* {
@@ -445,7 +433,6 @@
 
 @media(prefers-reduced-motion:reduce) {
 
-  #portfolio-quality.workflow-animate .workflow-step-guide>*,
   #portfolio-quality.workflow-animate #captureQualitySummary .workflow-brief-card>*,
   #portfolio-quality.workflow-animate .workflow-fulltext-card>*,
   #portfolio-quality.workflow-animate .workflow-range-panel>h3,
