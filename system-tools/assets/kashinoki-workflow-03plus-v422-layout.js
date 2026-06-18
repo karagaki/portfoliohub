@@ -1872,6 +1872,9 @@ function workflowHeading(cfg){
         normalizeInitialArticleChip(article, type);
       }
     });
+    if (typeof window.afterFilterRender === "function" && document.getElementById('portfolio-quality')?.classList.contains('active')) {
+      window.afterFilterRender();
+    }
     /* v731: classification-bridge-02 管理中は、旧フィルター処理は
        会話カードの初期整形だけを行い、上部カウントDOMには触れない。
        ここでDOM再生成すると分類カウントアニメーションを潰すため早期returnする。 */

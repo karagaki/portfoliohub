@@ -106,6 +106,7 @@
       || $("#captureQualityList .presentation-extract-card", page);
     if (!editor) return [];
     return [
+      $(".presentation-extract-card", editor),
       $(".presentation-card-heading > span", editor),
       $(".presentation-card-heading > h3", editor),
       ...$$("[data-quality02-category-picks] [data-quality02-pick-category]", editor),
@@ -315,6 +316,7 @@
       requestAnimationFrame(revealForCurrentPhase);
     });
   }
+  window.afterFilterRender = afterFilterRender;
 
   function wrapFilter() {
     if (typeof window.setQualityFilter === "function" && !window.setQualityFilter.__kashinokiWorkflow02Wrapped) {
