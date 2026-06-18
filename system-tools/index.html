@@ -4211,7 +4211,7 @@
       const target = section.querySelector('.guided-action-slot .btn.primary') || section.querySelector('.btn.primary');
       if (target) target.classList.add('workflow-primary-target');
       void section.offsetWidth;
-      section.classList.add('workflow-animate');
+      if (id !== 'portfolio-quality') section.classList.add('workflow-animate');
       if (id === 'target-inbox' && qs('#inboxInlineRegistration')?.style.display !== 'none') resetInlineRegistrationGuidance();
     }
 

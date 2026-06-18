@@ -669,18 +669,6 @@
   pointer-events: none !important;
 }
 
-/* v807: STEP2 intro copy guard.
-   Keep the left-side range panel headline and intro text hidden until workflow-02.js marks them visible. */
-#portfolio-quality.active:not(.guide-show-all):not(.jv02-complete) #captureQualityList .workflow-range-panel > h3:not(.jv02-visible),
-#portfolio-quality.active:not(.guide-show-all):not(.jv02-complete) #captureQualityList .workflow-range-panel > p:not(.jv02-visible),
-#portfolio-quality.active:not(.guide-show-all):not(.jv02-complete) #captureQualityList .workflow-range-panel .workflow-filter-note:not(.jv02-visible) {
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-}
-
-
-
 /* v654: STEP2 filter buttons stronger flash guard.
    v653 still allowed a one-frame flash when the page kept jv02-page from a previous visit
    or when regenerated filter buttons did not yet have jv02-target. Hide every filter button
