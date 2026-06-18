@@ -669,6 +669,18 @@
   pointer-events: none !important;
 }
 
+/* v806: STEP2 intro copy flash guard.
+   Hide the left-side range panel headline and intro text until the entry sequence reveals them. */
+#portfolio-quality.active:not(.guide-show-all):not(.jv02-page) #captureQualityList .workflow-range-panel > h3,
+#portfolio-quality.active:not(.guide-show-all):not(.jv02-page) #captureQualityList .workflow-range-panel > p,
+#portfolio-quality.active:not(.guide-show-all):not(.jv02-page) #captureQualityList .workflow-range-panel .workflow-filter-note {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  transform: translateY(8px) !important;
+  filter: blur(1.2px) !important;
+  pointer-events: none !important;
+}
+
 
 
 /* v654: STEP2 filter buttons stronger flash guard.
