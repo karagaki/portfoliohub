@@ -669,16 +669,14 @@
   pointer-events: none !important;
 }
 
-/* v806: STEP2 intro copy flash guard.
-   Hide the left-side range panel headline and intro text until the entry sequence reveals them. */
-#portfolio-quality.active:not(.guide-show-all):not(.jv02-page) #captureQualityList .workflow-range-panel > h3,
-#portfolio-quality.active:not(.guide-show-all):not(.jv02-page) #captureQualityList .workflow-range-panel > p,
-#portfolio-quality.active:not(.guide-show-all):not(.jv02-page) #captureQualityList .workflow-range-panel .workflow-filter-note {
-  opacity: 0 !important;
-  visibility: hidden !important;
-  transform: translateY(8px) !important;
-  filter: blur(1.2px) !important;
-  pointer-events: none !important;
+/* v807: STEP2 intro copy guard.
+   Keep the left-side range panel headline and intro text hidden until workflow-02.js marks them visible. */
+#portfolio-quality.active:not(.guide-show-all):not(.jv02-complete) #captureQualityList .workflow-range-panel > h3:not(.jv02-visible),
+#portfolio-quality.active:not(.guide-show-all):not(.jv02-complete) #captureQualityList .workflow-range-panel > p:not(.jv02-visible),
+#portfolio-quality.active:not(.guide-show-all):not(.jv02-complete) #captureQualityList .workflow-range-panel .workflow-filter-note:not(.jv02-visible) {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
 }
 
 
