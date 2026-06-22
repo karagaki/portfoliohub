@@ -2120,3 +2120,80 @@
 #portfolio-quality .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-chat-thread > .chat-bubble:first-child{
   margin-top: 0;
 }
+
+
+/* v1.0921: STEP2読込状態パネルは workflow-02.js の jv02 シーケンスに統合する。
+   active直後の静的表示を止め、スキップ時/完了時は必ず表示する。 */
+#portfolio-quality.active:not(.guide-show-all):not(.jv02-page) #aiThreadReadStatusStep2 {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  transform: translateY(8px) !important;
+  filter: blur(1.2px) !important;
+  pointer-events: none !important;
+}
+#portfolio-quality.jv02-page #aiThreadReadStatusStep2.jv02-target {
+  transition: opacity .72s cubic-bezier(.22, .61, .28, 1), transform .72s cubic-bezier(.22, .61, .28, 1), filter .72s cubic-bezier(.22, .61, .28, 1);
+}
+#portfolio-quality.jv02-page #aiThreadReadStatusStep2.jv02-visible,
+#portfolio-quality.jv02-page.guide-show-all #aiThreadReadStatusStep2,
+#portfolio-quality.jv02-page.jv02-complete #aiThreadReadStatusStep2 {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: none !important;
+  filter: none !important;
+  pointer-events: auto !important;
+}
+
+/* v1.0921: STEP2入場順と縦間隔の最終整理。
+   読込状態パネルより先に会話パネル枠が見える経路を止める。
+   会話本文は高さを変えず、行間・カード間の隙間だけを詰める。 */
+#portfolio-quality.active:not(.guide-show-all):not(.jv02-complete) #captureQualityList .presentation-chat-card:not(.jv02-visible),
+#portfolio-quality.active:not(.guide-show-all):not(.jv02-complete) #captureQualityList .presentation-extract-card:not(.jv02-visible) {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  transform: translateY(8px) !important;
+  filter: blur(1.2px) !important;
+  pointer-events: none !important;
+}
+#portfolio-quality.jv02-page #captureQualityList .presentation-chat-card.jv02-target,
+#portfolio-quality.jv02-page #captureQualityList .presentation-extract-card.jv02-target {
+  transition: opacity .52s cubic-bezier(.22, .61, .28, 1), transform .52s cubic-bezier(.22, .61, .28, 1), filter .52s cubic-bezier(.22, .61, .28, 1);
+}
+#portfolio-quality.jv02-page #captureQualityList .presentation-chat-card.jv02-visible,
+#portfolio-quality.jv02-page #captureQualityList .presentation-extract-card.jv02-visible,
+#portfolio-quality.jv02-page.guide-show-all #captureQualityList .presentation-chat-card,
+#portfolio-quality.jv02-page.guide-show-all #captureQualityList .presentation-extract-card,
+#portfolio-quality.jv02-page.jv02-complete #captureQualityList .presentation-chat-card,
+#portfolio-quality.jv02-page.jv02-complete #captureQualityList .presentation-extract-card {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: none !important;
+  filter: none !important;
+  pointer-events: auto !important;
+}
+#portfolio-quality.active .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-chat-thread,
+#portfolio-quality .presentation-chat-layout.kashinoki-v449-editor-layout .presentation-chat-thread {
+  gap: 5px !important;
+  padding-top: 8px !important;
+  padding-bottom: 10px !important;
+  scroll-padding-top: 24px !important;
+}
+#portfolio-quality.active .presentation-chat-layout.kashinoki-v449-editor-layout .chat-bubble,
+#portfolio-quality .presentation-chat-layout.kashinoki-v449-editor-layout .chat-bubble {
+  padding: 6px 9px !important;
+  border-radius: 12px !important;
+}
+#portfolio-quality.active .presentation-chat-layout.kashinoki-v449-editor-layout .chat-bubble label,
+#portfolio-quality .presentation-chat-layout.kashinoki-v449-editor-layout .chat-bubble label {
+  margin-bottom: 3px !important;
+}
+#portfolio-quality.active .presentation-chat-layout.kashinoki-v449-editor-layout .chat-bubble p,
+#portfolio-quality .presentation-chat-layout.kashinoki-v449-editor-layout .chat-bubble p {
+  line-height: 1.32 !important;
+  margin-top: 0 !important;
+  margin-bottom: 4px !important;
+}
+#portfolio-quality.active .presentation-chat-layout.kashinoki-v449-editor-layout .chat-bubble p:last-child,
+#portfolio-quality .presentation-chat-layout.kashinoki-v449-editor-layout .chat-bubble p:last-child {
+  margin-bottom: 0 !important;
+}

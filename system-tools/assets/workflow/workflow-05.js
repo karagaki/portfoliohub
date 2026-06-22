@@ -228,7 +228,7 @@
       current.classList.remove("jv05-running");
       current.classList.add("jv05-complete");
     }
-    // 05の動的再描画やfile://直開き時のイベント差異があっても、
+    // 05の動的再描画やローカル直開き時のイベント差異があっても、
     // 主操作ボタンだけは必ず06へ進めるよう、既存page()とDOM直切替の両方で保証する。
     let navigated = false;
     if (typeof window.page === "function") {

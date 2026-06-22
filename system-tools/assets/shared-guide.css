@@ -615,3 +615,24 @@
   opacity: .72 !important;
   filter: grayscale(1) saturate(0) contrast(1.05) !important;
 }
+
+/* v1.0923: page assist copy supports a STEP2 lead line and attached operation image. */
+.page-assist-popover {
+  width: min(460px, calc(100vw - 44px));
+}
+.page-assist-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  margin: 2px 0 10px;
+  border-radius: 16px;
+}
+.page-assist-lead {
+  display: block;
+  margin: 0 0 6px;
+  color: var(--ink);
+  font-size: 13px;
+  line-height: 1.45;
+  font-weight: 800;
+}

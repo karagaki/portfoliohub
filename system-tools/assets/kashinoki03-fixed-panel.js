@@ -1,6 +1,6 @@
 (function(){
   'use strict';
-  const VERSION='v1.0823';
+  const VERSION='v1.0975';
   const PAGE_ID='portfolio-review';
   const shelves=[
     {key:'A',title:'AI理解前提',cats:['AI理解前提'],display:['AI理解前提'],page:'artifact-intent'},
@@ -130,8 +130,28 @@
     const value=String(text||'').replace(/\s+/g,'');
     return value.includes('分類チップを03へ登録') || value.includes('了承した範囲を03へ送る') || value.includes('03へ送る');
   }
+  function isActualStep2TransferButton(btn){
+    if(!btn || !isTransferButtonText(btn.textContent)) return false;
+    if(btn.classList && btn.classList.contains('ck-step-guide-demo-jump')) return false;
+    const step2 = document.getElementById('portfolio-quality');
+    if(!step2 || !step2.contains(btn)) return false;
+    const actionSlot = btn.closest?.('.guided-action-slot');
+    if(!actionSlot) return false;
+    const onclick = String(btn.getAttribute('onclick') || '');
+    return btn.hasAttribute('data-kashinoki02-transfer-to-step3') || onclick.includes('portfolio-review');
+  }
   function markTransferReady(){ transferReady=true; window.__kashinoki03TransferReady=true; }
+  function resetTransferReady(){ transferReady=false; window.__kashinoki03TransferReady=false; registered=false; }
   function isTransferReady(){ return transferReady===true || window.__kashinoki03TransferReady===true; }
+  function hasConversationLoaded(){
+    const sources=[
+      window.__KASHINOKI_ACTIVE_CONVERSATION_JSON,
+      window.__KASHINOKI_CURRENT_CONVERSATION_JSON,
+      window.__kashinokiCurrentConversationExport,
+      window.__KASHINOKI_PENDING_CONVERSATION_JSON
+    ];
+    return sources.some(raw=>raw && Array.isArray(raw.messages) && raw.messages.length>0);
+  }
   function pageEl(){return document.getElementById(PAGE_ID)}
   function isActive(){return !!pageEl()?.classList.contains('active')}
   function ensureTopGuide(animateIntro=false){
@@ -141,9 +161,39 @@
     if(!guide){ guide=document.createElement('div'); guide.className='workflow-step-guide workflow03-step-intro'; heading.insertAdjacentElement('afterend',guide); }
     guide.classList.add('workflow03-step-intro');
     if(guide.getAttribute('data-j03-guide-ready')!=='true'){
-      guide.innerHTML='<span class="workflow-step-number" data-j03-guide-item="1">活かすへ</span><span class="workflow-step-copy"><b data-j03-guide-item="2">送り先と件数を確認します</b><small data-j03-guide-item="3">02で分類したチップの送り先と件数を確認し、A〜Fへ登録します。</small></span>';
+      guide.innerHTML='<span class="workflow-step-number" data-j03-guide-item="1">活かすへ</span><span class="workflow-step-copy"><b data-j03-guide-item="2">送り先と件数を確認します</b><small data-j03-guide-item="3">02で分類したチップの送り先と件数を確認し、A〜Fへ登録します。</small></span><button type="button" class="btn primary step-empty-jump-btn ck-step1-demo-jump-cta ck-step-guide-demo-jump ck-step-guide-demo-jump-03 ck-cta-codepen-host" onclick="page(\'portfolio-collect\')">「デモモード読込」へ移動<span class="ck-codepen-bounce" aria-hidden="true"><span class="loading_04"></span></span></button>';
       guide.setAttribute('data-j03-guide-ready','true');
     }
+    const pendingStep1 = (typeof window.hasKashinoki02PendingStep1Conversation === 'function') ? window.hasKashinoki02PendingStep1Conversation() : false;
+    const loaded = hasConversationLoaded();
+    const ready = isTransferReady();
+    const pendingTransfer = loaded && !ready && !pendingStep1;
+    const jumpBtn = guide.querySelector('.ck-step-guide-demo-jump');
+    if(jumpBtn){
+      if(pendingStep1){
+        jumpBtn.setAttribute('onclick', "page('portfolio-collect')");
+        jumpBtn.innerHTML='「中身を確かめる ➡」へ移動<span class="ck-codepen-bounce" aria-hidden="true"><span class="loading_04"></span></span>';
+      }else if(pendingTransfer){
+        jumpBtn.setAttribute('onclick', "page('portfolio-quality')");
+        jumpBtn.innerHTML='「分類チップを03へ登録 ➡」へ移動<span class="ck-codepen-bounce" aria-hidden="true"><span class="loading_04"></span></span>';
+      }else{
+        jumpBtn.setAttribute('onclick', "page('portfolio-collect')");
+        jumpBtn.innerHTML='「デモモード読込」へ移動<span class="ck-codepen-bounce" aria-hidden="true"><span class="loading_04"></span></span>';
+      }
+    }
+    guide.classList.toggle('j03-unloaded', !loaded && !pendingStep1);
+    guide.classList.toggle('j03-step1-pending', pendingStep1);
+    guide.classList.toggle('j03-loaded', loaded);
+    guide.classList.toggle('j03-transfer-pending', pendingTransfer);
+    guide.classList.toggle('j03-transfer-ready', loaded && ready);
+    page.classList.toggle('j03-unloaded', !loaded && !pendingStep1);
+    page.classList.toggle('j03-step1-pending', pendingStep1);
+    page.classList.toggle('j03-loaded', loaded);
+    page.classList.toggle('j03-transfer-pending', pendingTransfer);
+    page.classList.toggle('j03-transfer-ready', loaded && ready);
+    page.dataset.kashinoki03Loaded = loaded ? 'true' : 'false';
+    page.dataset.kashinoki03Step1Pending = pendingStep1 ? 'true' : 'false';
+    page.dataset.kashinoki03TransferReady = ready ? 'true' : 'false';
     const items=[...guide.querySelectorAll('[data-j03-guide-item]')];
     if(animateIntro){
       guide.classList.remove('j03-guide-complete','j03-guide-run');
@@ -337,13 +387,13 @@
       #portfolio-review .kashinoki03-list-head h3{margin:0 0 2px!important;font-size:15px!important;line-height:1.2!important;}
       #portfolio-review .kashinoki03-list-head p{margin:0!important;color:var(--mut,#6f736f)!important;font-size:10px!important;}
       #portfolio-review .kashinoki03-list-head strong{min-width:40px!important;padding:5px 9px!important;border-radius:999px!important;background:var(--neumo-pressed,rgba(255,255,255,.50))!important;box-shadow:inset 1px 1px 4px var(--nm-shadow-color,rgba(30,40,35,.12)),inset -1px -1px 4px var(--nm-light-color,rgba(255,255,255,.45))!important;text-align:center!important;font-size:12px!important;}
-      #portfolio-review .kashinoki03-transfer-table-head{display:grid!important;grid-template-columns:82px 140px minmax(0,1fr)!important;column-gap:11px!important;align-items:start!important;padding:0 2px 6px!important;font-size:9.5px!important;font-weight:700!important;color:var(--mut,#6f736f)!important;border:0!important;background:transparent!important;box-shadow:none!important;}
-      #portfolio-review .kashinoki03-transfer-list{display:grid!important;grid-template-columns:82px 140px minmax(0,1fr)!important;column-gap:11px!important;row-gap:7px!important;max-height:260px!important;overflow:auto!important;padding:0 2px 2px!important;background:transparent!important;border:0!important;box-shadow:none!important;}
+      #portfolio-review .kashinoki03-transfer-table-head{display:grid!important;grid-template-columns:minmax(120px,.24fr) minmax(190px,.30fr) minmax(0,1fr)!important;column-gap:14px!important;align-items:start!important;padding:0 2px 6px!important;font-size:9.5px!important;font-weight:700!important;color:var(--mut,#6f736f)!important;border:0!important;background:transparent!important;box-shadow:none!important;}
+      #portfolio-review .kashinoki03-transfer-list{display:grid!important;grid-template-columns:minmax(120px,.24fr) minmax(190px,.30fr) minmax(0,1fr)!important;column-gap:14px!important;row-gap:7px!important;max-height:260px!important;overflow:auto!important;padding:0 2px 2px!important;background:transparent!important;border:0!important;box-shadow:none!important;}
       #portfolio-review .kashinoki03-transfer-row{display:contents!important;padding:0!important;margin:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;outline:0!important;filter:none!important;line-height:1.42!important;font-size:11px!important;cursor:default!important;}
       #portfolio-review .kashinoki03-transfer-row:hover{background:transparent!important;box-shadow:none!important;transform:none!important;}
-      #portfolio-review .kashinoki03-transfer-row > span{display:block!important;padding:0!important;margin:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;outline:0!important;filter:none!important;}
-      #portfolio-review .kashinoki03-transfer-id{font-weight:750!important;font-size:10px!important;color:inherit!important;}
-      #portfolio-review .kashinoki03-transfer-source{color:var(--mut,#6f736f)!important;font-size:10px!important;}
+      #portfolio-review .kashinoki03-transfer-row > span{display:block!important;min-width:0!important;padding:0!important;margin:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;outline:0!important;filter:none!important;overflow-wrap:anywhere!important;word-break:break-word!important;}
+      #portfolio-review .kashinoki03-transfer-id{font-weight:750!important;font-size:10px!important;color:inherit!important;line-height:1.32!important;}
+      #portfolio-review .kashinoki03-transfer-source{color:var(--mut,#6f736f)!important;font-size:10px!important;line-height:1.32!important;}
       #portfolio-review .kashinoki03-transfer-text{display:block!important;overflow:visible!important;word-break:break-word!important;white-space:normal!important;color:inherit!important;}
       #portfolio-review .kashinoki03-check-mini{margin-top:9px!important;padding:6px 8px!important;border-radius:10px!important;background:var(--neumo-pressed,rgba(255,255,255,.30))!important;box-shadow:inset calc(.25 * var(--nm-offset,2px)) calc(.25 * var(--nm-offset,2px)) calc(.48 * var(--nm-blur,11px)) var(--nm-shadow-color,rgba(30,40,35,.10)),inset calc(-.25 * var(--nm-offset,2px)) calc(-.25 * var(--nm-offset,2px)) calc(.48 * var(--nm-blur,11px)) var(--nm-light-color,rgba(255,255,255,.36))!important;color:var(--mut,#6f736f)!important;font-size:10px!important;}
       #portfolio-review .kashinoki03-register-done{margin-top:8px!important;padding:8px 10px!important;border-radius:12px!important;background:var(--kashinoki-accent-08,rgba(150,46,255,.08))!important;display:flex!important;align-items:center!important;justify-content:space-between!important;gap:12px!important;min-height:0!important;}
@@ -380,7 +430,7 @@
       #portfolio-review .kashinoki03-dest-panel{min-height:0!important;}
       #portfolio-review .kashinoki03-empty{padding:8px 2px!important;border-bottom:0!important;color:var(--mut,#6f736f)!important;font-size:11px!important;}
       #portfolio-review .workflow-page-title,#portfolio-review .page-title{margin-bottom:10px!important;}
-      @media (max-width:900px){#portfolio-review .kashinoki03-transfer-layout{grid-template-columns:1fr!important;}#portfolio-review .kashinoki03-transfer-table-head,#portfolio-review .kashinoki03-transfer-list{grid-template-columns:78px 130px minmax(0,1fr)!important;}}
+      @media (max-width:900px){#portfolio-review .kashinoki03-transfer-layout{grid-template-columns:1fr!important;}#portfolio-review .kashinoki03-transfer-table-head,#portfolio-review .kashinoki03-transfer-list{grid-template-columns:minmax(92px,.24fr) minmax(150px,.30fr) minmax(0,1fr)!important;}}
     `;
     document.head.appendChild(style);
   }
@@ -494,7 +544,9 @@
     const g=grouped();
     const shelf=shelves.find(s=>s.key===selected)||shelves[0]; selected=shelf.key;
     const items=g[shelf.key]||[];
-    const signature=[selected, registered?'1':'0', shelves.map(s=>s.key+':' + ((g[s.key]||[]).length)).join('|')].join('::');
+    const unloaded=!hasConversationLoaded();
+    const ready=isTransferReady();
+    const signature=[selected, registered?'1':'0', unloaded?'unloaded':'loaded', ready?'ready':'pending', shelves.map(s=>s.key+':' + ((g[s.key]||[]).length)).join('|')].join('::');
     injectStyle();
     const animateTopGuide=isActive()&&!topGuideIntroPlayed;
     const animateDestIntro=isActive()&&!destIntroPlayed;
@@ -518,8 +570,13 @@
       const countDelay=Math.round(1260 + index*120);
       return `<button type="button" class="kashinoki03-dest-button ${active?'is-active':''}" data-kashinoki03-shelf="${esc(s.key)}" data-j03-dest-item style="--j03-dest-delay:${delay}s" aria-pressed="${active?'true':'false'}"><span class="kashinoki03-dest-main"><b>${esc(s.key)} ${esc(s.title)}</b><small>${esc(shelfBreakdown(g[s.key]||[], s))}</small></span><em data-j03-count-target="${count}" data-j03-count-delay="${countDelay}">${animateDestIntro?'0':count}件</em></button>`;
     }).join('');
-    const rows=items.length?items.map(chip=>`<div class="kashinoki03-transfer-row"><span class="kashinoki03-transfer-id">${esc(chip.id)}</span><span class="kashinoki03-transfer-source">${esc(chip.thread)} / ${esc(chip.date)}</span><span class="kashinoki03-transfer-text">${esc(chip.text)}</span></div>`).join(''):`<div class="kashinoki03-empty">${isTransferReady()?'この送り先へ登録する候補はありません。':'02下部の「分類チップを03へ登録」を押すと、ここに送り先候補を表示します。'}</div>`;
-    root.innerHTML=`<div class="kashinoki03-transfer-layout" data-j03-final="true" data-j03-dest-seq-ready="true"><aside class="kashinoki03-dest-panel kashinoki-neumo-panel ${animateDestIntro?'j03-dest-run':'j03-dest-complete'}"><div class="kashinoki03-panel-head-simple"><h3 data-j03-dest-item style="--j03-dest-delay:.16s">送り先</h3><p data-j03-dest-item style="--j03-dest-delay:.40s">02で分類したチップを、A〜Fへ振り分けます。</p></div><div class="kashinoki03-dest-list">${buttons}</div><div class="kashinoki03-check-mini" data-j03-dest-item style="--j03-dest-delay:1.62s"><b>要確認</b><br><span>未分類 0 / 送り先なし 0 / 空欄 0</span></div></aside><section class="kashinoki03-list-panel kashinoki-neumo-panel ${animateDestIntro?'j03-right-run':'j03-right-complete'}"><div class="kashinoki03-list-head" data-j03-right-item style="--j03-right-delay:2.48s"><div><h3>${esc(shelf.key)} ${esc(shelf.title)}へ送る候補</h3><p>${esc(shelfBreakdown(items, shelf))} / 合計 ${items.length}件</p></div><strong data-j03-right-count="${items.length}">${animateDestIntro?'0':items.length}件</strong></div><div class="kashinoki03-transfer-table-head" data-j03-right-item style="--j03-right-delay:2.68s"><span>ID</span><span>スレッド名 / 登録日</span><span>内容</span></div><div class="kashinoki03-transfer-list" data-j03-right-item style="--j03-right-delay:2.88s">${rows}</div><div class="kashinoki03-check-mini kashinoki03-check-inline" data-j03-right-item style="--j03-right-delay:3.08s"><span>未分類 0 / 送り先なし 0 / 空欄 0</span></div>${registered?`<div class="kashinoki03-register-done"><b>A〜F登録完了</b><div>${shelves.map(s=>`<button type="button" data-kashinoki03-goal="${esc(s.page)}">${esc(s.key)}で確認</button>`).join('')}</div></div>`:''}</section></div>`;
+    const rows=items.length?items.map(chip=>`<div class="kashinoki03-transfer-row"><span class="kashinoki03-transfer-id">${esc(chip.id)}</span><span class="kashinoki03-transfer-source">${esc(chip.thread)} / ${esc(chip.date)}</span><span class="kashinoki03-transfer-text">${esc(chip.text)}</span></div>`).join(''):`<div class="kashinoki03-empty">${ready?'この送り先へ登録する候補はありません。':'02下部の「分類チップを03へ登録」を押すと、ここに送り先候補を表示します。'}</div>`;
+    /* v1.0967: STEP3の「デモモード読込」へ移動は上部ガイド右側だけに集約する。
+       下部/候補パネル内の重複ボタンはDOM自体を生成しない。
+       読込後の通常CTA「A〜Fへ登録する」は下部CTAパネルで維持する。 */
+    const jumpArea='';
+    const doneArea=(!unloaded && registered)?`<div class="kashinoki03-register-done"><b>A〜F登録完了</b><div>${shelves.map(s=>`<button type="button" data-kashinoki03-goal="${esc(s.page)}">${esc(s.key)}で確認</button>`).join('')}</div></div>`:'';
+    root.innerHTML=`<div class="kashinoki03-transfer-layout" data-j03-final="true" data-j03-dest-seq-ready="true"><aside class="kashinoki03-dest-panel kashinoki-neumo-panel ${animateDestIntro?'j03-dest-run':'j03-dest-complete'}"><div class="kashinoki03-panel-head-simple"><h3 data-j03-dest-item style="--j03-dest-delay:.16s">送り先</h3><p data-j03-dest-item style="--j03-dest-delay:.40s">02で分類したチップを、A〜Fへ振り分けます。</p></div><div class="kashinoki03-dest-list">${buttons}</div><div class="kashinoki03-check-mini" data-j03-dest-item style="--j03-dest-delay:1.62s"><b>要確認</b><br><span>未分類 0 / 送り先なし 0 / 空欄 0</span></div></aside><section class="kashinoki03-list-panel kashinoki-neumo-panel ${animateDestIntro?'j03-right-run':'j03-right-complete'}"><div class="kashinoki03-list-head" data-j03-right-item style="--j03-right-delay:2.48s"><div><h3>${esc(shelf.key)} ${esc(shelf.title)}へ送る候補</h3><p>${esc(shelfBreakdown(items, shelf))} / 合計 ${items.length}件</p></div><strong data-j03-right-count="${items.length}">${animateDestIntro?'0':items.length}件</strong></div><div class="kashinoki03-transfer-table-head" data-j03-right-item style="--j03-right-delay:2.68s"><span>ID</span><span>スレッド名 / 登録日</span><span>内容</span></div><div class="kashinoki03-transfer-list" data-j03-right-item style="--j03-right-delay:2.88s">${rows}</div><div class="kashinoki03-check-mini kashinoki03-check-inline" data-j03-right-item style="--j03-right-delay:3.08s"><span>未分類 0 / 送り先なし 0 / 空欄 0</span></div>${jumpArea}${doneArea}</section></div>`;
     if(animateDestIntro){
       startDestinationIntro(root);
       startRightPanelIntro(root);
@@ -528,13 +585,33 @@
       completeRightPanelIntro(root);
     }
     lastRenderedSignature=signature;
-    const slot=page.querySelector('.kashinoki03-bottom-action');
-    if(slot){ slot.className='guided-action-slot portfolio-action kashinoki-action-panel-slot kashinoki03-bottom-action'; }
-    const action=page.querySelector('.kashinoki03-bottom-action .guided-action');
+    let slot=page.querySelector('.kashinoki03-bottom-action');
+    /* v1.0973: STEP3下部パネル自体は常に残す。
+       STEP2下部の「分類チップを03へ登録」押下前は、A〜F登録ボタンだけを出さず、02へ戻す案内を表示する。 */
+    if(!slot){
+      slot=document.createElement('div');
+      slot.className='guided-action-slot portfolio-action kashinoki-action-panel-slot kashinoki03-bottom-action';
+      root.insertAdjacentElement('afterend', slot);
+    }else{
+      slot.className='guided-action-slot portfolio-action kashinoki-action-panel-slot kashinoki03-bottom-action';
+    }
+    slot.style.display='';
+    let action=slot.querySelector('.guided-action');
+    if(!action){
+      action=document.createElement('div');
+      action.className='guided-action kashinoki-action-panel';
+      slot.appendChild(action);
+    }
     if(action){
       action.className='guided-action kashinoki-action-panel';
       action.classList.add(animateActionIntro?'j03-action-run':'j03-action-complete');
-      action.innerHTML=`<div class="guided-action-copy"><label data-j03-action-item style="--j03-action-delay:3.48s">今行う主操作 <span class="guided-action-badge">活かすへ</span></label><b data-j03-action-item style="--j03-action-delay:3.72s">A〜Fへ登録する</b><p data-j03-action-item style="--j03-action-delay:3.96s">03では送り先と内容だけ確認します。修正が必要な場合は02へ戻ります。</p></div><button class="btn primary workflow-primary-target" type="button" data-kashinoki03-register data-j03-action-item style="--j03-action-delay:4.22s">A〜Fへ登録する</button><button class="workflow-secondary-link" type="button" data-kashinoki03-back data-j03-action-item style="--j03-action-delay:4.42s">02へ戻る</button>`;
+      /* v1.0976: STEP3下部パネルは常に表示する。
+         ただしSTEP2下部の「分類チップを03へ登録」未押下時は、
+         03登録実行ボタンだけを生成しない。 */
+      const registerButtonHtml = ready
+        ? `<button class="btn primary workflow-primary-target" type="button" data-kashinoki03-register data-j03-action-item style="--j03-action-delay:4.22s">A〜Fへ登録する</button>`
+        : '';
+      action.innerHTML=`<div class="guided-action-copy"><label data-j03-action-item style="--j03-action-delay:3.48s">今行う主操作 <span class="guided-action-badge">活かすへ</span></label><b data-j03-action-item style="--j03-action-delay:3.72s">A〜Fへ登録する</b><p data-j03-action-item style="--j03-action-delay:3.96s">03では送り先と内容だけ確認します。修正が必要な場合は02へ戻ります。</p></div>${registerButtonHtml}<button class="workflow-secondary-link" type="button" data-kashinoki03-back data-j03-action-item style="--j03-action-delay:4.42s">02へ戻る</button>`;
       if(animateActionIntro) startBottomActionIntro(page); else completeBottomActionIntro(page);
     }
     page.querySelectorAll('#portfolioAnalysisSummary,.workflow-filter-row').forEach(n=>n.remove());
@@ -542,6 +619,7 @@
     // page側の guide-show-all / jv03-complete は上部ガイド内フェードを即時完了扱いにするため付与しない。
     page.classList.remove('guide-show-all','jv03-complete','jv03-running','workflow-animate');
     page.classList.add('j03-fixed-panel-ready');
+    try{ window.dispatchEvent(new CustomEvent('kashinoki03:rendered')); }catch(e){}
     rendering=false;
   }
   function schedule(force=false){
@@ -569,11 +647,20 @@
     render(true);
     ensureTopGuide(true);
   };
-  window.selectKashinoKi03Shelf=function(key){selected=key||'A';registered=false;render(true);};
-  window.sendKashinoKi03ToShelf=function(){saveRegisteredArtifacts(); registered=true; render(true); if(typeof window.toast==='function') window.toast('A〜Fへ登録しました。');};
+  window.selectKashinoKi03Shelf=function(key){selected=key||'A';render(true);};
+  window.sendKashinoKi03ToShelf=function(){
+    if(!isTransferReady()){
+      if(typeof window.toast==='function') window.toast('02で「分類チップを03へ登録 ➡」を押してから登録してください。');
+      render(true);
+      return;
+    }
+    saveRegisteredArtifacts(); registered=true; render(true); if(typeof window.toast==='function') window.toast('A〜Fへ登録しました。');
+  };
   document.addEventListener('click',function(ev){
     const transferBtn=ev.target.closest?.('button,a');
-    if(transferBtn && isTransferButtonText(transferBtn.textContent)){ markTransferReady(); }
+    if(transferBtn && isActualStep2TransferButton(transferBtn)){ markTransferReady(); }
+    const jumpBtn=ev.target.closest?.('.kashinoki03-step1-jump-area .ck-step1-demo-jump-cta');
+    if(jumpBtn){ev.preventDefault();ev.stopPropagation(); if(typeof window.page==='function') window.page('portfolio-collect'); return;}
     const shelfBtn=ev.target.closest?.('[data-kashinoki03-shelf]');
     if(shelfBtn){ev.preventDefault();ev.stopPropagation();window.selectKashinoKi03Shelf(shelfBtn.getAttribute('data-kashinoki03-shelf'));return;}
     const reg=ev.target.closest?.('[data-kashinoki03-register]');
@@ -583,6 +670,8 @@
     const goal=ev.target.closest?.('[data-kashinoki03-goal]');
     if(goal){ev.preventDefault();ev.stopPropagation(); if(typeof window.page==='function') window.page(goal.getAttribute('data-kashinoki03-goal')); return;}
   },true);
+  window.addEventListener('kashinoki-step1-json-committed', function(){ resetTransferReady(); schedule(true); });
+  window.addEventListener('kashinoki-step1-json-pending', function(){ resetTransferReady(); schedule(true); });
   const previousPage=window.page;
   if(typeof previousPage==='function'&&!previousPage.__kashinoki03FinalPanelWrapped){
     const wrapped=function(){const result=previousPage.apply(this,arguments); if(String(arguments[0]||'')===PAGE_ID){ topGuideIntroPlayed=false; destIntroPlayed=false; actionIntroPlayed=false; schedule(false); } return result;};

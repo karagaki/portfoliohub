@@ -1,9 +1,9 @@
 window.KASHINOKI_PAGE_ASSIST_ENGINE = (function () {
-  const VERSION = 'v1.0749';
+  const VERSION = 'v1.0923';
   const WRAP_FLAG = '__kashinokiV201AssistWrapped';
   const LIFECYCLE_FLAG = '__kashinokiPageAssistLifecycleBound';
   const CLICK_FLAG = '__kashinokiPageAssistClickBound';
-  const HIDDEN_ASSIST_PAGE_IDS = new Set(['artifact-intent','artifact-handoff','artifact-spec','artifact-countermeasure','artifact-design','artifact-ideas']);
+  const HIDDEN_ASSIST_PAGE_IDS = new Set([]);
 
   function escapeText(value) {
     if (typeof window.esc === 'function') return window.esc(value);
@@ -86,7 +86,11 @@ window.KASHINOKI_PAGE_ASSIST_ENGINE = (function () {
     fab.hidden = false;
     fab.style.removeProperty('display');
     pop.style.removeProperty('display');
-    pop.innerHTML = `<b>${escapeText(data.title)}</b><p>${escapeText(data.body)}</p>`;
+    const imageHtml = data.image
+      ? `<img class="page-assist-image" src="${escapeText(data.image)}" alt="${escapeText(data.imageAlt || '')}">`
+      : '';
+    const leadHtml = data.lead ? `<strong class="page-assist-lead">${escapeText(data.lead)}</strong>` : '';
+    pop.innerHTML = `<b>${escapeText(data.title)}</b>${imageHtml}${leadHtml}<p>${escapeText(data.body)}</p>`;
     if (toggle) {
       const next = !pop.classList.contains('is-open');
       pop.classList.toggle('is-open', next);

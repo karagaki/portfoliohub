@@ -3086,3 +3086,12 @@ html body #portfolio-purpose .floating-guide-controls.is-workflow-docked.kashino
   line-height: 1.6;
   overflow-wrap: anywhere;
 }
+
+/* v1.0979: STEP1未接続パネルの外側だけ、公開表示で不要な光・影を外す。 */
+#portfolio-collect.portfolio-disconnected .portfolio-connection-panel,
+body.theme-neumorphism #portfolio-collect.portfolio-disconnected .portfolio-connection-panel,
+body.ck-demo-mode #portfolio-collect.portfolio-disconnected .portfolio-connection-panel,
+body.ck-work-mode #portfolio-collect.portfolio-disconnected .portfolio-connection-panel {
+  box-shadow: none !important;
+  filter: none !important;
+}

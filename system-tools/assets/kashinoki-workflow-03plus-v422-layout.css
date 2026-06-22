@@ -2035,7 +2035,7 @@ html body.theme-neumorphism .kashinoki-v422-03plus .kashinoki-v422-03plus-btn[ar
 }
 #portfolio-review .kashinoki03-transfer-table-head,
 #portfolio-review .kashinoki03-transfer-row {
-  grid-template-columns: 92px 156px minmax(0, 1fr) !important;
+  grid-template-columns: minmax(120px,.24fr) minmax(190px,.30fr) minmax(0,1fr) !important;
   gap: 10px !important;
 }
 #portfolio-review .kashinoki03-dest-button {
@@ -4398,4 +4398,64 @@ html body.theme-neumorphism .kashinoki-v422-03plus .kashinoki-v422-03plus-btn[ar
   #portfolio-quality[data-quality02-editor-mode="range"] .kashinoki-v449-category-picks::after{
     opacity:.72 !important;
   }
+}
+
+
+/* v1.0921: エディター候補行は一覧確認時に1行表示へ寄せ、長文は右端で省略する。 */
+.artifact-v702-multiline-row .artifact-v661-line-body p{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  min-width:0;
+  line-height:1.55;
+  white-space:nowrap;
+  overflow:hidden;
+}
+.artifact-v702-row-copy{
+  display:inline-block;
+  flex:1 1 auto;
+  min-width:0;
+  max-width:none;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  vertical-align:middle;
+}
+.artifact-v702-raw-text,.artifact-v702-raw-detail{
+  display:inline;
+  margin-top:0;
+  white-space:nowrap;
+}
+.artifact-v702-raw-detail{opacity:.72;}
+.artifact-v665-hashtags,.artifact-v661-line-comment,.artifact-v800-link-status,.artifact-v669-row-tools{
+  flex:0 0 auto;
+  white-space:nowrap;
+}
+
+/* v1.0921: A-F editor rows use fixed category chips for presentation.
+   Per-row category dropdowns and category switch UI are removed. */
+.artifact-v10887-category-static{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:72px;
+  min-height:26px;
+  padding:4px 12px;
+  border-radius:10px;
+  background:var(--artifact-category-color, rgba(255,255,255,.64));
+  color:var(--artifact-category-text, #24232a);
+  font-weight:800;
+  line-height:1;
+  box-shadow:inset 1px 1px 2px rgba(255,255,255,.65), inset -1px -1px 2px rgba(0,0,0,.08);
+}
+
+/* v1096 STEP3 overlap guard */
+#portfolio-review .kashinoki03-transfer-row > span {
+  min-width: 0 !important;
+  overflow-wrap: anywhere !important;
+  word-break: break-word !important;
+}
+#portfolio-review .kashinoki03-transfer-id,
+#portfolio-review .kashinoki03-transfer-source {
+  line-height: 1.32 !important;
 }

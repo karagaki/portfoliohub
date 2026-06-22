@@ -28,6 +28,23 @@
   };
   const QUALITY02_TYPES = Object.keys(QUALITY02_DEFAULT_COLORS);
 
+  function notifyBridge(message){
+    const text = String(message || '');
+    if(typeof window.toast === 'function'){
+      window.toast(text);
+      return;
+    }
+    const toastEl = document.getElementById('toast');
+    if(toastEl){
+      toastEl.textContent = text;
+      toastEl.classList.add('show');
+      clearTimeout(notifyBridge.timer);
+      notifyBridge.timer = setTimeout(()=>toastEl.classList.remove('show'), 2600);
+      return;
+    }
+    console.warn('[KASHINOKI] ' + text);
+  }
+
   // ChatGPT分類カテゴリは内部論理、表示色は既存の「表示設定3 / アンダーライン・チップ色」に寄せる。
   const CATEGORY_META = {
     next_action: { label: '次作業', qualityType: 'タスク', group: 'next' },
@@ -403,7 +420,8 @@
   function setConversation(raw){
     state.conversation = normalizeConversation(raw);
     state.lineMessages = buildLineMessages(state.conversation);
-    state.annotations = mergeAnnotations([], manualAnnotationsForCurrentConversation());
+    const externalAnnotations = Array.isArray(raw && raw.annotations) ? raw.annotations : [];
+    state.annotations = mergeAnnotations(externalAnnotations, manualAnnotationsForCurrentConversation());
     updateStatus();
     renderAll();
   }
@@ -426,7 +444,7 @@
        STEP 2と分類反映モードが読むのは「中身を確かめる」で確定された ACTIVE のみ。
        これにより、JSON未確定時に旧デモ会話や旧カウントが先読み表示される経路を止める。 */
     const raw = window.__KASHINOKI_ACTIVE_CONVERSATION_JSON;
-    if(raw && raw.exportType === 'chatgpt_conversation_full_export' && Array.isArray(raw.messages)) return raw;
+    if(raw && (raw.exportType === 'chatgpt_conversation_full_export' || raw.exportType === 'clipknowledge_ai_thread') && Array.isArray(raw.messages)) return raw;
     if(raw && raw.raw_export && raw.raw_export.exportType === 'chatgpt_conversation_full_export' && Array.isArray(raw.raw_export.messages)) return raw.raw_export;
     if(raw && Array.isArray(raw.raw_messages)){
       return {
@@ -467,7 +485,8 @@
       const previousAnnotations = Array.isArray(state.annotations) ? state.annotations.slice() : [];
       state.conversation = normalizeConversation(raw);
       state.lineMessages = buildLineMessages(state.conversation);
-      state.annotations = (same && options.preserveAnnotations !== false && !options.clearAnnotations) ? mergeAnnotations(previousAnnotations, manualAnnotationsForCurrentConversation()) : mergeAnnotations([], manualAnnotationsForCurrentConversation());
+      const externalAnnotations = Array.isArray(raw.annotations) ? raw.annotations : (raw.classification && Array.isArray(raw.classification.annotations) ? raw.classification.annotations : []);
+      state.annotations = (same && options.preserveAnnotations !== false && !options.clearAnnotations) ? mergeAnnotations(externalAnnotations.length ? externalAnnotations : previousAnnotations, manualAnnotationsForCurrentConversation()) : mergeAnnotations(externalAnnotations, manualAnnotationsForCurrentConversation());
       updateStatus();
       renderAll({ animateCounts: !!options.animateCounts, countsInitialZero: !!options.countsInitialZero });
       return true;
@@ -667,16 +686,21 @@
     const desc = card.querySelector('.presentation-card-heading p');
     if(desc) desc.textContent = '会話内の発言そのものに、表示設定の分類色でアンダーラインと分類チップを反映しています。';
     host.classList.add('ck02-left-reflection-thread');
+    let previousRoleClass = '';
     host.innerHTML = state.lineMessages.map((msg)=>{
       const roleClass = msg.role === 'assistant' ? 'assistant' : msg.role === 'user' ? 'user' : 'assistant';
       const roleLabel = msg.role === 'assistant' ? 'ChatGPT' : msg.role === 'user' ? 'User' : msg.role;
+      const isRoleBlockHead = roleClass !== previousRoleClass;
+      previousRoleClass = roleClass;
+      const iconSrc = roleClass === 'assistant' ? 'assets/dialogue/robot.svg' : 'assets/dialogue/user.svg';
+      const iconHtml = isRoleBlockHead ? `<img class="ck02-role-icon" src="${iconSrc}" alt="" aria-hidden="true" loading="eager">` : '';
       const lines = msg.lines.map((line)=>renderExistingLeftLine(msg.messageIndex, line)).join('');
       const messageTypes = Array.from(new Set(msg.lines.flatMap((line)=>lineQualityTypes(msg.messageIndex, line.line)))).filter(isQuality02Type);
       // v742: チャット枠下の分類チップ列は廃止。分類表示は各行右側の .ck02-left-line-tags のみに集約する。
       const reviewClass = messageTypes[0] || '';
       const reviewClasses = messageTypes.join(',');
       const reviewAttrs = reviewClass ? `data-review02-class="${escapeHtml(reviewClass)}" data-review02-classes="${escapeHtml(reviewClasses)}"` : 'data-review02-class="" data-quality02-none="true"';
-      return `<article class="chat-bubble ${roleClass} ck02-left-message" data-message-index="${msg.messageIndex}" ${reviewAttrs}><label>${escapeHtml(roleLabel)}</label><p>${lines}</p></article>`;
+      return `<article class="chat-bubble ${roleClass} ck02-left-message" data-message-index="${msg.messageIndex}" ${reviewAttrs}>${iconHtml}<label>${escapeHtml(roleLabel)}</label><p>${lines}</p></article>`;
     }).join('');
   }
 
@@ -958,47 +982,10 @@
   }
 
   function injectPanel(){
-    const page=$('#portfolio-quality');
-    if(!page || $('#ck02BridgePanel')) { syncBridgePanelDemoVisibility(); return; }
-    const after=$('#captureQualitySummary', page);
-    const panel=document.createElement('section');
-    panel.id='ck02BridgePanel';
-    panel.className='ck02-bridge-panel';
-    panel.innerHTML=`
-      <div class="ck02-bridge-head">
-        <div>
-          <span class="ck02-bridge-kicker">CLASSIFICATION REFLECTION / STEP 2内検証</span>
-          <h3>分類反映モード</h3>
-          <p>既存の表示設定3で指定した分類色を使い、会話レイアウト上に分類アンダーラインを表示します。原文は改変せず、分類は右側の編集パネルで調整します。</p>
-        </div>
-        <button class="ck02-bridge-toggle" id="ck02Toggle" type="button">開く</button>
-      </div>
-      <div class="ck02-bridge-body">
-        <div class="ck02-actions">
-          <button class="ck02-btn" id="ck02ApplyAnn" type="button">分類JSONを反映</button>
-          <button class="ck02-btn" id="ck02MakePrompt" type="button">分類プロンプト生成</button>
-          <label class="ck02-file-label">会話JSONを選択<input id="ck02ConversationFile" type="file" accept="application/json,.json"></label>
-        </div>
-        <div id="ck02Status" class="ck02-status">未読込：02内の分類反映モードです。</div>
-        <div class="ck02-main-grid">
-          <div class="ck02-panel-inner ck02-conversation-panel">
-            <h4>会話本文</h4>
-            <div id="ck02ConversationView" class="ck02-conversation"></div>
-          </div>
-          <div class="ck02-panel-inner ck02-editor-panel">
-            <h4>分類編集</h4>
-            <div id="ck02AnnotationEditor" class="ck02-annotation-editor"></div>
-          </div>
-        </div>
-        <div class="ck02-sub-grid">
-          <div class="ck02-panel-inner"><h4>分類別一覧</h4><div id="ck02CategoryList" class="ck02-category-list"></div></div>
-          <div class="ck02-panel-inner"><h4>分類プロンプト</h4><textarea id="ck02PromptArea" class="ck02-textarea" placeholder="分類プロンプト生成で出力"></textarea></div>
-          <div class="ck02-panel-inner"><h4>分類JSON貼り付け</h4><textarea id="ck02AnnotationArea" class="ck02-textarea" placeholder="ChatGPTが返した annotations[] JSON を貼り付け"></textarea></div>
-        </div>
-      </div>`;
-    if(after) after.insertAdjacentElement('afterend', panel); else page.prepend(panel);
-    syncBridgePanelDemoVisibility();
-    bindEvents(); updateStatus(); renderAll();
+    const existing = $('#ck02BridgePanel');
+    if(existing) existing.remove();
+    /* v1.0921: presentation demo keeps STEP 2 classification reflection controls removed from the UI.
+       The bridge script may still synchronize existing STEP2 classification state, but it does not inject the inspection panel. */
   }
 
   function currentConversationLooksStarryMuseum(){
@@ -1039,7 +1026,7 @@
     });
     $('#ck02ApplyAnn')?.addEventListener('click',()=>{
       try{ setAnnotations(JSON.parse($('#ck02AnnotationArea').value)); }
-      catch(e){ alert('分類JSONを読み込めません: '+e.message); }
+      catch(e){ notifyBridge('分類JSONを読み込めません: '+e.message); }
     });
     $('#ck02MakePrompt')?.addEventListener('click',()=>{ $('#ck02PromptArea').value=buildPrompt(); });
     $('#ck02ConversationFile')?.addEventListener('change',(ev)=>{
@@ -1051,7 +1038,7 @@
           setConversation(JSON.parse(reader.result));
           $('#ck02BridgePanel')?.classList.add('is-open');
           $('#ck02Toggle').textContent='閉じる';
-        }catch(e){ alert('会話JSONを読み込めません: '+e.message); }
+        }catch(e){ notifyBridge('会話JSONを読み込めません: '+e.message); }
       };
       reader.readAsText(file);
     });
@@ -1084,9 +1071,16 @@
   });
   window.addEventListener('kashinoki-enter-step2', () => {
     if(clearWhenNoActiveConversation()) return;
+    const raw = resolveExternalConversationJson();
+    const hasExternalAnnotations = !!(raw && (Array.isArray(raw.annotations) || (raw.classification && Array.isArray(raw.classification.annotations))));
     if(window.__KASHINOKI_PENDING_STEP2_SAMPLE_APPLY){
       window.__KASHINOKI_PENDING_STEP2_SAMPLE_APPLY = false;
-      syncFromStep1AndApplySample({openPanel:false, deferCountAnimation:true});
+      if(hasExternalAnnotations){
+        /* v1.0921: ClassifiedThreadBundle由来のannotationsを、星空デモ用サンプル反映で空に戻さない。 */
+        syncFromExternalConversation({force:true, refresh:true, countsInitialZero:true, preserveAnnotations:true});
+      }else{
+        syncFromStep1AndApplySample({openPanel:false, deferCountAnimation:true});
+      }
       return;
     }
     /* v754: STEP2再入場・リターン再生時も、このイベントではカウントを開始しない。

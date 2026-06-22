@@ -1,6 +1,6 @@
 (function(){
   'use strict';
-  const VERSION = 'v1.0817';
+  const VERSION = 'v1.0921';
   const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
   const pages = {
     'portfolio-current': {
@@ -331,9 +331,8 @@ function workflowHeading(cfg){
     scope.querySelectorAll('[data-artifact-row-category]').forEach(select=>applyArtifactCategorySelectStyle(select, select.value));
   }
   function artifactCategorySelectHTML(current){
-    const value = String(current || '').trim();
-    const options = ARTIFACT_EDITOR_CATEGORIES.map(cat=>`<option value="${esc(cat)}"${cat===value?' selected':''}>${esc(cat)}</option>`).join('');
-    return `<label class="artifact-v669-category-control artifact-v671-category-compact artifact-v673-category-color-control" contenteditable="false" style="${artifactCategorySelectStyle(value)}"><select aria-label="分類" title="分類を変更" data-artifact-row-category data-artifact-row-category-current="${esc(value)}" style="${artifactCategorySelectStyle(value)}">${options}</select></label>`;
+    // v1.0921: A-Fの各行では分類ドロップダウン/固定チップを出さず、余白も残さない。
+    return '';
   }
   function artifactEditorTags(cat, source){
     const src = artifactSourceParts(source);
@@ -374,7 +373,7 @@ function workflowHeading(cfg){
   }
   function artifactEditorRowsHTML(candidates, fallbackText){
     const rows = Array.isArray(candidates) ? candidates : [];
-    if(!rows.length) return artifactEditorHTML(fallbackText || '登録された断片はまだありません。\nデモ体験で分類し表示が確認できます。');
+    if(!rows.length) return `<div class="artifact-v660-editor-row artifact-v661-editor-line artifact-v852-empty-row" data-editor-row="0"><span class="artifact-v660-row-no artifact-v661-line-no" aria-hidden="true"></span><div class="artifact-v660-row-body artifact-v661-line-body"><p><span class="artifact-v852-empty-text">${artifactEditorHTML(fallbackText || '登録された断片はまだありません。\nデモ体験で分類し表示が確認できます。')}</span></p></div></div>`;
     return rows.map((c,i)=>{
       const rawCat = c.cat || c.category || '分類';
       const rawSource = c.source || [c.speaker, c.thread].filter(Boolean).join(' / ');
@@ -434,7 +433,7 @@ function workflowHeading(cfg){
     const tagGroups = artifactEditorFilterGroupsFromRows(candidates);
     const tags = artifactFlattenTagGroups(tagGroups);
     if(!tags.length) return '';
-    return `<div class="artifact-v666-filter is-collapsed" data-artifact-editor-filter><div class="artifact-v666-filter-head"><button type="button" class="artifact-v666-filter-toggle" data-artifact-filter-toggle aria-expanded="false"><span data-artifact-filter-arrow>▶</span><span>タグ表示フィルター</span></button><em data-artifact-filter-count>表示 ${esc(String(candidates.length))} / 全${esc(String(candidates.length))}</em><button type="button" class="is-active" data-artifact-tags-toggle>タグ全て</button><button type="button" data-artifact-category-switch-toggle>切替表示</button><button type="button" data-artifact-project-tags-toggle>プロジェクト</button><button type="button" data-artifact-filter-clear>すべて表示</button></div><div class="artifact-v666-filter-tags">${artifactEditorFilterButtonsHTML(tagGroups, new Set())}</div></div>`;
+    return `<div class="artifact-v666-filter is-collapsed" data-artifact-editor-filter><div class="artifact-v666-filter-head"><button type="button" class="artifact-v666-filter-toggle" data-artifact-filter-toggle aria-expanded="false"><span data-artifact-filter-arrow>▶</span><span>タグ表示フィルター</span></button><em data-artifact-filter-count>表示 ${esc(String(candidates.length))} / 全${esc(String(candidates.length))}</em><button type="button" class="is-active" data-artifact-tags-toggle>タグ全て</button><button type="button" data-artifact-project-tags-toggle>プロジェクト</button><button type="button" data-artifact-filter-clear>すべて表示</button></div><div class="artifact-v666-filter-tags">${artifactEditorFilterButtonsHTML(tagGroups, new Set())}</div></div>`;
   }
   function artifactPlainText(editor){
     if(!editor) return '';
@@ -624,7 +623,7 @@ function workflowHeading(cfg){
             <b>内容を確認してから書き出す</b>
             <span>この分類に集まった断片を読み、次のAI作業で使う前提として確認します。</span>
           </div>
-          <span class="artifact-v790-demo-export-inline" data-artifact-demo-export-inline hidden>デモ版のため、ファイル書き出しは行いません。</span>
+          <span class="artifact-v790-demo-export-inline" data-artifact-demo-export-inline hidden>書き出しJSONを保存しました。</span>
           <button type="button" class="artifact-v598-export-btn" data-artifact-demo-export>書き出し</button>
         </section>
         ${artifactUsePreviewHTML(cfg, candidates)}
@@ -1962,6 +1961,16 @@ function workflowHeading(cfg){
     requestAnimationFrame(()=>renderAllQuality02UnderlineLayers(root));
   }
 
+  window.KashinoKiQuality02RestoreEditorPanel = function(){
+    installQuality02Filter();
+    const root = document.getElementById('portfolio-quality');
+    if(root){
+      applyQuality02ManualStore(root);
+      applyQuality02ColorStyles(root, readQuality02Settings());
+      renderAllQuality02UnderlineLayers(root);
+    }
+  };
+
   function refreshKashinoKiArtifacts(){
     /* v749: 登録前は空、STEP3登録後は登録payloadを再読込するため、
        artifact editor session cacheを毎回破棄する。 */
@@ -2077,7 +2086,8 @@ function workflowHeading(cfg){
         refreshKashinoKiArtifacts();
         const currentRoot = document.querySelector(`.artifact-v571[data-artifact-page="${CSS.escape(pageId)}"]`);
         const status = currentRoot && currentRoot.querySelector('[data-artifact-status]');
-        const label = result.moved ? `${nextCat}へ変更し、該当する蓄積先へ移動しました。` : `分類タグを ${nextCat} に変更しました。`;
+        const destLabel = ({'artifact-intent':'A AI理解前提','artifact-handoff':'B 引き継ぎ書','artifact-spec':'C 仕様正本','artifact-countermeasure':'D 再発防止','artifact-design':'E デザイン判断','artifact-ideas':'F 発展タスク'})[result.toPage] || '該当ページ';
+        const label = result.moved ? `${nextCat}へ変更し、${destLabel}へ移動しました。` : `分類タグを ${nextCat} に変更しました。`;
         if(status) status.textContent = label;
       }else{
         artifactRowSetCategory(row, nextCat);
@@ -2169,39 +2179,32 @@ function workflowHeading(cfg){
     const demoExportBtn = ev.target && ev.target.closest ? ev.target.closest('[data-artifact-demo-export]') : null;
     if(demoExportBtn){
       ev.preventDefault();
+      ev.stopPropagation();
       const root = demoExportBtn.closest('.artifact-v571');
-      const preview = root && root.querySelector('[data-artifact-use-preview]');
       const status = root && root.querySelector('[data-artifact-status]');
       const inline = root && root.querySelector('[data-artifact-demo-export-inline]');
+      const msg = 'デモ版のため、ファイル書き出しは行いません。';
       if(root){
-        resetArtifactTypewriter(root);
-        root.classList.remove('is-export-preview-open','is-export-cta-reveal','is-export-preview-note','is-export-preview-card1','is-export-preview-card2','is-export-preview-card3','is-export-preview-card4','is-export-preview-bottom');
         root.classList.add('is-demo-export-blocked');
+        root.classList.remove('is-export-preview-open');
       }
-      if(preview) preview.hidden = true;
       if(inline){
         inline.hidden = false;
-        inline.textContent = 'デモ版のため、ファイル書き出しは行いません。';
+        inline.textContent = msg;
       }
-      /* v791: 表示はボタン左の1行だけ。下部ステータスは書き換えない。 */
+      if(status) status.textContent = msg;
       return;
     }
     const exportBtn = ev.target && ev.target.closest ? ev.target.closest('[data-artifact-editor-export]') : null;
     if(exportBtn){
       ev.preventDefault();
+      ev.stopPropagation();
       const root = exportBtn.closest('.artifact-v571');
-      const editor = root && root.querySelector('[data-artifact-editor]');
-      const page = root && root.getAttribute('data-artifact-page') || 'artifact';
       const status = root && root.querySelector('[data-artifact-status]');
-      if(editor){
-        const blob = new Blob([artifactPlainText(editor)], {type:'text/plain;charset=utf-8'});
-        const a = document.createElement('a');
-        a.href = URL.createObjectURL(blob);
-        a.download = `${page}_fragments.txt`;
-        document.body.appendChild(a); a.click(); a.remove();
-        setTimeout(()=>URL.revokeObjectURL(a.href), 500);
-        if(status) status.textContent='エディター内容を書き出しました。';
-      }
+      const inline = root && root.querySelector('[data-artifact-demo-export-inline]');
+      const msg = 'デモ版のため、ファイル書き出しは行いません。';
+      if(inline){ inline.hidden = false; inline.textContent = msg; }
+      if(status) status.textContent = msg;
       return;
     }
     const loadBtn = ev.target && ev.target.closest ? ev.target.closest('[data-artifact-editor-load]') : null;

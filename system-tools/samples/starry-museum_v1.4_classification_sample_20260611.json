@@ -3,7 +3,7 @@
   "sourceMode": "line_based_annotation",
   "sourceFile": "星空科学館_来館体験と案内ページ設計_v1.4_raw_20260609.json",
   "sourceExportType": "chatgpt_conversation_full_export",
-  "sourceTitle": "運営のひっ迫 - プラネタリウム再生計画",
+  "sourceTitle": "星空科学館_来館体験と案内ページ設計",
   "createdFor": "presentation_demo_before_full_classifier",
   "notes": "分類機能本実装前の表示確認用サンプル。本文JSONとは別ファイルとして扱う。全行分類ではなく、プレゼン確認用に代表箇所を抽出。",
   "annotations": [

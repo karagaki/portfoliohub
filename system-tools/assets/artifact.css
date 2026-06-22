@@ -1156,3 +1156,82 @@
 .artifact-v702-multiline-row{
   min-height:48px;
 }
+
+
+/* v1.0921: エディター空状態・行番号・本文の縦位置を整え、固定ガイド線の文字めり込みを止める。 */
+.artifact-v571 .artifact-v660-editor-sheet{
+  background:linear-gradient(90deg, rgba(38,51,47,.035) 0 46px, rgba(38,51,47,.10) 46px 47px, #fff 47px 100%) !important;
+}
+.artifact-v660-editor-row.artifact-v661-editor-line{
+  align-items:center !important;
+}
+.artifact-v660-row-no.artifact-v661-line-no{
+  align-items:center !important;
+  justify-content:flex-end !important;
+  align-self:stretch !important;
+  padding:0 10px 0 0 !important;
+  line-height:1 !important;
+}
+.artifact-v660-row-body.artifact-v661-line-body{
+  display:flex !important;
+  align-items:center !important;
+  min-height:34px !important;
+  padding:5px 12px !important;
+}
+.artifact-v702-multiline-row .artifact-v661-line-body p,
+.artifact-v852-empty-row .artifact-v661-line-body p{
+  display:flex !important;
+  align-items:center !important;
+  gap:10px !important;
+  min-width:0 !important;
+  width:100% !important;
+  margin:0 !important;
+  line-height:1.55 !important;
+  white-space:nowrap !important;
+  overflow:hidden !important;
+}
+.artifact-v852-empty-row{
+  min-height:70px !important;
+}
+.artifact-v852-empty-row .artifact-v661-line-body{
+  align-items:flex-start !important;
+  padding:14px 14px !important;
+}
+.artifact-v852-empty-row .artifact-v661-line-body p{
+  display:block !important;
+  white-space:normal !important;
+  overflow:visible !important;
+}
+.artifact-v852-empty-text{
+  display:block !important;
+  padding-left:0 !important;
+  font-weight:850 !important;
+  color:#26332f !important;
+}
+.artifact-v702-row-copy{
+  display:block !important;
+  flex:1 1 auto !important;
+  min-width:0 !important;
+  max-width:none !important;
+  overflow:hidden !important;
+  text-overflow:ellipsis !important;
+  white-space:nowrap !important;
+  vertical-align:middle !important;
+}
+.artifact-v702-raw-text,.artifact-v702-raw-detail{
+  display:inline !important;
+  white-space:nowrap !important;
+}
+.artifact-v665-hashtags,.artifact-v661-line-comment,.artifact-v800-link-status,.artifact-v669-row-tools{
+  flex:0 0 auto !important;
+  white-space:nowrap !important;
+}
+
+/* v1.0921: STEP1の主操作チップをSTEP2/3と同じ強調色系へ統一する。 */
+html body #portfolio-collect.workflow-guide-page .guided-action-slot.portfolio-action .guided-action.kashinoki-action-panel .guided-action-badge,
+html body #portfolio-collect #portfolioStepSlot.guided-action-slot.portfolio-action .guided-action.kashinoki-action-panel .guided-action-badge{
+  background:var(--kashinoki-accent-18, color-mix(in srgb, var(--nm-accent, #962eff) 18%, transparent)) !important;
+  border:1px solid var(--kashinoki-accent-32, color-mix(in srgb, var(--nm-accent, #962eff) 32%, transparent)) !important;
+  color:var(--kashinoki-guide-panel-text, var(--tx, rgba(46,58,76,.94))) !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.28) !important;
+}

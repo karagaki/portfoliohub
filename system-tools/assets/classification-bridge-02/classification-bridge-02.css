@@ -641,3 +641,655 @@ html body.theme-neumorphism #portfolio-quality #captureQualitySummary[data-quali
   background:color-mix(in srgb, var(--ck02-count-color, transparent) 18%, var(--neumo-pressed, rgba(239,239,236,.72)) 82%) !important;
   border-color:color-mix(in srgb, var(--ck02-count-color, rgba(104,127,123,.10)) 24%, rgba(255,255,255,.45) 76%) !important;
 }
+
+/* v1.0921: STEP2 left conversation bubble overflow guard.
+   Keep user/AI bubbles inside the visible card at full width and while the window shrinks.
+   This clips only decorative spill such as underline/chip edges and forces long technical strings to wrap. */
+#portfolio-quality .presentation-chat-card.ck02-left-reflection-card,
+#portfolio-quality .presentation-chat-card.ck02-left-reflection-card .presentation-chat-thread.ck02-left-reflection-thread,
+#portfolio-quality .presentation-chat-card.ck02-left-reflection-card .ck02-left-message.chat-bubble{
+  box-sizing:border-box !important;
+  max-width:100% !important;
+  overflow:hidden !important;
+}
+#portfolio-quality .presentation-chat-card.ck02-left-reflection-card .ck02-left-message.chat-bubble{
+  width:fit-content !important;
+  width:-moz-fit-content !important;
+  max-width:min(820px, calc(100% - 18px)) !important;
+}
+#portfolio-quality .presentation-chat-card.ck02-left-reflection-card .ck02-left-message.chat-bubble.is-user,
+#portfolio-quality .presentation-chat-card.ck02-left-reflection-card .ck02-left-message.chat-bubble.user,
+#portfolio-quality .presentation-chat-card.ck02-left-reflection-card .ck02-left-message.chat-bubble[data-role="user"]{
+  max-width:min(780px, calc(100% - 18px)) !important;
+}
+#portfolio-quality .presentation-chat-card.ck02-left-reflection-card .ck02-left-message .ck02-left-line{
+  max-width:100% !important;
+  overflow:hidden !important;
+  grid-template-columns:24px minmax(0,1fr) minmax(0,auto) !important;
+}
+#portfolio-quality .presentation-chat-card.ck02-left-reflection-card .ck02-left-line-text{
+  min-width:0 !important;
+  max-width:100% !important;
+  overflow:hidden !important;
+  overflow-wrap:anywhere !important;
+  word-break:break-word !important;
+}
+#portfolio-quality .presentation-chat-card.ck02-left-reflection-card .ck02-left-line-tags{
+  max-width:100% !important;
+  min-width:0 !important;
+  overflow:hidden !important;
+  flex-wrap:wrap !important;
+}
+#portfolio-quality .presentation-chat-card.ck02-left-reflection-card .ck02-left-line-tag,
+#portfolio-quality .presentation-chat-card.ck02-left-reflection-card .ck02-muted-chip,
+#portfolio-quality .presentation-chat-card.ck02-left-reflection-card .ck02-quality-chip{
+  max-width:100% !important;
+  white-space:nowrap !important;
+}
+@media(max-width:1100px){
+  #portfolio-quality .presentation-chat-card.ck02-left-reflection-card .ck02-left-message.chat-bubble,
+  #portfolio-quality .presentation-chat-card.ck02-left-reflection-card .ck02-left-message.chat-bubble.is-user,
+  #portfolio-quality .presentation-chat-card.ck02-left-reflection-card .ck02-left-message.chat-bubble.user,
+  #portfolio-quality .presentation-chat-card.ck02-left-reflection-card .ck02-left-message.chat-bubble[data-role="user"]{
+    max-width:calc(100% - 10px) !important;
+  }
+}
+
+/* v1.0921: STEP2 conversation panel tone separation and role-corner shaping. */
+#portfolio-quality #captureQualityList .presentation-chat-card.ck02-left-reflection-card,
+#portfolio-quality #captureQualityList .presentation-chat-card{
+  background:rgba(229,232,229,.74) !important;
+}
+#portfolio-quality #captureQualityList .presentation-chat-card.ck02-left-reflection-card .presentation-chat-thread,
+#portfolio-quality #captureQualityList .presentation-chat-card .presentation-chat-thread{
+  background:transparent !important;
+}
+#portfolio-quality #captureQualityList article.chat-bubble.assistant,
+#portfolio-quality #captureQualityList article.chat-bubble.assistant.ck02-left-message{
+  border-top-left-radius:0 !important;
+  border-top-right-radius:16px !important;
+  border-bottom-right-radius:16px !important;
+  border-bottom-left-radius:16px !important;
+  background:rgba(250,250,247,.86) !important;
+}
+#portfolio-quality #captureQualityList article.chat-bubble.user,
+#portfolio-quality #captureQualityList article.chat-bubble.user.ck02-left-message{
+  border-top-right-radius:0 !important;
+  border-top-left-radius:16px !important;
+  border-bottom-right-radius:16px !important;
+  border-bottom-left-radius:16px !important;
+  background:rgba(242,244,241,.78) !important;
+}
+
+/* v1.0921: STEP2 tone correction.
+   Keep the outer conversation card/header bright, darken only the scroll mask area behind bubbles.
+   Do not darken the bubbles themselves; preserve the v1.0921 role-specific square outer corner. */
+#portfolio-quality #captureQualityList .presentation-chat-card.ck02-left-reflection-card,
+#portfolio-quality #captureQualityList .presentation-chat-card{
+  background:var(--neumo-raised, rgba(240,240,237,.92)) !important;
+}
+#portfolio-quality #captureQualityList .presentation-chat-card.ck02-left-reflection-card .presentation-chat-thread,
+#portfolio-quality #captureQualityList .presentation-chat-card .presentation-chat-thread,
+#portfolio-quality .presentation-chat-card.ck02-left-reflection-card .presentation-chat-thread.ck02-left-reflection-thread{
+  background:rgba(222,226,223,.46) !important;
+  border-radius:18px !important;
+  padding-left:10px !important;
+  padding-right:10px !important;
+}
+#portfolio-quality #captureQualityList article.chat-bubble.assistant,
+#portfolio-quality #captureQualityList article.chat-bubble.assistant.ck02-left-message,
+#portfolio-quality #captureQualityList article.chat-bubble.user,
+#portfolio-quality #captureQualityList article.chat-bubble.user.ck02-left-message{
+  background:var(--neumo-raised, rgba(255,255,255,.72)) !important;
+}
+#portfolio-quality #captureQualityList article.chat-bubble.assistant,
+#portfolio-quality #captureQualityList article.chat-bubble.assistant.ck02-left-message{
+  border-top-left-radius:0 !important;
+  border-top-right-radius:16px !important;
+  border-bottom-right-radius:16px !important;
+  border-bottom-left-radius:16px !important;
+}
+#portfolio-quality #captureQualityList article.chat-bubble.user,
+#portfolio-quality #captureQualityList article.chat-bubble.user.ck02-left-message{
+  border-top-right-radius:0 !important;
+  border-top-left-radius:16px !important;
+  border-bottom-right-radius:16px !important;
+  border-bottom-left-radius:16px !important;
+}
+
+/* v1.0921: STEP2 bubble text inset and Neumorphism shadow link.
+   Align User bubble internal line-start with ChatGPT bubble and make each bubble shadow use display-setting variables. */
+#portfolio-quality #captureQualityList article.chat-bubble.ck02-left-message,
+#portfolio-quality #captureQualityList article.chat-bubble.assistant.ck02-left-message,
+#portfolio-quality #captureQualityList article.chat-bubble.user.ck02-left-message{
+  padding:10px 11px !important;
+}
+#portfolio-quality #captureQualityList article.chat-bubble.user.ck02-left-message,
+#portfolio-quality #captureQualityList article.chat-bubble.user.ck02-left-message > p,
+#portfolio-quality #captureQualityList article.chat-bubble.user.ck02-left-message .ck02-left-line,
+#portfolio-quality #captureQualityList article.chat-bubble.user.ck02-left-message .ck02-left-line-text{
+  direction:ltr !important;
+  text-align:left !important;
+}
+#portfolio-quality #captureQualityList article.chat-bubble.user.ck02-left-message .ck02-left-line,
+#portfolio-quality #captureQualityList article.chat-bubble.assistant.ck02-left-message .ck02-left-line{
+  grid-template-columns:24px minmax(0,1fr) minmax(0,auto) !important;
+  column-gap:7px !important;
+}
+#portfolio-quality #captureQualityList article.chat-bubble.user.ck02-left-message .ck02-left-line-no,
+#portfolio-quality #captureQualityList article.chat-bubble.assistant.ck02-left-message .ck02-left-line-no{
+  min-width:24px !important;
+  text-align:left !important;
+}
+html body.theme-neumorphism #portfolio-quality #captureQualityList article.chat-bubble.ck02-left-message,
+html body.theme-neumorphism #portfolio-quality #captureQualityList article.chat-bubble.assistant.ck02-left-message,
+html body.theme-neumorphism #portfolio-quality #captureQualityList article.chat-bubble.user.ck02-left-message{
+  background:var(--neumo-raised, rgba(255,255,255,.72)) !important;
+  box-shadow:
+    calc(-.45 * var(--nm-offset, 8px)) calc(-.45 * var(--nm-offset, 8px)) calc(.82 * var(--nm-blur, 16px)) var(--nm-light-color, rgba(255,255,255,.62)),
+    calc(.45 * var(--nm-offset, 8px)) calc(.45 * var(--nm-offset, 8px)) calc(.82 * var(--nm-blur, 16px)) var(--nm-shadow-color, rgba(153,153,151,.32)) !important;
+}
+
+
+/* v1.0921: STEP2 bubble inset / edge correction.
+   Use the same internal line grid for ChatGPT and User; keep the bubble edge visible under Neumorphism settings. */
+#portfolio-quality #captureQualityList article.chat-bubble.ck02-left-message,
+#portfolio-quality #captureQualityList article.chat-bubble.assistant.ck02-left-message,
+#portfolio-quality #captureQualityList article.chat-bubble.user.ck02-left-message{
+  padding:14px 16px !important;
+  border:1px solid color-mix(in srgb, var(--nm-shadow-color, rgba(37,52,49,.26)) 24%, rgba(255,255,255,.64) 76%) !important;
+  box-sizing:border-box !important;
+}
+#portfolio-quality #captureQualityList article.chat-bubble.ck02-left-message > label,
+#portfolio-quality #captureQualityList article.chat-bubble.assistant.ck02-left-message > label,
+#portfolio-quality #captureQualityList article.chat-bubble.user.ck02-left-message > label{
+  margin-left:0 !important;
+  text-align:left !important;
+}
+#portfolio-quality #captureQualityList article.chat-bubble.ck02-left-message .ck02-left-line,
+#portfolio-quality #captureQualityList article.chat-bubble.assistant.ck02-left-message .ck02-left-line,
+#portfolio-quality #captureQualityList article.chat-bubble.user.ck02-left-message .ck02-left-line{
+  display:grid !important;
+  grid-template-columns:24px minmax(0,1fr) minmax(0,auto) !important;
+  column-gap:8px !important;
+  align-items:start !important;
+  padding-left:0 !important;
+  margin-left:0 !important;
+  direction:ltr !important;
+  text-align:left !important;
+}
+#portfolio-quality #captureQualityList article.chat-bubble.ck02-left-message .ck02-left-line-no,
+#portfolio-quality #captureQualityList article.chat-bubble.assistant.ck02-left-message .ck02-left-line-no,
+#portfolio-quality #captureQualityList article.chat-bubble.user.ck02-left-message .ck02-left-line-no{
+  position:static !important;
+  left:auto !important;
+  top:auto !important;
+  width:24px !important;
+  min-width:24px !important;
+  text-align:left !important;
+  line-height:1.8 !important;
+}
+#portfolio-quality #captureQualityList article.chat-bubble.ck02-left-message .ck02-left-line-text,
+#portfolio-quality #captureQualityList article.chat-bubble.assistant.ck02-left-message .ck02-left-line-text,
+#portfolio-quality #captureQualityList article.chat-bubble.user.ck02-left-message .ck02-left-line-text{
+  min-width:0 !important;
+  margin-left:0 !important;
+  text-align:left !important;
+  overflow-wrap:anywhere !important;
+}
+#portfolio-quality #captureQualityList article.chat-bubble.ck02-left-message .ck02-left-line-tags,
+#portfolio-quality #captureQualityList article.chat-bubble.assistant.ck02-left-message .ck02-left-line-tags,
+#portfolio-quality #captureQualityList article.chat-bubble.user.ck02-left-message .ck02-left-line-tags{
+  min-width:0 !important;
+  max-width:100% !important;
+  margin-left:0 !important;
+  align-self:start !important;
+  justify-self:start !important;
+}
+#portfolio-quality .presentation-chat-card.ck02-line-numbers-hidden #captureQualityList article.chat-bubble.ck02-left-message .ck02-left-line,
+#portfolio-quality #captureQualityList .presentation-chat-card.ck02-line-numbers-hidden article.chat-bubble.ck02-left-message .ck02-left-line,
+#portfolio-quality .presentation-chat-card.ck02-line-numbers-hidden article.chat-bubble.ck02-left-message .ck02-left-line{
+  grid-template-columns:minmax(0,1fr) minmax(0,auto) !important;
+}
+#portfolio-quality .presentation-chat-card.ck02-line-numbers-hidden article.chat-bubble.ck02-left-message .ck02-left-line-no{
+  display:none !important;
+}
+html body.theme-neumorphism #portfolio-quality #captureQualityList article.chat-bubble.ck02-left-message,
+html body.theme-neumorphism #portfolio-quality #captureQualityList article.chat-bubble.assistant.ck02-left-message,
+html body.theme-neumorphism #portfolio-quality #captureQualityList article.chat-bubble.user.ck02-left-message{
+  background:var(--neumo-raised, rgba(255,255,255,.72)) !important;
+  box-shadow:
+    calc(-.30 * var(--nm-offset, 8px)) calc(-.30 * var(--nm-offset, 8px)) calc(.58 * var(--nm-blur, 16px)) color-mix(in srgb, var(--nm-light-color, rgba(255,255,255,.62)) 58%, transparent),
+    calc(.34 * var(--nm-offset, 8px)) calc(.34 * var(--nm-offset, 8px)) calc(.66 * var(--nm-blur, 16px)) color-mix(in srgb, var(--nm-shadow-color, rgba(153,153,151,.32)) 78%, transparent) !important;
+}
+
+/* v1.0921: STEP2 role icon markers beside the first bubble in each consecutive role block.
+   Uses existing assets/dialogue icons as gray masks. Consecutive bubbles of the same role suppress repeated icons. */
+#portfolio-quality .presentation-chat-card.ck02-left-reflection-card .presentation-chat-thread.ck02-left-reflection-thread,
+#portfolio-quality #captureQualityList .presentation-chat-card.ck02-left-reflection-card .presentation-chat-thread,
+#portfolio-quality #captureQualityList .presentation-chat-card .presentation-chat-thread{
+  padding-left:42px !important;
+  padding-right:42px !important;
+}
+#portfolio-quality #captureQualityList article.chat-bubble.assistant.ck02-left-message,
+#portfolio-quality #captureQualityList article.chat-bubble.user.ck02-left-message{
+  position:relative !important;
+}
+#portfolio-quality #captureQualityList article.chat-bubble.assistant.ck02-left-message::before,
+#portfolio-quality #captureQualityList article.chat-bubble.user.ck02-left-message::before{
+  content:"";
+  position:absolute;
+  top:-4px;
+  width:24px;
+  height:24px;
+  opacity:.44;
+  background:rgba(37,52,49,.46);
+  background-color:rgba(37,52,49,.46);
+  pointer-events:none;
+  z-index:0;
+  filter:none;
+}
+#portfolio-quality #captureQualityList article.chat-bubble.assistant.ck02-left-message::before{
+  left:-34px;
+  -webkit-mask:url('../dialogue/robot.svg') center / contain no-repeat;
+  mask:url('../dialogue/robot.svg') center / contain no-repeat;
+}
+#portfolio-quality #captureQualityList article.chat-bubble.user.ck02-left-message::before{
+  right:-34px;
+  -webkit-mask:url('../dialogue/user.svg') center / contain no-repeat;
+  mask:url('../dialogue/user.svg') center / contain no-repeat;
+}
+#portfolio-quality #captureQualityList article.chat-bubble.assistant.ck02-left-message + article.chat-bubble.assistant.ck02-left-message::before,
+#portfolio-quality #captureQualityList article.chat-bubble.user.ck02-left-message + article.chat-bubble.user.ck02-left-message::before{
+  display:none !important;
+}
+@media(max-width:900px){
+  #portfolio-quality .presentation-chat-card.ck02-left-reflection-card .presentation-chat-thread.ck02-left-reflection-thread,
+  #portfolio-quality #captureQualityList .presentation-chat-card.ck02-left-reflection-card .presentation-chat-thread,
+  #portfolio-quality #captureQualityList .presentation-chat-card .presentation-chat-thread{
+    padding-left:34px !important;
+    padding-right:34px !important;
+  }
+  #portfolio-quality #captureQualityList article.chat-bubble.assistant.ck02-left-message::before,
+  #portfolio-quality #captureQualityList article.chat-bubble.user.ck02-left-message::before{
+    width:20px;
+    height:20px;
+  }
+  #portfolio-quality #captureQualityList article.chat-bubble.assistant.ck02-left-message::before{left:-28px;}
+  #portfolio-quality #captureQualityList article.chat-bubble.user.ck02-left-message::before{right:-28px;}
+}
+
+/* v1.0921: STEP2 role icon edge correction.
+   Keep bubbles near the mask edge, make SVG role icons visible, and place them at the squared outside corner.
+   Do not add a wide gutter that pushes bubbles inward. */
+#portfolio-quality .presentation-chat-card.ck02-left-reflection-card .presentation-chat-thread.ck02-left-reflection-thread,
+#portfolio-quality #captureQualityList .presentation-chat-card.ck02-left-reflection-card .presentation-chat-thread,
+#portfolio-quality #captureQualityList .presentation-chat-card .presentation-chat-thread{
+  padding-left:24px !important;
+  padding-right:24px !important;
+  overflow-x:visible !important;
+}
+#portfolio-quality .presentation-chat-card.ck02-left-reflection-card,
+#portfolio-quality #captureQualityList .presentation-chat-card.ck02-left-reflection-card{
+  overflow:hidden !important;
+}
+#portfolio-quality #captureQualityList article.chat-bubble.assistant.ck02-left-message,
+#portfolio-quality #captureQualityList article.chat-bubble.user.ck02-left-message{
+  position:relative !important;
+  overflow:visible !important;
+  z-index:1 !important;
+}
+#portfolio-quality #captureQualityList article.chat-bubble.assistant.ck02-left-message::before,
+#portfolio-quality #captureQualityList article.chat-bubble.user.ck02-left-message::before{
+  content:"" !important;
+  display:block !important;
+  position:absolute !important;
+  top:-2px !important;
+  width:22px !important;
+  height:22px !important;
+  opacity:.42 !important;
+  background-color:rgba(37,52,49,.48) !important;
+  background:rgba(37,52,49,.48) !important;
+  pointer-events:none !important;
+  z-index:3 !important;
+  filter:none !important;
+}
+#portfolio-quality #captureQualityList article.chat-bubble.assistant.ck02-left-message::before{
+  left:-25px !important;
+  -webkit-mask-image:url('../dialogue/robot.svg') !important;
+  -webkit-mask-position:center !important;
+  -webkit-mask-size:contain !important;
+  -webkit-mask-repeat:no-repeat !important;
+  mask-image:url('../dialogue/robot.svg') !important;
+  mask-position:center !important;
+  mask-size:contain !important;
+  mask-repeat:no-repeat !important;
+}
+#portfolio-quality #captureQualityList article.chat-bubble.user.ck02-left-message::before{
+  right:-25px !important;
+  -webkit-mask-image:url('../dialogue/user.svg') !important;
+  -webkit-mask-position:center !important;
+  -webkit-mask-size:contain !important;
+  -webkit-mask-repeat:no-repeat !important;
+  mask-image:url('../dialogue/user.svg') !important;
+  mask-position:center !important;
+  mask-size:contain !important;
+  mask-repeat:no-repeat !important;
+}
+#portfolio-quality #captureQualityList article.chat-bubble.assistant.ck02-left-message + article.chat-bubble.assistant.ck02-left-message::before,
+#portfolio-quality #captureQualityList article.chat-bubble.user.ck02-left-message + article.chat-bubble.user.ck02-left-message::before{
+  display:none !important;
+}
+@media(max-width:900px){
+  #portfolio-quality .presentation-chat-card.ck02-left-reflection-card .presentation-chat-thread.ck02-left-reflection-thread,
+  #portfolio-quality #captureQualityList .presentation-chat-card.ck02-left-reflection-card .presentation-chat-thread,
+  #portfolio-quality #captureQualityList .presentation-chat-card .presentation-chat-thread{
+    padding-left:20px !important;
+    padding-right:20px !important;
+  }
+  #portfolio-quality #captureQualityList article.chat-bubble.assistant.ck02-left-message::before,
+  #portfolio-quality #captureQualityList article.chat-bubble.user.ck02-left-message::before{
+    width:19px !important;
+    height:19px !important;
+  }
+  #portfolio-quality #captureQualityList article.chat-bubble.assistant.ck02-left-message::before{left:-22px !important;}
+  #portfolio-quality #captureQualityList article.chat-bubble.user.ck02-left-message::before{right:-22px !important;}
+}
+
+/* v1.0921: STEP2 role icons as real SVG images, not CSS masks.
+   This avoids the mask icon disappearing and keeps icons only on the first bubble of a consecutive role block. */
+#portfolio-quality #captureQualityList article.chat-bubble.ck02-left-message::before,
+#portfolio-quality #captureQualityList article.chat-bubble.assistant.ck02-left-message::before,
+#portfolio-quality #captureQualityList article.chat-bubble.user.ck02-left-message::before{
+  content:none !important;
+  display:none !important;
+}
+#portfolio-quality #captureQualityList article.chat-bubble.ck02-left-message{
+  position:relative !important;
+  overflow:visible !important;
+}
+#portfolio-quality #captureQualityList article.chat-bubble.ck02-left-message .ck02-role-icon{
+  position:absolute !important;
+  top:-5px !important;
+  width:23px !important;
+  height:23px !important;
+  opacity:.42 !important;
+  filter:grayscale(1) brightness(.72) opacity(.72) !important;
+  pointer-events:none !important;
+  z-index:5 !important;
+  display:block !important;
+}
+#portfolio-quality #captureQualityList article.chat-bubble.assistant.ck02-left-message .ck02-role-icon{
+  left:-25px !important;
+}
+#portfolio-quality #captureQualityList article.chat-bubble.user.ck02-left-message .ck02-role-icon{
+  right:-25px !important;
+}
+#portfolio-quality .presentation-chat-card.ck02-left-reflection-card .presentation-chat-thread.ck02-left-reflection-thread,
+#portfolio-quality #captureQualityList .presentation-chat-card.ck02-left-reflection-card .presentation-chat-thread{
+  overflow-x:visible !important;
+  padding-left:24px !important;
+  padding-right:24px !important;
+}
+@media(max-width:900px){
+  #portfolio-quality #captureQualityList article.chat-bubble.ck02-left-message .ck02-role-icon{
+    width:19px !important;
+    height:19px !important;
+    top:-4px !important;
+  }
+  #portfolio-quality #captureQualityList article.chat-bubble.assistant.ck02-left-message .ck02-role-icon{left:-21px !important;}
+  #portfolio-quality #captureQualityList article.chat-bubble.user.ck02-left-message .ck02-role-icon{right:-21px !important;}
+}
+
+
+/* v1.0921: STEP2 role SVG position adjustment.
+   Place the role icon above the squared outer corner, not beside the bubble.
+   Keep icons only where JS inserts .ck02-role-icon for the head of each consecutive role block. */
+#portfolio-quality #captureQualityList article.chat-bubble.ck02-left-message .ck02-role-icon{
+  width:46px !important;
+  height:46px !important;
+  top:-54px !important;
+  opacity:.40 !important;
+  filter:grayscale(1) brightness(.74) opacity(.78) !important;
+  z-index:6 !important;
+}
+#portfolio-quality #captureQualityList article.chat-bubble.assistant.ck02-left-message .ck02-role-icon{
+  left:-2px !important;
+  right:auto !important;
+}
+#portfolio-quality #captureQualityList article.chat-bubble.user.ck02-left-message .ck02-role-icon{
+  right:-2px !important;
+  left:auto !important;
+}
+#portfolio-quality .presentation-chat-card.ck02-left-reflection-card .presentation-chat-thread.ck02-left-reflection-thread,
+#portfolio-quality #captureQualityList .presentation-chat-card.ck02-left-reflection-card .presentation-chat-thread{
+  padding-top:64px !important;
+}
+@media(max-width:900px){
+  #portfolio-quality #captureQualityList article.chat-bubble.ck02-left-message .ck02-role-icon{
+    width:36px !important;
+    height:36px !important;
+    top:-42px !important;
+  }
+  #portfolio-quality #captureQualityList article.chat-bubble.assistant.ck02-left-message .ck02-role-icon{left:-1px !important;}
+  #portfolio-quality #captureQualityList article.chat-bubble.user.ck02-left-message .ck02-role-icon{right:-1px !important;}
+  #portfolio-quality .presentation-chat-card.ck02-left-reflection-card .presentation-chat-thread.ck02-left-reflection-thread,
+  #portfolio-quality #captureQualityList .presentation-chat-card.ck02-left-reflection-card .presentation-chat-thread{
+    padding-top:52px !important;
+  }
+}
+
+/* v1.0921: STEP2 role icon scale / gap adjustment.
+   Match the reference balance: icons stay above the squared outside corner, but the mask top gap is reduced.
+   Icons are smaller than v1.0921 so they read as role marks, not separate UI objects. */
+#portfolio-quality #captureQualityList article.chat-bubble.ck02-left-message .ck02-role-icon{
+  width:30px !important;
+  height:30px !important;
+  top:-34px !important;
+  opacity:.42 !important;
+  filter:grayscale(1) brightness(.72) opacity(.78) !important;
+  z-index:6 !important;
+}
+#portfolio-quality #captureQualityList article.chat-bubble.assistant.ck02-left-message .ck02-role-icon{
+  left:0 !important;
+  right:auto !important;
+}
+#portfolio-quality #captureQualityList article.chat-bubble.user.ck02-left-message .ck02-role-icon{
+  right:0 !important;
+  left:auto !important;
+}
+#portfolio-quality .presentation-chat-card.ck02-left-reflection-card .presentation-chat-thread.ck02-left-reflection-thread,
+#portfolio-quality #captureQualityList .presentation-chat-card.ck02-left-reflection-card .presentation-chat-thread{
+  padding-top:40px !important;
+  gap:22px !important;
+}
+@media(max-width:900px){
+  #portfolio-quality #captureQualityList article.chat-bubble.ck02-left-message .ck02-role-icon{
+    width:26px !important;
+    height:26px !important;
+    top:-30px !important;
+  }
+  #portfolio-quality .presentation-chat-card.ck02-left-reflection-card .presentation-chat-thread.ck02-left-reflection-thread,
+  #portfolio-quality #captureQualityList .presentation-chat-card.ck02-left-reflection-card .presentation-chat-thread{
+    padding-top:36px !important;
+    gap:18px !important;
+  }
+}
+
+
+/* v1.0921: STEP2 role icon top adjusted upward per tuning request. */
+#portfolio-quality #captureQualityList article.chat-bubble.ck02-left-message .ck02-role-icon{
+  width:40px !important;
+  height:40px !important;
+  top:-25px !important;
+}
+#portfolio-quality .presentation-chat-card.ck02-left-reflection-card .presentation-chat-thread.ck02-left-reflection-thread,
+#portfolio-quality #captureQualityList .presentation-chat-card.ck02-left-reflection-card .presentation-chat-thread{
+  padding-left:10px !important;
+  padding-right:10px !important;
+  gap:7px !important;
+}
+@media(max-width:900px){
+  #portfolio-quality #captureQualityList article.chat-bubble.ck02-left-message .ck02-role-icon{
+    width:38px !important;
+    height:38px !important;
+    top:-25px !important;
+  }
+  #portfolio-quality .presentation-chat-card.ck02-left-reflection-card .presentation-chat-thread.ck02-left-reflection-thread,
+  #portfolio-quality #captureQualityList .presentation-chat-card.ck02-left-reflection-card .presentation-chat-thread{
+    padding-left:10px !important;
+    padding-right:10px !important;
+    gap:7px !important;
+  }
+}
+
+/* v1.0921: STEP2 role SVG size / height retune. */
+#portfolio-quality #captureQualityList article.chat-bubble.ck02-left-message .ck02-role-icon{
+  width:52px !important;
+  height:52px !important;
+  top:-32px !important;
+}
+@media(max-width:900px){
+  #portfolio-quality #captureQualityList article.chat-bubble.ck02-left-message .ck02-role-icon{
+    width:48px !important;
+    height:48px !important;
+    top:-32px !important;
+  }
+}
+
+/* v1.0921: STEP2 role SVG horizontal offset / height retune. */
+#portfolio-quality #captureQualityList article.chat-bubble.ck02-left-message .ck02-role-icon{
+  top:-42px !important;
+}
+#portfolio-quality #captureQualityList article.chat-bubble.assistant.ck02-left-message .ck02-role-icon{
+  left:-10px !important;
+  right:auto !important;
+}
+#portfolio-quality #captureQualityList article.chat-bubble.user.ck02-left-message .ck02-role-icon{
+  right:-10px !important;
+  left:auto !important;
+}
+@media(max-width:900px){
+  #portfolio-quality #captureQualityList article.chat-bubble.ck02-left-message .ck02-role-icon{
+    top:-42px !important;
+  }
+  #portfolio-quality #captureQualityList article.chat-bubble.assistant.ck02-left-message .ck02-role-icon{
+    left:-10px !important;
+    right:auto !important;
+  }
+  #portfolio-quality #captureQualityList article.chat-bubble.user.ck02-left-message .ck02-role-icon{
+    right:-10px !important;
+    left:auto !important;
+  }
+}
+
+/* v1.0921: STEP2 role SVG final offset tuning. */
+#portfolio-quality #captureQualityList article.chat-bubble.ck02-left-message .ck02-role-icon{
+  top:-46px !important;
+}
+#portfolio-quality #captureQualityList article.chat-bubble.assistant.ck02-left-message .ck02-role-icon{
+  left:-15px !important;
+  right:auto !important;
+}
+#portfolio-quality #captureQualityList article.chat-bubble.user.ck02-left-message .ck02-role-icon{
+  right:-15px !important;
+  left:auto !important;
+}
+@media(max-width:900px){
+  #portfolio-quality #captureQualityList article.chat-bubble.ck02-left-message .ck02-role-icon{
+    top:-46px !important;
+  }
+  #portfolio-quality #captureQualityList article.chat-bubble.assistant.ck02-left-message .ck02-role-icon{
+    left:-15px !important;
+    right:auto !important;
+  }
+  #portfolio-quality #captureQualityList article.chat-bubble.user.ck02-left-message .ck02-role-icon{
+    right:-15px !important;
+    left:auto !important;
+  }
+}
+
+/* v1.0921: STEP2 line chips attach to the end of the selected underline range.
+   Keep the line number as a side marker, then let text and chips flow inline.
+   This prevents the chip column from squeezing Japanese text into vertical wrapping on narrow widths. */
+#portfolio-quality #captureQualityList article.chat-bubble.ck02-left-message .ck02-left-line,
+#portfolio-quality #captureQualityList article.chat-bubble.assistant.ck02-left-message .ck02-left-line,
+#portfolio-quality #captureQualityList article.chat-bubble.user.ck02-left-message .ck02-left-line{
+  display:block !important;
+  position:relative !important;
+  padding-left:32px !important;
+  margin:0 0 4px !important;
+  min-width:0 !important;
+  max-width:100% !important;
+  direction:ltr !important;
+  text-align:left !important;
+  line-height:1.55 !important;
+}
+#portfolio-quality #captureQualityList article.chat-bubble.ck02-left-message .ck02-left-line-no,
+#portfolio-quality #captureQualityList article.chat-bubble.assistant.ck02-left-message .ck02-left-line-no,
+#portfolio-quality #captureQualityList article.chat-bubble.user.ck02-left-message .ck02-left-line-no{
+  position:absolute !important;
+  left:0 !important;
+  top:.28em !important;
+  width:24px !important;
+  min-width:24px !important;
+  line-height:1 !important;
+  text-align:left !important;
+  font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace !important;
+  font-size:7pt !important;
+  color:rgba(42,51,49,.40) !important;
+  font-variant-numeric:tabular-nums !important;
+  user-select:none !important;
+}
+#portfolio-quality #captureQualityList article.chat-bubble.ck02-left-message .ck02-left-line-text,
+#portfolio-quality #captureQualityList article.chat-bubble.assistant.ck02-left-message .ck02-left-line-text,
+#portfolio-quality #captureQualityList article.chat-bubble.user.ck02-left-message .ck02-left-line-text{
+  display:inline !important;
+  min-width:0 !important;
+  max-width:100% !important;
+  white-space:normal !important;
+  overflow-wrap:anywhere !important;
+  word-break:normal !important;
+  line-break:strict !important;
+  text-align:left !important;
+}
+#portfolio-quality #captureQualityList article.chat-bubble.ck02-left-message .ck02-left-line-tags,
+#portfolio-quality #captureQualityList article.chat-bubble.assistant.ck02-left-message .ck02-left-line-tags,
+#portfolio-quality #captureQualityList article.chat-bubble.user.ck02-left-message .ck02-left-line-tags{
+  display:inline-flex !important;
+  flex-direction:row !important;
+  flex-wrap:wrap !important;
+  align-items:center !important;
+  justify-content:flex-start !important;
+  gap:3px !important;
+  margin-left:8px !important;
+  max-width:100% !important;
+  vertical-align:baseline !important;
+  white-space:normal !important;
+}
+#portfolio-quality .presentation-chat-card.ck02-line-numbers-hidden article.chat-bubble.ck02-left-message .ck02-left-line{
+  padding-left:0 !important;
+}
+#portfolio-quality .presentation-chat-card.ck02-line-numbers-hidden article.chat-bubble.ck02-left-message .ck02-left-line-no{
+  display:none !important;
+}
+@media(max-width:760px){
+  #portfolio-quality #captureQualityList article.chat-bubble.ck02-left-message .ck02-left-line,
+  #portfolio-quality #captureQualityList article.chat-bubble.assistant.ck02-left-message .ck02-left-line,
+  #portfolio-quality #captureQualityList article.chat-bubble.user.ck02-left-message .ck02-left-line{
+    padding-left:30px !important;
+    line-height:1.5 !important;
+  }
+  #portfolio-quality #captureQualityList article.chat-bubble.ck02-left-message .ck02-left-line-tags,
+  #portfolio-quality #captureQualityList article.chat-bubble.assistant.ck02-left-message .ck02-left-line-tags,
+  #portfolio-quality #captureQualityList article.chat-bubble.user.ck02-left-message .ck02-left-line-tags{
+    display:inline-flex !important;
+    flex-direction:column-reverse !important;
+    flex-wrap:nowrap !important;
+    align-items:flex-start !important;
+    gap:3px !important;
+    margin-left:6px !important;
+    vertical-align:bottom !important;
+    transform:translateY(.12em) !important;
+  }
+}

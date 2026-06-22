@@ -4,7 +4,7 @@
   window.__kashinokiWorkflow02Installed = true;
 
   const PAGE_ID = "portfolio-quality";
-  const VERSION = 'v1.0766';
+  const VERSION = 'v1.0921';
   let timers = [];
   let token = 0;
   let running = false;
@@ -32,7 +32,7 @@
       title: "使える範囲を確認",
       sequenceOwner: "assets/workflow/workflow-02.js",
       cssOwner: "assets/workflow/workflow-02.css",
-      sequencePolicy: "02 entry sequence reveals STEP, count cards, text/range panels, range items, and action panel in order; filter clicks do not restart the entry sequence",
+      sequencePolicy: "02 entry sequence reveals STEP, count cards, read status panel, conversation/editor panels, and action panel in order; filter clicks do not restart the entry sequence",
       version: VERSION
     };
   }
@@ -69,7 +69,7 @@
     }
     guide.classList.add("workflow02-step-intro");
     if (guide.getAttribute("data-j02-guide-ready") !== "true") {
-      guide.innerHTML = '<span class="workflow-step-number jv02-target">分ける</span><span class="workflow-step-copy"><b class="jv02-target">会話から集めた中身を確かめます</b><small class="jv02-target">ChatGPT / User のやり取りから、仕様・失敗・禁止条件の素材を拾えているか確認します。</small></span>';
+      guide.innerHTML = '<span class="workflow-step-number jv02-target">分ける</span><span class="workflow-step-copy"><b class="jv02-target">会話から集めた中身を確かめます</b><small class="jv02-target">ChatGPT / User のやり取りから、仕様・失敗・禁止条件の素材を拾えているか確認します。</small></span><button type="button" class="btn primary step-empty-jump-btn ck-step1-demo-jump-cta ck-step-guide-demo-jump ck-step-guide-demo-jump-02 ck-cta-codepen-host" onclick="page(\'portfolio-collect\')">「デモモード読込」へ移動<span class="ck-codepen-bounce" aria-hidden="true"><span class="loading_04"></span></span></button>';
       guide.setAttribute("data-j02-guide-ready", "true");
     }
     [".workflow-step-number", ".workflow-step-copy > b", ".workflow-step-copy > small"]
@@ -93,6 +93,27 @@
     const page = pageEl();
     if (!page) return [];
     return $$("#captureQualitySummary .workflow-brief-card", page);
+  }
+
+  function statusTargets() {
+    const page = pageEl();
+    if (!page) return [];
+    return [$("#aiThreadReadStatusStep2", page)].filter(Boolean);
+  }
+
+  function chatPanelTargets() {
+    const page = pageEl();
+    if (!page) return [];
+    return [$("#captureQualityList .presentation-chat-card", page)].filter(Boolean);
+  }
+
+  function editorPanelTargets() {
+    const page = pageEl();
+    if (!page) return [];
+    return [
+      $("#captureQualityList .presentation-extract-card.kashinoki-v449-editor-panel", page)
+        || $("#captureQualityList .presentation-extract-card", page)
+    ].filter(Boolean);
   }
 
   function chatHeaderTargets() {
@@ -152,7 +173,15 @@
   }
 
   function allTargets() {
-    return [...stepTargets(), ...countTargets(), ...contentTargets(), ...actionTargets()];
+    return [
+      ...stepTargets(),
+      ...countTargets(),
+      ...statusTargets(),
+      ...chatPanelTargets(),
+      ...editorPanelTargets(),
+      ...contentTargets(),
+      ...actionTargets()
+    ];
   }
 
   function markTargets() {
@@ -187,7 +216,7 @@
   }
 
   function phaseAtLeast(name) {
-    const order = { idle: 0, top: 1, count: 2, content: 3, action: 4, complete: 5 };
+    const order = { idle: 0, top: 1, count: 2, status: 3, content: 4, action: 5, complete: 6 };
     return (order[phase] || 0) >= (order[name] || 0);
   }
 
@@ -203,7 +232,12 @@
     }
     if (phaseAtLeast("top")) stepTargets().forEach(show);
     if (phaseAtLeast("count")) countTargets().forEach(show);
-    if (phaseAtLeast("content")) contentTargets().forEach(show);
+    if (phaseAtLeast("status")) statusTargets().forEach(show);
+    if (phaseAtLeast("content")) {
+      chatPanelTargets().forEach(show);
+      editorPanelTargets().forEach(show);
+      contentTargets().forEach(show);
+    }
     if (phaseAtLeast("action")) actionTargets().forEach(show);
   }
 
@@ -242,23 +276,38 @@
     after(0.26, () => show(stepTargets()[1]));
     after(0.44, () => show(stepTargets()[2]));
 
-    const COUNT_CARD_START = 0.78;
-    const COUNT_CARD_STAGGER = 0.30;
-    const COUNT_NUMBER_START = 2.16;
-    const CONTENT_START = 2.58;
+    /* v1.0921: STEP2 entry order is fixed by the user-provided screenshots.
+       1) STEP guide, 2) count summary cards, 3) read status panel,
+       4) conversation/editor panels. The read status panel must appear between
+       the count summary and the conversation panel, never before the counts and
+       never after the conversation panel. */
+    const COUNT_CARD_START = 0.74;
+    const COUNT_CARD_STAGGER = 0.12;
+    const countEls = countTargets();
+    const COUNT_NUMBER_START = COUNT_CARD_START + 0.78;
+    const COUNT_DONE = COUNT_CARD_START + Math.max(0, countEls.length - 1) * COUNT_CARD_STAGGER + 0.36;
+    const STATUS_START = COUNT_DONE;
+    const CONTENT_START = STATUS_START + 0.68;
 
-    after(0.74, () => { phase = "count"; });
-    countTargets().forEach((el, i) => after(COUNT_CARD_START + i * COUNT_CARD_STAGGER, () => show(el)));
+    after(COUNT_CARD_START - 0.04, () => { phase = "count"; });
+    countEls.forEach((el, i) => after(COUNT_CARD_START + i * COUNT_CARD_STAGGER, () => show(el)));
     after(COUNT_NUMBER_START, () => {
       if (typeof window.animateQualityCounts === "function") window.animateQualityCounts();
     });
 
+    after(STATUS_START, () => {
+      phase = "status";
+      statusTargets().forEach(show);
+    });
+
+    after(CONTENT_START - 0.10, () => chatPanelTargets().forEach(show));
     after(CONTENT_START, () => { phase = "content"; show(chatHeaderTargets()[0]); });
     after(CONTENT_START + 0.26, () => show(chatHeaderTargets()[1]));
     after(CONTENT_START + 0.52, () => show(chatHeaderTargets()[2]));
     after(CONTENT_START + 0.86, () => show(chatHeaderTargets()[3]));
 
     const EDITOR_START = CONTENT_START + 1.18;
+    after(EDITOR_START - 0.18, () => editorPanelTargets().forEach(show));
     after(EDITOR_START, () => show(editorTargets()[0]));
     after(EDITOR_START + 0.24, () => show(editorTargets()[1]));
     for (let i = 0; i < 10; i++) after(EDITOR_START + 0.54 + i * 0.10, () => show($$("#captureQualityList .presentation-extract-card [data-quality02-category-picks] [data-quality02-pick-category]", pageEl())[i]));
